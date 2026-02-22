@@ -164,6 +164,7 @@ fn start_watching(app: tauri::AppHandle, project_path: String) -> Result<(), Str
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
+        .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
             get_app_project_path,
             set_app_project_path,
