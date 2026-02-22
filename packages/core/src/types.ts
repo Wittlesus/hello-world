@@ -137,24 +137,6 @@ export const BrainStateSchema = z.object({
 
 export type BrainState = z.infer<typeof BrainStateSchema>;
 
-// ── Brain: Retrieval Result ─────────────────────────────────────
-
-export const RetrievalResultSchema = z.object({
-  memories: z.array(z.object({
-    memory: MemorySchema,
-    score: z.number(),
-    matchedTags: z.array(z.string()),
-    source: z.enum(['direct', 'associative', 'dopamine']),
-  })),
-  hotTags: z.array(z.object({
-    tag: z.string(),
-    count: z.number(),
-  })),
-  injectionText: z.string(),
-});
-
-export type RetrievalResult = z.infer<typeof RetrievalResultSchema>;
-
 // ── Sessions ────────────────────────────────────────────────────
 
 export const SessionSchema = z.object({
