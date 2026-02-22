@@ -1,9 +1,16 @@
-import { Sidebar } from './components/Sidebar';
-import { Dashboard } from './components/Dashboard';
-import { TaskBoard } from './components/TaskBoard';
-import { ApprovalQueue } from './components/ApprovalQueue';
-import { PlaceholderView } from './components/PlaceholderView';
-import { useAppStore } from './stores/app';
+import { useEffect } from 'react';
+import { invoke } from '@tauri-apps/api/core';
+import { Sidebar } from './components/Sidebar.js';
+import { Dashboard } from './components/Dashboard.js';
+import { TaskBoard } from './components/TaskBoard.js';
+import { ApprovalQueue } from './components/ApprovalQueue.js';
+import { DecisionsView } from './components/DecisionsView.js';
+import { MemoryView } from './components/MemoryView.js';
+import { SessionsView } from './components/SessionsView.js';
+import { CostView } from './components/CostView.js';
+import { SettingsView } from './components/SettingsView.js';
+import { useAppStore } from './stores/app.js';
+import { PROJECT_PATH } from './config.js';
 
 function MainContent() {
   const view = useAppStore((s) => s.activeView);
@@ -14,21 +21,25 @@ function MainContent() {
     case 'tasks':
       return <TaskBoard />;
     case 'decisions':
-      return <PlaceholderView title="Decisions" description="Architecture decisions and rationale — wired in next step" />;
+      return <DecisionsView />;
     case 'memory':
-      return <PlaceholderView title="Memory" description="Brain state, hot tags, and memory dashboard — wired in next step" />;
+      return <MemoryView />;
     case 'sessions':
-      return <PlaceholderView title="Sessions" description="Session history and cost tracking — wired in next step" />;
+      return <SessionsView />;
     case 'cost':
-      return <PlaceholderView title="Cost" description="Spending by model, session, and project — wired in next step" />;
+      return <CostView />;
     case 'settings':
-      return <PlaceholderView title="Settings" description="Project configuration, MCP servers, budgets — wired in next step" />;
+      return <SettingsView />;
     default:
       return <Dashboard />;
   }
 }
 
 export function App() {
+  useEffect(() => {
+    invoke('start_watching', { projectPath: PROJECT_PATH }).catch(console.error);
+  }, []);
+
   return (
     <div className="h-screen flex flex-col bg-[#0a0a0f] text-gray-200">
       <div className="flex-1 flex min-h-0">

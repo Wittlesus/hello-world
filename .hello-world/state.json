@@ -1,5 +1,33 @@
 {
-  "tasks": [],
+  "tasks": [
+    {
+      "id": "t_da721a28",
+      "title": "Test: did this task appear live?",
+      "description": "If you can see this task in the Hello World app without refreshing, live reactivity works.",
+      "status": "done",
+      "tags": [
+        "test",
+        "reactivity"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:11:49.745Z",
+      "updatedAt": "2026-02-22T06:19:41.982Z"
+    },
+    {
+      "id": "t_3b8d5249",
+      "title": "Live reactivity is working",
+      "description": "This task should appear in the Todo column within 1 second of being created via MCP.",
+      "status": "done",
+      "tags": [
+        "test",
+        "reactivity",
+        "v2"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:18:41.232Z",
+      "updatedAt": "2026-02-22T06:19:42.423Z"
+    }
+  ],
   "milestones": [],
   "decisions": [
     {

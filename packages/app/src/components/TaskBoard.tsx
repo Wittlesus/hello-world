@@ -1,7 +1,23 @@
 import { useState } from 'react';
-import { useTaskStore, type TaskItem } from '../stores/tasks';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { LoadingState, ErrorState } from './LoadingState.js';
 
-type Status = TaskItem['status'];
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: 'todo' | 'in_progress' | 'done' | 'blocked';
+  tags: string[];
+  dependsOn: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface StateData {
+  tasks: Task[];
+}
+
+type Status = Task['status'];
 
 const COLUMNS: { status: Status; label: string; color: string; headerBg: string; badgeBg: string }[] = [
   { status: 'todo', label: 'Todo', color: 'border-yellow-500/60', headerBg: 'bg-yellow-500/10', badgeBg: 'bg-yellow-500/20 text-yellow-300' },
@@ -29,7 +45,7 @@ function tagColor(tag: string): string {
   return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length];
 }
 
-function TaskCard({ task, tasks }: { task: TaskItem; tasks: TaskItem[] }) {
+function TaskCard({ task, tasks }: { task: Task; tasks: Task[] }) {
   const [expanded, setExpanded] = useState(false);
 
   const dependencyCount = task.dependsOn.length;
@@ -94,91 +110,12 @@ function TaskCard({ task, tasks }: { task: TaskItem; tasks: TaskItem[] }) {
   );
 }
 
-function AddTaskForm() {
-  const [active, setActive] = useState(false);
-  const [title, setTitle] = useState('');
-  const addTask = useTaskStore((s) => s.addTask);
-
-  function submit() {
-    const trimmed = title.trim();
-    if (!trimmed) return;
-
-    addTask({
-      id: crypto.randomUUID(),
-      title: trimmed,
-      description: '',
-      status: 'todo',
-      tags: [],
-      dependsOn: [],
-    });
-
-    setTitle('');
-    setActive(false);
-  }
-
-  if (!active) {
-    return (
-      <button
-        type="button"
-        onClick={() => setActive(true)}
-        className="w-full text-xs text-gray-500 hover:text-gray-300 border border-dashed border-gray-800 hover:border-gray-600 rounded-lg py-2 transition-colors cursor-pointer"
-      >
-        + Add Task
-      </button>
-    );
-  }
-
-  return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        submit();
-      }}
-      className="flex flex-col gap-2"
-    >
-      <input
-        autoFocus
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Escape') {
-            setTitle('');
-            setActive(false);
-          }
-        }}
-        onBlur={() => {
-          if (!title.trim()) {
-            setActive(false);
-          }
-        }}
-        placeholder="Task title..."
-        className="w-full bg-[#1a1a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 placeholder-gray-600 outline-none focus:border-yellow-500/50"
-      />
-      <div className="flex gap-2">
-        <button
-          type="submit"
-          className="text-xs px-3 py-1 rounded bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30 transition-colors cursor-pointer"
-        >
-          Add
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setTitle('');
-            setActive(false);
-          }}
-          className="text-xs px-3 py-1 rounded text-gray-500 hover:text-gray-300 transition-colors cursor-pointer"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
-  );
-}
-
 export function TaskBoard() {
-  const tasks = useTaskStore((s) => s.tasks);
+  const { data, loading, error, refetch } = useTauriData<StateData>('get_state');
+  const tasks = data?.tasks ?? [];
+
+  if (loading) return <LoadingState label="Loading tasks..." />;
+  if (error) return <ErrorState message={error} onRetry={refetch} />;
 
   return (
     <div className="flex-1 flex gap-4 p-4 overflow-x-auto min-w-0">
@@ -195,8 +132,6 @@ export function TaskBoard() {
             </div>
 
             <div className="flex-1 flex flex-col gap-2 p-2 bg-[#111118]/50 rounded-b-lg border border-t-0 border-gray-800/50">
-              {col.status === 'todo' && <AddTaskForm />}
-
               {columnTasks.length === 0 ? (
                 <div className="flex-1 flex items-center justify-center min-h-[80px] border border-dashed border-gray-800 rounded-lg">
                   <span className="text-xs text-gray-600">(empty)</span>

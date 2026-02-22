@@ -83,6 +83,56 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-22T04:00:09.037Z"
+    },
+    {
+      "id": "mem_e89f9764",
+      "projectId": "Hello World",
+      "type": "pain",
+      "title": "taskkill crashes Claude Code session",
+      "content": "Running `taskkill //F //IM <process>.exe` from Bash tool crashes the Claude Code session repeatedly. Also running never-terminating processes like `npx tauri dev` in foreground crashes when output buffer fills. Solutions: (1) Never use taskkill from Claude Code, (2) Use run_in_background for dev servers, (3) Ask user to kill processes manually.",
+      "rule": "",
+      "tags": [
+        "windows",
+        "bash",
+        "crash",
+        "tauri"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T06:10:14.107Z"
+    },
+    {
+      "id": "mem_6efd1e33",
+      "projectId": "Hello World",
+      "type": "win",
+      "title": "Live reactivity wired up in Hello World",
+      "content": "File watcher (notify crate) + Tauri events + React listeners = live dashboard. MCP writes to .hello-world/ JSON files, Rust detects changes, emits events, frontend auto-refetches. Zero polling.",
+      "rule": "",
+      "tags": [
+        "hello-world",
+        "tauri",
+        "reactivity"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T06:11:48.197Z"
+    },
+    {
+      "id": "mem_13552274",
+      "projectId": "Hello World",
+      "type": "fact",
+      "title": "Live reactivity test #2",
+      "content": "Testing if the file watcher picks up this MCP write and the app updates live.",
+      "rule": "",
+      "tags": [
+        "test"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T06:15:30.079Z"
     }
   ]
 }
