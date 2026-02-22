@@ -13,6 +13,7 @@
     "build": "turbo build",
     "build:ts": "turbo build --filter=@hello-world/core --filter=@hello-world/cli",
     "dev": "turbo dev",
+    "app": "npm run build:ts && npm run --workspace=packages/app dev",
     "test": "turbo test",
     "lint": "turbo lint",
     "clean": "turbo clean"
