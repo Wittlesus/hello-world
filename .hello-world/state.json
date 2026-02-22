@@ -60,7 +60,7 @@
       "id": "t_c6f7b3fd",
       "title": "Fix hardcoded PROJECT_PATH in config.ts",
       "description": "App only works on Patri's machine. Need Tauri store for persisted path + first-run project picker UI (directory browse button).",
-      "status": "todo",
+      "status": "done",
       "tags": [
         "bug",
         "p1",
@@ -68,13 +68,13 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-22T06:35:00.133Z",
-      "updatedAt": "2026-02-22T06:35:00.133Z"
+      "updatedAt": "2026-02-22T06:51:10.181Z"
     },
     {
       "id": "t_92f07d66",
       "title": "Persist Two-Strike and Approval state to disk",
       "description": "Both engines are in-memory only — state lost on MCP server restart. Need strikes.json and approvals.json via JsonStore. Also wire approvals to desktop app via Tauri command.",
-      "status": "todo",
+      "status": "done",
       "tags": [
         "bug",
         "p2",
@@ -82,13 +82,13 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-22T06:35:02.180Z",
-      "updatedAt": "2026-02-22T06:35:02.180Z"
+      "updatedAt": "2026-02-22T06:51:10.849Z"
     },
     {
       "id": "t_8708e380",
       "title": "Connect WorkflowEngine to MCP server",
       "description": "WorkflowEngine (SCOPE→PLAN→BUILD→VERIFY→SHIP state machine) is built but never used. Add MCP tools: hw_get_workflow_state, hw_advance_phase, hw_get_phase_tasks.",
-      "status": "todo",
+      "status": "done",
       "tags": [
         "feature",
         "p2",
@@ -96,7 +96,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-22T06:35:04.282Z",
-      "updatedAt": "2026-02-22T06:35:04.282Z"
+      "updatedAt": "2026-02-22T06:51:11.360Z"
     },
     {
       "id": "t_eed2f6f2",

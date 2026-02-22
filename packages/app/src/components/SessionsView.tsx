@@ -1,4 +1,5 @@
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
 import { LoadingState, ErrorState, EmptyState } from './LoadingState.js';
 
@@ -63,7 +64,8 @@ function SessionCard({ session, index, total }: { session: Session; index: numbe
 }
 
 export function SessionsView() {
-  const { data, loading, error, refetch } = useTauriData<SessionsData>('get_sessions');
+  const projectPath = useProjectPath();
+  const { data, loading, error, refetch } = useTauriData<SessionsData>('get_sessions', projectPath);
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;

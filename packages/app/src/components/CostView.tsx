@@ -1,4 +1,5 @@
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
 import { LoadingState, ErrorState } from './LoadingState.js';
 
@@ -35,8 +36,9 @@ function StatCard({ label, value, sub, color }: { label: string; value: string; 
 }
 
 export function CostView() {
-  const { data: sessionsData, loading: sLoading, error: sError, refetch: sRefetch } = useTauriData<SessionsData>('get_sessions');
-  const { data: configData, loading: cLoading, error: cError } = useTauriData<ConfigData>('get_config');
+  const projectPath = useProjectPath();
+  const { data: sessionsData, loading: sLoading, error: sError, refetch: sRefetch } = useTauriData<SessionsData>('get_sessions', projectPath);
+  const { data: configData, loading: cLoading, error: cError } = useTauriData<ConfigData>('get_config', projectPath);
 
   if (sLoading || cLoading) return <LoadingState />;
   if (sError) return <ErrorState message={sError} onRetry={sRefetch} />;

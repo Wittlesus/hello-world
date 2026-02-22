@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
 import { LoadingState, ErrorState, EmptyState } from './LoadingState.js';
 
@@ -88,7 +89,8 @@ function DecisionCard({ decision }: { decision: Decision }) {
 }
 
 export function DecisionsView() {
-  const { data, loading, error, refetch } = useTauriData<StateData>('get_state');
+  const projectPath = useProjectPath();
+  const { data, loading, error, refetch } = useTauriData<StateData>('get_state', projectPath);
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;

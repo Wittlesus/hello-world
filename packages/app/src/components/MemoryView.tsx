@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
 import { LoadingState, ErrorState, EmptyState } from './LoadingState.js';
 
@@ -132,8 +133,9 @@ function MemoryCard({ memory }: { memory: Memory }) {
 }
 
 export function MemoryView() {
-  const { data: memoriesData, loading: memLoading, error: memError, refetch: memRefetch } = useTauriData<MemoriesData>('get_memories');
-  const { data: brainData, loading: brainLoading, error: brainError } = useTauriData<BrainState>('get_brain_state');
+  const projectPath = useProjectPath();
+  const { data: memoriesData, loading: memLoading, error: memError, refetch: memRefetch } = useTauriData<MemoriesData>('get_memories', projectPath);
+  const { data: brainData, loading: brainLoading, error: brainError } = useTauriData<BrainState>('get_brain_state', projectPath);
   const [filter, setFilter] = useState<MemoryType>('all');
 
   if (memLoading || brainLoading) return <LoadingState />;

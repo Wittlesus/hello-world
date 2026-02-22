@@ -26,6 +26,7 @@ import { SessionManager } from '../orchestration/session.js';
 import { ApprovalGates } from '../orchestration/approvals.js';
 import { TwoStrikeEngine } from '../orchestration/strikes.js';
 import { ActivityStore } from '../activity.js';
+import { WorkflowEngine } from '../orchestration/workflow.js';
 import { retrieveMemories } from '../brain/engine.js';
 import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '../brain/state.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
@@ -38,14 +39,16 @@ let sessions: SessionManager;
 let approvals: ApprovalGates;
 let strikes: TwoStrikeEngine;
 let activity: ActivityStore;
+let workflow: WorkflowEngine;
 
 try {
   project = Project.open(projectRoot);
   memoryStore = new MemoryStore(projectRoot, project.config.name);
   sessions = new SessionManager(projectRoot);
-  approvals = new ApprovalGates();
-  strikes = new TwoStrikeEngine();
+  approvals = new ApprovalGates(projectRoot);
+  strikes = new TwoStrikeEngine(projectRoot);
   activity = new ActivityStore(projectRoot);
+  workflow = new WorkflowEngine(projectRoot);
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -253,6 +256,54 @@ server.registerTool('hw_answer_question', {
   const q = project.state.answerQuestion(args.id, args.answer);
   activity.append('question_answered', `Answered: ${q.question.slice(0, 60)}`, args.answer);
   return text(`Question ${q.id} answered: "${args.answer}"`);
+});
+
+// ── Workflow ─────────────────────────────────────────────────────
+
+server.registerTool('hw_get_workflow_state', {
+  title: 'Get Workflow State',
+  description: 'Get current workflow phase (SCOPE→PLAN→BUILD→VERIFY→SHIP) and autonomous timer status.',
+  inputSchema: z.object({}),
+}, async () => {
+  const state = workflow.getState();
+  const timer = workflow.checkAutonomousTimer();
+  const lines = [
+    `Phase: ${state.phase.toUpperCase()}`,
+    `Task: ${state.currentTaskId ?? 'none'}`,
+    `Strikes: ${state.strikes}/2`,
+    `Context: ${state.contextUsagePercent}%`,
+  ];
+  if (timer.minutesElapsed > 0) {
+    lines.push(`Autonomous timer: ${timer.minutesElapsed}min${timer.warn ? ' ⚠ WARN' : ''}${timer.halt ? ' 🛑 HALT' : ''}`);
+  }
+  if (state.lastStrikeError) lines.push(`Last error: ${state.lastStrikeError}`);
+  return text(lines.join('\n'));
+});
+
+server.registerTool('hw_advance_phase', {
+  title: 'Advance Workflow Phase',
+  description: 'Transition to the next workflow phase. Valid: idle→scope, scope→plan/build, plan→build, build→verify, verify→ship/build, ship→idle.',
+  inputSchema: z.object({
+    phase: z.enum(['idle', 'scope', 'plan', 'build', 'verify', 'ship', 'waiting_approval', 'blocked']),
+    taskId: z.string().optional(),
+  }),
+}, async (args: { phase: string; taskId?: string }) => {
+  if (args.taskId) workflow.assignTask(args.taskId);
+  const result = workflow.transition(args.phase as any);
+  if (!result.ok) return text(`ERROR: ${result.reason}`);
+  activity.append('context_loaded', `Workflow → ${args.phase.toUpperCase()}`, args.taskId ? `Task: ${args.taskId}` : '');
+  return text(`Phase advanced to: ${result.state.phase.toUpperCase()}\nTask: ${result.state.currentTaskId ?? 'none'}`);
+});
+
+server.registerTool('hw_check_autonomous_timer', {
+  title: 'Check Autonomous Timer',
+  description: 'Check how long Claude has been working autonomously. Warns at 15min, halts at 20min.',
+  inputSchema: z.object({}),
+}, async () => {
+  const timer = workflow.checkAutonomousTimer();
+  if (timer.minutesElapsed === 0) return text('Autonomous timer not running (not in BUILD phase).');
+  const status = timer.halt ? '🛑 HALT — check in with Pat NOW' : timer.warn ? '⚠ WARNING — approaching limit' : 'OK';
+  return text(`Autonomous timer: ${timer.minutesElapsed} minutes elapsed\nStatus: ${status}`);
 });
 
 // ── Start ───────────────────────────────────────────────────────

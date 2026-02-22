@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 
 interface ActivityEvent {
   id: string;
@@ -38,7 +39,12 @@ function getConfig(type: string) {
 function formatTime(timestamp: string): string {
   const date = new Date(timestamp);
   if (isNaN(date.getTime())) return timestamp;
-  return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const diffMs = Date.now() - date.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  if (diffSec < 60) return `${diffSec}s ago`;
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `${diffMin}m ago`;
+  return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
 
 function ActivityRow({ item }: { item: ActivityEvent }) {
@@ -81,7 +87,8 @@ function ActivityRow({ item }: { item: ActivityEvent }) {
 }
 
 export function ActivityStream() {
-  const { data, loading } = useTauriData<ActivityData>('get_activity');
+  const projectPath = useProjectPath();
+  const { data, loading } = useTauriData<ActivityData>('get_activity', projectPath);
   const containerRef = useRef<HTMLDivElement>(null);
   const prevCountRef = useRef(0);
 

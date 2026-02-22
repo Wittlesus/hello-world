@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 import { LoadingState, ErrorState } from './LoadingState.js';
 
 interface Task {
@@ -111,7 +112,8 @@ function TaskCard({ task, tasks }: { task: Task; tasks: Task[] }) {
 }
 
 export function TaskBoard() {
-  const { data, loading, error, refetch } = useTauriData<StateData>('get_state');
+  const projectPath = useProjectPath();
+  const { data, loading, error, refetch } = useTauriData<StateData>('get_state', projectPath);
   const tasks = data?.tasks ?? [];
 
   if (loading) return <LoadingState label="Loading tasks..." />;

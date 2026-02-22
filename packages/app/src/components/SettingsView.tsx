@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
 import { LoadingState, ErrorState } from './LoadingState.js';
-import { PROJECT_PATH } from '../config.js';
 
 interface ProjectConfig {
   name: string;
@@ -37,7 +37,8 @@ function formatDateTime(iso: string): string {
 }
 
 export function SettingsView() {
-  const { data, loading, error, refetch } = useTauriData<ConfigData>('get_config');
+  const projectPath = useProjectPath();
+  const { data, loading, error, refetch } = useTauriData<ConfigData>('get_config', projectPath);
   const [form, setForm] = useState<ProjectConfig | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -68,7 +69,7 @@ export function SettingsView() {
     setSaving(true);
     try {
       const updated = { ...form, updatedAt: new Date().toISOString() };
-      await invoke('save_config', { projectPath: PROJECT_PATH, config: { config: updated } });
+      await invoke('save_config', { projectPath, config: { config: updated } });
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
       refetch();
@@ -172,7 +173,7 @@ export function SettingsView() {
           <div className="space-y-2 text-xs text-gray-400">
             <div>Created: <span className="text-gray-300">{formatDateTime(form.createdAt)}</span></div>
             <div>Updated: <span className="text-gray-300">{formatDateTime(form.updatedAt)}</span></div>
-            <div>Path: <span className="text-gray-300 font-mono">{PROJECT_PATH}</span></div>
+            <div>Path: <span className="text-gray-300 font-mono">{projectPath}</span></div>
           </div>
         </section>
       </div>

@@ -2,8 +2,11 @@
  * Two-Strike Engine
  *
  * Tracks error patterns per task. Same error class twice = HALT.
- * This is a system-level constraint, not a suggestion.
+ * Persisted to strikes.json so the rule fires across MCP server restarts.
  */
+
+import { JsonStore } from '../storage.js';
+import { now } from '../utils.js';
 
 export interface Strike {
   errorClass: string;
@@ -18,13 +21,17 @@ export interface StrikeCheck {
   history: Strike[];
 }
 
-export class TwoStrikeEngine {
-  private strikes: Map<string, Strike[]> = new Map();
+interface StrikesData {
+  strikes: Record<string, Strike[]>; // key: "taskId:errorClass"
+}
 
-  /**
-   * Classify an error into a class based on type + affected area.
-   * Same class = same type of failure in the same area.
-   */
+export class TwoStrikeEngine {
+  private store: JsonStore<StrikesData>;
+
+  constructor(projectRoot: string) {
+    this.store = new JsonStore<StrikesData>(projectRoot, 'strikes.json', { strikes: {} });
+  }
+
   private classifyError(errorMessage: string, affectedFile?: string): string {
     const type = this.detectErrorType(errorMessage);
     const area = affectedFile ?? 'unknown';
@@ -42,40 +49,27 @@ export class TwoStrikeEngine {
     return 'runtime';
   }
 
-  recordFailure(
-    taskId: string,
-    errorMessage: string,
-    approach: string,
-    affectedFile?: string,
-  ): StrikeCheck {
+  recordFailure(taskId: string, errorMessage: string, approach: string, affectedFile?: string): StrikeCheck {
     const errorClass = this.classifyError(errorMessage, affectedFile);
     const key = `${taskId}:${errorClass}`;
 
-    const existing = this.strikes.get(key) ?? [];
-    existing.push({
-      errorClass,
-      errorMessage,
-      approach,
-      timestamp: new Date().toISOString(),
+    const data = this.store.update((d) => {
+      const existing = d.strikes[key] ?? [];
+      existing.push({ errorClass, errorMessage, approach, timestamp: now() });
+      return { strikes: { ...d.strikes, [key]: existing } };
     });
-    this.strikes.set(key, existing);
 
-    return {
-      count: existing.length,
-      shouldHalt: existing.length >= 2,
-      history: [...existing],
-    };
+    const strikes = data.strikes[key];
+    return { count: strikes.length, shouldHalt: strikes.length >= 2, history: [...strikes] };
   }
 
   checkStrikes(taskId: string): StrikeCheck {
-    // Find the worst (most strikes) error class for this task
+    const data = this.store.read();
     let worst: StrikeCheck = { count: 0, shouldHalt: false, history: [] };
 
-    for (const [key, strikes] of this.strikes) {
-      if (key.startsWith(`${taskId}:`)) {
-        if (strikes.length > worst.count) {
-          worst = { count: strikes.length, shouldHalt: strikes.length >= 2, history: [...strikes] };
-        }
+    for (const [key, strikes] of Object.entries(data.strikes)) {
+      if (key.startsWith(`${taskId}:`) && strikes.length > worst.count) {
+        worst = { count: strikes.length, shouldHalt: strikes.length >= 2, history: [...strikes] };
       }
     }
 
@@ -83,28 +77,24 @@ export class TwoStrikeEngine {
   }
 
   resetStrikes(taskId: string): void {
-    for (const key of this.strikes.keys()) {
-      if (key.startsWith(`${taskId}:`)) {
-        this.strikes.delete(key);
-      }
-    }
+    this.store.update((d) => {
+      const filtered = Object.fromEntries(
+        Object.entries(d.strikes).filter(([key]) => !key.startsWith(`${taskId}:`))
+      );
+      return { strikes: filtered };
+    });
   }
 
   getAlternatives(taskId: string): string {
     const check = this.checkStrikes(taskId);
     if (check.history.length === 0) return 'No failures recorded.';
 
-    const lines = [
-      `TWO-STRIKE HALT: ${check.count} failures on same error class.`,
-      '',
-      'Attempts:',
-    ];
+    const lines = [`TWO-STRIKE HALT: ${check.count} failures on same error class.`, '', 'Attempts:'];
     for (const s of check.history) {
       lines.push(`  ${s.timestamp}: "${s.approach}"`);
       lines.push(`    Error: ${s.errorMessage.slice(0, 200)}`);
     }
-    lines.push('');
-    lines.push('STOP. Present 2-3 fundamentally different approaches to Pat.');
+    lines.push('', 'STOP. Present 2-3 fundamentally different approaches to Pat.');
     return lines.join('\n');
   }
 }

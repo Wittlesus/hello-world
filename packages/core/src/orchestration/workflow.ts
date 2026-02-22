@@ -1,105 +1,99 @@
 /**
  * Workflow Engine — state machine implementing SCOPE → PLAN → BUILD → VERIFY → SHIP
+ * Persisted to workflow.json so phase survives MCP server restarts.
  */
 
 import type { WorkflowPhase, WorkflowState } from '../types.js';
 import { WorkflowStateSchema } from '../types.js';
+import { JsonStore } from '../storage.js';
 import { now } from '../utils.js';
 
 type TransitionResult = { ok: true; state: WorkflowState } | { ok: false; reason: string };
 
 const VALID_TRANSITIONS: Record<string, WorkflowPhase[]> = {
-  idle: ['scope'],
-  scope: ['plan', 'build'],            // small tasks skip plan
-  plan: ['build'],
-  build: ['verify', 'waiting_approval'],
-  verify: ['ship', 'build', 'blocked'], // test fail → back to build (strike++)
-  ship: ['idle'],
+  idle:             ['scope'],
+  scope:            ['plan', 'build'],
+  plan:             ['build'],
+  build:            ['verify', 'waiting_approval'],
+  verify:           ['ship', 'build', 'blocked'],
+  ship:             ['idle'],
   waiting_approval: ['build', 'scope', 'idle', 'blocked'],
-  blocked: ['idle'],                     // only Pat can unblock (reset + new direction)
+  blocked:          ['idle'],
 };
 
 export class WorkflowEngine {
-  private state: WorkflowState;
+  private store: JsonStore<WorkflowState>;
 
-  constructor(initial?: Partial<WorkflowState>) {
-    this.state = WorkflowStateSchema.parse(initial ?? {});
+  constructor(projectRoot: string) {
+    const initial = WorkflowStateSchema.parse({});
+    this.store = new JsonStore<WorkflowState>(projectRoot, 'workflow.json', initial);
   }
 
   getState(): WorkflowState {
-    return { ...this.state };
+    return { ...this.store.read() };
   }
 
   getPhase(): WorkflowPhase {
-    return this.state.phase;
+    return this.store.read().phase;
   }
 
   transition(to: WorkflowPhase): TransitionResult {
-    const valid = VALID_TRANSITIONS[this.state.phase];
+    const state = this.store.read();
+    const valid = VALID_TRANSITIONS[state.phase];
     if (!valid?.includes(to)) {
-      return { ok: false, reason: `Cannot transition from '${this.state.phase}' to '${to}'` };
+      return { ok: false, reason: `Cannot transition from '${state.phase}' to '${to}'` };
     }
 
-    this.state = { ...this.state, phase: to };
+    const updated = this.store.update((s) => {
+      const next = { ...s, phase: to };
+      if (to === 'build') next.autonomousStartedAt = now();
+      if (to === 'scope' || to === 'idle') {
+        next.strikes = 0;
+        next.lastStrikeError = undefined;
+      }
+      return next;
+    });
 
-    // Reset autonomous timer on phase change
-    if (to === 'build') {
-      this.state.autonomousStartedAt = now();
-    }
-
-    // Reset strikes when moving to new task
-    if (to === 'scope' || to === 'idle') {
-      this.state.strikes = 0;
-      this.state.lastStrikeError = undefined;
-    }
-
-    return { ok: true, state: this.getState() };
+    return { ok: true, state: { ...updated } };
   }
 
   assignTask(taskId: string): TransitionResult {
-    this.state.currentTaskId = taskId;
+    this.store.update((s) => ({ ...s, currentTaskId: taskId }));
     return this.transition('scope');
   }
 
   recordStrike(errorMessage: string): void {
-    this.state.strikes += 1;
-    this.state.lastStrikeError = errorMessage;
-
-    if (this.state.strikes >= 2) {
-      this.state.phase = 'blocked';
-    }
+    this.store.update((s) => {
+      const strikes = s.strikes + 1;
+      return {
+        ...s,
+        strikes,
+        lastStrikeError: errorMessage,
+        phase: strikes >= 2 ? 'blocked' : s.phase,
+      };
+    });
   }
 
-  /**
-   * Check autonomous timer. Returns minutes elapsed since build started.
-   * Warns at 15 min, halts at 20 min.
-   */
   checkAutonomousTimer(): { minutesElapsed: number; warn: boolean; halt: boolean } {
-    if (!this.state.autonomousStartedAt) {
-      return { minutesElapsed: 0, warn: false, halt: false };
-    }
-
-    const elapsed = (Date.now() - new Date(this.state.autonomousStartedAt).getTime()) / 60000;
-    return {
-      minutesElapsed: Math.floor(elapsed),
-      warn: elapsed >= 15,
-      halt: elapsed >= 20,
-    };
+    const { autonomousStartedAt } = this.store.read();
+    if (!autonomousStartedAt) return { minutesElapsed: 0, warn: false, halt: false };
+    const elapsed = (Date.now() - new Date(autonomousStartedAt).getTime()) / 60000;
+    return { minutesElapsed: Math.floor(elapsed), warn: elapsed >= 15, halt: elapsed >= 20 };
   }
 
   resetAutonomousTimer(): void {
-    this.state.autonomousStartedAt = now();
+    this.store.update((s) => ({ ...s, autonomousStartedAt: now() }));
   }
 
   updateContextUsage(percent: number): void {
-    this.state.contextUsagePercent = percent;
+    this.store.update((s) => ({ ...s, contextUsagePercent: percent }));
   }
 
   isBlocked(): boolean {
-    return this.state.phase === 'blocked';
+    return this.store.read().phase === 'blocked';
   }
 
   isWaitingApproval(): boolean {
-    return this.state.phase === 'waiting_approval';
+    return this.store.read().phase === 'waiting_approval';
   }
 }

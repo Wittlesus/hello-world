@@ -5,6 +5,41 @@ use serde_json::Value;
 use tauri::Emitter;
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 
+// ── App config (project path storage) ───────────────────────────
+
+fn app_config_path() -> PathBuf {
+    let home = std::env::var("USERPROFILE")
+        .or_else(|_| std::env::var("HOME"))
+        .unwrap_or_else(|_| ".".to_string());
+    PathBuf::from(home).join(".hello-world-app.json")
+}
+
+#[tauri::command]
+fn get_app_project_path() -> Option<String> {
+    let path = app_config_path();
+    let contents = fs::read_to_string(&path).ok()?;
+    let v: Value = serde_json::from_str(&contents).ok()?;
+    v.get("projectPath")?.as_str().map(|s| s.to_string())
+}
+
+#[tauri::command]
+fn set_app_project_path(project_path: String) -> Result<(), String> {
+    let hw_dir = PathBuf::from(&project_path).join(".hello-world");
+    if !hw_dir.exists() {
+        return Err(format!(
+            "Not a Hello World project — .hello-world/ not found at {}",
+            project_path
+        ));
+    }
+    let config = serde_json::json!({ "projectPath": project_path });
+    let contents = serde_json::to_string_pretty(&config)
+        .map_err(|e| format!("Serialize error: {}", e))?;
+    fs::write(app_config_path(), contents)
+        .map_err(|e| format!("Write error: {}", e))
+}
+
+// ── Project data commands ────────────────────────────────────────
+
 fn hw_path(project_path: &str, file_name: &str) -> PathBuf {
     PathBuf::from(project_path).join(".hello-world").join(file_name)
 }
@@ -60,6 +95,18 @@ fn get_brain_state(project_path: &str) -> Result<Value, String> {
 fn get_activity(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "activity.json")
 }
+
+#[tauri::command]
+fn get_approvals(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "approvals.json")
+}
+
+#[tauri::command]
+fn get_workflow(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "workflow.json")
+}
+
+// ── File watcher ─────────────────────────────────────────────────
 
 #[tauri::command]
 fn start_watching(app: tauri::AppHandle, project_path: String) -> Result<(), String> {
@@ -118,6 +165,8 @@ pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![
+            get_app_project_path,
+            set_app_project_path,
             get_config,
             save_config,
             get_state,
@@ -125,6 +174,8 @@ pub fn run() {
             get_sessions,
             get_brain_state,
             get_activity,
+            get_approvals,
+            get_workflow,
             start_watching,
         ])
         .run(tauri::generate_context!())
