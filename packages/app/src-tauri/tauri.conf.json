@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nicerapp/tauri/dev/crates/tauri-config-schema/schema.json",
+  "$schema": "https://raw.githubusercontent.com/tauri-apps/tauri/dev/crates/tauri-config-schema/schema.json",
   "productName": "Hello World",
   "version": "0.1.0",
   "identifier": "com.wittlesus.hello-world",
@@ -10,7 +10,6 @@
     "beforeBuildCommand": "npm run build"
   },
   "app": {
-    "title": "Hello World",
     "windows": [
       {
         "title": "Hello World",
@@ -27,6 +26,6 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": []
+    "icon": ["icons/icon.ico"]
   }
 }
