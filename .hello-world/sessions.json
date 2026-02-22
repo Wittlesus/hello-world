@@ -1,0 +1,22 @@
+{
+  "sessions": [
+    {
+      "id": "s_e0e0358e",
+      "startedAt": "2026-02-22T04:00:09.038Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "summary": ""
+    },
+    {
+      "id": "s_1dcd5878",
+      "startedAt": "2026-02-22T04:00:24.562Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "summary": ""
+    }
+  ]
+}

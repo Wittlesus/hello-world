@@ -1,0 +1,88 @@
+{
+  "memories": [
+    {
+      "id": "mem_0ecaee65",
+      "projectId": "Hello World",
+      "type": "pain",
+      "title": "Electron subprocess hangs with claude -p",
+      "content": "6+ attempts to spawn Claude as subprocess in Electron. Shell:true, named pipes, direct spawn — all fail.",
+      "rule": "Do not attempt shell spawning in Electron for Claude. Use API directly or Tauri.",
+      "tags": [
+        "electron",
+        "subprocess",
+        "architecture"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T04:00:09.034Z"
+    },
+    {
+      "id": "mem_b2b4052a",
+      "projectId": "Hello World",
+      "type": "pain",
+      "title": "better-sqlite3 requires MSVC build tools",
+      "content": "Node native modules need Visual Studio C++ Build Tools on Windows. 6GB install.",
+      "rule": "Use JSON storage first, add native deps when toolchain is ready.",
+      "tags": [
+        "dependencies",
+        "windows",
+        "build"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T04:00:09.035Z"
+    },
+    {
+      "id": "mem_46480fbc",
+      "projectId": "Hello World",
+      "type": "win",
+      "title": "Brain engine ported in one session — 20 tests passing",
+      "content": "Ported Synaptica 9-stage hippocampal pipeline to Hello World. All stages working.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "architecture",
+        "testing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T04:00:09.035Z"
+    },
+    {
+      "id": "mem_43b26a49",
+      "projectId": "Hello World",
+      "type": "win",
+      "title": "Cross-session memory verified — moat works",
+      "content": "Session 2 context contains full state from Session 1 without re-prompting.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "cross-session",
+        "moat"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T04:00:09.036Z"
+    },
+    {
+      "id": "mem_bc19b05c",
+      "projectId": "Hello World",
+      "type": "win",
+      "title": "CLI working end-to-end in first attempt",
+      "content": "init, status, tasks, start — all working on first build.",
+      "rule": "",
+      "tags": [
+        "cli",
+        "testing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T04:00:09.037Z"
+    }
+  ]
+}

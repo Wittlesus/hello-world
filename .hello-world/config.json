@@ -1,0 +1,12 @@
+{
+  "config": {
+    "name": "Hello World",
+    "version": "0.1.0",
+    "description": "Autonomous AI workspace — a computer for Claude to operate from",
+    "gitIntegration": true,
+    "defaultModel": "claude-sonnet-4-6",
+    "dailyBudgetUsd": 5,
+    "createdAt": "2026-02-22T03:59:27.728Z",
+    "updatedAt": "2026-02-22T03:59:27.728Z"
+  }
+}

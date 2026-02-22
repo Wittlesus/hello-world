@@ -1,0 +1,56 @@
+{
+  "tasks": [],
+  "milestones": [],
+  "decisions": [
+    {
+      "id": "d_a6eabc7b",
+      "title": "Use Tauri over Electron",
+      "context": "Electron subprocess hangs after 6+ attempts. Need reliable process spawning.",
+      "chosen": "Tauri (Rust backend + webview)",
+      "alternatives": [
+        {
+          "option": "Electron",
+          "tradeoff": "Subprocess hangs, 150MB+ bundle"
+        },
+        {
+          "option": "VS Code extension",
+          "tradeoff": "Limited UX control, plugin not product"
+        }
+      ],
+      "rationale": "Smaller bundle, Rust process spawning is reliable, existing React code ports directly",
+      "decidedAt": "2026-02-22T04:00:09.031Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_c29246fe",
+      "title": "Hybrid stack: Rust I/O + TypeScript domain logic",
+      "context": "Need fast I/O (process spawning, file ops) but rapid iteration on domain logic",
+      "chosen": "Rust for I/O, TypeScript for brain/state/agents",
+      "alternatives": [],
+      "rationale": "Best of both worlds — reliability where it matters, iteration speed where it matters",
+      "decidedAt": "2026-02-22T04:00:09.032Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_02238108",
+      "title": "Port Synaptica brain engine as memory layer",
+      "context": "Need cross-session project memory. Synaptica already has hippocampal retrieval.",
+      "chosen": "Port 9-stage pipeline from Synaptica, adapt to project-scoped memory",
+      "alternatives": [],
+      "rationale": "Proven architecture, pain/win/fact types, plasticity/decay already battle-tested",
+      "decidedAt": "2026-02-22T04:00:09.032Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_a4f6022a",
+      "title": "JSON file storage, swappable to SQLite",
+      "context": "MSVC build tools not available at scaffold time for better-sqlite3",
+      "chosen": "JsonStore with same interface, migrate to SQLite when ready",
+      "alternatives": [],
+      "rationale": "Unblocks development immediately, storage is an implementation detail",
+      "decidedAt": "2026-02-22T04:00:09.033Z",
+      "decidedBy": "claude"
+    }
+  ],
+  "questions": []
+}
