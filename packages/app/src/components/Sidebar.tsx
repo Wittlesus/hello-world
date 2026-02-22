@@ -2,7 +2,6 @@ import { useAppStore, type View } from '../stores/app';
 
 const NAV_ITEMS: { view: View; label: string; icon: string }[] = [
   { view: 'dashboard', label: 'Dashboard', icon: 'HW' },
-  { view: 'chat', label: 'Chat', icon: '💬' },
   { view: 'terminal', label: 'Terminal', icon: '⌨' },
   { view: 'tasks', label: 'Tasks', icon: 'TK' },
   { view: 'decisions', label: 'Decisions', icon: 'DC' },

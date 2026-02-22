@@ -10,7 +10,6 @@ import { MemoryView } from './components/MemoryView.js';
 import { SessionsView } from './components/SessionsView.js';
 import { CostView } from './components/CostView.js';
 import { SettingsView } from './components/SettingsView.js';
-import { ChatView } from './components/ChatView.js';
 import { TerminalView } from './components/TerminalView.js';
 import { ProjectSetup } from './components/ProjectSetup.js';
 import { useAppStore, type View } from './stores/app.js';
@@ -25,7 +24,6 @@ const KEY_MAP: Record<string, View> = {
   '7': 'cost',
   '8': 'settings',
   't': 'terminal',
-  'c': 'chat',
 };
 
 function MainContent() {
@@ -42,7 +40,6 @@ function MainContent() {
       {view === 'sessions'   && <SessionsView />}
       {view === 'cost'       && <CostView />}
       {view === 'settings'   && <SettingsView />}
-      {view === 'chat'       && <ChatView />}
 
       {/* Terminal stays mounted always — hidden when not active so PTY and xterm.js survive tab switches */}
       <div className="flex-1 flex flex-col min-h-0" style={{ display: view === 'terminal' ? 'flex' : 'none' }}>
