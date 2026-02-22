@@ -21,6 +21,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 import { join } from 'node:path';
 import { Project } from '../project.js';
 import { MemoryStore } from '../brain/store.js';
@@ -209,6 +210,43 @@ server.registerTool('hw_record_decision', {
   return text(`Decision recorded: ${dec.id} "${dec.title}" -> ${dec.chosen}`);
 });
 
+// ── Discord Notifications ────────────────────────────────────────
+
+const DISCORD_BOT_TOKEN = 'MTQ3NTI3NjQ3OTY4MzIzNTk0Mg.GMInN0.NxGNJTClBjBfSx8Jde5UXC3QT4-lVg1Yjzlr1o';
+const PAT_USER_ID = '403706305144946690';
+
+async function sendDiscordDM(message: string): Promise<void> {
+  try {
+    // Open DM channel with Pat
+    const dmRes = await fetch('https://discord.com/api/v10/users/@me/channels', {
+      method: 'POST',
+      headers: { 'Authorization': `Bot ${DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recipient_id: PAT_USER_ID }),
+    });
+    const dm = await dmRes.json() as { id?: string };
+    if (!dm.id) return;
+
+    // Send message
+    await fetch(`https://discord.com/api/v10/channels/${dm.id}/messages`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bot ${DISCORD_BOT_TOKEN}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: message }),
+    });
+  } catch {
+    // Notification failure is non-fatal
+  }
+}
+
+server.registerTool('hw_notify', {
+  title: 'Notify Pat',
+  description: 'Send Pat a Discord DM notification. Use for important events, blockers, or when you need attention.',
+  inputSchema: z.object({ message: z.string() }),
+}, async (args: { message: string }) => {
+  await sendDiscordDM(`**Hello World:** ${args.message}`);
+  activity.append('notification', 'Discord DM sent to Pat', args.message);
+  return text('Notification sent to Pat via Discord DM.');
+});
+
 // ── Approvals ───────────────────────────────────────────────────
 
 server.registerTool('hw_check_approval', {
@@ -227,6 +265,7 @@ server.registerTool('hw_check_approval', {
   }
   const req = approvals.requestApproval(args.action, args.description);
   activity.append('approval_requested', `BLOCKED: ${args.action} — waiting for Pat`, args.description);
+  await sendDiscordDM(`🔴 **Approval needed** (${req.id})\n**Action:** ${args.action}\n**Reason:** ${args.description}\n\nReply \`approve ${req.id}\` or \`reject ${req.id}\``);
   return text(`BLOCKED: "${args.action}" requires Pat's approval. Request: ${req.id}. STOP and ask Pat. ${args.description}`);
 });
 
