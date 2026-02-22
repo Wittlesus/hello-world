@@ -28,6 +28,9 @@ TypeScript monorepo (Turborepo). Three packages:
 - Zod schemas + inferred types: `packages/core/src/types.ts`
 - Tool definitions: `packages/core/src/tools/filesystem.ts`
 
+## Session Start
+Call `hw_get_context()` immediately when this project loads to get current tasks, decisions, and session state.
+
 ## Rules
 - ESM throughout. Use `.js` extensions in relative imports.
 - Brain engine functions must be pure (no side effects). Storage is separate.

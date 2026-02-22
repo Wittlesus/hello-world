@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node C:/Users/Patri/CascadeProjects/hello-world/.claude/session-start.mjs",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

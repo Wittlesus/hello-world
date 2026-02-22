@@ -111,6 +111,117 @@
       "dependsOn": [],
       "createdAt": "2026-02-22T06:35:06.198Z",
       "updatedAt": "2026-02-22T06:41:04.808Z"
+    },
+    {
+      "id": "t_6ee4aef8",
+      "title": "Verify live reactivity works",
+      "description": "Check that Dashboard and other views update in real-time when MCP tools write to .hello-world/ JSON files.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:59:09.556Z",
+      "updatedAt": "2026-02-22T06:59:09.556Z"
+    },
+    {
+      "id": "t_365b1fcf",
+      "title": "Feature verification run",
+      "description": "Testing all Hello World features one by one using the project itself as the template. Tasks → Memory → Decisions → Questions → Workflow → Approval → Two-Strike → Cost → Sessions.",
+      "status": "in_progress",
+      "tags": [
+        "test",
+        "verification"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T07:01:06.058Z",
+      "updatedAt": "2026-02-22T07:01:08.130Z"
+    },
+    {
+      "id": "t_c7674e29",
+      "title": "Wire question answers to downstream actions (tasks/decisions)",
+      "description": "When a question is answered, the answer should optionally route to a task (if it implies action) or a decision (if it reveals a tradeoff). Currently answers just sit in the Answered section with no follow-through. Could be a convention in the MCP tool, or a UI prompt after answering.",
+      "status": "in_progress",
+      "tags": [
+        "ux",
+        "backlog"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T07:52:24.343Z",
+      "updatedAt": "2026-02-22T11:41:47.655Z"
+    },
+    {
+      "id": "t_5efb6913",
+      "title": "Add keyboard shortcuts for view switching",
+      "description": "Add hotkeys to switch between views without the mouse. Suggested: 1=Dashboard, 2=Tasks, 3=Decisions, 4=Questions, 5=Memory, 6=Sessions, 7=Cost, 8=Settings. Low effort, high power-user value.",
+      "status": "done",
+      "tags": [
+        "ux",
+        "backlog"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T07:52:25.753Z",
+      "updatedAt": "2026-02-22T11:37:08.822Z"
+    },
+    {
+      "id": "t_fd1f61e5",
+      "title": "Connect approval queue to MCP — persist approvals to approvals.json",
+      "description": "Added hw_list_approvals and hw_resolve_approval MCP tools. ApprovalGates already persisted to approvals.json — the missing piece was MCP exposure. Now Claude can list pending approvals and Pat can resolve them via MCP.",
+      "status": "done",
+      "tags": [
+        "bug",
+        "backlog",
+        "approval"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T08:00:19.893Z",
+      "updatedAt": "2026-02-22T12:10:44.400Z"
+    },
+    {
+      "id": "t_8422ad1c",
+      "title": "Auto-close orphaned sessions on new session start",
+      "description": "When hw_get_context starts a new session, any previous sessions without an endedAt field should be automatically closed with a synthetic endedAt timestamp (their last recorded activity time, or the new session's startedAt). Currently all abandoned sessions show as \"Active\" in the Sessions view because isActive = !session.endedAt. Should only ever be one active session at a time.",
+      "status": "done",
+      "tags": [
+        "bug",
+        "sessions",
+        "backlog"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T08:08:46.484Z",
+      "updatedAt": "2026-02-22T11:35:47.057Z"
+    },
+    {
+      "id": "t_974f16de",
+      "title": "Remove chat bridge feature",
+      "description": "The terminal-based Claude CLI interface works and replaces the need for the chat bridge (hw_await_message/hw_send_response/hw_chat_status). Remove the chat bridge code, port listener, and any related UI components from the app.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T11:21:30.407Z",
+      "updatedAt": "2026-02-22T11:36:27.903Z"
+    },
+    {
+      "id": "t_f5ed5ac2",
+      "title": "Prime Claude with app context on terminal launch",
+      "description": "Implemented via thalamus.py (SessionStart hook) + hw_write_handoff/hw_get_context restart handoff loop. Thalamus now includes Hello World (Claude Plus) section in every session briefing. settings.json has mcp__hello-world__* wildcard auto-approval.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T11:23:37.299Z",
+      "updatedAt": "2026-02-22T12:10:13.665Z"
+    },
+    {
+      "id": "t_7dff0c38",
+      "title": "Auto-initialize terminal with project context on launch",
+      "description": "Fix two issues in TerminalView: (1) pass projectPath to start_pty_session so build_project_context() actually runs and injects dynamic task/phase context, (2) auto-send an init message after PTY output arrives so Claude greets Pat with project name, workflow phase, and active tasks — confirming the injection worked and removing silent startup ambiguity.",
+      "status": "done",
+      "tags": [
+        "terminal",
+        "ux",
+        "context-injection"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T13:09:13.662Z",
+      "updatedAt": "2026-02-22T13:09:37.770Z"
     }
   ],
   "milestones": [],
@@ -163,7 +274,52 @@
       "rationale": "Unblocks development immediately, storage is an implementation detail",
       "decidedAt": "2026-02-22T04:00:09.033Z",
       "decidedBy": "claude"
+    },
+    {
+      "id": "d_bc50e845",
+      "title": "Remove max-w-3xl width constraint from all views",
+      "context": "All list views (Memory, Decisions, Questions, Sessions, Cost) had max-w-3xl on their content containers, leaving dead horizontal space on wider screens.",
+      "chosen": "Remove max-w-3xl, let cards span full width",
+      "alternatives": [
+        {
+          "option": "Keep max-w-3xl",
+          "tradeoff": "Consistent reading width but wastes screen space"
+        },
+        {
+          "option": "Center with max-w-3xl",
+          "tradeoff": "Looks better than left-aligned but adds complexity"
+        }
+      ],
+      "rationale": "Cards filling the full width looks better and uses the available space. No content benefit to constraining width in a desktop app.",
+      "decidedAt": "2026-02-22T07:39:03.670Z",
+      "decidedBy": "both"
     }
   ],
-  "questions": []
+  "questions": [
+    {
+      "id": "q_1ddfadfc",
+      "question": "Should Hello World support multiple projects or just one at a time?",
+      "context": "Currently the app is pointed at a single project path. Multi-project support would require a project switcher UI and separate data stores per project.",
+      "status": "answered",
+      "createdAt": "2026-02-22T07:41:26.170Z",
+      "answer": "One project at a time for now. The setup screen already handles project selection. Multi-project can come later if there's demand.",
+      "answeredAt": "2026-02-22T07:41:30.495Z"
+    },
+    {
+      "id": "q_24979e5f",
+      "question": "Should we add keyboard shortcuts to the Hello World desktop app?",
+      "context": "Currently everything is mouse-driven. Power users might want hotkeys to switch views or trigger actions.",
+      "status": "answered",
+      "createdAt": "2026-02-22T07:43:47.529Z",
+      "answer": "Yes — basic view-switching shortcuts (1-8 for each view) would be a quick win. Low effort, high power-user appeal.",
+      "answeredAt": "2026-02-22T07:43:54.040Z"
+    },
+    {
+      "id": "q_a524cf58",
+      "question": "Should the Settings view allow changing the project path without reinstalling?",
+      "context": "Currently project path is set once on first launch. Changing it requires manual config edits.",
+      "status": "open",
+      "createdAt": "2026-02-22T08:08:52.713Z"
+    }
+  ]
 }

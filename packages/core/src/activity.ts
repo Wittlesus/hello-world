@@ -11,11 +11,14 @@ export type ActivityType =
   | 'decision_recorded'
   | 'approval_requested'
   | 'approval_auto'
+  | 'approval_resolved'
   | 'strike_recorded'
   | 'strike_halt'
   | 'question_added'
   | 'question_answered'
-  | 'context_loaded';
+  | 'context_loaded'
+  | 'handoff_written'
+  | 'handoff_loaded';
 
 export interface ActivityEvent {
   id: string;

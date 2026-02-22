@@ -60,7 +60,7 @@ export function CostView() {
 
   return (
     <ViewShell title="Cost" description="Spending by session and budget tracking">
-      <div className="grid grid-cols-3 gap-4 mb-6 max-w-3xl">
+      <div className="grid grid-cols-3 gap-4 mb-6">
         <StatCard label="Total spent" value={`$${totalSpent.toFixed(2)}`} sub={`${totalTokens.toLocaleString()} tokens`} color="text-gray-100" />
         <StatCard label="Daily budget" value={`$${budget.toFixed(2)}`} sub="per day" color="text-gray-100" />
         <StatCard label="Remaining today" value={`$${remaining.toFixed(2)}`} sub={`${remainingPercent.toFixed(0)}% left`} color={remainingColor} />
@@ -72,7 +72,7 @@ export function CostView() {
         </div>
       )}
 
-      <div className="max-w-3xl">
+      <div>
         <table className="w-full text-xs">
           <thead>
             <tr className="border-b border-gray-800">

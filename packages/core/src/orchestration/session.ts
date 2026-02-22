@@ -29,13 +29,17 @@ export class SessionManager {
   }
 
   start(): Session {
-    const sessions = this.store.read().sessions;
+    // Auto-close any orphaned sessions (no endedAt) from previous runs
+    const closedSessions = this.store.read().sessions.map(s =>
+      s.endedAt ? s : { ...s, endedAt: now(), summary: '(orphaned — auto-closed)' }
+    );
+
     const session = SessionSchema.parse({
       id: generateId('s'),
       startedAt: now(),
     });
     this.current = session;
-    this.store.update(data => ({ sessions: [...data.sessions, session] }));
+    this.store.update(() => ({ sessions: [...closedSessions, session] }));
     return session;
   }
 

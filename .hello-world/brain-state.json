@@ -1,6 +1,6 @@
 {
   "state": {
-    "sessionStart": "2026-02-22T06:38:24.121Z",
+    "sessionStart": "2026-02-22T14:02:57.405Z",
     "messageCount": 0,
     "contextPhase": "early",
     "synapticActivity": {
@@ -31,6 +31,22 @@
       "tauri": {
         "count": 1,
         "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "bug": {
+        "count": 1,
+        "lastHit": "2026-02-22T08:08:51.218Z"
+      },
+      "approval-queue": {
+        "count": 1,
+        "lastHit": "2026-02-22T08:08:51.218Z"
+      },
+      "mcp-disconnect": {
+        "count": 1,
+        "lastHit": "2026-02-22T08:08:51.218Z"
+      },
+      "hello-world": {
+        "count": 1,
+        "lastHit": "2026-02-22T08:08:51.218Z"
       }
     },
     "memoryTraces": {
@@ -50,8 +66,13 @@
         "synapticStrength": 1
       },
       "mem_6efd1e33": {
+        "count": 2,
+        "lastAccessed": "2026-02-22T08:08:51.218Z",
+        "synapticStrength": 1
+      },
+      "mem_862c1185": {
         "count": 1,
-        "lastAccessed": "2026-02-22T06:30:33.616Z",
+        "lastAccessed": "2026-02-22T08:08:51.218Z",
         "synapticStrength": 1
       }
     },

@@ -119,9 +119,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 2,
       "createdAt": "2026-02-22T06:11:48.197Z",
-      "lastAccessed": "2026-02-22T06:30:33.617Z"
+      "lastAccessed": "2026-02-22T08:08:51.218Z"
     },
     {
       "id": "mem_13552274",
@@ -137,6 +137,41 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-22T06:15:30.079Z"
+    },
+    {
+      "id": "mem_5bb83c0b",
+      "projectId": "Hello World",
+      "type": "fact",
+      "title": "Live reactivity test",
+      "content": "Testing real-time file watching. If the Dashboard updated without a refresh, live reactivity is working.",
+      "rule": "",
+      "tags": [
+        "test",
+        "live-reactivity"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-22T06:59:06.691Z"
+    },
+    {
+      "id": "mem_862c1185",
+      "projectId": "Hello World",
+      "type": "pain",
+      "title": "Approval Queue is fully disconnected from MCP server",
+      "content": "The ApprovalQueue UI component reads from a Zustand in-memory store (useActivityStore.approvals). This store is never populated from the file system. The MCP tool hw_check_approval writes an activity event to .hello-world/activity.json but does NOT write to any approvals file. The frontend has no Tauri command for reading approvals, no useTauriData hook for approvals, and no file watcher connection to the approval store. The result: the bottom approval bar always shows \"No pending approvals\" regardless of what Claude requests. Approve/Reject buttons exist in the UI but are functionally dead. Fix requires: (1) MCP server writes pending approvals to .hello-world/approvals.json with status field, (2) new Rust Tauri command get_approvals reads that file, (3) frontend polls it via useTauriData and syncs into Zustand store, (4) Approve/Reject buttons call a set_approval_status Tauri command that writes the resolution back to file so the MCP tool can read it and unblock.",
+      "rule": "",
+      "tags": [
+        "bug",
+        "approval-queue",
+        "mcp-disconnect",
+        "hello-world"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-22T08:01:24.950Z",
+      "lastAccessed": "2026-02-22T08:08:51.218Z"
     }
   ]
 }

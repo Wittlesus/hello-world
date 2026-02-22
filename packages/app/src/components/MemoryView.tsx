@@ -188,7 +188,7 @@ export function MemoryView() {
       {filtered.length === 0 ? (
         <EmptyState message={filter === 'all' ? 'No memories stored yet' : `No ${filter} memories`} />
       ) : (
-        <div className="space-y-3 max-w-3xl">
+        <div className="space-y-3">
           {filtered.map((m) => (
             <MemoryCard key={m.id} memory={m} />
           ))}

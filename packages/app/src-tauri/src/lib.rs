@@ -1,9 +1,12 @@
 use std::fs;
+use std::io::{BufRead, BufReader, Read, Write};
 use std::path::PathBuf;
+use std::sync::Mutex;
 use std::time::Duration;
 use serde_json::Value;
 use tauri::Emitter;
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
+use portable_pty::{native_pty_system, CommandBuilder, PtySize};
 
 // ── App config (project path storage) ───────────────────────────
 
@@ -106,6 +109,396 @@ fn get_workflow(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "workflow.json")
 }
 
+fn epoch_ms() -> u64 {
+    std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis() as u64
+}
+
+// ── Approval resolution ──────────────────────────────────────────
+
+#[tauri::command]
+fn resolve_approval(project_path: &str, request_id: String, decision: String) -> Result<(), String> {
+    let mut data = read_json_file(project_path, "approvals.json")?;
+
+    let pending = data["pending"]
+        .as_array_mut()
+        .ok_or("approvals.json missing pending array")?;
+
+    let pos = pending.iter().position(|r| r["id"].as_str() == Some(request_id.as_str()));
+    let idx = pos.ok_or_else(|| format!("Approval request not found: {}", request_id))?;
+    let mut resolved = pending.remove(idx);
+
+    resolved["status"] = serde_json::json!(decision);
+    resolved["resolvedAt"] = serde_json::json!(epoch_ms());
+
+    data["resolved"]
+        .as_array_mut()
+        .ok_or("approvals.json missing resolved array")?
+        .push(resolved);
+
+    write_json_file(project_path, "approvals.json", &data)
+}
+
+// ── Question answering ───────────────────────────────────────────
+
+#[tauri::command]
+fn answer_question(project_path: &str, id: String, answer: String) -> Result<Value, String> {
+    let mut data = read_json_file(project_path, "state.json")?;
+
+    let questions = data["questions"]
+        .as_array_mut()
+        .ok_or("state.json missing questions array")?;
+
+    let q = questions
+        .iter_mut()
+        .find(|q| q["id"].as_str() == Some(id.as_str()))
+        .ok_or_else(|| format!("Question not found: {}", id))?;
+
+    q["status"] = serde_json::json!("answered");
+    q["answer"] = serde_json::json!(answer);
+    q["answeredAt"] = serde_json::json!(epoch_ms());
+
+    let result = q.clone();
+    write_json_file(project_path, "state.json", &data)?;
+    Ok(result)
+}
+
+// ── Chat history ─────────────────────────────────────────────────
+
+fn append_chat_message_internal(project_path: &str, role: &str, text: &str) -> Result<(), String> {
+    let mut history = read_json_file(project_path, "chat-out.json")
+        .unwrap_or_else(|_| serde_json::json!({ "messages": [] }));
+
+    let timestamp_ms = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis() as u64;
+
+    let new_msg = serde_json::json!({
+        "id": format!("msg_{}", timestamp_ms),
+        "role": role,
+        "text": text,
+        "timestamp": timestamp_ms,
+    });
+
+    history["messages"]
+        .as_array_mut()
+        .ok_or("messages is not an array")?
+        .push(new_msg);
+
+    write_json_file(project_path, "chat-out.json", &history)
+}
+
+#[tauri::command]
+fn get_chat_history(project_path: &str) -> Value {
+    read_json_file(project_path, "chat-out.json")
+        .unwrap_or_else(|_| serde_json::json!({ "messages": [] }))
+}
+
+#[tauri::command]
+fn append_chat_message(project_path: &str, role: String, text: String) -> Result<(), String> {
+    append_chat_message_internal(project_path, &role, &text)
+}
+
+// ── Claude subprocess chat (streaming) ───────────────────────────
+
+// Persists the active chat session ID across messages for conversation continuity
+static CHAT_SESSION_ID: Mutex<Option<String>> = Mutex::new(None);
+
+// Emitted to frontend as text chunks arrive
+#[derive(Clone, serde::Serialize)]
+struct ChatChunkPayload {
+    text: String,
+    done: bool,
+}
+
+#[tauri::command]
+async fn send_claude_message(
+    app: tauri::AppHandle,
+    project_path: String,
+    message: String,
+) -> Result<(), String> {
+    let session_id = CHAT_SESSION_ID
+        .lock()
+        .map_err(|_| "Session lock poisoned")?
+        .clone();
+
+    let app_clone = app.clone();
+    let proj_clone = project_path.clone();
+
+    let result = tauri::async_runtime::spawn_blocking(move || {
+        let home = std::env::var("USERPROFILE")
+            .or_else(|_| std::env::var("HOME"))
+            .unwrap_or_else(|_| ".".to_string());
+
+        // Use `cmd /c claude` so Windows shell PATH is used (npm global binaries)
+        let mut cmd = std::process::Command::new("cmd");
+        cmd.arg("/c").arg("claude");
+        cmd.args(["-p", "--output-format", "stream-json", "--include-partial-messages"]);
+
+        if let Some(ref sid) = session_id {
+            cmd.args(["--resume", sid]);
+        } else {
+            cmd.args([
+                "--append-system-prompt",
+                "You are Claude, the AI CEO. You are chatting with Pat via the Hello World desktop app. Be concise and direct. You have access to hw_* MCP tools for tasks, memory, and decisions.",
+            ]);
+        }
+
+        cmd.arg(&message)
+            .current_dir(&home)
+            .stdout(std::process::Stdio::piped())
+            .stderr(std::process::Stdio::null());
+
+        let mut child = cmd
+            .spawn()
+            .map_err(|e| format!("Failed to start claude: {e}"))?;
+
+        let stdout = child.stdout.take().ok_or("No stdout")?;
+        let reader = BufReader::new(stdout);
+
+        let mut full_text = String::new();
+        let mut session_id_out: Option<String> = None;
+
+        // stream-json emits one JSON object per line
+        for line in reader.lines() {
+            let line = match line {
+                Ok(l) if !l.trim().is_empty() => l,
+                _ => continue,
+            };
+
+            let Ok(event) = serde_json::from_str::<Value>(&line) else {
+                continue;
+            };
+
+            let event_type = event["type"].as_str().unwrap_or("");
+
+            // Capture session_id from the result event
+            if event_type == "result" {
+                if let Some(sid) = event["session_id"].as_str() {
+                    session_id_out = Some(sid.to_string());
+                }
+                // Final result — done
+                let _ = app_clone.emit("hw-chat-chunk", ChatChunkPayload {
+                    text: String::new(),
+                    done: true,
+                });
+                break;
+            }
+
+            // Partial text chunks from assistant message
+            if event_type == "assistant" {
+                if let Some(content) = event["message"]["content"].as_array() {
+                    for block in content {
+                        if block["type"].as_str() == Some("text") {
+                            if let Some(text) = block["text"].as_str() {
+                                full_text.push_str(text);
+                                let _ = app_clone.emit("hw-chat-chunk", ChatChunkPayload {
+                                    text: text.to_string(),
+                                    done: false,
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        child.wait().ok();
+
+        if full_text.is_empty() {
+            return Err("Claude returned no text".to_string());
+        }
+
+        Ok((proj_clone, full_text, session_id_out))
+    })
+    .await
+    .map_err(|e| format!("Spawn error: {e}"))??;
+
+    let (proj, response_text, new_session_id) = result;
+
+    // Store new session ID for conversation continuity
+    if let Some(sid) = new_session_id {
+        *CHAT_SESSION_ID.lock().map_err(|_| "Lock poisoned")? = Some(sid);
+    }
+
+    // Write complete response to chat-out.json (file watcher fires → UI refetches full history)
+    append_chat_message_internal(&proj, "assistant", &response_text)
+}
+
+#[tauri::command]
+fn reset_chat_session() -> Result<(), String> {
+    *CHAT_SESSION_ID.lock().map_err(|_| "Lock poisoned")? = None;
+    Ok(())
+}
+
+// ── Embedded terminal (PTY) ───────────────────────────────────────
+
+struct PtyState {
+    writer: Box<dyn Write + Send>,
+    master: Box<dyn portable_pty::MasterPty + Send>,
+}
+
+static PTY_STATE: Mutex<Option<PtyState>> = Mutex::new(None);
+
+fn build_project_context(project_path: &str) -> String {
+    let config = read_json_file(project_path, "config.json").ok();
+    let state = read_json_file(project_path, "state.json").ok();
+    let workflow = read_json_file(project_path, "workflow.json").ok();
+
+    let name = config.as_ref()
+        .and_then(|c| c["config"]["name"].as_str())
+        .unwrap_or("Unknown Project");
+
+    let phase = workflow.as_ref()
+        .and_then(|w| w["phase"].as_str())
+        .unwrap_or("idle");
+
+    let active_tasks: Vec<String> = state.as_ref()
+        .and_then(|s| s["tasks"].as_array())
+        .map(|tasks| {
+            tasks.iter()
+                .filter(|t| matches!(t["status"].as_str(), Some("in_progress") | Some("todo")))
+                .take(5)
+                .filter_map(|t| {
+                    t["title"].as_str().map(|title| {
+                        format!("- [{}] {}", t["status"].as_str().unwrap_or("?"), title)
+                    })
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+
+    let open_questions: Vec<String> = state.as_ref()
+        .and_then(|s| s["questions"].as_array())
+        .map(|qs| {
+            qs.iter()
+                .filter(|q| q["status"].as_str() == Some("open"))
+                .take(3)
+                .filter_map(|q| q["question"].as_str().map(|s| format!("- {}", s)))
+                .collect()
+        })
+        .unwrap_or_default();
+
+    let mut ctx = format!(
+        "You are Claude, the autonomous AI CEO. Project: '{}' at {}. Workflow phase: {}.",
+        name, project_path, phase
+    );
+
+    if !active_tasks.is_empty() {
+        ctx.push_str(&format!("\n\nActive tasks:\n{}", active_tasks.join("\n")));
+    }
+
+    if !open_questions.is_empty() {
+        ctx.push_str(&format!("\n\nOpen questions:\n{}", open_questions.join("\n")));
+    }
+
+    ctx.push_str("\n\nYou have access to hw_* MCP tools. Act autonomously. Report outcomes to Pat.");
+    ctx
+}
+
+#[tauri::command]
+fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Result<(), String> {
+    // Idempotent — if a session is already running, don't spawn another
+    if PTY_STATE.lock().map_err(|_| "Lock poisoned")?.is_some() {
+        return Ok(());
+    }
+
+    let home = std::env::var("USERPROFILE")
+        .or_else(|_| std::env::var("HOME"))
+        .unwrap_or_else(|_| ".".to_string());
+
+    let pty_system = native_pty_system();
+    let pty_pair = pty_system
+        .openpty(PtySize { rows: 24, cols: 220, pixel_width: 0, pixel_height: 0 })
+        .map_err(|e| format!("PTY open failed: {e}"))?;
+
+    let mut cmd = CommandBuilder::new("cmd");
+
+    if let Some(ref path) = project_path {
+        let context = build_project_context(path);
+        cmd.args(["/c", "helloworld", "--append-system-prompt", &context]);
+    } else {
+        cmd.args(["/c", "helloworld"]);
+    }
+
+    cmd.cwd(&home);
+
+    pty_pair.slave
+        .spawn_command(cmd)
+        .map_err(|e| format!("Spawn failed: {e}"))?;
+
+    let reader = pty_pair.master
+        .try_clone_reader()
+        .map_err(|e| format!("Reader clone failed: {e}"))?;
+
+    let writer = pty_pair.master
+        .take_writer()
+        .map_err(|e| format!("Writer take failed: {e}"))?;
+
+    // Background thread: stream raw PTY output to frontend
+    std::thread::spawn(move || {
+        let mut buf = [0u8; 4096];
+        let mut reader = reader;
+        loop {
+            match reader.read(&mut buf) {
+                Ok(0) | Err(_) => break,
+                Ok(n) => {
+                    // Send raw bytes as base64 — xterm.js decodes and renders natively
+                    let encoded = base64_encode(&buf[..n]);
+                    let _ = app.emit("pty-data", encoded);
+                }
+            }
+        }
+    });
+
+    *PTY_STATE.lock().map_err(|_| "Lock poisoned")? = Some(PtyState {
+        writer,
+        master: pty_pair.master,
+    });
+
+    Ok(())
+}
+
+#[tauri::command]
+fn write_pty_input(data: String) -> Result<(), String> {
+    let mut guard = PTY_STATE.lock().map_err(|_| "Lock poisoned")?;
+    if let Some(ref mut state) = *guard {
+        state.writer.write_all(data.as_bytes()).map_err(|e| format!("Write failed: {e}"))?;
+        state.writer.flush().map_err(|e| format!("Flush failed: {e}"))?;
+    }
+    Ok(())
+}
+
+#[tauri::command]
+fn resize_pty(rows: u16, cols: u16) -> Result<(), String> {
+    let guard = PTY_STATE.lock().map_err(|_| "Lock poisoned")?;
+    if let Some(ref state) = *guard {
+        state.master
+            .resize(PtySize { rows, cols, pixel_width: 0, pixel_height: 0 })
+            .map_err(|e| format!("Resize failed: {e}"))?;
+    }
+    Ok(())
+}
+
+// Minimal base64 encoder (avoids adding a dep)
+fn base64_encode(data: &[u8]) -> String {
+    const CHARS: &[u8] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let mut out = String::with_capacity((data.len() + 2) / 3 * 4);
+    for chunk in data.chunks(3) {
+        let b0 = chunk[0] as usize;
+        let b1 = if chunk.len() > 1 { chunk[1] as usize } else { 0 };
+        let b2 = if chunk.len() > 2 { chunk[2] as usize } else { 0 };
+        out.push(CHARS[(b0 >> 2)] as char);
+        out.push(CHARS[((b0 & 3) << 4) | (b1 >> 4)] as char);
+        out.push(if chunk.len() > 1 { CHARS[((b1 & 15) << 2) | (b2 >> 6)] as char } else { '=' });
+        out.push(if chunk.len() > 2 { CHARS[b2 & 63] as char } else { '=' });
+    }
+    out
+}
+
 // ── File watcher ─────────────────────────────────────────────────
 
 #[tauri::command]
@@ -177,6 +570,13 @@ pub fn run() {
             get_activity,
             get_approvals,
             get_workflow,
+            get_chat_history,
+            append_chat_message,
+            send_claude_message,
+            reset_chat_session,
+            start_pty_session,
+            write_pty_input,
+            resize_pty,
             start_watching,
         ])
         .run(tauri::generate_context!())

@@ -96,7 +96,7 @@ export function QuestionsView() {
       {questions.length === 0 ? (
         <EmptyState message="No known unknowns recorded" />
       ) : (
-        <div className="space-y-6 max-w-3xl">
+        <div className="space-y-6">
           {open.length > 0 && (
             <section>
               <h3 className="text-[10px] uppercase tracking-wider text-yellow-500/70 font-semibold mb-2">Open</h3>

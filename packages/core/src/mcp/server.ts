@@ -20,6 +20,8 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { Project } from '../project.js';
 import { MemoryStore } from '../brain/store.js';
 import { SessionManager } from '../orchestration/session.js';
@@ -32,6 +34,7 @@ import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '..
 import type { MemoryType, MemorySeverity } from '../types.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
+const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
 
 let project: Project;
 let memoryStore: MemoryStore;
@@ -67,7 +70,32 @@ server.registerTool('hw_get_context', {
   sessions.getCurrent() ?? sessions.start();
   const ctx = sessions.compileContext(project.config.name, project.state, memoryStore, project.config.dailyBudgetUsd);
   activity.append('context_loaded', `Session #${ctx.sessionNumber} started`, `Project: ${ctx.projectName}\nActive tasks: ${ctx.activeTasks.length}\nOpen questions: ${ctx.openQuestions.length}`);
-  return text(ctx.compiledText);
+
+  // Check for restart handoff — written by hw_write_handoff before a self-modifying restart
+  let handoffSection = '';
+  try {
+    if (existsSync(HANDOFF_FILE)) {
+      const handoff = JSON.parse(readFileSync(HANDOFF_FILE, 'utf-8')) as { message: string; timestamp: string };
+      handoffSection = `\n\n## RESTART HANDOFF\nWritten: ${handoff.timestamp}\n\n${handoff.message}`;
+      unlinkSync(HANDOFF_FILE);
+      activity.append('handoff_loaded', 'Restart handoff consumed', handoff.message.slice(0, 120));
+    }
+  } catch { /* non-fatal */ }
+
+  return text(ctx.compiledText + handoffSection);
+});
+
+server.registerTool('hw_write_handoff', {
+  title: 'Write Restart Handoff',
+  description: 'Write a restart handoff before Hello World restarts due to self-modification. Call this BEFORE any edit that triggers a restart. The next session will pick it up automatically via hw_get_context.',
+  inputSchema: z.object({
+    message: z.string().describe('Full context: what you were doing, what changed, what to verify next'),
+  }),
+}, async (args: { message: string }) => {
+  const handoff = { message: args.message, timestamp: new Date().toISOString(), elevated: true };
+  writeFileSync(HANDOFF_FILE, JSON.stringify(handoff, null, 2));
+  activity.append('handoff_written', 'Restart handoff saved', args.message.slice(0, 120));
+  return text('Handoff written. Safe to restart Hello World now — next session will resume automatically.');
 });
 
 server.registerTool('hw_retrieve_memories', {
@@ -200,6 +228,33 @@ server.registerTool('hw_check_approval', {
   const req = approvals.requestApproval(args.action, args.description);
   activity.append('approval_requested', `BLOCKED: ${args.action} — waiting for Pat`, args.description);
   return text(`BLOCKED: "${args.action}" requires Pat's approval. Request: ${req.id}. STOP and ask Pat. ${args.description}`);
+});
+
+server.registerTool('hw_list_approvals', {
+  title: 'List Approval Requests',
+  description: 'List pending approval requests that need Pat\'s decision.',
+  inputSchema: z.object({}),
+}, async () => {
+  const pending = approvals.getPending();
+  if (pending.length === 0) return text('No pending approvals.');
+  const lines = pending.map(r =>
+    `[${r.id}] ${r.action} (${r.tier})\n  ${r.description}${r.context ? `\n  Context: ${r.context}` : ''}`
+  );
+  return text(`${pending.length} pending:\n\n${lines.join('\n\n')}`);
+});
+
+server.registerTool('hw_resolve_approval', {
+  title: 'Resolve Approval',
+  description: 'Approve or reject a pending approval request.',
+  inputSchema: z.object({
+    requestId: z.string(),
+    decision: z.enum(['approved', 'rejected']),
+    notes: z.string().optional(),
+  }),
+}, async (args: { requestId: string; decision: 'approved' | 'rejected'; notes?: string }) => {
+  const resolved = approvals.resolveApproval(args.requestId, args.decision, args.notes);
+  activity.append('approval_resolved', `${args.decision.toUpperCase()}: ${resolved.action}`, args.notes ?? '');
+  return text(`${args.decision.toUpperCase()}: "${resolved.action}" (${resolved.id})`);
 });
 
 // ── Strikes ─────────────────────────────────────────────────────
