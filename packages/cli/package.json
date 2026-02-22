@@ -1,0 +1,24 @@
+{
+  "name": "@hello-world/cli",
+  "version": "0.1.0",
+  "description": "CLI for Hello World autonomous workspace",
+  "type": "module",
+  "bin": {
+    "hello-world": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@hello-world/core": "*",
+    "commander": "^13.0.0",
+    "chalk": "^5.4.0",
+    "ora": "^8.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicerapp/tauri/dev/crates/tauri-config-schema/schema.json",
+  "productName": "Hello World",
+  "version": "0.1.0",
+  "identifier": "com.wittlesus.hello-world",
+  "build": {
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run build"
+  },
+  "app": {
+    "title": "Hello World",
+    "windows": [
+      {
+        "title": "Hello World",
+        "width": 1400,
+        "height": 900,
+        "minWidth": 1000,
+        "minHeight": 600
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": []
+  }
+}

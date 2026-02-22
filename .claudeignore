@@ -1,0 +1,10 @@
+node_modules/
+dist/
+out/
+release/
+target/
+*.lock
+*.env*
+coverage/
+.turbo/
+*.tsbuildinfo
