@@ -53,6 +53,18 @@
       "costUsd": 0,
       "tokensUsed": 0,
       "summary": ""
+    },
+    {
+      "id": "s_e2ba730a",
+      "startedAt": "2026-02-22T06:38:24.117Z",
+      "tasksCompleted": [
+        "t_82facb50",
+        "t_eed2f6f2"
+      ],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "summary": ""
     }
   ]
 }

@@ -57,6 +57,11 @@ fn get_brain_state(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn get_activity(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "activity.json")
+}
+
+#[tauri::command]
 fn start_watching(app: tauri::AppHandle, project_path: String) -> Result<(), String> {
     let watch_path = PathBuf::from(&project_path).join(".hello-world");
 
@@ -119,6 +124,7 @@ pub fn run() {
             get_memories,
             get_sessions,
             get_brain_state,
+            get_activity,
             start_watching,
         ])
         .run(tauri::generate_context!())

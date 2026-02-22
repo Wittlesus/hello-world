@@ -26,6 +26,91 @@
       "dependsOn": [],
       "createdAt": "2026-02-22T06:18:41.232Z",
       "updatedAt": "2026-02-22T06:19:42.423Z"
+    },
+    {
+      "id": "t_c2cd8698",
+      "title": "Fix recordDecisionMade persistence bug (session.ts:67)",
+      "description": "recordDecisionMade modifies only in-memory object, never calls store.update(). decisionsMade array always empty in persisted sessions. One-line fix matching recordTaskCompleted pattern.",
+      "status": "done",
+      "tags": [
+        "bug",
+        "p1",
+        "core"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:34:55.621Z",
+      "updatedAt": "2026-02-22T06:35:18.102Z"
+    },
+    {
+      "id": "t_82facb50",
+      "title": "Activity stream — end-to-end (activity.json → MCP → Tauri → UI)",
+      "description": "Primary dashboard view always empty. Need: activity.json file, MCP tools write events on every tool call, get_activity Tauri command, file watcher coverage, Dashboard reads live. This is the centerpiece of the vision.",
+      "status": "done",
+      "tags": [
+        "feature",
+        "p1",
+        "core",
+        "app"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:34:58.259Z",
+      "updatedAt": "2026-02-22T06:41:04.125Z"
+    },
+    {
+      "id": "t_c6f7b3fd",
+      "title": "Fix hardcoded PROJECT_PATH in config.ts",
+      "description": "App only works on Patri's machine. Need Tauri store for persisted path + first-run project picker UI (directory browse button).",
+      "status": "todo",
+      "tags": [
+        "bug",
+        "p1",
+        "app"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:35:00.133Z",
+      "updatedAt": "2026-02-22T06:35:00.133Z"
+    },
+    {
+      "id": "t_92f07d66",
+      "title": "Persist Two-Strike and Approval state to disk",
+      "description": "Both engines are in-memory only — state lost on MCP server restart. Need strikes.json and approvals.json via JsonStore. Also wire approvals to desktop app via Tauri command.",
+      "status": "todo",
+      "tags": [
+        "bug",
+        "p2",
+        "core"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:35:02.180Z",
+      "updatedAt": "2026-02-22T06:35:02.180Z"
+    },
+    {
+      "id": "t_8708e380",
+      "title": "Connect WorkflowEngine to MCP server",
+      "description": "WorkflowEngine (SCOPE→PLAN→BUILD→VERIFY→SHIP state machine) is built but never used. Add MCP tools: hw_get_workflow_state, hw_advance_phase, hw_get_phase_tasks.",
+      "status": "todo",
+      "tags": [
+        "feature",
+        "p2",
+        "core"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:35:04.282Z",
+      "updatedAt": "2026-02-22T06:35:04.282Z"
+    },
+    {
+      "id": "t_eed2f6f2",
+      "title": "Add Questions view to desktop app",
+      "description": "Data model, storage, and MCP tools all exist (hw_add_question, hw_answer_question). Just needs a QuestionsView component mirroring DecisionsView, added to sidebar nav.",
+      "status": "done",
+      "tags": [
+        "feature",
+        "p3",
+        "app"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-22T06:35:06.198Z",
+      "updatedAt": "2026-02-22T06:41:04.808Z"
     }
   ],
   "milestones": [],

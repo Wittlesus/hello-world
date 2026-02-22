@@ -14,8 +14,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-22T04:00:09.034Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-22T04:00:09.034Z",
+      "lastAccessed": "2026-02-22T06:30:33.617Z"
     },
     {
       "id": "mem_b2b4052a",
@@ -48,8 +49,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-22T04:00:09.035Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-22T04:00:09.035Z",
+      "lastAccessed": "2026-02-22T06:30:33.617Z"
     },
     {
       "id": "mem_43b26a49",
@@ -99,8 +101,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-22T06:10:14.107Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-22T06:10:14.107Z",
+      "lastAccessed": "2026-02-22T06:30:33.617Z"
     },
     {
       "id": "mem_6efd1e33",
@@ -116,8 +119,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-22T06:11:48.197Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-22T06:11:48.197Z",
+      "lastAccessed": "2026-02-22T06:30:33.617Z"
     },
     {
       "id": "mem_13552274",

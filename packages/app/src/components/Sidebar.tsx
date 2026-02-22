@@ -4,6 +4,7 @@ const NAV_ITEMS: { view: View; label: string; icon: string }[] = [
   { view: 'dashboard', label: 'Dashboard', icon: 'HW' },
   { view: 'tasks', label: 'Tasks', icon: 'TK' },
   { view: 'decisions', label: 'Decisions', icon: 'DC' },
+  { view: 'questions', label: 'Questions', icon: 'Q?' },
   { view: 'memory', label: 'Memory', icon: 'BR' },
   { view: 'sessions', label: 'Sessions', icon: 'SS' },
   { view: 'cost', label: 'Cost', icon: '$' },

@@ -1,10 +1,60 @@
 {
   "state": {
-    "sessionStart": "2026-02-22T05:22:54.897Z",
+    "sessionStart": "2026-02-22T06:38:24.121Z",
     "messageCount": 0,
     "contextPhase": "early",
-    "synapticActivity": {},
-    "memoryTraces": {},
+    "synapticActivity": {
+      "electron": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "subprocess": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "architecture": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "windows": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "bash": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "crash": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      },
+      "tauri": {
+        "count": 1,
+        "lastHit": "2026-02-22T06:30:33.616Z"
+      }
+    },
+    "memoryTraces": {
+      "mem_0ecaee65": {
+        "count": 1,
+        "lastAccessed": "2026-02-22T06:30:33.616Z",
+        "synapticStrength": 1
+      },
+      "mem_e89f9764": {
+        "count": 1,
+        "lastAccessed": "2026-02-22T06:30:33.616Z",
+        "synapticStrength": 1
+      },
+      "mem_46480fbc": {
+        "count": 1,
+        "lastAccessed": "2026-02-22T06:30:33.616Z",
+        "synapticStrength": 1
+      },
+      "mem_6efd1e33": {
+        "count": 1,
+        "lastAccessed": "2026-02-22T06:30:33.616Z",
+        "synapticStrength": 1
+      }
+    },
     "firingFrequency": {},
     "activeTraces": []
   }

@@ -5,6 +5,7 @@ import { Dashboard } from './components/Dashboard.js';
 import { TaskBoard } from './components/TaskBoard.js';
 import { ApprovalQueue } from './components/ApprovalQueue.js';
 import { DecisionsView } from './components/DecisionsView.js';
+import { QuestionsView } from './components/QuestionsView.js';
 import { MemoryView } from './components/MemoryView.js';
 import { SessionsView } from './components/SessionsView.js';
 import { CostView } from './components/CostView.js';
@@ -22,6 +23,8 @@ function MainContent() {
       return <TaskBoard />;
     case 'decisions':
       return <DecisionsView />;
+    case 'questions':
+      return <QuestionsView />;
     case 'memory':
       return <MemoryView />;
     case 'sessions':

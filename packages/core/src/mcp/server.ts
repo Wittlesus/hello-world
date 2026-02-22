@@ -25,6 +25,7 @@ import { MemoryStore } from '../brain/store.js';
 import { SessionManager } from '../orchestration/session.js';
 import { ApprovalGates } from '../orchestration/approvals.js';
 import { TwoStrikeEngine } from '../orchestration/strikes.js';
+import { ActivityStore } from '../activity.js';
 import { retrieveMemories } from '../brain/engine.js';
 import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '../brain/state.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
@@ -36,6 +37,7 @@ let memoryStore: MemoryStore;
 let sessions: SessionManager;
 let approvals: ApprovalGates;
 let strikes: TwoStrikeEngine;
+let activity: ActivityStore;
 
 try {
   project = Project.open(projectRoot);
@@ -43,6 +45,7 @@ try {
   sessions = new SessionManager(projectRoot);
   approvals = new ApprovalGates();
   strikes = new TwoStrikeEngine();
+  activity = new ActivityStore(projectRoot);
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -60,6 +63,7 @@ server.registerTool('hw_get_context', {
 }, async () => {
   sessions.getCurrent() ?? sessions.start();
   const ctx = sessions.compileContext(project.config.name, project.state, memoryStore, project.config.dailyBudgetUsd);
+  activity.append('context_loaded', `Session #${ctx.sessionNumber} started`, `Project: ${ctx.projectName}\nActive tasks: ${ctx.activeTasks.length}\nOpen questions: ${ctx.openQuestions.length}`);
   return text(ctx.compiledText);
 });
 
@@ -79,6 +83,8 @@ server.registerTool('hw_retrieve_memories', {
     memoryStore.saveBrainState(updated);
     memoryStore.incrementAccess(ids);
   }
+  const count = result.painMemories.length + result.winMemories.length;
+  activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}"`, result.injectionText || 'No matches.');
   return text(result.injectionText || 'No relevant memories found.');
 });
 
@@ -102,6 +108,7 @@ server.registerTool('hw_store_memory', {
     tags: args.tags,
     severity: args.severity as MemorySeverity | undefined,
   });
+  activity.append('memory_stored', `[${mem.type.toUpperCase()}] ${mem.title}`, mem.content ?? mem.rule ?? '');
   return text(`Memory stored: ${mem.id} (${mem.type}) "${mem.title}"`);
 });
 
@@ -129,6 +136,7 @@ server.registerTool('hw_add_task', {
   }),
 }, async (args: { title: string; description?: string; tags?: string[]; dependsOn?: string[] }) => {
   const task = project.state.addTask(args.title, { description: args.description, tags: args.tags, dependsOn: args.dependsOn });
+  activity.append('task_added', `Task: ${task.title}`, args.description ?? '');
   return text(`Task created: ${task.id} "${task.title}"`);
 });
 
@@ -146,6 +154,7 @@ server.registerTool('hw_update_task', {
   if (args.description) updates.description = args.description;
   const task = project.state.updateTask(args.id, updates);
   if (args.status === 'done') sessions.recordTaskCompleted(args.id);
+  activity.append('task_updated', `[${task.status.toUpperCase()}] ${task.title}`, args.description ?? '');
   return text(`Task ${task.id} updated to [${task.status}]`);
 });
 
@@ -165,6 +174,7 @@ server.registerTool('hw_record_decision', {
 }, async (args: { title: string; context: string; chosen: string; rationale: string; decidedBy: 'pat' | 'claude' | 'both'; alternatives?: Array<{ option: string; tradeoff: string }> }) => {
   const dec = project.state.addDecision(args.title, args);
   sessions.recordDecisionMade(dec.id);
+  activity.append('decision_recorded', `Decision: ${dec.title}`, `Chosen: ${dec.chosen}\n${dec.rationale}`);
   return text(`Decision recorded: ${dec.id} "${dec.title}" -> ${dec.chosen}`);
 });
 
@@ -176,9 +186,16 @@ server.registerTool('hw_check_approval', {
   inputSchema: z.object({ action: z.string(), description: z.string() }),
 }, async (args: { action: string; description: string }) => {
   const tier = approvals.classifyAction(args.action);
-  if (tier === 'auto') return text(`AUTO-APPROVED: "${args.action}" is safe to proceed.`);
-  if (tier === 'notify') return text(`NOTIFY: "${args.action}" — proceeding. Pat will see this. ${args.description}`);
+  if (tier === 'auto') {
+    activity.append('approval_auto', `Auto-approved: ${args.action}`, args.description);
+    return text(`AUTO-APPROVED: "${args.action}" is safe to proceed.`);
+  }
+  if (tier === 'notify') {
+    activity.append('approval_auto', `Notify: ${args.action}`, args.description);
+    return text(`NOTIFY: "${args.action}" — proceeding. Pat will see this. ${args.description}`);
+  }
   const req = approvals.requestApproval(args.action, args.description);
+  activity.append('approval_requested', `BLOCKED: ${args.action} — waiting for Pat`, args.description);
   return text(`BLOCKED: "${args.action}" requires Pat's approval. Request: ${req.id}. STOP and ask Pat. ${args.description}`);
 });
 
@@ -195,7 +212,11 @@ server.registerTool('hw_record_failure', {
   }),
 }, async (args: { taskId: string; errorMessage: string; approach: string; affectedFile?: string }) => {
   const check = strikes.recordFailure(args.taskId, args.errorMessage, args.approach, args.affectedFile);
-  if (check.shouldHalt) return text(`TWO-STRIKE HALT!\n\n${strikes.getAlternatives(args.taskId)}\n\nSTOP. Present 2-3 fundamentally different approaches to Pat.`);
+  if (check.shouldHalt) {
+    activity.append('strike_halt', `TWO-STRIKE HALT on task ${args.taskId}`, args.errorMessage);
+    return text(`TWO-STRIKE HALT!\n\n${strikes.getAlternatives(args.taskId)}\n\nSTOP. Present 2-3 fundamentally different approaches to Pat.`);
+  }
+  activity.append('strike_recorded', `Strike ${check.count}/2: ${args.errorMessage.slice(0, 80)}`, `Task: ${args.taskId}\nApproach: ${args.approach}`);
   return text(`Strike ${check.count}/2 recorded for task ${args.taskId}. Try a different angle.`);
 });
 
@@ -206,6 +227,7 @@ server.registerTool('hw_end_session', {
   description: 'End current session with a summary.',
   inputSchema: z.object({ summary: z.string() }),
 }, async (args: { summary: string }) => {
+  activity.append('session_end', 'Session ended', args.summary);
   const session = sessions.end(args.summary);
   if (!session) return text('No active session.');
   return text(`Session ${session.id} ended. ${session.startedAt} -> ${session.endedAt}`);
@@ -219,6 +241,7 @@ server.registerTool('hw_add_question', {
   inputSchema: z.object({ question: z.string(), context: z.string().optional() }),
 }, async (args: { question: string; context?: string }) => {
   const q = project.state.addQuestion(args.question, args.context);
+  activity.append('question_added', `Question: ${q.question.slice(0, 80)}`, args.context ?? '');
   return text(`Question recorded: ${q.id} "${q.question}"`);
 });
 
@@ -228,6 +251,7 @@ server.registerTool('hw_answer_question', {
   inputSchema: z.object({ id: z.string(), answer: z.string() }),
 }, async (args: { id: string; answer: string }) => {
   const q = project.state.answerQuestion(args.id, args.answer);
+  activity.append('question_answered', `Answered: ${q.question.slice(0, 60)}`, args.answer);
   return text(`Question ${q.id} answered: "${args.answer}"`);
 });
 

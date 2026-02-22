@@ -66,6 +66,9 @@ export class SessionManager {
   recordDecisionMade(decisionId: string): void {
     if (!this.current) return;
     this.current.decisionsMade.push(decisionId);
+    this.store.update(data => ({
+      sessions: data.sessions.map(s => s.id === this.current!.id ? this.current! : s),
+    }));
   }
 
   getCurrent(): Session | null {

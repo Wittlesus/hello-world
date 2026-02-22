@@ -10,6 +10,7 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_memories: ['memories.json'],
   get_sessions: ['sessions.json'],
   get_brain_state: ['brain-state.json'],
+  get_activity: ['activity.json'],
 };
 
 interface TauriDataState<T> {
