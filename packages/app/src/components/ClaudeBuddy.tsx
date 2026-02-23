@@ -95,9 +95,16 @@ export function ClaudeBuddy() {
 
     // Stop hook — Claude definitively finished its turn.
     // This is the authoritative Waiting signal — no timeout needed.
+    // UserPromptSubmit hook sends type:'typing' so hadActivity is always true
+    // before Stop fires — guarantees chime even for pure text responses.
     const summaryPromise = listen<{ type: string; summary: string }>(
       'hw-tool-summary',
       (event) => {
+        if (event.payload?.type === 'typing') {
+          hadActivityRef.current = true;
+          setBuddyState('Responding');
+          return;
+        }
         if (event.payload?.type !== 'awaiting') return;
         // Reset timestamps so the fallback poller doesn't fight us
         lastPtyLine.current      = 0;
