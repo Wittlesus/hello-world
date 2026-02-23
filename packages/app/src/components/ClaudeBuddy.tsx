@@ -1,7 +1,27 @@
 import { useState, useEffect, useRef, type CSSProperties } from 'react';
 import { listen } from '@tauri-apps/api/event';
+import { Volume2, VolumeX } from 'lucide-react';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+
+function playDoneSound() {
+  try {
+    const ctx = new AudioContext();
+    const gain = ctx.createGain();
+    gain.connect(ctx.destination);
+    gain.gain.setValueAtTime(0.18, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
+    // Two ascending tones — A5 then D6 — soft chime
+    ([880, 1175] as number[]).forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      osc.connect(gain);
+      osc.start(ctx.currentTime + i * 0.13);
+      osc.stop(ctx.currentTime + 0.7);
+    });
+  } catch { /* AudioContext unavailable — non-fatal */ }
+}
 
 interface WorkflowData { phase: string }
 interface Task        { id: string; title: string; status: string }
@@ -34,9 +54,14 @@ export function ClaudeBuddy() {
 
   const [collapsed, setCollapsed]     = useState(false);
   const [buddyState, setBuddyState]   = useState<BuddyState>('Waiting');
+  const [muted, setMuted]             = useState(false);
+  const mutedRef                      = useRef(false);
   const cleanupRef                    = useRef<(() => void)[]>([]);
   const lastFilesChanged              = useRef<number>(0);
   const lastPtyLine                   = useRef<number>(0);
+  const prevBuddyState                = useRef<BuddyState>('Waiting');
+
+  const toggleMute = () => setMuted(m => { mutedRef.current = !m; return !m; });
 
   const phase       = workflowData?.phase ?? 'idle';
   const activeTask  = stateData?.tasks.find((t) => t.status === 'in_progress');
@@ -63,17 +88,23 @@ export function ClaudeBuddy() {
     return () => cleanupRef.current.forEach((fn) => fn());
   }, []);
 
-  // Recompute state every 500ms based on last event timestamps
+  // Recompute state every 500ms based on last event timestamps.
+  // Detects the Responding/Coding → Waiting transition and fires a chime.
   useEffect(() => {
     const id = setInterval(() => {
       const now = Date.now();
-      if (now - lastFilesChanged.current < 3000) {
-        setBuddyState('Coding');
-      } else if (now - lastPtyLine.current < 4000) {
-        setBuddyState('Responding');
-      } else {
-        setBuddyState('Waiting');
+      const next: BuddyState =
+        now - lastFilesChanged.current < 3000 ? 'Coding' :
+        now - lastPtyLine.current   < 4000 ? 'Responding' :
+        'Waiting';
+
+      if (next === 'Waiting' && prevBuddyState.current !== 'Waiting') {
+        // Claude just finished — play chime unless muted
+        if (!mutedRef.current) playDoneSound();
       }
+
+      prevBuddyState.current = next;
+      setBuddyState(next);
     }, 500);
     return () => clearInterval(id);
   }, []);
@@ -149,18 +180,27 @@ export function ClaudeBuddy() {
               </span>
             </div>
 
-            {/* State pill */}
+            {/* State pill + mute toggle */}
             <div className="flex items-center gap-2">
               <span
                 className="w-2 h-2 rounded-full shrink-0"
                 style={stateDotStyle}
               />
               <span
-                className="text-[11px] font-mono"
+                className="text-[11px] font-mono flex-1"
                 style={{ color: stateTextColor }}
               >
                 {buddyState}
               </span>
+              <button
+                onClick={toggleMute}
+                title={muted ? 'Unmute sound' : 'Mute sound'}
+                className="text-gray-700 hover:text-gray-500 transition-colors"
+              >
+                {muted
+                  ? <VolumeX size={10} />
+                  : <Volume2 size={10} />}
+              </button>
             </div>
 
             {/* Active task */}
