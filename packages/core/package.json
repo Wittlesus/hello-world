@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "mcp": "tsx src/mcp/server.ts",
+    "discord": "tsx src/discord-listener.ts",
     "dev": "tsc --watch",
     "test": "vitest run",
     "test:watch": "vitest",

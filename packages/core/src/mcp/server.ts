@@ -344,12 +344,56 @@ server.registerTool('hw_add_question', {
 
 server.registerTool('hw_answer_question', {
   title: 'Answer Question',
-  description: 'Answer a previously recorded question.',
-  inputSchema: z.object({ id: z.string(), answer: z.string() }),
-}, async (args: { id: string; answer: string }) => {
-  const q = project.state.answerQuestion(args.id, args.answer);
+  description: 'Answer a previously recorded question. Optionally route to a task (if the answer implies action) or a decision (if it reveals a tradeoff).',
+  inputSchema: z.object({
+    id: z.string(),
+    answer: z.string(),
+    route: z.discriminatedUnion('type', [
+      z.object({
+        type: z.literal('task'),
+        title: z.string(),
+        description: z.string().optional(),
+      }),
+      z.object({
+        type: z.literal('decision'),
+        title: z.string(),
+        context: z.string(),
+        chosen: z.string(),
+        rationale: z.string(),
+        decidedBy: z.enum(['pat', 'claude', 'both']).default('claude'),
+      }),
+    ]).optional(),
+  }),
+}, async (args: { id: string; answer: string; route?: { type: 'task'; title: string; description?: string } | { type: 'decision'; title: string; context: string; chosen: string; rationale: string; decidedBy: 'pat' | 'claude' | 'both' } }) => {
+  let linkedTaskId: string | undefined;
+  let linkedDecisionId: string | undefined;
+  const routeMsgs: string[] = [];
+
+  if (args.route?.type === 'task') {
+    const task = project.state.addTask(args.route.title, {
+      description: args.route.description ?? '',
+      status: 'todo',
+    });
+    linkedTaskId = task.id;
+    activity.append('task_added', `Task from Q&A: ${task.title}`, `Triggered by question ${args.id}`);
+    routeMsgs.push(`Task created: ${task.id} "${task.title}"`);
+  } else if (args.route?.type === 'decision') {
+    const decision = project.state.addDecision(args.route.title, {
+      context: args.route.context,
+      chosen: args.route.chosen,
+      rationale: args.route.rationale,
+      decidedBy: args.route.decidedBy ?? 'claude',
+    });
+    linkedDecisionId = decision.id;
+    activity.append('decision_added', `Decision from Q&A: ${decision.title}`, `Triggered by question ${args.id}`);
+    routeMsgs.push(`Decision logged: ${decision.id} "${decision.title}"`);
+  }
+
+  const q = project.state.answerQuestion(args.id, args.answer, { linkedTaskId, linkedDecisionId });
   activity.append('question_answered', `Answered: ${q.question.slice(0, 60)}`, args.answer);
-  return text(`Question ${q.id} answered: "${args.answer}"`);
+
+  const lines = [`Question ${q.id} answered.`, ...routeMsgs];
+  return text(lines.join('\n'));
 });
 
 // ── Workflow ─────────────────────────────────────────────────────
@@ -400,7 +444,107 @@ server.registerTool('hw_check_autonomous_timer', {
   return text(`Autonomous timer: ${timer.minutesElapsed} minutes elapsed\nStatus: ${status}`);
 });
 
+// ── Direction ────────────────────────────────────────────────────
+
+const directionPath = join(projectRoot, '.hello-world', 'direction.json');
+
+function readDirection(): { vision: string; scope: Array<{ area: string; decision: string; rationale: string; capturedAt: string }>; notes: Array<{ id: string; text: string; source: string; read: boolean; capturedAt: string }> } {
+  try {
+    const raw = JSON.parse(readFileSync(directionPath, 'utf-8'));
+    return {
+      vision: raw.vision ?? '',
+      scope: Array.isArray(raw.scope) ? raw.scope : [],
+      notes: Array.isArray(raw.notes) ? raw.notes : [],
+    };
+  } catch {
+    return { vision: '', scope: [], notes: [] };
+  }
+}
+
+server.registerTool('hw_update_direction', {
+  title: 'Update Direction',
+  description: 'Write vision, scope decisions, or notes from Pat to direction.json. Call IMMEDIATELY when Pat discusses project strategy, scope, or leaves feedback. Do not wait until end of session.',
+  inputSchema: z.object({
+    vision: z.string().optional(),
+    scope: z.object({
+      area: z.string(),
+      decision: z.enum(['in', 'out']),
+      rationale: z.string(),
+    }).optional(),
+    note: z.string().optional(),
+  }),
+}, async (args: { vision?: string; scope?: { area: string; decision: 'in' | 'out'; rationale: string }; note?: string }) => {
+  const dir = readDirection();
+  const updated = { ...dir };
+  const changes: string[] = [];
+
+  if (args.vision) {
+    updated.vision = args.vision;
+    changes.push('vision updated');
+  }
+
+  if (args.scope) {
+    updated.scope = [...dir.scope, { ...args.scope, capturedAt: new Date().toISOString() }];
+    changes.push(`scope entry added: ${args.scope.area} [${args.scope.decision.toUpperCase()}]`);
+  }
+
+  if (args.note) {
+    const id = `n_${Date.now().toString(36)}`;
+    updated.notes = [...dir.notes, { id, text: args.note, source: 'session', read: false, capturedAt: new Date().toISOString() }];
+    changes.push(`note added: ${args.note.slice(0, 60)}`);
+  }
+
+  writeFileSync(directionPath, JSON.stringify(updated, null, 2), 'utf-8');
+  activity.append('direction_updated', `Direction updated`, changes.join(', '));
+  return text(`direction.json updated: ${changes.join(', ')}`);
+});
+
 // ── Start ───────────────────────────────────────────────────────
+
+// Write capabilities manifest so hooks + app can check MCP status
+const capabilitiesPath = join(projectRoot, '.hello-world', 'capabilities.json');
+const TOOL_CATALOG = [
+  { name: 'hw_get_context', category: 'context' },
+  { name: 'hw_write_handoff', category: 'context' },
+  { name: 'hw_retrieve_memories', category: 'memory' },
+  { name: 'hw_store_memory', category: 'memory' },
+  { name: 'hw_list_tasks', category: 'tasks' },
+  { name: 'hw_add_task', category: 'tasks' },
+  { name: 'hw_update_task', category: 'tasks' },
+  { name: 'hw_record_decision', category: 'decisions' },
+  { name: 'hw_add_question', category: 'questions' },
+  { name: 'hw_answer_question', category: 'questions' },
+  { name: 'hw_update_direction', category: 'direction' },
+  { name: 'hw_notify', category: 'notifications' },
+  { name: 'hw_check_approval', category: 'approvals' },
+  { name: 'hw_list_approvals', category: 'approvals' },
+  { name: 'hw_resolve_approval', category: 'approvals' },
+  { name: 'hw_record_failure', category: 'safety' },
+  { name: 'hw_end_session', category: 'sessions' },
+  { name: 'hw_get_workflow_state', category: 'workflow' },
+  { name: 'hw_advance_phase', category: 'workflow' },
+  { name: 'hw_check_autonomous_timer', category: 'workflow' },
+];
+
+try {
+  writeFileSync(capabilitiesPath, JSON.stringify({
+    generatedAt: new Date().toISOString(),
+    status: 'running',
+    pid: process.pid,
+    tools: TOOL_CATALOG,
+  }, null, 2), 'utf-8');
+} catch { /* non-fatal */ }
+
+process.on('exit', () => {
+  try {
+    writeFileSync(capabilitiesPath, JSON.stringify({
+      generatedAt: new Date().toISOString(),
+      status: 'stopped',
+      pid: process.pid,
+      tools: TOOL_CATALOG,
+    }, null, 2), 'utf-8');
+  } catch { /* non-fatal */ }
+});
 
 const transport = new StdioServerTransport();
 await server.connect(transport);

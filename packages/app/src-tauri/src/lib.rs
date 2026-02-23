@@ -1,12 +1,92 @@
 use std::fs;
 use std::io::{BufRead, BufReader, Read, Write};
 use std::path::PathBuf;
+use std::process::Child;
 use std::sync::Mutex;
 use std::time::Duration;
 use serde_json::Value;
 use tauri::Emitter;
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use portable_pty::{native_pty_system, CommandBuilder, PtySize};
+
+// ── Capabilities (Claude settings + known tools) ────────────────
+
+#[tauri::command]
+fn get_capabilities() -> Value {
+    let home = std::env::var("USERPROFILE")
+        .or_else(|_| std::env::var("HOME"))
+        .unwrap_or_else(|_| ".".to_string());
+    let settings_path = PathBuf::from(&home).join(".claude").join("settings.json");
+
+    let settings: Value = fs::read_to_string(&settings_path)
+        .ok()
+        .and_then(|s| serde_json::from_str(&s).ok())
+        .unwrap_or(serde_json::json!({}));
+
+    // Parse enabled plugins
+    let plugins: Vec<Value> = settings
+        .get("enabledPlugins")
+        .and_then(|p| p.as_object())
+        .map(|obj| {
+            obj.iter()
+                .filter(|(_, v)| v.as_bool().unwrap_or(false))
+                .map(|(k, _)| {
+                    let parts: Vec<&str> = k.splitn(2, '@').collect();
+                    serde_json::json!({
+                        "name": parts.first().copied().unwrap_or(k.as_str()),
+                        "source": parts.get(1).copied().unwrap_or(""),
+                        "key": k,
+                    })
+                })
+                .collect()
+        })
+        .unwrap_or_default();
+
+    // Parse MCP server permissions
+    let mcp_servers: Vec<String> = settings
+        .get("permissions")
+        .and_then(|p| p.get("allow"))
+        .and_then(|a| a.as_array())
+        .map(|arr| {
+            let mut seen = std::collections::HashSet::new();
+            arr.iter()
+                .filter_map(|v| v.as_str())
+                .filter_map(|s| {
+                    if s.starts_with("mcp__") {
+                        s.strip_prefix("mcp__")
+                            .and_then(|r| r.split("__").next())
+                            .map(|name| name.to_string())
+                    } else {
+                        None
+                    }
+                })
+                .filter(|name| seen.insert(name.clone()))
+                .collect()
+        })
+        .unwrap_or_default();
+
+    serde_json::json!({
+        "plugins": plugins,
+        "mcpServers": mcp_servers,
+        "discordBot": {
+            "name": "Hello World",
+            "appId": "1475276479683235942",
+            "patUserId": "403706305144946690",
+            "server": "Robopals",
+            "status": "active"
+        },
+        "accounts": [
+            { "service": "Discord", "username": "wsdevfriend", "purpose": "War room + bot" },
+            { "service": "Twitter/X", "username": "@WSDevGuy", "purpose": "buildinpublic" },
+            { "service": "Reddit", "username": "WSDevGuy", "purpose": "community" },
+            { "service": "GitHub", "username": "Wittlesus", "purpose": "repos" },
+            { "service": "npm", "username": "pooter", "purpose": "packages" },
+            { "service": "HuggingFace", "username": "wittlesus", "purpose": "models/datasets" },
+            { "service": "Stripe", "username": "connected", "purpose": "payments" },
+            { "service": "ProtonMail", "username": "WittleSusDev", "purpose": "project email" },
+        ]
+    })
+}
 
 // ── App config (project path storage) ───────────────────────────
 
@@ -578,6 +658,7 @@ pub fn run() {
             write_pty_input,
             resize_pty,
             start_watching,
+            get_capabilities,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

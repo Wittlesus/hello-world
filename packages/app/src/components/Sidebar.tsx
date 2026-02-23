@@ -9,6 +9,7 @@ const NAV_ITEMS: { view: View; label: string; icon: string }[] = [
   { view: 'memory', label: 'Memory', icon: 'BR' },
   { view: 'sessions', label: 'Sessions', icon: 'SS' },
   { view: 'cost', label: 'Cost', icon: '$' },
+  { view: 'skills', label: 'Skills', icon: 'SK' },
   { view: 'settings', label: 'Settings', icon: 'ST' },
 ];
 

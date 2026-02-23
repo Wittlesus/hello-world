@@ -12,6 +12,8 @@ interface Question {
   answer?: string;
   createdAt: string;
   answeredAt?: string;
+  linkedTaskId?: string;
+  linkedDecisionId?: string;
 }
 
 interface StateData {
@@ -67,6 +69,21 @@ function QuestionCard({ q }: { q: Question }) {
               <p className="text-xs text-gray-300 mt-1 leading-relaxed">{q.answer}</p>
               {q.answeredAt && (
                 <p className="text-[10px] text-gray-600 mt-1">Answered {formatDate(q.answeredAt)}</p>
+              )}
+            </div>
+          )}
+          {(q.linkedTaskId || q.linkedDecisionId) && (
+            <div className="flex items-center gap-2 pt-1">
+              <span className="text-[10px] text-gray-600">routed to</span>
+              {q.linkedTaskId && (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 border border-blue-500/20">
+                  task {q.linkedTaskId}
+                </span>
+              )}
+              {q.linkedDecisionId && (
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/20">
+                  decision {q.linkedDecisionId}
+                </span>
               )}
             </div>
           )}

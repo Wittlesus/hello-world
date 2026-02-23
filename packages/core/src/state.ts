@@ -193,14 +193,14 @@ export class StateManager {
     return q;
   }
 
-  answerQuestion(id: string, answer: string): Question {
+  answerQuestion(id: string, answer: string, opts?: { linkedTaskId?: string; linkedDecisionId?: string }): Question {
     let updated: Question | undefined;
 
     this.store.update(data => ({
       ...data,
       questions: data.questions.map(q => {
         if (q.id !== id) return q;
-        updated = { ...q, status: 'answered' as QuestionStatus, answer, answeredAt: now() };
+        updated = { ...q, status: 'answered' as QuestionStatus, answer, answeredAt: now(), ...opts };
         return updated;
       }),
     }));

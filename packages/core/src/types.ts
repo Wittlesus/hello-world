@@ -84,6 +84,8 @@ export const QuestionSchema = z.object({
   answer: z.string().optional(),
   answeredAt: z.string().datetime().optional(),
   createdAt: z.string().datetime(),
+  linkedTaskId: z.string().optional(),
+  linkedDecisionId: z.string().optional(),
 });
 
 export type Question = z.infer<typeof QuestionSchema>;
