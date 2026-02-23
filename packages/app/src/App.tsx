@@ -16,6 +16,7 @@ import { ProjectContextView } from './components/ProjectContextView.js';
 import { TimelineView } from './components/TimelineView.js';
 import { TerminalView } from './components/TerminalView.js';
 import { ProjectSetup } from './components/ProjectSetup.js';
+import { ClaudeBuddy } from './components/ClaudeBuddy.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -119,6 +120,7 @@ export function App() {
         </main>
       </div>
       <ApprovalQueue />
+      <ClaudeBuddy />
     </div>
   );
 }

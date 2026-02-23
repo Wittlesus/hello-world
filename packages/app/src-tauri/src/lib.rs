@@ -657,6 +657,84 @@ fn base64_encode(data: &[u8]) -> String {
     out
 }
 
+// ── Loopback HTTP notify listener ────────────────────────────────
+//
+// MCP server POSTs to http://127.0.0.1:<port>/notify after every tool call.
+// Body: { "files": ["state.json", ...], "tool": "hw_add_task", "summary": "..." }
+// We emit hw-files-changed (for tab refresh) and hw-tool-summary (for buddy).
+// Port is written to .hello-world/sync.json so the MCP server can discover it.
+
+fn start_notify_listener(app: tauri::AppHandle, project_path: String) {
+    use std::net::TcpListener;
+    use std::io::{BufRead, BufReader, Read, Write};
+
+    std::thread::spawn(move || {
+        let listener = match TcpListener::bind("127.0.0.1:0") {
+            Ok(l) => l,
+            Err(_) => return,
+        };
+
+        let port = match listener.local_addr() {
+            Ok(addr) => addr.port(),
+            Err(_) => return,
+        };
+
+        // Write port + pid to sync.json so MCP server can discover us
+        let pid = std::process::id();
+        let sync = serde_json::json!({ "port": port, "pid": pid });
+        let sync_path = PathBuf::from(&project_path).join(".hello-world").join("sync.json");
+        if let Ok(contents) = serde_json::to_string_pretty(&sync) {
+            let _ = fs::write(&sync_path, contents);
+        }
+
+        for stream in listener.incoming() {
+            let Ok(mut stream) = stream else { continue };
+            let app_handle = app.clone();
+
+            std::thread::spawn(move || {
+                let mut reader = BufReader::new(&stream);
+
+                // Read headers until blank line
+                let mut content_length: usize = 0;
+                loop {
+                    let mut line = String::new();
+                    if reader.read_line(&mut line).is_err() { return; }
+                    let line = line.trim_end_matches(|c| c == '\r' || c == '\n').to_string();
+                    if line.is_empty() { break; }
+                    let lower = line.to_lowercase();
+                    if lower.starts_with("content-length:") {
+                        content_length = lower["content-length:".len()..].trim().parse().unwrap_or(0);
+                    }
+                }
+
+                if content_length == 0 { return; }
+
+                let mut body = vec![0u8; content_length];
+                if reader.read_exact(&mut body).is_err() { return; }
+
+                if let Ok(payload) = serde_json::from_slice::<Value>(&body) {
+                    // Emit file refresh event
+                    if let Some(files) = payload["files"].as_array() {
+                        let names: Vec<String> = files.iter()
+                            .filter_map(|f| f.as_str().map(String::from))
+                            .collect();
+                        if !names.is_empty() {
+                            let _ = app_handle.emit("hw-files-changed", &names);
+                        }
+                    }
+                    // Emit summary event for buddy
+                    if payload["summary"].is_string() {
+                        let _ = app_handle.emit("hw-tool-summary", &payload);
+                    }
+                }
+
+                // Respond 200 OK
+                let _ = stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n");
+            });
+        }
+    });
+}
+
 // ── File watcher ─────────────────────────────────────────────────
 
 #[tauri::command]
@@ -666,6 +744,9 @@ fn start_watching(app: tauri::AppHandle, project_path: String) -> Result<(), Str
     if !watch_path.exists() {
         return Err(format!("{} does not exist", watch_path.display()));
     }
+
+    // Start the loopback HTTP listener for MCP server notifications
+    start_notify_listener(app.clone(), project_path.clone());
 
     std::thread::spawn(move || {
         let app_handle = app.clone();

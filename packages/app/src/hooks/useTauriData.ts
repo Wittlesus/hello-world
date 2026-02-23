@@ -61,5 +61,14 @@ export function useTauriData<T>(command: string, projectPath: string): TauriData
     return () => { unlisten.then((fn) => fn()); };
   }, [command, projectPath]);
 
+  // 10-second polling fallback — catches anything the event listener misses
+  useEffect(() => {
+    if (!projectPath) return;
+    const id = setInterval(() => {
+      invoke<T>(command, { projectPath }).then(setData).catch(() => {});
+    }, 10_000);
+    return () => clearInterval(id);
+  }, [command, projectPath]);
+
   return { data, loading, error, refetch: fetchData };
 }

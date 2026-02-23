@@ -67,6 +67,120 @@ try {
 const server = new McpServer({ name: 'hello-world', version: '0.1.0' });
 const text = (t: string) => ({ content: [{ type: 'text' as const, text: t }] });
 
+// ── Loopback notify: push file changes + summaries to Tauri UI ───
+
+const SYNC_FILE = join(projectRoot, '.hello-world', 'sync.json');
+
+function readSyncPort(): { port: number; pid: number } | null {
+  try {
+    const raw = JSON.parse(readFileSync(SYNC_FILE, 'utf-8'));
+    if (typeof raw.port === 'number' && typeof raw.pid === 'number') return raw;
+  } catch { /* app not running */ }
+  return null;
+}
+
+function generateSummary(tool: string, args: Record<string, unknown>): string {
+  switch (tool) {
+    case 'hw_add_task':      return `Added task: ${args.title}`;
+    case 'hw_update_task':   return `Task ${args.id} → ${args.status}`;
+    case 'hw_store_memory':  return `Stored ${args.type}: ${args.title}`;
+    case 'hw_advance_phase': return `Phase → ${args.phase}`;
+    case 'hw_add_question':  return `Question: ${String(args.question).slice(0, 60)}`;
+    case 'hw_answer_question': return `Answered question ${args.id}`;
+    case 'hw_notify':        return `Notified Pat`;
+    case 'hw_record_decision': return `Decision: ${args.title}`;
+    case 'hw_write_handoff': return `Handoff written`;
+    case 'hw_spawn_watcher': return `Spawned watcher: ${args.type}`;
+    case 'hw_get_context':   return `Context loaded`;
+    default: return tool.replace('hw_', '').replace(/_/g, ' ');
+  }
+}
+
+// File lists per tool — which .hello-world/*.json files does each tool write?
+function toolFiles(tool: string): string[] {
+  const map: Record<string, string[]> = {
+    hw_add_task:          ['state.json'],
+    hw_update_task:       ['state.json'],
+    hw_list_tasks:        [],
+    hw_store_memory:      ['memories.json'],
+    hw_retrieve_memories: [],
+    hw_advance_phase:     ['workflow.json'],
+    hw_get_workflow_state:[],
+    hw_record_decision:   ['state.json'],
+    hw_add_question:      ['state.json'],
+    hw_answer_question:   ['state.json'],
+    hw_notify:            [],
+    hw_check_approval:    [],
+    hw_list_approvals:    [],
+    hw_resolve_approval:  ['approvals.json'],
+    hw_write_handoff:     [],
+    hw_record_failure:    ['workflow.json'],
+    hw_get_context:       ['sessions.json', 'activity.json'],
+    hw_end_session:       ['sessions.json'],
+    hw_update_direction:  ['direction.json'],
+    hw_process_direction_note: ['direction.json'],
+    hw_spawn_watcher:     ['watchers.json'],
+    hw_kill_watcher:      ['watchers.json'],
+    hw_list_watchers:     [],
+    hw_check_autonomous_timer: [],
+  };
+  return map[tool] ?? ['state.json'];
+}
+
+let pendingNotify: { files: Set<string>; events: Array<{ tool: string; summary: string }> } | null = null;
+let notifyTimer: ReturnType<typeof setTimeout> | null = null;
+
+function scheduleNotify(tool: string, args: Record<string, unknown>): void {
+  const files = toolFiles(tool);
+  const summary = generateSummary(tool, args);
+
+  if (!pendingNotify) pendingNotify = { files: new Set(), events: [] };
+  files.forEach(f => pendingNotify!.files.add(f));
+  pendingNotify!.events.push({ tool, summary });
+
+  if (notifyTimer) clearTimeout(notifyTimer);
+  notifyTimer = setTimeout(async () => {
+    const payload = pendingNotify!;
+    pendingNotify = null;
+    notifyTimer = null;
+
+    const sync = readSyncPort();
+    if (!sync) return;
+
+    // Liveness check
+    try { process.kill(sync.pid, 0); } catch { return; }
+
+    const body = JSON.stringify({
+      files: Array.from(payload.files),
+      events: payload.events,
+      summary: payload.events.map(e => e.summary).join(' · '),
+    });
+
+    try {
+      await fetch(`http://127.0.0.1:${sync.port}/notify`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      });
+    } catch { /* app not running */ }
+  }, 150);
+}
+
+// Wrap registerTool so scheduleNotify fires automatically after every tool call.
+// Individual tool handlers don't need to know about the notify system.
+{
+  const _register = server.registerTool.bind(server);
+  (server as unknown as Record<string, unknown>)['registerTool'] = (
+    name: string, schema: unknown, handler: (args: Record<string, unknown>) => Promise<unknown>
+  ) => {
+    return _register(name as never, schema as never, async (args: Record<string, unknown>) => {
+      const result = await handler(args);
+      scheduleNotify(name, args ?? {});
+      return result;
+    });
+  };
+}
+
 // ── Context & Memory ────────────────────────────────────────────
 
 server.registerTool('hw_get_context', {
