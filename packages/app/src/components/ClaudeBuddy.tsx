@@ -3,14 +3,13 @@ import { listen } from '@tauri-apps/api/event';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 
-interface WorkflowData  { phase: string }
-interface Task          { id: string; title: string; status: string }
-interface StateData     { tasks: Task[] }
+interface WorkflowData { phase: string }
+interface Task        { id: string; title: string; status: string }
+interface StateData   { tasks: Task[] }
 
-interface Thought {
+interface Line {
   id: string;
   text: string;
-  fresh: boolean; // true for ~600ms after arrival, drives flash highlight
 }
 
 const PHASE_COLOR: Record<string, string> = {
@@ -31,20 +30,9 @@ const PHASE_BORDER: Record<string, string> = {
   ship:   'border-green-500/60',
 };
 
-const PHASE_LABEL: Record<string, string> = {
-  idle:   'idle',
-  scope:  'scoping',
-  plan:   'planning',
-  build:  'building',
-  verify: 'verifying',
-  ship:   'shipping',
-};
-
-const PHASES = ['scope', 'plan', 'build', 'verify', 'ship'] as const;
-
-// Opacity for each position in the stream: [newest, ...oldest]
-const STREAM_OPACITIES = [1, 0.55, 0.35, 0.2, 0.12];
-const MAX_THOUGHTS = 5;
+// Opacity for oldest→newest display order (4 lines max)
+const LINE_OPACITIES = [0.12, 0.28, 0.55, 1.0];
+const MAX_LINES = 4;
 
 export function ClaudeBuddy() {
   const projectPath = useProjectPath();
@@ -52,55 +40,46 @@ export function ClaudeBuddy() {
   const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
 
   const [collapsed, setCollapsed] = useState(false);
-  const [thoughts, setThoughts]   = useState<Thought[]>([]);
-  const [awaiting, setAwaiting]   = useState(true);
-  const freshTimers = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const [lines, setLines]         = useState<Line[]>([]); // newest first
+  const [awaiting, setAwaiting]   = useState(false);
+  const cleanupRef = useRef<(() => void)[]>([]);
 
-  const phase      = workflowData?.phase ?? 'idle';
-  const activeTask = stateData?.tasks.find((t) => t.status === 'in_progress');
-  const eyeColor   = PHASE_COLOR[phase] ?? '#4b5563';
+  const phase       = workflowData?.phase ?? 'idle';
+  const activeTask  = stateData?.tasks.find((t) => t.status === 'in_progress');
+  const eyeColor    = PHASE_COLOR[phase] ?? '#4b5563';
   const borderClass = PHASE_BORDER[phase] ?? 'border-gray-700';
-  const isActive   = phase !== 'idle';
-  const currentIdx = PHASES.indexOf(phase as typeof PHASES[number]);
+  const isActive    = phase !== 'idle';
 
   useEffect(() => {
-    const unlisten = listen<{ summary: string; type?: string }>('hw-tool-summary', (event) => {
-      const { summary, type } = event.payload ?? {};
-      if (!summary) return;
-
-      if (type === 'awaiting') {
-        setAwaiting(true);
-        return;
-      }
-
+    // PTY lines — real-time terminal output
+    const ptyPromise = listen<string>('hw-pty-line', (event) => {
+      const text = event.payload;
+      if (!text) return;
       setAwaiting(false);
-      const id = String(Date.now()) + Math.random().toString(36).slice(2, 6);
-
-      setThoughts((prev) => {
-        const next: Thought[] = [{ id, text: summary, fresh: true }, ...prev].slice(0, MAX_THOUGHTS);
-        return next;
-      });
-
-      // Clear fresh flag after 600ms
-      const timer = setTimeout(() => {
-        setThoughts((prev) => prev.map((t) => t.id === id ? { ...t, fresh: false } : t));
-        freshTimers.current.delete(id);
-      }, 600);
-      freshTimers.current.set(id, timer);
+      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+      setLines((prev) => [{ id, text }, ...prev].slice(0, MAX_LINES));
     });
 
-    return () => {
-      unlisten.then((fn) => fn());
-      freshTimers.current.forEach((t) => clearTimeout(t));
-    };
+    // Loopback — only used for Stop hook 'awaiting' signal
+    const loopPromise = listen<{ summary: string; type?: string }>('hw-tool-summary', (event) => {
+      if (event.payload?.type === 'awaiting') setAwaiting(true);
+    });
+
+    cleanupRef.current = [
+      () => ptyPromise.then((fn) => fn()),
+      () => loopPromise.then((fn) => fn()),
+    ];
+    return () => cleanupRef.current.forEach((fn) => fn());
   }, []);
 
-  // Animation speed: twitch when building, slow bob otherwise
   const headAnim =
     phase === 'build'  ? 'buddy-twitch 0.45s ease infinite' :
     phase === 'ship'   ? 'buddy-bob 0.55s ease infinite' :
     phase === 'verify' ? 'buddy-bob 1.2s ease infinite' :
                          'buddy-bob 3.5s ease infinite';
+
+  // Reverse to show oldest at top, newest at bottom
+  const displayLines = [...lines].reverse();
 
   return (
     <>
@@ -120,32 +99,24 @@ export function ClaudeBuddy() {
           60%       { transform: translate(-1px, 0); }
           80%       { transform: translate(1px, -1px); }
         }
-        @keyframes bubble-in {
-          from { opacity: 0; transform: scale(0.92) translateY(6px); }
-          to   { opacity: 1; transform: scale(1)    translateY(0); }
-        }
         @keyframes glow-pulse {
           0%, 100% { opacity: 0.7; }
           50%       { opacity: 1; }
         }
-        @keyframes await-pulse {
-          0%, 100% { opacity: 0.5; }
-          50%       { opacity: 1; }
-        }
-        @keyframes thought-in {
-          from { opacity: 0; transform: translateY(-4px); }
-          to   { opacity: 1; transform: translateY(0); }
+        @keyframes cursor-blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
         }
       `}</style>
 
       <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2 select-none pointer-events-none">
-        {/* Speech bubble */}
+
+        {/* Terminal feed */}
         {!collapsed && (
           <div
-            className="relative bg-[#0f0f18] border border-gray-700/90 rounded-2xl px-3.5 py-2.5 w-[230px] shadow-xl shadow-black/60 pointer-events-auto"
-            style={{ animation: 'bubble-in 0.18s ease-out' }}
+            className="bg-[#09090f] border border-gray-800/80 rounded px-2.5 py-2 w-[220px] shadow-xl shadow-black/70 pointer-events-auto"
           >
-            {/* Phase row */}
+            {/* Phase dot */}
             <div className="flex items-center gap-1.5 mb-1.5">
               <span
                 className="w-1.5 h-1.5 rounded-full shrink-0"
@@ -155,69 +126,55 @@ export function ClaudeBuddy() {
                 }}
               />
               <span className="text-[9px] font-mono uppercase tracking-widest text-gray-600">
-                {PHASE_LABEL[phase] ?? phase}
+                {phase}
               </span>
             </div>
 
-            {/* Phase progress bar */}
-            <div className="flex gap-[3px] mb-2.5">
-              {PHASES.map((p, idx) => {
-                const isPast    = idx < currentIdx;
-                const isCurrent = idx === currentIdx;
-                const color     = PHASE_COLOR[p];
+            {/* Lines — oldest top, newest bottom */}
+            <div className="flex flex-col gap-[2px] min-h-[14px]">
+              {displayLines.length === 0 && !awaiting && (
+                <span className="text-[10px] font-mono text-gray-700">ready</span>
+              )}
+              {displayLines.map((line, i) => {
+                const opacity  = LINE_OPACITIES[i] ?? LINE_OPACITIES[LINE_OPACITIES.length - 1];
+                const isNewest = i === displayLines.length - 1;
                 return (
                   <div
-                    key={p}
-                    className="h-[3px] flex-1 rounded-full transition-all duration-300"
-                    style={{
-                      backgroundColor: isCurrent ? color : isPast ? color + '55' : '#1f2937',
-                      boxShadow: isCurrent ? `0 0 5px ${color}` : 'none',
-                    }}
-                  />
+                    key={line.id}
+                    className="text-[10px] font-mono leading-relaxed truncate"
+                    style={{ opacity, color: isNewest ? '#c4b5fd' : '#9ca3af' }}
+                  >
+                    {line.text}
+                    {isNewest && awaiting && (
+                      <span style={{ animation: 'cursor-blink 1s step-end infinite', color: '#4ade80' }}>
+                        ▎
+                      </span>
+                    )}
+                  </div>
                 );
               })}
-            </div>
-
-            {/* Thought stream — newest on top, fades toward bottom */}
-            <div className="flex flex-col gap-[3px] min-h-[16px]">
-              {thoughts.length === 0 && !awaiting && (
-                <p className="text-[10px] text-gray-700 italic font-mono">ready</p>
-              )}
-              {thoughts.map((t, i) => (
-                <p
-                  key={t.id}
-                  className="text-[11px] font-mono leading-snug truncate transition-opacity duration-300"
-                  style={{
-                    opacity: STREAM_OPACITIES[i] ?? 0.08,
-                    color: t.fresh ? '#a5b4fc' : '#d1d5db',
-                    animation: i === 0 ? 'thought-in 0.12s ease-out' : 'none',
-                  }}
-                >
-                  {t.text}
-                </p>
-              ))}
-            </div>
-
-            {/* Awaiting response indicator */}
-            {awaiting && (
-              <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-gray-800/60">
+              {awaiting && displayLines.length === 0 && (
                 <span
-                  className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"
-                  style={{ animation: 'await-pulse 1.2s ease infinite' }}
-                />
-                <span className="text-[10px] font-mono text-green-500/80">Awaiting response...</span>
-              </div>
-            )}
+                  className="text-[10px] font-mono text-green-500/70"
+                  style={{ animation: 'cursor-blink 1s step-end infinite' }}
+                >
+                  ▎
+                </span>
+              )}
+            </div>
 
             {/* Active task */}
             {activeTask && (
-              <p className="text-[9px] text-gray-600 mt-1.5 font-mono truncate" title={activeTask.title}>
+              <p
+                className="text-[9px] text-gray-700 mt-1.5 font-mono truncate border-t border-gray-800/60 pt-1.5"
+                title={activeTask.title}
+              >
                 {'\u21b3'} {activeTask.title}
               </p>
             )}
 
             {/* Bubble tail */}
-            <div className="absolute -bottom-[7px] right-[18px] w-3 h-3 bg-[#0f0f18] border-r border-b border-gray-700/90 rotate-45" />
+            <div className="absolute -bottom-[7px] right-[18px] w-3 h-3 bg-[#09090f] border-r border-b border-gray-800/80 rotate-45" />
           </div>
         )}
 
