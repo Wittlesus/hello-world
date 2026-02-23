@@ -195,6 +195,21 @@ fn get_direction(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn mark_direction_note_read(project_path: &str, note_id: String) -> Result<(), String> {
+    let mut data = read_json_file(project_path, "direction.json")?;
+    let notes = data["notes"]
+        .as_array_mut()
+        .ok_or("direction.json missing notes array")?;
+    for note in notes.iter_mut() {
+        if note["id"].as_str() == Some(note_id.as_str()) {
+            note["read"] = serde_json::json!(true);
+            break;
+        }
+    }
+    write_json_file(project_path, "direction.json", &data)
+}
+
+#[tauri::command]
 fn get_watchers(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "watchers.json")
 }
@@ -670,6 +685,7 @@ pub fn run() {
             get_approvals,
             get_workflow,
             get_direction,
+            mark_direction_note_read,
             get_watchers,
             get_timeline,
             get_chat_history,
