@@ -67,10 +67,9 @@ export function ClaudeBuddy() {
   const cleanupRef                    = useRef<(() => void)[]>([]);
   const lastFilesChanged              = useRef<number>(0);
   const lastPtyLine                   = useRef<number>(0);
-  // Chime state machine: track activity cycle so we only fire once per
-  // completed response, not on every mid-response thinking pause.
-  const hadActivityRef                = useRef(false); // seen Coding/Responding since last chime
-  const chimeFiredRef                 = useRef(false); // chime already fired this cycle
+  // True once we've seen any activity this cycle — so the chime only fires
+  // after real work, not on a cold Waiting state at startup.
+  const hadActivityRef                = useRef(false);
 
   const toggleMute = () => setMuted(m => { mutedRef.current = !m; return !m; });
 
@@ -85,50 +84,63 @@ export function ClaudeBuddy() {
     const ptyPromise = listen<string>('hw-pty-line', (event) => {
       if (!event.payload) return;
       lastPtyLine.current = Date.now();
+      hadActivityRef.current = true;
     });
 
-    // Files changed — Claude is executing MCP tools
+    // Files changed — Claude is executing Edit/Write tools
     const filesPromise = listen<string[]>('hw-files-changed', () => {
       lastFilesChanged.current = Date.now();
+      hadActivityRef.current = true;
     });
+
+    // Stop hook — Claude definitively finished its turn.
+    // This is the authoritative Waiting signal — no timeout needed.
+    const summaryPromise = listen<{ type: string; summary: string }>(
+      'hw-tool-summary',
+      (event) => {
+        if (event.payload?.type !== 'awaiting') return;
+        // Reset timestamps so the fallback poller doesn't fight us
+        lastPtyLine.current      = 0;
+        lastFilesChanged.current = 0;
+        setBuddyState('Waiting');
+        if (hadActivityRef.current && !mutedRef.current) playDoneSound();
+        hadActivityRef.current = false;
+      }
+    );
 
     cleanupRef.current = [
       () => ptyPromise.then((fn) => fn()),
       () => filesPromise.then((fn) => fn()),
+      () => summaryPromise.then((fn) => fn()),
     ];
     return () => cleanupRef.current.forEach((fn) => fn());
   }, []);
 
-  // Recompute state every 500ms based on last event timestamps.
-  // Chime logic: requires 6s of silence from BOTH PTY and MCP events so
-  // mid-response thinking pauses don't trigger it. Uses hadActivityRef +
-  // chimeFiredRef so the chime fires once per completed response cycle.
+  // Fallback poller: drives Coding/Responding labels and catches the rare
+  // case where the Stop hook fails to fire (crash/timeout edge case).
+  // The Stop hook owns the Waiting transition — this only steps in after
+  // 10s of total silence from both channels.
   useEffect(() => {
     const id = setInterval(() => {
       const now = Date.now();
       const next: BuddyState =
         now - lastFilesChanged.current < 3000 ? 'Coding' :
-        now - lastPtyLine.current   < 4000 ? 'Responding' :
+        now - lastPtyLine.current      < 4000 ? 'Responding' :
         'Waiting';
 
       if (next !== 'Waiting') {
-        // Active — record that work happened this cycle, reset chime lock
-        hadActivityRef.current = true;
-        chimeFiredRef.current  = false;
-      } else if (hadActivityRef.current && !chimeFiredRef.current) {
-        // Waiting, had prior activity, chime not yet fired — check silence depth.
-        // Both events must have been quiet for 6s (not just PTY).
-        // This filters out pauses where Claude is still "thinking" between tool calls.
-        const ptyQuiet   = now - lastPtyLine.current   > 6000;
-        const filesQuiet = now - lastFilesChanged.current > 6000;
-        if (ptyQuiet && filesQuiet) {
-          if (!mutedRef.current) playDoneSound();
-          chimeFiredRef.current  = true;
-          hadActivityRef.current = false;
+        setBuddyState(next);
+      } else {
+        // Only override to Waiting via fallback after 10s of total silence
+        const lastActivity = Math.max(lastPtyLine.current, lastFilesChanged.current);
+        if (lastActivity > 0 && now - lastActivity > 10_000) {
+          setBuddyState('Waiting');
+          if (hadActivityRef.current && !mutedRef.current) playDoneSound();
+          hadActivityRef.current   = false;
+          lastPtyLine.current      = 0;
+          lastFilesChanged.current = 0;
         }
       }
-
-      setBuddyState(next);
     }, 500);
     return () => clearInterval(id);
   }, []);
