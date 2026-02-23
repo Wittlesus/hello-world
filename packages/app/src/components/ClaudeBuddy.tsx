@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type CSSProperties } from 'react';
 import { listen } from '@tauri-apps/api/event';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
@@ -7,10 +7,7 @@ interface WorkflowData { phase: string }
 interface Task        { id: string; title: string; status: string }
 interface StateData   { tasks: Task[] }
 
-interface Line {
-  id: string;
-  text: string;
-}
+type BuddyState = 'Coding' | 'Responding' | 'Waiting';
 
 const PHASE_COLOR: Record<string, string> = {
   idle:   '#4b5563',
@@ -30,19 +27,16 @@ const PHASE_BORDER: Record<string, string> = {
   ship:   'border-green-500/60',
 };
 
-// Opacity for oldest→newest display order (4 lines max)
-const LINE_OPACITIES = [0.12, 0.28, 0.55, 1.0];
-const MAX_LINES = 4;
-
 export function ClaudeBuddy() {
   const projectPath = useProjectPath();
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
   const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
 
-  const [collapsed, setCollapsed] = useState(false);
-  const [lines, setLines]         = useState<Line[]>([]); // newest first
-  const [awaiting, setAwaiting]   = useState(false);
-  const cleanupRef = useRef<(() => void)[]>([]);
+  const [collapsed, setCollapsed]     = useState(false);
+  const [buddyState, setBuddyState]   = useState<BuddyState>('Waiting');
+  const cleanupRef                    = useRef<(() => void)[]>([]);
+  const lastFilesChanged              = useRef<number>(0);
+  const lastPtyLine                   = useRef<number>(0);
 
   const phase       = workflowData?.phase ?? 'idle';
   const activeTask  = stateData?.tasks.find((t) => t.status === 'in_progress');
@@ -51,25 +45,37 @@ export function ClaudeBuddy() {
   const isActive    = phase !== 'idle';
 
   useEffect(() => {
-    // PTY lines — real-time terminal output
+    // PTY lines — real-time terminal output from Claude
     const ptyPromise = listen<string>('hw-pty-line', (event) => {
-      const text = event.payload;
-      if (!text) return;
-      setAwaiting(false);
-      const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
-      setLines((prev) => [{ id, text }, ...prev].slice(0, MAX_LINES));
+      if (!event.payload) return;
+      lastPtyLine.current = Date.now();
     });
 
-    // Loopback — only used for Stop hook 'awaiting' signal
-    const loopPromise = listen<{ summary: string; type?: string }>('hw-tool-summary', (event) => {
-      if (event.payload?.type === 'awaiting') setAwaiting(true);
+    // Files changed — Claude is executing MCP tools
+    const filesPromise = listen<string[]>('hw-files-changed', () => {
+      lastFilesChanged.current = Date.now();
     });
 
     cleanupRef.current = [
       () => ptyPromise.then((fn) => fn()),
-      () => loopPromise.then((fn) => fn()),
+      () => filesPromise.then((fn) => fn()),
     ];
     return () => cleanupRef.current.forEach((fn) => fn());
+  }, []);
+
+  // Recompute state every 500ms based on last event timestamps
+  useEffect(() => {
+    const id = setInterval(() => {
+      const now = Date.now();
+      if (now - lastFilesChanged.current < 3000) {
+        setBuddyState('Coding');
+      } else if (now - lastPtyLine.current < 4000) {
+        setBuddyState('Responding');
+      } else {
+        setBuddyState('Waiting');
+      }
+    }, 500);
+    return () => clearInterval(id);
   }, []);
 
   const headAnim =
@@ -78,8 +84,17 @@ export function ClaudeBuddy() {
     phase === 'verify' ? 'buddy-bob 1.2s ease infinite' :
                          'buddy-bob 3.5s ease infinite';
 
-  // Reverse to show oldest at top, newest at bottom
-  const displayLines = [...lines].reverse();
+  const stateDotStyle: CSSProperties =
+    buddyState === 'Coding'
+      ? { backgroundColor: '#fb923c', animation: 'dot-pulse 0.8s ease infinite' }
+      : buddyState === 'Responding'
+      ? { backgroundColor: '#60a5fa', animation: 'cursor-blink 1s step-end infinite' }
+      : { backgroundColor: '#374151' };
+
+  const stateTextColor =
+    buddyState === 'Coding'     ? '#fb923c' :
+    buddyState === 'Responding' ? '#60a5fa' :
+    '#4b5563';
 
   return (
     <>
@@ -107,17 +122,21 @@ export function ClaudeBuddy() {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0; }
         }
+        @keyframes dot-pulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50%       { opacity: 0.5; transform: scale(0.75); }
+        }
       `}</style>
 
       <div className="fixed bottom-5 right-5 z-50 flex flex-col items-end gap-2 select-none pointer-events-none">
 
-        {/* Terminal feed */}
+        {/* Status panel */}
         {!collapsed && (
           <div
-            className="bg-[#09090f] border border-gray-800/80 rounded px-2.5 py-2 w-[220px] shadow-xl shadow-black/70 pointer-events-auto"
+            className="bg-[#09090f] border border-gray-800/80 rounded px-2.5 py-2 w-[160px] shadow-xl shadow-black/70 pointer-events-auto"
           >
             {/* Phase dot */}
-            <div className="flex items-center gap-1.5 mb-1.5">
+            <div className="flex items-center gap-1.5 mb-2">
               <span
                 className="w-1.5 h-1.5 rounded-full shrink-0"
                 style={{
@@ -130,43 +149,24 @@ export function ClaudeBuddy() {
               </span>
             </div>
 
-            {/* Lines — oldest top, newest bottom */}
-            <div className="flex flex-col gap-[2px] min-h-[14px]">
-              {displayLines.length === 0 && !awaiting && (
-                <span className="text-[10px] font-mono text-gray-700">ready</span>
-              )}
-              {displayLines.map((line, i) => {
-                const opacity  = LINE_OPACITIES[i] ?? LINE_OPACITIES[LINE_OPACITIES.length - 1];
-                const isNewest = i === displayLines.length - 1;
-                return (
-                  <div
-                    key={line.id}
-                    className="text-[10px] font-mono leading-relaxed truncate"
-                    style={{ opacity, color: isNewest ? '#c4b5fd' : '#9ca3af' }}
-                  >
-                    {line.text}
-                    {isNewest && awaiting && (
-                      <span style={{ animation: 'cursor-blink 1s step-end infinite', color: '#4ade80' }}>
-                        ▎
-                      </span>
-                    )}
-                  </div>
-                );
-              })}
-              {awaiting && displayLines.length === 0 && (
-                <span
-                  className="text-[10px] font-mono text-green-500/70"
-                  style={{ animation: 'cursor-blink 1s step-end infinite' }}
-                >
-                  ▎
-                </span>
-              )}
+            {/* State pill */}
+            <div className="flex items-center gap-2">
+              <span
+                className="w-2 h-2 rounded-full shrink-0"
+                style={stateDotStyle}
+              />
+              <span
+                className="text-[11px] font-mono"
+                style={{ color: stateTextColor }}
+              >
+                {buddyState}
+              </span>
             </div>
 
             {/* Active task */}
             {activeTask && (
               <p
-                className="text-[9px] text-gray-700 mt-1.5 font-mono truncate border-t border-gray-800/60 pt-1.5"
+                className="text-[9px] text-gray-700 mt-2 font-mono truncate border-t border-gray-800/60 pt-1.5"
                 title={activeTask.title}
               >
                 {'\u21b3'} {activeTask.title}
