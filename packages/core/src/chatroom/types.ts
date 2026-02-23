@@ -1,0 +1,50 @@
+export type AgentStatus = 'idle' | 'thinking' | 'responding';
+export type SessionStatus = 'idle' | 'active' | 'paused' | 'concluded';
+export type MessageType = 'message' | 'thinking' | 'system' | 'pat' | 'claude';
+
+export interface ChatAgent {
+  id: string;
+  name: string;
+  color: string;
+  status: AgentStatus;
+  currentThought: string;
+}
+
+export interface ChatMessage {
+  id: string;
+  agentId: string;  // 'pat' | 'claude' | agent id
+  text: string;
+  timestamp: string;
+  type: MessageType;
+}
+
+export interface ChatSession {
+  id: string;
+  topic: string;
+  status: SessionStatus;
+  startedAt: string;
+  startedBy: 'claude' | 'pat';
+  waitingForInput: boolean;
+  roundNumber: number;
+  pendingPatMessage?: string;
+}
+
+export interface ChatroomState {
+  session: ChatSession;
+  agents: ChatAgent[];
+  messages: ChatMessage[];
+}
+
+export const EMPTY_CHATROOM: ChatroomState = {
+  session: {
+    id: '',
+    topic: '',
+    status: 'idle',
+    startedAt: '',
+    startedBy: 'claude',
+    waitingForInput: false,
+    roundNumber: 0,
+  },
+  agents: [],
+  messages: [],
+};

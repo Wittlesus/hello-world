@@ -36,6 +36,9 @@ import { retrieveMemories } from '../brain/engine.js';
 import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '../brain/state.js';
 import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
+import { ChatroomStore } from '../chatroom/chatroom-state.js';
+import { AGENT_DEFINITIONS, DEFAULT_AGENTS } from '../chatroom/agent-definitions.js';
+import { runDeliberation, stopDeliberation } from '../chatroom/agent-runner.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
@@ -50,6 +53,7 @@ let strikes: TwoStrikeEngine;
 let activity: ActivityStore;
 let workflow: WorkflowEngine;
 let watchers: WatcherStore;
+let chatroom: ChatroomStore;
 
 try {
   project = Project.open(projectRoot);
@@ -60,6 +64,7 @@ try {
   activity = new ActivityStore(projectRoot);
   workflow = new WorkflowEngine(projectRoot);
   watchers = new WatcherStore(projectRoot);
+  chatroom = new ChatroomStore(projectRoot);
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -91,11 +96,16 @@ function generateSummary(tool: string, args: Record<string, unknown>): string {
     case 'hw_notify':        return `Notified Pat`;
     case 'hw_record_decision': return `Decision: ${args.title}`;
     case 'hw_write_handoff': return `Handoff written`;
-    case 'hw_spawn_watcher': return `Spawned watcher: ${args.type}`;
-    case 'hw_get_context':   return `Context loaded`;
-    case 'hw_start_task':    return `Started task: ${args.taskId}`;
-    case 'hw_get_task':      return `Got task: ${args.taskId}`;
-    case 'hw_reset_strikes': return `Strikes reset: ${args.taskId}`;
+    case 'hw_spawn_watcher':        return `Spawned watcher: ${args.type}`;
+    case 'hw_get_context':          return `Context loaded`;
+    case 'hw_start_task':           return `Started task: ${args.taskId}`;
+    case 'hw_get_task':             return `Got task: ${args.taskId}`;
+    case 'hw_reset_strikes':        return `Strikes reset: ${args.taskId}`;
+    case 'hw_start_deliberation':   return `Deliberation: "${String(args.topic).slice(0, 50)}"`;
+    case 'hw_pause_deliberation':   return `Deliberation paused`;
+    case 'hw_resume_deliberation':  return `Deliberation resumed`;
+    case 'hw_conclude_deliberation': return `Deliberation concluded`;
+    case 'hw_post_to_chatroom':     return `Claude: ${String(args.message).slice(0, 50)}`;
     default: return tool.replace('hw_', '').replace(/_/g, ' ');
   }
 }
@@ -123,9 +133,14 @@ function toolFiles(tool: string): string[] {
     hw_end_session:       ['sessions.json'],
     hw_update_direction:  ['direction.json'],
     hw_process_direction_note: ['direction.json'],
-    hw_spawn_watcher:     ['watchers.json'],
-    hw_kill_watcher:      ['watchers.json'],
-    hw_list_watchers:     [],
+    hw_spawn_watcher:          ['watchers.json'],
+    hw_kill_watcher:           ['watchers.json'],
+    hw_list_watchers:          [],
+    hw_start_deliberation:     ['chatroom.json'],
+    hw_pause_deliberation:     ['chatroom.json'],
+    hw_resume_deliberation:    ['chatroom.json'],
+    hw_conclude_deliberation:  ['chatroom.json'],
+    hw_post_to_chatroom:       ['chatroom.json'],
     hw_check_autonomous_timer: [],
     hw_start_task:            ['state.json', 'workflow.json'],
     hw_get_task:              [],
@@ -847,6 +862,82 @@ server.registerTool('hw_kill_watcher', {
   return text(`${args.watcherId}: ${result}`);
 });
 
+// ── Chatroom / Deliberation ──────────────────────────────────────
+
+server.registerTool('hw_start_deliberation', {
+  title: 'Start Deliberation',
+  description: 'Start a multi-agent chatroom deliberation session. Agents discuss the topic in real-time.',
+  inputSchema: z.object({
+    topic: z.string().describe('The topic or question to deliberate on'),
+    agents: z.array(z.string()).optional().describe('Agent IDs to include. Defaults to architect, critic, product, security.'),
+  }),
+}, async (args: { topic: string; agents?: string[] }) => {
+  const agentIds = args.agents ?? DEFAULT_AGENTS;
+  const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
+  activity.append('deliberation_started', `Deliberation: "${args.topic}"`, `Agents: ${agentIds.join(', ')}`);
+  // Start runner in background (non-blocking)
+  runDeliberation(chatroom, (files) => {
+    scheduleNotify('hw_chatroom_update', {});
+    void files;
+  }).catch(() => {});
+  return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"`);
+});
+
+server.registerTool('hw_pause_deliberation', {
+  title: 'Pause Deliberation',
+  description: 'Pause the active deliberation to allow input or review.',
+  inputSchema: z.object({}),
+}, async () => {
+  stopDeliberation();
+  chatroom.setSessionStatus('paused', true);
+  activity.append('deliberation_paused', 'Deliberation paused', '');
+  return text('Deliberation paused. Resume with hw_resume_deliberation or conclude with hw_conclude_deliberation.');
+});
+
+server.registerTool('hw_resume_deliberation', {
+  title: 'Resume Deliberation',
+  description: 'Resume a paused deliberation.',
+  inputSchema: z.object({}),
+}, async () => {
+  chatroom.setSessionStatus('active', false);
+  activity.append('deliberation_resumed', 'Deliberation resumed', '');
+  runDeliberation(chatroom, (files) => {
+    scheduleNotify('hw_chatroom_update', {});
+    void files;
+  }).catch(() => {});
+  return text('Deliberation resumed.');
+});
+
+server.registerTool('hw_conclude_deliberation', {
+  title: 'Conclude Deliberation',
+  description: 'Conclude the deliberation with a summary decision.',
+  inputSchema: z.object({
+    summary: z.string().describe('Summary of the deliberation outcome / decision reached'),
+  }),
+}, async (args: { summary: string }) => {
+  stopDeliberation();
+  chatroom.appendMessage('system', `Concluded: ${args.summary}`, 'system');
+  chatroom.setSessionStatus('concluded');
+  activity.append('deliberation_concluded', 'Deliberation concluded', args.summary);
+  return text(`Deliberation concluded. Summary recorded: "${args.summary}"`);
+});
+
+server.registerTool('hw_post_to_chatroom', {
+  title: 'Post to Chatroom',
+  description: 'Post a message as Claude (golden buddy) to the deliberation chatroom.',
+  inputSchema: z.object({
+    message: z.string().describe('Message to post as Claude'),
+  }),
+}, async (args: { message: string }) => {
+  const state = chatroom.read();
+  if (state.session.status === 'idle') {
+    return text('No active deliberation. Start one with hw_start_deliberation first.');
+  }
+  chatroom.appendMessage('claude', args.message, 'claude');
+  activity.append('claude_posted_to_chatroom', `Claude: ${args.message.slice(0, 60)}`, '');
+  return text('Posted to chatroom.');
+});
+
 // ── Start ───────────────────────────────────────────────────────
 
 // Write capabilities manifest so hooks + app can check MCP status
@@ -876,6 +967,11 @@ const TOOL_CATALOG = [
   { name: 'hw_spawn_watcher', category: 'watchers' },
   { name: 'hw_list_watchers', category: 'watchers' },
   { name: 'hw_kill_watcher', category: 'watchers' },
+  { name: 'hw_start_deliberation', category: 'chatroom' },
+  { name: 'hw_pause_deliberation', category: 'chatroom' },
+  { name: 'hw_resume_deliberation', category: 'chatroom' },
+  { name: 'hw_conclude_deliberation', category: 'chatroom' },
+  { name: 'hw_post_to_chatroom', category: 'chatroom' },
 ];
 
 try {

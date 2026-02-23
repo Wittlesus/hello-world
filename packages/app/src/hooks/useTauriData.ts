@@ -16,6 +16,7 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_direction: ['direction.json'],
   get_timeline: ['timeline.md'],
   get_watchers: ['watchers.json'],
+  get_chatroom: ['chatroom.json'],
 };
 
 interface TauriDataState<T> {
