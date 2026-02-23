@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
 import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus } from './types.js';
@@ -10,9 +10,11 @@ function uid(prefix: string): string {
 
 export class ChatroomStore {
   private path: string;
+  private deliberationsDir: string;
 
   constructor(projectRoot: string) {
     this.path = join(projectRoot, '.hello-world', 'chatroom.json');
+    this.deliberationsDir = join(projectRoot, '.hello-world', 'deliberations');
   }
 
   read(): ChatroomState {
@@ -115,5 +117,28 @@ export class ChatroomStore {
       ...state,
       session: { ...state.session, pendingPatMessage: message },
     }));
+  }
+
+  // Archive the current session to deliberations/ and reset chatroom to idle.
+  // No-op if session is already idle or has no messages.
+  archiveAndReset(): string | null {
+    const state = this.read();
+    if (state.session.status === 'idle' || state.messages.length === 0) return null;
+
+    mkdirSync(this.deliberationsDir, { recursive: true });
+
+    const date = new Date().toISOString().slice(0, 10);
+    const slug = state.session.topic
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 50);
+    const filename = `${date}-${slug || state.session.id}.json`;
+    const archivePath = join(this.deliberationsDir, filename);
+
+    writeFileSync(archivePath, JSON.stringify(state, null, 2), 'utf-8');
+    this.write(structuredClone(EMPTY_CHATROOM));
+
+    return filename;
   }
 }
