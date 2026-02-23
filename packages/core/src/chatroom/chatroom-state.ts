@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
-import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase } from './types.js';
+import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase, ChatReaction } from './types.js';
 import { EMPTY_CHATROOM } from './types.js';
 
 function uid(prefix: string): string {
@@ -67,6 +67,7 @@ export class ChatroomStore {
           type: 'system',
         },
       ],
+      reactions: [],
     };
 
     this.write(state);
@@ -118,6 +119,24 @@ export class ChatroomStore {
       ...state,
       session: { ...state.session, deliberationPhase: phase },
     }));
+  }
+
+  appendReaction(agentId: string, emoji: string): ChatReaction {
+    const reaction: ChatReaction = {
+      id: uid('rxn'),
+      agentId,
+      emoji,
+      timestamp: new Date().toISOString(),
+    };
+    const cutoff = new Date(Date.now() - 30_000).toISOString();
+    this.update(state => ({
+      ...state,
+      reactions: [
+        ...(state.reactions ?? []).filter(r => r.timestamp > cutoff),
+        reaction,
+      ],
+    }));
+    return reaction;
   }
 
   setPendingPatMessage(message: string | undefined): void {

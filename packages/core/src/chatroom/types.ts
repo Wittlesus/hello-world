@@ -32,10 +32,18 @@ export interface ChatSession {
   deliberationPhase?: DeliberationPhase;
 }
 
+export interface ChatReaction {
+  id: string;
+  agentId: string;
+  emoji: string;
+  timestamp: string;
+}
+
 export interface ChatroomState {
   session: ChatSession;
   agents: ChatAgent[];
   messages: ChatMessage[];
+  reactions: ChatReaction[];
 }
 
 export const EMPTY_CHATROOM: ChatroomState = {
@@ -50,4 +58,5 @@ export const EMPTY_CHATROOM: ChatroomState = {
   },
   agents: [],
   messages: [],
+  reactions: [],
 };
