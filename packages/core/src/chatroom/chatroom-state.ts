@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
-import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus } from './types.js';
+import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase } from './types.js';
 import { EMPTY_CHATROOM } from './types.js';
 
 function uid(prefix: string): string {
@@ -55,6 +55,7 @@ export class ChatroomStore {
         startedBy,
         waitingForInput: false,
         roundNumber: 0,
+        deliberationPhase: 'frame',
       },
       agents,
       messages: [
@@ -109,6 +110,13 @@ export class ChatroomStore {
     this.update(state => ({
       ...state,
       session: { ...state.session, waitingForInput: waiting },
+    }));
+  }
+
+  setDeliberationPhase(phase: DeliberationPhase): void {
+    this.update(state => ({
+      ...state,
+      session: { ...state.session, deliberationPhase: phase },
     }));
   }
 

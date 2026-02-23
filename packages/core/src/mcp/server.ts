@@ -910,6 +910,23 @@ server.registerTool('hw_conclude_deliberation', {
   return text(`Deliberation concluded. Summary recorded: "${args.summary}"`);
 });
 
+server.registerTool('hw_set_deliberation_phase', {
+  title: 'Set Deliberation Phase',
+  description: 'Advance the deliberation to a named phase. Claude (Reason) calls this to signal phase transitions to the UI. Phases: frame → deliberate → synthesis → patinput → decision.',
+  inputSchema: z.object({
+    phase: z.enum(['frame', 'deliberate', 'synthesis', 'patinput', 'decision']).describe('The phase to move to'),
+  }),
+}, async (args: { phase: 'frame' | 'deliberate' | 'synthesis' | 'patinput' | 'decision' }) => {
+  const state = chatroom.read();
+  if (state.session.status === 'idle') {
+    return text('No active deliberation.');
+  }
+  chatroom.setDeliberationPhase(args.phase);
+  chatroom.appendMessage('system', `Phase: ${args.phase}`, 'system');
+  activity.append('deliberation_phase', `Phase → ${args.phase}`, '');
+  return text(`Deliberation phase set to: ${args.phase}`);
+});
+
 server.registerTool('hw_post_to_chatroom', {
   title: 'Post to Chatroom',
   description: 'Post a message as Claude (golden buddy) to the deliberation chatroom.',
@@ -993,6 +1010,7 @@ const TOOL_CATALOG = [
   { name: 'hw_conclude_deliberation', category: 'chatroom' },
   { name: 'hw_post_to_chatroom', category: 'chatroom' },
   { name: 'hw_post_agent_message', category: 'chatroom' },
+  { name: 'hw_set_deliberation_phase', category: 'chatroom' },
 ];
 
 try {
