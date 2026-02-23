@@ -17,6 +17,7 @@ import { TimelineView } from './components/TimelineView.js';
 import { TerminalView } from './components/TerminalView.js';
 import { ProjectSetup } from './components/ProjectSetup.js';
 import { ClaudeBuddy } from './components/ClaudeBuddy.js';
+import { HelpModal } from './components/HelpModal.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -66,12 +67,14 @@ export function App() {
   const { projectPath, setProject } = useAppStore();
   const setView = useAppStore((s) => s.setView);
   const [bootstrapping, setBootstrapping] = useState(true);
+  const [showHelp, setShowHelp] = useState(false);
 
   // Global keyboard shortcuts — number keys and letters switch views
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     // Don't intercept when user is typing in inputs
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === '?') { setShowHelp(true); return; }
     const view = KEY_MAP[e.key];
     if (view) setView(view);
   }, [setView]);
@@ -114,13 +117,14 @@ export function App() {
   return (
     <div className="h-screen flex flex-col bg-[#0a0a0f] text-gray-200">
       <div className="flex-1 flex min-h-0">
-        <Sidebar />
+        <Sidebar onShowHelp={() => setShowHelp(true)} />
         <main className="flex-1 flex flex-col min-w-0 min-h-0">
           <MainContent />
         </main>
       </div>
       <ApprovalQueue />
       <ClaudeBuddy />
+      <HelpModal open={showHelp} onClose={() => setShowHelp(false)} />
     </div>
   );
 }

@@ -1,21 +1,33 @@
+import {
+  LayoutDashboard, CheckSquare, BookOpen, HelpCircle, Brain,
+  Clock, DollarSign, Zap, Terminal, Eye, FolderOpen, GitBranch,
+  Settings,
+} from 'lucide-react';
 import { useAppStore, type View } from '../stores/app.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 
-const NAV_ITEMS: { view: View; label: string; icon: string }[] = [
-  { view: 'dashboard', label: 'Dashboard', icon: 'HW' },
-  { view: 'terminal', label: 'Terminal', icon: '⌨' },
-  { view: 'tasks', label: 'Tasks', icon: 'TK' },
-  { view: 'decisions', label: 'Decisions', icon: 'DC' },
-  { view: 'questions', label: 'Questions', icon: 'Q?' },
-  { view: 'memory', label: 'Memory', icon: 'BR' },
-  { view: 'sessions', label: 'Sessions', icon: 'SS' },
-  { view: 'cost', label: 'Cost', icon: '$' },
-  { view: 'skills', label: 'Skills', icon: 'SK' },
-  { view: 'watchers', label: 'Agents', icon: 'AG' },
-  { view: 'context', label: 'Context', icon: 'CX' },
-  { view: 'timeline', label: 'Timeline', icon: 'TL' },
-  { view: 'settings', label: 'Settings', icon: 'ST' },
+interface NavItem {
+  view: View;
+  label: string;
+  key: string;
+  Icon: React.ComponentType<{ size?: number; className?: string }>;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { view: 'dashboard',  label: 'Dashboard',       key: '1', Icon: LayoutDashboard },
+  { view: 'terminal',   label: 'Terminal',         key: 'T', Icon: Terminal },
+  { view: 'tasks',      label: 'Tasks',            key: '2', Icon: CheckSquare },
+  { view: 'decisions',  label: 'Decisions',        key: '3', Icon: BookOpen },
+  { view: 'questions',  label: 'Questions',        key: '4', Icon: HelpCircle },
+  { view: 'memory',     label: 'Memory',           key: '5', Icon: Brain },
+  { view: 'sessions',   label: 'Sessions',         key: '6', Icon: Clock },
+  { view: 'cost',       label: 'Cost',             key: '7', Icon: DollarSign },
+  { view: 'settings',   label: 'Settings',         key: '8', Icon: Settings },
+  { view: 'skills',     label: 'Skills',           key: 'K', Icon: Zap },
+  { view: 'watchers',   label: 'Agents',           key: 'W', Icon: Eye },
+  { view: 'context',    label: 'Context',          key: 'P', Icon: FolderOpen },
+  { view: 'timeline',   label: 'Timeline',         key: 'L', Icon: GitBranch },
 ];
 
 const PHASE_COLOR: Record<string, string> = {
@@ -38,7 +50,11 @@ const PHASE_DOT: Record<string, string> = {
 
 interface WorkflowData { phase: string; strikes: number }
 
-export function Sidebar() {
+interface SidebarProps {
+  onShowHelp?: () => void;
+}
+
+export function Sidebar({ onShowHelp }: SidebarProps) {
   const { activeView, setView, projectName, sidebarCollapsed, toggleSidebar } = useAppStore();
   const projectPath = useProjectPath();
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
@@ -57,17 +73,20 @@ export function Sidebar() {
       </div>
 
       <nav className="flex-1 py-2">
-        {NAV_ITEMS.map(({ view, label, icon }) => (
+        {NAV_ITEMS.map(({ view, label, key, Icon }) => (
           <button
             key={view}
             onClick={() => setView(view)}
+            title={`${label} (${key})`}
             className={`w-full flex items-center gap-3 px-3 py-2 text-sm transition-colors ${
               activeView === view
                 ? 'bg-gray-800/60 text-white'
                 : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/30'
             }`}
           >
-            <span className="w-6 text-center text-xs font-mono opacity-60">{icon}</span>
+            <span className="w-6 flex items-center justify-center shrink-0">
+              <Icon size={16} />
+            </span>
             {!sidebarCollapsed && <span>{label}</span>}
           </button>
         ))}
@@ -89,6 +108,20 @@ export function Sidebar() {
           </div>
         )}
       </div>
+
+      {/* Help button */}
+      {onShowHelp && (
+        <button
+          onClick={onShowHelp}
+          title="Keyboard shortcuts (?)"
+          className="px-3 py-2 text-gray-500 hover:text-gray-300 text-xs border-t border-gray-800 flex items-center gap-2"
+        >
+          <span className="w-6 flex items-center justify-center">
+            <HelpCircle size={14} />
+          </span>
+          {!sidebarCollapsed && <span>Shortcuts</span>}
+        </button>
+      )}
 
       <button
         onClick={toggleSidebar}
