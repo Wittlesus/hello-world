@@ -156,28 +156,48 @@ export function TerminalView() {
       invoke('write_pty_input', { data }).catch(() => {});
     });
 
-    const unlistenPty = listen<string>('pty-data', (event) => {
-      const binary = atob(event.payload);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-      term.write(bytes);
-      setStatus('ready');
+    let unlistenData: (() => void) | null = null;
+    let unlistenDied: (() => void) | null = null;
 
-      if (!initializedRef.current) {
-        initializedRef.current = true;
-        setTimeout(() => {
-          invoke('write_pty_input', {
-            data: 'hw_get_context() — greet Pat with project name, workflow phase, and active tasks.\n',
-          }).catch(() => {});
-        }, 2000);
-      }
-    });
+    const startSession = async () => {
+      // Await listener registration BEFORE spawning PTY — prevents dropped startup events
+      unlistenData = await listen<string>('pty-data', (event) => {
+        const binary = atob(event.payload);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        term.write(bytes);
+        setStatus('ready');
 
-    invoke('start_pty_session', { projectPath })
-      .catch((e) => {
-        setStatus('error');
-        setError(String(e));
+        if (!initializedRef.current) {
+          initializedRef.current = true;
+          setTimeout(() => {
+            invoke('write_pty_input', {
+              data: 'hw_get_context() — greet Pat with project name, workflow phase, and active tasks.\n',
+            }).catch(() => {});
+          }, 2000);
+        }
       });
+
+      unlistenDied = await listen('pty-died', () => {
+        setStatus('starting');
+        // Auto-respawn after brief delay
+        setTimeout(() => {
+          invoke('start_pty_session', { projectPath }).catch((e: unknown) => {
+            setStatus('error');
+            setError(String(e));
+          });
+        }, 1000);
+      });
+
+      // Returns false if session already running — set ready immediately
+      const spawned = await invoke<boolean>('start_pty_session', { projectPath });
+      if (!spawned) setStatus('ready');
+    };
+
+    startSession().catch((e) => {
+      setStatus('error');
+      setError(String(e));
+    });
 
     const observer = new ResizeObserver(() => {
       fit.fit();
@@ -186,7 +206,8 @@ export function TerminalView() {
     if (containerRef.current) observer.observe(containerRef.current);
 
     return () => {
-      unlistenPty.then((fn) => fn());
+      unlistenData?.();
+      unlistenDied?.();
       observer.disconnect();
       term.dispose();
     };

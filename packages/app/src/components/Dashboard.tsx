@@ -1,3 +1,5 @@
+import { useState, useCallback } from 'react';
+import { invoke } from '@tauri-apps/api/core';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ActivityStream } from './ActivityStream.js';
@@ -19,8 +21,31 @@ interface WorkflowData {
   currentTaskId: string | null;
 }
 
-interface DecisionsData {
-  decisions: Array<{ id: string; title: string; chosen: string; decidedAt: string }>;
+interface Session {
+  id: string;
+  startedAt: string;
+  endedAt?: string;
+  summary?: string;
+  tasksCompleted: string[];
+  costUsd: number;
+}
+
+interface SessionsData {
+  sessions: Session[];
+}
+
+interface DirectionNote {
+  id: string;
+  text: string;
+  source: string;
+  read: boolean;
+  capturedAt: string;
+}
+
+interface DirectionData {
+  vision?: string;
+  scope?: Array<{ area: string; decision: string; rationale: string }>;
+  notes?: DirectionNote[];
 }
 
 const PHASE_ORDER = ['idle', 'scope', 'plan', 'build', 'verify', 'ship'];
@@ -43,11 +68,19 @@ const PHASE_BG: Record<string, string> = {
   ship:   'bg-green-500/10',
 };
 
+function formatSessionDate(iso: string) {
+  const d = new Date(iso);
+  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
+
 export function Dashboard() {
   const projectPath = useProjectPath();
-  const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
-  const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
-  const { data: decisionsData } = useTauriData<DecisionsData>('get_state', projectPath);
+  const { data: stateData }                                      = useTauriData<StateData>('get_state', projectPath);
+  const { data: workflowData }                                   = useTauriData<WorkflowData>('get_workflow', projectPath);
+  const { data: sessionsData }                                   = useTauriData<SessionsData>('get_sessions', projectPath);
+  const { data: directionData, refetch: refetchDirection }       = useTauriData<DirectionData>('get_direction', projectPath);
+
+  const [markingRead, setMarkingRead] = useState<Set<string>>(new Set());
 
   const tasks    = stateData?.tasks ?? [];
   const phase    = workflowData?.phase ?? 'idle';
@@ -57,13 +90,29 @@ export function Dashboard() {
   const todoTasks  = tasks.filter((t) => t.status === 'todo');
   const doneTasks  = tasks.filter((t) => t.status === 'done');
 
-  const phaseIdx  = PHASE_ORDER.indexOf(phase);
+  const phaseIdx   = PHASE_ORDER.indexOf(phase);
   const phaseColor = PHASE_COLOR[phase] ?? 'text-gray-400';
   const phaseBg    = PHASE_BG[phase] ?? 'bg-gray-500/10';
 
-  const recentDecisions = (decisionsData as any)?.decisions
-    ? [...(decisionsData as any).decisions].slice(-3).reverse()
-    : [];
+  const unreadNotes   = (directionData?.notes ?? []).filter((n) => !n.read);
+  const recentSessions = [...(sessionsData?.sessions ?? [])].reverse().slice(0, 4);
+
+  const markRead = useCallback(async (noteId: string) => {
+    setMarkingRead((prev) => new Set(prev).add(noteId));
+    try {
+      await invoke('mark_direction_note_read', { projectPath, noteId });
+      refetchDirection();
+    } finally {
+      setMarkingRead((prev) => { const s = new Set(prev); s.delete(noteId); return s; });
+    }
+  }, [projectPath, refetchDirection]);
+
+  const markAllRead = useCallback(async () => {
+    for (const note of unreadNotes) {
+      await invoke('mark_direction_note_read', { projectPath, noteId: note.id });
+    }
+    refetchDirection();
+  }, [projectPath, unreadNotes, refetchDirection]);
 
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-[#0a0a0f]">
@@ -75,17 +124,56 @@ export function Dashboard() {
         {strikes > 0 && (
           <span className="text-[11px] text-yellow-500">{strikes}/2 strikes</span>
         )}
+        {unreadNotes.length > 0 && (
+          <span className="text-[11px] text-amber-400 font-medium">
+            {unreadNotes.length} unread {unreadNotes.length === 1 ? 'note' : 'notes'}
+          </span>
+        )}
         <div className="ml-auto flex items-center gap-3">
           <span className="text-[11px] text-blue-400">{todoTasks.length} todo</span>
           <span className="text-[11px] text-gray-500">{doneTasks.length} done</span>
         </div>
       </div>
 
-      {/* Top info pane */}
+      {/* Direction notes — only shown when unread exist */}
+      {unreadNotes.length > 0 && (
+        <div className="shrink-0 border-b border-amber-900/40 bg-amber-950/20">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-amber-900/30">
+            <p className="text-[10px] uppercase tracking-widest text-amber-600 font-semibold">Direction from Pat</p>
+            <button
+              onClick={markAllRead}
+              className="text-[10px] text-amber-700 hover:text-amber-400 transition-colors"
+            >
+              Dismiss all
+            </button>
+          </div>
+          <div className="flex flex-col divide-y divide-amber-900/20">
+            {unreadNotes.map((note) => (
+              <div key={note.id} className="flex items-start gap-3 px-4 py-3">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[12px] text-amber-200 leading-relaxed">{note.text}</p>
+                  <p className="text-[10px] text-amber-800 mt-1 font-mono">
+                    {note.source} · {new Date(note.capturedAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <button
+                  onClick={() => markRead(note.id)}
+                  disabled={markingRead.has(note.id)}
+                  className="shrink-0 text-[10px] text-amber-700 hover:text-amber-400 transition-colors disabled:opacity-40 mt-0.5"
+                >
+                  {markingRead.has(note.id) ? '...' : 'Dismiss'}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Top info pane — 3 columns */}
       <div className="shrink-0 grid grid-cols-3 gap-px bg-gray-800/40 border-b border-gray-800/70">
 
         {/* Active task */}
-        <div className="col-span-2 bg-[#0a0a0f] p-4">
+        <div className="col-span-1 bg-[#0a0a0f] p-4">
           <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">Active Task</p>
           {activeTask ? (
             <>
@@ -96,13 +184,12 @@ export function Dashboard() {
               <p className="text-[10px] text-gray-700 mt-2 font-mono">{activeTask.id}</p>
             </>
           ) : (
-            <p className="text-sm text-gray-600 italic">No active task — call hw_update_task</p>
+            <p className="text-sm text-gray-600 italic">No active task</p>
           )}
         </div>
 
         {/* Phase + queue */}
         <div className="bg-[#0a0a0f] p-4 flex flex-col gap-3">
-          {/* Workflow phase */}
           <div>
             <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">Phase</p>
             <div className="flex gap-1 flex-wrap">
@@ -123,7 +210,6 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* Queue */}
           {todoTasks.length > 0 && (
             <div>
               <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-1.5">Up Next</p>
@@ -137,6 +223,33 @@ export function Dashboard() {
                   <p className="text-[10px] text-gray-600">+{todoTasks.length - 3} more</p>
                 )}
               </div>
+            </div>
+          )}
+        </div>
+
+        {/* Recent sessions */}
+        <div className="bg-[#0a0a0f] p-4">
+          <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">Recent Sessions</p>
+          {recentSessions.length === 0 ? (
+            <p className="text-xs text-gray-600 italic">No sessions yet</p>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {recentSessions.map((s) => (
+                <div key={s.id} className="flex items-start gap-2">
+                  <span className="text-[10px] text-gray-600 font-mono shrink-0 mt-0.5">
+                    {formatSessionDate(s.startedAt)}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[11px] text-gray-400 truncate leading-snug">
+                      {s.summary && s.summary !== '(orphaned — auto-closed)'
+                        ? s.summary
+                        : s.tasksCompleted.length > 0
+                          ? `${s.tasksCompleted.length} task${s.tasksCompleted.length !== 1 ? 's' : ''} done`
+                          : 'no summary'}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

@@ -89,7 +89,18 @@ server.registerTool('hw_get_context', {
     }
   } catch { /* non-fatal */ }
 
-  return text(ctx.compiledText + handoffSection);
+  // Surface unread direction notes — must be processed before starting work
+  let notesSection = '';
+  try {
+    const dir = readDirection();
+    const unread = dir.notes.filter(n => !n.read);
+    if (unread.length > 0) {
+      const noteLines = unread.map(n => `  [${n.id}] ${n.text}`).join('\n');
+      notesSection = `\n\n## UNREAD DIRECTION NOTES — PROCESS BEFORE STARTING WORK\nYou have ${unread.length} unread note(s) from Pat. Call hw_process_direction_note for each one.\nChoose an action: "task" (create a task), "decision" (record a decision), "scope" (add scope entry), or "dismiss" (with reason).\n\n${noteLines}`;
+    }
+  } catch { /* non-fatal */ }
+
+  return text(ctx.compiledText + handoffSection + notesSection);
 });
 
 server.registerTool('hw_write_handoff', {
@@ -505,6 +516,64 @@ server.registerTool('hw_update_direction', {
   return text(`direction.json updated: ${changes.join(', ')}`);
 });
 
+server.registerTool('hw_process_direction_note', {
+  title: 'Process Direction Note',
+  description: 'Route an unread direction note to a concrete action: create a task, record a decision, add a scope entry, or dismiss with a reason. Call for every unread note returned by hw_get_context.',
+  inputSchema: z.object({
+    noteId: z.string().describe('The note ID from hw_get_context unread notes list'),
+    action: z.enum(['task', 'decision', 'scope', 'dismiss']),
+    task: z.object({ title: z.string(), description: z.string() }).optional(),
+    decision: z.object({ title: z.string(), context: z.string(), chosen: z.string(), rationale: z.string(), decidedBy: z.enum(['pat', 'claude', 'both']) }).optional(),
+    scope: z.object({ area: z.string(), decision: z.enum(['in', 'out']), rationale: z.string() }).optional(),
+    dismiss: z.object({ reason: z.string() }).optional(),
+  }),
+}, async (args: { noteId: string; action: string; task?: { title: string; description: string }; decision?: { title: string; context: string; chosen: string; rationale: string; decidedBy: 'pat' | 'claude' | 'both' }; scope?: { area: string; decision: 'in' | 'out'; rationale: string }; dismiss?: { reason: string } }) => {
+  const dir = readDirection();
+  const note = dir.notes.find(n => n.id === args.noteId);
+  if (!note) return text(`Note ${args.noteId} not found`);
+  if (note.read) return text(`Note ${args.noteId} already processed`);
+
+  let outcome = '';
+  let actionId: string | undefined;
+
+  if (args.action === 'task' && args.task) {
+    const task = project.state.addTask(args.task.title, { description: args.task.description });
+    actionId = task.id;
+    outcome = `task created: ${task.id} "${task.title}"`;
+  } else if (args.action === 'decision' && args.decision) {
+    const d = project.state.addDecision(args.decision.title, {
+      context: args.decision.context,
+      chosen: args.decision.chosen,
+      rationale: args.decision.rationale,
+      decidedBy: args.decision.decidedBy,
+    });
+    actionId = d.id;
+    outcome = `decision recorded: ${d.id} "${d.title}"`;
+  } else if (args.action === 'scope' && args.scope) {
+    const fresh = readDirection();
+    fresh.scope = [...fresh.scope, { ...args.scope, capturedAt: new Date().toISOString() }];
+    writeFileSync(directionPath, JSON.stringify(fresh, null, 2), 'utf-8');
+    outcome = `scope entry added: ${args.scope.area} [${args.scope.decision.toUpperCase()}]`;
+  } else if (args.action === 'dismiss' && args.dismiss) {
+    outcome = `dismissed: ${args.dismiss.reason}`;
+  } else {
+    return text(`Missing data for action "${args.action}". Provide the matching field (task/decision/scope/dismiss).`);
+  }
+
+  // Mark note read with action recorded
+  const updated = readDirection();
+  const idx = updated.notes.findIndex(n => n.id === args.noteId);
+  if (idx >= 0) {
+    (updated.notes[idx] as Record<string, unknown>).read = true;
+    (updated.notes[idx] as Record<string, unknown>).actionTaken = args.action;
+    if (actionId) (updated.notes[idx] as Record<string, unknown>).actionId = actionId;
+  }
+  writeFileSync(directionPath, JSON.stringify(updated, null, 2), 'utf-8');
+
+  activity.append('note_processed', `Direction note ${args.noteId} processed via ${args.action}`, outcome);
+  return text(`Note processed.\n${outcome}`);
+});
+
 // ── Watchers ────────────────────────────────────────────────────
 
 server.registerTool('hw_spawn_watcher', {
@@ -576,6 +645,7 @@ const TOOL_CATALOG = [
   { name: 'hw_add_question', category: 'questions' },
   { name: 'hw_answer_question', category: 'questions' },
   { name: 'hw_update_direction', category: 'direction' },
+  { name: 'hw_process_direction_note', category: 'direction' },
   { name: 'hw_notify', category: 'notifications' },
   { name: 'hw_check_approval', category: 'approvals' },
   { name: 'hw_list_approvals', category: 'approvals' },

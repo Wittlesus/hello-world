@@ -25,11 +25,16 @@ export type ProjectConfig = z.infer<typeof ProjectConfigSchema>;
 export const TaskStatus = z.enum(['todo', 'in_progress', 'done', 'blocked']);
 export type TaskStatus = z.infer<typeof TaskStatus>;
 
+export const TaskSize = z.enum(['S', 'M', 'L', 'Epic']);
+export type TaskSize = z.infer<typeof TaskSize>;
+
 export const TaskSchema = z.object({
   id: z.string(),
   title: z.string().min(1),
   description: z.string().default(''),
   status: TaskStatus.default('todo'),
+  size: TaskSize.optional(),
+  parentId: z.string().optional(),
   assignee: z.string().optional(),
   milestoneId: z.string().optional(),
   tags: z.array(z.string()).default([]),

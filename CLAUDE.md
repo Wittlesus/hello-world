@@ -59,6 +59,9 @@ Storage: JSON files in `.hello-world/` (local-first, no cloud dependency)
 - `hw_add_question(question, context?)` — log open questions.
 - `hw_answer_question(id, answer)` — close answered questions.
 
+### Direction Notes
+- `hw_process_direction_note(noteId, action, data)` — route an unread note to an action. action: "task" | "decision" | "scope" | "dismiss". MUST call for every unread note before starting other work.
+
 ### Approvals & Notifications
 - `hw_check_approval(action, description)` — MUST call before: git push, deploy, delete files, architecture changes. Returns auto/notify/block.
 - `hw_notify(message)` — DM Pat when blocked, need direction, or something important happened.

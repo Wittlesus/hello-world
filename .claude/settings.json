@@ -44,6 +44,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node C:/Users/Patri/CascadeProjects/hello-world/.claude/hooks/post-rust-check.mjs",
+            "timeout": 120
+          }
+        ]
       }
     ]
   }

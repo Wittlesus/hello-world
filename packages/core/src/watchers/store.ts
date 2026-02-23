@@ -1,7 +1,11 @@
 import { JsonStore } from '../storage.js';
-import { generateId, now } from '../utils.js';
+import { generateWatcherName, now } from '../utils.js';
 
 export type WatcherType = 'app_shutdown_copy';
+
+const TYPE_TAGS: Record<WatcherType, string> = {
+  app_shutdown_copy: 'copy',
+};
 export type WatcherStatus = 'active' | 'completed' | 'failed' | 'killed' | 'timed_out';
 
 export interface CopySpec {
@@ -40,9 +44,11 @@ export class WatcherStore {
   }
 
   add(entry: Omit<WatcherEntry, 'spawnedAt' | 'status'> & { id?: string }): WatcherEntry {
+    const existing = this.listAllIds();
+    const tag = TYPE_TAGS[entry.type] ?? 'watch';
     const watcher: WatcherEntry = {
       ...entry,
-      id: entry.id ?? generateId('w'),
+      id: entry.id ?? generateWatcherName(tag, existing),
       spawnedAt: now(),
       status: 'active',
     };
@@ -50,8 +56,14 @@ export class WatcherStore {
     return watcher;
   }
 
-  generateId(): string {
-    return generateId('w');
+  private listAllIds(): string[] {
+    const d = this.store.read();
+    return [...d.active, ...d.completed].map((w) => w.id);
+  }
+
+  generateName(type: WatcherType): string {
+    const tag = TYPE_TAGS[type] ?? 'watch';
+    return generateWatcherName(tag, this.listAllIds());
   }
 
   kill(watcherId: string): 'killed' | 'not_found' | 'already_terminated' {

@@ -11,6 +11,9 @@ import { SessionsView } from './components/SessionsView.js';
 import { CostView } from './components/CostView.js';
 import { SettingsView } from './components/SettingsView.js';
 import { SkillsView } from './components/SkillsView.js';
+import { WatchersView } from './components/WatchersView.js';
+import { ProjectContextView } from './components/ProjectContextView.js';
+import { TimelineView } from './components/TimelineView.js';
 import { TerminalView } from './components/TerminalView.js';
 import { ProjectSetup } from './components/ProjectSetup.js';
 import { useAppStore, type View } from './stores/app.js';
@@ -26,6 +29,9 @@ const KEY_MAP: Record<string, View> = {
   '8': 'settings',
   't': 'terminal',
   'k': 'skills',
+  'w': 'watchers',
+  'p': 'context',
+  'l': 'timeline',
 };
 
 function MainContent() {
@@ -43,6 +49,9 @@ function MainContent() {
       {view === 'cost'       && <CostView />}
       {view === 'settings'   && <SettingsView />}
       {view === 'skills'     && <SkillsView />}
+      {view === 'watchers'   && <WatchersView />}
+      {view === 'context'    && <ProjectContextView />}
+      {view === 'timeline'   && <TimelineView />}
 
       {/* Terminal stays mounted always — hidden when not active so PTY and xterm.js survive tab switches */}
       <div className="flex-1 flex flex-col min-h-0" style={{ display: view === 'terminal' ? 'flex' : 'none' }}>

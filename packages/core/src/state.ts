@@ -55,6 +55,17 @@ export class StateManager {
   }
 
   updateTask(id: string, updates: Partial<Omit<Task, 'id' | 'createdAt'>>): Task {
+    // Epics cannot be started directly — they must be decomposed into child tasks first
+    if (updates.status === 'in_progress') {
+      const task = this.getTask(id);
+      if (task?.size === 'Epic') {
+        const children = this.getEpicChildren(id);
+        if (children.length === 0) {
+          throw new Error(`Cannot start Epic "${task.title}" — decompose it into child tasks first`);
+        }
+      }
+    }
+
     let updated: Task | undefined;
 
     this.store.update(data => ({
@@ -68,6 +79,10 @@ export class StateManager {
 
     if (!updated) throw new Error(`Task not found: ${id}`);
     return updated;
+  }
+
+  getEpicChildren(epicId: string): Task[] {
+    return this.store.read().tasks.filter(t => t.parentId === epicId);
   }
 
   removeTask(id: string): void {

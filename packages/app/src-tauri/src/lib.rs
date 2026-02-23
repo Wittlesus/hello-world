@@ -195,6 +195,21 @@ fn get_direction(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn mark_direction_note_read(project_path: &str, note_id: String) -> Result<(), String> {
+    let mut data = read_json_file(project_path, "direction.json")?;
+    let notes = data["notes"]
+        .as_array_mut()
+        .ok_or("direction.json missing notes array")?;
+    for note in notes.iter_mut() {
+        if note["id"].as_str() == Some(note_id.as_str()) {
+            note["read"] = serde_json::json!(true);
+            break;
+        }
+    }
+    write_json_file(project_path, "direction.json", &data)
+}
+
+#[tauri::command]
 fn get_watchers(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "watchers.json")
 }
@@ -499,10 +514,10 @@ fn build_project_context(project_path: &str) -> String {
 }
 
 #[tauri::command]
-fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Result<(), String> {
-    // Idempotent — if a session is already running, don't spawn another
+fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Result<bool, String> {
+    // Idempotent — if a session is already running, return false so frontend knows to set status ready
     if PTY_STATE.lock().map_err(|_| "Lock poisoned")?.is_some() {
-        return Ok(());
+        return Ok(false);
     }
 
     let home = std::env::var("USERPROFILE")
@@ -516,12 +531,8 @@ fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Res
 
     let mut cmd = CommandBuilder::new("cmd");
 
-    if let Some(ref path) = project_path {
-        let context = build_project_context(path);
-        cmd.args(["/c", "helloworld", "--append-system-prompt", &context]);
-    } else {
-        cmd.args(["/c", "helloworld"]);
-    }
+    // helloworld.cmd already injects the CEO system prompt — don't double up
+    cmd.args(["/c", "helloworld"]);
 
     cmd.cwd(&home);
 
@@ -537,15 +548,28 @@ fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Res
         .take_writer()
         .map_err(|e| format!("Writer take failed: {e}"))?;
 
+    // Set state BEFORE spawning thread — prevents race where thread clears state
+    // before we've written it, causing respawn checks to fail
+    *PTY_STATE.lock().map_err(|_| "Lock poisoned")? = Some(PtyState {
+        writer,
+        master: pty_pair.master,
+    });
+
     // Background thread: stream raw PTY output to frontend
+    // When the process dies, clear PTY_STATE so the next start_pty_session call respawns
     std::thread::spawn(move || {
         let mut buf = [0u8; 4096];
         let mut reader = reader;
         loop {
             match reader.read(&mut buf) {
-                Ok(0) | Err(_) => break,
+                Ok(0) | Err(_) => {
+                    if let Ok(mut guard) = PTY_STATE.lock() {
+                        *guard = None;
+                    }
+                    let _ = app.emit("pty-died", ());
+                    break;
+                }
                 Ok(n) => {
-                    // Send raw bytes as base64 — xterm.js decodes and renders natively
                     let encoded = base64_encode(&buf[..n]);
                     let _ = app.emit("pty-data", encoded);
                 }
@@ -553,12 +577,7 @@ fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Res
         }
     });
 
-    *PTY_STATE.lock().map_err(|_| "Lock poisoned")? = Some(PtyState {
-        writer,
-        master: pty_pair.master,
-    });
-
-    Ok(())
+    Ok(true)
 }
 
 #[tauri::command]
@@ -670,6 +689,7 @@ pub fn run() {
             get_approvals,
             get_workflow,
             get_direction,
+            mark_direction_note_read,
             get_watchers,
             get_timeline,
             get_chat_history,
