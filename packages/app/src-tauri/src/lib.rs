@@ -263,6 +263,52 @@ fn get_timeline(project_path: &str) -> Result<String, String> {
         .map_err(|e| format!("Failed to read timeline.md: {}", e))
 }
 
+#[tauri::command]
+fn get_chatroom(project_path: &str) -> Result<String, String> {
+    let path = std::path::Path::new(project_path)
+        .join(".hello-world")
+        .join("chatroom.json");
+    if !path.exists() {
+        return Ok(r#"{"session":{"id":"","topic":"","status":"idle","startedAt":"","startedBy":"claude","waitingForInput":false,"roundNumber":0},"agents":[],"messages":[]}"#.to_string());
+    }
+    std::fs::read_to_string(&path)
+        .map_err(|e| format!("Failed to read chatroom.json: {}", e))
+}
+
+#[tauri::command]
+fn post_pat_chatroom_message(project_path: &str, message: String) -> Result<(), String> {
+    let path = std::path::Path::new(project_path)
+        .join(".hello-world")
+        .join("chatroom.json");
+    let raw = std::fs::read_to_string(&path)
+        .map_err(|e| format!("Failed to read chatroom.json: {}", e))?;
+    let mut data: serde_json::Value = serde_json::from_str(&raw)
+        .map_err(|e| format!("Failed to parse chatroom.json: {}", e))?;
+    // Set pendingPatMessage on the session
+    if let Some(session) = data.get_mut("session") {
+        session["pendingPatMessage"] = serde_json::Value::String(message.clone());
+        session["waitingForInput"] = serde_json::Value::Bool(false);
+    }
+    // Also append to messages directly so Pat sees it immediately
+    if let Some(messages) = data.get_mut("messages").and_then(|m| m.as_array_mut()) {
+        let ms = epoch_ms();
+        let now = ms.to_string(); // epoch ms — new Date(ms) works fine in JS
+        let id = format!("msg_{}", ms);
+        messages.push(serde_json::json!({
+            "id": id,
+            "agentId": "pat",
+            "text": message,
+            "timestamp": now,
+            "type": "pat"
+        }));
+    }
+    let out = serde_json::to_string_pretty(&data)
+        .map_err(|e| format!("Serialize error: {}", e))?;
+    std::fs::write(&path, out)
+        .map_err(|e| format!("Write error: {}", e))?;
+    Ok(())
+}
+
 fn epoch_ms() -> u64 {
     std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -907,6 +953,8 @@ pub fn run() {
             get_watchers,
             kill_watcher,
             get_timeline,
+            get_chatroom,
+            post_pat_chatroom_message,
             get_chat_history,
             append_chat_message,
             send_claude_message,
