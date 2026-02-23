@@ -18,6 +18,8 @@ export interface ChatMessage {
   type: MessageType;
 }
 
+export type DeliberationPhase = 'frame' | 'deliberate' | 'synthesis' | 'patinput' | 'decision';
+
 export interface ChatSession {
   id: string;
   topic: string;
@@ -27,6 +29,7 @@ export interface ChatSession {
   waitingForInput: boolean;
   roundNumber: number;
   pendingPatMessage?: string;
+  deliberationPhase?: DeliberationPhase;
 }
 
 export interface ChatroomState {
