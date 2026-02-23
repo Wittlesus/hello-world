@@ -60,18 +60,19 @@ export function ClaudeBuddy() {
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
   const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
 
-  const [collapsed, setCollapsed]     = useState(false);
-  const [buddyState, setBuddyState]   = useState<BuddyState>('Waiting');
-  const [muted, setMuted]             = useState(false);
-  const mutedRef                      = useRef(false);
-  const cleanupRef                    = useRef<(() => void)[]>([]);
-  const lastFilesChanged              = useRef<number>(0);
-  const lastPtyLine                   = useRef<number>(0);
-  // True once we've seen any activity this cycle — so the chime only fires
-  // after real work, not on a cold Waiting state at startup.
-  const hadActivityRef                = useRef(false);
+  const [collapsed, setCollapsed]   = useState(false);
+  const [buddyState, setBuddyState] = useState<BuddyState>('Waiting');
+  const [muted, setMuted]           = useState(false);
+  const mutedRef                    = useRef(false);
+  const buddyStateRef               = useRef<BuddyState>('Waiting');
+  const safetyTimerRef              = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const toggleMute = () => setMuted(m => { mutedRef.current = !m; return !m; });
+
+  const setStateAndRef = (s: BuddyState) => {
+    buddyStateRef.current = s;
+    setBuddyState(s);
+  };
 
   const phase       = workflowData?.phase ?? 'idle';
   const activeTask  = stateData?.tasks.find((t) => t.status === 'in_progress');
@@ -80,76 +81,45 @@ export function ClaudeBuddy() {
   const isActive    = phase !== 'idle';
 
   useEffect(() => {
-    // PTY lines — real-time terminal output from Claude
-    const ptyPromise = listen<string>('hw-pty-line', (event) => {
-      if (!event.payload) return;
-      lastPtyLine.current = Date.now();
-      hadActivityRef.current = true;
-    });
-
-    // Files changed — Claude is executing Edit/Write tools
+    // Files changed — sub-state while Claude is editing (only during Claude's turn)
     const filesPromise = listen<string[]>('hw-files-changed', () => {
-      lastFilesChanged.current = Date.now();
-      hadActivityRef.current = true;
+      if (buddyStateRef.current !== 'Waiting') {
+        setStateAndRef('Coding');
+      }
     });
 
-    // Stop hook — Claude definitively finished its turn.
-    // This is the authoritative Waiting signal — no timeout needed.
-    // UserPromptSubmit hook sends type:'typing' so hadActivity is always true
-    // before Stop fires — guarantees chime even for pure text responses.
+    // Two hook signals drive the state machine:
+    //   typing  (UserPromptSubmit) → Pat sent a message, Claude has the turn
+    //   awaiting (Stop)            → Claude finished, Pat has the turn + chime
     const summaryPromise = listen<{ type: string; summary: string }>(
       'hw-tool-summary',
       (event) => {
-        if (event.payload?.type === 'typing') {
-          hadActivityRef.current = true;
-          setBuddyState('Responding');
+        const type = event.payload?.type;
+
+        if (type === 'typing') {
+          // Clear any pending safety timeout — a real cycle is starting
+          if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+          setStateAndRef('Responding');
+          // Safety fallback: if Stop hook never fires (crash/timeout), reset after 3min
+          safetyTimerRef.current = setTimeout(() => {
+            setStateAndRef('Waiting');
+          }, 3 * 60 * 1000);
           return;
         }
-        if (event.payload?.type !== 'awaiting') return;
-        // Reset timestamps so the fallback poller doesn't fight us
-        lastPtyLine.current      = 0;
-        lastFilesChanged.current = 0;
-        setBuddyState('Waiting');
-        if (hadActivityRef.current && !mutedRef.current) playDoneSound();
-        hadActivityRef.current = false;
+
+        if (type === 'awaiting') {
+          if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+          setStateAndRef('Waiting');
+          if (!mutedRef.current) playDoneSound();
+        }
       }
     );
 
-    cleanupRef.current = [
-      () => ptyPromise.then((fn) => fn()),
-      () => filesPromise.then((fn) => fn()),
-      () => summaryPromise.then((fn) => fn()),
-    ];
-    return () => cleanupRef.current.forEach((fn) => fn());
-  }, []);
-
-  // Fallback poller: drives Coding/Responding labels and catches the rare
-  // case where the Stop hook fails to fire (crash/timeout edge case).
-  // The Stop hook owns the Waiting transition — this only steps in after
-  // 10s of total silence from both channels.
-  useEffect(() => {
-    const id = setInterval(() => {
-      const now = Date.now();
-      const next: BuddyState =
-        now - lastFilesChanged.current < 3000 ? 'Coding' :
-        now - lastPtyLine.current      < 4000 ? 'Responding' :
-        'Waiting';
-
-      if (next !== 'Waiting') {
-        setBuddyState(next);
-      } else {
-        // Only override to Waiting via fallback after 10s of total silence
-        const lastActivity = Math.max(lastPtyLine.current, lastFilesChanged.current);
-        if (lastActivity > 0 && now - lastActivity > 10_000) {
-          setBuddyState('Waiting');
-          if (hadActivityRef.current && !mutedRef.current) playDoneSound();
-          hadActivityRef.current   = false;
-          lastPtyLine.current      = 0;
-          lastFilesChanged.current = 0;
-        }
-      }
-    }, 500);
-    return () => clearInterval(id);
+    return () => {
+      filesPromise.then((fn) => fn());
+      summaryPromise.then((fn) => fn());
+      if (safetyTimerRef.current) clearTimeout(safetyTimerRef.current);
+    };
   }, []);
 
   const headAnim =
