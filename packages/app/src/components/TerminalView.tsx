@@ -7,6 +7,7 @@ import { WebLinksAddon } from '@xterm/addon-web-links';
 import '@xterm/xterm/css/xterm.css';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
+import { ChatroomPanel } from './ChatroomPanel.js';
 
 interface Task { id: string; title: string; description?: string; status: string }
 interface StateData { tasks: Task[] }
@@ -334,6 +335,9 @@ export function TerminalView() {
         />
         {panelOpen && <SidePanel />}
       </div>
+
+      {/* Chatroom deliberation panel */}
+      <ChatroomPanel />
     </div>
   );
 }
