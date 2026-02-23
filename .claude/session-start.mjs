@@ -24,8 +24,10 @@ const directionRaw = safeRead('direction.json');
 const directions  = Array.isArray(directionRaw)
   ? { vision: '', scope: [], notes: directionRaw }
   : (directionRaw ?? { vision: '', scope: [], notes: [] });
-const sessions    = safeRead('sessions.json');
-const handoff     = safeRead('restart-handoff.json');
+const sessions      = safeRead('sessions.json');
+const handoff       = safeRead('restart-handoff.json');
+const pendingChanges = safeRead('pending-changes.json');
+const crashReport   = safeRead('crash-report.json');
 
 const projectName   = config?.config?.name ?? 'Claude AI Interface';
 const phase         = workflow?.phase ?? 'idle';
@@ -59,6 +61,35 @@ lines.push('');
 if (vision) {
   const visionShort = vision.length > 120 ? vision.slice(0, 117) + '...' : vision;
   lines.push(`VISION: ${visionShort}`);
+  lines.push('');
+}
+
+// Crash report — watcher applied Rust changes on last shutdown
+if (crashReport?.appliedCopies?.length > 0) {
+  const ageMs = Date.now() - new Date(crashReport.reportedAt).getTime();
+  if (ageMs < 24 * 60 * 60 * 1000) { // only surface if under 24h old
+    const allOk = crashReport.appliedCopies.every(c => c.status === 'ok');
+    lines.push(`## RUST CHANGES APPLIED (watcher fired on last shutdown)`);
+    lines.push(`${crashReport.pendingChangesDescription} — applied ${crashReport.reportedAt}`);
+    crashReport.appliedCopies.forEach(c => {
+      lines.push(`  ${c.status === 'ok' ? '[OK]' : '[FAIL]'} ${c.to}`);
+      if (c.errorMessage) lines.push(`       Error: ${c.errorMessage}`);
+    });
+    if (!allOk) lines.push(`ATTENTION: Some copies failed — check .hello-world/watcher-results.json`);
+    lines.push('');
+  }
+}
+
+// Pending Rust changes — worktree edits not yet applied
+const pendingRust = (pendingChanges?.pending ?? []).filter(p => p.status === 'pending');
+if (pendingRust.length > 0) {
+  lines.push(`## PENDING RUST CHANGES (not yet applied to master)`);
+  pendingRust.forEach(p => {
+    lines.push(`  [ ] ${p.description}`);
+    lines.push(`      from: ${p.fromPath}`);
+    lines.push(`      to:   ${p.toPath}`);
+  });
+  lines.push(`  Apply after app shutdown: cp <from> <to>, then git add + commit`);
   lines.push('');
 }
 
