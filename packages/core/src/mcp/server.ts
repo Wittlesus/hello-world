@@ -94,6 +94,8 @@ function generateSummary(tool: string, args: Record<string, unknown>): string {
     case 'hw_spawn_watcher': return `Spawned watcher: ${args.type}`;
     case 'hw_get_context':   return `Context loaded`;
     case 'hw_start_task':    return `Started task: ${args.taskId}`;
+    case 'hw_get_task':      return `Got task: ${args.taskId}`;
+    case 'hw_reset_strikes': return `Strikes reset: ${args.taskId}`;
     default: return tool.replace('hw_', '').replace(/_/g, ' ');
   }
 }
@@ -126,6 +128,8 @@ function toolFiles(tool: string): string[] {
     hw_list_watchers:     [],
     hw_check_autonomous_timer: [],
     hw_start_task:            ['state.json', 'workflow.json'],
+    hw_get_task:              [],
+    hw_reset_strikes:         ['workflow.json'],
   };
   return map[tool] ?? ['state.json'];
 }
@@ -341,6 +345,22 @@ server.registerTool('hw_start_task', {
     taskId: z.string().describe('The task ID to start'),
   }),
 }, async (args: { taskId: string }) => {
+  // Enforce dependency gate — block if any depended-on tasks are not done
+  const allTasks = project.state.listTasks();
+  const candidate = allTasks.find(t => t.id === args.taskId);
+  if (candidate?.dependsOn?.length) {
+    const blockers = candidate.dependsOn.filter(depId => {
+      const dep = allTasks.find(t => t.id === depId);
+      return dep && dep.status !== 'done';
+    });
+    if (blockers.length > 0) {
+      const blockerDetails = blockers.map(id => {
+        const dep = allTasks.find(t => t.id === id);
+        return `  ${id}: ${dep?.title ?? 'unknown'} [${dep?.status ?? '?'}]`;
+      }).join('\n');
+      return text(`BLOCKED: Task "${candidate.title}" has unmet dependencies:\n${blockerDetails}\n\nComplete those tasks first, or remove the dependency.`);
+    }
+  }
   const task = project.state.updateTask(args.taskId, { status: 'in_progress' });
   const wf = workflow.getState();
   if (wf.phase === 'idle') {
@@ -502,6 +522,34 @@ server.registerTool('hw_record_failure', {
   }
   activity.append('strike_recorded', `Strike ${check.count}/2: ${args.errorMessage.slice(0, 80)}`, `Task: ${args.taskId}\nApproach: ${args.approach}`);
   return text(`Strike ${check.count}/2 recorded for task ${args.taskId}. Try a different angle.`);
+});
+
+server.registerTool('hw_get_task', {
+  title: 'Get Task',
+  description: 'Get full details of a specific task by ID — title, description, status, tags, dependencies.',
+  inputSchema: z.object({ taskId: z.string() }),
+}, async (args: { taskId: string }) => {
+  const task = project.state.listTasks().find(t => t.id === args.taskId);
+  if (!task) return text(`No task found with ID: ${args.taskId}`);
+  const lines = [
+    `ID: ${task.id}`,
+    `Title: ${task.title}`,
+    `Status: ${task.status}`,
+    task.description ? `Description: ${task.description}` : null,
+    task.tags?.length ? `Tags: ${task.tags.join(', ')}` : null,
+    task.dependsOn?.length ? `Depends on: ${task.dependsOn.join(', ')}` : null,
+  ].filter((l): l is string => l !== null);
+  return text(lines.join('\n'));
+});
+
+server.registerTool('hw_reset_strikes', {
+  title: 'Reset Strikes',
+  description: 'Clear Two-Strike halt for a task so work can resume with a new approach. Call after agreeing on a different approach with Pat.',
+  inputSchema: z.object({ taskId: z.string() }),
+}, async (args: { taskId: string }) => {
+  strikes.resetStrikes(args.taskId);
+  activity.append('strike_reset', `Strikes cleared for task ${args.taskId}`, 'New approach authorized');
+  return text(`Strikes cleared for task ${args.taskId}. Safe to proceed with a different approach.`);
 });
 
 // ── Sessions ────────────────────────────────────────────────────
