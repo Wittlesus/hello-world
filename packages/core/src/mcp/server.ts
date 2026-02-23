@@ -927,6 +927,23 @@ server.registerTool('hw_set_deliberation_phase', {
   return text(`Deliberation phase set to: ${args.phase}`);
 });
 
+server.registerTool('hw_react', {
+  title: 'React',
+  description: 'Post an emoji reaction as an agent — appears as a combat-text floater above their head in the UI. Use while another agent is speaking to show real-time reactions (e.g. agreement, skepticism, surprise). Keep it to a single emoji.',
+  inputSchema: z.object({
+    agentId: z.string().describe('The reacting agent ID'),
+    emoji: z.string().describe('Single emoji to react with'),
+  }),
+}, async (args: { agentId: string; emoji: string }) => {
+  const state = chatroom.read();
+  if (state.session.status === 'idle') return text('No active deliberation.');
+  const valid = [...state.agents.map(a => a.id), 'claude'];
+  if (!valid.includes(args.agentId)) return text(`Unknown agent "${args.agentId}". Valid: ${valid.join(', ')}`);
+  chatroom.appendReaction(args.agentId, args.emoji);
+  activity.append('agent_reacted', `${args.agentId}: ${args.emoji}`, '');
+  return text(`Reaction posted: ${args.agentId} ${args.emoji}`);
+});
+
 server.registerTool('hw_post_to_chatroom', {
   title: 'Post to Chatroom',
   description: 'Post a message as Claude (golden buddy) to the deliberation chatroom.',
@@ -1011,6 +1028,7 @@ const TOOL_CATALOG = [
   { name: 'hw_post_to_chatroom', category: 'chatroom' },
   { name: 'hw_post_agent_message', category: 'chatroom' },
   { name: 'hw_set_deliberation_phase', category: 'chatroom' },
+  { name: 'hw_react', category: 'chatroom' },
 ];
 
 try {
