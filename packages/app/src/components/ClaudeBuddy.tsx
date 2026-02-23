@@ -7,18 +7,26 @@ import { useProjectPath } from '../hooks/useProjectPath.js';
 function playDoneSound() {
   try {
     const ctx = new AudioContext();
-    const gain = ctx.createGain();
-    gain.connect(ctx.destination);
-    gain.gain.setValueAtTime(0.18, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
-    // Two ascending tones — A5 then D6 — soft chime
-    ([880, 1175] as number[]).forEach((freq, i) => {
+    // C5 harmonic bell: fundamental + natural overtone series.
+    // Higher partials decay faster, leaving the fundamental resonating —
+    // like a small crystal singing bowl settling after being struck.
+    const partials: [freq: number, gain: number, decay: number][] = [
+      [523.25, 0.20, 1.8],  // C5 — fundamental, long sustain
+      [1046.5, 0.09, 1.0],  // C6 — octave
+      [1568.0, 0.05, 0.65], // G6 — perfect fifth harmonic
+      [2093.0, 0.03, 0.40], // C7 — two octaves up
+    ];
+    partials.forEach(([freq, peak, decay]) => {
       const osc = ctx.createOscillator();
+      const g   = ctx.createGain();
       osc.type = 'sine';
       osc.frequency.value = freq;
-      osc.connect(gain);
-      osc.start(ctx.currentTime + i * 0.13);
-      osc.stop(ctx.currentTime + 0.7);
+      osc.connect(g);
+      g.connect(ctx.destination);
+      g.gain.setValueAtTime(peak, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + decay);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + decay);
     });
   } catch { /* AudioContext unavailable — non-fatal */ }
 }
@@ -59,7 +67,10 @@ export function ClaudeBuddy() {
   const cleanupRef                    = useRef<(() => void)[]>([]);
   const lastFilesChanged              = useRef<number>(0);
   const lastPtyLine                   = useRef<number>(0);
-  const prevBuddyState                = useRef<BuddyState>('Waiting');
+  // Chime state machine: track activity cycle so we only fire once per
+  // completed response, not on every mid-response thinking pause.
+  const hadActivityRef                = useRef(false); // seen Coding/Responding since last chime
+  const chimeFiredRef                 = useRef(false); // chime already fired this cycle
 
   const toggleMute = () => setMuted(m => { mutedRef.current = !m; return !m; });
 
@@ -89,7 +100,9 @@ export function ClaudeBuddy() {
   }, []);
 
   // Recompute state every 500ms based on last event timestamps.
-  // Detects the Responding/Coding → Waiting transition and fires a chime.
+  // Chime logic: requires 6s of silence from BOTH PTY and MCP events so
+  // mid-response thinking pauses don't trigger it. Uses hadActivityRef +
+  // chimeFiredRef so the chime fires once per completed response cycle.
   useEffect(() => {
     const id = setInterval(() => {
       const now = Date.now();
@@ -98,12 +111,23 @@ export function ClaudeBuddy() {
         now - lastPtyLine.current   < 4000 ? 'Responding' :
         'Waiting';
 
-      if (next === 'Waiting' && prevBuddyState.current !== 'Waiting') {
-        // Claude just finished — play chime unless muted
-        if (!mutedRef.current) playDoneSound();
+      if (next !== 'Waiting') {
+        // Active — record that work happened this cycle, reset chime lock
+        hadActivityRef.current = true;
+        chimeFiredRef.current  = false;
+      } else if (hadActivityRef.current && !chimeFiredRef.current) {
+        // Waiting, had prior activity, chime not yet fired — check silence depth.
+        // Both events must have been quiet for 6s (not just PTY).
+        // This filters out pauses where Claude is still "thinking" between tool calls.
+        const ptyQuiet   = now - lastPtyLine.current   > 6000;
+        const filesQuiet = now - lastFilesChanged.current > 6000;
+        if (ptyQuiet && filesQuiet) {
+          if (!mutedRef.current) playDoneSound();
+          chimeFiredRef.current  = true;
+          hadActivityRef.current = false;
+        }
       }
 
-      prevBuddyState.current = next;
       setBuddyState(next);
     }, 500);
     return () => clearInterval(id);
