@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { Terminal } from '@xterm/xterm';
@@ -13,11 +13,28 @@ interface StateData { tasks: Task[] }
 interface ActivityEvent { id: string; type: string; description: string; timestamp: string }
 interface ActivityData { activities: ActivityEvent[] }
 interface WorkflowData { phase: string }
+interface Session { id: string; startedAt: string; endedAt?: string; tasksCompleted: string[] }
+interface SessionsData { sessions: Session[] }
 
 const PHASE_DOT: Record<string, string> = {
   idle: 'bg-gray-500', scope: 'bg-yellow-400', plan: 'bg-blue-400',
   build: 'bg-indigo-400', verify: 'bg-orange-400', ship: 'bg-green-400',
 };
+
+function formatSessionDate(iso: string): string {
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+}
+
+function formatDuration(start: string, end?: string): string {
+  const s = new Date(start);
+  const e = end ? new Date(end) : new Date();
+  if (isNaN(s.getTime())) return '';
+  const mins = Math.floor((e.getTime() - s.getTime()) / 60000);
+  if (mins < 60) return `${mins}m`;
+  return `${Math.floor(mins / 60)}h${mins % 60 ? `${mins % 60}m` : ''}`;
+}
 
 function formatTime(ts: string): string {
   const d = new Date(ts);
@@ -33,6 +50,7 @@ function SidePanel() {
   const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
   const { data: activityData } = useTauriData<ActivityData>('get_activity', projectPath);
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
+  const { data: sessionsData } = useTauriData<SessionsData>('get_sessions', projectPath);
 
   const tasks      = stateData?.tasks ?? [];
   const activeTask = tasks.find((t) => t.status === 'in_progress');
@@ -43,6 +61,17 @@ function SidePanel() {
   const activities = activityData?.activities
     ? [...activityData.activities].reverse().slice(0, 8)
     : [];
+
+  const allSessions    = sessionsData?.sessions ?? [];
+  const recentSessions = [...allSessions].reverse().slice(0, 5);
+  const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
+  const toggleSession = useCallback((id: string) => {
+    setExpandedSessions((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }, []);
 
   return (
     <div className="w-64 flex flex-col border-l border-gray-800 bg-[#0d0d14] shrink-0 overflow-hidden">
@@ -77,6 +106,52 @@ function SidePanel() {
                 <span className="text-gray-700 mr-1">·</span>{t.title}
               </p>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Recent sessions */}
+      {recentSessions.length > 0 && (
+        <div className="px-3 py-3 border-b border-gray-800/60">
+          <p className="text-[9px] uppercase tracking-widest text-gray-600 mb-1.5">Sessions</p>
+          <div className="flex flex-col gap-0.5">
+            {recentSessions.map((s, i) => {
+              const sessionNum = allSessions.length - i;
+              const isActive   = !s.endedAt;
+              const isExpanded = expandedSessions.has(s.id);
+              const hasTasks   = s.tasksCompleted.length > 0;
+              const duration   = formatDuration(s.startedAt, s.endedAt);
+              return (
+                <div key={s.id}>
+                  <button
+                    onClick={() => hasTasks && toggleSession(s.id)}
+                    className={`w-full flex items-center gap-1 text-left py-0.5 ${hasTasks ? 'cursor-pointer' : 'cursor-default'}`}
+                  >
+                    <span className="text-[9px] text-gray-700 shrink-0 w-2">
+                      {hasTasks ? (isExpanded ? '▼' : '▶') : '\u00a0'}
+                    </span>
+                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 animate-pulse" />}
+                    <span className="text-[10px] text-gray-500 font-mono shrink-0">#{sessionNum}</span>
+                    <span className="text-[10px] text-gray-600 font-mono shrink-0 ml-1">{formatSessionDate(s.startedAt)}</span>
+                    <span className="text-[10px] text-gray-700 ml-auto shrink-0 font-mono">
+                      {hasTasks ? `${s.tasksCompleted.length}t` : '\u2014'} · {duration}
+                    </span>
+                  </button>
+                  {isExpanded && hasTasks && (
+                    <div className="ml-3.5 mb-1 flex flex-col gap-0.5 border-l border-gray-800/80 pl-2">
+                      {s.tasksCompleted.map((tid) => {
+                        const task = tasks.find((t) => t.id === tid);
+                        return (
+                          <p key={tid} className="text-[10px] text-gray-500 truncate">
+                            {'\u21b3'} {task ? task.title : tid}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
