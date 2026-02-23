@@ -2,11 +2,13 @@
 /**
  * Hello World — PreCompact hook
  * Fires before Claude Code compresses context.
- * Appends (or updates) the current session's entry in timeline.md.
- * Idempotent: keyed on session ID, safe to fire multiple times.
+ * 1. Appends (or updates) the current session's entry in timeline.md.
+ * 2. Updates the current session's costUsd + tokensUsed in sessions.json
+ *    by scanning JSONL conversation logs.
+ * Idempotent: safe to fire multiple times.
  */
 
-import { readFileSync, writeFileSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 
 const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
@@ -146,3 +148,99 @@ if (existing.includes(marker)) {
 }
 
 writeFileSync(timelinePath, existing, 'utf8');
+
+// ── Cost tracking: scan JSONL for current session token usage ──────────────
+
+const JSONL_DIR = 'C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world';
+
+// Pricing per 1M tokens (claude-sonnet-4-x)
+const PRICE = {
+  input:          3.00,
+  cache_creation: 3.75,
+  cache_read:     0.30,
+  output:        15.00,
+};
+
+function computeCost(usage) {
+  return (
+    (usage.input          * PRICE.input +
+     usage.cache_creation * PRICE.cache_creation +
+     usage.cache_read     * PRICE.cache_read +
+     usage.output         * PRICE.output) / 1_000_000
+  );
+}
+
+try {
+  const sessionStartMs = sessionStart.getTime();
+  const sessionEndMs   = currentSession.endedAt
+    ? new Date(currentSession.endedAt).getTime()
+    : Date.now() + 5 * 60 * 1000; // open session: look up to 5min in future
+
+  const SLACK = 5 * 60 * 1000; // 5 minute boundary slack
+
+  let totalTokens = 0;
+  let totalCost   = 0;
+
+  const files = readdirSync(JSONL_DIR).filter(f => f.endsWith('.jsonl'));
+
+  for (const file of files) {
+    const filePath = `${JSONL_DIR}/${file}`;
+    let content;
+    try { content = readFileSync(filePath, 'utf8'); } catch { continue; }
+
+    const lines = content.split('\n').filter(Boolean);
+    if (lines.length === 0) continue;
+
+    // Quick check: does this file's time range overlap with the session?
+    // Sample first + last line timestamps to avoid parsing everything
+    let fileMinMs = Infinity, fileMaxMs = -Infinity;
+    for (const idx of [0, Math.floor(lines.length / 2), lines.length - 1]) {
+      try {
+        const ts = JSON.parse(lines[idx]).timestamp;
+        if (ts) {
+          const ms = new Date(ts).getTime();
+          if (ms < fileMinMs) fileMinMs = ms;
+          if (ms > fileMaxMs) fileMaxMs = ms;
+        }
+      } catch { /* skip */ }
+    }
+
+    // No overlap with session window (with slack)
+    if (fileMaxMs < sessionStartMs - SLACK || fileMinMs > sessionEndMs + SLACK) continue;
+
+    // Full parse: sum usage records that fall within session window
+    for (const line of lines) {
+      try {
+        const rec = JSON.parse(line);
+        const ts  = rec.timestamp ? new Date(rec.timestamp).getTime() : null;
+        if (!ts || ts < sessionStartMs - SLACK || ts > sessionEndMs + SLACK) continue;
+
+        const u = rec.message?.usage;
+        if (!u) continue;
+
+        const input          = (u.input_tokens ?? 0);
+        const cache_creation = (u.cache_creation_input_tokens ?? 0);
+        const cache_read     = (u.cache_read_input_tokens ?? 0);
+        const output         = (u.output_tokens ?? 0);
+
+        totalTokens += input + cache_creation + cache_read + output;
+        totalCost   += computeCost({ input, cache_creation, cache_read, output });
+      } catch { /* skip malformed lines */ }
+    }
+  }
+
+  // Update sessions.json with real numbers
+  if (totalTokens > 0) {
+    const sessionsPath = join(HW, 'sessions.json');
+    const sessionsRaw  = safeRead('sessions.json');
+    const isBare       = Array.isArray(sessionsRaw);
+    const list         = isBare ? sessionsRaw : (sessionsRaw?.sessions ?? []);
+    const idx          = list.findIndex(s => s.id === sessionId);
+    if (idx >= 0) {
+      list[idx].tokensUsed = totalTokens;
+      list[idx].costUsd    = Math.round(totalCost * 10000) / 10000;
+      const out = isBare ? list : { ...sessionsRaw, sessions: list };
+      writeFileSync(sessionsPath, JSON.stringify(out, null, 2), 'utf8');
+    }
+  }
+} catch { /* cost tracking is non-fatal */ }
