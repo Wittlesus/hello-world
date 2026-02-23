@@ -5,7 +5,7 @@
  * Exploits Claude's training bias to complete ordered checklists.
  */
 
-import { readFileSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
 const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
@@ -15,6 +15,33 @@ function safeRead(file) {
   try { return JSON.parse(readFileSync(join(HW, file), 'utf8')); }
   catch { return null; }
 }
+
+// Archive any non-idle deliberation and reset chatroom to idle state
+function archiveChatroom() {
+  try {
+    const chatroom = safeRead('chatroom.json');
+    if (!chatroom || chatroom.session?.status === 'idle' || !chatroom.messages?.length) return;
+
+    const deliberationsDir = join(HW, 'deliberations');
+    mkdirSync(deliberationsDir, { recursive: true });
+
+    const date = new Date().toISOString().slice(0, 10);
+    const slug = (chatroom.session?.topic ?? '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .slice(0, 50);
+    const filename = `${date}-${slug || chatroom.session?.id || 'session'}.json`;
+    writeFileSync(join(deliberationsDir, filename), JSON.stringify(chatroom, null, 2), 'utf-8');
+
+    const empty = { session: { id: '', topic: '', status: 'idle', startedAt: '', startedBy: 'claude', waitingForInput: false, roundNumber: 0 }, agents: [], messages: [] };
+    writeFileSync(join(HW, 'chatroom.json'), JSON.stringify(empty, null, 2), 'utf-8');
+  } catch {
+    // Non-fatal — don't break session start if archive fails
+  }
+}
+
+archiveChatroom();
 
 const config      = safeRead('config.json');
 const workflow    = safeRead('workflow.json');

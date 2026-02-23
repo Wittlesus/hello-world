@@ -921,6 +921,9 @@ server.registerTool('hw_post_to_chatroom', {
   if (state.session.status === 'idle') {
     return text('No active deliberation. Start one with hw_start_deliberation first.');
   }
+  if (args.message.length > 670) {
+    return text(`Message too long (${args.message.length} chars). Keep it under 670 — 1-2 sentences, occasional paragraph.`);
+  }
   chatroom.appendMessage('claude', args.message, 'claude');
   activity.append('claude_posted_to_chatroom', `Claude: ${args.message.slice(0, 60)}`, '');
   return text('Posted to chatroom.');
@@ -928,7 +931,7 @@ server.registerTool('hw_post_to_chatroom', {
 
 server.registerTool('hw_post_agent_message', {
   title: 'Post Agent Message',
-  description: 'Post a message as a specific agent (architect, critic, product, security) to the deliberation chatroom. Claude uses this to voice each agent persona during a deliberation.',
+  description: 'Post a message as a specific agent (architect, critic, product, security) to the deliberation chatroom. Claude uses this to voice each agent persona during a deliberation. Etiquette: agents have full conversation context, respond to what was actually said, speak in natural turn order (not round-robin), stay silent when they have nothing to add, and keep messages under 670 chars (1-2 sentences; a paragraph when truly needed).',
   inputSchema: z.object({
     agentId: z.string().describe('The agent ID to post as (e.g. architect, critic, product, security)'),
     message: z.string().describe('The message to post as this agent'),
@@ -943,9 +946,16 @@ server.registerTool('hw_post_agent_message', {
     const valid = state.agents.map(a => a.id).join(', ');
     return text(`Unknown agent "${args.agentId}". Active agents: ${valid}`);
   }
+  if (args.message.length > 670) {
+    return text(`Message too long (${args.message.length} chars). Keep it under 670 — 1-2 sentences, occasional paragraph.`);
+  }
   chatroom.appendMessage(args.agentId, args.message, 'message');
   activity.append('agent_posted_to_chatroom', `${validAgent.name}: ${args.message.slice(0, 60)}`, '');
-  return text(`Posted as ${validAgent.name}.`);
+
+  // Return recent thread so next post has context
+  const updated = chatroom.read();
+  const recent = updated.messages.slice(-6).map(m => `[${m.agentId}] ${m.text}`).join('\n');
+  return text(`Posted as ${validAgent.name}.\n\nRecent thread:\n${recent}`);
 });
 
 // ── Start ───────────────────────────────────────────────────────
