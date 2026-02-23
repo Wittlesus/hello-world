@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { listen } from '@tauri-apps/api/event';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 
@@ -35,6 +36,8 @@ const PHASE_LABEL: Record<string, string> = {
   ship:   'shipping',
 };
 
+const PHASES = ['scope', 'plan', 'build', 'verify', 'ship'] as const;
+
 function truncate(text: string, words = 9): string {
   const w = text.split(/\s+/);
   return w.length <= words ? text : w.slice(0, words).join(' ') + '\u2026';
@@ -60,6 +63,7 @@ export function ClaudeBuddy() {
   const eyeColor    = PHASE_COLOR[phase] ?? '#4b5563';
   const borderClass = PHASE_BORDER[phase] ?? 'border-gray-700';
   const isActive    = phase !== 'idle';
+  const currentIdx  = PHASES.indexOf(phase as typeof PHASES[number]);
 
   const typeText = useCallback((text: string) => {
     if (typingRef.current) clearTimeout(typingRef.current);
@@ -78,10 +82,24 @@ export function ClaudeBuddy() {
     typingRef.current = setTimeout(tick, 22);
   }, []);
 
-  // Retype whenever a new activity arrives
+  // Primary: live tool summaries from MCP server via loopback HTTP → Tauri event
+  useEffect(() => {
+    const unlisten = listen<{ summary: string }>('hw-tool-summary', (event) => {
+      const summary = event.payload?.summary;
+      if (summary) {
+        lastIdRef.current = '__live__' + Date.now();
+        typeText(truncate(summary, 12));
+      }
+    });
+    return () => { unlisten.then((fn) => fn()); };
+  }, [typeText]);
+
+  // Fallback: retype whenever a new activity arrives (covers non-MCP writes)
   useEffect(() => {
     const incoming = latest?.id ?? '';
     if (incoming && incoming === lastIdRef.current) return;
+    // Don't overwrite a live summary for 3 seconds
+    if (lastIdRef.current.startsWith('__live__')) return;
     lastIdRef.current = incoming;
 
     const text = latest
@@ -152,6 +170,25 @@ export function ClaudeBuddy() {
               <span className="text-[9px] font-mono uppercase tracking-widest text-gray-600">
                 {PHASE_LABEL[phase] ?? phase}
               </span>
+            </div>
+
+            {/* Phase progress bar */}
+            <div className="flex gap-[3px] mb-2">
+              {PHASES.map((p, idx) => {
+                const isPast    = idx < currentIdx;
+                const isCurrent = idx === currentIdx;
+                const color     = PHASE_COLOR[p];
+                return (
+                  <div
+                    key={p}
+                    className="h-[3px] flex-1 rounded-full transition-all duration-300"
+                    style={{
+                      backgroundColor: isCurrent ? color : isPast ? color + '55' : '#1f2937',
+                      boxShadow: isCurrent ? `0 0 5px ${color}` : 'none',
+                    }}
+                  />
+                );
+              })}
             </div>
 
             {/* Activity text */}
