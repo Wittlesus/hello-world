@@ -17,6 +17,7 @@
  * }
  */
 
+import 'dotenv/config';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
@@ -386,8 +387,8 @@ server.registerTool('hw_record_decision', {
 
 // ── Discord Notifications ────────────────────────────────────────
 
-const DISCORD_BOT_TOKEN = 'MTQ3NTI3NjQ3OTY4MzIzNTk0Mg.GMInN0.NxGNJTClBjBfSx8Jde5UXC3QT4-lVg1Yjzlr1o';
-const PAT_USER_ID = '403706305144946690';
+const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN ?? '';
+const PAT_USER_ID = process.env.DISCORD_USER_ID ?? '';
 
 async function sendDiscordDM(message: string): Promise<void> {
   try {

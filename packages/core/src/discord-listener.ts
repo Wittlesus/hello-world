@@ -10,11 +10,12 @@
  *   note <text>           — leave a direction note for next session
  */
 
+import 'dotenv/config';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const BOT_TOKEN = 'MTQ3NTI3NjQ3OTY4MzIzNTk0Mg.GMInN0.NxGNJTClBjBfSx8Jde5UXC3QT4-lVg1Yjzlr1o';
-const PAT_USER_ID = '403706305144946690';
+const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN ?? '';
+const PAT_USER_ID = process.env.DISCORD_USER_ID ?? '';
 const GATEWAY_URL = 'wss://gateway.discord.gg/?v=10&encoding=json';
 const DISCORD_API = 'https://discord.com/api/v10';
 const PROJECT_ROOT = process.env.HW_PROJECT_ROOT ?? 'C:/Users/Patri/CascadeProjects/hello-world';
