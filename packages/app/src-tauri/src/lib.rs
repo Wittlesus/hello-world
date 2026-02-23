@@ -189,6 +189,25 @@ fn get_workflow(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "workflow.json")
 }
 
+#[tauri::command]
+fn get_direction(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "direction.json")
+}
+
+#[tauri::command]
+fn get_watchers(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "watchers.json")
+}
+
+#[tauri::command]
+fn get_timeline(project_path: &str) -> Result<String, String> {
+    let path = std::path::Path::new(project_path)
+        .join(".hello-world")
+        .join("timeline.md");
+    std::fs::read_to_string(&path)
+        .map_err(|e| format!("Failed to read timeline.md: {}", e))
+}
+
 fn epoch_ms() -> u64 {
     std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -650,6 +669,9 @@ pub fn run() {
             get_activity,
             get_approvals,
             get_workflow,
+            get_direction,
+            get_watchers,
+            get_timeline,
             get_chat_history,
             append_chat_message,
             send_claude_message,
