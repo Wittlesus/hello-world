@@ -33,7 +33,7 @@ import { ActivityStore } from '../activity.js';
 import { WorkflowEngine } from '../orchestration/workflow.js';
 import { retrieveMemories } from '../brain/engine.js';
 import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '../brain/state.js';
-import { WatcherStore } from '../watchers/store.js';
+import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
@@ -594,7 +594,7 @@ server.registerTool('hw_spawn_watcher', {
     timeoutMinutes: args.config.timeoutMinutes ?? 60,
   };
   // Generate ID first so runner can reference it when writing results
-  const watcherId = watchers.generateId();
+  const watcherId = watchers.generateName(args.type as WatcherType);
   const child = spawn(process.execPath, [RUNNER_PATH, watcherId, projectRoot, JSON.stringify(cfg)], {
     detached: true,
     stdio: 'ignore',
