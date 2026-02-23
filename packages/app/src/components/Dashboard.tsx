@@ -2,79 +2,147 @@ import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ActivityStream } from './ActivityStream.js';
 
-interface BrainState {
-  state: {
-    messageCount: number;
-    contextPhase: 'early' | 'mid' | 'late';
-    activeTraces: string[];
-  };
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  status: string;
 }
 
 interface StateData {
-  tasks: Array<{ status: string }>;
+  tasks: Task[];
 }
 
-interface SessionsData {
-  sessions: Array<{ id: string; endedAt?: string }>;
+interface WorkflowData {
+  phase: string;
+  strikes: number;
+  currentTaskId: string | null;
 }
 
-const PHASE_DOT: Record<string, string> = {
-  early: 'bg-green-500',
-  mid: 'bg-yellow-500',
-  late: 'bg-red-500',
+interface DecisionsData {
+  decisions: Array<{ id: string; title: string; chosen: string; decidedAt: string }>;
+}
+
+const PHASE_ORDER = ['idle', 'scope', 'plan', 'build', 'verify', 'ship'];
+
+const PHASE_COLOR: Record<string, string> = {
+  idle:   'text-gray-500',
+  scope:  'text-yellow-400',
+  plan:   'text-blue-400',
+  build:  'text-indigo-400',
+  verify: 'text-orange-400',
+  ship:   'text-green-400',
+};
+
+const PHASE_BG: Record<string, string> = {
+  idle:   'bg-gray-500/10',
+  scope:  'bg-yellow-500/10',
+  plan:   'bg-blue-500/10',
+  build:  'bg-indigo-500/10',
+  verify: 'bg-orange-500/10',
+  ship:   'bg-green-500/10',
 };
 
 export function Dashboard() {
   const projectPath = useProjectPath();
-  const { data: brainData } = useTauriData<BrainState>('get_brain_state', projectPath);
-  const { data: stateData } = useTauriData<StateData>('get_state', projectPath);
-  const { data: sessionsData } = useTauriData<SessionsData>('get_sessions', projectPath);
+  const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
+  const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
+  const { data: decisionsData } = useTauriData<DecisionsData>('get_state', projectPath);
 
-  const brain = brainData?.state;
-  const tasks = stateData?.tasks ?? [];
-  const sessions = sessionsData?.sessions ?? [];
+  const tasks    = stateData?.tasks ?? [];
+  const phase    = workflowData?.phase ?? 'idle';
+  const strikes  = workflowData?.strikes ?? 0;
 
-  const inProgress = tasks.filter((t) => t.status === 'in_progress').length;
-  const todo = tasks.filter((t) => t.status === 'todo').length;
-  const currentSession = sessions.filter((s) => !s.endedAt).length > 0
-    ? sessions.length
-    : null;
+  const activeTask = tasks.find((t) => t.status === 'in_progress');
+  const todoTasks  = tasks.filter((t) => t.status === 'todo');
+  const doneTasks  = tasks.filter((t) => t.status === 'done');
+
+  const phaseIdx  = PHASE_ORDER.indexOf(phase);
+  const phaseColor = PHASE_COLOR[phase] ?? 'text-gray-400';
+  const phaseBg    = PHASE_BG[phase] ?? 'bg-gray-500/10';
+
+  const recentDecisions = (decisionsData as any)?.decisions
+    ? [...(decisionsData as any).decisions].slice(-3).reverse()
+    : [];
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
-      {/* Status bar */}
-      <div className="flex items-center gap-5 px-4 py-2 border-b border-gray-800/70 bg-[#0d0d14]">
+    <div className="flex-1 flex flex-col min-h-0 bg-[#0a0a0f]">
+      {/* Header strip */}
+      <div className="flex items-center gap-4 px-4 py-2 border-b border-gray-800/70 bg-[#0d0d14] shrink-0">
         <span className="text-[11px] font-semibold text-gray-300">Dashboard</span>
         <div className="h-3 w-px bg-gray-800" />
-
-        {brain ? (
-          <>
-            <div className="flex items-center gap-1.5">
-              <span className={`w-1.5 h-1.5 rounded-full ${PHASE_DOT[brain.contextPhase] ?? 'bg-gray-500'}`} />
-              <span className="text-[11px] text-gray-500">{brain.contextPhase} phase</span>
-            </div>
-            <span className="text-[11px] text-gray-500">{brain.messageCount} msgs</span>
-            {brain.activeTraces.length > 0 && (
-              <span className="text-[11px] text-gray-500">{brain.activeTraces.length} traces</span>
-            )}
-          </>
-        ) : (
-          <span className="text-[11px] text-gray-600">brain idle</span>
+        <span className={`text-[11px] font-mono uppercase ${phaseColor}`}>{phase}</span>
+        {strikes > 0 && (
+          <span className="text-[11px] text-yellow-500">{strikes}/2 strikes</span>
         )}
-
-        <div className="h-3 w-px bg-gray-800" />
-
-        {inProgress > 0 && (
-          <span className="text-[11px] text-blue-400">{inProgress} in progress</span>
-        )}
-        {todo > 0 && (
-          <span className="text-[11px] text-gray-500">{todo} todo</span>
-        )}
-        {currentSession && (
-          <span className="text-[11px] text-gray-500">session #{currentSession}</span>
-        )}
+        <div className="ml-auto flex items-center gap-3">
+          <span className="text-[11px] text-blue-400">{todoTasks.length} todo</span>
+          <span className="text-[11px] text-gray-500">{doneTasks.length} done</span>
+        </div>
       </div>
 
+      {/* Top info pane */}
+      <div className="shrink-0 grid grid-cols-3 gap-px bg-gray-800/40 border-b border-gray-800/70">
+
+        {/* Active task */}
+        <div className="col-span-2 bg-[#0a0a0f] p-4">
+          <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">Active Task</p>
+          {activeTask ? (
+            <>
+              <p className="text-sm font-medium text-white leading-snug">{activeTask.title}</p>
+              {activeTask.description && (
+                <p className="text-xs text-gray-500 mt-1 leading-relaxed line-clamp-2">{activeTask.description}</p>
+              )}
+              <p className="text-[10px] text-gray-700 mt-2 font-mono">{activeTask.id}</p>
+            </>
+          ) : (
+            <p className="text-sm text-gray-600 italic">No active task — call hw_update_task</p>
+          )}
+        </div>
+
+        {/* Phase + queue */}
+        <div className="bg-[#0a0a0f] p-4 flex flex-col gap-3">
+          {/* Workflow phase */}
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">Phase</p>
+            <div className="flex gap-1 flex-wrap">
+              {PHASE_ORDER.map((p, i) => (
+                <span
+                  key={p}
+                  className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
+                    i === phaseIdx
+                      ? `${phaseColor} ${phaseBg} ring-1 ring-current/30`
+                      : i < phaseIdx
+                        ? 'text-gray-600 bg-gray-800/30'
+                        : 'text-gray-700'
+                  }`}
+                >
+                  {p}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Queue */}
+          {todoTasks.length > 0 && (
+            <div>
+              <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-1.5">Up Next</p>
+              <div className="flex flex-col gap-1">
+                {todoTasks.slice(0, 3).map((t) => (
+                  <p key={t.id} className="text-[11px] text-gray-400 truncate leading-snug">
+                    <span className="text-gray-700 mr-1">·</span>{t.title}
+                  </p>
+                ))}
+                {todoTasks.length > 3 && (
+                  <p className="text-[10px] text-gray-600">+{todoTasks.length - 3} more</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Activity stream */}
       <ActivityStream />
     </div>
   );

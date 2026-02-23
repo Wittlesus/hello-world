@@ -6,6 +6,99 @@ import { FitAddon } from '@xterm/addon-fit';
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import '@xterm/xterm/css/xterm.css';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
+
+interface Task { id: string; title: string; description?: string; status: string }
+interface StateData { tasks: Task[] }
+interface ActivityEvent { id: string; type: string; description: string; timestamp: string }
+interface ActivityData { activities: ActivityEvent[] }
+interface WorkflowData { phase: string }
+
+const PHASE_DOT: Record<string, string> = {
+  idle: 'bg-gray-500', scope: 'bg-yellow-400', plan: 'bg-blue-400',
+  build: 'bg-indigo-400', verify: 'bg-orange-400', ship: 'bg-green-400',
+};
+
+function formatTime(ts: string): string {
+  const d = new Date(ts);
+  if (isNaN(d.getTime())) return '';
+  const diff = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (diff < 60) return `${diff}s`;
+  if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+  return `${Math.floor(diff / 3600)}h`;
+}
+
+function SidePanel() {
+  const projectPath = useProjectPath();
+  const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
+  const { data: activityData } = useTauriData<ActivityData>('get_activity', projectPath);
+  const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
+
+  const tasks      = stateData?.tasks ?? [];
+  const activeTask = tasks.find((t) => t.status === 'in_progress');
+  const todoTasks  = tasks.filter((t) => t.status === 'todo');
+  const phase      = workflowData?.phase ?? 'idle';
+  const phaseDot   = PHASE_DOT[phase] ?? 'bg-gray-500';
+
+  const activities = activityData?.activities
+    ? [...activityData.activities].reverse().slice(0, 8)
+    : [];
+
+  return (
+    <div className="w-64 flex flex-col border-l border-gray-800 bg-[#0d0d14] shrink-0 overflow-hidden">
+      {/* Phase */}
+      <div className="px-3 py-2 border-b border-gray-800/60 flex items-center gap-2">
+        <span className={`w-1.5 h-1.5 rounded-full ${phaseDot}`} />
+        <span className="text-[10px] font-mono uppercase text-gray-500">{phase}</span>
+      </div>
+
+      {/* Active task */}
+      <div className="px-3 py-3 border-b border-gray-800/60">
+        <p className="text-[9px] uppercase tracking-widest text-gray-600 mb-1.5">Active</p>
+        {activeTask ? (
+          <>
+            <p className="text-xs text-white leading-snug font-medium">{activeTask.title}</p>
+            {activeTask.description && (
+              <p className="text-[10px] text-gray-500 mt-1 leading-relaxed line-clamp-2">{activeTask.description}</p>
+            )}
+          </>
+        ) : (
+          <p className="text-xs text-gray-600 italic">No active task</p>
+        )}
+      </div>
+
+      {/* Up next */}
+      {todoTasks.length > 0 && (
+        <div className="px-3 py-3 border-b border-gray-800/60">
+          <p className="text-[9px] uppercase tracking-widest text-gray-600 mb-1.5">Up Next</p>
+          <div className="flex flex-col gap-1.5">
+            {todoTasks.slice(0, 3).map((t) => (
+              <p key={t.id} className="text-[10px] text-gray-400 leading-snug">
+                <span className="text-gray-700 mr-1">·</span>{t.title}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Recent activity */}
+      <div className="flex-1 overflow-y-auto px-3 py-3">
+        <p className="text-[9px] uppercase tracking-widest text-gray-600 mb-2">Activity</p>
+        <div className="flex flex-col gap-2">
+          {activities.map((a) => (
+            <div key={a.id} className="flex items-start gap-2">
+              <span className="text-[9px] text-gray-700 shrink-0 mt-px w-5">{formatTime(a.timestamp)}</span>
+              <span className="text-[10px] text-gray-400 leading-snug">{a.description}</span>
+            </div>
+          ))}
+          {activities.length === 0 && (
+            <p className="text-[10px] text-gray-700 italic">No activity yet</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function TerminalView() {
   const projectPath = useProjectPath();
@@ -15,11 +108,11 @@ export function TerminalView() {
   const initializedRef = useRef(false);
   const [status, setStatus] = useState<'starting' | 'ready' | 'error'>('starting');
   const [error, setError] = useState<string | null>(null);
+  const [panelOpen, setPanelOpen] = useState(true);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Create xterm instance
     const term = new Terminal({
       theme: {
         background: '#0d0d14',
@@ -59,12 +152,10 @@ export function TerminalView() {
     termRef.current = term;
     fitRef.current = fit;
 
-    // Send keystrokes to PTY
     term.onData((data) => {
       invoke('write_pty_input', { data }).catch(() => {});
     });
 
-    // Listen for PTY output — raw bytes arrive as base64
     const unlistenPty = listen<string>('pty-data', (event) => {
       const binary = atob(event.payload);
       const bytes = new Uint8Array(binary.length);
@@ -72,7 +163,6 @@ export function TerminalView() {
       term.write(bytes);
       setStatus('ready');
 
-      // Auto-init: once Claude's welcome banner arrives, send a greeting prompt
       if (!initializedRef.current) {
         initializedRef.current = true;
         setTimeout(() => {
@@ -83,14 +173,12 @@ export function TerminalView() {
       }
     });
 
-    // Start the PTY session (spawns claude with project context injected)
     invoke('start_pty_session', { projectPath })
       .catch((e) => {
         setStatus('error');
         setError(String(e));
       });
 
-    // Handle resize
     const observer = new ResizeObserver(() => {
       fit.fit();
       invoke('resize_pty', { rows: term.rows, cols: term.cols }).catch(() => {});
@@ -104,32 +192,52 @@ export function TerminalView() {
     };
   }, []);
 
+  // Refit when panel opens/closes
+  useEffect(() => {
+    setTimeout(() => {
+      fitRef.current?.fit();
+      const t = termRef.current;
+      if (t) invoke('resize_pty', { rows: t.rows, cols: t.cols }).catch(() => {});
+    }, 150);
+  }, [panelOpen]);
+
   return (
     <div className="flex-1 flex flex-col min-h-0">
       {/* Header */}
       <div className="px-4 py-2.5 border-b border-gray-800 flex items-center justify-between shrink-0 bg-[#0d0d14]">
         <span className="text-sm font-semibold text-gray-200">⌨ Terminal</span>
-        <div className="flex items-center gap-2">
-          <span className={`w-1.5 h-1.5 rounded-full ${status === 'ready' ? 'bg-green-400' : status === 'error' ? 'bg-red-400' : 'bg-yellow-400 animate-pulse'}`} />
-          <span className={`text-xs ${status === 'ready' ? 'text-green-400' : status === 'error' ? 'text-red-400' : 'text-yellow-400'}`}>
-            {status === 'ready' ? 'Claude running' : status === 'error' ? 'Error' : 'Starting...'}
-          </span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <span className={`w-1.5 h-1.5 rounded-full ${status === 'ready' ? 'bg-green-400' : status === 'error' ? 'bg-red-400' : 'bg-yellow-400 animate-pulse'}`} />
+            <span className={`text-xs ${status === 'ready' ? 'text-green-400' : status === 'error' ? 'text-red-400' : 'text-yellow-400'}`}>
+              {status === 'ready' ? 'Claude running' : status === 'error' ? 'Error' : 'Starting...'}
+            </span>
+          </div>
+          <button
+            onClick={() => setPanelOpen((p) => !p)}
+            className="text-[11px] text-gray-500 hover:text-gray-300 transition-colors font-mono"
+            title="Toggle context panel"
+          >
+            {panelOpen ? '[hide]' : '[ctx]'}
+          </button>
         </div>
       </div>
 
-      {/* Error */}
       {error && (
         <div className="px-4 py-2 bg-red-900/30 border-b border-red-800/50 text-xs text-red-400">
           {error}
         </div>
       )}
 
-      {/* xterm.js container */}
-      <div
-        ref={containerRef}
-        className="flex-1 min-h-0 p-2 bg-[#0d0d14]"
-        style={{ overflow: 'hidden' }}
-      />
+      {/* Terminal + optional side panel */}
+      <div className="flex-1 flex min-h-0">
+        <div
+          ref={containerRef}
+          className="flex-1 min-h-0 min-w-0 p-2 bg-[#0d0d14]"
+          style={{ overflow: 'hidden' }}
+        />
+        {panelOpen && <SidePanel />}
+      </div>
     </div>
   );
 }

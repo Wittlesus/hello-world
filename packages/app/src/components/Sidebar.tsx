@@ -1,4 +1,6 @@
-import { useAppStore, type View } from '../stores/app';
+import { useAppStore, type View } from '../stores/app.js';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 
 const NAV_ITEMS: { view: View; label: string; icon: string }[] = [
   { view: 'dashboard', label: 'Dashboard', icon: 'HW' },
@@ -13,8 +15,35 @@ const NAV_ITEMS: { view: View; label: string; icon: string }[] = [
   { view: 'settings', label: 'Settings', icon: 'ST' },
 ];
 
+const PHASE_COLOR: Record<string, string> = {
+  idle:   'text-gray-500',
+  scope:  'text-yellow-400',
+  plan:   'text-blue-400',
+  build:  'text-indigo-400',
+  verify: 'text-orange-400',
+  ship:   'text-green-400',
+};
+
+const PHASE_DOT: Record<string, string> = {
+  idle:   'bg-gray-500',
+  scope:  'bg-yellow-400',
+  plan:   'bg-blue-400',
+  build:  'bg-indigo-400',
+  verify: 'bg-orange-400',
+  ship:   'bg-green-400',
+};
+
+interface WorkflowData { phase: string; strikes: number }
+
 export function Sidebar() {
   const { activeView, setView, projectName, sidebarCollapsed, toggleSidebar } = useAppStore();
+  const projectPath = useProjectPath();
+  const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
+
+  const phase   = workflowData?.phase ?? 'idle';
+  const strikes = workflowData?.strikes ?? 0;
+  const phaseColor = PHASE_COLOR[phase] ?? 'text-gray-400';
+  const phaseDot   = PHASE_DOT[phase] ?? 'bg-gray-500';
 
   return (
     <aside className={`flex flex-col bg-[#111118] border-r border-gray-800 transition-all ${sidebarCollapsed ? 'w-14' : 'w-52'}`}>
@@ -40,6 +69,23 @@ export function Sidebar() {
           </button>
         ))}
       </nav>
+
+      {/* Workflow phase indicator */}
+      <div className="border-t border-gray-800/60 px-3 py-2.5">
+        {sidebarCollapsed ? (
+          <div className="flex justify-center" title={`Phase: ${phase}${strikes > 0 ? ` (${strikes}/2 strikes)` : ''}`}>
+            <span className={`w-2 h-2 rounded-full ${phaseDot}`} />
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className={`w-2 h-2 rounded-full shrink-0 ${phaseDot}`} />
+            <span className={`text-[11px] font-mono uppercase ${phaseColor}`}>{phase}</span>
+            {strikes > 0 && (
+              <span className="ml-auto text-[10px] text-yellow-500">{strikes}/2</span>
+            )}
+          </div>
+        )}
+      </div>
 
       <button
         onClick={toggleSidebar}
