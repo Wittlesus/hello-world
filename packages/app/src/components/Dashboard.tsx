@@ -73,6 +73,17 @@ function formatSessionDate(iso: string) {
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
+function formatDuration(startedAt: string, endedAt?: string): string {
+  if (!endedAt) return 'active';
+  const ms = new Date(endedAt).getTime() - new Date(startedAt).getTime();
+  const mins = Math.round(ms / 60_000);
+  if (mins < 1) return '< 1m';
+  if (mins < 60) return `${mins}m`;
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return m > 0 ? `${h}h ${m}m` : `${h}h`;
+}
+
 export function Dashboard() {
   const projectPath = useProjectPath();
   const { data: stateData }                                      = useTauriData<StateData>('get_state', projectPath);
@@ -80,7 +91,8 @@ export function Dashboard() {
   const { data: sessionsData }                                   = useTauriData<SessionsData>('get_sessions', projectPath);
   const { data: directionData, refetch: refetchDirection }       = useTauriData<DirectionData>('get_direction', projectPath);
 
-  const [markingRead, setMarkingRead] = useState<Set<string>>(new Set());
+  const [markingRead, setMarkingRead]         = useState<Set<string>>(new Set());
+  const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
 
   const tasks    = stateData?.tasks ?? [];
   const phase    = workflowData?.phase ?? 'idle';
@@ -95,7 +107,16 @@ export function Dashboard() {
   const phaseBg    = PHASE_BG[phase] ?? 'bg-gray-500/10';
 
   const unreadNotes    = (directionData?.notes ?? []).filter((n) => !n.read);
-  const recentSessions = [...(sessionsData?.sessions ?? [])].reverse().slice(0, 4);
+  const allSessions    = sessionsData?.sessions ?? [];
+  const recentSessions = [...allSessions].reverse().slice(0, 5);
+
+  const toggleSession = useCallback((id: string) => {
+    setExpandedSessions((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  }, []);
 
   const markRead = useCallback(async (noteId: string) => {
     setMarkingRead((prev) => new Set(prev).add(noteId));
@@ -233,23 +254,46 @@ export function Dashboard() {
           {recentSessions.length === 0 ? (
             <p className="text-xs text-gray-600 italic">No sessions yet</p>
           ) : (
-            <div className="flex flex-col gap-2">
-              {recentSessions.map((s) => (
-                <div key={s.id} className="flex items-start gap-2">
-                  <span className="text-[10px] text-gray-600 font-mono shrink-0 mt-0.5">
-                    {formatSessionDate(s.startedAt)}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[11px] text-gray-400 truncate leading-snug">
-                      {s.summary && s.summary !== '(orphaned — auto-closed)'
-                        ? s.summary
-                        : s.tasksCompleted.length > 0
-                          ? `${s.tasksCompleted.length} task${s.tasksCompleted.length !== 1 ? 's' : ''} done`
-                          : 'no summary'}
-                    </p>
+            <div className="flex flex-col gap-0.5">
+              {recentSessions.map((s, i) => {
+                const sessionNum = allSessions.length - i;
+                const isActive   = !s.endedAt;
+                const isExpanded = expandedSessions.has(s.id);
+                const hasTasks   = s.tasksCompleted.length > 0;
+                const duration   = formatDuration(s.startedAt, s.endedAt);
+                return (
+                  <div key={s.id}>
+                    <button
+                      onClick={() => hasTasks && toggleSession(s.id)}
+                      className={`w-full flex items-center gap-1.5 text-left py-0.5 ${hasTasks ? 'cursor-pointer' : 'cursor-default'}`}
+                    >
+                      <span className="text-[9px] text-gray-700 shrink-0 w-2">
+                        {hasTasks ? (isExpanded ? '▼' : '▶') : '\u00a0'}
+                      </span>
+                      {isActive && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 animate-pulse" />
+                      )}
+                      <span className="text-[10px] text-gray-500 font-mono shrink-0">#{sessionNum}</span>
+                      <span className="text-[10px] text-gray-600 font-mono shrink-0">{formatSessionDate(s.startedAt)}</span>
+                      <span className="text-[10px] text-gray-700 ml-auto shrink-0 font-mono">
+                        {hasTasks ? `${s.tasksCompleted.length}t` : '\u2014'} · {duration}
+                      </span>
+                    </button>
+                    {isExpanded && hasTasks && (
+                      <div className="ml-3.5 mb-1 flex flex-col gap-0.5 border-l border-gray-800/80 pl-2">
+                        {s.tasksCompleted.map((tid) => {
+                          const task = tasks.find((t) => t.id === tid);
+                          return (
+                            <p key={tid} className="text-[10px] text-gray-500 truncate">
+                              {'\u21b3'} {task ? task.title : tid}
+                            </p>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
