@@ -21,8 +21,9 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
-import { execSync } from 'node:child_process';
-import { join } from 'node:path';
+import { execSync, spawn } from 'node:child_process';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Project } from '../project.js';
 import { MemoryStore } from '../brain/store.js';
 import { SessionManager } from '../orchestration/session.js';
@@ -32,10 +33,13 @@ import { ActivityStore } from '../activity.js';
 import { WorkflowEngine } from '../orchestration/workflow.js';
 import { retrieveMemories } from '../brain/engine.js';
 import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '../brain/state.js';
+import { WatcherStore } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
+
+const RUNNER_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', 'watchers', 'runner.mjs');
 
 let project: Project;
 let memoryStore: MemoryStore;
@@ -44,6 +48,7 @@ let approvals: ApprovalGates;
 let strikes: TwoStrikeEngine;
 let activity: ActivityStore;
 let workflow: WorkflowEngine;
+let watchers: WatcherStore;
 
 try {
   project = Project.open(projectRoot);
@@ -53,6 +58,7 @@ try {
   strikes = new TwoStrikeEngine(projectRoot);
   activity = new ActivityStore(projectRoot);
   workflow = new WorkflowEngine(projectRoot);
+  watchers = new WatcherStore(projectRoot);
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -499,6 +505,61 @@ server.registerTool('hw_update_direction', {
   return text(`direction.json updated: ${changes.join(', ')}`);
 });
 
+// ── Watchers ────────────────────────────────────────────────────
+
+server.registerTool('hw_spawn_watcher', {
+  title: 'Spawn Watcher',
+  description: 'Spawn a detached background watcher. type="app_shutdown_copy" waits for the Tauri app to exit, then copies files from worktree to main. Use before editing lib.rs in a worktree.',
+  inputSchema: z.object({
+    type: z.enum(['app_shutdown_copy']),
+    config: z.object({
+      copies: z.array(z.object({ from: z.string(), to: z.string() })),
+      label: z.string().optional(),
+      timeoutMinutes: z.number().optional(),
+    }),
+  }),
+}, async (args: { type: string; config: { copies: Array<{ from: string; to: string }>; label?: string; timeoutMinutes?: number } }) => {
+  const cfg = {
+    copies: args.config.copies,
+    label: args.config.label ?? 'Rust file changes',
+    timeoutMinutes: args.config.timeoutMinutes ?? 60,
+  };
+  // Generate ID first so runner can reference it when writing results
+  const watcherId = watchers.generateId();
+  const child = spawn(process.execPath, [RUNNER_PATH, watcherId, projectRoot, JSON.stringify(cfg)], {
+    detached: true,
+    stdio: 'ignore',
+    windowsHide: true,
+  });
+  child.unref();
+  const entry = watchers.add({ id: watcherId, type: 'app_shutdown_copy', label: cfg.label, pid: child.pid ?? 0, config: cfg });
+  activity.append('watcher_spawned', `Watcher ${entry.id} spawned`, `${cfg.label} — ${cfg.copies.length} file(s)`);
+  return text(`Watcher spawned: ${entry.id} (pid ${child.pid})\nWaiting for app shutdown to apply ${cfg.copies.length} file copy/copies.\nLabel: ${cfg.label}`);
+});
+
+server.registerTool('hw_list_watchers', {
+  title: 'List Watchers',
+  description: 'List active and recent completed watchers.',
+  inputSchema: z.object({}),
+}, async () => {
+  const all = watchers.listRecent();
+  if (all.length === 0) return text('No watchers.');
+  const lines = all.map((w) =>
+    `[${w.id}] ${w.type} — ${w.status.toUpperCase()}\n  Label: ${w.label}\n  Spawned: ${w.spawnedAt}${w.completedAt ? `\n  Completed: ${w.completedAt}` : ''}\n  PID: ${w.pid}${w.resultSummary ? `\n  Result: ${w.resultSummary}` : ''}`
+  );
+  return text(lines.join('\n\n'));
+});
+
+server.registerTool('hw_kill_watcher', {
+  title: 'Kill Watcher',
+  description: 'Kill an active watcher by ID.',
+  inputSchema: z.object({ watcherId: z.string() }),
+}, async (args: { watcherId: string }) => {
+  const result = watchers.kill(args.watcherId);
+  activity.append('watcher_killed', `Watcher ${args.watcherId} killed`, result);
+  return text(`${args.watcherId}: ${result}`);
+});
+
 // ── Start ───────────────────────────────────────────────────────
 
 // Write capabilities manifest so hooks + app can check MCP status
@@ -524,6 +585,9 @@ const TOOL_CATALOG = [
   { name: 'hw_get_workflow_state', category: 'workflow' },
   { name: 'hw_advance_phase', category: 'workflow' },
   { name: 'hw_check_autonomous_timer', category: 'workflow' },
+  { name: 'hw_spawn_watcher', category: 'watchers' },
+  { name: 'hw_list_watchers', category: 'watchers' },
+  { name: 'hw_kill_watcher', category: 'watchers' },
 ];
 
 try {
