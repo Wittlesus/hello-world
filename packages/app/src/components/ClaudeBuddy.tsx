@@ -6,27 +6,48 @@ import { useProjectPath } from '../hooks/useProjectPath.js';
 
 function playDoneSound() {
   try {
-    const ctx = new AudioContext();
-    // C5 harmonic bell: fundamental + natural overtone series.
-    // Higher partials decay faster, leaving the fundamental resonating —
-    // like a small crystal singing bowl settling after being struck.
-    const partials: [freq: number, gain: number, decay: number][] = [
-      [523.25, 0.20, 1.8],  // C5 — fundamental, long sustain
-      [1046.5, 0.09, 1.0],  // C6 — octave
-      [1568.0, 0.05, 0.65], // G6 — perfect fifth harmonic
-      [2093.0, 0.03, 0.40], // C7 — two octaves up
+    const ctx  = new AudioContext();
+    const t    = ctx.currentTime;
+
+    // Two-note ascending chime: E5 (659 Hz) -> C#6 (1109 Hz), 90ms apart.
+    // Interval: major sixth — warm and open, signals "ready" not "alert".
+    // C#6 as the landing note (not the obvious C6 octave) gives it a
+    // slightly unexpected quality that makes it stick in memory.
+    // Each note has a short linear attack to avoid the click-onset that
+    // makes single-note sine tones read as system errors.
+    //
+    // Structure: [startOffset, freq, peakGain, attackMs, decayS]
+    const voices: [number, number, number, number, number][] = [
+      // E5 — strike
+      [0.000,  659.25, 0.18, 0.012, 0.90],  // E5 fundamental
+      [0.000, 1318.50, 0.06, 0.010, 0.50],  // E6 octave partial
+      // C#6 — resolve (90ms later, slightly softer, longer tail)
+      [0.090, 1108.73, 0.15, 0.015, 1.50],  // C#6 fundamental
+      [0.090, 2217.46, 0.04, 0.012, 0.65],  // C#7 octave partial
+      [0.090, 1663.09, 0.02, 0.010, 0.40],  // G#6 fifth shimmer
     ];
-    partials.forEach(([freq, peak, decay]) => {
+
+    // Compressor on the output bus — prevents clipping, glues the two notes.
+    const comp = ctx.createDynamicsCompressor();
+    comp.threshold.value = -8;
+    comp.ratio.value     =  4;
+    comp.attack.value    =  0.003;
+    comp.release.value   =  0.25;
+    comp.connect(ctx.destination);
+
+    voices.forEach(([t0, freq, peak, attackS, decayS]) => {
       const osc = ctx.createOscillator();
       const g   = ctx.createGain();
-      osc.type = 'sine';
+      osc.type           = 'sine';
       osc.frequency.value = freq;
       osc.connect(g);
-      g.connect(ctx.destination);
-      g.gain.setValueAtTime(peak, ctx.currentTime);
-      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + decay);
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + decay);
+      g.connect(comp);
+      const start = t + t0;
+      g.gain.setValueAtTime(0.0001, start);
+      g.gain.linearRampToValueAtTime(peak, start + attackS);
+      g.gain.exponentialRampToValueAtTime(0.0001, start + attackS + decayS);
+      osc.start(start);
+      osc.stop(start + attackS + decayS + 0.05);
     });
   } catch { /* AudioContext unavailable — non-fatal */ }
 }
