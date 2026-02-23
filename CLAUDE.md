@@ -176,6 +176,7 @@ This file is loaded on every session start. If it's populated, every future Clau
 - Approval gates are system constraints, not suggestions — always call hw_check_approval before destructive ops.
 - hw_write_handoff before any edit that could trigger a restart.
 - No half-implementations. Ship complete features or explicitly flag what's deferred and why.
+- **Task gate (enforced by hook):** Edit/Write is hard-blocked when no task is in_progress. Before writing any code: scan the user's message for implied tasks, hw_add_task for each, then hw_update_task to in_progress. No task = no edit.
 
 ## Pat's Preferences
 - No emojis unless asked.

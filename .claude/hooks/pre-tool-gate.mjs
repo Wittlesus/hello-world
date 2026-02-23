@@ -2,7 +2,7 @@
 /**
  * Hello World — PreToolUse hook (Write|Edit matcher)
  * Fires before every Write or Edit tool call.
- * Hard-blocks dangerous edits (exit code 2). Warns on skipped workflow steps.
+ * Hard-blocks dangerous edits and untracked work (exit code 2). Warns on workflow gaps.
  */
 
 import { readFileSync } from 'fs';
@@ -73,7 +73,14 @@ if (phase === 'idle') {
 }
 
 if (inProgress.length === 0) {
-  warnings.push(`[HW WARNING] No task is in_progress. Did you call hw_update_task(id, "in_progress") first?`);
+  process.stdout.write([
+    `[HW BLOCK] No task is in_progress. Cannot write code without an active task.`,
+    ``,
+    `Fix: hw_update_task(id, "in_progress") to start an existing task,`,
+    `  or hw_add_task(title, desc) + hw_update_task(id, "in_progress") for a new one.`,
+    ``,
+  ].join('\n'));
+  process.exit(2);
 }
 
 // Warn if editing other restartable files without a handoff
