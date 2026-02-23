@@ -110,7 +110,7 @@ function resolveCollisions(pos: Record<string, Position>): Record<string, Positi
   return r;
 }
 
-export function ChatroomPanel() {
+export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) {
   const projectPath = useProjectPath();
   const [state,       setState]       = useState<ChatroomState | null>(null);
   const [collapsed,   setCollapsed]   = useState(false);
@@ -251,7 +251,7 @@ export function ChatroomPanel() {
         .hw-chat-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.1); }
       `}</style>
 
-      <div className="shrink-0 border-t border-gray-800/60 bg-[#09090f] flex flex-col" style={{ height: collapsed ? 32 : 380 }}>
+      <div className={fullHeight ? 'flex-1 min-h-0 bg-[#09090f] flex flex-col' : 'shrink-0 border-t border-gray-800/60 bg-[#09090f] flex flex-col'} style={fullHeight ? undefined : { height: collapsed ? 32 : 380 }}>
 
         {/* Header */}
         <div className="flex items-center gap-2 px-3 h-8 shrink-0 border-b border-gray-800/40">

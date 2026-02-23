@@ -91,7 +91,7 @@ function ApprovalCard({
   );
 }
 
-export function ApprovalQueue() {
+export function ApprovalQueue({ standalone = false }: { standalone?: boolean }) {
   const approvals = useActivityStore((s) => s.approvals);
   const resolveApproval = useActivityStore((s) => s.resolveApproval);
 
@@ -120,10 +120,48 @@ export function ApprovalQueue() {
     setConfirmingAction(null);
   }
 
+  // Standalone full-page view (Approvals tab)
+  if (standalone) {
+    return (
+      <div className="flex-1 flex flex-col min-h-0 bg-[#0a0a0f]">
+        <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-800/70 bg-[#0d0d14] shrink-0">
+          <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest">Approvals</span>
+          {pending.length > 0 && (
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-700/60 text-[11px] font-bold text-amber-200">
+              {pending.length}
+            </span>
+          )}
+        </div>
+        <div className="flex-1 overflow-y-auto p-4">
+          {pending.length === 0 ? (
+            <p className="text-sm text-gray-600 text-center mt-16 max-w-sm mx-auto">
+              No pending approvals. Claude will request approval here before git push, deploy, delete, or architecture changes.
+            </p>
+          ) : (
+            <div className="flex flex-col gap-3 max-w-2xl">
+              {pending.map((item) => (
+                <ApprovalCard
+                  key={item.id}
+                  item={item}
+                  confirmingId={confirmingId}
+                  confirmingAction={confirmingAction}
+                  onConfirmStart={handleConfirmStart}
+                  onConfirmCancel={handleConfirmCancel}
+                  onConfirmExecute={handleConfirmExecute}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // Bottom-bar overlay (always present in App layout)
   if (pending.length === 0) {
     return (
       <div className="h-8 flex items-center px-4 bg-[#111118] border-t border-gray-800">
-        <span className="text-xs text-gray-600">No pending approvals. When Claude needs to take a sensitive action (git push, deploy, delete), it will appear here for your decision.</span>
+        <span className="text-xs text-gray-600">No pending approvals.</span>
       </div>
     );
   }

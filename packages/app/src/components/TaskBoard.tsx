@@ -14,18 +14,17 @@ interface Task {
   updatedAt: string;
 }
 
-interface StateData {
-  tasks: Task[];
-}
+interface StateData { tasks: Task[] }
+interface WorkflowData { phase: string }
 
-type Status = Task['status'];
-
-const COLUMNS: { status: Status; label: string; color: string; headerBg: string; badgeBg: string }[] = [
-  { status: 'todo', label: 'Todo', color: 'border-yellow-500/60', headerBg: 'bg-yellow-500/10', badgeBg: 'bg-yellow-500/20 text-yellow-300' },
-  { status: 'in_progress', label: 'In Progress', color: 'border-blue-500/60', headerBg: 'bg-blue-500/10', badgeBg: 'bg-blue-500/20 text-blue-300' },
-  { status: 'done', label: 'Done', color: 'border-green-500/60', headerBg: 'bg-green-500/10', badgeBg: 'bg-green-500/20 text-green-300' },
-  { status: 'blocked', label: 'Blocked', color: 'border-red-500/60', headerBg: 'bg-red-500/10', badgeBg: 'bg-red-500/20 text-red-300' },
-];
+const PHASE_COLORS: Record<string, { bg: string; text: string }> = {
+  idle:   { bg: 'bg-gray-800',      text: 'text-gray-400' },
+  scope:  { bg: 'bg-yellow-900/50', text: 'text-yellow-300' },
+  plan:   { bg: 'bg-blue-900/50',   text: 'text-blue-300' },
+  build:  { bg: 'bg-indigo-900/50', text: 'text-indigo-300' },
+  verify: { bg: 'bg-orange-900/50', text: 'text-orange-300' },
+  ship:   { bg: 'bg-green-900/50',  text: 'text-green-300' },
+};
 
 const TAG_COLORS = [
   'bg-violet-500/20 text-violet-300',
@@ -33,130 +32,212 @@ const TAG_COLORS = [
   'bg-amber-500/20 text-amber-300',
   'bg-rose-500/20 text-rose-300',
   'bg-emerald-500/20 text-emerald-300',
-  'bg-fuchsia-500/20 text-fuchsia-300',
   'bg-sky-500/20 text-sky-300',
-  'bg-orange-500/20 text-orange-300',
 ];
 
 function tagColor(tag: string): string {
   let hash = 0;
-  for (let i = 0; i < tag.length; i++) {
-    hash = ((hash << 5) - hash + tag.charCodeAt(i)) | 0;
-  }
+  for (let i = 0; i < tag.length; i++) hash = ((hash << 5) - hash + tag.charCodeAt(i)) | 0;
   return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length];
 }
 
-function TaskCard({ task, tasks }: { task: Task; tasks: Task[] }) {
-  const [expanded, setExpanded] = useState(false);
+function isStale(createdAt: string): boolean {
+  return Date.now() - new Date(createdAt).getTime() > 7 * 24 * 60 * 60 * 1000;
+}
 
-  const dependencyCount = task.dependsOn.length;
-  const resolvedDeps = task.dependsOn.map((depId) => {
-    const dep = tasks.find((t) => t.id === depId);
-    return { id: depId, title: dep?.title ?? depId, status: dep?.status };
-  });
+function relativeAge(iso: string): string {
+  const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86_400_000);
+  if (days === 0) return 'today';
+  if (days === 1) return '1d';
+  if (days < 7) return `${days}d`;
+  return `${Math.floor(days / 7)}w`;
+}
 
+function TodoRow({ task, index, expanded, onToggle }: {
+  task: Task; index: number; expanded: boolean; onToggle: () => void;
+}) {
+  const stale = isStale(task.createdAt);
   return (
-    <button
-      type="button"
-      onClick={() => setExpanded((prev) => !prev)}
-      className="w-full text-left bg-[#1a1a24] border border-gray-800 rounded-lg p-3 hover:border-gray-700 transition-colors cursor-pointer"
-    >
-      <div className="flex items-start justify-between gap-2">
-        <span className="text-sm font-medium text-gray-100 leading-snug">{task.title}</span>
-        {dependencyCount > 0 && (
-          <span className="shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded bg-gray-800 text-gray-400">
-            {dependencyCount} dep{dependencyCount !== 1 ? 's' : ''}
+    <div className={`border-b border-gray-800/40 last:border-0 ${expanded ? 'bg-white/[0.03]' : 'hover:bg-white/[0.02]'} transition-colors`}>
+      <button type="button" onClick={onToggle} className="w-full flex items-start gap-3 px-4 py-2.5 text-left">
+        <span className={`shrink-0 text-[11px] font-mono mt-0.5 w-5 text-right ${stale ? 'text-gray-700' : 'text-gray-600'}`}>
+          {index}.
+        </span>
+        <div className="flex-1 min-w-0">
+          <span className={`text-sm leading-snug ${stale ? 'text-gray-600' : 'text-gray-300'}`}>
+            {task.title}
           </span>
-        )}
-      </div>
-
-      {task.tags.length > 0 && (
-        <div className="flex flex-wrap gap-1 mt-2">
-          {task.tags.map((tag) => (
-            <span key={tag} className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${tagColor(tag)}`}>
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {expanded && (
-        <div className="mt-3 pt-3 border-t border-gray-800">
-          {task.description ? (
-            <p className="text-xs text-gray-400 leading-relaxed whitespace-pre-wrap">{task.description}</p>
-          ) : (
-            <p className="text-xs text-gray-600 italic">No description.</p>
-          )}
-
-          {resolvedDeps.length > 0 && (
-            <div className="mt-2">
-              <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Dependencies</span>
-              <ul className="mt-1 space-y-0.5">
-                {resolvedDeps.map((dep) => (
-                  <li key={dep.id} className="flex items-center gap-1.5 text-xs text-gray-400">
-                    <span
-                      className={`inline-block w-1.5 h-1.5 rounded-full ${
-                        dep.status === 'done' ? 'bg-green-500' : dep.status === 'blocked' ? 'bg-red-500' : 'bg-gray-500'
-                      }`}
-                    />
-                    {dep.title}
-                  </li>
-                ))}
-              </ul>
+          {task.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mt-1">
+              {task.tags.map((tag) => (
+                <span key={tag} className={`text-[10px] font-medium px-1.5 py-px rounded-full ${stale ? 'opacity-40' : ''} ${tagColor(tag)}`}>
+                  {tag}
+                </span>
+              ))}
             </div>
           )}
+          {expanded && task.description && (
+            <p className="text-xs text-gray-500 mt-2 leading-relaxed whitespace-pre-wrap">{task.description}</p>
+          )}
         </div>
-      )}
-    </button>
+        <span className="shrink-0 text-[10px] font-mono mt-0.5 text-gray-700">
+          {relativeAge(task.createdAt)}
+        </span>
+      </button>
+    </div>
   );
 }
 
 export function TaskBoard() {
   const projectPath = useProjectPath();
   const { data, loading, error, refetch } = useTauriData<StateData>('get_state', projectPath);
-  const tasks = data?.tasks ?? [];
+  const { data: wf } = useTauriData<WorkflowData>('get_workflow', projectPath);
+  const [expandedTodo, setExpandedTodo] = useState<string | null>(null);
+  const [doneOpen, setDoneOpen] = useState(false);
+  const [expandedDone, setExpandedDone] = useState<string | null>(null);
 
   if (loading) return <LoadingState label="Loading tasks..." />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;
 
+  const tasks   = data?.tasks ?? [];
+  const phase   = wf?.phase ?? 'idle';
+  const ps      = PHASE_COLORS[phase] ?? PHASE_COLORS.idle;
+  const blocked = tasks.filter((t) => t.status === 'blocked');
+  const active  = tasks.find((t) => t.status === 'in_progress') ?? null;
+  const todo    = tasks.filter((t) => t.status === 'todo');
+  const done    = tasks.filter((t) => t.status === 'done');
+
   if (tasks.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <p className="text-sm text-gray-500 text-center max-w-md">
-          No tasks yet. Claude creates tasks automatically via MCP tools, or use <code className="text-gray-400 bg-gray-800 px-1 rounded">hw_add_task</code> to add one manually.
+        <p className="text-sm text-gray-600 text-center max-w-sm">
+          No tasks yet. Claude creates tasks via{' '}
+          <code className="text-gray-500 bg-gray-800/60 px-1 rounded">hw_add_task</code>.
         </p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex gap-4 p-4 overflow-x-auto min-w-0">
-      {COLUMNS.map((col) => {
-        const columnTasks = tasks.filter((t) => t.status === col.status);
+    <div className="flex-1 flex flex-col min-h-0 bg-[#0a0a0f]">
 
-        return (
-          <div key={col.status} className="flex flex-col min-w-[240px] w-[280px] shrink-0">
-            <div className={`flex items-center justify-between px-3 py-2 rounded-t-lg border-t-2 ${col.color} ${col.headerBg}`}>
-              <span className="text-sm font-semibold text-gray-200">{col.label}</span>
-              <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-full ${col.badgeBg}`}>
-                {columnTasks.length}
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-2.5 border-b border-gray-800/70 bg-[#0d0d14] shrink-0">
+        <span className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest">Tasks</span>
+        <div className="flex items-center gap-3">
+          <span className="text-[10px] font-mono text-gray-700">{todo.length} queued</span>
+          {done.length > 0 && (
+            <button
+              type="button"
+              onClick={() => setDoneOpen((v) => !v)}
+              className="text-[10px] font-mono text-gray-600 hover:text-gray-400 transition-colors"
+            >
+              {done.length} done {doneOpen ? '▲' : '▼'}
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto min-h-0">
+
+        {/* Zone 1: Blocked banner */}
+        {blocked.length > 0 && (
+          <div className="mx-4 mt-4 rounded-lg border border-red-800/50 bg-red-950/20 px-4 py-3">
+            <div className="flex items-center gap-2 mb-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-red-400">
+                Blocked
               </span>
             </div>
-
-            <div className="flex-1 flex flex-col gap-2 p-2 bg-[#111118]/50 rounded-b-lg border border-t-0 border-gray-800/50">
-              {columnTasks.length === 0 ? (
-                <div className="flex-1 flex items-center justify-center min-h-[80px] border border-dashed border-gray-800 rounded-lg">
-                  <span className="text-xs text-gray-600">(empty)</span>
+            <div className="space-y-2">
+              {blocked.map((t) => (
+                <div key={t.id} className="pl-3.5">
+                  <span className="text-sm text-red-300/80 leading-snug">{t.title}</span>
+                  {t.description && (
+                    <p className="text-xs text-red-400/40 mt-0.5 leading-relaxed">{t.description}</p>
+                  )}
                 </div>
-              ) : (
-                columnTasks.map((task) => (
-                  <TaskCard key={task.id} task={task} tasks={tasks} />
-                ))
-              )}
+              ))}
             </div>
           </div>
-        );
-      })}
+        )}
+
+        {/* Zone 2: Active task */}
+        <div className="px-4 mt-4">
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-600 mb-2">Active</div>
+          {active ? (
+            <div className="flex items-start gap-3 px-3 py-2.5 rounded-lg border border-gray-700/50 bg-[#111118]">
+              <span className={`shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded uppercase tracking-wide mt-0.5 ${ps.bg} ${ps.text}`}>
+                {phase}
+              </span>
+              <div className="flex-1 min-w-0">
+                <span className="text-sm text-white leading-snug">{active.title}</span>
+                {active.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1.5">
+                    {active.tags.map((tag) => (
+                      <span key={tag} className={`text-[10px] font-medium px-1.5 py-px rounded-full ${tagColor(tag)}`}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div className="px-3 py-2.5 rounded-lg border border-gray-800/40 bg-[#111118]/40">
+              <span className="text-xs text-gray-600 italic">No active task</span>
+            </div>
+          )}
+        </div>
+
+        {/* Zone 3: Todo queue */}
+        {todo.length > 0 && (
+          <div className="px-4 mt-5">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-600 mb-2">Queue</div>
+            <div className="rounded-lg border border-gray-800/60 bg-[#111118] overflow-hidden">
+              {todo.map((task, i) => (
+                <TodoRow
+                  key={task.id}
+                  task={task}
+                  index={i + 1}
+                  expanded={expandedTodo === task.id}
+                  onToggle={() => setExpandedTodo((v) => v === task.id ? null : task.id)}
+                />
+              ))}
+            </div>
+            {todo.some((t) => isStale(t.createdAt)) && (
+              <p className="text-[10px] text-gray-700 mt-1.5 px-1">Faded items queued 7+ days.</p>
+            )}
+          </div>
+        )}
+
+        {/* Done — expanded via header badge */}
+        {doneOpen && done.length > 0 && (
+          <div className="px-4 mt-5 mb-4">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-600 mb-2">Done</div>
+            <div className="rounded-lg border border-gray-800/40 bg-[#0e0e16] overflow-hidden">
+              {done.map((task) => (
+                <div key={task.id} className={`border-b border-gray-800/30 last:border-0 ${expandedDone === task.id ? 'bg-white/[0.02]' : ''}`}>
+                  <button
+                    type="button"
+                    onClick={() => setExpandedDone((v) => v === task.id ? null : task.id)}
+                    className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-white/[0.02] transition-colors"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-800/60 shrink-0" />
+                    <span className="text-xs text-gray-600 flex-1 leading-snug">{task.title}</span>
+                    <span className="text-[10px] font-mono text-gray-700 shrink-0">{relativeAge(task.updatedAt)}</span>
+                  </button>
+                  {expandedDone === task.id && task.description && (
+                    <p className="text-xs text-gray-600 px-4 pb-2.5 pl-9 leading-relaxed">{task.description}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="h-4" />
+      </div>
     </div>
   );
 }
