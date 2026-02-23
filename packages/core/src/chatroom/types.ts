@@ -30,6 +30,7 @@ export interface ChatSession {
   roundNumber: number;
   pendingPatMessage?: string;
   deliberationPhase?: DeliberationPhase;
+  introRevealedCount?: number;  // undefined = no intro mode; 0..N = agents revealed so far
 }
 
 export interface ChatReaction {
