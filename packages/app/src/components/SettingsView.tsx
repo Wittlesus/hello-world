@@ -4,6 +4,7 @@ import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
 import { LoadingState, ErrorState } from './LoadingState.js';
+import { THEMES, useThemeStore } from '../stores/theme.js';
 
 interface ProjectConfig {
   name: string;
@@ -42,6 +43,7 @@ export function SettingsView() {
   const [form, setForm] = useState<ProjectConfig | null>(null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const { themeId, setTheme } = useThemeStore();
 
   useEffect(() => {
     if (data?.config) setForm({ ...data.config });
@@ -105,6 +107,63 @@ export function SettingsView() {
       }
     >
       <div className="max-w-2xl space-y-8">
+
+        {/* Appearance */}
+        <section>
+          <h2 className="text-sm font-semibold text-gray-200 mb-4">Appearance</h2>
+          <div className={labelClass}>Theme</div>
+          <div className="grid grid-cols-4 gap-2">
+            {THEMES.map((t) => {
+              const active = themeId === t.id;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setTheme(t.id)}
+                  className={`relative flex flex-col items-center gap-2 p-3 rounded-lg border transition-all cursor-pointer ${
+                    active
+                      ? 'border-current bg-[#1a1a24]'
+                      : 'border-gray-800 bg-[#0f0f18] hover:border-gray-600'
+                  }`}
+                  style={active ? { borderColor: t.accent, boxShadow: `0 0 8px ${t.accent}40` } : {}}
+                >
+                  {/* Mini buddy preview */}
+                  <div style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: t.bg,
+                    border: `1.5px solid ${active ? t.accent : '#2a2a3a'}`,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '5px',
+                  }}>
+                    {[0, 1].map((i) => (
+                      <div key={i} style={{
+                        width: '4px',
+                        height: '4px',
+                        borderRadius: '50%',
+                        backgroundColor: t.buddyIdle,
+                        boxShadow: `0 0 3px ${t.buddyIdle}`,
+                      }} />
+                    ))}
+                  </div>
+                  <span className="text-[9px] font-medium text-center leading-tight" style={{ color: active ? t.accent : '#6b7280' }}>
+                    {t.name}
+                  </span>
+                  {active && (
+                    <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.accent }} />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-[10px] text-gray-600 mt-2">
+            Theme applies to the floating buddy window. UI accent color follows the accent.
+          </p>
+        </section>
+
         <section>
           <h2 className="text-sm font-semibold text-gray-200 mb-4">Project</h2>
           <div className="space-y-4">

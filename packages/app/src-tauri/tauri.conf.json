@@ -12,11 +12,23 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Hello World",
         "width": 1400,
         "height": 900,
         "minWidth": 1000,
         "minHeight": 600
+      },
+      {
+        "label": "buddy",
+        "title": "Claude Buddy",
+        "width": 90,
+        "height": 120,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "skipTaskbar": true,
+        "resizable": false,
+        "visible": false
       }
     ],
     "security": {
