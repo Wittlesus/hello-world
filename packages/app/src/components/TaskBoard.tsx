@@ -119,6 +119,16 @@ export function TaskBoard() {
   if (loading) return <LoadingState label="Loading tasks..." />;
   if (error) return <ErrorState message={error} onRetry={refetch} />;
 
+  if (tasks.length === 0) {
+    return (
+      <div className="flex-1 flex items-center justify-center">
+        <p className="text-sm text-gray-500 text-center max-w-md">
+          No tasks yet. Claude creates tasks automatically via MCP tools, or use <code className="text-gray-400 bg-gray-800 px-1 rounded">hw_add_task</code> to add one manually.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 flex gap-4 p-4 overflow-x-auto min-w-0">
       {COLUMNS.map((col) => {

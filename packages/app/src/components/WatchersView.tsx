@@ -194,7 +194,7 @@ export function WatchersView() {
       )}
 
       {active.length === 0 && completed.length === 0 && (
-        <EmptyState message="No watchers — spawn one with hw_spawn_watcher()" />
+        <EmptyState message="No watchers running. Use hw_spawn_watcher to start a background process that fires on app shutdown." />
       )}
     </ViewShell>
   );

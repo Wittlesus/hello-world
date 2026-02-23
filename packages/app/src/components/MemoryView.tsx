@@ -186,7 +186,7 @@ export function MemoryView() {
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState message={filter === 'all' ? 'No memories stored yet' : `No ${filter} memories`} />
+        <EmptyState message={filter === 'all' ? 'No memories stored yet. Claude auto-captures pain, win, and decision memories as it works. You can also call hw_store_memory directly.' : `No ${filter} memories`} />
       ) : (
         <div className="space-y-3">
           {filtered.map((m) => (

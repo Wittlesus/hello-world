@@ -115,7 +115,7 @@ export function ActivityStream() {
   if (activities.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center bg-[#0a0a0f]">
-        <p className="text-sm text-gray-500">No activity yet. Call <code className="text-gray-400 bg-gray-800 px-1 rounded">hw_get_context</code> to start.</p>
+        <p className="text-sm text-gray-500">No activity yet. Activity appears here as Claude uses MCP tools during sessions.</p>
       </div>
     );
   }

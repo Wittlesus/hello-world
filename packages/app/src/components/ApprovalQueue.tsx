@@ -60,7 +60,7 @@ export function ApprovalQueue() {
   if (pending.length === 0) {
     return (
       <div className="h-8 flex items-center px-4 bg-[#111118] border-t border-gray-800">
-        <span className="text-xs text-gray-600">No pending approvals</span>
+        <span className="text-xs text-gray-600">No pending approvals. When Claude needs to take a sensitive action (git push, deploy, delete), it will appear here for your decision.</span>
       </div>
     );
   }

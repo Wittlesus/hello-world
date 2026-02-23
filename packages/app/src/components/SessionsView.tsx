@@ -187,7 +187,7 @@ export function SessionsView() {
       description={`${sessions.length} session${sessions.length !== 1 ? 's' : ''} · click to expand`}
     >
       {sessions.length === 0 ? (
-        <EmptyState message="No sessions recorded yet" />
+        <EmptyState message="No sessions recorded. Sessions are created automatically when Claude starts working via hw_get_context." />
       ) : (
         <div className="space-y-2">
           {sessions.map((s, i) => (

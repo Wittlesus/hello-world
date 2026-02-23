@@ -103,7 +103,7 @@ export function DecisionsView() {
   return (
     <ViewShell title="🧭 Decisions" description={`${decisions.length} choice${decisions.length !== 1 ? 's' : ''} made so far`}>
       {decisions.length === 0 ? (
-        <EmptyState message="🤷 No decisions recorded yet" />
+        <EmptyState message="No decisions recorded yet. Use hw_record_decision when an architectural choice is made — these accumulate into your project's decision log." />
       ) : (
         <div className="space-y-3">
           {[...decisions].reverse().map((d) => (

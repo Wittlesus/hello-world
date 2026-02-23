@@ -156,18 +156,22 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* Direction notes — only shown when unread exist */}
-      {unreadNotes.length > 0 && (
-        <div className="shrink-0 border-b border-amber-900/40 bg-amber-950/20">
-          <div className="flex items-center justify-between px-4 py-2 border-b border-amber-900/30">
-            <p className="text-[10px] uppercase tracking-widest text-amber-600 font-semibold">Direction from Pat</p>
+      {/* Direction notes — always shown; content varies by unread count */}
+      <div className={`shrink-0 border-b ${unreadNotes.length > 0 ? 'border-amber-900/40 bg-amber-950/20' : 'border-gray-800/40 bg-[#0d0d14]'}`}>
+        <div className={`flex items-center justify-between px-4 py-2 ${unreadNotes.length > 0 ? 'border-b border-amber-900/30' : ''}`}>
+          <p className={`text-[10px] uppercase tracking-widest font-semibold ${unreadNotes.length > 0 ? 'text-amber-600' : 'text-gray-700'}`}>Direction from Pat</p>
+          {unreadNotes.length > 0 && (
             <button
               onClick={markAllRead}
               className="text-[10px] text-amber-700 hover:text-amber-400 transition-colors"
             >
               Dismiss all
             </button>
-          </div>
+          )}
+        </div>
+        {unreadNotes.length === 0 ? (
+          <p className="px-4 py-2 text-[11px] text-gray-600">No unread notes. Pat can send direction notes via Discord — they appear here for review.</p>
+        ) : (
           <div className="flex flex-col divide-y divide-amber-900/20">
             {unreadNotes.map((note) => (
               <div key={note.id} className="flex items-start gap-3 px-4 py-3">
@@ -187,8 +191,8 @@ export function Dashboard() {
               </div>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* Top info pane — 3 columns */}
       <div className="shrink-0 grid grid-cols-3 gap-px bg-gray-800/40 border-b border-gray-800/70">

@@ -119,6 +119,7 @@ export function TimelineView() {
   const lines = (raw ?? '').split('\n');
   // Count sessions (## headings that start with "Session")
   const sessionCount = lines.filter((l) => l.startsWith('## Session')).length;
+  const isEmpty = !raw || raw.trim().length === 0;
 
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-[#0a0a0f]">
@@ -128,7 +129,11 @@ export function TimelineView() {
         <span className="text-[11px] text-gray-600">{sessionCount} sessions logged</span>
       </div>
       <div className="flex-1 overflow-y-auto px-5 py-4">
-        {lines.map((line, i) => renderLine(line, i))}
+        {isEmpty ? (
+          <p className="text-sm text-gray-500 text-center mt-16">No timeline entries yet. The timeline builds as Claude logs activity across sessions.</p>
+        ) : (
+          lines.map((line, i) => renderLine(line, i))
+        )}
       </div>
     </div>
   );

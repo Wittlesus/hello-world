@@ -68,7 +68,7 @@ export function CostView() {
 
       {totalSpent === 0 && (
         <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg px-4 py-3 mb-6 max-w-3xl">
-          <p className="text-xs text-blue-300/80">Cost tracking activates when Claude sessions run through the MCP server. All sessions currently show $0.00.</p>
+          <p className="text-xs text-blue-300/80">Cost data populates as sessions run. Token usage is estimated per session and accumulated here.</p>
         </div>
       )}
 
@@ -84,15 +84,23 @@ export function CostView() {
             </tr>
           </thead>
           <tbody>
-            {[...sessions].reverse().map((s, i) => (
-              <tr key={s.id} className="border-b border-gray-800/50 hover:bg-gray-800/20">
-                <td className="py-2 px-3 font-mono text-gray-400">{sessions.length - i}</td>
-                <td className="py-2 px-3 text-gray-300">{formatDate(s.startedAt)}</td>
-                <td className="py-2 px-3 text-right font-mono text-gray-300">${s.costUsd.toFixed(2)}</td>
-                <td className="py-2 px-3 text-right font-mono text-gray-400">{s.tokensUsed.toLocaleString()}</td>
-                <td className="py-2 px-3 text-right text-gray-400">{s.tasksCompleted.length}</td>
+            {sessions.length === 0 ? (
+              <tr>
+                <td colSpan={5} className="py-8 px-3 text-center text-sm text-gray-500">
+                  Cost data populates as sessions run. Token usage is estimated per session and accumulated here.
+                </td>
               </tr>
-            ))}
+            ) : (
+              [...sessions].reverse().map((s, i) => (
+                <tr key={s.id} className="border-b border-gray-800/50 hover:bg-gray-800/20">
+                  <td className="py-2 px-3 font-mono text-gray-400">{sessions.length - i}</td>
+                  <td className="py-2 px-3 text-gray-300">{formatDate(s.startedAt)}</td>
+                  <td className="py-2 px-3 text-right font-mono text-gray-300">${s.costUsd.toFixed(2)}</td>
+                  <td className="py-2 px-3 text-right font-mono text-gray-400">{s.tokensUsed.toLocaleString()}</td>
+                  <td className="py-2 px-3 text-right text-gray-400">{s.tasksCompleted.length}</td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
