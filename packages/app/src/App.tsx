@@ -7,17 +7,17 @@ import { ApprovalQueue } from './components/ApprovalQueue.js';
 import { DecisionsView } from './components/DecisionsView.js';
 import { QuestionsView } from './components/QuestionsView.js';
 import { MemoryView } from './components/MemoryView.js';
-import { SessionsView } from './components/SessionsView.js';
 import { CostView } from './components/CostView.js';
 import { SettingsView } from './components/SettingsView.js';
 import { SkillsView } from './components/SkillsView.js';
 import { WatchersView } from './components/WatchersView.js';
 import { ProjectContextView } from './components/ProjectContextView.js';
-import { TimelineView } from './components/TimelineView.js';
 import { TerminalView } from './components/TerminalView.js';
 import { ProjectSetup } from './components/ProjectSetup.js';
 import { ClaudeBuddy } from './components/ClaudeBuddy.js';
 import { HelpModal } from './components/HelpModal.js';
+import { HistoryView } from './components/HistoryView.js';
+import { AgentsView } from './components/AgentsView.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -26,14 +26,15 @@ const KEY_MAP: Record<string, View> = {
   '3': 'decisions',
   '4': 'questions',
   '5': 'memory',
-  '6': 'sessions',
   '7': 'cost',
   '8': 'settings',
   't': 'terminal',
+  'a': 'approvals',
+  'g': 'agents',
+  'h': 'history',
   'k': 'skills',
-  'w': 'watchers',
   'p': 'context',
-  'l': 'timeline',
+  'w': 'watchers',
 };
 
 function MainContent() {
@@ -41,21 +42,27 @@ function MainContent() {
 
   return (
     <>
-      {/* Standard views — mount/unmount normally */}
       {view === 'dashboard'  && <Dashboard />}
       {view === 'tasks'      && <TaskBoard />}
       {view === 'decisions'  && <DecisionsView />}
       {view === 'questions'  && <QuestionsView />}
       {view === 'memory'     && <MemoryView />}
-      {view === 'sessions'   && <SessionsView />}
+      {view === 'history'    && <HistoryView />}
+      {view === 'agents'     && <AgentsView />}
       {view === 'cost'       && <CostView />}
       {view === 'settings'   && <SettingsView />}
       {view === 'skills'     && <SkillsView />}
       {view === 'watchers'   && <WatchersView />}
       {view === 'context'    && <ProjectContextView />}
-      {view === 'timeline'   && <TimelineView />}
 
-      {/* Terminal stays mounted always — hidden when not active so PTY and xterm.js survive tab switches */}
+      {/* Approvals as standalone full view */}
+      {view === 'approvals'  && (
+        <div className="flex-1 flex flex-col min-h-0 overflow-y-auto p-4">
+          <ApprovalQueue standalone />
+        </div>
+      )}
+
+      {/* Terminal stays mounted always — PTY + xterm survive tab switches */}
       <div className="flex-1 flex flex-col min-h-0" style={{ display: view === 'terminal' ? 'flex' : 'none' }}>
         <TerminalView />
       </div>
@@ -69,13 +76,11 @@ export function App() {
   const [bootstrapping, setBootstrapping] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
 
-  // Global keyboard shortcuts — number keys and letters switch views
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    // Don't intercept when user is typing in inputs
     if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === '?') { setShowHelp(true); return; }
-    const view = KEY_MAP[e.key];
+    const view = KEY_MAP[e.key.toLowerCase()];
     if (view) setView(view);
   }, [setView]);
 
@@ -86,14 +91,11 @@ export function App() {
 
   useEffect(() => {
     invoke<string | null>('get_app_project_path')
-      .then((path) => {
-        if (path) setProject(path, '');
-      })
-      .catch(() => {}) // no stored path → show setup screen
+      .then((path) => { if (path) setProject(path, ''); })
+      .catch(() => {})
       .finally(() => setBootstrapping(false));
   }, []);
 
-  // Once we have a path, start the file watcher and load project name
   useEffect(() => {
     if (!projectPath) return;
     invoke('start_watching', { projectPath }).catch(console.error);

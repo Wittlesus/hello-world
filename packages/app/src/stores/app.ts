@@ -1,6 +1,10 @@
 import { create } from 'zustand';
 
-export type View = 'dashboard' | 'tasks' | 'decisions' | 'questions' | 'memory' | 'sessions' | 'cost' | 'settings' | 'terminal' | 'skills' | 'watchers' | 'context' | 'timeline';
+export type View =
+  | 'terminal' | 'dashboard' | 'approvals'
+  | 'tasks' | 'decisions' | 'questions' | 'agents'
+  | 'memory' | 'context' | 'history'
+  | 'settings' | 'cost' | 'skills' | 'watchers';
 
 interface AppState {
   activeView: View;
@@ -13,7 +17,7 @@ interface AppState {
 }
 
 export const useAppStore = create<AppState>((set) => ({
-  activeView: 'dashboard',
+  activeView: 'terminal',
   projectPath: null,
   projectName: null,
   sidebarCollapsed: false,
