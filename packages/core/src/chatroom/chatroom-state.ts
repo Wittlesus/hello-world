@@ -56,6 +56,7 @@ export class ChatroomStore {
         waitingForInput: false,
         roundNumber: 0,
         deliberationPhase: 'frame',
+        introRevealedCount: 0,
       },
       agents,
       messages: [
@@ -119,6 +120,21 @@ export class ChatroomStore {
       ...state,
       session: { ...state.session, deliberationPhase: phase },
     }));
+  }
+
+  setIntroRevealedCount(n: number): void {
+    this.update(state => ({
+      ...state,
+      session: { ...state.session, introRevealedCount: n },
+    }));
+  }
+
+  clearIntroMode(): void {
+    this.update(state => {
+      const session = { ...state.session };
+      delete session.introRevealedCount;
+      return { ...state, session };
+    });
   }
 
   appendReaction(agentId: string, emoji: string): ChatReaction {

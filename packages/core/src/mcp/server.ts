@@ -38,6 +38,7 @@ import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 import { ChatroomStore } from '../chatroom/chatroom-state.js';
 import { AGENT_DEFINITIONS, DEFAULT_AGENTS } from '../chatroom/agent-definitions.js';
+import { runDeliberation, stopDeliberation } from '../chatroom/agent-runner.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
@@ -874,7 +875,9 @@ server.registerTool('hw_start_deliberation', {
   const agentIds = args.agents ?? DEFAULT_AGENTS;
   const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
   activity.append('deliberation_started', `Deliberation: "${args.topic}"`, `Agents: ${agentIds.join(', ')}`);
-  return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"`);
+  // Kick off automatic agent runner in background (non-blocking)
+  runDeliberation(chatroom, notifyRunner).catch(() => {});
+  return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"\nIntro sequence running — agents will appear one by one.`);
 });
 
 server.registerTool('hw_pause_deliberation', {
@@ -882,6 +885,7 @@ server.registerTool('hw_pause_deliberation', {
   description: 'Pause the active deliberation to allow input or review.',
   inputSchema: z.object({}),
 }, async () => {
+  stopDeliberation();
   chatroom.setSessionStatus('paused', true);
   activity.append('deliberation_paused', 'Deliberation paused', '');
   return text('Deliberation paused. Resume with hw_resume_deliberation or conclude with hw_conclude_deliberation.');
@@ -894,6 +898,8 @@ server.registerTool('hw_resume_deliberation', {
 }, async () => {
   chatroom.setSessionStatus('active', false);
   activity.append('deliberation_resumed', 'Deliberation resumed', '');
+  // Restart background runner
+  runDeliberation(chatroom, notifyRunner).catch(() => {});
   return text('Deliberation resumed.');
 });
 

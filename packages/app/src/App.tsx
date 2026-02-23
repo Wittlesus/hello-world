@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
+import { listen } from '@tauri-apps/api/event';
 import { Sidebar } from './components/Sidebar.js';
 import { Dashboard } from './components/Dashboard.js';
 import { TaskBoard } from './components/TaskBoard.js';
@@ -103,6 +104,25 @@ export function App() {
       .then((data) => setProject(projectPath, data.config.name))
       .catch(() => {});
   }, [projectPath]);
+
+  // Auto-navigate to Agents tab when a deliberation session starts
+  const prevDelibStatus = useRef<string>('idle');
+  useEffect(() => {
+    if (!projectPath) return;
+    const unlisten = listen<string[]>('hw-files-changed', async (e) => {
+      if (!e.payload.includes('chatroom.json')) return;
+      try {
+        const raw = await invoke<string>('get_chatroom', { projectPath });
+        const cr = JSON.parse(raw) as { session: { status: string } };
+        const status = cr.session.status;
+        if (prevDelibStatus.current === 'idle' && status === 'active') {
+          setView('agents');
+        }
+        prevDelibStatus.current = status;
+      } catch { /* ignore */ }
+    });
+    return () => { unlisten.then(fn => fn()); };
+  }, [projectPath, setView]);
 
   if (bootstrapping) {
     return (
