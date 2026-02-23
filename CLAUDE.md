@@ -71,6 +71,38 @@ Storage: JSON files in `.hello-world/` (local-first, no cloud dependency)
 - `hw_write_handoff(message)` — call BEFORE any edit that might trigger a restart. Saves context for next session.
 - `hw_record_failure(taskId, errorMessage, approach)` — Two-Strike: same error twice = stop and ask Pat.
 
+## Handoff Format (REQUIRED — use this exact structure)
+
+When writing `hw_write_handoff()`, always use this structure so the next Claude instance knows exactly what to verify, not just what was done:
+
+```
+## VERIFIED (done, tested, confirmed working)
+- <feature>: <what was confirmed>
+
+## MERGED BUT UNTESTED (code is on master, not yet tested in running app)
+- <feature>: merged in commit <sha>. Test: <exact steps + expected outcome>
+
+## STILL IN BRANCH (not on master yet)
+- Branch <name>: <what it contains>
+- Files changed: <list>
+- Merge blocker (if any): <why it hasn't been merged>
+
+## VERIFICATION CHECKLIST (run on next session start, in order)
+1. `git log --oneline -3` → expect: <specific commit message>
+2. `npm run build:ts` → expect: 0 errors
+3. File exists: <path> → expect: yes/no
+4. App test: press <key> → expect: <what panel/data should appear>
+
+## WHAT NEEDS WORK NEXT
+1. <specific next action with branch/file context>
+2. <next action>
+
+## GIT STATE
+- master: <sha> — <commit message>
+- Worktrees in use: <branch> at <path> (purpose: ...)
+- Pending Rust changes: <yes/no — if yes, describe>
+```
+
 ## Architecture
 - Brain engine: `packages/core/src/brain/`
 - State management: `packages/core/src/state.ts`
@@ -95,22 +127,25 @@ Storage: JSON files in `.hello-world/` (local-first, no cloud dependency)
 | Settings | 8 | Project config |
 
 ## What's Built (as of Feb 2026)
-- Tauri v2 desktop app with all views above (Skills in progress)
+- Tauri v2 desktop app with all views listed above
+- Additional views: Watchers (w), Project Context (p), Timeline (l), Dashboard sessions panel
 - File watcher — live reactivity, MCP writes sync to UI instantly
-- MCP server with all hw_* tools
+- MCP server with all hw_* tools including hw_process_direction_note, hw_spawn_watcher
 - Discord bot — sends DMs for approvals and notifications
 - Discord listener — receives approve/reject/note replies from Pat
 - SessionStart hook — injects context on every session
 - PostToolUse hook — captures last-edited file for crash resume
+- UserPromptSubmit hook — status line with phase/task/notes count
 - Workflow engine (idle→scope→plan→build→verify→ship)
 - Two-Strike system — same error twice = stop
 - Approval gates — auto/notify/block tiers
 - Brain memory — pain/win/fact searchable at session start
+- Watcher system — spawn background watchers that fire on app shutdown
+- Direction notes — captured in direction.json, surfaced in Dashboard + ProjectContextView
 
 ## What's In Progress
 - SkillsView tab (Rust command exists, UI not yet wired)
-- Question answers triggering downstream actions (tasks/decisions)
-- Direction notes surfaced in app UI
+- Direction notes "mark read" button in Dashboard (Rust command in feat/direction-notes, not yet merged)
 
 ## Direction Capture — Critical Rule
 When Pat discusses vision, scope, or strategy during a session, write it to `.hello-world/direction.json` immediately — before moving on. Do not wait for the end of the session. A crash wipes context; the file survives.

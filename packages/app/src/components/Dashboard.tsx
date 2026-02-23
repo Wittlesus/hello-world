@@ -94,7 +94,7 @@ export function Dashboard() {
   const phaseColor = PHASE_COLOR[phase] ?? 'text-gray-400';
   const phaseBg    = PHASE_BG[phase] ?? 'bg-gray-500/10';
 
-  const unreadNotes   = (directionData?.notes ?? []).filter((n) => !n.read);
+  const unreadNotes    = (directionData?.notes ?? []).filter((n) => !n.read);
   const recentSessions = [...(sessionsData?.sessions ?? [])].reverse().slice(0, 4);
 
   const markRead = useCallback(async (noteId: string) => {
