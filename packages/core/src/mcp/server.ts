@@ -92,6 +92,7 @@ function generateSummary(tool: string, args: Record<string, unknown>): string {
     case 'hw_write_handoff': return `Handoff written`;
     case 'hw_spawn_watcher': return `Spawned watcher: ${args.type}`;
     case 'hw_get_context':   return `Context loaded`;
+    case 'hw_start_task':    return `Started task: ${args.taskId}`;
     default: return tool.replace('hw_', '').replace(/_/g, ' ');
   }
 }
@@ -123,6 +124,7 @@ function toolFiles(tool: string): string[] {
     hw_kill_watcher:      ['watchers.json'],
     hw_list_watchers:     [],
     hw_check_autonomous_timer: [],
+    hw_start_task:            ['state.json', 'workflow.json'],
   };
   return map[tool] ?? ['state.json'];
 }
@@ -316,9 +318,42 @@ server.registerTool('hw_update_task', {
   if (args.status) updates.status = args.status;
   if (args.description) updates.description = args.description;
   const task = project.state.updateTask(args.id, updates);
-  if (args.status === 'done') sessions.recordTaskCompleted(args.id);
+  if (args.status === 'done') {
+    sessions.recordTaskCompleted(args.id);
+    // Auto-capture win memory so brain learns from task completions without manual calls
+    memoryStore.storeMemory({
+      type: 'win',
+      title: `Completed: ${task.title}`,
+      content: task.description ?? 'Task completed successfully.',
+      tags: ['auto-captured', ...(task.tags ?? [])],
+      severity: 'low',
+    });
+  }
   activity.append('task_updated', `[${task.status.toUpperCase()}] ${task.title}`, args.description ?? '');
   return text(`Task ${task.id} updated to [${task.status}]`);
+});
+
+server.registerTool('hw_start_task', {
+  title: 'Start Task',
+  description: 'Start a task: marks it in_progress, advances phase to scope if idle, returns task details. Shorthand replacing separate hw_update_task + hw_advance_phase calls.',
+  inputSchema: z.object({
+    taskId: z.string().describe('The task ID to start'),
+  }),
+}, async (args: { taskId: string }) => {
+  const task = project.state.updateTask(args.taskId, { status: 'in_progress' });
+  const wf = workflow.getState();
+  if (wf.phase === 'idle') {
+    workflow.advance('scope', args.taskId);
+  }
+  activity.append('task_started', `Started: ${task.title}`, `Task ${task.id} → in_progress`);
+  const lines = [
+    `Task started: ${task.id}`,
+    `Title: ${task.title}`,
+    task.description ? `Description: ${task.description}` : null,
+    task.tags?.length ? `Tags: ${task.tags.join(', ')}` : null,
+    task.dependsOn?.length ? `Depends on: ${task.dependsOn.join(', ')}` : null,
+  ].filter((l): l is string => l !== null);
+  return text(lines.join('\n'));
 });
 
 // ── Decisions ───────────────────────────────────────────────────
@@ -338,6 +373,14 @@ server.registerTool('hw_record_decision', {
   const dec = project.state.addDecision(args.title, args);
   sessions.recordDecisionMade(dec.id);
   activity.append('decision_recorded', `Decision: ${dec.title}`, `Chosen: ${dec.chosen}\n${dec.rationale}`);
+  // Auto-capture decision memory so it surfaces during future relevant retrieval
+  memoryStore.storeMemory({
+    type: 'decision',
+    title: dec.title,
+    content: `Context: ${args.context}\nChosen: ${dec.chosen}\nRationale: ${dec.rationale}`,
+    tags: ['auto-captured', 'decision'],
+    severity: 'low',
+  });
   return text(`Decision recorded: ${dec.id} "${dec.title}" -> ${dec.chosen}`);
 });
 
@@ -440,6 +483,18 @@ server.registerTool('hw_record_failure', {
   }),
 }, async (args: { taskId: string; errorMessage: string; approach: string; affectedFile?: string }) => {
   const check = strikes.recordFailure(args.taskId, args.errorMessage, args.approach, args.affectedFile);
+
+  // Auto-capture pain memory on every failure so brain learns without manual hw_store_memory calls
+  const failedTask = project.state.listTasks().find(t => t.id === args.taskId);
+  memoryStore.storeMemory({
+    type: 'pain',
+    title: `Strike: ${args.errorMessage.slice(0, 60)} (${failedTask?.title ?? args.taskId})`,
+    content: `Approach tried: ${args.approach}${args.affectedFile ? `\nFile: ${args.affectedFile}` : ''}`,
+    rule: args.errorMessage.slice(0, 300),
+    tags: ['auto-captured', args.taskId, 'strike'],
+    severity: check.shouldHalt ? 'high' : 'medium',
+  });
+
   if (check.shouldHalt) {
     activity.append('strike_halt', `TWO-STRIKE HALT on task ${args.taskId}`, args.errorMessage);
     return text(`TWO-STRIKE HALT!\n\n${strikes.getAlternatives(args.taskId)}\n\nSTOP. Present 2-3 fundamentally different approaches to Pat.`);
