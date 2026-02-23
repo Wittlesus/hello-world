@@ -215,6 +215,46 @@ fn get_watchers(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn kill_watcher(project_path: &str, watcher_id: String) -> Result<(), String> {
+    let mut data = read_json_file(project_path, "watchers.json")?;
+
+    let active = data["active"]
+        .as_array_mut()
+        .ok_or("watchers.json missing active array")?;
+
+    let idx = active
+        .iter()
+        .position(|w| w["id"].as_str() == Some(watcher_id.as_str()))
+        .ok_or_else(|| format!("Watcher {} not found in active list", watcher_id))?;
+
+    let pid = active[idx]["pid"]
+        .as_u64()
+        .ok_or("Watcher missing pid")?;
+
+    #[cfg(windows)]
+    std::process::Command::new("taskkill")
+        .args(["/F", "/PID", &pid.to_string()])
+        .output()
+        .map_err(|e| format!("taskkill failed: {}", e))?;
+
+    #[cfg(not(windows))]
+    std::process::Command::new("kill")
+        .args(["-9", &pid.to_string()])
+        .output()
+        .map_err(|e| format!("kill failed: {}", e))?;
+
+    let mut watcher = active.remove(idx);
+    watcher["status"] = serde_json::json!("killed");
+
+    data["completed"]
+        .as_array_mut()
+        .ok_or("watchers.json missing completed array")?
+        .push(watcher);
+
+    write_json_file(project_path, "watchers.json", &data)
+}
+
+#[tauri::command]
 fn get_timeline(project_path: &str) -> Result<String, String> {
     let path = std::path::Path::new(project_path)
         .join(".hello-world")
@@ -691,6 +731,7 @@ pub fn run() {
             get_direction,
             mark_direction_note_read,
             get_watchers,
+            kill_watcher,
             get_timeline,
             get_chat_history,
             append_chat_message,

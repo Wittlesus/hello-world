@@ -1,3 +1,5 @@
+import { useState, useCallback } from 'react';
+import { invoke } from '@tauri-apps/api/core';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { ViewShell } from './ViewShell.js';
@@ -57,7 +59,15 @@ const STATUS_LABEL: Record<string, string> = {
   timed_out: 'timed out',
 };
 
-function WatcherCard({ watcher }: { watcher: WatcherEntry }) {
+function WatcherCard({
+  watcher,
+  onKill,
+  killing,
+}: {
+  watcher: WatcherEntry;
+  onKill?: (id: string) => void;
+  killing?: boolean;
+}) {
   const isActive = watcher.status === 'active';
   const statusStyle = STATUS_STYLE[watcher.status] ?? 'text-gray-400 bg-gray-500/15';
   const statusLabel = STATUS_LABEL[watcher.status] ?? watcher.status;
@@ -67,15 +77,26 @@ function WatcherCard({ watcher }: { watcher: WatcherEntry }) {
       {/* Header */}
       <div className="px-4 py-3 flex items-center justify-between gap-3">
         <span className="font-mono text-sm text-white font-medium truncate">{watcher.id}</span>
-        <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full shrink-0 ${statusStyle}`}>
-          {statusLabel}
-        </span>
+        <div className="flex items-center gap-2 shrink-0">
+          {isActive && onKill && (
+            <button
+              onClick={() => onKill(watcher.id)}
+              disabled={killing}
+              className="text-[10px] text-red-700 hover:text-red-400 transition-colors disabled:opacity-40"
+            >
+              {killing ? '...' : 'Kill'}
+            </button>
+          )}
+          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${statusStyle}`}>
+            {statusLabel}
+          </span>
+        </div>
       </div>
 
       {/* Active progress bar */}
       {isActive && (
         <div className="h-1 bg-gray-800 mx-4 mb-3 rounded-full overflow-hidden">
-          <div className="h-full bg-cyan-500/70 rounded-full animate-[progress_2s_ease-in-out_infinite]"
+          <div className="h-full bg-cyan-500/70 rounded-full"
                style={{ animation: 'progress-slide 2s ease-in-out infinite' }} />
         </div>
       )}
@@ -116,7 +137,20 @@ function WatcherCard({ watcher }: { watcher: WatcherEntry }) {
 
 export function WatchersView() {
   const projectPath = useProjectPath();
-  const { data } = useTauriData<WatchersData>('get_watchers', projectPath);
+  const { data, refetch } = useTauriData<WatchersData>('get_watchers', projectPath);
+  const [killing, setKilling] = useState<Set<string>>(new Set());
+
+  const handleKill = useCallback(async (watcherId: string) => {
+    setKilling((prev) => new Set(prev).add(watcherId));
+    try {
+      await invoke('kill_watcher', { projectPath, watcherId });
+      refetch();
+    } catch (err) {
+      console.error('kill_watcher failed:', err);
+    } finally {
+      setKilling((prev) => { const s = new Set(prev); s.delete(watcherId); return s; });
+    }
+  }, [projectPath, refetch]);
 
   const active    = data?.active ?? [];
   const completed = [...(data?.completed ?? [])].reverse().slice(0, 10);
@@ -137,7 +171,12 @@ export function WatchersView() {
           <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-3">Active</p>
           <div className="space-y-3">
             {active.map((w) => (
-              <WatcherCard key={w.id} watcher={w} />
+              <WatcherCard
+                key={w.id}
+                watcher={w}
+                onKill={handleKill}
+                killing={killing.has(w.id)}
+              />
             ))}
           </div>
         </section>
