@@ -490,6 +490,72 @@ fn reset_chat_session() -> Result<(), String> {
 
 // ── Embedded terminal (PTY) ───────────────────────────────────────
 
+/// Strip ANSI/VT escape sequences from raw PTY bytes and return plain UTF-8 text.
+fn strip_ansi(input: &[u8]) -> String {
+    let text = String::from_utf8_lossy(input);
+    let mut out = String::with_capacity(text.len());
+    let mut chars = text.chars().peekable();
+    while let Some(c) = chars.next() {
+        match c {
+            '\x1b' => match chars.peek().copied() {
+                Some('[') => {
+                    chars.next();
+                    for nc in chars.by_ref() {
+                        if nc.is_ascii_alphabetic() || nc == '~' { break; }
+                    }
+                }
+                Some(']') => {
+                    chars.next();
+                    loop {
+                        match chars.next() {
+                            Some('\x07') | None => break,
+                            Some('\x1b') => { chars.next(); break; }
+                            _ => {}
+                        }
+                    }
+                }
+                Some('(') | Some(')') | Some('*') | Some('+') => {
+                    chars.next(); chars.next();
+                }
+                Some('P') | Some('X') | Some('^') | Some('_') => {
+                    chars.next();
+                    loop {
+                        match chars.next() {
+                            Some('\x1b') => { chars.next(); break; }
+                            None => break,
+                            _ => {}
+                        }
+                    }
+                }
+                _ => { chars.next(); }
+            },
+            '\r' | '\x00' => {}
+            '\x08' => { out.pop(); }
+            c if !c.is_control() => { out.push(c); }
+            _ => {}
+        }
+    }
+    out
+}
+
+/// Returns true if a stripped PTY line is worth forwarding to Buddy.
+fn should_emit_pty_line(line: &str) -> bool {
+    let t = line.trim();
+    let char_len = t.chars().count();
+    if char_len < 4 || char_len > 150 { return false; }
+    if t.starts_with('{') || t.starts_with('[') { return false; }
+    if t.contains("<tool_") || t.contains("</") { return false; }
+    if !t.chars().any(|c| c.is_alphanumeric()) { return false; }
+    // Skip terminal prompts (e.g. "C:\Users\Patri>")
+    if t.ends_with('>') && t.contains('\\') { return false; }
+    // Skip lines that are all the same char (spinners, dividers)
+    if t.len() > 2 {
+        let first = t.chars().next().unwrap();
+        if t.chars().all(|c| c == first) { return false; }
+    }
+    true
+}
+
 struct PtyState {
     writer: Box<dyn Write + Send>,
     master: Box<dyn portable_pty::MasterPty + Send>,
@@ -595,11 +661,14 @@ fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Res
         master: pty_pair.master,
     });
 
-    // Background thread: stream raw PTY output to frontend
+    // Background thread: stream raw PTY output to frontend + extract lines for Buddy feed
     // When the process dies, clear PTY_STATE so the next start_pty_session call respawns
     std::thread::spawn(move || {
         let mut buf = [0u8; 4096];
         let mut reader = reader;
+        let mut line_buf: Vec<u8> = Vec::new();
+        let mut last_line = String::new();
+        let mut last_emit = std::time::Instant::now();
         loop {
             match reader.read(&mut buf) {
                 Ok(0) | Err(_) => {
@@ -610,8 +679,32 @@ fn start_pty_session(app: tauri::AppHandle, project_path: Option<String>) -> Res
                     break;
                 }
                 Ok(n) => {
+                    // Emit raw bytes to terminal view (unchanged)
                     let encoded = base64_encode(&buf[..n]);
                     let _ = app.emit("pty-data", encoded);
+
+                    // Extract clean lines for Buddy feed
+                    for &byte in &buf[..n] {
+                        if byte == b'\n' {
+                            if !line_buf.is_empty() {
+                                let text = strip_ansi(&line_buf);
+                                if should_emit_pty_line(&text) {
+                                    let display: String = text.trim().chars().take(60).collect();
+                                    let now = std::time::Instant::now();
+                                    let elapsed = now.duration_since(last_emit).as_millis();
+                                    let is_dup = display == last_line && elapsed < 500;
+                                    if !is_dup && elapsed >= 30 {
+                                        let _ = app.emit("hw-pty-line", &display);
+                                        last_line = display;
+                                        last_emit = now;
+                                    }
+                                }
+                                line_buf.clear();
+                            }
+                        } else if byte != b'\r' && line_buf.len() < 512 {
+                            line_buf.push(byte);
+                        }
+                    }
                 }
             }
         }
