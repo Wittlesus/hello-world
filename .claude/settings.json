@@ -34,9 +34,20 @@
         ]
       }
     ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node C:/Users/Patri/CascadeProjects/hello-world/.claude/hooks/stop-thought.mjs",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit|Bash|Read",
+        "matcher": "Write|Edit|Bash|Read|Glob|Grep|Task|MultiEdit",
         "hooks": [
           {
             "type": "command",
