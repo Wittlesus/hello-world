@@ -4,10 +4,12 @@
  * Fires before every user message Claude processes.
  * Injects a compact one-liner with current phase, task, and tool names.
  * Keeps hw_* tools top-of-mind throughout the session, not just at start.
+ * Also signals Buddy that Claude is about to respond (typing signal).
  */
 
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
+import { request } from 'http';
 
 const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
 const HW = join(PROJECT, '.hello-world');
@@ -52,3 +54,31 @@ const parts = [
 ].filter(Boolean);
 
 process.stdout.write(parts.join(' ') + '\n');
+
+// Signal Buddy: Claude is about to respond.
+// This sets hadActivity=true in Buddy so the Stop-hook chime always fires,
+// even for pure text responses that produce no PTY or file-change events.
+const sync = (() => {
+  try { return JSON.parse(readFileSync(join(HW, 'sync.json'), 'utf8')); }
+  catch { return null; }
+})();
+if (sync?.port) {
+  const body = JSON.stringify({ type: 'typing', summary: 'Responding...' });
+  const req = request(
+    {
+      hostname: '127.0.0.1',
+      port: sync.port,
+      method: 'POST',
+      path: '/',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(body),
+        'Connection': 'close',
+      },
+    },
+    () => { process.exit(0); }
+  );
+  req.on('error', () => { process.exit(0); });
+  req.write(body);
+  req.end();
+}
