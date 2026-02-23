@@ -236,10 +236,10 @@ export function TerminalView() {
           </div>
           <button
             onClick={() => setPanelOpen((p) => !p)}
-            className="text-[11px] text-gray-500 hover:text-gray-300 transition-colors font-mono"
+            className="text-[11px] px-2 py-0.5 rounded border border-gray-700 text-gray-400 hover:text-gray-200 hover:border-gray-500 transition-colors font-mono"
             title="Toggle context panel"
           >
-            {panelOpen ? '[hide]' : '[ctx]'}
+            {panelOpen ? 'hide ctx' : 'show ctx'}
           </button>
         </div>
       </div>

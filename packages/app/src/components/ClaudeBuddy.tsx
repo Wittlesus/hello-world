@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { listen } from '@tauri-apps/api/event';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 
@@ -79,24 +78,10 @@ export function ClaudeBuddy() {
     typingRef.current = setTimeout(tick, 22);
   }, []);
 
-  // Primary: live tool summaries from MCP server via loopback HTTP → Tauri event
-  useEffect(() => {
-    const unlisten = listen<{ summary: string }>('hw-tool-summary', (event) => {
-      const summary = event.payload?.summary;
-      if (summary) {
-        lastIdRef.current = '__live__' + Date.now();
-        typeText(truncate(summary, 12));
-      }
-    });
-    return () => { unlisten.then((fn) => fn()); };
-  }, [typeText]);
-
-  // Fallback: retype whenever a new activity arrives (covers non-MCP writes)
+  // Retype whenever a new activity arrives
   useEffect(() => {
     const incoming = latest?.id ?? '';
     if (incoming && incoming === lastIdRef.current) return;
-    // Don't overwrite a live summary for 3 seconds
-    if (lastIdRef.current.startsWith('__live__')) return;
     lastIdRef.current = incoming;
 
     const text = latest
