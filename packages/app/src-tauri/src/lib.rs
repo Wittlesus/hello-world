@@ -866,7 +866,7 @@ fn start_watching(app: tauri::AppHandle, project_path: String) -> Result<(), Str
                         if event.kind == DebouncedEventKind::Any {
                             if let Some(name) = event.path.file_name() {
                                 let name_str = name.to_string_lossy().to_string();
-                                if name_str.ends_with(".json") && !changed_files.contains(&name_str) {
+                                if (name_str.ends_with(".json") || name_str.ends_with(".md")) && !changed_files.contains(&name_str) {
                                     changed_files.push(name_str);
                                 }
                             }
