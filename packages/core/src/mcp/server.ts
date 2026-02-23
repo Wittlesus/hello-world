@@ -38,7 +38,6 @@ import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 import { ChatroomStore } from '../chatroom/chatroom-state.js';
 import { AGENT_DEFINITIONS, DEFAULT_AGENTS } from '../chatroom/agent-definitions.js';
-import { runDeliberation, stopDeliberation } from '../chatroom/agent-runner.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
@@ -875,11 +874,6 @@ server.registerTool('hw_start_deliberation', {
   const agentIds = args.agents ?? DEFAULT_AGENTS;
   const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
   activity.append('deliberation_started', `Deliberation: "${args.topic}"`, `Agents: ${agentIds.join(', ')}`);
-  // Start runner in background (non-blocking)
-  runDeliberation(chatroom, (files) => {
-    scheduleNotify('hw_chatroom_update', {});
-    void files;
-  }).catch(() => {});
   return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"`);
 });
 
@@ -888,7 +882,6 @@ server.registerTool('hw_pause_deliberation', {
   description: 'Pause the active deliberation to allow input or review.',
   inputSchema: z.object({}),
 }, async () => {
-  stopDeliberation();
   chatroom.setSessionStatus('paused', true);
   activity.append('deliberation_paused', 'Deliberation paused', '');
   return text('Deliberation paused. Resume with hw_resume_deliberation or conclude with hw_conclude_deliberation.');
@@ -901,10 +894,6 @@ server.registerTool('hw_resume_deliberation', {
 }, async () => {
   chatroom.setSessionStatus('active', false);
   activity.append('deliberation_resumed', 'Deliberation resumed', '');
-  runDeliberation(chatroom, (files) => {
-    scheduleNotify('hw_chatroom_update', {});
-    void files;
-  }).catch(() => {});
   return text('Deliberation resumed.');
 });
 
@@ -915,7 +904,6 @@ server.registerTool('hw_conclude_deliberation', {
     summary: z.string().describe('Summary of the deliberation outcome / decision reached'),
   }),
 }, async (args: { summary: string }) => {
-  stopDeliberation();
   chatroom.appendMessage('system', `Concluded: ${args.summary}`, 'system');
   chatroom.setSessionStatus('concluded');
   activity.append('deliberation_concluded', 'Deliberation concluded', args.summary);
@@ -936,6 +924,28 @@ server.registerTool('hw_post_to_chatroom', {
   chatroom.appendMessage('claude', args.message, 'claude');
   activity.append('claude_posted_to_chatroom', `Claude: ${args.message.slice(0, 60)}`, '');
   return text('Posted to chatroom.');
+});
+
+server.registerTool('hw_post_agent_message', {
+  title: 'Post Agent Message',
+  description: 'Post a message as a specific agent (architect, critic, product, security) to the deliberation chatroom. Claude uses this to voice each agent persona during a deliberation.',
+  inputSchema: z.object({
+    agentId: z.string().describe('The agent ID to post as (e.g. architect, critic, product, security)'),
+    message: z.string().describe('The message to post as this agent'),
+  }),
+}, async (args: { agentId: string; message: string }) => {
+  const state = chatroom.read();
+  if (state.session.status === 'idle') {
+    return text('No active deliberation. Start one with hw_start_deliberation first.');
+  }
+  const validAgent = state.agents.find(a => a.id === args.agentId);
+  if (!validAgent) {
+    const valid = state.agents.map(a => a.id).join(', ');
+    return text(`Unknown agent "${args.agentId}". Active agents: ${valid}`);
+  }
+  chatroom.appendMessage(args.agentId, args.message, 'message');
+  activity.append('agent_posted_to_chatroom', `${validAgent.name}: ${args.message.slice(0, 60)}`, '');
+  return text(`Posted as ${validAgent.name}.`);
 });
 
 // ── Start ───────────────────────────────────────────────────────
@@ -972,6 +982,7 @@ const TOOL_CATALOG = [
   { name: 'hw_resume_deliberation', category: 'chatroom' },
   { name: 'hw_conclude_deliberation', category: 'chatroom' },
   { name: 'hw_post_to_chatroom', category: 'chatroom' },
+  { name: 'hw_post_agent_message', category: 'chatroom' },
 ];
 
 try {
