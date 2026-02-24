@@ -41,7 +41,17 @@ export function BuddyOverlay() {
 
   const [activity, setActivity]   = useState<ActivityState>('waiting');
   const [hasError, setHasError]   = useState(false);
-  const [themeId, setThemeId]     = useState('void-protocol');
+  const [themeId, setThemeId]     = useState(() => {
+    // Read persisted theme from localStorage on mount (same key as zustand persist)
+    try {
+      const stored = localStorage.getItem('hw-theme');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed?.state?.themeId) return parsed.state.themeId as string;
+      }
+    } catch { /* fall through */ }
+    return 'void-protocol';
+  });
   const [muted, setMuted]         = useState(false);
   const mutedRef                  = useRef(false);
   const activityRef               = useRef<ActivityState>('waiting');
