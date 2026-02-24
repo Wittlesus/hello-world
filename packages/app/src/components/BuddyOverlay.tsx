@@ -233,21 +233,12 @@ export function BuddyOverlay() {
           <div style={{
             fontFamily: '"Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace',
             fontSize: '15px',
-            lineHeight: '1.2',
+            lineHeight: '1',
             color: bodyColor,
             transition: 'color 0.25s ease',
             whiteSpace: 'pre',
             textAlign: 'left',
-          }}>
-            {/* Row 1 — dome */}
-            <div>{'▐▛███▜▌'}</div>
-
-            {/* Row 2 — neck (neckline = mouth, slits in row 1 = eyes) */}
-            <div>{'▝▜█████▛▘'}</div>
-
-            {/* Row 3 — feet */}
-            <div style={{ paddingLeft: '4px' }}>{'▘▘ ▝▝'}</div>
-          </div>
+          }}>{`  ▐▛███▜▌\n▝▜█████▛▘\n  ▘▘ ▝▝`}</div>
         </div>
 
         {/* Mute dot */}
