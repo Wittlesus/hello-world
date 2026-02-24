@@ -31,10 +31,11 @@ const SECTIONS: SectionDef[] = [
     defaultView: 'terminal',
     Icon: AnthropicIcon,
     tabs: [
-      { view: 'terminal',  label: 'Terminal',  key: 'T' },
-      { view: 'dashboard', label: 'Dashboard', key: '1' },
-      { view: 'approvals', label: 'Approvals', key: 'A' },
-      { view: 'files',     label: 'Files',     key: 'F' },
+      { view: 'terminal',  label: 'Terminal',          key: 'T' },
+      { view: 'agents',    label: 'Deliberation Room', key: 'D' },
+      { view: 'dashboard', label: 'Dashboard',         key: '1' },
+      { view: 'approvals', label: 'Approvals',         key: 'A' },
+      { view: 'files',     label: 'Files',             key: 'F' },
     ],
   },
   {
@@ -46,7 +47,6 @@ const SECTIONS: SectionDef[] = [
       { view: 'tasks',     label: 'Board',     key: '2' },
       { view: 'decisions', label: 'Decisions', key: '3' },
       { view: 'questions', label: 'Questions', key: '4' },
-      { view: 'agents',    label: 'Agents',    key: 'G' },
     ],
   },
   {
@@ -75,8 +75,8 @@ const SECTIONS: SectionDef[] = [
 ];
 
 function getSection(view: View): Section {
-  if (['terminal', 'dashboard', 'approvals', 'files'].includes(view)) return 'claude';
-  if (['tasks', 'decisions', 'questions', 'agents'].includes(view)) return 'tasks';
+  if (['terminal', 'agents', 'dashboard', 'approvals', 'files'].includes(view)) return 'claude';
+  if (['tasks', 'decisions', 'questions'].includes(view)) return 'tasks';
   if (['memory', 'context', 'history'].includes(view)) return 'brain';
   return 'settings';
 }

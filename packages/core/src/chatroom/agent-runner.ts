@@ -50,17 +50,23 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
       '--output-format', 'text',
       '--max-turns', '1',
       '--dangerously-skip-permissions',
-    ], { env });
+    ], { env, stdio: ['ignore', 'pipe', 'pipe'] });
 
     let stdout = '';
     let stderr = '';
     child.stdout.on('data', (d: Buffer) => { stdout += d.toString(); });
     child.stderr.on('data', (d: Buffer) => { stderr += d.toString(); });
 
-    const onAbort = () => { child.kill(); reject(new Error('aborted')); };
+    const timeout = setTimeout(() => {
+      child.kill();
+      reject(new Error('agent timed out after 45s'));
+    }, 45_000);
+
+    const onAbort = () => { clearTimeout(timeout); child.kill(); reject(new Error('aborted')); };
     signal.addEventListener('abort', onAbort, { once: true });
 
     child.on('close', (code: number | null) => {
+      clearTimeout(timeout);
       signal.removeEventListener('abort', onAbort);
       if (signal.aborted) return;
       if (code === 0) resolve(stdout.trim());
