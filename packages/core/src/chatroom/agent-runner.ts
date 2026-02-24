@@ -26,6 +26,21 @@ const AGENT_INTROS: Record<string, string> = {
 
 let activeRunner: AbortController | null = null;
 
+// Strip markdown formatting and agent name prefixes from responses.
+// Agents sometimes output **Bold**, ## Headers, or prefix with their name.
+function stripMarkdown(text: string): string {
+  return text
+    .replace(/^#{1,4}\s+/gm, '')           // ## Headers
+    .replace(/\*\*([^*]+)\*\*/g, '$1')      // **bold**
+    .replace(/\*([^*]+)\*/g, '$1')          // *italic*
+    .replace(/^[-*]\s+/gm, '')              // - bullet points
+    .replace(/^\d+\.\s+/gm, '')            // 1. numbered lists
+    .replace(/^>\s+/gm, '')                // > blockquotes
+    .replace(/`([^`]+)`/g, '$1')           // `inline code`
+    .replace(/^(Contrarian|Pre-mortem|First Principles|Steelman|Analogist|Constraint|New User|Power User)(\s*(responds?|synthesizes?|observes?|notes?|adds?|counters?|replies?|clarifies?|argues?|warns?|concludes?|opens?|challenges?|asks?|—[^:]*)?)\s*:\s*/im, '')
+    .trim();
+}
+
 function sleep(ms: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
     const t = setTimeout(resolve, ms);
@@ -121,9 +136,9 @@ async function runSingleAgent(
   if (state.session.status !== 'active') return;
 
   try {
-    const text = await callClaude(def.systemPrompt, buildConversation(state.messages, state.session.topic), signal);
+    const raw = await callClaude(def.systemPrompt, buildConversation(state.messages, state.session.topic), signal);
     if (signal.aborted) return;
-    store.appendMessage(agentId, text, 'message');
+    store.appendMessage(agentId, stripMarkdown(raw), 'message');
     store.updateAgentStatus(agentId, 'idle', '');
     notify(['chatroom.json']);
   } catch (err: unknown) {
