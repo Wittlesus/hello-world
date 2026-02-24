@@ -60,8 +60,9 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
 
     const cleanup = () => { try { unlinkSync(tmpFile); } catch { /* ignore */ } };
 
-    // Use cmd.exe to pipe the file into claude — avoids any arg-escaping issues
-    const shellCmd = `type "${tmpFile}" | claude --model ${MODEL} --output-format text --max-turns 1 --dangerously-skip-permissions`;
+    // Use cmd.exe to pipe the file into claude — avoids any arg-escaping issues.
+    // --print with no argument reads prompt from stdin (piped from the temp file).
+    const shellCmd = `type "${tmpFile}" | claude --print --model ${MODEL} --output-format text --max-turns 1 --dangerously-skip-permissions`;
     const child = spawn('cmd.exe', ['/d', '/s', '/c', shellCmd], {
       env, stdio: ['ignore', 'pipe', 'pipe'],
     });
