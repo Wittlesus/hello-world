@@ -50,7 +50,7 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
       '--output-format', 'text',
       '--max-turns', '1',
       '--dangerously-skip-permissions',
-    ], { env, stdio: ['ignore', 'pipe', 'pipe'] });
+    ], { env, stdio: ['ignore', 'pipe', 'pipe'], shell: true });
 
     let stdout = '';
     let stderr = '';
@@ -64,6 +64,12 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
 
     const onAbort = () => { clearTimeout(timeout); child.kill(); reject(new Error('aborted')); };
     signal.addEventListener('abort', onAbort, { once: true });
+
+    child.on('error', (err: Error) => {
+      clearTimeout(timeout);
+      signal.removeEventListener('abort', onAbort);
+      reject(err);
+    });
 
     child.on('close', (code: number | null) => {
       clearTimeout(timeout);
