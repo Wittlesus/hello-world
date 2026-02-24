@@ -103,7 +103,7 @@ export function TaskBoard() {
   const phase   = wf?.phase ?? 'idle';
   const ps      = PHASE_COLORS[phase] ?? PHASE_COLORS.idle;
   const blocked = tasks.filter((t) => t.status === 'blocked');
-  const active  = tasks.find((t) => t.status === 'in_progress') ?? null;
+  const active  = tasks.filter((t) => t.status === 'in_progress');
   const todo    = tasks.filter((t) => t.status === 'todo');
   const done    = tasks.filter((t) => t.status === 'done');
 
@@ -162,26 +162,33 @@ export function TaskBoard() {
           </div>
         )}
 
-        {/* Zone 2: Active task */}
+        {/* Zone 2: Active tasks */}
         <div className="px-4 mt-4">
           <div className="text-[10px] font-semibold uppercase tracking-widest text-gray-600 mb-2">Active</div>
-          {active ? (
-            <div className="flex items-start gap-3 px-3 py-2.5 rounded-lg border border-gray-700/50 bg-[#111118]">
-              <span className={`shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded uppercase tracking-wide mt-0.5 ${ps.bg} ${ps.text}`}>
-                {phase}
-              </span>
-              <div className="flex-1 min-w-0">
-                <span className="text-sm text-white leading-snug">{active.title}</span>
-                {active.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1.5">
-                    {active.tags.map((tag) => (
-                      <span key={tag} className={`text-[10px] font-medium px-1.5 py-px rounded-full ${tagColor(tag)}`}>
-                        {tag}
-                      </span>
-                    ))}
+          {active.length > 0 ? (
+            <div className="rounded-lg border border-gray-700/50 bg-[#111118] overflow-hidden">
+              {active.map((task, i) => (
+                <div key={task.id} className={`flex items-start gap-3 px-3 py-2.5 ${i > 0 ? 'border-t border-gray-800/50' : ''}`}>
+                  {i === 0 && (
+                    <span className={`shrink-0 text-[10px] font-mono px-1.5 py-0.5 rounded uppercase tracking-wide mt-0.5 ${ps.bg} ${ps.text}`}>
+                      {phase}
+                    </span>
+                  )}
+                  {i > 0 && <span className="shrink-0 w-[38px]" />}
+                  <div className="flex-1 min-w-0">
+                    <span className={`text-sm leading-snug ${i === 0 ? 'text-white' : 'text-gray-400'}`}>{task.title}</span>
+                    {task.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-1.5">
+                        {task.tags.map((tag) => (
+                          <span key={tag} className={`text-[10px] font-medium px-1.5 py-px rounded-full ${i === 0 ? tagColor(tag) : 'bg-gray-800/60 text-gray-600'}`}>
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </div>
+              ))}
             </div>
           ) : (
             <div className="px-3 py-2.5 rounded-lg border border-gray-800/40 bg-[#111118]/40">
