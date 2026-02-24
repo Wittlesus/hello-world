@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { X, FileImage, FileVideo, File } from 'lucide-react';
+import { X, FileImage, Upload, File } from 'lucide-react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 
 interface SharedFile {
@@ -23,6 +23,7 @@ export function FilesView() {
   const [dragOver, setDragOver] = useState(false);
   const [saving, setSaving] = useState(false);
   const dragCounter = useRef(0);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const processFiles = async (fileList: FileList) => {
     if (!projectPath || !fileList.length) return;
@@ -86,6 +87,21 @@ export function FilesView() {
               Clear all
             </button>
           )}
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="flex items-center gap-1.5 px-2.5 py-1 text-[11px] bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white rounded transition-colors"
+          >
+            <Upload size={11} />
+            Browse
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept="image/*,video/*"
+            className="hidden"
+            onChange={(e) => { if (e.target.files?.length) { processFiles(e.target.files); e.target.value = ''; } }}
+          />
         </div>
       </div>
 
@@ -105,7 +121,7 @@ export function FilesView() {
         {files.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center gap-2 text-gray-600 pointer-events-none select-none">
             <FileImage size={32} className="opacity-30" />
-            <p className="text-sm">Drop images or videos</p>
+            <p className="text-sm">Drop images or videos, or Browse</p>
             <p className="text-[11px] opacity-60">Files are saved to .hello-world/shared-files/</p>
           </div>
         ) : (
