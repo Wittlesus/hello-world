@@ -19,6 +19,7 @@ import { ClaudeBuddy } from './components/ClaudeBuddy.js';
 import { HelpModal } from './components/HelpModal.js';
 import { HistoryView } from './components/HistoryView.js';
 import { AgentsView } from './components/AgentsView.js';
+import { FilesView } from './components/FilesView.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -36,6 +37,7 @@ const KEY_MAP: Record<string, View> = {
   'k': 'skills',
   'p': 'context',
   'w': 'watchers',
+  'f': 'files',
 };
 
 function MainContent() {
@@ -55,6 +57,7 @@ function MainContent() {
       {view === 'skills'     && <SkillsView />}
       {view === 'watchers'   && <WatchersView />}
       {view === 'context'    && <ProjectContextView />}
+      {view === 'files'      && <FilesView />}
 
       {/* Approvals as standalone full view */}
       {view === 'approvals'  && (

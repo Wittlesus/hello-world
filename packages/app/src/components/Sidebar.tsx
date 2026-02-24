@@ -34,6 +34,7 @@ const SECTIONS: SectionDef[] = [
       { view: 'terminal',  label: 'Terminal',  key: 'T' },
       { view: 'dashboard', label: 'Dashboard', key: '1' },
       { view: 'approvals', label: 'Approvals', key: 'A' },
+      { view: 'files',     label: 'Files',     key: 'F' },
     ],
   },
   {
@@ -74,7 +75,7 @@ const SECTIONS: SectionDef[] = [
 ];
 
 function getSection(view: View): Section {
-  if (['terminal', 'dashboard', 'approvals'].includes(view)) return 'claude';
+  if (['terminal', 'dashboard', 'approvals', 'files'].includes(view)) return 'claude';
   if (['tasks', 'decisions', 'questions', 'agents'].includes(view)) return 'tasks';
   if (['memory', 'context', 'history'].includes(view)) return 'brain';
   return 'settings';
