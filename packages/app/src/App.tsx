@@ -20,6 +20,7 @@ import { HelpModal } from './components/HelpModal.js';
 import { HistoryView } from './components/HistoryView.js';
 import { AgentsView } from './components/AgentsView.js';
 import { FilesView } from './components/FilesView.js';
+import { ErrorBoundary } from './components/ErrorBoundary.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -51,7 +52,7 @@ function MainContent() {
       {view === 'questions'  && <QuestionsView />}
       {view === 'memory'     && <MemoryView />}
       {view === 'history'    && <HistoryView />}
-      {view === 'agents'     && <AgentsView />}
+      {view === 'agents'     && <ErrorBoundary label="agents"><AgentsView /></ErrorBoundary>}
       {view === 'cost'       && <CostView />}
       {view === 'settings'   && <SettingsView />}
       {view === 'skills'     && <SkillsView />}

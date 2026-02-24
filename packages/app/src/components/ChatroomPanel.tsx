@@ -135,7 +135,7 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
   const fetchState = useCallback(async () => {
     if (!projectPath) return;
     try { setState(JSON.parse(await invoke<string>('get_chatroom', { projectPath })) as ChatroomState); }
-    catch { setState(null); }
+    catch (err) { console.error('[ChatroomPanel] fetchState error:', err); setState(null); }
   }, [projectPath]);
 
   useEffect(() => { fetchState(); }, [fetchState]);
