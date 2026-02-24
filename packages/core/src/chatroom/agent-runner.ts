@@ -1,8 +1,4 @@
 import { spawn } from 'child_process';
-import { writeFileSync, unlinkSync } from 'fs';
-import { tmpdir } from 'os';
-import { join } from 'path';
-import { randomBytes } from 'crypto';
 import { ChatroomStore } from './chatroom-state.js';
 import { AGENT_DEFINITIONS } from './agent-definitions.js';
 import type { ChatMessage } from './types.js';
@@ -39,10 +35,7 @@ function sleep(ms: number, signal: AbortSignal): Promise<void> {
 
 // Spawn claude CLI subprocess with CLAUDECODE unset to allow nesting.
 // Uses existing Claude Code OAuth — no separate API key needed.
-//
-// Windows note: passing the prompt via -p "..." through cmd.exe mangles newlines,
-// quotes, and other special chars. Instead we write the prompt to a temp file and
-// pipe it via `type "file" | claude`, which avoids all shell escaping issues.
+// Pipes prompt via stdin to avoid all Windows cmd.exe escaping issues.
 function callClaude(systemPrompt: string, userMessage: string, signal: AbortSignal): Promise<string> {
   return new Promise((resolve, reject) => {
     if (signal.aborted) { reject(new Error('aborted')); return; }
@@ -54,19 +47,16 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
 
     const prompt = `${systemPrompt}\n\n${userMessage}`;
 
-    // Write prompt to temp file to avoid cmd.exe special-char mangling
-    const tmpFile = join(tmpdir(), `hw_agent_${randomBytes(4).toString('hex')}.txt`);
-    try { writeFileSync(tmpFile, prompt, 'utf-8'); }
-    catch (err) { reject(new Error(`failed to write prompt file: ${err}`)); return; }
+    // shell:true so Windows finds claude.cmd in PATH
+    // stdin piped so we can write the prompt directly — no temp files, no escaping
+    const child = spawn(
+      'claude',
+      ['--print', '--model', MODEL, '--output-format', 'text', '--max-turns', '1', '--dangerously-skip-permissions'],
+      { env, stdio: ['pipe', 'pipe', 'pipe'], shell: true },
+    );
 
-    const cleanup = () => { try { unlinkSync(tmpFile); } catch { /* ignore */ } };
-
-    // Use cmd.exe to pipe the file into claude — avoids any arg-escaping issues.
-    // --print with no argument reads prompt from stdin (piped from the temp file).
-    const shellCmd = `type "${tmpFile}" | claude --print --model ${MODEL} --output-format text --max-turns 1 --dangerously-skip-permissions`;
-    const child = spawn('cmd.exe', ['/d', '/s', '/c', shellCmd], {
-      env, stdio: ['ignore', 'pipe', 'pipe'],
-    });
+    child.stdin.write(prompt);
+    child.stdin.end();
 
     let stdout = '';
     let stderr = '';
@@ -75,24 +65,21 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
 
     const timeout = setTimeout(() => {
       child.kill();
-      cleanup();
       reject(new Error('agent timed out after 45s'));
     }, 45_000);
 
-    const onAbort = () => { clearTimeout(timeout); child.kill(); cleanup(); reject(new Error('aborted')); };
+    const onAbort = () => { clearTimeout(timeout); child.kill(); reject(new Error('aborted')); };
     signal.addEventListener('abort', onAbort, { once: true });
 
     child.on('error', (err: Error) => {
       clearTimeout(timeout);
       signal.removeEventListener('abort', onAbort);
-      cleanup();
       reject(err);
     });
 
     child.on('close', (code: number | null) => {
       clearTimeout(timeout);
       signal.removeEventListener('abort', onAbort);
-      cleanup();
       if (signal.aborted) return;
       if (code === 0) resolve(stdout.trim());
       else reject(new Error(stderr.slice(0, 300) || `claude exited with code ${code}`));
