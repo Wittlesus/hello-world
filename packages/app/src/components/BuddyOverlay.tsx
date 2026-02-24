@@ -7,6 +7,15 @@ import { getTheme } from '../stores/theme.js';
 type ActivityState = 'waiting' | 'responding' | 'shocked' | 'happy';
 type VisualState = ActivityState | 'error';
 
+// Eye character per state
+function eyeChar(visual: VisualState): string {
+  if (visual === 'responding') return '─'; // squint — determined
+  if (visual === 'shocked')    return '○'; // wide open
+  if (visual === 'happy')      return '◡'; // curved up
+  if (visual === 'error')      return '×'; // error X
+  return '●';                              // waiting — relaxed dot
+}
+
 function playDoneSound() {
   try {
     const ctx = new AudioContext();
@@ -52,8 +61,34 @@ export function BuddyOverlay() {
 
   const setAct = (s: ActivityState) => { activityRef.current = s; setActivity(s); };
 
-  const theme: ReturnType<typeof getTheme> = getTheme(themeId);
+  const theme = getTheme(themeId);
   const visual: VisualState = hasError ? 'error' : activity;
+  const eye = eyeChar(visual);
+
+  // Body color follows state
+  const bodyColor =
+    visual === 'error'      ? '#f87171' :
+    visual === 'responding' ? theme.buddyActive :
+    visual === 'shocked'    ? '#e2e8f0' :
+    theme.buddyIdle;  // waiting + happy
+
+  const eyeColor =
+    visual === 'error'   ? '#fca5a5' :
+    visual === 'shocked' ? '#ffffff'  :
+    bodyColor;
+
+  const glowColor = `${bodyColor}55`;
+
+  const bodyAnim =
+    visual === 'responding' ? 'buddy-twitch 0.28s ease infinite' :
+    visual === 'happy'      ? 'buddy-bounce 0.45s ease infinite, happy-glow 0.9s ease infinite' :
+    visual === 'error'      ? 'buddy-pulse 1.4s ease infinite' :
+    'buddy-bob 3.5s ease infinite';
+
+  const blinkAnim = (delay: number) =>
+    visual === 'waiting'
+      ? `buddy-blink 4.5s ease infinite ${delay}ms`
+      : 'none';
 
   // Position bottom-right and show
   useEffect(() => {
@@ -61,11 +96,11 @@ export function BuddyOverlay() {
       try {
         const mon = await currentMonitor();
         if (mon) {
-          const sw = mon.size.width / mon.scaleFactor;
+          const sw = mon.size.width  / mon.scaleFactor;
           const sh = mon.size.height / mon.scaleFactor;
-          await win.setPosition(new LogicalPosition(sw - 110, sh - 145));
+          await win.setPosition(new LogicalPosition(sw - 120, sh - 150));
         }
-      } catch { /* ignore — window stays at default position */ }
+      } catch { /* ignore */ }
       await win.show().catch(() => {});
     })();
   }, []);
@@ -141,82 +176,51 @@ export function BuddyOverlay() {
     setMuted((m) => { mutedRef.current = !m; return !m; });
   };
 
-  // Colors
-  const eyeColor =
-    visual === 'error'      ? '#f87171' :
-    visual === 'responding' ? theme.buddyActive :
-    visual === 'shocked'    ? '#ffffff' :
-    visual === 'happy'      ? theme.buddyIdle :
-    theme.buddyIdle;  // waiting
-
-  const glowColor =
-    visual === 'error' ? 'rgba(248,113,113,0.7)' :
-    visual === 'happy' ? `${theme.buddyIdle}cc` :
-    `${eyeColor}99`;
-
-  // Animation on the face container
-  const faceAnim =
-    visual === 'responding' ? 'buddy-twitch 0.28s ease infinite' :
-    visual === 'happy'      ? 'buddy-bounce 0.45s ease infinite' :
-    visual === 'error'      ? 'buddy-pulse 1.4s ease infinite' :
-    'buddy-bob 3.5s ease infinite';  // waiting + shocked
-
-  // Eye shape
-  const eyeScaleY =
-    visual === 'responding' ? 0.55 :
-    visual === 'happy'      ? 0.25 :
-    1.0;
-
-  // Blink animation — no blink when responding or happy
-  const blinkAnim = (delay: number) =>
-    visual === 'responding' || visual === 'happy' || visual === 'shocked'
-      ? 'none'
-      : `buddy-blink 4.5s ease infinite ${delay}ms`;
-
   return (
     <>
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { overflow: hidden; user-select: none; background: ${theme.bg}; }
+
         @keyframes buddy-bob {
           0%, 100% { transform: translateY(0); }
           50%       { transform: translateY(-4px); }
         }
         @keyframes buddy-twitch {
           0%, 100% { transform: translate(0,0) rotate(0deg); }
-          15%  { transform: translate(-2px,-1px) rotate(-1.2deg); }
-          30%  { transform: translate(2px,1px) rotate(1.2deg); }
-          50%  { transform: translate(-1px,2px) rotate(-0.6deg); }
-          65%  { transform: translate(2px,-1px) rotate(0.6deg); }
-          80%  { transform: translate(-2px,0) rotate(-1deg); }
+          15%  { transform: translate(-2px,-1px) rotate(-1.5deg); }
+          30%  { transform: translate(2px,1px)  rotate(1.5deg); }
+          50%  { transform: translate(-1px,2px) rotate(-0.8deg); }
+          65%  { transform: translate(2px,-1px) rotate(0.8deg); }
+          80%  { transform: translate(-2px,0)   rotate(-1.2deg); }
         }
         @keyframes buddy-bounce {
           0%, 100% { transform: translateY(0) scale(1); }
-          50%       { transform: translateY(-7px) scale(1.06); }
+          50%       { transform: translateY(-8px) scale(1.07); }
         }
         @keyframes buddy-pulse {
           0%, 100% { opacity: 1; }
-          50%       { opacity: 0.45; }
+          50%       { opacity: 0.4; }
         }
         @keyframes buddy-blink {
           0%, 87%, 100% { transform: scaleY(1); }
-          92%            { transform: scaleY(0.06); }
+          92%            { transform: scaleY(0.08); }
         }
         @keyframes exclaim-pop {
-          0%   { transform: scale(0) translateY(6px); opacity: 0; }
-          55%  { transform: scale(1.35) translateY(-3px); opacity: 1; }
+          0%   { transform: scale(0) translateY(4px); opacity: 0; }
+          55%  { transform: scale(1.4) translateY(-2px); opacity: 1; }
           100% { transform: scale(1) translateY(0); opacity: 1; }
         }
         @keyframes happy-glow {
-          0%, 100% { filter: drop-shadow(0 0 3px ${glowColor}); }
-          50%       { filter: drop-shadow(0 0 9px ${glowColor}); }
+          0%, 100% { filter: drop-shadow(0 0 4px ${glowColor}); }
+          50%       { filter: drop-shadow(0 0 12px ${bodyColor}88); }
         }
       `}</style>
 
       <div
         style={{
-          width: '90px',
-          height: '120px',
+          width: '110px',
+          height: '140px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -232,8 +236,8 @@ export function BuddyOverlay() {
         {visual === 'shocked' && (
           <div style={{
             position: 'absolute',
-            top: '16px',
-            fontSize: '22px',
+            top: '14px',
+            fontSize: '20px',
             fontWeight: '900',
             fontFamily: 'monospace',
             color: '#ffffff',
@@ -244,30 +248,43 @@ export function BuddyOverlay() {
           }}>!</div>
         )}
 
-        {/* Face — animated container */}
-        <div style={{ animation: faceAnim }}>
-          {/* Eyes */}
-          <div style={{ display: 'flex', gap: '22px', alignItems: 'center' }}>
-            {[0, 260].map((delay) => (
-              <div
-                key={delay}
-                style={{
-                  width: '13px',
-                  height: '13px',
-                  borderRadius: '50%',
-                  backgroundColor: eyeColor,
-                  filter: visual === 'happy'
-                    ? `drop-shadow(0 0 3px ${glowColor})`
-                    : `drop-shadow(0 0 3px ${eyeColor}99)`,
-                  transform: `scaleY(${eyeScaleY})`,
-                  transformOrigin: 'center',
-                  animation: visual === 'happy'
-                    ? `happy-glow 0.9s ease infinite ${delay}ms`
-                    : blinkAnim(delay),
-                  transition: 'transform 0.12s ease, background-color 0.25s ease',
-                }}
-              />
-            ))}
+        {/* Block-art avatar — animated container */}
+        <div style={{ animation: bodyAnim }}>
+          <div style={{
+            fontFamily: '"Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace',
+            fontSize: '15px',
+            lineHeight: '1.2',
+            color: bodyColor,
+            transition: 'color 0.25s ease',
+            whiteSpace: 'pre',
+            textAlign: 'left',
+          }}>
+            {/* Row 1 — dome */}
+            <div>{'▐▛███▜▌'}</div>
+
+            {/* Row 2 — eye row */}
+            <div>
+              <span>{'▝▜█'}</span>
+              <span style={{
+                color: eyeColor,
+                display: 'inline-block',
+                transformOrigin: 'center',
+                animation: blinkAnim(0),
+                transition: 'color 0.2s ease',
+              }}>{eye}</span>
+              <span>{' '}</span>
+              <span style={{
+                color: eyeColor,
+                display: 'inline-block',
+                transformOrigin: 'center',
+                animation: blinkAnim(260),
+                transition: 'color 0.2s ease',
+              }}>{eye}</span>
+              <span>{'▛▘'}</span>
+            </div>
+
+            {/* Row 3 — feet */}
+            <div style={{ paddingLeft: '4px' }}>{'▘▘ ▝▝'}</div>
           </div>
         </div>
 
@@ -275,7 +292,7 @@ export function BuddyOverlay() {
         {muted && (
           <div style={{
             position: 'absolute',
-            bottom: '7px',
+            bottom: '8px',
             width: '5px',
             height: '5px',
             borderRadius: '50%',

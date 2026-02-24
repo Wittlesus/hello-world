@@ -106,13 +106,13 @@ export function SettingsView() {
         </button>
       }
     >
-      <div className="max-w-2xl space-y-8">
+      <div className="max-w-3xl space-y-8">
 
         {/* Appearance */}
         <section>
           <h2 className="text-sm font-semibold text-gray-200 mb-4">Appearance</h2>
           <div className={labelClass}>Theme</div>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-5 gap-2">
             {THEMES.map((t) => {
               const active = themeId === t.id;
               return (
@@ -127,27 +127,17 @@ export function SettingsView() {
                   }`}
                   style={active ? { borderColor: t.accent, boxShadow: `0 0 8px ${t.accent}40` } : {}}
                 >
-                  {/* Mini buddy preview */}
+                  {/* Mini block-art buddy preview */}
                   <div style={{
-                    width: '28px',
-                    height: '28px',
-                    borderRadius: '50%',
-                    background: t.bg,
-                    border: `1.5px solid ${active ? t.accent : '#2a2a3a'}`,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '5px',
+                    fontFamily: '"Cascadia Code", "Fira Code", Consolas, monospace',
+                    fontSize: '7px',
+                    lineHeight: '1.15',
+                    color: t.buddyIdle,
+                    whiteSpace: 'pre',
+                    textShadow: `0 0 4px ${t.buddyIdle}88`,
+                    letterSpacing: '0',
                   }}>
-                    {[0, 1].map((i) => (
-                      <div key={i} style={{
-                        width: '4px',
-                        height: '4px',
-                        borderRadius: '50%',
-                        backgroundColor: t.buddyIdle,
-                        boxShadow: `0 0 3px ${t.buddyIdle}`,
-                      }} />
-                    ))}
+                    {'▐▛██▜▌\n▝▜●  ●▛▘\n ▘▘ ▝▝'}
                   </div>
                   <span className="text-[9px] font-medium text-center leading-tight" style={{ color: active ? t.accent : '#6b7280' }}>
                     {t.name}
@@ -160,7 +150,7 @@ export function SettingsView() {
             })}
           </div>
           <p className="text-[10px] text-gray-600 mt-2">
-            Theme applies to the floating buddy window. UI accent color follows the accent.
+            Changes buddy color and UI accent. Right-click buddy to mute/unmute.
           </p>
         </section>
 
