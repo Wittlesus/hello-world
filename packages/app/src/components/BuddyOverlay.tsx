@@ -231,14 +231,14 @@ export function BuddyOverlay() {
         {/* Block-art avatar — animated container */}
         <div style={{ animation: bodyAnim }}>
           <div style={{
-            fontFamily: '"Cascadia Code", "Fira Code", "JetBrains Mono", Consolas, monospace',
+            fontFamily: '"Courier New", Courier, monospace',
             fontSize: '15px',
-            lineHeight: '1',
+            lineHeight: '0.85',
             color: bodyColor,
             transition: 'color 0.25s ease',
             whiteSpace: 'pre',
             textAlign: 'left',
-          }}>{`  ▐▛███▜▌\n▝▜█████▛▘\n  ▘▘ ▝▝`}</div>
+          }}>{`▐▛█████▜▌\n▐███████▌\n  ██ ██  `}</div>
         </div>
 
         {/* Mute dot */}

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 export type View =
-  | 'terminal' | 'dashboard' | 'approvals'
+  | 'terminal' | 'dashboard' | 'approvals' | 'files'
   | 'tasks' | 'decisions' | 'questions' | 'agents'
   | 'memory' | 'context' | 'history'
   | 'settings' | 'cost' | 'skills' | 'watchers';
