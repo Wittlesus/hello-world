@@ -233,7 +233,7 @@ export function BuddyOverlay() {
           <div style={{
             fontFamily: '"Courier New", Courier, monospace',
             fontSize: '15px',
-            lineHeight: '0.85',
+            lineHeight: '0.95',
             color: bodyColor,
             transition: 'color 0.25s ease',
             whiteSpace: 'pre',
