@@ -231,6 +231,7 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
   ];
 
   const logMessages = (state?.messages ?? []).filter(m => m.type !== 'system' && m.type !== 'thinking');
+  const [showSummary, setShowSummary] = useState(false);
 
   // Track which agents are actively typewriting for shake animation
   const typingNow = new Set<string>();
@@ -322,25 +323,32 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
                     waiting...
                   </div>
                 )}
-                {logMessages.map(msg => {
+                {logMessages.map((msg, idx) => {
                   const color = agentColor(msg.agentId, state?.agents ?? []);
                   const name  = agentDisplayName(msg.agentId, state?.agents ?? []);
                   const isGold = msg.agentId === 'claude';
+                  const prevAgent = idx > 0 ? logMessages[idx - 1].agentId : null;
+                  const isNewSpeaker = prevAgent !== null && prevAgent !== msg.agentId;
                   return (
-                    <div key={msg.id} style={{ padding: '1px 8px 2px', lineHeight: 1.45, wordBreak: 'break-word' }}>
-                      <span style={{ fontSize: 8, fontFamily: 'monospace', color: '#252535', marginRight: 4 }}>
-                        {formatTime(msg.timestamp)}
-                      </span>
-                      <span style={{
-                        fontSize: 9, fontFamily: 'monospace', fontWeight: 700, color,
-                        marginRight: 3,
-                        textShadow: isGold ? `0 0 6px ${color}50` : undefined,
-                      }}>
-                        {name}:
-                      </span>
-                      <span style={{ fontSize: 9, fontFamily: 'monospace', color: '#c0c0d5' }}>
-                        {msg.text}
-                      </span>
+                    <div key={msg.id}>
+                      {isNewSpeaker && (
+                        <div style={{ height: 1, margin: '3px 8px', background: 'rgba(255,255,255,0.03)' }} />
+                      )}
+                      <div style={{ padding: isNewSpeaker ? '3px 8px 2px' : '1px 8px 2px', lineHeight: 1.45, wordBreak: 'break-word' }}>
+                        <span style={{ fontSize: 8, fontFamily: 'monospace', color: '#252535', marginRight: 4 }}>
+                          {formatTime(msg.timestamp)}
+                        </span>
+                        <span style={{
+                          fontSize: 9, fontFamily: 'monospace', fontWeight: 700, color,
+                          marginRight: 3,
+                          textShadow: isGold ? `0 0 6px ${color}50` : undefined,
+                        }}>
+                          {name}:
+                        </span>
+                        <span style={{ fontSize: 9, fontFamily: 'monospace', color: '#c0c0d5' }}>
+                          {msg.text}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
@@ -529,12 +537,75 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
               {state?.session.status === 'concluded' && (
                 <div style={{
                   position: 'absolute', bottom: 12, left: '50%', transform: 'translateX(-50%)',
-                  padding: '4px 14px', borderRadius: 4,
-                  background: 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.22)',
-                  fontSize: 8, fontFamily: 'monospace', color: '#818cf8',
-                  letterSpacing: '0.1em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
                 }}>
-                  deliberation concluded
+                  <div style={{
+                    padding: '4px 14px', borderRadius: 4,
+                    background: 'rgba(129,140,248,0.1)', border: '1px solid rgba(129,140,248,0.22)',
+                    fontSize: 8, fontFamily: 'monospace', color: '#818cf8',
+                    letterSpacing: '0.1em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                  }}>
+                    deliberation concluded -- return to terminal to discuss results
+                  </div>
+                  <button
+                    onClick={() => setShowSummary(s => !s)}
+                    style={{
+                      padding: '3px 10px', borderRadius: 3,
+                      background: 'rgba(129,140,248,0.08)', border: '1px solid rgba(129,140,248,0.18)',
+                      fontSize: 7.5, fontFamily: 'monospace', color: '#818cf8',
+                      letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer',
+                    }}
+                  >
+                    {showSummary ? 'hide summary' : 'view summary'}
+                  </button>
+                </div>
+              )}
+
+              {/* Summary overlay */}
+              {showSummary && state?.session.status === 'concluded' && (
+                <div
+                  className="hw-chat-scroll"
+                  style={{
+                    position: 'absolute', inset: 0,
+                    background: 'rgba(3,3,16,0.95)',
+                    overflowY: 'auto', padding: '12px 16px',
+                    zIndex: 30,
+                  }}
+                >
+                  <div style={{
+                    fontSize: 8, fontFamily: 'monospace', color: '#818cf8',
+                    letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10,
+                  }}>
+                    Deliberation Summary: {state.session.topic}
+                  </div>
+                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+                    <thead>
+                      <tr>
+                        <th style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#3a3a58', textAlign: 'left', padding: '2px 6px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>Time</th>
+                        <th style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#3a3a58', textAlign: 'left', padding: '2px 6px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>Agent</th>
+                        <th style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#3a3a58', textAlign: 'left', padding: '2px 6px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>Message</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {logMessages.map(msg => {
+                        const color = agentColor(msg.agentId, state?.agents ?? []);
+                        const name  = agentDisplayName(msg.agentId, state?.agents ?? []);
+                        return (
+                          <tr key={msg.id}>
+                            <td style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#252535', padding: '3px 6px', verticalAlign: 'top', whiteSpace: 'nowrap' }}>
+                              {formatTime(msg.timestamp)}
+                            </td>
+                            <td style={{ fontSize: 8, fontFamily: 'monospace', fontWeight: 700, color, padding: '3px 6px', verticalAlign: 'top', whiteSpace: 'nowrap' }}>
+                              {name}
+                            </td>
+                            <td style={{ fontSize: 8, fontFamily: 'monospace', color: '#c0c0d5', padding: '3px 6px', lineHeight: 1.45, wordBreak: 'break-word' }}>
+                              {msg.text}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               )}
             </div>
