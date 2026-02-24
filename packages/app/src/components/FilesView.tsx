@@ -1,61 +1,53 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { listen } from '@tauri-apps/api/event';
-import { convertFileSrc } from '@tauri-apps/api/core';
+import { useState, useRef } from 'react';
+import { invoke } from '@tauri-apps/api/core';
 import { X, FileImage, FileVideo, File } from 'lucide-react';
+import { useProjectPath } from '../hooks/useProjectPath.js';
 
 interface SharedFile {
   path: string;
   name: string;
-  ext: string;
-  previewUrl: string | null;
   type: 'image' | 'video' | 'other';
+  previewUrl: string;
 }
 
-function fileType(ext: string): 'image' | 'video' | 'other' {
+function fileType(name: string): 'image' | 'video' | 'other' {
+  const ext = (name.split('.').pop() ?? '').toLowerCase();
   if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'ico', 'avif'].includes(ext)) return 'image';
   if (['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogg'].includes(ext)) return 'video';
   return 'other';
 }
 
-function pathBasename(p: string) {
-  return p.replace(/\\/g, '/').split('/').pop() ?? p;
-}
-
-function pathExt(name: string) {
-  return (name.split('.').pop() ?? '').toLowerCase();
-}
-
 export function FilesView() {
+  const projectPath = useProjectPath();
   const [files, setFiles] = useState<SharedFile[]>([]);
   const [dragOver, setDragOver] = useState(false);
+  const [saving, setSaving] = useState(false);
   const dragCounter = useRef(0);
 
-  const addPaths = useCallback((paths: string[]) => {
-    const newFiles: SharedFile[] = paths.map((p) => {
-      const name = pathBasename(p);
-      const ext = pathExt(name);
-      const type = fileType(ext);
-      let previewUrl: string | null = null;
-      if (type === 'image' || type === 'video') {
-        try { previewUrl = convertFileSrc(p); } catch { /* ignore */ }
+  const processFiles = async (fileList: FileList) => {
+    if (!projectPath || !fileList.length) return;
+    setSaving(true);
+    for (const file of Array.from(fileList)) {
+      try {
+        const buffer = await file.arrayBuffer();
+        const data = Array.from(new Uint8Array(buffer));
+        const savedPath = await invoke<string>('save_shared_file', {
+          projectPath,
+          filename: file.name,
+          data,
+        });
+        const previewUrl = URL.createObjectURL(file);
+        setFiles((prev) => {
+          if (prev.some((f) => f.path === savedPath)) return prev;
+          return [...prev, { path: savedPath, name: file.name, type: fileType(file.name), previewUrl }];
+        });
+      } catch (err) {
+        console.error('save_shared_file failed:', err);
       }
-      return { path: p, name, ext, type, previewUrl };
-    });
-    setFiles((prev) => {
-      const existingPaths = new Set(prev.map((f) => f.path));
-      return [...prev, ...newFiles.filter((f) => !existingPaths.has(f.path))];
-    });
-  }, []);
+    }
+    setSaving(false);
+  };
 
-  // Tauri drag-drop gives us actual filesystem paths
-  useEffect(() => {
-    const unlisten = listen<{ paths: string[] }>('tauri://drag-drop', (e) => {
-      if (e.payload?.paths?.length) addPaths(e.payload.paths);
-    });
-    return () => { unlisten.then((fn) => fn()); };
-  }, [addPaths]);
-
-  // HTML5 drag events for visual feedback
   const onDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     dragCounter.current++;
@@ -71,7 +63,7 @@ export function FilesView() {
     e.preventDefault();
     dragCounter.current = 0;
     setDragOver(false);
-    // Tauri://drag-drop fires separately with paths — no need to handle files here
+    if (e.dataTransfer.files.length) processFiles(e.dataTransfer.files);
   };
 
   const remove = (path: string) => setFiles((prev) => prev.filter((f) => f.path !== path));
@@ -80,25 +72,23 @@ export function FilesView() {
   return (
     <div className="flex-1 flex flex-col min-h-0 p-4">
 
-      {/* Header */}
       <div className="flex items-center justify-between mb-3 shrink-0">
         <div>
           <h2 className="text-sm font-semibold text-white">Shared Files</h2>
           <p className="text-[11px] text-gray-500 mt-0.5">
-            Drop images or videos here. Claude can read them by path.
+            Drop images or videos here — copied to .hello-world/shared-files/ for Claude to read.
           </p>
         </div>
-        {files.length > 0 && (
-          <button
-            onClick={clear}
-            className="text-[11px] text-gray-600 hover:text-gray-400 transition-colors"
-          >
-            Clear all
-          </button>
-        )}
+        <div className="flex items-center gap-3">
+          {saving && <span className="text-[11px] text-gray-500">Saving...</span>}
+          {files.length > 0 && (
+            <button onClick={clear} className="text-[11px] text-gray-600 hover:text-gray-400 transition-colors">
+              Clear all
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Drop zone / file grid */}
       <div
         onDragEnter={onDragEnter}
         onDragLeave={onDragLeave}
@@ -113,13 +103,13 @@ export function FilesView() {
         }`}
       >
         {files.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center gap-2 text-gray-600 pointer-events-none">
+          <div className="h-full flex flex-col items-center justify-center gap-2 text-gray-600 pointer-events-none select-none">
             <FileImage size={32} className="opacity-30" />
             <p className="text-sm">Drop images or videos</p>
-            <p className="text-[11px] opacity-60">Files stay on disk — Claude reads them by path</p>
+            <p className="text-[11px] opacity-60">Files are saved to .hello-world/shared-files/</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-3 p-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))' }}>
+          <div className="p-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px' }}>
             {files.map((f) => (
               <FileCard key={f.path} file={f} onRemove={() => remove(f.path)} />
             ))}
@@ -142,7 +132,6 @@ function FileCard({ file, onRemove }: { file: SharedFile; onRemove: () => void }
 
   return (
     <div className="bg-gray-900/60 border border-gray-800/60 rounded-lg overflow-hidden group relative">
-      {/* Remove button */}
       <button
         onClick={onRemove}
         className="absolute top-1.5 right-1.5 z-10 w-5 h-5 rounded bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-white"
@@ -150,37 +139,20 @@ function FileCard({ file, onRemove }: { file: SharedFile; onRemove: () => void }
         <X size={10} />
       </button>
 
-      {/* Preview */}
-      <div className="w-full bg-black/30" style={{ height: '120px' }}>
-        {file.type === 'image' && file.previewUrl ? (
-          <img
-            src={file.previewUrl}
-            alt={file.name}
-            className="w-full h-full object-contain"
-          />
-        ) : file.type === 'video' && file.previewUrl ? (
-          <video
-            src={file.previewUrl}
-            className="w-full h-full object-contain"
-            controls={false}
-            muted
-            preload="metadata"
-          />
+      <div className="w-full bg-black/30 flex items-center justify-center" style={{ height: '120px' }}>
+        {file.type === 'image' ? (
+          <img src={file.previewUrl} alt={file.name} className="w-full h-full object-contain" />
+        ) : file.type === 'video' ? (
+          <video src={file.previewUrl} className="w-full h-full object-contain" muted preload="metadata" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-700">
-            {file.type === 'video' ? <FileVideo size={28} /> : <File size={28} />}
-          </div>
+          <File size={28} className="text-gray-700" />
         )}
       </div>
 
-      {/* Info */}
       <div className="p-2">
         <p className="text-[11px] font-medium text-gray-200 truncate" title={file.name}>{file.name}</p>
         <p className="text-[10px] text-gray-600 truncate mt-0.5 font-mono" title={file.path}>{file.path}</p>
-        <button
-          onClick={copyPath}
-          className="mt-1.5 text-[10px] text-gray-600 hover:text-indigo-400 transition-colors"
-        >
+        <button onClick={copyPath} className="mt-1.5 text-[10px] text-gray-600 hover:text-indigo-400 transition-colors">
           {copied ? 'Copied!' : 'Copy path'}
         </button>
       </div>

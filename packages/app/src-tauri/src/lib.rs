@@ -255,6 +255,26 @@ fn kill_watcher(project_path: &str, watcher_id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
+fn save_shared_file(project_path: String, filename: String, data: Vec<u8>) -> Result<String, String> {
+    let dir = std::path::Path::new(&project_path)
+        .join(".hello-world")
+        .join("shared-files");
+    std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
+    let mut path = dir.join(&filename);
+    if path.exists() {
+        let stem = path.file_stem().unwrap_or_default().to_string_lossy().to_string();
+        let ext = path.extension().map(|e| format!(".{}", e.to_string_lossy())).unwrap_or_default();
+        let mut i = 1u32;
+        while path.exists() {
+            path = dir.join(format!("{}_{}{}", stem, i, ext));
+            i += 1;
+        }
+    }
+    std::fs::write(&path, &data).map_err(|e| e.to_string())?;
+    Ok(path.to_string_lossy().replace('\\', "/").to_owned())
+}
+
+#[tauri::command]
 fn get_timeline(project_path: &str) -> Result<String, String> {
     let path = std::path::Path::new(project_path)
         .join(".hello-world")
@@ -952,6 +972,7 @@ pub fn run() {
             mark_direction_note_read,
             get_watchers,
             kill_watcher,
+            save_shared_file,
             get_timeline,
             get_chatroom,
             post_pat_chatroom_message,
