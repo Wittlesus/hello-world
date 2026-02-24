@@ -25,6 +25,7 @@
         "width": 110,
         "height": 140,
         "decorations": false,
+        "transparent": true,
         "alwaysOnTop": true,
         "skipTaskbar": true,
         "resizable": false,

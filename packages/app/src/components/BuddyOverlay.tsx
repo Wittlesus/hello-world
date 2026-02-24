@@ -7,15 +7,6 @@ import { getTheme } from '../stores/theme.js';
 type ActivityState = 'waiting' | 'responding' | 'shocked' | 'happy';
 type VisualState = ActivityState | 'error';
 
-// Eye character per state
-function eyeChar(visual: VisualState): string {
-  if (visual === 'responding') return '─'; // squint — determined
-  if (visual === 'shocked')    return '○'; // wide open
-  if (visual === 'happy')      return '◡'; // curved up
-  if (visual === 'error')      return '×'; // error X
-  return '●';                              // waiting — relaxed dot
-}
-
 function playDoneSound() {
   try {
     const ctx = new AudioContext();
@@ -63,7 +54,6 @@ export function BuddyOverlay() {
 
   const theme = getTheme(themeId);
   const visual: VisualState = hasError ? 'error' : activity;
-  const eye = eyeChar(visual);
 
   // Body color follows state
   const bodyColor =
@@ -72,11 +62,6 @@ export function BuddyOverlay() {
     visual === 'shocked'    ? '#e2e8f0' :
     theme.buddyIdle;  // waiting + happy
 
-  const eyeColor =
-    visual === 'error'   ? '#fca5a5' :
-    visual === 'shocked' ? '#ffffff'  :
-    bodyColor;
-
   const glowColor = `${bodyColor}55`;
 
   const bodyAnim =
@@ -84,11 +69,6 @@ export function BuddyOverlay() {
     visual === 'happy'      ? 'buddy-bounce 0.45s ease infinite, happy-glow 0.9s ease infinite' :
     visual === 'error'      ? 'buddy-pulse 1.4s ease infinite' :
     'buddy-bob 3.5s ease infinite';
-
-  const blinkAnim = (delay: number) =>
-    visual === 'waiting'
-      ? `buddy-blink 4.5s ease infinite ${delay}ms`
-      : 'none';
 
   // Position bottom-right and show
   useEffect(() => {
@@ -180,7 +160,7 @@ export function BuddyOverlay() {
     <>
       <style>{`
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { overflow: hidden; user-select: none; background: ${theme.bg}; }
+        body { overflow: hidden; user-select: none; background: transparent; }
 
         @keyframes buddy-bob {
           0%, 100% { transform: translateY(0); }
@@ -262,26 +242,8 @@ export function BuddyOverlay() {
             {/* Row 1 — dome */}
             <div>{'▐▛███▜▌'}</div>
 
-            {/* Row 2 — eye row */}
-            <div>
-              <span>{'▝▜█'}</span>
-              <span style={{
-                color: eyeColor,
-                display: 'inline-block',
-                transformOrigin: 'center',
-                animation: blinkAnim(0),
-                transition: 'color 0.2s ease',
-              }}>{eye}</span>
-              <span>{' '}</span>
-              <span style={{
-                color: eyeColor,
-                display: 'inline-block',
-                transformOrigin: 'center',
-                animation: blinkAnim(260),
-                transition: 'color 0.2s ease',
-              }}>{eye}</span>
-              <span>{'▛▘'}</span>
-            </div>
+            {/* Row 2 — neck (neckline = mouth, slits in row 1 = eyes) */}
+            <div>{'▝▜█████▛▘'}</div>
 
             {/* Row 3 — feet */}
             <div style={{ paddingLeft: '4px' }}>{'▘▘ ▝▝'}</div>
