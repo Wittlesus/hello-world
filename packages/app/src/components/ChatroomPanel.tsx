@@ -124,6 +124,7 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
   const [positions,   setPositions]   = useState<Record<string, Position>>({});
   const [floaters,    setFloaters]    = useState<Floater[]>([]);
   const [typewriters, setTypewriters] = useState<Record<string, { msgId: string; revealed: number }>>({});
+  const [showSummary, setShowSummary] = useState(false);
 
   const twIntervals   = useRef<Record<string, ReturnType<typeof setInterval>>>({});
   const lastSeenMsgId = useRef<Record<string, string>>({});
@@ -231,7 +232,6 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
   ];
 
   const logMessages = (state?.messages ?? []).filter(m => m.type !== 'system' && m.type !== 'thinking');
-  const [showSummary, setShowSummary] = useState(false);
 
   // Track which agents are actively typewriting for shake animation
   const typingNow = new Set<string>();
