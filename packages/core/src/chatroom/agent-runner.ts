@@ -1,14 +1,13 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { spawn } from 'child_process';
 import { ChatroomStore } from './chatroom-state.js';
 import { AGENT_DEFINITIONS } from './agent-definitions.js';
 import type { ChatMessage } from './types.js';
 
 const MODEL = 'claude-haiku-4-5-20251001';
-const MAX_TOKENS = 120;          // hard limit — enforces 4-sentence brevity
-const MAX_ROUNDS = 5;            // auto-synthesize after this many rounds
-const BETWEEN_AGENT_MS = 1400;  // pause between agents
-const INTRO_DELAY_MS = 2800;    // pause between agent introductions
-const INPUT_WINDOW_MS = 8_000;  // how long Pat has to type each round
+const MAX_ROUNDS = 5;
+const BETWEEN_AGENT_MS = 1400;
+const INTRO_DELAY_MS = 2800;
+const INPUT_WINDOW_MS = 8_000;
 
 const AGENT_INTROS: Record<string, string> = {
   contrarian:
@@ -34,7 +33,43 @@ function sleep(ms: number, signal: AbortSignal): Promise<void> {
   });
 }
 
-function buildMessages(history: ChatMessage[], topic: string): Anthropic.MessageParam[] {
+// Spawn claude CLI subprocess with CLAUDECODE unset to allow nesting.
+// Uses existing Claude Code OAuth — no separate API key needed.
+function callClaude(systemPrompt: string, userMessage: string, signal: AbortSignal): Promise<string> {
+  return new Promise((resolve, reject) => {
+    if (signal.aborted) { reject(new Error('aborted')); return; }
+
+    const env = { ...process.env };
+    delete env['CLAUDECODE'];
+
+    const prompt = `${systemPrompt}\n\n${userMessage}`;
+
+    const child = spawn('claude', [
+      '-p', prompt,
+      '--model', MODEL,
+      '--output-format', 'text',
+      '--max-turns', '1',
+      '--dangerously-skip-permissions',
+    ], { env });
+
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (d: Buffer) => { stdout += d.toString(); });
+    child.stderr.on('data', (d: Buffer) => { stderr += d.toString(); });
+
+    const onAbort = () => { child.kill(); reject(new Error('aborted')); };
+    signal.addEventListener('abort', onAbort, { once: true });
+
+    child.on('close', (code: number | null) => {
+      signal.removeEventListener('abort', onAbort);
+      if (signal.aborted) return;
+      if (code === 0) resolve(stdout.trim());
+      else reject(new Error(stderr.slice(0, 300) || `claude exited with code ${code}`));
+    });
+  });
+}
+
+function buildConversation(history: ChatMessage[], topic: string): string {
   const conversation = history
     .filter(m => m.type !== 'thinking')
     .slice(-16)
@@ -47,14 +82,10 @@ function buildMessages(history: ChatMessage[], topic: string): Anthropic.Message
     })
     .join('\n');
 
-  return [{
-    role: 'user',
-    content: `Topic: "${topic}"\n\nDiscussion so far:\n${conversation}\n\nRespond now. HARD RULE: 4 sentences maximum. Cut anything beyond 4 sentences before posting. Stay in your assigned role.`,
-  }];
+  return `Topic: "${topic}"\n\nDiscussion so far:\n${conversation}\n\nRespond now. HARD RULE: 4 sentences maximum. Stay in your assigned role.`;
 }
 
 async function runSingleAgent(
-  client: Anthropic,
   store: ChatroomStore,
   agentId: string,
   notify: (files: string[]) => void,
@@ -71,37 +102,12 @@ async function runSingleAgent(
   const state = store.read();
   if (state.session.status !== 'active') return;
 
-  const messages = buildMessages(state.messages, state.session.topic);
-  let fullText = '';
-
   try {
-    const stream = await client.messages.stream({
-      model: MODEL,
-      max_tokens: MAX_TOKENS,
-      system: def.systemPrompt,
-      messages,
-    });
-
-    store.updateAgentStatus(agentId, 'responding', '');
-    notify(['chatroom.json']);
-
-    for await (const chunk of stream) {
-      if (signal.aborted) return;
-      if (chunk.type === 'content_block_delta' && chunk.delta.type === 'text_delta') {
-        fullText += chunk.delta.text;
-        if (fullText.length % 25 < 3) {
-          store.updateAgentStatus(agentId, 'responding', fullText.slice(-80));
-          notify(['chatroom.json']);
-        }
-      }
-    }
-
+    const text = await callClaude(def.systemPrompt, buildConversation(state.messages, state.session.topic), signal);
     if (signal.aborted) return;
-
-    store.appendMessage(agentId, fullText.trim(), 'message');
+    store.appendMessage(agentId, text, 'message');
     store.updateAgentStatus(agentId, 'idle', '');
     notify(['chatroom.json']);
-
   } catch (err: unknown) {
     if (signal.aborted) return;
     const msg = err instanceof Error ? err.message : String(err);
@@ -130,11 +136,9 @@ async function runIntroSequence(
     const agent = agents[i];
     const introLine = AGENT_INTROS[agent.id] ?? `${agent.name} joins the deliberation.`;
 
-    // Reveal this agent in the UI
     store.setIntroRevealedCount(i + 1);
     notify(['chatroom.json']);
 
-    // Brief pause so avatar entrance plays before Claude narrates
     try { await sleep(700, signal); } catch { return; }
 
     store.appendMessage('claude', introLine, 'claude');
@@ -150,11 +154,7 @@ async function runIntroSequence(
   try { await sleep(1200, signal); } catch { return; }
 }
 
-async function checkConsensus(
-  client: Anthropic,
-  messages: ChatMessage[],
-  topic: string,
-): Promise<boolean> {
+async function checkConsensus(messages: ChatMessage[], topic: string): Promise<boolean> {
   const recent = messages
     .filter(m => m.type === 'message')
     .slice(-10)
@@ -163,24 +163,20 @@ async function checkConsensus(
 
   if (!recent) return false;
 
+  const ctrl = new AbortController();
   try {
-    const result = await client.messages.create({
-      model: MODEL,
-      max_tokens: 8,
-      messages: [{
-        role: 'user',
-        content: `Topic: "${topic}"\n\nRecent discussion:\n${recent}\n\nHave a majority of participants converged on a shared answer or direction? Answer YES or NO only.`,
-      }],
-    });
-    const answer = ((result.content[0] as { type: string; text?: string })?.text ?? '').trim().toUpperCase();
-    return answer.startsWith('YES');
+    const answer = await callClaude(
+      'You are a neutral observer. Answer YES or NO only. No other text.',
+      `Topic: "${topic}"\n\nRecent discussion:\n${recent}\n\nHave a majority of participants converged on a shared answer or direction? Answer YES or NO only.`,
+      ctrl.signal,
+    );
+    return answer.toUpperCase().startsWith('YES');
   } catch {
     return false;
   }
 }
 
 async function runSynthesis(
-  client: Anthropic,
   store: ChatroomStore,
   notify: (files: string[]) => void,
   signal: AbortSignal,
@@ -202,20 +198,14 @@ async function runSynthesis(
     .join('\n\n');
 
   try {
-    const result = await client.messages.create({
-      model: MODEL,
-      max_tokens: 350,
-      messages: [{
-        role: 'user',
-        content: `You are Claude, moderating a deliberation on: "${state.session.topic}"\n\nFull discussion:\n${discussion}\n\nWrite a synthesis document: state the core question, note points of agreement, surface key tensions, and give a concrete recommendation. 100-150 words maximum. Be direct.`,
-      }],
-    });
-
-    const synthesis = ((result.content[0] as { type: string; text?: string })?.text ?? '').trim();
+    const synthesis = await callClaude(
+      'You are Claude, moderating a deliberation. Be direct and concise.',
+      `Deliberation topic: "${state.session.topic}"\n\nFull discussion:\n${discussion}\n\nWrite a synthesis: state the core question, note points of agreement, surface key tensions, give a concrete recommendation. 100-150 words maximum. Be direct.`,
+      signal,
+    );
     store.appendMessage('claude', synthesis, 'claude');
     store.setSessionStatus('concluded');
     notify(['chatroom.json']);
-
   } catch (err: unknown) {
     const msg = err instanceof Error ? err.message : String(err);
     store.appendMessage('claude', `Synthesis error: ${msg}`, 'claude');
@@ -232,18 +222,7 @@ export async function runDeliberation(
   const ctrl = new AbortController();
   activeRunner = ctrl;
 
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    store.appendMessage('system', 'Error: ANTHROPIC_API_KEY not set. Cannot run agents.', 'system');
-    store.setSessionStatus('paused');
-    notify(['chatroom.json']);
-    return;
-  }
-
-  const client = new Anthropic({ apiKey });
-
   try {
-    // Run intro if freshly started
     const initialState = store.read();
     if (typeof initialState.session.introRevealedCount === 'number') {
       await runIntroSequence(store, notify, ctrl.signal);
@@ -260,30 +239,26 @@ export async function runDeliberation(
       store.incrementRound();
       notify(['chatroom.json']);
 
-      // Fixed turn order — round table, clockwise
       const agentIds = state.agents.map(a => a.id);
       for (const agentId of agentIds) {
         if (ctrl.signal.aborted) break;
-        await runSingleAgent(client, store, agentId, notify, ctrl.signal);
+        await runSingleAgent(store, agentId, notify, ctrl.signal);
         try { await sleep(BETWEEN_AGENT_MS, ctrl.signal); } catch { break; }
       }
 
       if (ctrl.signal.aborted) break;
 
-      // Consensus check after round 2+
       const afterRound = store.read();
       if (afterRound.session.roundNumber >= 2) {
-        const hasConsensus = await checkConsensus(client, afterRound.messages, afterRound.session.topic);
+        const hasConsensus = await checkConsensus(afterRound.messages, afterRound.session.topic);
         consecutiveConsensus = hasConsensus ? consecutiveConsensus + 1 : 0;
       }
 
-      // Synthesize on 2 consecutive consensus rounds OR hitting max rounds
       if (consecutiveConsensus >= 2 || store.read().session.roundNumber >= MAX_ROUNDS) {
-        await runSynthesis(client, store, notify, ctrl.signal);
+        await runSynthesis(store, notify, ctrl.signal);
         break;
       }
 
-      // Pat input window
       store.setWaitingForInput(true);
       notify(['chatroom.json']);
 
