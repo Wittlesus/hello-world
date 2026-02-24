@@ -119,7 +119,7 @@ export function App() {
         const raw = await invoke<string>('get_chatroom', { projectPath });
         const cr = JSON.parse(raw) as { session: { status: string } };
         const status = cr.session.status;
-        if (prevDelibStatus.current === 'idle' && status === 'active') {
+        if (prevDelibStatus.current !== 'active' && status === 'active') {
           setView('agents');
         }
         prevDelibStatus.current = status;

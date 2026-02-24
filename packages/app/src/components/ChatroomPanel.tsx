@@ -237,7 +237,7 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
   allBuddies.forEach(a => {
     const msg = lastMsg[a.id];
     const tw  = msg ? typewriters[a.id] : null;
-    if (tw?.msgId === msg?.id && tw.revealed < (msg?.text.length ?? 0)) typingNow.add(a.id);
+    if (tw && tw.msgId === msg?.id && tw.revealed < (msg?.text.length ?? 0)) typingNow.add(a.id);
   });
 
   const PHASE_COLORS: Record<string, string> = {
