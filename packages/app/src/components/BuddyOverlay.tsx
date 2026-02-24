@@ -220,15 +220,11 @@ export function BuddyOverlay() {
         onContextMenu={handleContextMenu}
         title={muted ? 'Muted — right-click to unmute' : 'Right-click to mute'}
       >
-        {/* Typing indicator bubble — responding state */}
+        {/* Typing indicator dots — responding state */}
         {visual === 'responding' && (
           <div style={{
             position: 'absolute',
-            top: '4px',
-            backgroundColor: `${bodyColor}22`,
-            border: `1px solid ${bodyColor}66`,
-            borderRadius: '10px',
-            padding: '5px 8px',
+            top: '18px',
             display: 'flex',
             gap: '4px',
             alignItems: 'center',
