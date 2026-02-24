@@ -188,6 +188,17 @@ function scheduleNotify(tool: string, args: Record<string, unknown>): void {
   }, 150);
 }
 
+// Direct notify for the agent runner (no debounce — called from background loop).
+function notifyRunner(files: string[]): void {
+  const sync = readSyncPort();
+  if (!sync) return;
+  fetch(`http://127.0.0.1:${sync.port}/notify`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ files }),
+  }).catch(() => {});
+}
+
 // Wrap registerTool so scheduleNotify fires automatically after every tool call.
 // Individual tool handlers don't need to know about the notify system.
 {
