@@ -238,7 +238,7 @@ export function BuddyOverlay() {
             transition: 'color 0.25s ease',
             whiteSpace: 'pre',
             textAlign: 'left',
-          }}>{`  ██ ██  \n▐███████▌\n▐▙█████▟▌`}</div>
+          }}>{` ███ ███ \n▐███████▌\n▐███████▌`}</div>
         </div>
 
         {/* Mute dot */}
