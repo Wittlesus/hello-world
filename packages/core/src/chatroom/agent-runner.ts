@@ -50,6 +50,7 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
     const env = { ...process.env };
     delete env['CLAUDECODE'];
     delete env['CLAUDE_CODE_ENTRYPOINT'];
+    env['HW_AGENT_MODE'] = '1'; // prevent session-start hook from firing + wiping chatroom
 
     const prompt = `${systemPrompt}\n\n${userMessage}`;
 

@@ -8,6 +8,9 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 
+// Skip hook entirely when running as an agent subprocess (prevents chatroom interference)
+if (process.env.HW_AGENT_MODE) process.exit(0);
+
 const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
 const HW = join(PROJECT, '.hello-world');
 
