@@ -37,7 +37,7 @@ import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '..
 import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 import { ChatroomStore } from '../chatroom/chatroom-state.js';
-import { AGENT_DEFINITIONS, DEFAULT_AGENTS } from '../chatroom/agent-definitions.js';
+import { AGENT_DEFINITIONS, DEFAULT_AGENTS, USER_SIM_AGENTS } from '../chatroom/agent-definitions.js';
 import { runDeliberation, stopDeliberation } from '../chatroom/agent-runner.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
@@ -866,16 +866,16 @@ server.registerTool('hw_kill_watcher', {
 
 server.registerTool('hw_start_deliberation', {
   title: 'Start Deliberation',
-  description: 'Start a multi-agent chatroom deliberation session. Agents discuss the topic in real-time.',
+  description: 'Start a multi-agent chatroom deliberation session. Agents discuss the topic in real-time. mode: "default" = cognitive lenses (contrarian, premortem, firstprinciples, steelman); "usersim" = user perspectives (contrarian, premortem, newuser, poweruser).',
   inputSchema: z.object({
     topic: z.string().describe('The topic or question to deliberate on'),
-    agents: z.array(z.string()).optional().describe('Agent IDs to include. Defaults to architect, critic, product, security.'),
+    mode: z.enum(['default', 'usersim']).optional().describe('Agent set to use. default = cognitive lenses, usersim = user perspectives.'),
+    agents: z.array(z.string()).optional().describe('Override: specific agent IDs. Overrides mode.'),
   }),
-}, async (args: { topic: string; agents?: string[] }) => {
-  const agentIds = args.agents ?? DEFAULT_AGENTS;
+}, async (args: { topic: string; mode?: 'default' | 'usersim'; agents?: string[] }) => {
+  const agentIds = args.agents ?? (args.mode === 'usersim' ? USER_SIM_AGENTS : DEFAULT_AGENTS);
   const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
   activity.append('deliberation_started', `Deliberation: "${args.topic}"`, `Agents: ${agentIds.join(', ')}`);
-  // Kick off automatic agent runner in background (non-blocking)
   runDeliberation(chatroom, notifyRunner).catch(() => {});
   return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"\nIntro sequence running — agents will appear one by one.`);
 });
