@@ -195,6 +195,14 @@ export function BuddyOverlay() {
           0%, 100% { filter: drop-shadow(0 0 4px ${glowColor}); }
           50%       { filter: drop-shadow(0 0 12px ${bodyColor}88); }
         }
+        @keyframes dot-bounce {
+          0%, 60%, 100% { transform: translateY(0); }
+          30%            { transform: translateY(-5px); }
+        }
+        @keyframes bubble-in {
+          from { opacity: 0; transform: scale(0.8) translateY(4px); }
+          to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
       `}</style>
 
       <div
@@ -212,6 +220,35 @@ export function BuddyOverlay() {
         onContextMenu={handleContextMenu}
         title={muted ? 'Muted — right-click to unmute' : 'Right-click to mute'}
       >
+        {/* Typing indicator bubble — responding state */}
+        {visual === 'responding' && (
+          <div style={{
+            position: 'absolute',
+            top: '4px',
+            backgroundColor: `${bodyColor}22`,
+            border: `1px solid ${bodyColor}66`,
+            borderRadius: '10px',
+            padding: '5px 8px',
+            display: 'flex',
+            gap: '4px',
+            alignItems: 'center',
+            animation: 'bubble-in 0.2s ease-out forwards',
+            pointerEvents: 'none',
+          }}>
+            {[0, 1, 2].map((i) => (
+              <span key={i} style={{
+                width: '5px',
+                height: '5px',
+                borderRadius: '50%',
+                backgroundColor: bodyColor,
+                display: 'inline-block',
+                animation: 'dot-bounce 0.9s ease infinite',
+                animationDelay: `${i * 0.18}s`,
+              }} />
+            ))}
+          </div>
+        )}
+
         {/* Exclamation mark — shocked state */}
         {visual === 'shocked' && (
           <div style={{
