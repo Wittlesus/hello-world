@@ -985,6 +985,7 @@ pub fn run() {
             resize_pty,
             start_watching,
             get_capabilities,
+            resolve_approval,
         ])
         .on_window_event(|window, event| {
             if window.label() == "main" {

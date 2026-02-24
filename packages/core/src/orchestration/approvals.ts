@@ -19,6 +19,8 @@ const DEFAULT_TIERS: Record<string, ApprovalTier> = {
   deploy: 'block',
   architecture_decision: 'block',
   security_change: 'block',
+  deliberation_plan: 'block',
+  deliberation_recommendation: 'block',
 };
 
 interface ApprovalsData {

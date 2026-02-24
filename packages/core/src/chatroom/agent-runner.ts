@@ -22,6 +22,24 @@ const AGENT_INTROS: Record<string, string> = {
     'Analogist: imports solved problems from other domains. The best insight is always one this room has never seen.',
   constraint:
     'Constraint: applies radical limits — 1/10th the time, 1/10th the complexity — to find what actually matters.',
+  pragmatist:
+    'Pragmatist: cuts through theory. What can actually ship with the resources we have right now?',
+  uxdesigner:
+    'UX Designer: evaluates user flows, friction points, and cognitive load. Every extra click is a cost the user pays.',
+  backendarch:
+    'Backend Architect: thinks in data models, system boundaries, and failure modes. Systems fail at boundaries.',
+  productmgr:
+    'Product Manager: ruthlessly cuts scope to the minimum that delivers core value. What should we say no to?',
+  costanalyst:
+    'Cost Analyst: evaluates token spend, resource costs, and ROI. Every feature has a recurring cost.',
+  devops:
+    'DevOps: focuses on reliability, observability, and deploy safety. If you can not observe it, you can not operate it.',
+  security:
+    'Security: finds trust boundaries, data exposure, and attack surface. The simplest attack is the most common.',
+  newuser:
+    'New User: first-time impressions. Where does a real user get confused, stuck, or bounce?',
+  poweruser:
+    'Power User: months of experience. Strong opinions on what should be faster, simpler, or more powerful.',
 };
 
 let activeRunner: AbortController | null = null;
@@ -37,7 +55,7 @@ function stripMarkdown(text: string): string {
     .replace(/^\d+\.\s+/gm, '')            // 1. numbered lists
     .replace(/^>\s+/gm, '')                // > blockquotes
     .replace(/`([^`]+)`/g, '$1')           // `inline code`
-    .replace(/^(Contrarian|Pre-mortem|First Principles|Steelman|Analogist|Constraint|New User|Power User)(\s*(responds?|synthesizes?|observes?|notes?|adds?|counters?|replies?|clarifies?|argues?|warns?|concludes?|opens?|challenges?|asks?|—[^:]*)?)\s*:\s*/im, '')
+    .replace(/^(Contrarian|Pre-mortem|First Principles|Steelman|Analogist|Constraint|Pragmatist|UX Designer|Backend Architect|Product Manager|Cost Analyst|DevOps|Security|New User|Power User)(\s*(responds?|synthesizes?|observes?|notes?|adds?|counters?|replies?|clarifies?|argues?|warns?|concludes?|opens?|challenges?|asks?|—[^:]*)?)\s*:\s*/im, '')
     .trim();
 }
 

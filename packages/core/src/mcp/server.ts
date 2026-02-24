@@ -37,7 +37,7 @@ import { tickMessageCount, recordSynapticActivity, recordMemoryTraces } from '..
 import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 import { ChatroomStore } from '../chatroom/chatroom-state.js';
-import { AGENT_DEFINITIONS, DEFAULT_AGENTS, USER_SIM_AGENTS } from '../chatroom/agent-definitions.js';
+import { AGENT_DEFINITIONS, DEFAULT_AGENTS, USER_SIM_AGENTS, AGENT_ROSTER } from '../chatroom/agent-definitions.js';
 import { runDeliberation, stopDeliberation } from '../chatroom/agent-runner.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
@@ -136,6 +136,9 @@ function toolFiles(tool: string): string[] {
     hw_spawn_watcher:          ['watchers.json'],
     hw_kill_watcher:           ['watchers.json'],
     hw_list_watchers:          [],
+    hw_list_agents:            [],
+    hw_plan_deliberation:      ['approvals.json'],
+    hw_extract_deliberation_recommendations: ['approvals.json'],
     hw_start_deliberation:     ['chatroom.json'],
     hw_pause_deliberation:     ['chatroom.json'],
     hw_resume_deliberation:    ['chatroom.json'],
@@ -875,9 +878,73 @@ server.registerTool('hw_kill_watcher', {
 
 // ── Chatroom / Deliberation ──────────────────────────────────────
 
+server.registerTool('hw_list_agents', {
+  title: 'List Deliberation Agents',
+  description: 'List all available deliberation agents grouped by category (cognitive, domain, usersim). Use this to select the right agents before planning a deliberation.',
+  inputSchema: z.object({}),
+}, async () => {
+  const grouped: Record<string, typeof AGENT_ROSTER> = {};
+  for (const a of AGENT_ROSTER) {
+    (grouped[a.category] ??= []).push(a);
+  }
+  const lines = Object.entries(grouped).map(([cat, agents]) =>
+    `${cat}:\n${agents.map(a => `  ${a.id} — ${a.name}`).join('\n')}`
+  ).join('\n\n');
+  return text(`${AGENT_ROSTER.length} agents available:\n\n${lines}`);
+});
+
+server.registerTool('hw_plan_deliberation', {
+  title: 'Plan Deliberation',
+  description: 'Plan a deliberation before running it. Creates a block-tier approval for Pat to review. Includes the topic framing, selected agents, and rationale. Pat must approve before tokens are spent. After approval, call hw_start_deliberation with the same agents.',
+  inputSchema: z.object({
+    topic: z.string().describe('The concrete, well-framed deliberation topic'),
+    agents: z.array(z.string()).min(2).max(6).describe('Agent IDs selected for this topic'),
+    framing: z.string().describe('Why this topic needs deliberation and what outcome you expect'),
+    rationale: z.string().describe('Why these specific agents were chosen for this topic'),
+  }),
+}, async (args: { topic: string; agents: string[]; framing: string; rationale: string }) => {
+  const agentNames = args.agents.map(id => AGENT_DEFINITIONS[id]?.name ?? id);
+  const description = `Topic: ${args.topic}\n\nFraming: ${args.framing}\n\nAgents: ${agentNames.join(', ')}\n\nRationale: ${args.rationale}`;
+  const request = approvals.requestApproval('deliberation_plan', `Run deliberation: "${args.topic.slice(0, 80)}"`, description);
+  activity.append('deliberation_planned', `Deliberation plan: "${args.topic.slice(0, 60)}"`, `Agents: ${agentNames.join(', ')}`);
+
+  sendDiscordDM(`Deliberation plan needs approval (${request.id})\nTopic: ${args.topic.slice(0, 100)}\nAgents: ${agentNames.join(', ')}\nReply "approve ${request.id}" or "reject ${request.id}"`).catch(() => {});
+
+  return text(`Deliberation plan created. Approval required: ${request.id}\nTopic: "${args.topic}"\nAgents: ${agentNames.join(', ')}\nPat must approve before deliberation starts.`);
+});
+
+server.registerTool('hw_extract_deliberation_recommendations', {
+  title: 'Extract Deliberation Recommendations',
+  description: 'After a deliberation concludes, extract concrete recommendations into individual approval tasks. Each recommendation becomes a block-tier approval that Pat can approve or reject in the Approvals tab.',
+  inputSchema: z.object({
+    recommendations: z.array(z.object({
+      title: z.string().describe('Short title for the recommendation'),
+      description: z.string().describe('What should be done and why'),
+      type: z.enum(['task', 'decision', 'scope']).describe('What this becomes if approved'),
+    })).min(1).max(10).describe('Recommendations extracted from the deliberation synthesis'),
+  }),
+}, async (args: { recommendations: { title: string; description: string; type: string }[] }) => {
+  const state = chatroom.read();
+  const topicRef = state.session.topic?.slice(0, 80) ?? 'unknown';
+  const ids: string[] = [];
+
+  for (const rec of args.recommendations) {
+    const context = `From deliberation: "${topicRef}"\nType: ${rec.type}\n\n${rec.description}`;
+    const request = approvals.requestApproval('deliberation_recommendation', rec.title, context);
+    ids.push(request.id);
+  }
+
+  activity.append('deliberation_recommendations', `${args.recommendations.length} recommendations extracted`, `From: "${topicRef}"`);
+
+  const lines = args.recommendations.map((r, i) => `${i + 1}. [${r.type}] ${r.title} (${ids[i]})`).join('\n');
+  sendDiscordDM(`${args.recommendations.length} deliberation recommendations need approval:\n${lines}\nReply "approve <id>" or "reject <id>" for each.`).catch(() => {});
+
+  return text(`${args.recommendations.length} recommendations created as approval requests:\n${args.recommendations.map((r, i) => `- ${ids[i]}: [${r.type}] ${r.title}`).join('\n')}\n\nPat can approve/reject each in the Approvals tab.`);
+});
+
 server.registerTool('hw_start_deliberation', {
   title: 'Start Deliberation',
-  description: 'Start a multi-agent chatroom deliberation session. Agents discuss the topic in real-time. mode: "default" = cognitive lenses (contrarian, premortem, firstprinciples, steelman); "usersim" = user perspectives (contrarian, premortem, newuser, poweruser).',
+  description: 'Start a multi-agent chatroom deliberation session. Available agents: cognitive (contrarian, premortem, firstprinciples, steelman, analogist, constraint, pragmatist), domain (uxdesigner, backendarch, productmgr, costanalyst, devops, security), usersim (newuser, poweruser). Use hw_plan_deliberation first to get Pat approval.',
   inputSchema: z.object({
     topic: z.string().describe('The topic or question to deliberate on'),
     mode: z.enum(['default', 'usersim']).optional().describe('Agent set to use. default = cognitive lenses, usersim = user perspectives.'),
@@ -1038,6 +1105,9 @@ const TOOL_CATALOG = [
   { name: 'hw_spawn_watcher', category: 'watchers' },
   { name: 'hw_list_watchers', category: 'watchers' },
   { name: 'hw_kill_watcher', category: 'watchers' },
+  { name: 'hw_list_agents', category: 'chatroom' },
+  { name: 'hw_plan_deliberation', category: 'chatroom' },
+  { name: 'hw_extract_deliberation_recommendations', category: 'chatroom' },
   { name: 'hw_start_deliberation', category: 'chatroom' },
   { name: 'hw_pause_deliberation', category: 'chatroom' },
   { name: 'hw_resume_deliberation', category: 'chatroom' },

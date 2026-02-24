@@ -1,5 +1,25 @@
-import { useMemo, useState } from 'react';
-import { useActivityStore, type ApprovalItem } from '../stores/activity';
+import { useState } from 'react';
+import { invoke } from '@tauri-apps/api/core';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { useProjectPath } from '../hooks/useProjectPath.js';
+
+interface ApprovalItem {
+  id: string;
+  action: string;
+  description: string;
+  tier: string;
+  status: string;
+  context?: string;
+  options?: string[];
+  resolution?: string;
+  resolvedAt?: string;
+  createdAt: string;
+}
+
+interface ApprovalsData {
+  pending: ApprovalItem[];
+  resolved: ApprovalItem[];
+}
 
 const TIER_STYLES: Record<string, { bg: string; text: string; border: string; label: string }> = {
   block:  { bg: 'bg-red-900/50',    text: 'text-red-400',    border: 'border-red-800',    label: 'BLOCK' },
@@ -7,10 +27,25 @@ const TIER_STYLES: Record<string, { bg: string; text: string; border: string; la
   auto:   { bg: 'bg-green-900/50',  text: 'text-green-400',  border: 'border-green-800',  label: 'AUTO' },
 };
 
+const ACTION_BADGES: Record<string, { bg: string; text: string; label: string }> = {
+  deliberation_plan:           { bg: 'bg-purple-900/50', text: 'text-purple-300', label: 'DELIB PLAN' },
+  deliberation_recommendation: { bg: 'bg-indigo-900/50', text: 'text-indigo-300', label: 'RECOMMENDATION' },
+};
+
 function TierBadge({ tier }: { tier: string }) {
   const style = TIER_STYLES[tier] ?? TIER_STYLES.notify;
   return (
     <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono uppercase border ${style.bg} ${style.text} ${style.border}`}>
+      {style.label}
+    </span>
+  );
+}
+
+function ActionBadge({ action }: { action: string }) {
+  const style = ACTION_BADGES[action];
+  if (!style) return null;
+  return (
+    <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono uppercase ${style.bg} ${style.text}`}>
       {style.label}
     </span>
   );
@@ -34,74 +69,81 @@ function ApprovalCard({
   onConfirmExecute,
 }: ApprovalCardProps) {
   const isConfirming = confirmingId === item.id;
+  const hasContext = item.context && item.context.length > 0;
 
   return (
-    <div className="flex items-center gap-3 bg-gray-900/60 border border-gray-700 rounded-lg px-3 py-2 w-full max-w-xl">
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-0.5">
-          <span className="text-xs font-semibold text-gray-200 truncate">{item.action}</span>
-          <TierBadge tier={item.tier} />
+    <div className="bg-gray-900/60 border border-gray-700 rounded-lg px-3 py-2 w-full max-w-2xl">
+      <div className="flex items-center gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className="text-xs font-semibold text-gray-200 truncate">{item.description}</span>
+            <TierBadge tier={item.tier} />
+            <ActionBadge action={item.action} />
+          </div>
+          <p className="text-[11px] text-gray-500 truncate" title={item.action}>
+            {item.id} | {new Date(item.createdAt).toLocaleString()}
+          </p>
         </div>
-        <p className="text-[11px] text-gray-500 truncate" title={item.description}>
-          {item.description}
-        </p>
+
+        <div className="flex items-center gap-1.5 shrink-0">
+          {isConfirming ? (
+            <>
+              <span className="text-[11px] text-gray-400 mr-1">
+                {confirmingAction === 'approve' ? 'Approve?' : 'Reject?'}
+              </span>
+              <button
+                onClick={onConfirmExecute}
+                className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
+                  confirmingAction === 'approve'
+                    ? 'bg-green-800/50 text-green-300 hover:bg-green-700/60'
+                    : 'bg-red-800/50 text-red-300 hover:bg-red-700/60'
+                }`}
+              >
+                Yes
+              </button>
+              <button
+                onClick={onConfirmCancel}
+                className="px-2.5 py-1 text-xs font-medium rounded bg-gray-700/50 text-gray-400 hover:bg-gray-600/60 transition-colors"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => onConfirmStart(item.id, 'approve')}
+                className="px-2.5 py-1 text-xs font-medium rounded bg-green-800/50 text-green-300 hover:bg-green-700/60 transition-colors"
+              >
+                Approve
+              </button>
+              <button
+                onClick={() => onConfirmStart(item.id, 'reject')}
+                className="px-2.5 py-1 text-xs font-medium rounded bg-red-800/50 text-red-300 hover:bg-red-700/60 transition-colors"
+              >
+                Reject
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
-      <div className="flex items-center gap-1.5 shrink-0">
-        {isConfirming ? (
-          <>
-            <span className="text-[11px] text-gray-400 mr-1">
-              {confirmingAction === 'approve' ? 'Approve?' : 'Reject?'}
-            </span>
-            <button
-              onClick={onConfirmExecute}
-              className={`px-2.5 py-1 text-xs font-medium rounded transition-colors ${
-                confirmingAction === 'approve'
-                  ? 'bg-green-800/50 text-green-300 hover:bg-green-700/60'
-                  : 'bg-red-800/50 text-red-300 hover:bg-red-700/60'
-              }`}
-            >
-              Yes
-            </button>
-            <button
-              onClick={onConfirmCancel}
-              className="px-2.5 py-1 text-xs font-medium rounded bg-gray-700/50 text-gray-400 hover:bg-gray-600/60 transition-colors"
-            >
-              Cancel
-            </button>
-          </>
-        ) : (
-          <>
-            <button
-              onClick={() => onConfirmStart(item.id, 'approve')}
-              className="px-2.5 py-1 text-xs font-medium rounded bg-green-800/50 text-green-300 hover:bg-green-700/60 transition-colors"
-            >
-              Approve
-            </button>
-            <button
-              onClick={() => onConfirmStart(item.id, 'reject')}
-              className="px-2.5 py-1 text-xs font-medium rounded bg-red-800/50 text-red-300 hover:bg-red-700/60 transition-colors"
-            >
-              Reject
-            </button>
-          </>
-        )}
-      </div>
+      {hasContext && (
+        <div className="mt-2 pt-2 border-t border-gray-800">
+          <p className="text-[11px] text-gray-400 whitespace-pre-wrap leading-relaxed">{item.context}</p>
+        </div>
+      )}
     </div>
   );
 }
 
 export function ApprovalQueue({ standalone = false }: { standalone?: boolean }) {
-  const approvals = useActivityStore((s) => s.approvals);
-  const resolveApproval = useActivityStore((s) => s.resolveApproval);
+  const projectPath = useProjectPath();
+  const { data } = useTauriData<ApprovalsData>('get_approvals', projectPath);
 
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [confirmingAction, setConfirmingAction] = useState<'approve' | 'reject' | null>(null);
 
-  const pending = useMemo(
-    () => approvals.filter((a) => a.status === 'pending'),
-    [approvals],
-  );
+  const pending = data?.pending ?? [];
 
   function handleConfirmStart(id: string, action: 'approve' | 'reject') {
     setConfirmingId(id);
@@ -113,9 +155,17 @@ export function ApprovalQueue({ standalone = false }: { standalone?: boolean }) 
     setConfirmingAction(null);
   }
 
-  function handleConfirmExecute() {
+  async function handleConfirmExecute() {
     if (!confirmingId || !confirmingAction) return;
-    resolveApproval(confirmingId, confirmingAction === 'approve' ? 'approved' : 'rejected');
+    try {
+      await invoke('resolve_approval', {
+        projectPath,
+        requestId: confirmingId,
+        decision: confirmingAction === 'approve' ? 'approved' : 'rejected',
+      });
+    } catch (err) {
+      console.error('Failed to resolve approval:', err);
+    }
     setConfirmingId(null);
     setConfirmingAction(null);
   }
@@ -135,7 +185,7 @@ export function ApprovalQueue({ standalone = false }: { standalone?: boolean }) 
         <div className="flex-1 overflow-y-auto p-4">
           {pending.length === 0 ? (
             <p className="text-sm text-gray-600 text-center mt-16 max-w-sm mx-auto">
-              No pending approvals. Claude will request approval here before git push, deploy, delete, or architecture changes.
+              No pending approvals. Claude will request approval here before git push, deploy, delete, architecture changes, and deliberation recommendations.
             </p>
           ) : (
             <div className="flex flex-col gap-3 max-w-2xl">
