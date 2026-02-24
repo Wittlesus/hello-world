@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, type ReactNode } from 'react';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useThemeStore, getTheme } from '../stores/theme.js';
 
 interface ActivityEvent {
   id: string;
@@ -36,6 +37,42 @@ function getConfig(type: string) {
   return TYPE_CONFIG[type] ?? DEFAULT_CONFIG;
 }
 
+const BRACKET_COLORS: Record<string, string> = {
+  DONE:        '#4ade80',
+  IN_PROGRESS: '#fbbf24',
+  BLOCKED:     '#f87171',
+  TODO:        '#94a3b8',
+  STARTED:     '#60a5fa',
+  SCOPE:       '#a78bfa',
+  PLAN:        '#818cf8',
+  BUILD:       '#22d3ee',
+  VERIFY:      '#fb923c',
+  SHIP:        '#4ade80',
+  HALT:        '#f87171',
+  STRIKE:      '#fbbf24',
+  BLOCK:       '#f87171',
+  AUTO:        '#94a3b8',
+};
+
+function colorBrackets(text: string, accent: string): ReactNode {
+  const bracketRegex = /\[([A-Z_]+)\]/g;
+  const parts: ReactNode[] = [];
+  let last = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  while ((match = bracketRegex.exec(text)) !== null) {
+    if (match.index > last) parts.push(text.slice(last, match.index));
+    const label = match[1];
+    const color = BRACKET_COLORS[label] ?? accent;
+    parts.push(
+      <span key={key++} style={{ color, fontWeight: 600 }}>[{label}]</span>
+    );
+    last = bracketRegex.lastIndex;
+  }
+  if (last < text.length) parts.push(text.slice(last));
+  return parts.length > 0 ? parts : text;
+}
+
 function formatTime(timestamp: string): string {
   const date = new Date(timestamp);
   if (isNaN(date.getTime())) return timestamp;
@@ -47,7 +84,7 @@ function formatTime(timestamp: string): string {
   return date.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
 }
 
-function ActivityRow({ item }: { item: ActivityEvent }) {
+function ActivityRow({ item, accent }: { item: ActivityEvent; accent: string }) {
   const [expanded, setExpanded] = useState(false);
   const config = getConfig(item.type);
   const hasDetails = item.details && item.details.trim().length > 0;
@@ -67,7 +104,7 @@ function ActivityRow({ item }: { item: ActivityEvent }) {
           {config.badge}
         </span>
         <span className="flex-1 text-sm text-gray-200 leading-5 break-words">
-          {item.description}
+          {colorBrackets(item.description, accent)}
         </span>
         {hasDetails && (
           <span className="shrink-0 text-xs text-gray-600 group-hover:text-gray-400 transition-colors select-none leading-5 pt-px">
@@ -88,6 +125,8 @@ function ActivityRow({ item }: { item: ActivityEvent }) {
 
 export function ActivityStream() {
   const projectPath = useProjectPath();
+  const themeId = useThemeStore((s) => s.themeId);
+  const accent = getTheme(themeId).accent;
   const { data, loading } = useTauriData<ActivityData>('get_activity', projectPath);
   const containerRef = useRef<HTMLDivElement>(null);
   const prevCountRef = useRef(0);
@@ -123,7 +162,7 @@ export function ActivityStream() {
   return (
     <div ref={containerRef} className="flex-1 overflow-y-auto bg-[#0a0a0f]">
       {activities.map((item) => (
-        <ActivityRow key={item.id} item={item} />
+        <ActivityRow key={item.id} item={item} accent={accent} />
       ))}
     </div>
   );
