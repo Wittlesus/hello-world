@@ -501,12 +501,34 @@ server.registerTool('hw_list_approvals', {
   description: 'List pending approval requests that need Pat\'s decision.',
   inputSchema: z.object({}),
 }, async () => {
+  // Run escalation check on every list call
+  const { reminders, autoResolved } = approvals.checkEscalations();
+  const escalationNotes: string[] = [];
+
+  for (const r of autoResolved) {
+    escalationNotes.push(`TIMEOUT: "${r.action}" (${r.id}) auto-approved after 60+ minutes.`);
+    activity.append('approval_timeout', `Auto-approved after timeout: ${r.action}`, r.resolution ?? '');
+    await sendDiscordDM(`\u{23F0} **Approval timeout** (${r.id})\n"${r.action}" auto-approved after 60 minutes with no response.`);
+  }
+
+  for (const r of reminders) {
+    const ageMin = Math.round((Date.now() - new Date(r.createdAt).getTime()) / 60000);
+    escalationNotes.push(`REMINDER: "${r.action}" (${r.id}) pending for ${ageMin} minutes.`);
+    await sendDiscordDM(`\u{1F551} **Approval reminder** (${r.id})\n"${r.action}" has been waiting ${ageMin} minutes.\nReply \`approve ${r.id}\` or \`reject ${r.id}\``);
+  }
+
   const pending = approvals.getPending();
-  if (pending.length === 0) return text('No pending approvals.');
-  const lines = pending.map(r =>
-    `[${r.id}] ${r.action} (${r.tier})\n  ${r.description}${r.context ? `\n  Context: ${r.context}` : ''}`
-  );
-  return text(`${pending.length} pending:\n\n${lines.join('\n\n')}`);
+  if (pending.length === 0 && escalationNotes.length === 0) return text('No pending approvals.');
+
+  const lines = pending.map(r => {
+    const ageMin = Math.round((Date.now() - new Date(r.createdAt).getTime()) / 60000);
+    return `[${r.id}] ${r.action} (${r.tier}) -- ${ageMin}m ago\n  ${r.description}${r.context ? `\n  Context: ${r.context}` : ''}`;
+  });
+
+  const output = escalationNotes.length > 0
+    ? `ESCALATIONS:\n${escalationNotes.join('\n')}\n\n${pending.length} pending:\n\n${lines.join('\n\n')}`
+    : `${pending.length} pending:\n\n${lines.join('\n\n')}`;
+  return text(output);
 });
 
 server.registerTool('hw_resolve_approval', {

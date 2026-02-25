@@ -1,0 +1,196 @@
+{
+  "vision": "The deliberation room is the external prototype for what the brain system should do natively. When facing a significant decision, the brain engine runs it through multiple cognitive modes in parallel (Contrarian, Pre-mortem, First Principles, Steelman, Analogist, Constraint), surfaces the tensions, then synthesizes. Right now Pat triggers deliberations manually. The long-term target: the system detects decision points automatically and runs internal deliberation before surfacing a recommendation. The human cognitive architecture epic and the deliberation room are the same feature â€” one internal, one external.",
+  "scope": [
+    {
+      "area": "Context loading",
+      "capturedAt": "2026-02-23T00:00:00.000Z",
+      "decision": "in",
+      "rationale": "Every session start injects full project state â€” tasks, decisions, questions, vision, scope. Claude never asks 'what were we doing?'"
+    },
+    {
+      "area": "Transparency",
+      "capturedAt": "2026-02-23T00:00:00.000Z",
+      "decision": "in",
+      "rationale": "All Claude activity is visible in the app â€” decisions logged, tasks tracked, memory searchable, activity streamed to Dashboard"
+    },
+    {
+      "area": "Guided building",
+      "capturedAt": "2026-02-23T00:00:00.000Z",
+      "decision": "in",
+      "rationale": "Claude follows a structured workflow (scopeâ†’planâ†’buildâ†’verifyâ†’ship). Pat approves decisions and unblocks blockers. Claude does not go rogue."
+    },
+    {
+      "area": "Memory continuity",
+      "capturedAt": "2026-02-23T00:00:00.000Z",
+      "decision": "in",
+      "rationale": "Pain/win/fact brain memories persist across sessions. Crash handoffs preserve resume point. direction.json preserves strategic context. No knowledge is lost."
+    },
+    {
+      "area": "Discord bot for approvals and notifications",
+      "capturedAt": "2026-02-22T23:18:07.373Z",
+      "decision": "in",
+      "rationale": "Pat wants a bot to DM him directly (not webhooks, not email). Bot is in Robopals server, Pat is 'pooter'. Claude uses hw_notify for all approvals and blockers."
+    },
+    {
+      "area": "Multi-project support",
+      "capturedAt": "2026-02-24T16:55:00.000Z",
+      "decision": "in",
+      "rationale": "Reversed from 'out'. HW needs clean project swapping: load/unload project-scoped data, point terminal at right directory, handle three cases (known project, new project, no project). Some memories (pains, wins) are global across all projects. Project-specific state (tasks, decisions) swaps per project."
+    },
+    {
+      "area": "SkillsView (deferred)",
+      "capturedAt": "2026-02-23T00:59:00.339Z",
+      "decision": "out",
+      "rationale": "Rust changes keep crashing the client. Deferred until context/memory system is solid. Code is staged and ready, just not activated."
+    },
+    {
+      "area": "In-app context sufficiency",
+      "capturedAt": "2026-02-23T02:00:00.000Z",
+      "decision": "in",
+      "rationale": "Every piece of information Claude would normally search for should be visible in the app. Vision, scope, timeline, decisions, active tasks â€” all one click away. Goal: Claude never needs to burn context loading things that the app already surfaces."
+    }
+  ],
+  "notes": [
+    {
+      "capturedAt": "2026-02-23T00:35:17.332Z",
+      "id": "n_001",
+      "read": true,
+      "source": "session",
+      "text": "Autonomy is the goal. Every instance of Claude â€” even a new one â€” should be able to connect and understand immediately what has been done, needs to be done, and context of scope and vision IMMEDIATELY. The client is for Pat as much as it is for Claude."
+    },
+    {
+      "capturedAt": "2026-02-22T23:11:52.555Z",
+      "id": "n_002",
+      "read": true,
+      "source": "session",
+      "text": "Pat's future vision: Claude attached to this app should automatically set up agents primed for each job Pat needs done. Claude should find a way to send Pat phone notifications whenever an agent needs a decision. Discord DM is the current solution for this."
+    },
+    {
+      "capturedAt": "2026-02-23T00:25:14.295Z",
+      "id": "n_003",
+      "read": true,
+      "source": "session",
+      "text": "Pat's frustration (Feb 23): 'ugh when i had you set this up i expect you to make it work how i explained it. why do we always have to have an extra convo about how you made something with clear instructions â€” you make a barebones version, i tell you what i actually wanted and you explain to me exactly what i wanted and tell me its buildable. its so incredibly annoying and wastes so much time and resources.' Rule: no half-implementations. Build the full thing or explicitly say what is deferred and why."
+    },
+    {
+      "capturedAt": "2026-02-23T00:39:20.634Z",
+      "id": "n_004",
+      "read": true,
+      "source": "session",
+      "text": "Pat's work style preference: 'do what makes sense in the order they make sense, just make sure you record every step and save after each step so we know if it crashes why it crashed or what you did before it crashed.'"
+    },
+    {
+      "capturedAt": "2026-02-23T00:55:08.435Z",
+      "id": "n_005",
+      "read": true,
+      "source": "session",
+      "text": "Pat on autonomous capture: 'i rather it be autonomous as i often forget. this client is for me as much as it is for you.' â€” Claude should capture direction/scope/vision statements automatically without requiring Pat to trigger it."
+    },
+    {
+      "capturedAt": "2026-02-23T00:31:15.322Z",
+      "id": "n_006",
+      "read": true,
+      "source": "session",
+      "text": "Core frustration from Session 19 audit: 'our memory tabs, all our tabs are rarely seeing use and most times i have to get you to do it. this isn't automation. We literally talked about this. this whole project needs an audit â€” i feel like our direction and scope got lost.' This drove the CLAUDE.md rewrite and direction.json system."
+    },
+    {
+      "capturedAt": "2026-02-23T00:57:35.523Z",
+      "id": "n_007",
+      "read": true,
+      "source": "session",
+      "text": "Conversation logs (JSONL) exist at ~/.claude/projects/<project>/ â€” one file per session, full message history. This enables retroactive context mining and PreCompact hook extraction. Pat: 'wait seriously? that makes so many things simpler? how am i just now finding out about this?'"
+    },
+    {
+      "capturedAt": "2026-02-23T04:30:31.549Z",
+      "id": "n_mlyohtod",
+      "read": true,
+      "source": "session",
+      "text": "Watchers should have cute/memorable names (e.g. animals, colors+nouns) instead of generic labels so Pat can track them at a glance."
+    },
+    {
+      "capturedAt": "2026-02-23T04:31:10.215Z",
+      "id": "n_mlyoinif",
+      "read": true,
+      "source": "session",
+      "text": "Watcher naming format: [tag] cute-name â€” where tag is a short purpose label (e.g. [copy], [build], [watch]) and the name is a memorable animal/word combo. Example: [copy] sleepy-badger, [build] blue-fox."
+    },
+    {
+      "id": "n_mm09z2ur",
+      "text": "Deliberation UX feedback from Pat: (1) Markdown rendering errors in agent messages need fixing -- agents should not output markdown bold/headers, just plain text. (2) Agent messages should be visually separated/partitioned as they come in, not a raw stream. (3) Add a button that spawns a full deliberation summary timeline on a \"table\" view -- aesthetically pleasing, written by Claude or an agent after conclusion. (4) At deliberation end, remind the user they can return to terminal to discuss the results. (5) Run a meta-deliberation: audit the deliberation process itself -- is this the right approach? What did we learn? Was it useful? (6) Run a deliberation about the whole Dashboard panel -- what's actually useful for both user and Claude that works and updates in real time.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T07:19:34.707Z",
+      "actionTaken": "task",
+      "actionId": "t_c901d782"
+    },
+    {
+      "id": "n_mm0apoet",
+      "text": "Pat feedback on deliberation topics: Keep deliberations practical and concrete, not meta-philosophical. Good topics: feature design, code architecture, UX improvements, what to build next. Bad topics: \"is this system valuable\" -- too abstract, agents spiral into unfalsifiable positions. The system proved its value by Pat using it and finding it useful. Focus deliberations on actionable outcomes.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T07:40:15.701Z",
+      "actionTaken": "decision",
+      "actionId": "d_ea09d5af"
+    },
+    {
+      "id": "n_mm0bbsr7",
+      "text": "Pat direction on deliberation improvements: (1) Need more agent types beyond the 4 cognitive lenses -- pick the right agents for the right topic. Claude should intelligently select which agents fit each deliberation. (2) Claude should enter plan mode before running deliberations to design them properly -- pick agents, frame the topic well, avoid wasting tokens on bad framing. (3) After a deliberation concludes, auto-extract the recommendations into individual approval tasks that Pat can approve/reject one by one in the Approvals tab. This gives the approval system real utility. (4) Summary writer from earlier request still needed -- polished timeline view of the deliberation.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T07:57:27.763Z",
+      "actionTaken": "task",
+      "actionId": "t_8f4cac54"
+    },
+    {
+      "id": "n_mm0proj1",
+      "text": "New project onboarding: When HW points at a project for the first time, it should automatically scan the project with specialized agents and populate all tabs (tasks from TODOs/issues, decisions from architecture, questions from ambiguity). User opens HW and every tab already has content. Option to run a deliberation for deeper scoping. This is the killer demo -- user sees value immediately.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T16:55:00.000Z",
+      "actionTaken": "dismiss"
+    },
+    {
+      "id": "n_mm0proj2",
+      "text": "Memory tiers: Some memories (pains, wins, base lessons) should be GLOBAL -- they persist across all HW project instances. They're base knowledge. Project-specific state (tasks, decisions, questions, terminal context) swaps cleanly per project. Need a clear separation between global and project-scoped data.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T16:55:30.000Z",
+      "actionTaken": "dismiss"
+    },
+    {
+      "id": "n_mm0proj3",
+      "text": "Project swapping UX: Need a clean way to switch projects that (1) loads/unloads all project-scoped data, (2) points Claude terminal at the right directory, (3) handles three cases: known project (load saved state), new project (run auto-onboard scan), no project (blank slate). Should be intuitive, not a config file edit.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T16:56:00.000Z",
+      "actionTaken": "dismiss"
+    },
+    {
+      "id": "n_mm0ggcg4",
+      "text": "Pat rule: when a deliberation concludes with a new project, automatically scaffold the project directory and save all context (deliberation outcome, prototype code, competitive research) without asking. Don't ask, just do it.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T10:20:57.988Z",
+      "actionTaken": "decision",
+      "actionId": "d_auto_scaffold"
+    },
+    {
+      "id": "n_mm18w9k6",
+      "text": "Rule: whenever Claude suggests restarting the app, ALWAYS write a handoff first (hw_write_handoff) with exact context for the next session to pick up where we left off. No exceptions.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-24T23:37:09.990Z",
+      "actionTaken": "decision",
+      "actionId": "d_d9b43d5b"
+    },
+    {
+      "id": "n_mm1eabqf",
+      "text": "Buddy recap on startup: When a session ends (X, Alt+F4, crash, reset), a detached subprocess should survive to summarize the last ~10 messages into a bulleted list. On next app launch in that project folder, the buddy shows the summary in a pixel-art chat bubble above his head, filling in real-time with the same chat sound effects from deliberations. Needs a crash-safe mechanism -- something that runs independent of the main app process to guarantee the summary gets written even on hard exits.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-25T02:08:04.071Z",
+      "actionTaken": "task",
+      "actionId": "t_ecdd0782"
+    }
+  ]
+}

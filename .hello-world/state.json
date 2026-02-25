@@ -116,37 +116,37 @@
       "id": "t_6ee4aef8",
       "title": "Verify live reactivity works",
       "description": "Check that Dashboard and other views update in real-time when MCP tools write to .hello-world/ JSON files.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-22T06:59:09.556Z",
-      "updatedAt": "2026-02-22T06:59:09.556Z"
+      "updatedAt": "2026-02-24T23:22:52.848Z"
     },
     {
       "id": "t_365b1fcf",
       "title": "Feature verification run",
       "description": "Testing all Hello World features one by one using the project itself as the template. Tasks → Memory → Decisions → Questions → Workflow → Approval → Two-Strike → Cost → Sessions.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [
         "test",
         "verification"
       ],
       "dependsOn": [],
       "createdAt": "2026-02-22T07:01:06.058Z",
-      "updatedAt": "2026-02-22T07:01:08.130Z"
+      "updatedAt": "2026-02-24T09:18:18.590Z"
     },
     {
       "id": "t_c7674e29",
       "title": "Wire question answers to downstream actions (tasks/decisions)",
       "description": "When a question is answered, the answer should optionally route to a task (if it implies action) or a decision (if it reveals a tradeoff). Currently answers just sit in the Answered section with no follow-through. Could be a convention in the MCP tool, or a UI prompt after answering.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [
         "ux",
         "backlog"
       ],
       "dependsOn": [],
       "createdAt": "2026-02-22T07:52:24.343Z",
-      "updatedAt": "2026-02-22T11:41:47.655Z"
+      "updatedAt": "2026-02-24T23:22:53.287Z"
     },
     {
       "id": "t_5efb6913",
@@ -222,6 +222,556 @@
       "dependsOn": [],
       "createdAt": "2026-02-22T13:09:13.662Z",
       "updatedAt": "2026-02-22T13:09:37.770Z"
+    },
+    {
+      "id": "t_c901d782",
+      "title": "Deliberation UX polish: message separation, summary timeline, end-of-delib prompt",
+      "description": "From Pat's feedback: (1) Strip markdown from agent output (already done on master). (2) Visually separate/partition agent messages as they arrive. (3) Add button to generate polished deliberation summary timeline in a table view. (4) At deliberation end, remind user to return to terminal to discuss results. (5-6) Deferred per Pat's later note -- keep deliberations practical, not meta.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T08:47:30.025Z",
+      "updatedAt": "2026-02-24T23:26:09.765Z"
+    },
+    {
+      "id": "t_8f4cac54",
+      "title": "Deliberation v2: intelligent agent selection, plan-before-run, recommendation extraction",
+      "description": "From Pat's direction: (1) Expand agent roster beyond 4 cognitive lenses -- Claude picks the right agents per topic. (2) Claude enters plan mode before deliberations to design framing + agent selection. (3) After conclusion, auto-extract recommendations into individual approval tasks in Approvals tab. (4) Summary writer -- polished timeline view. Items 1-3 are the core of the delib-v2 plan already in progress.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T08:47:35.313Z",
+      "updatedAt": "2026-02-24T23:23:25.198Z"
+    },
+    {
+      "id": "t_0a16d788",
+      "title": "Verification test task (delete me)",
+      "description": "Temporary task created during feature verification. Should be deleted after test.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T09:17:13.276Z",
+      "updatedAt": "2026-02-24T09:17:20.055Z"
+    },
+    {
+      "id": "t_177fd8ec",
+      "title": "Verify project swapping works with zero bleedover",
+      "description": "Test that Hello World app can switch between projects (hello-world and tax-credit-calculators) with completely isolated state. Each project should have its own tasks, decisions, questions, memories, workflow, and activity. Verify: (1) open-hello-world.bat in each folder correctly switches the app, (2) no data from one project appears in the other, (3) MCP server is project-scoped and doesn't leak hw_* tools to other Claude Code sessions.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T10:36:13.908Z",
+      "updatedAt": "2026-02-24T10:36:13.908Z"
+    },
+    {
+      "id": "t_mp_epic",
+      "title": "Multi-project support (Epic)",
+      "description": "Full multi-project support for Hello World. Three pillars: (1) Auto-onboard new projects by scanning with agents to populate all tabs. (2) Global vs project-scoped memory split. (3) Clean project switcher UX with three cases: returning project, new project, blank slate. Reverses previous 'out' scope decision. Needs architecture deliberation before implementation.",
+      "status": "todo",
+      "size": "Epic",
+      "tags": [
+        "architecture",
+        "multi-project"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T17:00:00.000Z",
+      "updatedAt": "2026-02-24T17:00:00.000Z"
+    },
+    {
+      "id": "t_mp_mcp_fix",
+      "title": "Fix MCP server unavailability when Claude Code opens from a different project folder",
+      "description": "When Pat opens Claude Code from a non-hello-world project (e.g. tax-credit-calculators), the hw_* MCP tools are unavailable because the MCP server is scoped to the hello-world .claude/settings.json. This blocks using HW tools from other project contexts. FIX: Moved MCP server config from project-scoped .claude/settings.json to global ~/.mcp.json. HW_PROJECT_ROOT env var hardcodes the path so it works from any directory.",
+      "status": "done",
+      "tags": [
+        "bug",
+        "multi-project",
+        "mcp"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T17:00:00.000Z",
+      "updatedAt": "2026-02-24T18:00:00.000Z"
+    },
+    {
+      "id": "t_mp_global_mem",
+      "title": "Split memories into global vs project-scoped",
+      "description": "Some memories (pains, wins, base lessons) should persist across ALL HW project instances -- they are base knowledge. Project-specific state (tasks, decisions, questions, activity) swaps per project. Need: (1) global storage location (~/.hello-world-global/ or similar), (2) memory type/tag to distinguish global vs project, (3) MemoryStore changes to merge both sources, (4) UI to show which memories are global.",
+      "status": "todo",
+      "tags": [
+        "architecture",
+        "multi-project",
+        "memory"
+      ],
+      "dependsOn": [
+        "t_mp_epic"
+      ],
+      "createdAt": "2026-02-24T17:00:00.000Z",
+      "updatedAt": "2026-02-24T17:00:00.000Z"
+    },
+    {
+      "id": "t_mp_auto_onboard",
+      "title": "Auto-onboard: scan new projects with agents to populate all tabs",
+      "description": "When HW points at a project for the first time, spawn specialized agents to scan it and populate: tasks (from TODOs, issues, package.json scripts), decisions (from architecture patterns, config choices), questions (from ambiguity, TODOs marked with ?), memory (from README, docs). This is the killer demo -- user opens HW on any project and every tab already has content. Optional deliberation for deeper scoping.",
+      "status": "todo",
+      "tags": [
+        "feature",
+        "multi-project",
+        "agents"
+      ],
+      "dependsOn": [
+        "t_mp_epic"
+      ],
+      "createdAt": "2026-02-24T17:00:00.000Z",
+      "updatedAt": "2026-02-24T17:00:00.000Z"
+    },
+    {
+      "id": "t_mp_switcher",
+      "title": "Project switcher UX: clean swap between projects",
+      "description": "UI to switch projects that: (1) loads/unloads all project-scoped data, (2) points Claude terminal at the right directory, (3) handles three cases: known project (load saved state), new project (run auto-onboard), blank (empty). Includes project registry in ~/.hello-world-app.json listing all known projects with last-opened timestamps. Terminal restarts pointing at new project dir.",
+      "status": "todo",
+      "tags": [
+        "feature",
+        "multi-project",
+        "ux"
+      ],
+      "dependsOn": [
+        "t_mp_epic"
+      ],
+      "createdAt": "2026-02-24T17:00:00.000Z",
+      "updatedAt": "2026-02-24T17:00:00.000Z"
+    },
+    {
+      "id": "t_mp_buddy_anim",
+      "title": "Buddy animations don't work on non-HW projects",
+      "description": "Buddy's state machine is driven by hw-tool-summary events emitted by the MCP server loopback notify. When HW points at a project where MCP isn't running, those events never fire and buddy stays in 'waiting' state permanently -- no twitch, no bounce, no sound. Fix options: (1) Have buddy watch PTY output directly for activity signals (regex on terminal output), (2) Have the Tauri Rust backend emit hw-tool-summary based on file watcher activity instead of relying on MCP push, (3) Both -- MCP push for HW-aware projects, file watcher fallback for others.",
+      "status": "todo",
+      "tags": [
+        "bug",
+        "multi-project",
+        "buddy"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T17:12:00.000Z",
+      "updatedAt": "2026-02-24T17:12:00.000Z"
+    },
+    {
+      "id": "t_mp_deliberate",
+      "title": "Run architecture deliberation for multi-project support",
+      "description": "Deliberation with backend-arch, ux-designer, pragmatist, constraint agents on: storage split (global vs project), project registry data model, MCP server switching strategy, auto-onboard agent pipeline, terminal context switching. Must run in-app with MCP server up.",
+      "status": "done",
+      "tags": [
+        "deliberation",
+        "multi-project"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T17:00:00.000Z",
+      "updatedAt": "2026-02-25T00:04:00.587Z"
+    },
+    {
+      "id": "t_mp_cwd_bug",
+      "title": "Bug: App ignores launch directory, always uses stale projectPath from ~/.hello-world-app.json",
+      "description": "When Pat runs `npx tauri dev` from the hello-world directory, the app loads whatever projectPath is stored in ~/.hello-world-app.json instead of using the current working directory. This caused the app to load tax-credit-calculators data even though it was launched from hello-world. Root cause: get_app_project_path() (lib.rs:101) reads from the JSON config unconditionally. set_app_project_path() (lib.rs:109) only gets called from the Settings UI. The app never checks std::env::current_dir() on startup. Fix: On Tauri app init, check if CWD contains a .hello-world/ directory. If yes, use CWD as projectPath and update the config file. If no, fall back to the stored config. This ensures launching from a project directory always wins over stale config. Related: t_mp_mcp_fix, t_mp_switcher.",
+      "status": "todo",
+      "tags": [
+        "bug",
+        "p1",
+        "multi-project",
+        "startup"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T17:30:00.000Z",
+      "updatedAt": "2026-02-24T17:30:00.000Z"
+    },
+    {
+      "id": "t_de2ea65b",
+      "title": "Clean up stale watcher from watchers.json",
+      "description": "Remove dead [copy] zesty-ferret watcher (PID 27244, process already dead) from watchers.json active list. Delib-v2 work was already merged to master.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T23:31:00.071Z",
+      "updatedAt": "2026-02-24T23:31:11.790Z"
+    },
+    {
+      "id": "t_175950da",
+      "title": "Color-code activity feed brackets in terminal side panel",
+      "description": "Color [DONE] green, and other bracket labels with appropriate colors in the Dashboard terminal side panel activity feed. Bonus: match buddy theme colors.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T23:33:16.977Z",
+      "updatedAt": "2026-02-24T23:35:58.128Z"
+    },
+    {
+      "id": "t_846ade5a",
+      "title": "Fix ChatroomPanel hooks ordering crash",
+      "description": "useState(false) for showSummary is at line 234, after the early return at line 212. React hooks must be called in the same order every render. Move it up to the hook block at line 126.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-24T23:46:32.390Z",
+      "updatedAt": "2026-02-24T23:47:25.667Z"
+    },
+    {
+      "id": "t_e8660663",
+      "title": "Build deliberation mediator guardrails",
+      "description": "Three guardrails to prevent lazy consensus in deliberations: (1) Coverage gate -- track numbered sub-questions from the framing, verify each gets substantive treatment before synthesis. If a question was dismissed without engagement, force a steelman round. (2) Mediator intervention rule -- when an agent dismisses a topic without engaging its specific value prop, Claude pauses the round and redirects. (3) Randomize or rotate agent speaking order per round so no single agent always anchors the frame. Implementation: these are behavioral rules for Claude as mediator, but could also be encoded as a pre-synthesis checklist in the deliberation flow.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:12:04.561Z",
+      "updatedAt": "2026-02-25T00:25:03.557Z"
+    },
+    {
+      "id": "t_1e0dbcff",
+      "title": "Deliberate on deliberation guardrails design",
+      "description": "Run a deliberation to evaluate the current guardrails system (subQuestions, balanceNotes, coverage checks) and determine if the design is right, what's missing, and what should change.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:29:00.480Z",
+      "updatedAt": "2026-02-25T00:54:36.067Z"
+    },
+    {
+      "id": "t_2f7a8717",
+      "title": "Delete balance notes as required field",
+      "description": "Remove balanceNotes from hw_plan_deliberation required schema. Make it optional. Update plan storage and display to handle missing balanceNotes.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:54:13.962Z",
+      "updatedAt": "2026-02-25T01:00:54.492Z"
+    },
+    {
+      "id": "t_3ae708d0",
+      "title": "Upgrade coverage from binary to quality tags",
+      "description": "Replace addressed/pending/lumped status in hw_check_deliberation_coverage with consensus/tension/shifted. Update coverage report output. All-consensus triggers a warning.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:54:16.598Z",
+      "updatedAt": "2026-02-25T01:00:55.108Z"
+    },
+    {
+      "id": "t_95ef6819",
+      "title": "Auto-runner pauses at synthesis phase",
+      "description": "runDeliberation auto-runner should stop generating agent messages when phase transitions to synthesis. Prevents late-stage messages that invalidate coverage reports.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:54:16.800Z",
+      "updatedAt": "2026-02-25T01:00:55.634Z"
+    },
+    {
+      "id": "t_c7ee8e85",
+      "title": "Conclusion must reference synthesis",
+      "description": "hw_conclude_deliberation should validate that a synthesis message exists in the chatroom before allowing conclusion. Warn if conclusion text doesn't align with synthesis.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:54:17.010Z",
+      "updatedAt": "2026-02-25T01:00:56.454Z"
+    },
+    {
+      "id": "t_c47e7d67",
+      "title": "Build separate lightweight-insights tool",
+      "description": "New hw_quick_insights tool: 3 agents, no coverage tracking, no sub-questions, bulk-dismissable output. Clearly non-binding. Visually distinct from deliberation in app.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:54:17.225Z",
+      "updatedAt": "2026-02-25T01:00:57.051Z"
+    },
+    {
+      "id": "t_0d832053",
+      "title": "Enforce one mandatory deliberation path",
+      "description": "Update CLAUDE.md and mediator instructions: all deliberations require hw_plan_deliberation with subQuestions. No skipping to hw_start_deliberation directly for decision-making. Document the distinction between deliberation (binding) and quick-insights (non-binding).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T00:54:18.960Z",
+      "updatedAt": "2026-02-25T01:01:50.272Z"
+    },
+    {
+      "id": "t_3d5a1878",
+      "title": "Make session startup instant -- eliminate redundant hw_get_context() call",
+      "description": "Enhance session-start.mjs to be the single source of truth for session context. Include active-state.md contents, register session directly in sessions.json, and replace the checklist with \"start working immediately\" instruction. Update CLAUDE.md startup instructions accordingly.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T01:20:50.527Z",
+      "updatedAt": "2026-02-25T01:24:12.436Z"
+    },
+    {
+      "id": "t_a8310252",
+      "title": "Buddy startup recap: summarize last session context in chat bubble",
+      "description": "Hybrid approach (decided with Pat):\n\n1. ROLLING BUFFER (crash-safe baseline):\n   - On every activity write, also update `.hello-world/buddy-recap.json` with last ~10 items\n   - Always fresh, survives crashes, costs nothing\n\n2. AI SUMMARY ON CLEAN EXIT:\n   - Tauri `on_window_event(CloseRequested)` spawns detached Node subprocess\n   - Subprocess reads the buffer, calls AI to summarize into bulleted list, overwrites buddy-recap.json\n   - Detached (survives app close), writes result before exiting\n\n3. BUDDY CHAT BUBBLE UI:\n   - On next app launch, buddy reads buddy-recap.json\n   - Shows summary in pixel-art chat box above buddy's head\n   - Typewriter text fill effect + chat sound effects (reuse deliberation sounds)\n   - Project-scoped (tied to .hello-world/ in project folder)\n\n4. DISPLAY LOGIC:\n   - If AI summary exists (clean exit) -> show polished bullets\n   - If only raw buffer exists (crash) -> format raw activity into bullets\n   - If no file exists (first launch) -> buddy says welcome message",
+      "status": "todo",
+      "tags": [
+        "buddy",
+        "ux",
+        "session",
+        "feature"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:08:25.956Z",
+      "updatedAt": "2026-02-25T02:14:33.423Z"
+    },
+    {
+      "id": "t_a4721f3a",
+      "title": "Add Augment Context Engine MCP to setup",
+      "description": "Add Augment's Context Engine MCP server to ~/.mcp.json. Semantic code indexing that improved agent performance by 70%+ in benchmarks. GA, MCP-compatible. Config-only change, no code. See memory/tech-radar-2026-02.md.",
+      "status": "done",
+      "tags": [
+        "mcp",
+        "immediate-win",
+        "tech-radar"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:43:02.692Z",
+      "updatedAt": "2026-02-25T02:48:55.010Z"
+    },
+    {
+      "id": "t_e24709e6",
+      "title": "Add Perplexity + GitMCP + Package Version MCP servers",
+      "description": "Add three MCP servers to ~/.mcp.json: (1) Perplexity MCP for deep web research (needs API key), (2) GitMCP for instant docs from any GitHub repo (zero setup, gitmcp.io), (3) Package Version Check MCP for ensuring up-to-date deps across 14+ ecosystems. All config-only. See memory/tech-radar-2026-02.md.",
+      "status": "done",
+      "tags": [
+        "mcp",
+        "immediate-win",
+        "tech-radar"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:43:06.548Z",
+      "updatedAt": "2026-02-25T02:50:54.634Z"
+    },
+    {
+      "id": "t_2081dd69",
+      "title": "Add Cargo.toml release profile optimization",
+      "description": "Add to packages/app/src-tauri/Cargo.toml: [profile.release] with lto=true, codegen-units=1, opt-level=3, panic=\"abort\". Zero-effort binary size and speed improvement. See memory/tech-radar-2026-02.md.",
+      "status": "done",
+      "tags": [
+        "rust",
+        "immediate-win",
+        "tech-radar"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:43:07.060Z",
+      "updatedAt": "2026-02-25T02:51:41.418Z"
+    },
+    {
+      "id": "t_04fe2eba",
+      "title": "Adopt React 19.2 Activity component for view preservation",
+      "description": "Wrap each app view (Dashboard, Tasks, Decisions, etc.) in React 19.2 Activity mode={visible|hidden} to preserve state on tab switch. Currently views unmount/remount losing scroll position, form state, etc. Drop-in improvement. See memory/tech-radar-2026-02.md.",
+      "status": "todo",
+      "tags": [
+        "react",
+        "adopt",
+        "tech-radar",
+        "ux"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:43:09.208Z",
+      "updatedAt": "2026-02-25T02:43:09.208Z"
+    },
+    {
+      "id": "t_6f95c250",
+      "title": "Adopt tauri-specta for type-safe IPC",
+      "description": "Replace manual invoke() string-based calls with auto-generated TypeScript bindings from Rust command signatures. Eliminates mismatched command name and wrong payload shape bugs. Medium effort but high ongoing value. See memory/tech-radar-2026-02.md.",
+      "status": "todo",
+      "tags": [
+        "rust",
+        "typescript",
+        "adopt",
+        "tech-radar"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:43:11.603Z",
+      "updatedAt": "2026-02-25T02:43:11.603Z"
+    },
+    {
+      "id": "t_0321c01b",
+      "title": "Evaluate Tech Radar MCP as a product",
+      "description": "Nobody has built proactive technique/repo discovery as an MCP server. Gap is wide open. Research scope: (1) Define what it would scrape (GitHub trending, HN, subreddits, changelogs), (2) How it filters/ranks by user stack, (3) Storage and caching strategy, (4) Subscription pricing model, (5) MVP scope. Run /market-intel:research before building. See memory/tech-radar-2026-02.md.",
+      "status": "todo",
+      "tags": [
+        "product",
+        "mcp",
+        "evaluate",
+        "tech-radar"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:43:14.615Z",
+      "updatedAt": "2026-02-25T02:43:14.615Z"
+    },
+    {
+      "id": "t_ecdd0782",
+      "title": "Buddy recap on startup: detached subprocess summary of last session",
+      "description": "When a session ends (X, Alt+F4, crash, reset), a detached subprocess should survive to summarize the last ~10 messages into a bulleted list. On next app launch in that project folder, the buddy shows the summary in a pixel-art chat bubble above his head, filling in real-time with the same chat sound effects from deliberations. Needs a crash-safe mechanism -- something that runs independent of the main app process to guarantee the summary gets written even on hard exits.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:51:33.119Z",
+      "updatedAt": "2026-02-25T02:51:33.119Z"
+    },
+    {
+      "id": "t_caa32ae8",
+      "title": "Build custom ACE MCP server -- semantic code indexing",
+      "description": "Build our own Augment Context Engine equivalent as a standalone MCP server. Semantic code indexing tailored to our workflow: file summaries, function/class extraction, dependency graphs, concept tagging. Uses Claude API for understanding, local JSON/SQLite for index storage. MCP tools: semantic_search, get_file_context, find_related_files, explain_architecture. No vector DB -- Claude does the semantic matching on pre-generated summaries.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:56:24.326Z",
+      "updatedAt": "2026-02-25T07:39:41.923Z"
+    },
+    {
+      "id": "t_0316d991",
+      "title": "Build deep web research MCP server",
+      "description": "Build our own deep web research MCP server (Perplexity alternative). Fan out queries across web search, specific sites (GitHub, StackOverflow, Reddit, HN), synthesize results with Claude, return structured output. Standalone repo, usable from any project. MCP tools: deep_search(query), research_topic(topic), find_solutions(problem).",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:56:54.308Z",
+      "updatedAt": "2026-02-25T02:56:54.308Z"
+    },
+    {
+      "id": "t_a699fbb8",
+      "title": "Adopt Spec-Driven Development workflow",
+      "description": "Integrate 3-5 line specs before every build task. Evaluate GitHub Spec Kit. Add spec step to workflow engine between scope and plan phases. Every task gets a spec before code starts.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:56:56.643Z",
+      "updatedAt": "2026-02-25T02:56:56.643Z"
+    },
+    {
+      "id": "t_aa0ac87a",
+      "title": "Enable Claude Code Agent Teams (experimental)",
+      "description": "Test CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 flag for parallel teammate agents. Evaluate if it improves our workflow. Set env var, test with real tasks, document findings.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:56:58.931Z",
+      "updatedAt": "2026-02-25T02:56:58.931Z"
+    },
+    {
+      "id": "t_0a24900d",
+      "title": "Replace ESLint + Prettier with Biome",
+      "description": "Single Rust binary, 50-100x faster linting. Drop ESLint and Prettier configs, install Biome, migrate rules. 10k files in 0.8s vs ESLint 45s.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:57:01.182Z",
+      "updatedAt": "2026-02-25T02:57:01.182Z"
+    },
+    {
+      "id": "t_72f4f388",
+      "title": "Evaluate Tech Radar MCP as a product",
+      "description": "Nobody built proactive technique/repo discovery as MCP. Scrape GitHub trending + HN + subreddits, analyze patterns, surface by user stack. Subscription model viable. Closest competitor: Forage (2 stars). Run competitive research before building.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T02:57:03.151Z",
+      "updatedAt": "2026-02-25T02:57:08.300Z"
+    },
+    {
+      "id": "t_556a8b1c",
+      "title": "Update memory files and extend Cortex scope",
+      "description": "Update active-state.md, context node, and timeline for Cortex build session. Then extend Cortex to index external tech discoveries into persistent memory.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:04:18.468Z",
+      "updatedAt": "2026-02-25T08:19:17.071Z"
+    },
+    {
+      "id": "t_7d412f42",
+      "title": "Add system explorer to Hello World app",
+      "description": "Embed the interactive system architecture explorer (system-explorer.html) as a view in the Hello World desktop app. Could be a new sidebar tab or accessible from the Dashboard.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:21:56.749Z",
+      "updatedAt": "2026-02-25T08:21:56.749Z"
+    },
+    {
+      "id": "t_c7e913a3",
+      "title": "Fix state.json race conditions with file locking",
+      "description": "State.json has race conditions where concurrent writes from MCP server, file watcher, and discord listener can silently clobber data. This is the highest-risk bug. Needs deliberation on: (1) File locking as a quick fix vs SQLite migration as the proper fix, (2) If locking, what mechanism (proper-lockfile, .lock file, OS-level), (3) If SQLite, should this be combined with t_f2d9ad7d, (4) How to detect and recover from data loss that may have already happened, (5) Whether to split state.json into separate files per concern (tasks.json, decisions.json, etc.) as an intermediate step.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:00.166Z",
+      "updatedAt": "2026-02-25T08:33:21.482Z"
+    },
+    {
+      "id": "t_6cb166c0",
+      "title": "Add fallback to SessionStart hook for corrupted files",
+      "description": "Wrap each JSON file read in session-start.mjs with individual try/catch so one corrupted file doesn't crash the entire hook. Output partial context with warnings instead of failing silently. Add a health check that reports which files loaded vs failed.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:02.572Z",
+      "updatedAt": "2026-02-25T08:43:16.398Z"
+    },
+    {
+      "id": "t_67c363db",
+      "title": "Add approval timeout with auto-escalation",
+      "description": "When a block-tier approval has been pending for >30 minutes, send a reminder DM to Pat. After 60 minutes, downgrade to notify-tier (proceed with caution, log the override). Prevents system from freezing when Pat is away.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:04.636Z",
+      "updatedAt": "2026-02-25T08:46:00.559Z"
+    },
+    {
+      "id": "t_5d5feda8",
+      "title": "Disable Tauri hot-reload for lib.rs specifically",
+      "description": "Configure Tauri dev mode to NOT hot-reload when lib.rs changes. This eliminates the root cause of PTY kills and removes the need for the worktree workflow on Rust changes. Check tauri.conf.json and Cargo.toml for watch/ignore config.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:06.696Z",
+      "updatedAt": "2026-02-25T08:44:38.640Z"
+    },
+    {
+      "id": "t_e215a18e",
+      "title": "[DELIBERATE] Memory quality feedback loop and staleness management",
+      "description": "86 memories stored with no mechanism to verify usefulness, prune stale facts, or detect when memories mislead. Needs deliberation on: (1) How to score memory relevance over time, (2) Auto-pruning rules for stale facts, (3) Whether to add semantic search (vs current keyword matching), (4) How to detect when a memory is actively harmful/outdated.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:13.159Z",
+      "updatedAt": "2026-02-25T08:29:13.159Z"
+    },
+    {
+      "id": "t_fee42a1a",
+      "title": "[DELIBERATE] Knowledge intake scheduling and automation",
+      "description": "Research pipeline is currently manual -- someone has to trigger it. Needs deliberation on: (1) What cadence makes sense (weekly? on-demand?), (2) What sources to auto-scan (GitHub trending, HN, specific subreddits), (3) How to avoid memory bloat from automated intake, (4) Whether this should be a cron job, a hook, or triggered by the app.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:15.718Z",
+      "updatedAt": "2026-02-25T08:29:15.718Z"
+    },
+    {
+      "id": "t_f2d9ad7d",
+      "title": "[DELIBERATE] State storage architecture: JSON files vs SQLite",
+      "description": "Current JSON file storage has race conditions, no transactions, no query capability. SQLite would fix all of these but adds complexity and migration work. Needs deliberation on: (1) Is the migration worth it now or after multi-project, (2) Which files to migrate first, (3) How to maintain the file-watcher reactivity pattern with SQLite, (4) Impact on the MCP server and Tauri app.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T08:29:18.946Z",
+      "updatedAt": "2026-02-25T08:29:18.946Z"
+    },
+    {
+      "id": "t_a9d3b3d7",
+      "title": "Implement B+: split state.json + atomic writes + backup",
+      "description": "From deliberation: (1) Split state.json into tasks.json, decisions.json, questions.json, memories.json. (2) Update JsonStore with atomic write-to-temp-then-rename with Windows NTFS retry. (3) Backup copy before each write. (4) Session-start hook reads split files with .backup fallback. (5) Update Tauri file watcher to watch new files. (6) Migration: on first run, read old state.json and split into new files.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T09:28:32.417Z",
+      "updatedAt": "2026-02-25T09:38:23.367Z"
     }
   ],
   "milestones": [],
@@ -293,6 +843,135 @@
       "rationale": "Cards filling the full width looks better and uses the available space. No content benefit to constraining width in a desktop app.",
       "decidedAt": "2026-02-22T07:39:03.670Z",
       "decidedBy": "both"
+    },
+    {
+      "id": "d_ea09d5af",
+      "title": "Keep deliberations practical and actionable",
+      "context": "Pat observed that meta-philosophical topics like 'is this system valuable' cause agents to spiral into unfalsifiable positions",
+      "chosen": "Only run deliberations on concrete, actionable topics: feature design, code architecture, UX improvements, what to build next",
+      "alternatives": [],
+      "rationale": "The system proved its value through actual use. Abstract meta-questions waste tokens and produce no actionable output.",
+      "decidedAt": "2026-02-24T08:47:32.962Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_mp_scope_in",
+      "title": "Multi-project support is now IN scope",
+      "context": "Previously scoped out (Feb 22). Pat reversed this after experiencing the pain of opening Claude Code from tax-credit-calculators and having no HW tools available. The current single-project model doesn't work when Pat works across multiple projects.",
+      "chosen": "Full multi-project support: project switcher, global vs project memory, auto-onboard new projects",
+      "alternatives": [
+        {
+          "option": "Keep single-project",
+          "tradeoff": "Simpler but forces Pat to only use HW from one directory"
+        },
+        {
+          "option": "Manual project switching via config edit",
+          "tradeoff": "Works but terrible UX, no auto-onboard"
+        }
+      ],
+      "rationale": "Pat hit the real pain: opened Claude Code from a different project and had zero HW tools. Multi-project is a requirement, not a nice-to-have.",
+      "decidedAt": "2026-02-24T17:00:00.000Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_c92d5e5a",
+      "title": "Verification test decision (delete me)",
+      "context": "Testing the decision recording feature during verification run.",
+      "chosen": "Record and verify",
+      "alternatives": [],
+      "rationale": "Need to confirm the decision system works end-to-end.",
+      "decidedAt": "2026-02-24T09:17:32.717Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_d9b43d5b",
+      "title": "Always write handoff before suggesting app restart",
+      "context": "Pat noticed sessions losing context when Claude suggests restarting the app without saving state first",
+      "chosen": "Mandatory hw_write_handoff() call before any restart suggestion, no exceptions",
+      "alternatives": [],
+      "rationale": "A restart kills the current session. Without a handoff, the next session starts blind. This rule prevents context loss.",
+      "decidedAt": "2026-02-24T23:41:05.602Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_c0062113",
+      "title": "Deliberation v2: one mandatory path + quick-insights",
+      "context": "Self-audit of deliberation on guardrails found 5 structural failures. Deliberation panel (6 agents) converged on: one mandatory path for binding decisions, separate lightweight tool for flavor-testing.",
+      "chosen": "One mandatory deliberation path (plan+coverage+conclude) with quality tags (consensus/tension/shifted). Separate hw_quick_insights for non-binding sanity checks. Balance notes optional. Auto-runner pauses at synthesis.",
+      "alternatives": [
+        {
+          "option": "Two-tier mode (quick vs full deliberation)",
+          "tradeoff": "Rejected: user must predict uncertainty before having data. Quick mode becomes a loophole to skip rigor."
+        },
+        {
+          "option": "Keep balance notes required",
+          "tradeoff": "Rejected: never changed mediation behavior in practice. Paperwork without signal."
+        },
+        {
+          "option": "Keep binary coverage (addressed/not)",
+          "tradeoff": "Rejected: enables checkbox theater. Agents can 'address' without real engagement."
+        }
+      ],
+      "rationale": "Two-tier modes create prediction burden (user must guess stakes upfront). One path removes the choice. Quick-insights is clearly separate and non-binding. Quality tags replace binary coverage to catch checkbox theater and groupthink.",
+      "decidedAt": "2026-02-25T01:05:33.241Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_4c882ae9",
+      "title": "Buddy recap: hybrid rolling buffer + AI summary on clean exit",
+      "context": "Need crash-safe session recap for buddy to display on next startup. Must survive X, Alt+F4, crashes.",
+      "chosen": "Hybrid: rolling buffer continuously writes last ~10 activity items (crash-safe baseline). On clean exit, detached Node subprocess upgrades the raw buffer into an AI-generated summary. Buddy displays whichever exists -- polished if available, raw if crash.",
+      "alternatives": [
+        {
+          "option": "Detached subprocess only",
+          "tradeoff": "Nice summaries but no crash safety -- hard exits lose everything"
+        },
+        {
+          "option": "Rolling buffer only",
+          "tradeoff": "Crash-proof but raw activity data, not polished summaries"
+        }
+      ],
+      "rationale": "Rolling buffer costs nothing (same pattern as activity.json). AI summary on clean exit gives a nicer experience when possible. Crash fallback to raw buffer means we never lose context. Best of both worlds.",
+      "decidedAt": "2026-02-25T02:14:26.791Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_85462add",
+      "title": "Build Cortex as standalone ACE replacement",
+      "context": "Discussed adding Augment Context Engine MCP vs building our own. Pat wanted our own version tailored to our workflow.",
+      "chosen": "Build Cortex: standalone MCP server at C:/Users/Patri/CascadeProjects/cortex/. Claude Haiku for file summarization, structured JSON index, keyword/concept search. No vector DB. 5 MCP tools: cortex_index, cortex_search, cortex_context, cortex_architecture, cortex_related.",
+      "alternatives": [
+        {
+          "option": "Install Augment Context Engine MCP",
+          "tradeoff": "Immediate 70% boost claim but not tailored to our workflow, dependency on external service"
+        },
+        {
+          "option": "Install Perplexity MCP for research",
+          "tradeoff": "Deep research but requires API key, monthly cost, not code-specific"
+        }
+      ],
+      "rationale": "With agents we can build something more attuned to our needs. No vector DB infra complexity. Claude API handles the semantic understanding. Per-project index in .cortex-index/ directory.",
+      "decidedAt": "2026-02-25T03:04:00.051Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_e5d0b81b",
+      "title": "State storage: split files + atomic writes (B+), defer SQLite",
+      "context": "state.json holds all tasks, decisions, questions, memories in one file. Concurrent write risk from MCP server, Discord listener. Deliberation with 4 agents.",
+      "chosen": "Split state.json into tasks.json, decisions.json, questions.json, memories.json. Atomic writes via write-to-temp-then-rename with Windows NTFS retry loop. Backup copy before each write. Session-start hook .backup fallback. SQLite deferred to multi-project epic.",
+      "alternatives": [
+        {
+          "option": "File locking only (Option A)",
+          "tradeoff": "2 hours but doesn't fix truncation risk or reduce blast radius"
+        },
+        {
+          "option": "SQLite migration (Option C)",
+          "tradeoff": "Fixes everything but 2-3 days work, breaks file-watcher reactivity, MSVC compilation issues on Windows, premature given multi-project timeline"
+        }
+      ],
+      "rationale": "Backendarch shifted from SQLite to B+ after: (1) multi-project epic is unplanned so SQLite timing is premature, (2) better-sqlite3 has MSVC native compilation issues on Windows, (3) split files are forward-compatible with eventual SQLite migration. Remaining no-ACID risk explicitly accepted.",
+      "decidedAt": "2026-02-25T09:25:49.987Z",
+      "decidedBy": "claude"
     }
   ],
   "questions": [
@@ -318,8 +997,19 @@
       "id": "q_a524cf58",
       "question": "Should the Settings view allow changing the project path without reinstalling?",
       "context": "Currently project path is set once on first launch. Changing it requires manual config edits.",
-      "status": "open",
-      "createdAt": "2026-02-22T08:08:52.713Z"
+      "status": "answered",
+      "createdAt": "2026-02-22T08:08:52.713Z",
+      "answer": "Yes -- this is now part of the multi-project support epic. A proper project switcher will replace the current one-time setup. Settings will include project management.",
+      "answeredAt": "2026-02-24T17:00:00.000Z"
+    },
+    {
+      "id": "q_01e1b2f3",
+      "question": "Verification test question -- does the question system work?",
+      "context": "Feature verification run",
+      "status": "answered",
+      "createdAt": "2026-02-24T09:17:36.768Z",
+      "answer": "Yes, it works. Verified during feature verification run.",
+      "answeredAt": "2026-02-24T09:17:40.178Z"
     }
   ]
 }

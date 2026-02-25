@@ -1,0 +1,4 @@
+# Prevent lib.rs changes from triggering hot-reload in dev mode.
+# This is the root cause of PTY session kills during development.
+# Rust changes should be applied via worktree + watcher pattern instead.
+src/lib.rs

@@ -16,14 +16,29 @@ const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
 const HW = join(PROJECT, '.hello-world');
 const MEMORY_DIR = 'C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/memory';
 
+const health = { loaded: [], failed: [] };
+
 function safeRead(file) {
-  try { return JSON.parse(readFileSync(join(HW, file), 'utf8')); }
-  catch { return null; }
+  try {
+    const data = JSON.parse(readFileSync(join(HW, file), 'utf8'));
+    health.loaded.push(file);
+    return data;
+  } catch (err) {
+    health.failed.push({ file, error: err.code || err.message });
+    return null;
+  }
 }
 
 function safeReadText(path) {
-  try { return readFileSync(path, 'utf8'); }
-  catch { return null; }
+  const label = path.replace(/.*[/\\]/, '');
+  try {
+    const text = readFileSync(path, 'utf8');
+    health.loaded.push(label);
+    return text;
+  } catch (err) {
+    health.failed.push({ file: label, error: err.code || err.message });
+    return null;
+  }
 }
 
 function generateId(prefix) {
@@ -101,10 +116,9 @@ archiveChatroom();
 const { session: newSession, number: sessionNumber } = createSession();
 const handoff = consumeHandoff();
 
-// ── Read state ───────────────────────────────────────────────────
+// ── Read state (split files with backward compat) ────────────────
 const config       = safeRead('config.json');
 const workflow     = safeRead('workflow.json');
-const state        = safeRead('state.json');
 const lastContext  = safeRead('last-context.json');
 const directionRaw = safeRead('direction.json');
 const directions   = Array.isArray(directionRaw)
@@ -114,17 +128,26 @@ const pendingChanges = safeRead('pending-changes.json');
 const crashReport    = safeRead('crash-report.json');
 const activeState    = safeReadText(join(MEMORY_DIR, 'active-state.md'));
 
+// Read split state files (with fallback to old state.json for migration)
+const tasksData     = safeRead('tasks.json');
+const decisionsData = safeRead('decisions.json');
+const questionsData = safeRead('questions.json');
+const oldState      = safeRead('state.json'); // backward compat
+
+const allTasks  = tasksData?.tasks ?? oldState?.tasks ?? [];
+const allDecisions = decisionsData?.decisions ?? oldState?.decisions ?? [];
+const allQuestions = questionsData?.questions ?? oldState?.questions ?? [];
+
 const projectName   = config?.config?.name ?? 'Claude AI Interface';
 const phase         = workflow?.phase ?? 'idle';
 
-const allTasks  = state?.tasks ?? [];
 const active    = allTasks.filter(t => t.status === 'in_progress');
 const pending   = allTasks.filter(t => t.status === 'todo');
 const doneCount = allTasks.filter(t => t.status === 'done').length;
 const blocked   = allTasks.filter(t => t.status === 'blocked');
 
-const decisions   = (state?.decisions ?? []).slice(-5);
-const openQs      = (state?.questions ?? []).filter(q => q.status === 'open');
+const decisions   = allDecisions.slice(-5);
+const openQs      = allQuestions.filter(q => q.status === 'open');
 const unreadNotes = (directions.notes ?? []).filter(n => !n.read);
 const vision      = directions.vision ?? '';
 
@@ -237,6 +260,14 @@ if (decisions.length > 0) {
 if (openQs.length > 0) {
   lines.push(`OPEN QUESTIONS:`);
   openQs.forEach(q => lines.push(`  ? ${q.id}: ${q.question}`));
+  lines.push('');
+}
+
+// Health check -- warn about any failed file reads
+if (health.failed.length > 0) {
+  lines.push(`## WARNING: ${health.failed.length} file(s) failed to load`);
+  health.failed.forEach(f => lines.push(`  [FAIL] ${f.file}: ${f.error}`));
+  lines.push(`  Context may be incomplete. Check .hello-world/ for corrupted files.`);
   lines.push('');
 }
 

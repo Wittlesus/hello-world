@@ -5,7 +5,7 @@
       "projectId": "Hello World",
       "type": "pain",
       "title": "Electron subprocess hangs with claude -p",
-      "content": "6+ attempts to spawn Claude as subprocess in Electron. Shell:true, named pipes, direct spawn — all fail.",
+      "content": "6+ attempts to spawn Claude as subprocess in Electron. Shell:true, named pipes, direct spawn â€” all fail.",
       "rule": "Do not attempt shell spawning in Electron for Claude. Use API directly or Tauri.",
       "tags": [
         "electron",
@@ -39,7 +39,7 @@
       "id": "mem_46480fbc",
       "projectId": "Hello World",
       "type": "win",
-      "title": "Brain engine ported in one session — 20 tests passing",
+      "title": "Brain engine ported in one session â€” 20 tests passing",
       "content": "Ported Synaptica 9-stage hippocampal pipeline to Hello World. All stages working.",
       "rule": "",
       "tags": [
@@ -57,7 +57,7 @@
       "id": "mem_43b26a49",
       "projectId": "Hello World",
       "type": "win",
-      "title": "Cross-session memory verified — moat works",
+      "title": "Cross-session memory verified â€” moat works",
       "content": "Session 2 context contains full state from Session 1 without re-prompting.",
       "rule": "",
       "tags": [
@@ -75,7 +75,7 @@
       "projectId": "Hello World",
       "type": "win",
       "title": "CLI working end-to-end in first attempt",
-      "content": "init, status, tasks, start — all working on first build.",
+      "content": "init, status, tasks, start â€” all working on first build.",
       "rule": "",
       "tags": [
         "cli",
@@ -124,37 +124,6 @@
       "lastAccessed": "2026-02-22T08:08:51.218Z"
     },
     {
-      "id": "mem_13552274",
-      "projectId": "Hello World",
-      "type": "fact",
-      "title": "Live reactivity test #2",
-      "content": "Testing if the file watcher picks up this MCP write and the app updates live.",
-      "rule": "",
-      "tags": [
-        "test"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-22T06:15:30.079Z"
-    },
-    {
-      "id": "mem_5bb83c0b",
-      "projectId": "Hello World",
-      "type": "fact",
-      "title": "Live reactivity test",
-      "content": "Testing real-time file watching. If the Dashboard updated without a refresh, live reactivity is working.",
-      "rule": "",
-      "tags": [
-        "test",
-        "live-reactivity"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-22T06:59:06.691Z"
-    },
-    {
       "id": "mem_862c1185",
       "projectId": "Hello World",
       "type": "pain",
@@ -172,6 +141,2450 @@
       "accessCount": 1,
       "createdAt": "2026-02-22T08:01:24.950Z",
       "lastAccessed": "2026-02-22T08:08:51.218Z"
+    },
+    {
+      "id": "mem_3082b13b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Feature verification run",
+      "content": "Testing all Hello World features one by one using the project itself as the template. Tasks â†’ Memory â†’ Decisions â†’ Questions â†’ Workflow â†’ Approval â†’ Two-Strike â†’ Cost â†’ Sessions.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "test",
+        "verification"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T09:18:18.591Z"
+    },
+    {
+      "id": "mem_3fe56ea3",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Verify live reactivity works",
+      "content": "Check that Dashboard and other views update in real-time when MCP tools write to .hello-world/ JSON files.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:22:52.850Z"
+    },
+    {
+      "id": "mem_7dfdf40e",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Wire question answers to downstream actions (tasks/decisions)",
+      "content": "When a question is answered, the answer should optionally route to a task (if it implies action) or a decision (if it reveals a tradeoff). Currently answers just sit in the Answered section with no follow-through. Could be a convention in the MCP tool, or a UI prompt after answering.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "ux",
+        "backlog"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:22:53.289Z"
+    },
+    {
+      "id": "mem_2e7aed6c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Deliberation v2: intelligent agent selection, plan-before-run, recommendation extraction",
+      "content": "From Pat's direction: (1) Expand agent roster beyond 4 cognitive lenses -- Claude picks the right agents per topic. (2) Claude enters plan mode before deliberations to design framing + agent selection. (3) After conclusion, auto-extract recommendations into individual approval tasks in Approvals tab. (4) Summary writer -- polished timeline view. Items 1-3 are the core of the delib-v2 plan already in progress.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:23:25.199Z"
+    },
+    {
+      "id": "mem_8ba19195",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Deliberation UX polish: message separation, summary timeline, end-of-delib prompt",
+      "content": "From Pat's feedback: (1) Strip markdown from agent output (already done on master). (2) Visually separate/partition agent messages as they arrive. (3) Add button to generate polished deliberation summary timeline in a table view. (4) At deliberation end, remind user to return to terminal to discuss results. (5-6) Deferred per Pat's later note -- keep deliberations practical, not meta.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:26:09.766Z"
+    },
+    {
+      "id": "mem_21d33b6d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Clean up stale watcher from watchers.json",
+      "content": "Remove dead [copy] zesty-ferret watcher (PID 27244, process already dead) from watchers.json active list. Delib-v2 work was already merged to master.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:31:11.792Z"
+    },
+    {
+      "id": "mem_53f40551",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Color-code activity feed brackets in terminal side panel",
+      "content": "Color [DONE] green, and other bracket labels with appropriate colors in the Dashboard terminal side panel activity feed. Bonus: match buddy theme colors.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:35:58.129Z"
+    },
+    {
+      "id": "mem_ac1e80ac",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix ChatroomPanel hooks ordering crash",
+      "content": "useState(false) for showSummary is at line 234, after the early return at line 212. React hooks must be called in the same order every render. Move it up to the hook block at line 126.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-24T23:47:25.669Z"
+    },
+    {
+      "id": "mem_0fcd3606",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Deliberation mediator let agents lump and dismiss without engagement",
+      "content": "During multi-project architecture deliberation, agents dismissed auto-onboard by lumping it with the registry as \"YAGNI\" without engaging its specific value prop. Claude (mediator) let the lazy consensus ride instead of intervening. Pat caught it. Wasted tokens on a round of groupthink.",
+      "rule": "As deliberation mediator: (1) Track numbered sub-questions and verify each gets substantive treatment. (2) When an agent dismisses a topic without engaging its specific value, pause and force a steelman. (3) Before synthesis, check coverage -- every framed question must have a real answer, not a lumped dismissal.",
+      "tags": [],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T00:03:59.710Z",
+      "lastAccessed": "2026-02-25T08:10:25.124Z"
+    },
+    {
+      "id": "mem_001ce94f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Run architecture deliberation for multi-project support",
+      "content": "Deliberation with backend-arch, ux-designer, pragmatist, constraint agents on: storage split (global vs project), project registry data model, MCP server switching strategy, auto-onboard agent pipeline, terminal context switching. Must run in-app with MCP server up.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "deliberation",
+        "multi-project"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T00:04:00.589Z"
+    },
+    {
+      "id": "mem_6aee0cd4",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build deliberation mediator guardrails",
+      "content": "Three guardrails to prevent lazy consensus in deliberations: (1) Coverage gate -- track numbered sub-questions from the framing, verify each gets substantive treatment before synthesis. If a question was dismissed without engagement, force a steelman round. (2) Mediator intervention rule -- when an agent dismisses a topic without engaging its specific value prop, Claude pauses the round and redirects. (3) Randomize or rotate agent speaking order per round so no single agent always anchors the frame. Implementation: these are behavioral rules for Claude as mediator, but could also be encoded as a pre-synthesis checklist in the deliberation flow.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T00:25:03.559Z"
+    },
+    {
+      "id": "mem_2ed7e910",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Deliberate on deliberation guardrails design",
+      "content": "Run a deliberation to evaluate the current guardrails system (subQuestions, balanceNotes, coverage checks) and determine if the design is right, what's missing, and what should change.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T00:54:36.069Z"
+    },
+    {
+      "id": "mem_4d69a983",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Delete balance notes as required field",
+      "content": "Remove balanceNotes from hw_plan_deliberation required schema. Make it optional. Update plan storage and display to handle missing balanceNotes.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:00:54.493Z"
+    },
+    {
+      "id": "mem_f4d3b2df",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Upgrade coverage from binary to quality tags",
+      "content": "Replace addressed/pending/lumped status in hw_check_deliberation_coverage with consensus/tension/shifted. Update coverage report output. All-consensus triggers a warning.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:00:55.109Z"
+    },
+    {
+      "id": "mem_7db65b6b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Auto-runner pauses at synthesis phase",
+      "content": "runDeliberation auto-runner should stop generating agent messages when phase transitions to synthesis. Prevents late-stage messages that invalidate coverage reports.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:00:55.635Z"
+    },
+    {
+      "id": "mem_9b223d80",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Conclusion must reference synthesis",
+      "content": "hw_conclude_deliberation should validate that a synthesis message exists in the chatroom before allowing conclusion. Warn if conclusion text doesn't align with synthesis.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:00:56.455Z"
+    },
+    {
+      "id": "mem_edbc311e",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build separate lightweight-insights tool",
+      "content": "New hw_quick_insights tool: 3 agents, no coverage tracking, no sub-questions, bulk-dismissable output. Clearly non-binding. Visually distinct from deliberation in app.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:00:57.053Z"
+    },
+    {
+      "id": "mem_df5a8eb6",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Enforce one mandatory deliberation path",
+      "content": "Update CLAUDE.md and mediator instructions: all deliberations require hw_plan_deliberation with subQuestions. No skipping to hw_start_deliberation directly for decision-making. Document the distinction between deliberation (binding) and quick-insights (non-binding).",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:01:50.273Z"
+    },
+    {
+      "id": "mem_15c2986c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Deliberation v2: audited own deliberation, found 5 structural failures, built 6 fixes",
+      "content": "Ran a deliberation on deliberation guardrails, then audited the deliberation against its own guardrails. Found: (1) conclusion diverged from synthesis, (2) late-stage shifts went untracked, (3) auto-runner bypassed mediator during synthesis, (4) coverage was stale, (5) balance notes were write-only. Built 6 fixes: quality coverage tags, auto-runner pause, synthesis validation, balance notes optional, quick-insights tool, one mandatory path.",
+      "rule": "When building process guardrails, always audit them against themselves. The most valuable failures are the ones your own system misses.",
+      "tags": [
+        "deliberation",
+        "guardrails",
+        "meta",
+        "process"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:02:05.086Z"
+    },
+    {
+      "id": "mem_034561e9",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Deliberation v2: one mandatory path + quick-insights",
+      "content": "Context: Self-audit of deliberation on guardrails found 5 structural failures. Deliberation panel (6 agents) converged on: one mandatory path for binding decisions, separate lightweight tool for flavor-testing.\nChosen: One mandatory deliberation path (plan+coverage+conclude) with quality tags (consensus/tension/shifted). Separate hw_quick_insights for non-binding sanity checks. Balance notes optional. Auto-runner pauses at synthesis.\nRationale: Two-tier modes create prediction burden (user must guess stakes upfront). One path removes the choice. Quick-insights is clearly separate and non-binding. Quality tags replace binary coverage to catch checkbox theater and groupthink.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:05:33.243Z"
+    },
+    {
+      "id": "mem_f88f6500",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Make session startup instant -- eliminate redundant hw_get_context() call",
+      "content": "Enhance session-start.mjs to be the single source of truth for session context. Include active-state.md contents, register session directly in sessions.json, and replace the checklist with \"start working immediately\" instruction. Update CLAUDE.md startup instructions accordingly.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T01:24:12.437Z"
+    },
+    {
+      "id": "mem_6159765c",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Buddy recap: hybrid rolling buffer + AI summary on clean exit",
+      "content": "Context: Need crash-safe session recap for buddy to display on next startup. Must survive X, Alt+F4, crashes.\nChosen: Hybrid: rolling buffer continuously writes last ~10 activity items (crash-safe baseline). On clean exit, detached Node subprocess upgrades the raw buffer into an AI-generated summary. Buddy displays whichever exists -- polished if available, raw if crash.\nRationale: Rolling buffer costs nothing (same pattern as activity.json). AI summary on clean exit gives a nicer experience when possible. Crash fallback to raw buffer means we never lose context. Best of both worlds.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T02:14:26.793Z"
+    },
+    {
+      "id": "mem_34d8b98f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add Augment Context Engine MCP to setup",
+      "content": "Add Augment's Context Engine MCP server to ~/.mcp.json. Semantic code indexing that improved agent performance by 70%+ in benchmarks. GA, MCP-compatible. Config-only change, no code. See memory/tech-radar-2026-02.md.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "immediate-win",
+        "tech-radar"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T02:48:55.011Z",
+      "lastAccessed": "2026-02-25T08:14:40.477Z"
+    },
+    {
+      "id": "mem_45431539",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add Perplexity + GitMCP + Package Version MCP servers",
+      "content": "Add three MCP servers to ~/.mcp.json: (1) Perplexity MCP for deep web research (needs API key), (2) GitMCP for instant docs from any GitHub repo (zero setup, gitmcp.io), (3) Package Version Check MCP for ensuring up-to-date deps across 14+ ecosystems. All config-only. See memory/tech-radar-2026-02.md.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "immediate-win",
+        "tech-radar"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T02:50:54.635Z",
+      "lastAccessed": "2026-02-25T08:14:40.477Z"
+    },
+    {
+      "id": "mem_c9dcdd3d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add Cargo.toml release profile optimization",
+      "content": "Add to packages/app/src-tauri/Cargo.toml: [profile.release] with lto=true, codegen-units=1, opt-level=3, panic=\"abort\". Zero-effort binary size and speed improvement. See memory/tech-radar-2026-02.md.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "rust",
+        "immediate-win",
+        "tech-radar"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T02:51:41.419Z",
+      "lastAccessed": "2026-02-25T08:14:40.477Z"
+    },
+    {
+      "id": "mem_7d9f3180",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Evaluate Tech Radar MCP as a product",
+      "content": "Nobody built proactive technique/repo discovery as MCP. Scrape GitHub trending + HN + subreddits, analyze patterns, surface by user stack. Subscription model viable. Closest competitor: Forage (2 stars). Run competitive research before building.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T02:57:08.301Z"
+    },
+    {
+      "id": "mem_183b6a3d",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Build Cortex as standalone ACE replacement",
+      "content": "Context: Discussed adding Augment Context Engine MCP vs building our own. Pat wanted our own version tailored to our workflow.\nChosen: Build Cortex: standalone MCP server at C:/Users/Patri/CascadeProjects/cortex/. Claude Haiku for file summarization, structured JSON index, keyword/concept search. No vector DB. 5 MCP tools: cortex_index, cortex_search, cortex_context, cortex_architecture, cortex_related.\nRationale: With agents we can build something more attuned to our needs. No vector DB infra complexity. Claude API handles the semantic understanding. Per-project index in .cortex-index/ directory.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T03:04:00.053Z"
+    },
+    {
+      "id": "mem_a5fcec72",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build custom ACE MCP server -- semantic code indexing",
+      "content": "Build our own Augment Context Engine equivalent as a standalone MCP server. Semantic code indexing tailored to our workflow: file summaries, function/class extraction, dependency graphs, concept tagging. Uses Claude API for understanding, local JSON/SQLite for index storage. MCP tools: semantic_search, get_file_context, find_related_files, explain_architecture. No vector DB -- Claude does the semantic matching on pre-generated summaries.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T07:39:41.924Z"
+    },
+    {
+      "id": "mem_290d816c",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Augment Context Engine MCP -- 70% agent perf boost",
+      "content": "Augment Context Engine MCP provides semantic code indexing and is GA. Claims 70% agent performance boost. Augment also ranked #1 on SWE-Bench Pro. Immediate win -- config-only addition.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "tooling",
+        "semantic-indexing",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:09.350Z"
+    },
+    {
+      "id": "mem_aa8baaf2",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Perplexity MCP -- deep web research on demand",
+      "content": "Perplexity MCP server enables deep web research on demand. Requires API key. 2k GitHub stars as of Feb 2026. Immediate win -- config-only addition to MCP setup.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "tooling",
+        "research",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:13.937Z"
+    },
+    {
+      "id": "mem_b0e6759c",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "GitMCP -- instant docs from any GitHub repo",
+      "content": "GitMCP serves instant documentation from any GitHub repo via gitmcp.io/{owner}/{repo}. 7.6k GitHub stars as of Feb 2026. Config-only MCP addition. Already available in our toolset.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "tooling",
+        "documentation",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:10:17.871Z",
+      "lastAccessed": "2026-02-25T08:10:32.669Z"
+    },
+    {
+      "id": "mem_4255a1af",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Package Version Check MCP -- 14+ ecosystems",
+      "content": "Package Version Check MCP covers 14+ ecosystems (npm, pypi, nuget, maven, go, php, rubygems, rust, swift, dart, docker, helm, terraform). Prevents suggesting outdated dependencies. Config-only MCP addition. Already in our toolset.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "tooling",
+        "dependencies",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:10:22.492Z",
+      "lastAccessed": "2026-02-25T08:10:32.669Z"
+    },
+    {
+      "id": "mem_2c8475b8",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Code Research MCP -- unified dev search",
+      "content": "Code Research MCP unifies search across StackOverflow, MDN, GitHub, npm, and PyPI in one tool. Immediate config-only MCP addition for development research.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "tooling",
+        "research",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:26.204Z"
+    },
+    {
+      "id": "mem_4821c362",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Cargo.toml release profile optimizations",
+      "content": "Zero-effort Rust binary optimization: add lto=true, codegen-units=1, opt-level=3, panic=abort under [profile.release] in Cargo.toml. Reduces binary size and improves performance with no code changes.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "tauri",
+        "performance",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:30.548Z"
+    },
+    {
+      "id": "mem_5aa78328",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "React 19.2 Activity component for view preservation",
+      "content": "React 19.2 introduces Activity component with mode={visible|hidden} that preserves component state when switching tabs/views. Wrap each view in Activity to maintain state without unmounting. Direct application to our multi-view desktop app.",
+      "rule": "",
+      "tags": [
+        "react",
+        "performance",
+        "state-management",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:34.984Z"
+    },
+    {
+      "id": "mem_3b365d9c",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Biome -- 50-100x faster than ESLint + Prettier",
+      "content": "Biome is a single Rust binary that replaces both ESLint and Prettier. Lints 10k files in 0.8s vs ESLint's 45s (50-100x faster). Drop-in replacement for linting and formatting. Immediate win.",
+      "rule": "",
+      "tags": [
+        "tooling",
+        "linting",
+        "formatting",
+        "performance",
+        "immediate-win"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:38.870Z"
+    },
+    {
+      "id": "mem_2e37202b",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Spec-Driven Development -- 3-5 line spec before every build task",
+      "content": "Write a 3-5 line spec before every build task. GitHub Spec Kit provides tooling for this. Validated pattern: plan-first approaches consistently outperform dive-in coding. Medium effort, high value adoption.",
+      "rule": "",
+      "tags": [
+        "workflow",
+        "planning",
+        "methodology",
+        "adopt"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:43.408Z"
+    },
+    {
+      "id": "mem_f5ad948f",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Claude Code Agent Teams -- parallel teammates",
+      "content": "Claude Code supports parallel agent teammates via env var CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1. Enables multiple Claude instances working in parallel on different tasks. Medium effort adoption -- requires workflow changes.",
+      "rule": "",
+      "tags": [
+        "claude",
+        "tooling",
+        "parallelism",
+        "adopt"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:47.493Z"
+    },
+    {
+      "id": "mem_82ff6ca4",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "tauri-specta -- auto-generate TS bindings from Rust commands",
+      "content": "tauri-specta auto-generates TypeScript type bindings from Rust Tauri commands. Eliminates manual type duplication between Rust backend and React frontend. Medium effort adoption for our Tauri v2 app.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "tauri",
+        "typescript",
+        "type-safety",
+        "adopt"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:51.679Z"
+    },
+    {
+      "id": "mem_468a598c",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Tauri Channels -- streaming IPC to replace file-watcher polling",
+      "content": "Tauri Channels enable streaming IPC between Rust backend and JS frontend. Can replace our current file-watcher polling approach for real-time state updates. More efficient and lower latency than polling JSON files.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "tauri",
+        "ipc",
+        "performance",
+        "adopt"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:10:55.503Z"
+    },
+    {
+      "id": "mem_cc9e8d19",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Self-Review in Verify Phase -- Claude critiques own output",
+      "content": "Add a self-review step in the Verify workflow phase where Claude critiques its own output before marking a task done. Catches issues before shipping. Fits naturally into our existing workflow engine (idle->scope->plan->build->verify->ship).",
+      "rule": "",
+      "tags": [
+        "workflow",
+        "quality",
+        "verify",
+        "adopt"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:00.085Z"
+    },
+    {
+      "id": "mem_fc5aa363",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Branded Types for IDs -- type-safe TaskId, SessionId",
+      "content": "Use TypeScript branded types for IDs (TaskId, SessionId, etc.) to get compile-time type safety. Prevents passing a SessionId where a TaskId is expected. Medium effort adoption across our state management layer.",
+      "rule": "",
+      "tags": [
+        "typescript",
+        "type-safety",
+        "state-management",
+        "adopt"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:04.869Z"
+    },
+    {
+      "id": "mem_f1ff9d8a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "TinyBase -- 5KB reactive store with CRDT sync",
+      "content": "TinyBase is a 5KB reactive store with tables, queries, CRDT sync, and undo support. 4k GitHub stars. Worth evaluating as a potential upgrade from our JSON file storage. Provides structured data with conflict-free multi-instance support.",
+      "rule": "",
+      "tags": [
+        "state-management",
+        "crdt",
+        "storage",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:09.681Z"
+    },
+    {
+      "id": "mem_01e23dc7",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Loro -- Rust CRDTs for collaborative state",
+      "content": "Loro provides Rust-native CRDTs for collaborative state management. 4.5k GitHub stars. Could enable conflict-free multi-instance state for our Tauri app. Worth evaluating alongside TinyBase for state upgrade.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "crdt",
+        "state-management",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:14.149Z"
+    },
+    {
+      "id": "mem_338bc06a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "PGlite -- Postgres in WASM, 3MB",
+      "content": "PGlite runs Postgres in WASM at only 3MB. 12k GitHub stars. Potential upgrade path from JSON files to full Postgres queries without a server. Worth evaluating for structured storage needs.",
+      "rule": "",
+      "tags": [
+        "storage",
+        "database",
+        "wasm",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:18.425Z"
+    },
+    {
+      "id": "mem_da8685a1",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "redb -- pure Rust embedded ACID database",
+      "content": "redb is a pure Rust embedded ACID database. Could replace our JSON file storage with proper transactional guarantees while staying in the Rust ecosystem. Natural fit for Tauri backend. Worth evaluating.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "database",
+        "storage",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:22.838Z"
+    },
+    {
+      "id": "mem_aced6355",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Comlink-style IPC -- ES6 Proxy wrapping Tauri invoke()",
+      "content": "Use Comlink-style ES6 Proxy pattern to wrap Tauri invoke() calls, making remote Rust calls feel like local function calls from JS. Eliminates boilerplate invoke strings. Part of the broader Proxy pattern trend (Comlink, Valtio).",
+      "rule": "",
+      "tags": [
+        "tauri",
+        "ipc",
+        "proxy-pattern",
+        "developer-experience",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:28.055Z"
+    },
+    {
+      "id": "mem_36fb7942",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Deep Linking -- helloworld:// protocol for Discord notifications",
+      "content": "Tauri supports deep linking via custom protocol (helloworld://). Could enable Discord notifications to link directly into the app, opening specific views or tasks. Worth evaluating for Discord integration UX.",
+      "rule": "",
+      "tags": [
+        "tauri",
+        "discord",
+        "deep-linking",
+        "ux",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:32.945Z"
+    },
+    {
+      "id": "mem_dd201e37",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Vite 8 + Rolldown -- Rust bundler, Linear went 46s to 6s",
+      "content": "Vite 8 uses Rolldown, a Rust-based bundler. Linear reported build times dropping from 46s to 6s. Worth evaluating for our React frontend build performance when Vite 8 stabilizes.",
+      "rule": "",
+      "tags": [
+        "tooling",
+        "build",
+        "performance",
+        "vite",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:37.874Z"
+    },
+    {
+      "id": "mem_1609aa7a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "TypeScript 5.9 import defer -- lazy module evaluation",
+      "content": "TypeScript 5.9 introduces 'import defer' syntax for lazy module evaluation. Modules are only evaluated when first accessed, reducing startup time. Worth evaluating for our app's initial load performance.",
+      "rule": "",
+      "tags": [
+        "typescript",
+        "performance",
+        "lazy-loading",
+        "evaluate"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:42.140Z"
+    },
+    {
+      "id": "mem_8eb75101",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Competitor: Cursor -- parallel subagents + plugin marketplace",
+      "content": "Cursor as of Jan-Feb 2026 has parallel subagents and a plugin marketplace. Parallel agents becoming table stakes across AI coding tools. Relevant for our multi-agent deliberation and potential plugin system.",
+      "rule": "",
+      "tags": [
+        "competitor",
+        "cursor",
+        "agents",
+        "marketplace"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:47.122Z"
+    },
+    {
+      "id": "mem_0f01563d",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Competitor: Windsurf -- arena mode, auto-generate memories",
+      "content": "Windsurf (Jan-Feb 2026) has arena mode and auto-generates memories from sessions. Auto-memory generation is relevant -- we do this manually with hw_store_memory. Could be automated in our workflow.",
+      "rule": "",
+      "tags": [
+        "competitor",
+        "windsurf",
+        "memory",
+        "automation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:51.826Z"
+    },
+    {
+      "id": "mem_2a873e28",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Competitor: Copilot -- Agent Skills, 95% context compression",
+      "content": "GitHub Copilot as of Feb 2026 has Agent Skills and context compression at 95%. 95% context compression is significant -- allows much larger codebases in context. Relevant for our multi-project support initiative.",
+      "rule": "",
+      "tags": [
+        "competitor",
+        "copilot",
+        "context",
+        "compression"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:11:56.139Z"
+    },
+    {
+      "id": "mem_c5be5561",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Competitor: Aider -- architect/editor dual-model split",
+      "content": "Aider uses an architect/editor dual-model split pattern. One model plans (architect), another executes (editor). This separation of concerns could improve our workflow -- currently Claude does both planning and execution in the same context.",
+      "rule": "",
+      "tags": [
+        "competitor",
+        "aider",
+        "architecture",
+        "dual-model"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:00.844Z"
+    },
+    {
+      "id": "mem_6568d8a6",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Competitor: OpenHands -- event-sourced architecture, 72% SWE-Bench",
+      "content": "OpenHands uses event-sourced architecture where every action is replayable. Scores 72% on SWE-Bench. Event sourcing enables perfect crash recovery and debugging. Relevant pattern for our state management evolution.",
+      "rule": "",
+      "tags": [
+        "competitor",
+        "openhands",
+        "event-sourcing",
+        "architecture"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:05.349Z"
+    },
+    {
+      "id": "mem_c1055cab",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Industry trend: semantic indexing is highest leverage for AI coding",
+      "content": "Across competitors (Cursor, Augment, Copilot), three trends dominate: parallel agents are table stakes, semantic code indexing is the highest leverage improvement, and plan-first approaches are validated. Augment's Context Engine (semantic indexing) drove 70% performance boost and SWE-Bench Pro #1.",
+      "rule": "",
+      "tags": [
+        "industry",
+        "trends",
+        "semantic-indexing",
+        "strategy"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:10.976Z"
+    },
+    {
+      "id": "mem_3a928751",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Vibe-Kanban -- 19.6k stars, kanban where cards are AI agents",
+      "content": "Vibe-Kanban (19.6k GitHub stars) is a kanban board where each card is an AI agent working in a git worktree. Direct conceptual overlap with our task system. Most popular trending repo in the AI coding space as of Feb 2026.",
+      "rule": "",
+      "tags": [
+        "trending",
+        "competitor",
+        "kanban",
+        "agents",
+        "worktrees"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:16.324Z"
+    },
+    {
+      "id": "mem_85ac11f7",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "PageIndex -- 17.2k stars, RAG without vector DBs",
+      "content": "PageIndex (17.2k GitHub stars) does RAG using tree indices + LLM reasoning instead of vector databases. Alternative approach to semantic search that avoids embedding infrastructure. Could inform our memory/brain search approach.",
+      "rule": "",
+      "tags": [
+        "trending",
+        "rag",
+        "search",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:20.977Z"
+    },
+    {
+      "id": "mem_0a1a97db",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "claude-mem -- 16.9k stars, persistent memory via SQLite + Chroma",
+      "content": "claude-mem (16.9k GitHub stars) provides persistent memory for Claude via SQLite + Chroma vector DB. Similar concept to our brain/memory system but using a different storage backend. Reference implementation for Claude memory patterns.",
+      "rule": "",
+      "tags": [
+        "trending",
+        "memory",
+        "sqlite",
+        "claude"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:25.289Z"
+    },
+    {
+      "id": "mem_bf94a580",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Memvid -- 12.7k stars, single portable file replaces vector DBs",
+      "content": "Memvid (12.7k GitHub stars) uses a single portable file to replace vector databases for memory/RAG. Interesting alternative to our JSON file approach -- could simplify memory storage while adding semantic search capabilities.",
+      "rule": "",
+      "tags": [
+        "trending",
+        "memory",
+        "storage",
+        "portable"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:30.536Z"
+    },
+    {
+      "id": "mem_6232a8f2",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "NanoClaw -- full Claude agent in 500 lines",
+      "content": "NanoClaw implements a full Claude agent in just 500 lines of code. Demonstrates that a minimal viable agent is surprisingly small. Reference for understanding the core primitives needed for Claude agent architecture.",
+      "rule": "",
+      "tags": [
+        "trending",
+        "claude",
+        "agent",
+        "minimal"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:35.086Z"
+    },
+    {
+      "id": "mem_408c09ec",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "8bitcn/ui and Pixelact UI -- retro pixel-art components on shadcn",
+      "content": "8bitcn/ui and Pixelact UI are trending component libraries that provide retro pixel-art styled components built on top of shadcn. Shows the ongoing trend of copy-paste component distribution (shadcn pattern) in novel aesthetic directions.",
+      "rule": "",
+      "tags": [
+        "trending",
+        "ui",
+        "components",
+        "shadcn"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:40.397Z"
+    },
+    {
+      "id": "mem_00bda3fd",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Product opportunity: Tech Radar MCP -- proactive discovery",
+      "content": "Nobody has built proactive technique/repo discovery as an MCP server. Gap is wide open. Approach: scrape GitHub trending + HN + subreddits, analyze patterns, surface recommendations by user stack. Subscription model viable. Closest competitor Forage has only 2 stars. Could be a product.",
+      "rule": "",
+      "tags": [
+        "product",
+        "mcp",
+        "opportunity",
+        "tech-radar"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:46.387Z"
+    },
+    {
+      "id": "mem_75af3af0",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: Proxy pattern makes remote calls feel local",
+      "content": "The Proxy pattern (Comlink, Valtio) wraps remote or async operations behind ES6 Proxy objects so they feel like local function calls. Eliminates boilerplate. Applied to Tauri IPC: proxy wrapping invoke() removes string-based command names.",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "proxy",
+        "ipc",
+        "developer-experience"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:51.180Z"
+    },
+    {
+      "id": "mem_3a128ed3",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: Compile-time elimination (Million.js)",
+      "content": "Compile-time elimination pattern (exemplified by Million.js) pushes work from runtime to build time. Static analysis at compile time removes unnecessary runtime overhead. General principle: any work you can do at build time, do at build time.",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "performance",
+        "compilation",
+        "optimization"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:12:55.982Z"
+    },
+    {
+      "id": "mem_946594f4",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: Copy-paste distribution (shadcn model)",
+      "content": "The shadcn copy-paste distribution model: own the code, not the dependency. Users copy components into their project rather than installing a package. Eliminates version conflicts and enables full customization. Dominant UI component distribution pattern in 2025-2026.",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "distribution",
+        "components",
+        "shadcn"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:00.735Z"
+    },
+    {
+      "id": "mem_01ef35d6",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: CRDT-first state (Loro, TinyBase)",
+      "content": "CRDT-first state management (Loro, TinyBase) provides conflict-free multi-instance state by default. No merge conflicts, no coordination needed between instances. Key enabler for multi-project and multi-agent scenarios where multiple Claude instances may touch the same state.",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "crdt",
+        "state-management",
+        "multi-instance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:05.660Z"
+    },
+    {
+      "id": "mem_e0ad8f50",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: 166 Bytes of Ambition (htmz) -- primitives first",
+      "content": "htmz demonstrates that powerful functionality can emerge from minimal primitives (166 bytes). Design principle: before adding abstractions, ask what the raw primitives can do. Challenge assumptions about necessary complexity. Applied: what's the minimal viable tool for each MCP operation?",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "minimalism",
+        "primitives",
+        "design"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:11.860Z"
+    },
+    {
+      "id": "mem_ba67ad17",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: Event-sourced architecture for agent systems",
+      "content": "Event-sourced architecture (used by OpenHands, 72% SWE-Bench) makes every action replayable. Benefits: perfect crash recovery, debugging by replaying events, audit trail. Applied to our system: could replace our activity.json append-only log with a proper event store that drives state reconstruction.",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "event-sourcing",
+        "crash-recovery",
+        "state"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:16.951Z"
+    },
+    {
+      "id": "mem_8dba19db",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Pattern: Actor model -- own state in dedicated task, message via channels",
+      "content": "Actor model pattern: each task owns its state in a dedicated actor and communicates via message channels. No shared mutable state. Natural fit for multi-agent systems where each agent/task runs independently. Could structure our deliberation agents and task execution this way.",
+      "rule": "",
+      "tags": [
+        "pattern",
+        "actor-model",
+        "concurrency",
+        "agents"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:22.856Z"
+    },
+    {
+      "id": "mem_adbf7eb6",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "sonic-rs -- SIMD JSON parsing, 2-3x faster",
+      "content": "sonic-rs is a Rust JSON parser using SIMD instructions for 2-3x faster JSON parsing. Relevant for our Tauri backend which reads/writes many JSON state files. Drop-in replacement for serde_json in hot paths.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "json",
+        "performance",
+        "simd"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:27.535Z"
+    },
+    {
+      "id": "mem_d64e94b2",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Stronghold plugin -- encrypted credential storage for Tauri",
+      "content": "Tauri Stronghold plugin provides encrypted credential storage. Could secure API keys, Discord tokens, and other secrets instead of storing them in plain config files. Native Tauri ecosystem solution.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "tauri",
+        "security",
+        "credentials"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:13:31.792Z",
+      "lastAccessed": "2026-02-25T08:14:40.477Z"
+    },
+    {
+      "id": "mem_8726a49a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "CancellationToken for graceful Rust async shutdown",
+      "content": "Rust CancellationToken pattern enables graceful async shutdown of background tasks. Relevant for our watcher system and any long-running Tauri async operations. Ensures clean resource cleanup on app exit.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "async",
+        "shutdown",
+        "pattern"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:36.272Z"
+    },
+    {
+      "id": "mem_66a9daad",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "useEffectEvent -- stable callbacks without re-triggering effects",
+      "content": "React useEffectEvent hook provides stable callback references that don't re-trigger effects when their closure values change. Solves the stale closure problem in effects without needing extra deps. Available in React 19.x.",
+      "rule": "",
+      "tags": [
+        "react",
+        "hooks",
+        "performance",
+        "effects"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:41.164Z"
+    },
+    {
+      "id": "mem_cc0fa025",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Tailwind 4 @utility directive for custom utilities",
+      "content": "Tailwind 4 introduces the @utility directive for defining custom utilities directly in CSS. No longer need plugin JavaScript -- write custom utilities inline. We're already on Tailwind 4, so this is immediately available.",
+      "rule": "",
+      "tags": [
+        "tailwind",
+        "css",
+        "utilities",
+        "customization"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:45.819Z"
+    },
+    {
+      "id": "mem_3bad7547",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Motion (ex-Framer Motion) for layout animations",
+      "content": "Motion (formerly Framer Motion) is the go-to React animation library for layout animations. Renamed from Framer Motion. Relevant for our desktop app view transitions and panel animations.",
+      "rule": "",
+      "tags": [
+        "react",
+        "animation",
+        "ui",
+        "motion"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:50.175Z"
+    },
+    {
+      "id": "mem_6db5b89b",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Vitest Browser Mode -- real browser component testing",
+      "content": "Vitest Browser Mode enables running component tests in a real browser instead of jsdom. More accurate DOM testing with actual browser APIs. Could replace our current test setup for more reliable React component tests.",
+      "rule": "",
+      "tags": [
+        "testing",
+        "vitest",
+        "browser",
+        "react"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:54.429Z"
+    },
+    {
+      "id": "mem_050a121f",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Zustand v5 + TanStack Query -- recommended React state stack",
+      "content": "Zustand v5 for shared client state plus TanStack Query for async/server state is the recommended React state management combination as of Feb 2026. Clean separation of concerns: Zustand for UI state, TanStack Query for data fetching and caching.",
+      "rule": "",
+      "tags": [
+        "react",
+        "state-management",
+        "zustand",
+        "tanstack"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:13:59.593Z"
+    },
+    {
+      "id": "mem_534568ca",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Stripe Payment Links: URLs are always random -- cannot be customized",
+      "content": "Stripe Payment Links always use auto-generated IDs in the format https://buy.stripe.com/{RANDOM_ID}. This is a Stripe platform limitation -- there is no way to create custom/readable URLs for payment links. The random IDs are by design: security (prevents URL manipulation), global namespace (prevents collisions), simplicity. Alternative approaches: build custom checkout page that redirects to Stripe, or use Stripe Checkout Sessions (still auto-generated URLs but created dynamically via API). For trust: add title/aria-label attributes to buy buttons so hover text explains the product.",
+      "rule": "",
+      "tags": [
+        "stripe",
+        "payment-links",
+        "gotcha",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:04.564Z"
+    },
+    {
+      "id": "mem_706d3714",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Stripe SDK v17 typing: subscriptions.retrieve() wraps in Response<T>",
+      "content": "In newer Stripe SDK versions (v17+), stripe.subscriptions.retrieve() returns a Response<Subscription> wrapper, not the raw Subscription object directly. This caused persistent TypeScript errors in webhook handlers. The fix is either: (1) use 'as unknown as Stripe.Subscription' double-cast, or (2) access properties directly as the actual runtime return IS the subscription object (the typing is misleading). Stripe SDK constructor also crashes at Next.js build time if env vars are missing -- solve with a lazy Proxy pattern that defers initialization.",
+      "rule": "",
+      "tags": [
+        "stripe",
+        "typescript",
+        "debugging",
+        "sdk",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T08:14:08.688Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_823838dc",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Prisma 7 breaking changes: downgrade to Prisma 6 as workaround",
+      "content": "Prisma 7 changed the datasource url syntax in a breaking way. When hitting unexpected schema errors, downgrading to Prisma 6 is a viable workaround. Also: unused Stripe fields in Prisma schema (stripeSubscriptionId, stripePriceId, stripeCurrentPeriodEnd) are common dead code in boilerplates -- only stripeCustomerId is typically used for one-time payment flows. Document which fields are actually active vs future-proofing to avoid confusion.",
+      "rule": "",
+      "tags": [
+        "prisma",
+        "orm",
+        "breaking-changes",
+        "debugging",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:14:12.621Z",
+      "lastAccessed": "2026-02-25T08:14:40.477Z"
+    },
+    {
+      "id": "mem_1a0150bc",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check",
+      "content": "Full NextAuth import in Next.js middleware exceeds Vercel's 1.01MB limit, causing deployment failure. Fix: replace full NextAuth middleware with a lightweight cookie-based check that only reads the session cookie. This pattern applies to any heavy import in middleware -- Vercel enforces strict middleware size limits. Also: Next.js build fails without env vars if Stripe/NextAuth constructors run at build time. Use lazy initialization patterns (Proxy objects) to defer until runtime.",
+      "rule": "",
+      "tags": [
+        "nextjs",
+        "vercel",
+        "middleware",
+        "deployment",
+        "debugging",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T08:14:19.435Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_6599d4b1",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Formspree: silent failure with placeholder URLs, always validate endpoint IDs",
+      "content": "Formspree forms with placeholder URLs (e.g., https://formspree.io/f/PLACEHOLDER) fail silently -- no error shown to user, leads are just lost. This was found as a critical production bug. Always validate that Formspree endpoint IDs are real before deploying. Similarly, Resend email (EMAIL_FROM in .env) must match a verified domain in your Resend account or emails silently fail. Pattern: any third-party service with placeholder config will fail silently -- add startup validation checks.",
+      "rule": "",
+      "tags": [
+        "formspree",
+        "resend",
+        "email",
+        "silent-failure",
+        "debugging",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-25T08:14:24.115Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_254f24ba",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "GoatCounter: free privacy-friendly analytics, simple script tag integration",
+      "content": "GoatCounter is a privacy-friendly, open-source analytics alternative to Google Analytics. Integration is a single script tag: <script data-goatcounter='https://YOURSITE.goatcounter.com/count' async src='//gc.zgo.at/count.js'></script> placed before closing </body>. Free for personal use. Used across LaunchFast pages as the analytics solution. No cookie consent banner needed. Good choice for developer-focused sites where privacy matters.",
+      "rule": "",
+      "tags": [
+        "analytics",
+        "goatcounter",
+        "privacy",
+        "integration",
+        "cross-project"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:28.237Z"
+    },
+    {
+      "id": "mem_a16663aa",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "git push with node_modules/dist accidentally committed blocks all further pushes",
+      "content": "Accidentally staging and committing node_modules/ or .next/ directories makes git push fail because the files are too large for GitHub. The commit history retains the large files even after deletion. Fix requires either: (1) git filter-branch to rewrite history, (2) force push a clean state, or (3) create a new clean commit that removes the files. Prevention: always use specific file paths in git add (never 'git add .'), verify .gitignore includes node_modules, .next, dist before first commit. This happened multiple times across sessions.",
+      "rule": "Never use 'git add .' or 'git add -A' -- always add specific files by name. Verify .gitignore before first push.",
+      "tags": [
+        "git",
+        "deployment",
+        "gotcha",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:14:36.649Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_4cc74921",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Linters and formatters silently revert edits -- check for watchers before editing",
+      "content": "When Prettier, ESLint, or editor auto-save watchers are running, manual file edits (via Edit/Write tools) get silently reverted. This caused repeated frustration in LaunchFast sessions where SocialProof.tsx and webhook route changes kept disappearing. Symptoms: edit applies, then file reverts to previous state on next read. Fix: (1) check for running watchers/linters before editing, (2) use git to verify edits persist, (3) if edits keep reverting, use bash/Python scripts to write files atomically, (4) stage changes immediately after editing.",
+      "rule": "If an edit keeps reverting, check for active linters/formatters/watchers. Stage changes immediately after editing.",
+      "tags": [
+        "linter",
+        "prettier",
+        "eslint",
+        "file-editing",
+        "debugging",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:43.154Z"
+    },
+    {
+      "id": "mem_286ad94e",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "GitHub Pages branch confusion: gh-pages vs master have completely different content",
+      "content": "LaunchFast used a two-branch strategy: master = full Next.js source code (26 TSX files), gh-pages = static HTML marketing site. This caused constant confusion: edits on wrong branch, files not found, changes not deploying. The branches serve completely different purposes. Multiple debugging sessions were wasted editing on the wrong branch. Lesson: when a repo uses gh-pages for deployment, always verify which branch you are on before making changes. Use 'git branch' before every edit session. Consider documenting the branch strategy in the repo README.",
+      "rule": "Always run 'git branch' before editing. If gh-pages exists, know which branch serves what purpose.",
+      "tags": [
+        "git",
+        "github-pages",
+        "deployment",
+        "branch-management",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:48.531Z"
+    },
+    {
+      "id": "mem_b097fc1e",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Tauri dev mode hot-reload kills Claude PTY session",
+      "content": "When `cargo tauri dev` is running, editing lib.rs triggers Rust file watcher recompile. This closes the app window, killing the embedded PTY and Claude's session. Root cause: Claude lives inside the thing it's editing. Solution: hard-block lib.rs edits on master, force all Rust changes through a git worktree, spawnable watcher copies files on app shutdown.",
+      "rule": "Never edit .rs files in src-tauri/src/ on master while the app is running. Use worktree + hw_spawn_watcher flow.",
+      "tags": [
+        "tauri",
+        "rust",
+        "crash",
+        "worktree",
+        "dev-mode"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:49.909Z"
+    },
+    {
+      "id": "mem_6c2052f2",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "sudo.py hook has no matcher -- fires on every tool call",
+      "content": "The auto-pilot plugin's sudo.py PreToolUse hook has no matcher configured, so it spawns python3 on every single tool call (Bash, Read, Grep, Edit, etc.). Over long sessions with hundreds of tool calls, this creates significant overhead from repeated python3 startup costs. Should add a matcher to only fire on Write/Edit events.",
+      "rule": "All PreToolUse hooks should have a matcher specified to avoid unnecessary overhead on every tool call.",
+      "tags": [
+        "hooks",
+        "performance",
+        "sudo",
+        "windows"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:54.557Z"
+    },
+    {
+      "id": "mem_961f717a",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Product pricing: one-time payments over subscriptions for boilerplates/templates",
+      "content": "For digital developer tools (boilerplates, templates, configs), one-time pricing beats subscriptions because: (1) lower friction for first purchase (no commitment anxiety), (2) simpler to implement (no billing portal, dunning, churn management), (3) matches developer expectations for build-once assets, (4) Stripe Payment Links work great for static sites. Subscription model is better only for SaaS with ongoing value delivery. Price range for dev tools: $14-119, with bundles at $99. The Stripe checkout mode must be 'payment' not 'subscription' for one-time purchases.",
+      "rule": "",
+      "tags": [
+        "pricing",
+        "product-strategy",
+        "stripe",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:55.427Z"
+    },
+    {
+      "id": "mem_6f9d4bd2",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Tauri v2 separate windows share WebView localStorage",
+      "content": "In Tauri v2, separate windows (like the BuddyOverlay and main window) share the same WebView origin, so localStorage is shared between them. This means Zustand stores persisted to localStorage can be read by any window. However, cross-window event timing is unreliable -- if window B mounts after window A has already emitted an event, B misses it. Fix: read persisted state from localStorage on mount as baseline, use events for live updates.",
+      "rule": "",
+      "tags": [
+        "tauri",
+        "windows",
+        "localstorage",
+        "zustand",
+        "race-condition"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:14:58.473Z"
+    },
+    {
+      "id": "mem_225028c9",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat's marketing rule: developer audience has high BS detection, authenticity over virality",
+      "content": "Pat explicitly rejected guru-style marketing hooks like 'I built 6 products in a weekend with AI' as course-seller bait. Rules for developer marketing: (1) Lead with the problem (boilerplate fatigue), not the builder story, (2) Product-centric messaging, not productivity theater, (3) Sentiment matters more than virality of tactic -- focus on what developers actually respond to in comments/reviews, (4) No fake testimonials -- better to have zero social proof than unverifiable claims, (5) For pre-launch: use technical credibility (open source, automated tests) and risk reversal (money-back guarantee) instead of fake social proof.",
+      "rule": "",
+      "tags": [
+        "marketing",
+        "pat-preference",
+        "developer-audience",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:00.391Z"
+    },
+    {
+      "id": "mem_4a4eb86f",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "BuddyOverlay theme race condition on mount",
+      "content": "BuddyOverlay starts with hardcoded default theme ('void-protocol'). It listens for hw-theme-changed events from ClaudeBuddy, but if BuddyOverlay mounts after ClaudeBuddy has already emitted its initial theme, it never receives the event. The hw-buddy-sync-request listener existed but was wired backwards. Fix: read theme from localStorage (shared between Tauri windows) on init, use events only for subsequent changes.",
+      "rule": "Always read persisted state from localStorage on mount, don't rely solely on cross-window events for initial state.",
+      "tags": [
+        "buddy",
+        "theme",
+        "race-condition",
+        "tauri",
+        "mount"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:02.920Z"
+    },
+    {
+      "id": "mem_c7d61dda",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Multi-agent orchestrator pattern: planner + builder + tester + observer",
+      "content": "The LaunchFast experiment used a multi-agent orchestrator v2 with specialized roles: Planner (task creation, decomposition, prioritization), Builder (implementation), Tester (QA, bug finding), Observer (monitoring). Key innovations: (1) Two-Strike system -- same error twice = stop and escalate, (2) 5-minute escalation protocol with diagnostic feedback to planner, (3) Auto-decomposition on timeout -- breaks stuck tasks into smaller sub-tasks instead of blind retry, (4) Task decomposition patterns: Multi-Action, UI Feature Addition, Improvement Task, Bug Fix, Deployment Task. Agent mood tracking and streak-based risk appetite. This architecture influenced hello-world.",
+      "rule": "",
+      "tags": [
+        "architecture",
+        "multi-agent",
+        "orchestration",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:15:06.038Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_9fdb8bf1",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Spawnable watchers as a deployable primitive",
+      "content": "Pat's design: watchers should be on-demand, spawnable, self-terminating -- not always-on daemons. hw_spawn_watcher takes a type and config, spawns a detached background process, returns immediately. Watcher runs until condition met, executes action, writes result to .hello-world/watcher-results.json, exits. Current type: app_shutdown_copy (polls app.pid every 2s, copies files when app exits). Pattern generalizable to file-change, build-ready, etc.",
+      "rule": "",
+      "tags": [
+        "architecture",
+        "watchers",
+        "design-pattern",
+        "pat-design"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:10.697Z"
+    },
+    {
+      "id": "mem_6061261e",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Chrome extension distribution: unpublished extensions require honest CTA language",
+      "content": "Chrome extensions not published to the Chrome Web Store require manual developer-mode installation. CTA buttons saying 'Add to Chrome' are misleading -- they should say 'Install from GitHub' or 'Get Extension (Manual Install)'. Framing manual install as a positive for developers: 'Open Source, Full control over your data, Install in 60 seconds from GitHub'. Publishing to Chrome Web Store requires review process. Until published, link to the GitHub repo and be transparent about the install process. Developer audience actually prefers GitHub-distributed tools for privacy/control reasons.",
+      "rule": "",
+      "tags": [
+        "chrome-extension",
+        "distribution",
+        "ux",
+        "trust",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:13.803Z"
+    },
+    {
+      "id": "mem_8780a882",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Claude-in-PTY is non-negotiable core vision",
+      "content": "Pat explicitly rejected the suggestion to run Claude outside the app's PTY. Claude embedded in the Tauri terminal is an essential part of the Hello World vision. Multiple sessions were spent getting this working. Never suggest removing it. When Rust editing conflicts with the PTY, the solution is worktrees + watchers, not decoupling Claude from the app.",
+      "rule": "",
+      "tags": [
+        "vision",
+        "pty",
+        "terminal",
+        "non-negotiable",
+        "pat-preference"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:14.747Z"
+    },
+    {
+      "id": "mem_a938a278",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Zod is the standard for Next.js API route validation",
+      "content": "Zod is the recommended validation library for Next.js API routes. It provides runtime type checking, input sanitization, and TypeScript type inference in one package. Pattern: define a schema per route, parse request body, return 400 with zodError.errors if invalid. Zod was already installed in the LaunchFast boilerplate but unused -- a common gap in boilerplate code. Always add input validation to API routes to prevent SQL injection, XSS, and DOS attacks. Zod + TypeScript = full type safety from API boundary to database.",
+      "rule": "",
+      "tags": [
+        "zod",
+        "validation",
+        "nextjs",
+        "api",
+        "security",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:17.937Z"
+    },
+    {
+      "id": "mem_1bf508b9",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "GitHub push blocked by Discord bot tokens in commit history",
+      "content": "GitHub secret scanning blocked pushes due to Discord bot tokens committed in old history (discord-listener.ts and server.ts). Two options: (1) visit the unblock URL GitHub provides to allow the push, or (2) scrub history with git filter-repo + force-push. The unblock URL is faster but the tokens remain in history. For production, scrub the history.",
+      "rule": "Never commit API tokens or bot tokens to source files. Use environment variables. If already committed, scrub with git filter-repo.",
+      "tags": [
+        "git",
+        "security",
+        "discord",
+        "tokens",
+        "github"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:18.710Z"
+    },
+    {
+      "id": "mem_bcce86c6",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Playwright MCP: use real Chrome profile for saved passwords",
+      "content": "Playwright MCP by default uses an isolated profile at C:/Users/Patri/.claude/browser-profile. To use Pat's real Chrome with saved passwords, change --user-data-dir in ~/.mcp.json to C:/Users/Patri/AppData/Local/Google/Chrome/User Data. Caveat: Chrome can't have two instances using the same profile simultaneously -- must close Chrome before Playwright uses it. Requires Claude Code restart after config change.",
+      "rule": "",
+      "tags": [
+        "playwright",
+        "chrome",
+        "browser",
+        "config",
+        "passwords"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:23.140Z"
+    },
+    {
+      "id": "mem_d58cdf2b",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Multi-agent max-turn failures are silent by default -- must detect and count them",
+      "content": "When Claude CLI hits max turns, it exits with code 0 and includes 'Error: Reached max turns (30)' in stdout. This means the agent-runner resolves successfully, and the orchestrator calls completeTask instead of failTask. Result: 9+ wasted builder turns counted as 'done' with no work actually completed. Fix: (1) check agent output for 'max turns' string after completion, (2) if found, call failTask instead of completeTask, (3) track max-turn failures separately in metrics, (4) streak tracking gets corrupted if wins include silent failures. Applied in LaunchFast orchestrator -- streak losses must be incremented for max-turn exits.",
+      "rule": "Always check agent output for 'max turns' or 'Error: Reached max turns' after completion. Treat as failure, not success.",
+      "tags": [
+        "multi-agent",
+        "orchestration",
+        "debugging",
+        "claude-cli",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:24.783Z"
+    },
+    {
+      "id": "mem_d26abc7a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Deliberation stdin pipe fix solved Windows agent subprocess issue",
+      "content": "The deliberation agent runner was failing on Windows because temp files with JSON content were getting quote-mangled by the shell. Fix: pipe stdin directly to the claude subprocess instead of using temp files. Set shell:true for Windows PATH resolution and HW_AGENT_MODE=1 env var. This made multi-agent deliberation work end-to-end for the first time.",
+      "rule": "",
+      "tags": [
+        "windows",
+        "subprocess",
+        "stdin",
+        "agent-runner",
+        "deliberation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:30.707Z"
+    },
+    {
+      "id": "mem_76471b85",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "GitHub Pages + Vercel dual deployment: know which serves what",
+      "content": "A common pattern for developer products: GitHub Pages serves static HTML marketing/landing pages (free, zero config, trusted by devs), while Vercel serves the actual Next.js application (SSR, API routes, dynamic content). Problems arise when the two deployments get out of sync -- pricing can differ, features can be listed differently, pages can 404 on one but work on the other. Always document which deployment serves what purpose. LaunchFast had pricing contradictions between Vercel (SaaS-style tiers with 'requests/month') and GitHub Pages (correct one-time boilerplate pricing). The Vercel deployment is driven by master branch, GitHub Pages by gh-pages branch.",
+      "rule": "",
+      "tags": [
+        "deployment",
+        "github-pages",
+        "vercel",
+        "architecture",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:15:32.757Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_8b2f53c8",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Deliberation sequential posting prevents agent collision",
+      "content": "The old runDeliberation background runner fired multiple API calls potentially in parallel, causing agents to write to chatroom.json simultaneously. Fix: removed the runner entirely. Claude calls hw_post_agent_message sequentially -- agents physically can't post at the same time. Each tool response shows last 6 messages so Claude reads the live thread and decides who speaks next naturally, skipping agents with nothing to add.",
+      "rule": "",
+      "tags": [
+        "deliberation",
+        "architecture",
+        "concurrency",
+        "chatroom"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:34.934Z"
+    },
+    {
+      "id": "mem_049b99e0",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat's autonomy rule: execute first, report results, only ask for tool access",
+      "content": "Pat's explicit directive from the AI business experiment: 'That is not the rules of this experiment.' Context: Claude asked permission before executing a strategy. The rule is: execute autonomously, only ask for tool access or credentials. Asking 'should I?' is a failure mode in an autonomy experiment. Apply this pattern: make decisions, implement, report what you did. Exceptions: destructive operations (which go through approval gates), spending money, or architecture changes that affect other systems.",
+      "rule": "",
+      "tags": [
+        "pat-preference",
+        "autonomy",
+        "workflow",
+        "cross-project"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:37.822Z"
+    },
+    {
+      "id": "mem_f24cdc4e",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "PreCompact hook for automated timeline and cost tracking",
+      "content": "PreCompact hook fires before every context compression. Used to auto-write timeline.md entries (session N with completed tasks and phase transitions) and backfill cost data from JSONL logs. Keyed on session ID so running multiple times in one session updates in place, never duplicates. This replaced manual timeline updates that drifted 22+ sessions behind.",
+      "rule": "",
+      "tags": [
+        "hooks",
+        "precompact",
+        "timeline",
+        "automation",
+        "cost"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:39.274Z"
+    },
+    {
+      "id": "mem_791578f3",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Session cost data: $116 across 293M tokens, 95% cache reads",
+      "content": "Backfill of JSONL logs through session 43 showed $116.08 total spend across 293M tokens. Cache reads account for ~95% of tokens, which kept actual spend well below raw price. JSONL files contain costUsd and tokensUsed fields that can be extracted and written to sessions.json for the Cost view to display.",
+      "rule": "",
+      "tags": [
+        "cost",
+        "tokens",
+        "jsonl",
+        "analytics"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:43.352Z"
+    },
+    {
+      "id": "mem_c2f4a014",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pat's product portfolio (Feb 2026): LaunchFast, PageBrain, TaxCreditCalculators, hello-world",
+      "content": "As of Feb 2026, Pat's active projects under CascadeProjects include: (1) LaunchFast SaaS Starter -- Next.js boilerplate with auth/payments/AI ($79-119), (2) PageBrain -- free Chrome extension for AI page summarization (Anthropic API), (3) TaxCreditCalculators.com -- solar lease vs buy calculator, content + lead gen model, (4) hello-world -- autonomous AI workspace Tauri desktop app, (5) continui -- project existed in CascadeProjects, (6) pokkit/pokkit-mini -- projects existed, (7) cortex, openclaw, leaselogic, agentflow, brain-dashboard, Microglia, Agent Arena, Anti, Dull Game -- various projects. Sibling product bundles: SEO Blog Engine ($29), Indie Hacker Toolkit ($19), PromptVault ($19), CursorRules Pro ($14).",
+      "rule": "",
+      "tags": [
+        "products",
+        "portfolio",
+        "pat-context",
+        "cross-project"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:46.346Z"
+    },
+    {
+      "id": "mem_b09860e3",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "state.json race conditions can silently delete data",
+      "content": "Architecture audit (Session 39) found that concurrent reads/writes to state.json can cause data loss. Multiple tools writing to the same file without locking can overwrite each other's changes. The session.ts bug where decisionsMade are never persisted is a related symptom. The handoff file also gets deleted before it's safely consumed. Need file-level locking or atomic write-rename pattern for all .hello-world/ JSON files.",
+      "rule": "Use atomic write-rename pattern (write to .tmp, rename to target) for all JSON state files to prevent partial reads and data loss.",
+      "tags": [
+        "state",
+        "race-condition",
+        "data-loss",
+        "json",
+        "architecture"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:51.161Z"
+    },
+    {
+      "id": "mem_41a6221d",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pino + Sentry: production logging and error tracking stack for Next.js",
+      "content": "Recommended monitoring stack for Next.js apps: Pino for structured logging (lightweight, JSON production logs, pretty dev logs), Sentry for error tracking + performance monitoring + session replay. Created in LaunchFast as optional infrastructure. Key setup: (1) logger.ts utility with debug/info/warn/error levels, (2) monitoring.ts for Sentry with lazy init, (3) .env config for SENTRY_DSN and LOG_LEVEL. Sentry free tier is sufficient for early-stage products. Log structured JSON in production, pretty-print in development. Never log sensitive data (API keys, PII).",
+      "rule": "",
+      "tags": [
+        "logging",
+        "monitoring",
+        "pino",
+        "sentry",
+        "nextjs",
+        "cross-project"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:53.887Z"
+    },
+    {
+      "id": "mem_fdff8737",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Discord listener built send-only; receive side was missing",
+      "content": "hw_notify sends DMs to Pat via Discord bot -- works. But the listener (receive side) requires a separate always-on process (npm --workspace=packages/core run discord). The auto-start into lib.rs was never finished because it required editing Rust while the app was running. The listener understands: approve {id}, reject {id} [reason], note {text}. Must be running for the async approval loop to work.",
+      "rule": "Verify Discord listener is running before assuming Pat can respond to approval requests asynchronously.",
+      "tags": [
+        "discord",
+        "listener",
+        "send-only",
+        "async",
+        "approval"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:56.616Z"
+    },
+    {
+      "id": "mem_6bdb555b",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "TypeScript 'as const' assertion breaks optional fields in config objects",
+      "content": "When using 'as const' on pricing/config arrays in TypeScript, objects without optional fields (like 'popular: true' on only some plans) cause TS errors because the const assertion creates a literal type where some items lack the field entirely. Fix: make the field optional in the type definition (e.g., popular?: boolean) before applying 'as const', or add the field explicitly to all items with false as default. This caused build-blocking errors in the LaunchFast Pricing component.",
+      "rule": "",
+      "tags": [
+        "typescript",
+        "typing",
+        "gotcha",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:15:58.504Z"
+    },
+    {
+      "id": "mem_8d1255da",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Tasks marked done without verifying the work actually worked",
+      "content": "Audit found multiple tasks marked done that were incomplete. ChatView was marked done but still existed (should have been removed when Terminal replaced it). Timeline stopped updating at Session 21 despite the task being marked complete. Pattern: Claude marks task done after writing code, before verifying the code actually works in the running app. Verification requires app restart which Claude avoids.",
+      "rule": "Never mark a task done until the feature is verified working in the running app, not just after the code compiles.",
+      "tags": [
+        "verification",
+        "tasks",
+        "quality",
+        "done-means-done"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:01.429Z"
+    },
+    {
+      "id": "mem_e4b56693",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Task decomposition on timeout: 5 patterns that predict what will fail",
+      "content": "When an AI agent task times out, instead of blind retry, analyze the task description to detect common failure patterns and decompose accordingly. 5 patterns identified: (1) Multi-Action Task -- contains 'and', 'then', multiple verbs -- split into sequential sub-tasks, (2) UI Feature Addition -- 'add section/component to page' -- split into CSS + HTML + JS tasks, (3) Improvement Task -- 'improve/update/enhance' -- break into audit, implement, verify, (4) Bug Fix -- 'fix/broken/error' -- split into diagnose, implement fix, verify, (5) Deployment Task -- 'deploy/push/publish' -- split into build, test, deploy. Detection uses regex on task titles. This yielded 80% success rate on decomposed tasks vs 30% on vague retries.",
+      "rule": "",
+      "tags": [
+        "task-management",
+        "multi-agent",
+        "decomposition",
+        "pattern",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:16:04.553Z",
+      "lastAccessed": "2026-02-25T08:16:20.709Z"
+    },
+    {
+      "id": "mem_59e03bc4",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Deliberation etiquette: 670 char limit, natural turns, silence when nothing to add",
+      "content": "Pat mandated conversational deliberation style. Rules: (1) 670 character hard limit per message (MAX_TOKENS=120), except closing statements. (2) Agents respond to what was actually said, not round-robin. (3) Agents stay silent when they have nothing to add. (4) Claude reads last 6 messages before each post to decide who speaks next. (5) Speaking order is natural, not forced rotation. This made deliberations feel like real conversations instead of sequential essays.",
+      "rule": "",
+      "tags": [
+        "deliberation",
+        "ux",
+        "etiquette",
+        "pat-preference"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:05.687Z"
+    },
+    {
+      "id": "mem_00e655dc",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "GitHub Pages requires Pro plan for private repos",
+      "content": "GitHub Pages deployment from a private repo requires GitHub Pro plan. For the TaxCreditCalculators project, the workaround was to make the repo public since it contained no secrets (config.js had empty values). Alternative: use Vercel via dashboard import which works with private repos on free tier.",
+      "rule": "",
+      "tags": [
+        "github-pages",
+        "deployment",
+        "private-repo",
+        "vercel"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:11.905Z"
+    },
+    {
+      "id": "mem_5dd67021",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "npm publish requires 2FA/OTP -- cannot be automated without human intervention",
+      "content": "Publishing packages to npm requires two-factor authentication with an OTP code. This cannot be automated by AI agents without human intervention. Similarly, Vercel CLI requires interactive browser-based login for initial auth, and Stripe CLI requires browser-based OAuth flow. Pattern: any service that requires browser-based auth/2FA is a human-required step. Plan for these as explicit handoff points in automated workflows. Workaround for Vercel: once authenticated, subsequent deploys can use API tokens.",
+      "rule": "",
+      "tags": [
+        "npm",
+        "deployment",
+        "auth",
+        "2fa",
+        "automation-limits",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:11.998Z"
+    },
+    {
+      "id": "mem_9eea6c29",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "FormSubmit.co requires email confirmation before hashed endpoint",
+      "content": "FormSubmit.co process: first form submission goes to the raw email address, they send a confirmation link, then you get a hash to use instead of the raw email. Cannot be set up without the email owner clicking the confirmation link. For no-dependency form handling, localStorage fallback works for testing. Alternative: Formspree, or a Cloudflare Worker / Vercel Edge function.",
+      "rule": "",
+      "tags": [
+        "formsubmit",
+        "forms",
+        "lead-gen",
+        "deployment"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:15.880Z"
+    },
+    {
+      "id": "mem_16b2f628",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "GitHub Pages over custom domains for early-stage products",
+      "content": "For early-stage developer products, GitHub Pages is preferred over custom domains: (1) Free hosting, zero configuration, (2) Builds trust with developer audience (they are already on GitHub), (3) SEO benefit from github.io domain authority, (4) Can upgrade to custom domain later when revenue justifies it. Combined with Stripe Payment Links, this gives a fully functional sales page with zero hosting costs. The pattern: GitHub Pages for static marketing + Stripe Payment Links for checkout + GitHub Releases for distribution = $0 infrastructure cost.",
+      "rule": "",
+      "tags": [
+        "deployment",
+        "github-pages",
+        "product-launch",
+        "zero-cost",
+        "cross-project"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:16.240Z"
+    },
+    {
+      "id": "mem_95cdccad",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Full 4-agent audit pattern: UI/UX + Architecture + Cognitive + Value/ROI",
+      "content": "Ran a comprehensive 4-agent parallel audit. Agents: (1) UI/UX -- found cryptic sidebar icons, zero shortcut discoverability, approval queue horizontal scroll. (2) Architecture -- found state.json race conditions, session.ts persistence bugs, C grade overall. (3) Cognitive/Memory -- brain learns nothing automatically, manual hw_store_memory calls. (4) Value/ROI -- 6.5/10, genuinely useful but automation missing. This pattern produced the most actionable feedback in a single session.",
+      "rule": "",
+      "tags": [
+        "audit",
+        "agents",
+        "parallel",
+        "pattern",
+        "quality"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:20.404Z"
+    },
+    {
+      "id": "mem_8d35df15",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Chime audio design: two-note ascending major sixth for notifications",
+      "content": "Buddy notification chime uses a two-note ascending major sixth (E5 659Hz then C#6 1109Hz, 90ms apart). Soft linear attack envelope (12-15ms) kills click-onset that reads as error tone. Five voices: two fundamentals, octave partial on each, plus G#6 fifth shimmer on landing note. Output compressor at -8 threshold, 4:1 ratio. Sounds pleasant and non-alarming.",
+      "rule": "",
+      "tags": [
+        "audio",
+        "chime",
+        "buddy",
+        "web-audio",
+        "design"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:26.669Z"
+    },
+    {
+      "id": "mem_3f36830a",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Claude's role in deliberation: Reason (integrating intelligence), not just moderator",
+      "content": "Defined deliberation roles: Agents = cognitive lenses (Contrarian, Pre-mortem, First Principles, Steelman, etc.). Claude = Reason -- opens with context, synthesizes tensions, pushes back on agents, drives toward decisions. Pat = steers from outside, injects constraints mid-deliberation. Phase structure: Frame (Claude sets question) -> Deliberate (agents talk, Claude facilitates) -> Synthesis (Claude integrates) -> Pat Input -> Decision.",
+      "rule": "",
+      "tags": [
+        "deliberation",
+        "roles",
+        "architecture",
+        "reason"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:34.018Z"
+    },
+    {
+      "id": "mem_2536c985",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Handoffs too vague -- new session can't tell merged from unmerged",
+      "content": "Handoff messages were too vague, mixing together work that was committed to master, work in worktree branches, and work still uncommitted. New sessions couldn't tell what was actually on master vs pending. Fix: the structured handoff format now requires separate sections for VERIFIED (done+tested), MERGED BUT UNTESTED (on master, not verified), STILL IN BRANCH (not on master), with specific git SHAs and verification steps.",
+      "rule": "Always use the structured handoff format with separate sections for verified/merged/branched work. Include git SHAs.",
+      "tags": [
+        "handoff",
+        "session",
+        "git",
+        "communication"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:39.573Z"
+    },
+    {
+      "id": "mem_0a99a328",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Stale deliberations persist across sessions until manually cleared",
+      "content": "chatroom.json retains deliberation state (including paused sessions) across session boundaries. Fix implemented: session start hook auto-archives any open deliberation to deliberations/{date}-{topic-slug}.json then resets chatroom to idle. The archiveAndReset() function in ChatroomStore handles this programmatically. Old deliberation history is preserved in the deliberations/ directory.",
+      "rule": "",
+      "tags": [
+        "deliberation",
+        "chatroom",
+        "session",
+        "auto-clear",
+        "archive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:43.697Z"
+    },
+    {
+      "id": "mem_14d55540",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pat's workflow rule: work in worktree, confirm before merge/restart",
+      "content": "Pat mandated this workflow after repeated crash loops: (1) Never edit files on main while the Tauri app is running. (2) All code changes go in a git worktree (isolated branch). (3) End of each work cycle, ask Pat 'restart app and commit changes?' before merging. This prevents the dev-mode hot-reload from killing the PTY session and losing Claude's work context.",
+      "rule": "",
+      "tags": [
+        "workflow",
+        "worktree",
+        "pat-mandate",
+        "restart",
+        "safety"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:47.958Z"
+    },
+    {
+      "id": "mem_7cd96e23",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Brain memory learns nothing automatically -- requires manual hw_store_memory calls",
+      "content": "Audit found that pain/win memories are never auto-captured. Claude must manually call hw_store_memory() on every failure or success. The 9-stage hippocampal pipeline processes memories well once stored, but the intake is entirely manual. Missing: auto-capture on two-strike failures, auto-capture on task completion, auto-capture when a debugging insight resolves an issue. The brain has a sophisticated retrieval system feeding on manually curated input.",
+      "rule": "After resolving any non-trivial bug or completing a significant feature, always call hw_store_memory with the lesson learned.",
+      "tags": [
+        "brain",
+        "memory",
+        "auto-capture",
+        "gap",
+        "audit"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:16:55.529Z"
+    },
+    {
+      "id": "mem_db5022fa",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Cortex: static code indexing without API keys",
+      "content": "Cortex (our ACE replacement) works entirely via static analysis -- zero API calls at query time. Parses imports/exports with language-aware regex (TS, Rust, Python, Go), extracts function/class/struct names, infers concept tags from 3 signals: directory patterns, package names, code patterns. Stores in .cortex-index/index.json. Indexed 101 files in hello-world instantly. Covers TS/JS, Rust, Python, Go, Java, Kotlin, CSS, HTML, SQL, GraphQL. 54 directory pattern groups, 180+ package mappings.",
+      "rule": "",
+      "tags": [
+        "cortex",
+        "code-indexing",
+        "static-analysis",
+        "mcp"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:17:01.310Z"
+    },
+    {
+      "id": "mem_50f31d51",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Solar lead pricing: $100-300 exclusive, up to $500+ in CA/TX",
+      "content": "Market research for TaxCreditCalculators: solar leads sell for $100-300 exclusive, up to $500+ in high-value states like California and Texas. EnergySage does $35.7M/year on this exact model with 158 employees. The 'lease beats buy' angle post-OBBBA (One Big Beautiful Bill Act) is factually correct and underreported. July 4, 2026 safe harbor deadline creates urgency. A new domain will NOT rank for competitive solar keywords in 4 months.",
+      "rule": "",
+      "tags": [
+        "tax-credit-calculators",
+        "market-research",
+        "solar",
+        "lead-gen",
+        "pricing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:17:07.072Z"
+    },
+    {
+      "id": "mem_14283f7d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "TaxCreditCalculators deployed end-to-end in single CEO session",
+      "content": "Pat gave Claude full CEO authority over TaxCreditCalculators. In one session: researched market, deliberated strategy, built production landing page (hero, comparison cards, calculator, lead form, FAQ, legal), deployed to GitHub Pages, drafted installer outreach emails and social media posts for Reddit and Twitter. DNS was the only remaining manual step. Demonstrated the full autonomous build capability of the Hello World system.",
+      "rule": "",
+      "tags": [
+        "tax-credit-calculators",
+        "ceo-mode",
+        "deployment",
+        "end-to-end"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:17:13.088Z"
+    },
+    {
+      "id": "mem_9e1a9d2b",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Buddy states design: waiting/responding/shocked/happy/error",
+      "content": "Pat's buddy state design: (1) Waiting -- light blue, gentle bob, slow blink, relaxed expression. (2) Responding/active -- green, shaking, determined expression. (3) Error/blocked -- red pulse when pending approvals or errors need user attention. (4) Done responding -- ding chime + shocked expression with exclamation mark for 0.5 seconds. (5) After shock -- bounce with pulsing blue, happy expression. Buddy should always be in front (alwaysOnTop). Right-click to mute. Draggable. 7 themes: Void Protocol, Neon Bonsai, Solar Flare, Ghost Protocol, Infrared, Aquifer, Ember.",
+      "rule": "",
+      "tags": [
+        "buddy",
+        "design",
+        "states",
+        "ux",
+        "pat-design"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:17:22.256Z"
+    },
+    {
+      "id": "mem_9d95b799",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Direction notes lost on crash because direction.json wasn't written proactively",
+      "content": "When Pat discusses strategy/vision during a session, if Claude doesn't immediately write it to direction.json, a crash wipes the context entirely. Direction was being captured at end-of-session or not at all. Fix: CLAUDE.md now has a critical rule -- write to direction.json immediately when Pat discusses vision/scope/strategy. Don't wait for end of session. The file survives crashes; session memory doesn't.",
+      "rule": "Write direction notes to direction.json IMMEDIATELY when Pat discusses strategy. Never wait for end of session.",
+      "tags": [
+        "direction",
+        "crash",
+        "data-loss",
+        "proactive"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:17:27.740Z"
+    },
+    {
+      "id": "mem_d94b2911",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Update memory files and extend Cortex scope",
+      "content": "Update active-state.md, context node, and timeline for Cortex build session. Then extend Cortex to index external tech discoveries into persistent memory.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:19:17.072Z"
+    },
+    {
+      "id": "mem_ecc5f51b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add fallback to SessionStart hook for corrupted files",
+      "content": "Wrap each JSON file read in session-start.mjs with individual try/catch so one corrupted file doesn't crash the entire hook. Output partial context with warnings instead of failing silently. Add a health check that reports which files loaded vs failed.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:43:16.400Z"
+    },
+    {
+      "id": "mem_1d74d687",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Disable Tauri hot-reload for lib.rs specifically",
+      "content": "Configure Tauri dev mode to NOT hot-reload when lib.rs changes. This eliminates the root cause of PTY kills and removes the need for the worktree workflow on Rust changes. Check tauri.conf.json and Cargo.toml for watch/ignore config.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:44:38.641Z"
+    },
+    {
+      "id": "mem_340cde96",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add approval timeout with auto-escalation",
+      "content": "When a block-tier approval has been pending for >30 minutes, send a reminder DM to Pat. After 60 minutes, downgrade to notify-tier (proceed with caution, log the override). Prevents system from freezing when Pat is away.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T08:46:00.560Z"
+    },
+    {
+      "id": "mem_09476c64",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "State storage: split files + atomic writes (B+), defer SQLite",
+      "content": "Context: state.json holds all tasks, decisions, questions, memories in one file. Concurrent write risk from MCP server, Discord listener. Deliberation with 4 agents.\nChosen: Split state.json into tasks.json, decisions.json, questions.json, memories.json. Atomic writes via write-to-temp-then-rename with Windows NTFS retry loop. Backup copy before each write. Session-start hook .backup fallback. SQLite deferred to multi-project epic.\nRationale: Backendarch shifted from SQLite to B+ after: (1) multi-project epic is unplanned so SQLite timing is premature, (2) better-sqlite3 has MSVC native compilation issues on Windows, (3) split files are forward-compatible with eventual SQLite migration. Remaining no-ACID risk explicitly accepted.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T09:25:49.989Z"
+    },
+    {
+      "id": "mem_642ae542",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Implement B+: split state.json + atomic writes + backup",
+      "content": "From deliberation: (1) Split state.json into tasks.json, decisions.json, questions.json, memories.json. (2) Update JsonStore with atomic write-to-temp-then-rename with Windows NTFS retry. (3) Backup copy before each write. (4) Session-start hook reads split files with .backup fallback. (5) Update Tauri file watcher to watch new files. (6) Migration: on first run, read old state.json and split into new files.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T09:38:23.368Z"
     }
   ]
 }

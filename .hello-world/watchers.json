@@ -1,0 +1,204 @@
+{
+  "active": [
+    {
+      "id": "[copy] swift-lemur",
+      "type": "app_shutdown_copy",
+      "label": "split-state-rust",
+      "pid": 28340,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/split-state/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "split-state-rust",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-25T09:32:10.244Z",
+      "status": "active"
+    }
+  ],
+  "completed": [
+    {
+      "id": "w_rust20260222",
+      "type": "app_shutdown_copy",
+      "label": "Add get_direction, get_watchers, get_timeline to lib.rs",
+      "pid": 94911,
+      "spawnedAt": "2026-02-23T04:22:05.959Z",
+      "status": "completed",
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/rust-edits/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "Add get_direction, get_watchers, get_timeline to lib.rs",
+        "timeoutMinutes": 120
+      },
+      "completedAt": "2026-02-23T04:24:55.648Z",
+      "resultSummary": "Applied 1/1 file(s)"
+    },
+    {
+      "id": "w_cc55695a",
+      "type": "app_shutdown_copy",
+      "label": "direction-notes lib.rs + frontend",
+      "pid": 47168,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/direction-notes/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/direction-notes/packages/app/src/hooks/useTauriData.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/hooks/useTauriData.ts"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/direction-notes/packages/app/src/components/Dashboard.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/Dashboard.tsx"
+          }
+        ],
+        "label": "direction-notes lib.rs + frontend",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-23T04:29:35.858Z",
+      "status": "completed",
+      "completedAt": "2026-02-23T04:31:23.709Z",
+      "resultSummary": "Applied 3/3 file(s)"
+    },
+    {
+      "id": "w_6fb7d786",
+      "type": "app_shutdown_copy",
+      "label": "watcher names + hook slug",
+      "pid": 53264,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/watcher-names/packages/core/src/utils.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/utils.ts"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/watcher-names/packages/core/src/watchers/store.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/watchers/store.ts"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/watcher-names/.claude/hooks/user-prompt.mjs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/.claude/hooks/user-prompt.mjs"
+          }
+        ],
+        "label": "watcher names + hook slug",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-23T04:53:34.687Z",
+      "status": "completed",
+      "completedAt": "2026-02-23T04:54:24.764Z",
+      "resultSummary": "Applied 3/3 file(s)"
+    },
+    {
+      "id": "[copy] buddy-merge",
+      "type": "app_shutdown_copy",
+      "label": "claude-buddy merge on shutdown",
+      "pid": 44920,
+      "spawnedAt": "2026-02-23T05:30:00.000Z",
+      "status": "completed",
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/components/ClaudeBuddy.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/App.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/App.tsx"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/components/TerminalView.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/TerminalView.tsx"
+          }
+        ],
+        "label": "claude-buddy merge on shutdown",
+        "timeoutMinutes": 120
+      },
+      "completedAt": "2026-02-23T08:41:04.459Z",
+      "resultSummary": "Applied 3/3 file(s)"
+    },
+    {
+      "id": "[copy] sleepy-jackal",
+      "type": "app_shutdown_copy",
+      "label": "loopback-notify merge on shutdown",
+      "pid": 36776,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/core/src/mcp/server.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/mcp/server.ts"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/app/src/hooks/useTauriData.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/hooks/useTauriData.ts"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/app/src/components/ClaudeBuddy.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx"
+          }
+        ],
+        "label": "loopback-notify merge on shutdown",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-23T09:43:59.020Z",
+      "status": "completed",
+      "completedAt": "2026-02-23T09:47:55.863Z",
+      "resultSummary": "Applied 4/4 file(s)"
+    },
+    {
+      "id": "[copy] rusty-stoat",
+      "type": "app_shutdown_copy",
+      "label": "buddy-pty-feed merge on shutdown",
+      "pid": 30280,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/buddy-pty-feed/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/buddy-pty-feed/packages/app/src/components/ClaudeBuddy.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx"
+          }
+        ],
+        "label": "buddy-pty-feed merge on shutdown",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-23T11:22:38.423Z",
+      "status": "completed",
+      "completedAt": "2026-02-23T11:23:10.477Z",
+      "resultSummary": "Applied 2/2 file(s)"
+    },
+    {
+      "id": "[copy] rusty-ibis",
+      "type": "app_shutdown_copy",
+      "label": "[copy] chatroom-rust",
+      "pid": 29700,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/chatroom-deliberation/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "[copy] chatroom-rust",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-23T14:47:17.083Z",
+      "status": "completed",
+      "completedAt": "2026-02-23T14:49:11.128Z",
+      "resultSummary": "Applied 1/1 file(s)"
+    }
+  ]
+}

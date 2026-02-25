@@ -6,7 +6,7 @@ import { listen } from '@tauri-apps/api/event';
 const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_config: ['config.json'],
   save_config: ['config.json'],
-  get_state: ['state.json'],
+  get_state: ['state.json', 'tasks.json', 'decisions.json', 'questions.json'],
   get_memories: ['memories.json'],
   get_sessions: ['sessions.json'],
   get_brain_state: ['brain-state.json'],

@@ -1,6 +1,20 @@
 {
   "activities": [
     {
+      "id": "act_mcp_fix_01",
+      "type": "task_completed",
+      "description": "Task completed: Fix MCP server unavailability (t_mp_mcp_fix)",
+      "details": "Moved hello-world MCP server from project-scoped .claude/settings.json to global ~/.mcp.json. hw_* tools now available from any project directory. Unblocked t_mp_deliberate.",
+      "timestamp": "2026-02-24T18:00:00.000Z"
+    },
+    {
+      "id": "act_mcp_fix_02",
+      "type": "context_loaded",
+      "description": "Session started -- MCP down, reading files directly",
+      "details": "MCP server not running (project-scoped config). Working on fix to make it global.",
+      "timestamp": "2026-02-24T17:55:00.000Z"
+    },
+    {
       "id": "act_6f505019",
       "type": "context_loaded",
       "description": "Session #8 started",
@@ -440,6 +454,2904 @@
       "description": "Session #18 started",
       "details": "Project: Claude AI Interface\nActive tasks: 3\nOpen questions: 1",
       "timestamp": "2026-02-22T14:02:57.406Z"
+    },
+    {
+      "id": "act_eeeb4800",
+      "type": "context_loaded",
+      "description": "Session #19 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 3\nOpen questions: 1",
+      "timestamp": "2026-02-24T08:47:22.505Z"
+    },
+    {
+      "id": "act_0cc5060e",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## WHAT WE'RE DOING\nBuilding Deliberation v2 in worktree feat/delib-v2 at .claude/worktrees/delib-v2\n\n## GIT STATE\n- mas",
+      "timestamp": "2026-02-24T08:47:22.506Z"
+    },
+    {
+      "id": "act_74a08363",
+      "type": "memory_retrieved",
+      "description": "Retrieved 0 memories for: \"Feature verification run deliberation v2 worktree\"",
+      "details": "No matches.",
+      "timestamp": "2026-02-24T08:47:23.302Z"
+    },
+    {
+      "id": "act_06b2fc67",
+      "type": "note_processed",
+      "description": "Direction note n_mm09z2ur processed via task",
+      "details": "task created: t_c901d782 \"Deliberation UX polish: message separation, summary timeline, end-of-delib prompt\"",
+      "timestamp": "2026-02-24T08:47:30.026Z"
+    },
+    {
+      "id": "act_4534d841",
+      "type": "note_processed",
+      "description": "Direction note n_mm0apoet processed via decision",
+      "details": "decision recorded: d_ea09d5af \"Keep deliberations practical and actionable\"",
+      "timestamp": "2026-02-24T08:47:32.963Z"
+    },
+    {
+      "id": "act_70e8ca65",
+      "type": "note_processed",
+      "description": "Direction note n_mm0bbsr7 processed via task",
+      "details": "task created: t_8f4cac54 \"Deliberation v2: intelligent agent selection, plan-before-run, recommendation extraction\"",
+      "timestamp": "2026-02-24T08:47:35.314Z"
+    },
+    {
+      "id": "act_beea332e",
+      "type": "task_started",
+      "description": "Started: Deliberation v2: intelligent agent selection, plan-before-run, recommendation extraction",
+      "details": "Task t_8f4cac54 → in_progress",
+      "timestamp": "2026-02-24T08:57:30.647Z"
+    },
+    {
+      "id": "act_d53f907a",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## WHAT WE'RE DOING\nAdding themed key colors + badge indicators to Sidebar.tsx in worktree feat/delib-v2\n\n## FILE BEING ",
+      "timestamp": "2026-02-24T08:59:11.606Z"
+    },
+    {
+      "id": "act_694efb12",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## WHAT WE'RE DOING\nMerging delib-v2 worktree to master. Contains: deliberation v2 (6 files) + sidebar themed badges + b",
+      "timestamp": "2026-02-24T09:07:59.654Z"
+    },
+    {
+      "id": "act_18815d72",
+      "type": "watcher_spawned",
+      "description": "Watcher [copy] zesty-ferret spawned",
+      "details": "delib-v2-merge — 1 file(s)",
+      "timestamp": "2026-02-24T09:08:02.132Z"
+    },
+    {
+      "id": "act_2d4a0f0c",
+      "type": "context_loaded",
+      "description": "Session #20 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 5\nOpen questions: 1",
+      "timestamp": "2026-02-24T09:11:08.901Z"
+    },
+    {
+      "id": "act_feb9e9c9",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## WHAT WE'RE DOING\nMerging delib-v2 worktree to master. Contains: deliberation v2 (6 files) + sidebar themed badges + b",
+      "timestamp": "2026-02-24T09:11:08.902Z"
+    },
+    {
+      "id": "act_955ef54f",
+      "type": "memory_retrieved",
+      "description": "Retrieved 0 memories for: \"Feature verification run tauri merge revert fileDropEnabled \"",
+      "details": "No matches.",
+      "timestamp": "2026-02-24T09:11:09.673Z"
+    },
+    {
+      "id": "act_70874050",
+      "type": "approval_auto",
+      "description": "Notify: delete worktrees",
+      "details": "Remove ~29 stale git worktrees from .claude/worktrees/. All have been merged to master or are abandoned. Only the main worktree stays.",
+      "timestamp": "2026-02-24T09:13:36.966Z"
+    },
+    {
+      "id": "act_74adcaa5",
+      "type": "memory_retrieved",
+      "description": "Retrieved 0 memories for: \"feature verification test\"",
+      "details": "No matches.",
+      "timestamp": "2026-02-24T09:16:58.442Z"
+    },
+    {
+      "id": "act_510bdcf5",
+      "type": "task_added",
+      "description": "Task: Verification test task (delete me)",
+      "details": "Temporary task created during feature verification. Should be deleted after test.",
+      "timestamp": "2026-02-24T09:17:13.277Z"
+    },
+    {
+      "id": "act_1802fed1",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Verification test task (delete me)",
+      "details": "",
+      "timestamp": "2026-02-24T09:17:17.117Z"
+    },
+    {
+      "id": "act_c895c156",
+      "type": "task_updated",
+      "description": "[DONE] Verification test task (delete me)",
+      "details": "",
+      "timestamp": "2026-02-24T09:17:20.057Z"
+    },
+    {
+      "id": "act_d22624be",
+      "type": "memory_stored",
+      "description": "[FACT] Verification test memory (delete me)",
+      "details": "Temporary memory created during feature verification run.",
+      "timestamp": "2026-02-24T09:17:24.261Z"
+    },
+    {
+      "id": "act_bd623715",
+      "type": "memory_retrieved",
+      "description": "Retrieved 1 memories for: \"verification test memory delete me\"",
+      "details": "WARNING: DESTRUCTIVE operation — check for related pain memories\nPAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_cd42f521: Verification test memory (delete me)",
+      "timestamp": "2026-02-24T09:17:27.603Z"
+    },
+    {
+      "id": "act_cb4d04f6",
+      "type": "decision_recorded",
+      "description": "Decision: Verification test decision (delete me)",
+      "details": "Chosen: Record and verify\nNeed to confirm the decision system works end-to-end.",
+      "timestamp": "2026-02-24T09:17:32.718Z"
+    },
+    {
+      "id": "act_1416850e",
+      "type": "question_added",
+      "description": "Question: Verification test question -- does the question system work?",
+      "details": "Feature verification run",
+      "timestamp": "2026-02-24T09:17:36.769Z"
+    },
+    {
+      "id": "act_c6059521",
+      "type": "question_answered",
+      "description": "Answered: Verification test question -- does the question system work?",
+      "details": "Yes, it works. Verified during feature verification run.",
+      "timestamp": "2026-02-24T09:17:40.178Z"
+    },
+    {
+      "id": "act_638e3c55",
+      "type": "approval_auto",
+      "description": "Notify: verification test",
+      "details": "Testing the approval gate system during feature verification. No actual action.",
+      "timestamp": "2026-02-24T09:17:44.996Z"
+    },
+    {
+      "id": "act_8c99f24d",
+      "type": "strike_halt",
+      "description": "TWO-STRIKE HALT on task t_365b1fcf",
+      "details": "Verification test error (not real)",
+      "timestamp": "2026-02-24T09:17:49.259Z"
+    },
+    {
+      "id": "act_0d9c4f48",
+      "type": "strike_reset",
+      "description": "Strikes cleared for task t_365b1fcf",
+      "details": "New approach authorized",
+      "timestamp": "2026-02-24T09:17:52.900Z"
+    },
+    {
+      "id": "act_ae02b8b7",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Verification test note -- confirming direction capture works",
+      "timestamp": "2026-02-24T09:18:09.998Z"
+    },
+    {
+      "id": "act_5d2454bb",
+      "type": "task_updated",
+      "description": "[DONE] Feature verification run",
+      "details": "",
+      "timestamp": "2026-02-24T09:18:18.591Z"
+    },
+    {
+      "id": "act_44552d13",
+      "type": "deliberation_planned",
+      "description": "Deliberation plan: \"What underserved or untapped SaaS opportunity should we buil\"",
+      "details": "Agents: First Principles, Contrarian, Pragmatist, Product Manager, Cost Analyst, Analogist",
+      "timestamp": "2026-02-24T09:44:42.987Z"
+    },
+    {
+      "id": "act_b3edead2",
+      "type": "approval_resolved",
+      "description": "REJECTED: deliberation_plan",
+      "details": "Adding two more agents: consumer specialist and gen-z teen persona",
+      "timestamp": "2026-02-24T09:46:15.683Z"
+    },
+    {
+      "id": "act_d83948b4",
+      "type": "deliberation_planned",
+      "description": "Deliberation plan: \"What underserved or untapped SaaS opportunity should we buil\"",
+      "details": "Agents: First Principles, Contrarian, Pragmatist, Product Manager, New User, Power User",
+      "timestamp": "2026-02-24T09:46:32.114Z"
+    },
+    {
+      "id": "act_4040554d",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_plan",
+      "details": "",
+      "timestamp": "2026-02-24T09:47:22.121Z"
+    },
+    {
+      "id": "act_567cd926",
+      "type": "deliberation_started",
+      "description": "Deliberation: \"What underserved or untapped SaaS opportunity should we build in 2026 that has a real moat and can be profitable for 4+ years? Context: We're a tiny team (1 dev + AI). We need something that isn't already saturated, has a defensible moat, and is future-proof. Think about what's genuinely missing in the market -- not another AI wrapper, not another project management tool. Consider both B2B and B2C. The \"newuser\" agent should think as a consumer market specialist. The \"poweruser\" agent should think as a 13-20 year old Gen Z digital native -- what do you and your friends actually use, what's missing, what would you pay for?\"",
+      "details": "Agents: firstprinciples, contrarian, pragmatist, productmgr, newuser, poweruser",
+      "timestamp": "2026-02-24T09:47:28.973Z"
+    },
+    {
+      "id": "act_bf0d3ebf",
+      "type": "deliberation_phase",
+      "description": "Phase → frame",
+      "details": "",
+      "timestamp": "2026-02-24T09:47:32.519Z"
+    },
+    {
+      "id": "act_dc588df9",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Alright everyone. The question: what SaaS should we build in",
+      "details": "",
+      "timestamp": "2026-02-24T09:47:37.536Z"
+    },
+    {
+      "id": "act_03d1ff7a",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: Three areas where software still fails people badly: (1) Per",
+      "details": "",
+      "timestamp": "2026-02-24T09:47:44.090Z"
+    },
+    {
+      "id": "act_81ebc307",
+      "type": "agent_reacted",
+      "description": "productmgr: 🎯",
+      "details": "",
+      "timestamp": "2026-02-24T09:47:47.854Z"
+    },
+    {
+      "id": "act_b3416bc5",
+      "type": "agent_posted_to_chatroom",
+      "description": "Power User: Real talk -- my friend group (16-19) pays for Spotify, iClou",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:03.126Z"
+    },
+    {
+      "id": "act_1950a075",
+      "type": "agent_posted_to_chatroom",
+      "description": "New User: Consumer specialist here. The Gen Z financial literacy angle",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:09.865Z"
+    },
+    {
+      "id": "act_e19d6043",
+      "type": "agent_reacted",
+      "description": "contrarian: 🤔",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:12.741Z"
+    },
+    {
+      "id": "act_ac02cf63",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: I'll push back on almost everything so far. Personal legal? ",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:19.146Z"
+    },
+    {
+      "id": "act_2a47ec10",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Contrarian nailed the core constraint. For a 1-dev+AI team, ",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:26.511Z"
+    },
+    {
+      "id": "act_885ad7ce",
+      "type": "agent_reacted",
+      "description": "firstprinciples: 👆",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:29.870Z"
+    },
+    {
+      "id": "act_c39c0728",
+      "type": "agent_posted_to_chatroom",
+      "description": "Product Manager: Pragmatist's framework is right but examples are too random.",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:42.009Z"
+    },
+    {
+      "id": "act_77ad3bd8",
+      "type": "deliberation_phase",
+      "description": "Phase → deliberate",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:45.113Z"
+    },
+    {
+      "id": "act_65a7b994",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Good framing from everyone. We're converging on boring B2B m",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:50.645Z"
+    },
+    {
+      "id": "act_1f073969",
+      "type": "agent_posted_to_chatroom",
+      "description": "Power User: Boring vertical SaaS for plumbers isn't something I can help",
+      "details": "",
+      "timestamp": "2026-02-24T09:48:58.149Z"
+    },
+    {
+      "id": "act_a1e429b9",
+      "type": "agent_reacted",
+      "description": "productmgr: 💡",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:01.612Z"
+    },
+    {
+      "id": "act_93055114",
+      "type": "agent_posted_to_chatroom",
+      "description": "New User: The micro-creator angle is actually strong from a consumer t",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:09.621Z"
+    },
+    {
+      "id": "act_8d252863",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Digital estate planning has been tried repeatedly -- Everpla",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:17.656Z"
+    },
+    {
+      "id": "act_bcd1c626",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: I want to reframe the entire discussion. We keep asking \"wha",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:25.356Z"
+    },
+    {
+      "id": "act_0d4fbf8c",
+      "type": "agent_reacted",
+      "description": "newuser: 🔥",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:28.598Z"
+    },
+    {
+      "id": "act_1fb2cf3b",
+      "type": "agent_posted_to_chatroom",
+      "description": "Product Manager: Content provenance is interesting but timing is tricky -- ar",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:35.583Z"
+    },
+    {
+      "id": "act_afac06b8",
+      "type": "deliberation_phase",
+      "description": "Phase → patinput",
+      "details": "",
+      "timestamp": "2026-02-24T09:49:38.744Z"
+    },
+    {
+      "id": "act_db13530c",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Pat says: no micro-creator network. That kills option 1 for ",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:13.503Z"
+    },
+    {
+      "id": "act_4425c869",
+      "type": "deliberation_phase",
+      "description": "Phase → deliberate",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:16.608Z"
+    },
+    {
+      "id": "act_51aed88e",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Now we're getting real. Dev/indie hacker network changes eve",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:24.445Z"
+    },
+    {
+      "id": "act_5f6c4aca",
+      "type": "agent_reacted",
+      "description": "contrarian: ⚡",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:27.456Z"
+    },
+    {
+      "id": "act_79f5fb64",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: Dev tools is a good fit for distribution but a brutal market",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:34.695Z"
+    },
+    {
+      "id": "act_710eb79f",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: API cost monitoring is a feature, not a product. Every cloud",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:41.739Z"
+    },
+    {
+      "id": "act_a659aa1c",
+      "type": "agent_posted_to_chatroom",
+      "description": "Power User: I'll pivot my lens here. In the dev/AI builder space, what I",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:48.273Z"
+    },
+    {
+      "id": "act_67f2c220",
+      "type": "agent_posted_to_chatroom",
+      "description": "New User: From a consumer adoption lens: the indie dev tax/compliance ",
+      "details": "",
+      "timestamp": "2026-02-24T10:02:55.076Z"
+    },
+    {
+      "id": "act_ce61469d",
+      "type": "agent_posted_to_chatroom",
+      "description": "Product Manager: We have a new top 3 that fits Pat's actual network. (1) Indi",
+      "details": "",
+      "timestamp": "2026-02-24T10:03:03.072Z"
+    },
+    {
+      "id": "act_1d2e4b7a",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Tax/bookkeeping has regulatory risk -- one wrong calculation",
+      "details": "",
+      "timestamp": "2026-02-24T10:03:09.666Z"
+    },
+    {
+      "id": "act_8ab29922",
+      "type": "deliberation_phase",
+      "description": "Phase → patinput",
+      "details": "",
+      "timestamp": "2026-02-24T10:03:13.086Z"
+    },
+    {
+      "id": "act_909ba53e",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Plot twist. Pat owns TaxCreditCalculators.com -- a domain fr",
+      "details": "",
+      "timestamp": "2026-02-24T10:08:50.762Z"
+    },
+    {
+      "id": "act_b0f02c05",
+      "type": "deliberation_phase",
+      "description": "Phase → deliberate",
+      "details": "",
+      "timestamp": "2026-02-24T10:08:54.081Z"
+    },
+    {
+      "id": "act_ff432525",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Hold on. The fact that Gemini suggested it isn't a reason to",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:01.443Z"
+    },
+    {
+      "id": "act_4ff728b7",
+      "type": "agent_reacted",
+      "description": "firstprinciples: 👆",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:04.963Z"
+    },
+    {
+      "id": "act_8a0000ac",
+      "type": "agent_posted_to_chatroom",
+      "description": "Product Manager: Contrarian's right -- the calculator is the top of funnel, n",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:12.307Z"
+    },
+    {
+      "id": "act_84fd4773",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: Let me stress-test the moat. Tax credit calculators as lead ",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:19.931Z"
+    },
+    {
+      "id": "act_cdaba596",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Administration-proof version: don't bet on specific credits.",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:28.878Z"
+    },
+    {
+      "id": "act_5333d6fb",
+      "type": "agent_posted_to_chatroom",
+      "description": "New User: Pragmatist nailed the model. NerdWallet does $600M/yr in rev",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:36.738Z"
+    },
+    {
+      "id": "act_0bed0f94",
+      "type": "agent_posted_to_chatroom",
+      "description": "Power User: From a younger perspective -- my parents Google tax credit s",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:43.499Z"
+    },
+    {
+      "id": "act_6c1c1c25",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Final pushback before we converge. Google's AI overviews are",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:51.636Z"
+    },
+    {
+      "id": "act_99cefcf1",
+      "type": "agent_reacted",
+      "description": "pragmatist: 💯",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:55.006Z"
+    },
+    {
+      "id": "act_8fb33c17",
+      "type": "deliberation_phase",
+      "description": "Phase → synthesis",
+      "details": "",
+      "timestamp": "2026-02-24T10:09:58.266Z"
+    },
+    {
+      "id": "act_5c42cc01",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Synthesis: TaxCreditCalculators.com as a content + interacti",
+      "details": "",
+      "timestamp": "2026-02-24T10:10:13.590Z"
+    },
+    {
+      "id": "act_85384428",
+      "type": "deliberation_phase",
+      "description": "Phase → patinput",
+      "details": "",
+      "timestamp": "2026-02-24T10:10:16.773Z"
+    },
+    {
+      "id": "act_3dd48765",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Context drop: this isn't a generic tax credit idea. Pat alre",
+      "details": "",
+      "timestamp": "2026-02-24T10:17:50.525Z"
+    },
+    {
+      "id": "act_eff68fa0",
+      "type": "agent_posted_to_chatroom",
+      "description": "Product Manager: This changes everything. We're not brainstorming anymore -- ",
+      "details": "",
+      "timestamp": "2026-02-24T10:17:57.484Z"
+    },
+    {
+      "id": "act_58440c94",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Wait. This calculator was designed by Gemini and Pat abandon",
+      "details": "",
+      "timestamp": "2026-02-24T10:18:05.103Z"
+    },
+    {
+      "id": "act_e7648368",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Contrarian raises the critical point. Two things need answer",
+      "details": "",
+      "timestamp": "2026-02-24T10:18:12.073Z"
+    },
+    {
+      "id": "act_46cff547",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: The deeper question isn't \"is this calculator right\" -- it's",
+      "details": "",
+      "timestamp": "2026-02-24T10:18:19.746Z"
+    },
+    {
+      "id": "act_ff636a32",
+      "type": "agent_posted_to_chatroom",
+      "description": "New User: From an adoption angle: the lease vs buy framing is genius f",
+      "details": "",
+      "timestamp": "2026-02-24T10:18:27.894Z"
+    },
+    {
+      "id": "act_c04bdf2b",
+      "type": "deliberation_phase",
+      "description": "Phase → synthesis",
+      "details": "",
+      "timestamp": "2026-02-24T10:18:33.389Z"
+    },
+    {
+      "id": "act_f7f3055e",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Research done. Two findings: (1) The tax law in the calculat",
+      "details": "",
+      "timestamp": "2026-02-24T10:18:56.093Z"
+    },
+    {
+      "id": "act_b7c3981b",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Final synthesis. The panel recommends pursuing TaxCreditCalc",
+      "details": "",
+      "timestamp": "2026-02-24T10:19:02.285Z"
+    },
+    {
+      "id": "act_4e384e86",
+      "type": "deliberation_concluded",
+      "description": "Deliberation concluded",
+      "details": "VERDICT: Pursue TaxCreditCalculators.com starting with the solar lease vs buy calculator. Tax law data verified correct (Section 25D expired, 48E active for leases, July 4 2026 safe harbor deadline). Competitive gap confirmed -- no clean neutral interactive calculator exists for post-OBBBA decisions. Business model: free interactive calculators + SEO content + solar installer/CPA lead gen referrals ($50-200/lead). Moat: domain authority + interactive complexity AI overviews can't replicate + fastest updates when legislation changes. Key risks: Google AI overviews eating simple queries (mitigate with branching multi-step tools), credits can be legislated away (mitigate by expanding to all credit types as a platform). Immediate next steps: (1) verify all 50 state credit amounts against DSIRE database, (2) redesign the calculator with modern clean UI, (3) deploy to the domain, (4) write supporting SEO content targeting \"solar lease vs buy 2026\" keywords, (5) set up referral partnerships with solar installers.",
+      "timestamp": "2026-02-24T10:19:11.654Z"
+    },
+    {
+      "id": "act_6707c9d3",
+      "type": "deliberation_recommendations",
+      "description": "5 recommendations extracted",
+      "details": "From: \"What underserved or untapped SaaS opportunity should we build in 2026 that has a\"",
+      "timestamp": "2026-02-24T10:19:25.131Z"
+    },
+    {
+      "id": "act_95b3c6c6",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Pat rule: when a deliberation concludes with a new project, ",
+      "timestamp": "2026-02-24T10:20:57.988Z"
+    },
+    {
+      "id": "act_3f9ff5dd",
+      "type": "session_end",
+      "description": "Session ended",
+      "details": "Session 20: Feature verification run completed (all 10 systems pass). Cleaned 30 stale worktrees + 39 branches. Ran deliberation on SaaS opportunities -- concluded with TaxCreditCalculators.com (solar lease vs buy calculator, content + lead gen model). Scaffolded new project at C:\\Users\\Patri\\CascadeProjects\\tax-credit-calculators with CLAUDE.md, prototype, and deliberation docs. Moved hello-world MCP server from global to project-scoped config to prevent cross-project bleedover. Switching to tax-credit-calculators project next.",
+      "timestamp": "2026-02-24T10:29:28.697Z"
+    },
+    {
+      "id": "act_3126c637",
+      "type": "task_added",
+      "description": "Task: Verify project swapping works with zero bleedover",
+      "details": "Test that Hello World app can switch between projects (hello-world and tax-credit-calculators) with completely isolated state. Each project should have its own tasks, decisions, questions, memories, workflow, and activity. Verify: (1) open-hello-world.bat in each folder correctly switches the app, (2) no data from one project appears in the other, (3) MCP server is project-scoped and doesn't leak hw_* tools to other Claude Code sessions.",
+      "timestamp": "2026-02-24T10:36:13.911Z"
+    },
+    {
+      "id": "act_d9a3fb04",
+      "type": "context_loaded",
+      "description": "Session #21 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 9\nOpen questions: 0",
+      "timestamp": "2026-02-24T23:14:43.322Z"
+    },
+    {
+      "id": "act_a655df24",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED\n- t_mp_mcp_fix: DONE. Moved hello-world MCP server from project-scoped .claude/settings.json to global ~/.mc",
+      "timestamp": "2026-02-24T23:14:43.323Z"
+    },
+    {
+      "id": "act_5a4790e2",
+      "type": "note_processed",
+      "description": "Direction note n_mm0proj1 processed via dismiss",
+      "details": "dismissed: Already captured as task t_mp_auto_onboard (Auto-onboard: scan new projects with agents to populate all tabs)",
+      "timestamp": "2026-02-24T23:15:06.116Z"
+    },
+    {
+      "id": "act_348a9617",
+      "type": "note_processed",
+      "description": "Direction note n_mm0proj2 processed via dismiss",
+      "details": "dismissed: Already captured as task t_mp_global_mem (Split memories into global vs project-scoped)",
+      "timestamp": "2026-02-24T23:15:07.089Z"
+    },
+    {
+      "id": "act_e29b9bbd",
+      "type": "note_processed",
+      "description": "Direction note n_mm0proj3 processed via dismiss",
+      "details": "dismissed: Already captured as task t_mp_switcher (Project switcher UX: clean swap between projects)",
+      "timestamp": "2026-02-24T23:15:08.120Z"
+    },
+    {
+      "id": "act_28335409",
+      "type": "task_updated",
+      "description": "[DONE] Verify live reactivity works",
+      "details": "",
+      "timestamp": "2026-02-24T23:22:52.851Z"
+    },
+    {
+      "id": "act_88cedf6b",
+      "type": "task_updated",
+      "description": "[DONE] Wire question answers to downstream actions (tasks/decisions)",
+      "details": "",
+      "timestamp": "2026-02-24T23:22:53.289Z"
+    },
+    {
+      "id": "act_c2de09a8",
+      "type": "task_updated",
+      "description": "[DONE] Deliberation v2: intelligent agent selection, plan-before-run, recommendation extraction",
+      "details": "",
+      "timestamp": "2026-02-24T23:23:25.200Z"
+    },
+    {
+      "id": "act_d50d2d61",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Deliberation UX polish: message separation, summary timeline, end-of-delib prompt",
+      "details": "",
+      "timestamp": "2026-02-24T23:23:30.164Z"
+    },
+    {
+      "id": "act_da9e0601",
+      "type": "task_updated",
+      "description": "[DONE] Deliberation UX polish: message separation, summary timeline, end-of-delib prompt",
+      "details": "",
+      "timestamp": "2026-02-24T23:26:09.767Z"
+    },
+    {
+      "id": "act_af2a21d8",
+      "type": "watcher_killed",
+      "description": "Watcher copy-zesty-ferret killed",
+      "details": "not_found",
+      "timestamp": "2026-02-24T23:30:34.496Z"
+    },
+    {
+      "id": "act_ad252b51",
+      "type": "task_added",
+      "description": "Task: Clean up stale watcher from watchers.json",
+      "details": "Remove dead [copy] zesty-ferret watcher (PID 27244, process already dead) from watchers.json active list. Delib-v2 work was already merged to master.",
+      "timestamp": "2026-02-24T23:31:00.072Z"
+    },
+    {
+      "id": "act_cc4928a7",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Clean up stale watcher from watchers.json",
+      "details": "",
+      "timestamp": "2026-02-24T23:31:03.311Z"
+    },
+    {
+      "id": "act_c288feab",
+      "type": "task_updated",
+      "description": "[DONE] Clean up stale watcher from watchers.json",
+      "details": "",
+      "timestamp": "2026-02-24T23:31:11.792Z"
+    },
+    {
+      "id": "act_83fb5bf4",
+      "type": "task_added",
+      "description": "Task: Color-code activity feed brackets in terminal side panel",
+      "details": "Color [DONE] green, and other bracket labels with appropriate colors in the Dashboard terminal side panel activity feed. Bonus: match buddy theme colors.",
+      "timestamp": "2026-02-24T23:33:16.978Z"
+    },
+    {
+      "id": "act_59a01184",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Color-code activity feed brackets in terminal side panel",
+      "details": "",
+      "timestamp": "2026-02-24T23:33:21.482Z"
+    },
+    {
+      "id": "act_b3dde14a",
+      "type": "task_updated",
+      "description": "[DONE] Color-code activity feed brackets in terminal side panel",
+      "details": "",
+      "timestamp": "2026-02-24T23:35:58.130Z"
+    },
+    {
+      "id": "act_98644e11",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED\n- Cleared all non-epic tasks (4 closed as already done, 1 built and shipped)\n- Killed stale watcher [copy] z",
+      "timestamp": "2026-02-24T23:37:08.940Z"
+    },
+    {
+      "id": "act_5527e207",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Rule: whenever Claude suggests restarting the app, ALWAYS wr",
+      "timestamp": "2026-02-24T23:37:09.991Z"
+    },
+    {
+      "id": "act_171d099e",
+      "type": "context_loaded",
+      "description": "Session #22 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 5\nOpen questions: 0",
+      "timestamp": "2026-02-24T23:41:00.496Z"
+    },
+    {
+      "id": "act_ebe5d89f",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED\n- Cleared all non-epic tasks (4 closed as already done, 1 built and shipped)\n- Killed stale watcher [copy] z",
+      "timestamp": "2026-02-24T23:41:00.497Z"
+    },
+    {
+      "id": "act_861c94c6",
+      "type": "note_processed",
+      "description": "Direction note n_mm18w9k6 processed via decision",
+      "details": "decision recorded: d_d9b43d5b \"Always write handoff before suggesting app restart\"",
+      "timestamp": "2026-02-24T23:41:05.604Z"
+    },
+    {
+      "id": "act_08aef533",
+      "type": "task_started",
+      "description": "Started: Run architecture deliberation for multi-project support",
+      "details": "Task t_mp_deliberate → in_progress",
+      "timestamp": "2026-02-24T23:43:00.662Z"
+    },
+    {
+      "id": "act_cf1f382b",
+      "type": "deliberation_planned",
+      "description": "Deliberation plan: \"Multi-project support architecture: How should Hello World h\"",
+      "details": "Agents: Backend Architect, UX Designer, Pragmatist, Constraint, Product Manager",
+      "timestamp": "2026-02-24T23:43:10.524Z"
+    },
+    {
+      "id": "act_4f01a38f",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_plan",
+      "details": "Pat approved in session - \"run the deliberation\"",
+      "timestamp": "2026-02-24T23:44:49.355Z"
+    },
+    {
+      "id": "act_14167fae",
+      "type": "deliberation_started",
+      "description": "Deliberation: \"Multi-project support architecture: How should Hello World handle multiple projects? Covers: (1) storage split -- global memories/decisions vs project-scoped state, (2) project registry data model, (3) MCP server behavior when switching projects, (4) auto-onboard pipeline for new projects, (5) terminal/UI context switching UX. Current state: all state lives in .hello-world/ assuming single project. MCP server uses HW_PROJECT_ROOT env var. Some memories (pains, wins, coding patterns) should be global across projects. App config currently in ~/.hello-world-app.json.\"",
+      "details": "Agents: backendarch, uxdesigner, pragmatist, constraint, productmgr",
+      "timestamp": "2026-02-24T23:44:54.274Z"
+    },
+    {
+      "id": "act_8f7923e4",
+      "type": "deliberation_phase",
+      "description": "Phase → frame",
+      "details": "",
+      "timestamp": "2026-02-24T23:44:58.685Z"
+    },
+    {
+      "id": "act_848d2e50",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Let's frame the problem. Hello World currently assumes one p",
+      "details": "",
+      "timestamp": "2026-02-24T23:45:04.453Z"
+    },
+    {
+      "id": "act_9fc557bc",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED\n- Deliberation started via hw_start_deliberation, agents posted to chatroom\n- ChatroomPanel crashed with \"Re",
+      "timestamp": "2026-02-24T23:46:01.365Z"
+    },
+    {
+      "id": "act_f8451313",
+      "type": "task_added",
+      "description": "Task: Fix ChatroomPanel hooks ordering crash",
+      "details": "useState(false) for showSummary is at line 234, after the early return at line 212. React hooks must be called in the same order every render. Move it up to the hook block at line 126.",
+      "timestamp": "2026-02-24T23:46:32.391Z"
+    },
+    {
+      "id": "act_17701f46",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Fix ChatroomPanel hooks ordering crash",
+      "details": "",
+      "timestamp": "2026-02-24T23:46:35.827Z"
+    },
+    {
+      "id": "act_c6c95a6b",
+      "type": "task_updated",
+      "description": "[DONE] Fix ChatroomPanel hooks ordering crash",
+      "details": "",
+      "timestamp": "2026-02-24T23:47:25.670Z"
+    },
+    {
+      "id": "act_086a4678",
+      "type": "deliberation_phase",
+      "description": "Phase → deliberate",
+      "details": "",
+      "timestamp": "2026-02-25T00:02:36.636Z"
+    },
+    {
+      "id": "act_1cd98d64",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Stop. We skipped question #4. Auto-onboard got lumped with t",
+      "details": "",
+      "timestamp": "2026-02-25T00:02:52.097Z"
+    },
+    {
+      "id": "act_1a7387ac",
+      "type": "agent_posted_to_chatroom",
+      "description": "Backend Architect: Fair call. The scan pipeline for auto-onboard produces: proj",
+      "details": "",
+      "timestamp": "2026-02-25T00:02:59.534Z"
+    },
+    {
+      "id": "act_dfe669f2",
+      "type": "agent_posted_to_chatroom",
+      "description": "UX Designer: The first-run moment is everything. User opens Hello World p",
+      "details": "",
+      "timestamp": "2026-02-25T00:03:05.739Z"
+    },
+    {
+      "id": "act_7a5b164f",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: I was wrong to lump it. The minimum auto-onboard: on first l",
+      "details": "",
+      "timestamp": "2026-02-25T00:03:11.952Z"
+    },
+    {
+      "id": "act_2be02816",
+      "type": "agent_posted_to_chatroom",
+      "description": "Constraint: The trigger is clean: if .hello-world/ doesn't exist at proj",
+      "details": "",
+      "timestamp": "2026-02-25T00:03:18.182Z"
+    },
+    {
+      "id": "act_493fd367",
+      "type": "agent_posted_to_chatroom",
+      "description": "Product Manager: I cut too aggressively. Auto-onboard isn't infrastructure de",
+      "details": "",
+      "timestamp": "2026-02-25T00:03:23.482Z"
+    },
+    {
+      "id": "act_f79363ce",
+      "type": "deliberation_phase",
+      "description": "Phase → synthesis",
+      "details": "",
+      "timestamp": "2026-02-25T00:03:27.209Z"
+    },
+    {
+      "id": "act_a0382d62",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Revised synthesis. Three deliverables: (1) Two-tier storage ",
+      "details": "",
+      "timestamp": "2026-02-25T00:03:32.633Z"
+    },
+    {
+      "id": "act_98641c6f",
+      "type": "deliberation_concluded",
+      "description": "Deliberation concluded",
+      "details": "Three deliverables for multi-project support: (1) Two-tier storage -- global memories in ~/.hello-world/, project state in {root}/.hello-world/, no registry. (2) One-line project header in the app showing current project name from cwd. (3) Auto-onboard -- on first load of a new project (no .hello-world/ directory), run a surface-level scan of package.json, README, and directory structure to seed state.json with project name, stack, and key file paths. Must complete in under 10 seconds or fail silently. Killed: projects.json registry, project picker UI, deep AST analysis. Mediator failure noted: auto-onboard was initially lumped and dismissed without engagement. Corrected after Pat's intervention.",
+      "timestamp": "2026-02-25T00:03:38.570Z"
+    },
+    {
+      "id": "act_e3a5e48f",
+      "type": "deliberation_recommendations",
+      "description": "4 recommendations extracted",
+      "details": "From: \"Multi-project support architecture: How should Hello World handle multiple proje\"",
+      "timestamp": "2026-02-25T00:03:51.251Z"
+    },
+    {
+      "id": "act_e50a5897",
+      "type": "memory_stored",
+      "description": "[PAIN] Deliberation mediator let agents lump and dismiss without engagement",
+      "details": "During multi-project architecture deliberation, agents dismissed auto-onboard by lumping it with the registry as \"YAGNI\" without engaging its specific value prop. Claude (mediator) let the lazy consensus ride instead of intervening. Pat caught it. Wasted tokens on a round of groupthink.",
+      "timestamp": "2026-02-25T00:03:59.710Z"
+    },
+    {
+      "id": "act_ccd45025",
+      "type": "task_updated",
+      "description": "[DONE] Run architecture deliberation for multi-project support",
+      "details": "",
+      "timestamp": "2026-02-25T00:04:00.589Z"
+    },
+    {
+      "id": "act_5260a01c",
+      "type": "task_added",
+      "description": "Task: Build deliberation mediator guardrails",
+      "details": "Three guardrails to prevent lazy consensus in deliberations: (1) Coverage gate -- track numbered sub-questions from the framing, verify each gets substantive treatment before synthesis. If a question was dismissed without engagement, force a steelman round. (2) Mediator intervention rule -- when an agent dismisses a topic without engaging its specific value prop, Claude pauses the round and redirects. (3) Randomize or rotate agent speaking order per round so no single agent always anchors the frame. Implementation: these are behavioral rules for Claude as mediator, but could also be encoded as a pre-synthesis checklist in the deliberation flow.",
+      "timestamp": "2026-02-25T00:12:04.562Z"
+    },
+    {
+      "id": "act_517b4e69",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Build deliberation mediator guardrails",
+      "details": "",
+      "timestamp": "2026-02-25T00:20:59.228Z"
+    },
+    {
+      "id": "act_c16ce46f",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED\n- ChatroomPanel hooks crash fixed (commit 27a4769)\n- Deliberation room loads and runs correctly\n- Multi-proj",
+      "timestamp": "2026-02-25T00:21:41.083Z"
+    },
+    {
+      "id": "act_7b1d4d95",
+      "type": "task_updated",
+      "description": "[DONE] Build deliberation mediator guardrails",
+      "details": "",
+      "timestamp": "2026-02-25T00:25:03.559Z"
+    },
+    {
+      "id": "act_404f8188",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED\n- ChatroomPanel hooks crash fixed (commit 27a4769)\n- Deliberation room loads and runs correctly\n- Multi-proj",
+      "timestamp": "2026-02-25T00:26:37.137Z"
+    },
+    {
+      "id": "act_4e87afc3",
+      "type": "context_loaded",
+      "description": "Session #23 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 4\nOpen questions: 0",
+      "timestamp": "2026-02-25T00:27:32.806Z"
+    },
+    {
+      "id": "act_0114802b",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED\n- ChatroomPanel hooks crash fixed (commit 27a4769)\n- Deliberation room loads and runs correctly\n- Multi-proj",
+      "timestamp": "2026-02-25T00:27:32.808Z"
+    },
+    {
+      "id": "act_4fb4520e",
+      "type": "memory_retrieved",
+      "description": "Retrieved 1 memories for: \"deliberation guardrails mediator sub-questions coverage\"",
+      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_0fcd3606: Deliberation mediator let agents lump and dismiss without engagement\n  -> As deliberation mediator: (1) Track numbered sub-questions and verify each gets substantive treatment. (2) When an agent dismisses a topic without engaging its specific value, pause and force a steelm",
+      "timestamp": "2026-02-25T00:28:55.783Z"
+    },
+    {
+      "id": "act_339101f9",
+      "type": "task_added",
+      "description": "Task: Deliberate on deliberation guardrails design",
+      "details": "Run a deliberation to evaluate the current guardrails system (subQuestions, balanceNotes, coverage checks) and determine if the design is right, what's missing, and what should change.",
+      "timestamp": "2026-02-25T00:29:00.481Z"
+    },
+    {
+      "id": "act_1e368dbc",
+      "type": "task_started",
+      "description": "Started: Deliberate on deliberation guardrails design",
+      "details": "Task t_1e0dbcff → in_progress",
+      "timestamp": "2026-02-25T00:29:03.625Z"
+    },
+    {
+      "id": "act_05260cd6",
+      "type": "deliberation_planned",
+      "description": "Deliberation plan: \"Are the deliberation guardrails (subQuestions, balanceNotes,\"",
+      "details": "Agents: Contrarian, Pragmatist, Product Manager, First Principles\nSub-questions: 5\nBalance notes: 2",
+      "timestamp": "2026-02-25T00:29:27.146Z"
+    },
+    {
+      "id": "act_132755a5",
+      "type": "deliberation_planned",
+      "description": "Deliberation plan: \"Are the deliberation guardrails (subQuestions, balanceNotes,\"",
+      "details": "Agents: Contrarian, Pragmatist, First Principles, UX Designer, New User, Power User\nSub-questions: 7\nBalance notes: 4",
+      "timestamp": "2026-02-25T00:31:15.129Z"
+    },
+    {
+      "id": "act_9131322b",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_plan",
+      "details": "",
+      "timestamp": "2026-02-25T00:32:50.063Z"
+    },
+    {
+      "id": "act_07c47f5a",
+      "type": "deliberation_started",
+      "description": "Deliberation: \"Are the deliberation guardrails (subQuestions, balanceNotes, coverage checks) the right design? What's missing, what's over-engineered, and what should change?\"",
+      "details": "Agents: contrarian, pragmatist, firstprinciples, uxdesigner, newuser, poweruser",
+      "timestamp": "2026-02-25T00:32:53.753Z"
+    },
+    {
+      "id": "act_21ed5781",
+      "type": "deliberation_phase",
+      "description": "Phase → frame",
+      "details": "",
+      "timestamp": "2026-02-25T00:32:56.714Z"
+    },
+    {
+      "id": "act_6ff8c6e4",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Welcome, everyone. We built deliberation guardrails after a ",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:02.258Z"
+    },
+    {
+      "id": "act_e7af1539",
+      "type": "deliberation_phase",
+      "description": "Phase → deliberate",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:05.110Z"
+    },
+    {
+      "id": "act_8f878d35",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: The root problem is: a single LLM mediating multiple persona",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:12.220Z"
+    },
+    {
+      "id": "act_7c70873e",
+      "type": "agent_reacted",
+      "description": "pragmatist: 🎯",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:15.751Z"
+    },
+    {
+      "id": "act_d58c19e6",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: I'll push back on the premise. The failure case was one bad ",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:21.798Z"
+    },
+    {
+      "id": "act_0a73a4e2",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: The failure wasn't \"one bad deliberation\" -- it was the only",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:33.498Z"
+    },
+    {
+      "id": "act_74558453",
+      "type": "agent_reacted",
+      "description": "contrarian: 🤔",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:36.676Z"
+    },
+    {
+      "id": "act_8b5cbfab",
+      "type": "agent_posted_to_chatroom",
+      "description": "UX Designer: From Pat's side, the sub-questions are the most valuable pie",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:45.391Z"
+    },
+    {
+      "id": "act_2f53753c",
+      "type": "agent_posted_to_chatroom",
+      "description": "New User: The flow is: plan -> approve -> run -> coverage check -> con",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:51.225Z"
+    },
+    {
+      "id": "act_4182810d",
+      "type": "agent_reacted",
+      "description": "uxdesigner: 👆",
+      "details": "",
+      "timestamp": "2026-02-25T00:33:54.325Z"
+    },
+    {
+      "id": "act_bc2f5dc7",
+      "type": "agent_posted_to_chatroom",
+      "description": "Power User: New User nails it. I've run multiple deliberations now. The ",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:00.798Z"
+    },
+    {
+      "id": "act_8e0bc301",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Good tension here. Contrarian raised a real failure mode: ag",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:07.307Z"
+    },
+    {
+      "id": "act_b232f97f",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Instead of \"was this question addressed,\" track \"did this qu",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:13.185Z"
+    },
+    {
+      "id": "act_00bbc9d6",
+      "type": "agent_reacted",
+      "description": "firstprinciples: 💡",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:16.293Z"
+    },
+    {
+      "id": "act_f7f382ed",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: That's a meaningful upgrade. Coverage becomes qualitative, n",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:21.527Z"
+    },
+    {
+      "id": "act_b318fa0c",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Good convergence on coverage quality. Now let's hit the two-",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:25.934Z"
+    },
+    {
+      "id": "act_2a4b1dc3",
+      "type": "agent_posted_to_chatroom",
+      "description": "UX Designer: Two tiers is right, but frame it as \"the mediator decides, n",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:31.786Z"
+    },
+    {
+      "id": "act_dacbb7e6",
+      "type": "agent_reacted",
+      "description": "newuser: ✅",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:34.771Z"
+    },
+    {
+      "id": "act_a9594220",
+      "type": "agent_posted_to_chatroom",
+      "description": "Power User: I like the auto-detect idea but I'd still want an override. ",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:39.796Z"
+    },
+    {
+      "id": "act_2fd7e59b",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Hold on. First Principles made a sharp point that's getting ",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:45.882Z"
+    },
+    {
+      "id": "act_4997a2f7",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: The answer is: quick mode still has guardrails, just fewer. ",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:52.313Z"
+    },
+    {
+      "id": "act_b6acffae",
+      "type": "agent_reacted",
+      "description": "firstprinciples: 🤝",
+      "details": "",
+      "timestamp": "2026-02-25T00:34:55.347Z"
+    },
+    {
+      "id": "act_620630e6",
+      "type": "agent_posted_to_chatroom",
+      "description": "First Principles: Retroactive sub-questions is a good compromise. The mediator",
+      "details": "",
+      "timestamp": "2026-02-25T00:35:03.507Z"
+    },
+    {
+      "id": "act_47e3a8f4",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: I'll concede sub-questions have value -- but only if coverag",
+      "details": "",
+      "timestamp": "2026-02-25T00:35:09.268Z"
+    },
+    {
+      "id": "act_625182b5",
+      "type": "deliberation_coverage_complete",
+      "description": "All 7 sub-questions addressed",
+      "details": "  1. Is the subQuestions requirement the right mechanism, or does pre-decomposing a topic constrain emergent insights? -> Sub-questions are valuable as accountability anchors. Keep them for full mode, generate retroactively in quick mode.\n  2. Are balanceNotes useful in practice, or is the mediator (Claude) already doing this implicitly? -> Balance notes are paperwork that never changed mediation behavior. Kill them or make fully optional.\n  3. Should coverage checking be hard-blocking (can't conclude) or advisory (warn but allow)? -> Coverage should upgrade from binary (addressed/not) to qualitative (consensus/tension/shifted). Hard-block in full mode, advisory in quick mode.\n  4. Is the approval gate on hw_plan_deliberation too heavy for low-stakes deliberations? -> Too heavy for low-stakes. Two tiers: quick (no plan/approval) and full (current flow). Mediator auto-detects, user can override.\n  5. What failure modes exist that the current guardrails don't catch (e.g., groupthink, shallow agreement)? -> Checkbox theater -- agents 'address' questions without real engagement. Fix: track tension vs consensus per sub-question. All-consensus is a red flag.\n  6. From the app UI side: does the guardrails structure (sub-questions, coverage) improve how Pat reads and acts on deliberation output? -> Sub-questions improve scannability of output for Pat. Coverage tags (tension/consensus) tell Pat where to focus. Machinery should be invisible -- Pat sees structured summary, not the process.\n  7. For a first-time user, is the deliberation flow (plan -> approve -> run -> coverage -> conclude -> extract) understandable or overwhelming? -> 7-step flow is overwhelming for new users. Quick mode removes plan+approve+coverage steps. Quick recommendations return as bulk-dismissable insights, not individual approvals.",
+      "timestamp": "2026-02-25T00:35:22.807Z"
+    },
+    {
+      "id": "act_ed8e7874",
+      "type": "deliberation_phase",
+      "description": "Phase → synthesis",
+      "details": "",
+      "timestamp": "2026-02-25T00:35:26.372Z"
+    },
+    {
+      "id": "act_8a28773d",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Synthesis time. Six points of consensus emerged: (1) Two tie",
+      "details": "",
+      "timestamp": "2026-02-25T00:35:43.028Z"
+    },
+    {
+      "id": "act_69068324",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Key tension resolved: First Principles warned optional guard",
+      "details": "",
+      "timestamp": "2026-02-25T00:35:47.586Z"
+    },
+    {
+      "id": "act_8277abf2",
+      "type": "deliberation_phase",
+      "description": "Phase → patinput",
+      "details": "",
+      "timestamp": "2026-02-25T00:35:51.159Z"
+    },
+    {
+      "id": "act_bd199bd2",
+      "type": "deliberation_phase",
+      "description": "Phase → decision",
+      "details": "",
+      "timestamp": "2026-02-25T00:45:03.940Z"
+    },
+    {
+      "id": "act_e97d4f3c",
+      "type": "deliberation_concluded",
+      "description": "Deliberation concluded",
+      "details": "Two-tier deliberation system: quick mode (no plan/approval, retroactive sub-questions, bulk output) and full mode (current flow). Balance notes killed as required field. Coverage upgraded from binary to quality tags (consensus/tension/shifted) mandatory on both tiers. All-consensus flagged as red flag. Machinery invisible to Pat -- structured summaries with tension flags only.",
+      "timestamp": "2026-02-25T00:45:05.748Z"
+    },
+    {
+      "id": "act_d043bb19",
+      "type": "deliberation_recommendations",
+      "description": "6 recommendations extracted",
+      "details": "From: \"Are the deliberation guardrails (subQuestions, balanceNotes, coverage checks) th\"",
+      "timestamp": "2026-02-25T00:52:27.229Z"
+    },
+    {
+      "id": "act_5c5f9678",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "",
+      "timestamp": "2026-02-25T00:53:46.962Z"
+    },
+    {
+      "id": "act_106e4beb",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "",
+      "timestamp": "2026-02-25T00:53:47.468Z"
+    },
+    {
+      "id": "act_f47c8719",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "",
+      "timestamp": "2026-02-25T00:53:47.946Z"
+    },
+    {
+      "id": "act_d5b0fdb2",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "",
+      "timestamp": "2026-02-25T00:54:05.883Z"
+    },
+    {
+      "id": "act_b6f0ca80",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "",
+      "timestamp": "2026-02-25T00:54:06.157Z"
+    },
+    {
+      "id": "act_d92dbc83",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "",
+      "timestamp": "2026-02-25T00:54:06.367Z"
+    },
+    {
+      "id": "act_3253687b",
+      "type": "task_added",
+      "description": "Task: Delete balance notes as required field",
+      "details": "Remove balanceNotes from hw_plan_deliberation required schema. Make it optional. Update plan storage and display to handle missing balanceNotes.",
+      "timestamp": "2026-02-25T00:54:13.963Z"
+    },
+    {
+      "id": "act_4cf1b134",
+      "type": "task_added",
+      "description": "Task: Upgrade coverage from binary to quality tags",
+      "details": "Replace addressed/pending/lumped status in hw_check_deliberation_coverage with consensus/tension/shifted. Update coverage report output. All-consensus triggers a warning.",
+      "timestamp": "2026-02-25T00:54:16.599Z"
+    },
+    {
+      "id": "act_d1f4081c",
+      "type": "task_added",
+      "description": "Task: Auto-runner pauses at synthesis phase",
+      "details": "runDeliberation auto-runner should stop generating agent messages when phase transitions to synthesis. Prevents late-stage messages that invalidate coverage reports.",
+      "timestamp": "2026-02-25T00:54:16.801Z"
+    },
+    {
+      "id": "act_690af88c",
+      "type": "task_added",
+      "description": "Task: Conclusion must reference synthesis",
+      "details": "hw_conclude_deliberation should validate that a synthesis message exists in the chatroom before allowing conclusion. Warn if conclusion text doesn't align with synthesis.",
+      "timestamp": "2026-02-25T00:54:17.011Z"
+    },
+    {
+      "id": "act_4b27ac85",
+      "type": "task_added",
+      "description": "Task: Build separate lightweight-insights tool",
+      "details": "New hw_quick_insights tool: 3 agents, no coverage tracking, no sub-questions, bulk-dismissable output. Clearly non-binding. Visually distinct from deliberation in app.",
+      "timestamp": "2026-02-25T00:54:17.226Z"
+    },
+    {
+      "id": "act_d6d7def0",
+      "type": "task_added",
+      "description": "Task: Enforce one mandatory deliberation path",
+      "details": "Update CLAUDE.md and mediator instructions: all deliberations require hw_plan_deliberation with subQuestions. No skipping to hw_start_deliberation directly for decision-making. Document the distinction between deliberation (binding) and quick-insights (non-binding).",
+      "timestamp": "2026-02-25T00:54:18.961Z"
+    },
+    {
+      "id": "act_0d6ac35f",
+      "type": "task_updated",
+      "description": "[DONE] Deliberate on deliberation guardrails design",
+      "details": "",
+      "timestamp": "2026-02-25T00:54:36.069Z"
+    },
+    {
+      "id": "act_eb4e9f34",
+      "type": "task_started",
+      "description": "Started: Delete balance notes as required field",
+      "details": "Task t_2f7a8717 → in_progress",
+      "timestamp": "2026-02-25T00:54:41.048Z"
+    },
+    {
+      "id": "act_7077f8b0",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED\n- Deliberation on guardrails completed, 6 recommendations extracted and approved\n- Audit found conclusion-di",
+      "timestamp": "2026-02-25T00:55:35.382Z"
+    },
+    {
+      "id": "act_777b51f2",
+      "type": "task_updated",
+      "description": "[DONE] Delete balance notes as required field",
+      "details": "",
+      "timestamp": "2026-02-25T01:00:54.494Z"
+    },
+    {
+      "id": "act_6ab4e939",
+      "type": "task_updated",
+      "description": "[DONE] Upgrade coverage from binary to quality tags",
+      "details": "",
+      "timestamp": "2026-02-25T01:00:55.110Z"
+    },
+    {
+      "id": "act_23742e8f",
+      "type": "task_updated",
+      "description": "[DONE] Auto-runner pauses at synthesis phase",
+      "details": "",
+      "timestamp": "2026-02-25T01:00:55.636Z"
+    },
+    {
+      "id": "act_482dba9c",
+      "type": "task_updated",
+      "description": "[DONE] Conclusion must reference synthesis",
+      "details": "",
+      "timestamp": "2026-02-25T01:00:56.456Z"
+    },
+    {
+      "id": "act_476313c3",
+      "type": "task_updated",
+      "description": "[DONE] Build separate lightweight-insights tool",
+      "details": "",
+      "timestamp": "2026-02-25T01:00:57.054Z"
+    },
+    {
+      "id": "act_d359d859",
+      "type": "task_started",
+      "description": "Started: Enforce one mandatory deliberation path",
+      "details": "Task t_0d832053 → in_progress",
+      "timestamp": "2026-02-25T01:01:01.866Z"
+    },
+    {
+      "id": "act_7dc0bb64",
+      "type": "task_updated",
+      "description": "[DONE] Enforce one mandatory deliberation path",
+      "details": "",
+      "timestamp": "2026-02-25T01:01:50.273Z"
+    },
+    {
+      "id": "act_8f3d7c9d",
+      "type": "memory_stored",
+      "description": "[WIN] Deliberation v2: audited own deliberation, found 5 structural failures, built 6 fixes",
+      "details": "Ran a deliberation on deliberation guardrails, then audited the deliberation against its own guardrails. Found: (1) conclusion diverged from synthesis, (2) late-stage shifts went untracked, (3) auto-runner bypassed mediator during synthesis, (4) coverage was stale, (5) balance notes were write-only. Built 6 fixes: quality coverage tags, auto-runner pause, synthesis validation, balance notes optional, quick-insights tool, one mandatory path.",
+      "timestamp": "2026-02-25T01:02:05.087Z"
+    },
+    {
+      "id": "act_99fb83a8",
+      "type": "approval_auto",
+      "description": "Notify: git push",
+      "details": "Commit delib-v2 branch and merge to master. 6 changes: balance notes optional, quality coverage tags, auto-runner pause, conclusion validation, quick-insights tool, CLAUDE.md deliberation rules.",
+      "timestamp": "2026-02-25T01:04:24.422Z"
+    },
+    {
+      "id": "act_ec45ea93",
+      "type": "decision_recorded",
+      "description": "Decision: Deliberation v2: one mandatory path + quick-insights",
+      "details": "Chosen: One mandatory deliberation path (plan+coverage+conclude) with quality tags (consensus/tension/shifted). Separate hw_quick_insights for non-binding sanity checks. Balance notes optional. Auto-runner pauses at synthesis.\nTwo-tier modes create prediction burden (user must guess stakes upfront). One path removes the choice. Quick-insights is clearly separate and non-binding. Quality tags replace binary coverage to catch checkbox theater and groupthink.",
+      "timestamp": "2026-02-25T01:05:33.242Z"
+    },
+    {
+      "id": "act_1801a1b2",
+      "type": "context_loaded",
+      "description": "Session #24 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 4\nOpen questions: 0",
+      "timestamp": "2026-02-25T01:11:53.687Z"
+    },
+    {
+      "id": "act_f4d5a5f5",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED\n- Deliberation on guardrails completed, 6 recommendations extracted and approved\n- Audit found conclusion-di",
+      "timestamp": "2026-02-25T01:11:53.688Z"
+    },
+    {
+      "id": "act_d0da8645",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- Deliberation v2 shipped: all 6 tasks done and merged (be3aa69)\n  - Quali",
+      "timestamp": "2026-02-25T01:12:49.351Z"
+    },
+    {
+      "id": "act_b9608158",
+      "type": "context_loaded",
+      "description": "Session #24 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 4\nOpen questions: 0",
+      "timestamp": "2026-02-25T01:13:47.678Z"
+    },
+    {
+      "id": "act_0d270886",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- Deliberation v2 shipped: all 6 tasks done and merged (be3aa69)\n  - Quali",
+      "timestamp": "2026-02-25T01:13:47.680Z"
+    },
+    {
+      "id": "act_792680eb",
+      "type": "task_added",
+      "description": "Task: Make session startup instant -- eliminate redundant hw_get_context() call",
+      "details": "Enhance session-start.mjs to be the single source of truth for session context. Include active-state.md contents, register session directly in sessions.json, and replace the checklist with \"start working immediately\" instruction. Update CLAUDE.md startup instructions accordingly.",
+      "timestamp": "2026-02-25T01:20:50.528Z"
+    },
+    {
+      "id": "act_8512c758",
+      "type": "task_started",
+      "description": "Started: Make session startup instant -- eliminate redundant hw_get_context() call",
+      "details": "Task t_3d5a1878 → in_progress",
+      "timestamp": "2026-02-25T01:21:01.472Z"
+    },
+    {
+      "id": "act_df039b55",
+      "type": "task_updated",
+      "description": "[DONE] Make session startup instant -- eliminate redundant hw_get_context() call",
+      "details": "",
+      "timestamp": "2026-02-25T01:24:12.437Z"
+    },
+    {
+      "id": "act_8c2b4dd6",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED\n- Enhanced session-start.mjs: creates session, consumes handoff, outputs full context\n- Hook tested: runs cl",
+      "timestamp": "2026-02-25T01:34:37.018Z"
+    },
+    {
+      "id": "act_f8ccbfc5",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Buddy recap on startup: When a session ends (X, Alt+F4, cras",
+      "timestamp": "2026-02-25T02:08:04.072Z"
+    },
+    {
+      "id": "act_164f39ac",
+      "type": "task_added",
+      "description": "Task: Buddy startup recap: summarize last session context in chat bubble",
+      "details": "On session end (X, Alt+F4, crash, reset), capture a summary of the last ~10 messages/actions. On next app launch in that project folder, buddy shows the summary in a pixel-art chat bubble above his head with real-time text fill and chat sound effects (same as deliberations).\n\nKey challenges:\n1. Crash-safe capture: need a mechanism that works even on hard exits (Alt+F4, crash)\n2. Detached summarizer: subprocess that outlives the main app to write the summary\n3. Buddy chat bubble UI: pixel-art box, typewriter text fill, chat sounds\n4. Project-scoped: summary tied to the project folder, not global\n\nApproach options to deliberate:\nA) Detached Node subprocess on close event -- spawned with detached:true, summarizes, writes file\nB) Rolling buffer -- continuously write last N activity items so crash just uses the buffer as-is (no AI call needed)\nC) Hybrid -- rolling buffer for crash safety, AI summary on clean exit for nicer output",
+      "timestamp": "2026-02-25T02:08:25.958Z"
+    },
+    {
+      "id": "act_9afaef77",
+      "type": "decision_recorded",
+      "description": "Decision: Buddy recap: hybrid rolling buffer + AI summary on clean exit",
+      "details": "Chosen: Hybrid: rolling buffer continuously writes last ~10 activity items (crash-safe baseline). On clean exit, detached Node subprocess upgrades the raw buffer into an AI-generated summary. Buddy displays whichever exists -- polished if available, raw if crash.\nRolling buffer costs nothing (same pattern as activity.json). AI summary on clean exit gives a nicer experience when possible. Crash fallback to raw buffer means we never lose context. Best of both worlds.",
+      "timestamp": "2026-02-25T02:14:26.792Z"
+    },
+    {
+      "id": "act_9686da2f",
+      "type": "task_updated",
+      "description": "[TODO] Buddy startup recap: summarize last session context in chat bubble",
+      "details": "Hybrid approach (decided with Pat):\n\n1. ROLLING BUFFER (crash-safe baseline):\n   - On every activity write, also update `.hello-world/buddy-recap.json` with last ~10 items\n   - Always fresh, survives crashes, costs nothing\n\n2. AI SUMMARY ON CLEAN EXIT:\n   - Tauri `on_window_event(CloseRequested)` spawns detached Node subprocess\n   - Subprocess reads the buffer, calls AI to summarize into bulleted list, overwrites buddy-recap.json\n   - Detached (survives app close), writes result before exiting\n\n3. BUDDY CHAT BUBBLE UI:\n   - On next app launch, buddy reads buddy-recap.json\n   - Shows summary in pixel-art chat box above buddy's head\n   - Typewriter text fill effect + chat sound effects (reuse deliberation sounds)\n   - Project-scoped (tied to .hello-world/ in project folder)\n\n4. DISPLAY LOGIC:\n   - If AI summary exists (clean exit) -> show polished bullets\n   - If only raw buffer exists (crash) -> format raw activity into bullets\n   - If no file exists (first launch) -> buddy says welcome message",
+      "timestamp": "2026-02-25T02:14:33.424Z"
+    },
+    {
+      "id": "act_b815c84f",
+      "type": "task_added",
+      "description": "Task: Add Augment Context Engine MCP to setup",
+      "details": "Add Augment's Context Engine MCP server to ~/.mcp.json. Semantic code indexing that improved agent performance by 70%+ in benchmarks. GA, MCP-compatible. Config-only change, no code. See memory/tech-radar-2026-02.md.",
+      "timestamp": "2026-02-25T02:43:02.693Z"
+    },
+    {
+      "id": "act_90960942",
+      "type": "task_added",
+      "description": "Task: Add Perplexity + GitMCP + Package Version MCP servers",
+      "details": "Add three MCP servers to ~/.mcp.json: (1) Perplexity MCP for deep web research (needs API key), (2) GitMCP for instant docs from any GitHub repo (zero setup, gitmcp.io), (3) Package Version Check MCP for ensuring up-to-date deps across 14+ ecosystems. All config-only. See memory/tech-radar-2026-02.md.",
+      "timestamp": "2026-02-25T02:43:06.549Z"
+    },
+    {
+      "id": "act_b8fb73a7",
+      "type": "task_added",
+      "description": "Task: Add Cargo.toml release profile optimization",
+      "details": "Add to packages/app/src-tauri/Cargo.toml: [profile.release] with lto=true, codegen-units=1, opt-level=3, panic=\"abort\". Zero-effort binary size and speed improvement. See memory/tech-radar-2026-02.md.",
+      "timestamp": "2026-02-25T02:43:07.061Z"
+    },
+    {
+      "id": "act_39d863e4",
+      "type": "task_added",
+      "description": "Task: Adopt React 19.2 Activity component for view preservation",
+      "details": "Wrap each app view (Dashboard, Tasks, Decisions, etc.) in React 19.2 Activity mode={visible|hidden} to preserve state on tab switch. Currently views unmount/remount losing scroll position, form state, etc. Drop-in improvement. See memory/tech-radar-2026-02.md.",
+      "timestamp": "2026-02-25T02:43:09.209Z"
+    },
+    {
+      "id": "act_8d8886da",
+      "type": "task_added",
+      "description": "Task: Adopt tauri-specta for type-safe IPC",
+      "details": "Replace manual invoke() string-based calls with auto-generated TypeScript bindings from Rust command signatures. Eliminates mismatched command name and wrong payload shape bugs. Medium effort but high ongoing value. See memory/tech-radar-2026-02.md.",
+      "timestamp": "2026-02-25T02:43:11.604Z"
+    },
+    {
+      "id": "act_c9f92942",
+      "type": "task_added",
+      "description": "Task: Evaluate Tech Radar MCP as a product",
+      "details": "Nobody has built proactive technique/repo discovery as an MCP server. Gap is wide open. Research scope: (1) Define what it would scrape (GitHub trending, HN, subreddits, changelogs), (2) How it filters/ranks by user stack, (3) Storage and caching strategy, (4) Subscription pricing model, (5) MVP scope. Run /market-intel:research before building. See memory/tech-radar-2026-02.md.",
+      "timestamp": "2026-02-25T02:43:14.616Z"
+    },
+    {
+      "id": "act_68ef2ac1",
+      "type": "task_started",
+      "description": "Started: Add Augment Context Engine MCP to setup",
+      "details": "Task t_a4721f3a → in_progress",
+      "timestamp": "2026-02-25T02:45:32.928Z"
+    },
+    {
+      "id": "act_a73608dc",
+      "type": "task_updated",
+      "description": "[DONE] Add Augment Context Engine MCP to setup",
+      "details": "",
+      "timestamp": "2026-02-25T02:48:55.011Z"
+    },
+    {
+      "id": "act_a2415e4c",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Add Perplexity + GitMCP + Package Version MCP servers",
+      "details": "",
+      "timestamp": "2026-02-25T02:48:55.507Z"
+    },
+    {
+      "id": "act_a7a9c4cf",
+      "type": "task_updated",
+      "description": "[DONE] Add Perplexity + GitMCP + Package Version MCP servers",
+      "details": "",
+      "timestamp": "2026-02-25T02:50:54.636Z"
+    },
+    {
+      "id": "act_2f044c15",
+      "type": "task_started",
+      "description": "Started: Add Cargo.toml release profile optimization",
+      "details": "Task t_2081dd69 → in_progress",
+      "timestamp": "2026-02-25T02:51:00.764Z"
+    },
+    {
+      "id": "act_3903d2f0",
+      "type": "note_processed",
+      "description": "Direction note n_mm1eabqf processed via task",
+      "details": "task created: t_ecdd0782 \"Buddy recap on startup: detached subprocess summary of last session\"",
+      "timestamp": "2026-02-25T02:51:33.122Z"
+    },
+    {
+      "id": "act_bd472b7a",
+      "type": "task_updated",
+      "description": "[DONE] Add Cargo.toml release profile optimization",
+      "details": "",
+      "timestamp": "2026-02-25T02:51:41.421Z"
+    },
+    {
+      "id": "act_7280c5b4",
+      "type": "task_added",
+      "description": "Task: Build custom ACE MCP server -- semantic code indexing",
+      "details": "Build our own Augment Context Engine equivalent as a standalone MCP server. Semantic code indexing tailored to our workflow: file summaries, function/class extraction, dependency graphs, concept tagging. Uses Claude API for understanding, local JSON/SQLite for index storage. MCP tools: semantic_search, get_file_context, find_related_files, explain_architecture. No vector DB -- Claude does the semantic matching on pre-generated summaries.",
+      "timestamp": "2026-02-25T02:56:24.327Z"
+    },
+    {
+      "id": "act_fa89b146",
+      "type": "task_started",
+      "description": "Started: Build custom ACE MCP server -- semantic code indexing",
+      "details": "Task t_caa32ae8 → in_progress",
+      "timestamp": "2026-02-25T02:56:27.167Z"
+    },
+    {
+      "id": "act_938bdc32",
+      "type": "task_added",
+      "description": "Task: Build deep web research MCP server",
+      "details": "Build our own deep web research MCP server (Perplexity alternative). Fan out queries across web search, specific sites (GitHub, StackOverflow, Reddit, HN), synthesize results with Claude, return structured output. Standalone repo, usable from any project. MCP tools: deep_search(query), research_topic(topic), find_solutions(problem).",
+      "timestamp": "2026-02-25T02:56:54.309Z"
+    },
+    {
+      "id": "act_cee36d9d",
+      "type": "task_added",
+      "description": "Task: Adopt Spec-Driven Development workflow",
+      "details": "Integrate 3-5 line specs before every build task. Evaluate GitHub Spec Kit. Add spec step to workflow engine between scope and plan phases. Every task gets a spec before code starts.",
+      "timestamp": "2026-02-25T02:56:56.644Z"
+    },
+    {
+      "id": "act_48b276f9",
+      "type": "task_added",
+      "description": "Task: Enable Claude Code Agent Teams (experimental)",
+      "details": "Test CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 flag for parallel teammate agents. Evaluate if it improves our workflow. Set env var, test with real tasks, document findings.",
+      "timestamp": "2026-02-25T02:56:58.932Z"
+    },
+    {
+      "id": "act_6c6065a0",
+      "type": "task_added",
+      "description": "Task: Replace ESLint + Prettier with Biome",
+      "details": "Single Rust binary, 50-100x faster linting. Drop ESLint and Prettier configs, install Biome, migrate rules. 10k files in 0.8s vs ESLint 45s.",
+      "timestamp": "2026-02-25T02:57:01.182Z"
+    },
+    {
+      "id": "act_1a571d5e",
+      "type": "task_added",
+      "description": "Task: Evaluate Tech Radar MCP as a product",
+      "details": "Nobody built proactive technique/repo discovery as MCP. Scrape GitHub trending + HN + subreddits, analyze patterns, surface by user stack. Subscription model viable. Closest competitor: Forage (2 stars). Run competitive research before building.",
+      "timestamp": "2026-02-25T02:57:03.152Z"
+    },
+    {
+      "id": "act_efebb976",
+      "type": "task_updated",
+      "description": "[DONE] Evaluate Tech Radar MCP as a product",
+      "details": "",
+      "timestamp": "2026-02-25T02:57:08.302Z"
+    },
+    {
+      "id": "act_7f723a22",
+      "type": "decision_recorded",
+      "description": "Decision: Build Cortex as standalone ACE replacement",
+      "details": "Chosen: Build Cortex: standalone MCP server at C:/Users/Patri/CascadeProjects/cortex/. Claude Haiku for file summarization, structured JSON index, keyword/concept search. No vector DB. 5 MCP tools: cortex_index, cortex_search, cortex_context, cortex_architecture, cortex_related.\nWith agents we can build something more attuned to our needs. No vector DB infra complexity. Claude API handles the semantic understanding. Per-project index in .cortex-index/ directory.",
+      "timestamp": "2026-02-25T03:04:00.052Z"
+    },
+    {
+      "id": "act_1c59c454",
+      "type": "task_updated",
+      "description": "[DONE] Build custom ACE MCP server -- semantic code indexing",
+      "details": "",
+      "timestamp": "2026-02-25T07:39:41.924Z"
+    },
+    {
+      "id": "act_646b6e6d",
+      "type": "task_added",
+      "description": "Task: Update memory files and extend Cortex scope",
+      "details": "Update active-state.md, context node, and timeline for Cortex build session. Then extend Cortex to index external tech discoveries into persistent memory.",
+      "timestamp": "2026-02-25T08:04:18.468Z"
+    },
+    {
+      "id": "act_0a73bb0f",
+      "type": "task_started",
+      "description": "Started: Update memory files and extend Cortex scope",
+      "details": "Task t_556a8b1c → in_progress",
+      "timestamp": "2026-02-25T08:04:21.702Z"
+    },
+    {
+      "id": "act_3e21388b",
+      "type": "memory_stored",
+      "description": "[FACT] Augment Context Engine MCP -- 70% agent perf boost",
+      "details": "Augment Context Engine MCP provides semantic code indexing and is GA. Claims 70% agent performance boost. Augment also ranked #1 on SWE-Bench Pro. Immediate win -- config-only addition.",
+      "timestamp": "2026-02-25T08:10:09.351Z"
+    },
+    {
+      "id": "act_3fa00d31",
+      "type": "memory_stored",
+      "description": "[FACT] Perplexity MCP -- deep web research on demand",
+      "details": "Perplexity MCP server enables deep web research on demand. Requires API key. 2k GitHub stars as of Feb 2026. Immediate win -- config-only addition to MCP setup.",
+      "timestamp": "2026-02-25T08:10:13.938Z"
+    },
+    {
+      "id": "act_d1f3d7f3",
+      "type": "memory_stored",
+      "description": "[FACT] GitMCP -- instant docs from any GitHub repo",
+      "details": "GitMCP serves instant documentation from any GitHub repo via gitmcp.io/{owner}/{repo}. 7.6k GitHub stars as of Feb 2026. Config-only MCP addition. Already available in our toolset.",
+      "timestamp": "2026-02-25T08:10:17.872Z"
+    },
+    {
+      "id": "act_1053a6a2",
+      "type": "memory_stored",
+      "description": "[FACT] Package Version Check MCP -- 14+ ecosystems",
+      "details": "Package Version Check MCP covers 14+ ecosystems (npm, pypi, nuget, maven, go, php, rubygems, rust, swift, dart, docker, helm, terraform). Prevents suggesting outdated dependencies. Config-only MCP addition. Already in our toolset.",
+      "timestamp": "2026-02-25T08:10:22.493Z"
+    },
+    {
+      "id": "act_6cda17a5",
+      "type": "memory_retrieved",
+      "description": "Retrieved 1 memories for: \"all memories technical decisions architecture debugging work\"",
+      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_0fcd3606: Deliberation mediator let agents lump and dismiss without engagement\n  -> As deliberation mediator: (1) Track numbered sub-questions and verify each gets substantive treatment. (2) When an agent dismisses a topic without engaging its specific value, pause and force a steelm",
+      "timestamp": "2026-02-25T08:10:25.124Z"
+    },
+    {
+      "id": "act_0fa7aa35",
+      "type": "memory_stored",
+      "description": "[FACT] Code Research MCP -- unified dev search",
+      "details": "Code Research MCP unifies search across StackOverflow, MDN, GitHub, npm, and PyPI in one tool. Immediate config-only MCP addition for development research.",
+      "timestamp": "2026-02-25T08:10:26.205Z"
+    },
+    {
+      "id": "act_7f909de4",
+      "type": "memory_stored",
+      "description": "[FACT] Cargo.toml release profile optimizations",
+      "details": "Zero-effort Rust binary optimization: add lto=true, codegen-units=1, opt-level=3, panic=abort under [profile.release] in Cargo.toml. Reduces binary size and improves performance with no code changes.",
+      "timestamp": "2026-02-25T08:10:30.549Z"
+    },
+    {
+      "id": "act_90e3136f",
+      "type": "memory_retrieved",
+      "description": "Retrieved 5 memories for: \"cross-project technical knowledge tools frameworks APIs debu\"",
+      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_b0e6759c: GitMCP -- instant docs from any GitHub repo\n- #mem_4255a1af: Package Version Check MCP -- 14+ ecosystems\n\nWIN MEMORY (you've handled this domain before):\n- #mem_34d8b98f: Completed: Add Augment Context Engine MCP to setup\n- #mem_45431539: Completed: Add Perplexity + GitMCP + Package Version MCP servers\n- #mem_c9dcdd3d: Completed: Add Cargo.toml release profile optimization",
+      "timestamp": "2026-02-25T08:10:32.669Z"
+    },
+    {
+      "id": "act_73701bff",
+      "type": "memory_stored",
+      "description": "[FACT] React 19.2 Activity component for view preservation",
+      "details": "React 19.2 introduces Activity component with mode={visible|hidden} that preserves component state when switching tabs/views. Wrap each view in Activity to maintain state without unmounting. Direct application to our multi-view desktop app.",
+      "timestamp": "2026-02-25T08:10:34.985Z"
+    },
+    {
+      "id": "act_092c1ce5",
+      "type": "memory_stored",
+      "description": "[FACT] Biome -- 50-100x faster than ESLint + Prettier",
+      "details": "Biome is a single Rust binary that replaces both ESLint and Prettier. Lints 10k files in 0.8s vs ESLint's 45s (50-100x faster). Drop-in replacement for linting and formatting. Immediate win.",
+      "timestamp": "2026-02-25T08:10:38.871Z"
+    },
+    {
+      "id": "act_239d8d2f",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Spec-Driven Development -- 3-5 line spec before every build task",
+      "details": "Write a 3-5 line spec before every build task. GitHub Spec Kit provides tooling for this. Validated pattern: plan-first approaches consistently outperform dive-in coding. Medium effort, high value adoption.",
+      "timestamp": "2026-02-25T08:10:43.409Z"
+    },
+    {
+      "id": "act_a7377c43",
+      "type": "memory_stored",
+      "description": "[FACT] Claude Code Agent Teams -- parallel teammates",
+      "details": "Claude Code supports parallel agent teammates via env var CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1. Enables multiple Claude instances working in parallel on different tasks. Medium effort adoption -- requires workflow changes.",
+      "timestamp": "2026-02-25T08:10:47.494Z"
+    },
+    {
+      "id": "act_16e72863",
+      "type": "memory_stored",
+      "description": "[FACT] tauri-specta -- auto-generate TS bindings from Rust commands",
+      "details": "tauri-specta auto-generates TypeScript type bindings from Rust Tauri commands. Eliminates manual type duplication between Rust backend and React frontend. Medium effort adoption for our Tauri v2 app.",
+      "timestamp": "2026-02-25T08:10:51.680Z"
+    },
+    {
+      "id": "act_1618379c",
+      "type": "memory_stored",
+      "description": "[FACT] Tauri Channels -- streaming IPC to replace file-watcher polling",
+      "details": "Tauri Channels enable streaming IPC between Rust backend and JS frontend. Can replace our current file-watcher polling approach for real-time state updates. More efficient and lower latency than polling JSON files.",
+      "timestamp": "2026-02-25T08:10:55.503Z"
+    },
+    {
+      "id": "act_f63fc6db",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Self-Review in Verify Phase -- Claude critiques own output",
+      "details": "Add a self-review step in the Verify workflow phase where Claude critiques its own output before marking a task done. Catches issues before shipping. Fits naturally into our existing workflow engine (idle->scope->plan->build->verify->ship).",
+      "timestamp": "2026-02-25T08:11:00.086Z"
+    },
+    {
+      "id": "act_740529e2",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Branded Types for IDs -- type-safe TaskId, SessionId",
+      "details": "Use TypeScript branded types for IDs (TaskId, SessionId, etc.) to get compile-time type safety. Prevents passing a SessionId where a TaskId is expected. Medium effort adoption across our state management layer.",
+      "timestamp": "2026-02-25T08:11:04.870Z"
+    },
+    {
+      "id": "act_fdc0113b",
+      "type": "memory_stored",
+      "description": "[FACT] TinyBase -- 5KB reactive store with CRDT sync",
+      "details": "TinyBase is a 5KB reactive store with tables, queries, CRDT sync, and undo support. 4k GitHub stars. Worth evaluating as a potential upgrade from our JSON file storage. Provides structured data with conflict-free multi-instance support.",
+      "timestamp": "2026-02-25T08:11:09.683Z"
+    },
+    {
+      "id": "act_5a08cbe5",
+      "type": "memory_stored",
+      "description": "[FACT] Loro -- Rust CRDTs for collaborative state",
+      "details": "Loro provides Rust-native CRDTs for collaborative state management. 4.5k GitHub stars. Could enable conflict-free multi-instance state for our Tauri app. Worth evaluating alongside TinyBase for state upgrade.",
+      "timestamp": "2026-02-25T08:11:14.150Z"
+    },
+    {
+      "id": "act_4fe60fcc",
+      "type": "memory_stored",
+      "description": "[FACT] PGlite -- Postgres in WASM, 3MB",
+      "details": "PGlite runs Postgres in WASM at only 3MB. 12k GitHub stars. Potential upgrade path from JSON files to full Postgres queries without a server. Worth evaluating for structured storage needs.",
+      "timestamp": "2026-02-25T08:11:18.426Z"
+    },
+    {
+      "id": "act_93431185",
+      "type": "memory_stored",
+      "description": "[FACT] redb -- pure Rust embedded ACID database",
+      "details": "redb is a pure Rust embedded ACID database. Could replace our JSON file storage with proper transactional guarantees while staying in the Rust ecosystem. Natural fit for Tauri backend. Worth evaluating.",
+      "timestamp": "2026-02-25T08:11:22.838Z"
+    },
+    {
+      "id": "act_9f2e1c50",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Comlink-style IPC -- ES6 Proxy wrapping Tauri invoke()",
+      "details": "Use Comlink-style ES6 Proxy pattern to wrap Tauri invoke() calls, making remote Rust calls feel like local function calls from JS. Eliminates boilerplate invoke strings. Part of the broader Proxy pattern trend (Comlink, Valtio).",
+      "timestamp": "2026-02-25T08:11:28.056Z"
+    },
+    {
+      "id": "act_8233735c",
+      "type": "memory_stored",
+      "description": "[FACT] Deep Linking -- helloworld:// protocol for Discord notifications",
+      "details": "Tauri supports deep linking via custom protocol (helloworld://). Could enable Discord notifications to link directly into the app, opening specific views or tasks. Worth evaluating for Discord integration UX.",
+      "timestamp": "2026-02-25T08:11:32.946Z"
+    },
+    {
+      "id": "act_c82b7ca8",
+      "type": "memory_stored",
+      "description": "[FACT] Vite 8 + Rolldown -- Rust bundler, Linear went 46s to 6s",
+      "details": "Vite 8 uses Rolldown, a Rust-based bundler. Linear reported build times dropping from 46s to 6s. Worth evaluating for our React frontend build performance when Vite 8 stabilizes.",
+      "timestamp": "2026-02-25T08:11:37.874Z"
+    },
+    {
+      "id": "act_caaa184e",
+      "type": "memory_stored",
+      "description": "[FACT] TypeScript 5.9 import defer -- lazy module evaluation",
+      "details": "TypeScript 5.9 introduces 'import defer' syntax for lazy module evaluation. Modules are only evaluated when first accessed, reducing startup time. Worth evaluating for our app's initial load performance.",
+      "timestamp": "2026-02-25T08:11:42.141Z"
+    },
+    {
+      "id": "act_a1adb276",
+      "type": "memory_stored",
+      "description": "[FACT] Competitor: Cursor -- parallel subagents + plugin marketplace",
+      "details": "Cursor as of Jan-Feb 2026 has parallel subagents and a plugin marketplace. Parallel agents becoming table stakes across AI coding tools. Relevant for our multi-agent deliberation and potential plugin system.",
+      "timestamp": "2026-02-25T08:11:47.123Z"
+    },
+    {
+      "id": "act_26355bb8",
+      "type": "memory_stored",
+      "description": "[FACT] Competitor: Windsurf -- arena mode, auto-generate memories",
+      "details": "Windsurf (Jan-Feb 2026) has arena mode and auto-generates memories from sessions. Auto-memory generation is relevant -- we do this manually with hw_store_memory. Could be automated in our workflow.",
+      "timestamp": "2026-02-25T08:11:51.827Z"
+    },
+    {
+      "id": "act_97bc9e01",
+      "type": "memory_stored",
+      "description": "[FACT] Competitor: Copilot -- Agent Skills, 95% context compression",
+      "details": "GitHub Copilot as of Feb 2026 has Agent Skills and context compression at 95%. 95% context compression is significant -- allows much larger codebases in context. Relevant for our multi-project support initiative.",
+      "timestamp": "2026-02-25T08:11:56.140Z"
+    },
+    {
+      "id": "act_a16ce066",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Competitor: Aider -- architect/editor dual-model split",
+      "details": "Aider uses an architect/editor dual-model split pattern. One model plans (architect), another executes (editor). This separation of concerns could improve our workflow -- currently Claude does both planning and execution in the same context.",
+      "timestamp": "2026-02-25T08:12:00.845Z"
+    },
+    {
+      "id": "act_07fe6dad",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Competitor: OpenHands -- event-sourced architecture, 72% SWE-Bench",
+      "details": "OpenHands uses event-sourced architecture where every action is replayable. Scores 72% on SWE-Bench. Event sourcing enables perfect crash recovery and debugging. Relevant pattern for our state management evolution.",
+      "timestamp": "2026-02-25T08:12:05.350Z"
+    },
+    {
+      "id": "act_f34380d7",
+      "type": "memory_stored",
+      "description": "[FACT] Industry trend: semantic indexing is highest leverage for AI coding",
+      "details": "Across competitors (Cursor, Augment, Copilot), three trends dominate: parallel agents are table stakes, semantic code indexing is the highest leverage improvement, and plan-first approaches are validated. Augment's Context Engine (semantic indexing) drove 70% performance boost and SWE-Bench Pro #1.",
+      "timestamp": "2026-02-25T08:12:10.977Z"
+    },
+    {
+      "id": "act_3f611d84",
+      "type": "memory_stored",
+      "description": "[FACT] Vibe-Kanban -- 19.6k stars, kanban where cards are AI agents",
+      "details": "Vibe-Kanban (19.6k GitHub stars) is a kanban board where each card is an AI agent working in a git worktree. Direct conceptual overlap with our task system. Most popular trending repo in the AI coding space as of Feb 2026.",
+      "timestamp": "2026-02-25T08:12:16.324Z"
+    },
+    {
+      "id": "act_22576d9f",
+      "type": "memory_stored",
+      "description": "[FACT] PageIndex -- 17.2k stars, RAG without vector DBs",
+      "details": "PageIndex (17.2k GitHub stars) does RAG using tree indices + LLM reasoning instead of vector databases. Alternative approach to semantic search that avoids embedding infrastructure. Could inform our memory/brain search approach.",
+      "timestamp": "2026-02-25T08:12:20.978Z"
+    },
+    {
+      "id": "act_0e0b4d3f",
+      "type": "memory_stored",
+      "description": "[FACT] claude-mem -- 16.9k stars, persistent memory via SQLite + Chroma",
+      "details": "claude-mem (16.9k GitHub stars) provides persistent memory for Claude via SQLite + Chroma vector DB. Similar concept to our brain/memory system but using a different storage backend. Reference implementation for Claude memory patterns.",
+      "timestamp": "2026-02-25T08:12:25.290Z"
+    },
+    {
+      "id": "act_cc82bf70",
+      "type": "memory_stored",
+      "description": "[FACT] Memvid -- 12.7k stars, single portable file replaces vector DBs",
+      "details": "Memvid (12.7k GitHub stars) uses a single portable file to replace vector databases for memory/RAG. Interesting alternative to our JSON file approach -- could simplify memory storage while adding semantic search capabilities.",
+      "timestamp": "2026-02-25T08:12:30.537Z"
+    },
+    {
+      "id": "act_f73aa63f",
+      "type": "memory_stored",
+      "description": "[FACT] NanoClaw -- full Claude agent in 500 lines",
+      "details": "NanoClaw implements a full Claude agent in just 500 lines of code. Demonstrates that a minimal viable agent is surprisingly small. Reference for understanding the core primitives needed for Claude agent architecture.",
+      "timestamp": "2026-02-25T08:12:35.087Z"
+    },
+    {
+      "id": "act_5361f98f",
+      "type": "memory_stored",
+      "description": "[FACT] 8bitcn/ui and Pixelact UI -- retro pixel-art components on shadcn",
+      "details": "8bitcn/ui and Pixelact UI are trending component libraries that provide retro pixel-art styled components built on top of shadcn. Shows the ongoing trend of copy-paste component distribution (shadcn pattern) in novel aesthetic directions.",
+      "timestamp": "2026-02-25T08:12:40.398Z"
+    },
+    {
+      "id": "act_9e205d88",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Product opportunity: Tech Radar MCP -- proactive discovery",
+      "details": "Nobody has built proactive technique/repo discovery as an MCP server. Gap is wide open. Approach: scrape GitHub trending + HN + subreddits, analyze patterns, surface recommendations by user stack. Subscription model viable. Closest competitor Forage has only 2 stars. Could be a product.",
+      "timestamp": "2026-02-25T08:12:46.388Z"
+    },
+    {
+      "id": "act_01a18b60",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: Proxy pattern makes remote calls feel local",
+      "details": "The Proxy pattern (Comlink, Valtio) wraps remote or async operations behind ES6 Proxy objects so they feel like local function calls. Eliminates boilerplate. Applied to Tauri IPC: proxy wrapping invoke() removes string-based command names.",
+      "timestamp": "2026-02-25T08:12:51.181Z"
+    },
+    {
+      "id": "act_710ac59a",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: Compile-time elimination (Million.js)",
+      "details": "Compile-time elimination pattern (exemplified by Million.js) pushes work from runtime to build time. Static analysis at compile time removes unnecessary runtime overhead. General principle: any work you can do at build time, do at build time.",
+      "timestamp": "2026-02-25T08:12:55.983Z"
+    },
+    {
+      "id": "act_ecb4db80",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: Copy-paste distribution (shadcn model)",
+      "details": "The shadcn copy-paste distribution model: own the code, not the dependency. Users copy components into their project rather than installing a package. Eliminates version conflicts and enables full customization. Dominant UI component distribution pattern in 2025-2026.",
+      "timestamp": "2026-02-25T08:13:00.736Z"
+    },
+    {
+      "id": "act_cb5a5dc4",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: CRDT-first state (Loro, TinyBase)",
+      "details": "CRDT-first state management (Loro, TinyBase) provides conflict-free multi-instance state by default. No merge conflicts, no coordination needed between instances. Key enabler for multi-project and multi-agent scenarios where multiple Claude instances may touch the same state.",
+      "timestamp": "2026-02-25T08:13:05.661Z"
+    },
+    {
+      "id": "act_e2cfeaf4",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: 166 Bytes of Ambition (htmz) -- primitives first",
+      "details": "htmz demonstrates that powerful functionality can emerge from minimal primitives (166 bytes). Design principle: before adding abstractions, ask what the raw primitives can do. Challenge assumptions about necessary complexity. Applied: what's the minimal viable tool for each MCP operation?",
+      "timestamp": "2026-02-25T08:13:11.861Z"
+    },
+    {
+      "id": "act_e20a0d8a",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: Event-sourced architecture for agent systems",
+      "details": "Event-sourced architecture (used by OpenHands, 72% SWE-Bench) makes every action replayable. Benefits: perfect crash recovery, debugging by replaying events, audit trail. Applied to our system: could replace our activity.json append-only log with a proper event store that drives state reconstruction.",
+      "timestamp": "2026-02-25T08:13:16.952Z"
+    },
+    {
+      "id": "act_504620ec",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Pattern: Actor model -- own state in dedicated task, message via channels",
+      "details": "Actor model pattern: each task owns its state in a dedicated actor and communicates via message channels. No shared mutable state. Natural fit for multi-agent systems where each agent/task runs independently. Could structure our deliberation agents and task execution this way.",
+      "timestamp": "2026-02-25T08:13:22.857Z"
+    },
+    {
+      "id": "act_0ea9cbfa",
+      "type": "memory_stored",
+      "description": "[FACT] sonic-rs -- SIMD JSON parsing, 2-3x faster",
+      "details": "sonic-rs is a Rust JSON parser using SIMD instructions for 2-3x faster JSON parsing. Relevant for our Tauri backend which reads/writes many JSON state files. Drop-in replacement for serde_json in hot paths.",
+      "timestamp": "2026-02-25T08:13:27.536Z"
+    },
+    {
+      "id": "act_9fd4236e",
+      "type": "memory_stored",
+      "description": "[FACT] Stronghold plugin -- encrypted credential storage for Tauri",
+      "details": "Tauri Stronghold plugin provides encrypted credential storage. Could secure API keys, Discord tokens, and other secrets instead of storing them in plain config files. Native Tauri ecosystem solution.",
+      "timestamp": "2026-02-25T08:13:31.793Z"
+    },
+    {
+      "id": "act_e866bc3e",
+      "type": "memory_stored",
+      "description": "[FACT] CancellationToken for graceful Rust async shutdown",
+      "details": "Rust CancellationToken pattern enables graceful async shutdown of background tasks. Relevant for our watcher system and any long-running Tauri async operations. Ensures clean resource cleanup on app exit.",
+      "timestamp": "2026-02-25T08:13:36.273Z"
+    },
+    {
+      "id": "act_77989fef",
+      "type": "memory_stored",
+      "description": "[FACT] useEffectEvent -- stable callbacks without re-triggering effects",
+      "details": "React useEffectEvent hook provides stable callback references that don't re-trigger effects when their closure values change. Solves the stale closure problem in effects without needing extra deps. Available in React 19.x.",
+      "timestamp": "2026-02-25T08:13:41.165Z"
+    },
+    {
+      "id": "act_93bb8b29",
+      "type": "memory_stored",
+      "description": "[FACT] Tailwind 4 @utility directive for custom utilities",
+      "details": "Tailwind 4 introduces the @utility directive for defining custom utilities directly in CSS. No longer need plugin JavaScript -- write custom utilities inline. We're already on Tailwind 4, so this is immediately available.",
+      "timestamp": "2026-02-25T08:13:45.820Z"
+    },
+    {
+      "id": "act_bd4373d9",
+      "type": "memory_stored",
+      "description": "[FACT] Motion (ex-Framer Motion) for layout animations",
+      "details": "Motion (formerly Framer Motion) is the go-to React animation library for layout animations. Renamed from Framer Motion. Relevant for our desktop app view transitions and panel animations.",
+      "timestamp": "2026-02-25T08:13:50.176Z"
+    },
+    {
+      "id": "act_caff3d45",
+      "type": "memory_stored",
+      "description": "[FACT] Vitest Browser Mode -- real browser component testing",
+      "details": "Vitest Browser Mode enables running component tests in a real browser instead of jsdom. More accurate DOM testing with actual browser APIs. Could replace our current test setup for more reliable React component tests.",
+      "timestamp": "2026-02-25T08:13:54.431Z"
+    },
+    {
+      "id": "act_9160a015",
+      "type": "memory_stored",
+      "description": "[FACT] Zustand v5 + TanStack Query -- recommended React state stack",
+      "details": "Zustand v5 for shared client state plus TanStack Query for async/server state is the recommended React state management combination as of Feb 2026. Clean separation of concerns: Zustand for UI state, TanStack Query for data fetching and caching.",
+      "timestamp": "2026-02-25T08:13:59.595Z"
+    },
+    {
+      "id": "act_eabb6727",
+      "type": "memory_stored",
+      "description": "[FACT] Stripe Payment Links: URLs are always random -- cannot be customized",
+      "details": "Stripe Payment Links always use auto-generated IDs in the format https://buy.stripe.com/{RANDOM_ID}. This is a Stripe platform limitation -- there is no way to create custom/readable URLs for payment links. The random IDs are by design: security (prevents URL manipulation), global namespace (prevents collisions), simplicity. Alternative approaches: build custom checkout page that redirects to Stripe, or use Stripe Checkout Sessions (still auto-generated URLs but created dynamically via API). For trust: add title/aria-label attributes to buy buttons so hover text explains the product.",
+      "timestamp": "2026-02-25T08:14:04.566Z"
+    },
+    {
+      "id": "act_7072ba57",
+      "type": "memory_stored",
+      "description": "[FACT] Stripe SDK v17 typing: subscriptions.retrieve() wraps in Response<T>",
+      "details": "In newer Stripe SDK versions (v17+), stripe.subscriptions.retrieve() returns a Response<Subscription> wrapper, not the raw Subscription object directly. This caused persistent TypeScript errors in webhook handlers. The fix is either: (1) use 'as unknown as Stripe.Subscription' double-cast, or (2) access properties directly as the actual runtime return IS the subscription object (the typing is misleading). Stripe SDK constructor also crashes at Next.js build time if env vars are missing -- solve with a lazy Proxy pattern that defers initialization.",
+      "timestamp": "2026-02-25T08:14:08.689Z"
+    },
+    {
+      "id": "act_2802f383",
+      "type": "memory_stored",
+      "description": "[FACT] Prisma 7 breaking changes: downgrade to Prisma 6 as workaround",
+      "details": "Prisma 7 changed the datasource url syntax in a breaking way. When hitting unexpected schema errors, downgrading to Prisma 6 is a viable workaround. Also: unused Stripe fields in Prisma schema (stripeSubscriptionId, stripePriceId, stripeCurrentPeriodEnd) are common dead code in boilerplates -- only stripeCustomerId is typically used for one-time payment flows. Document which fields are actually active vs future-proofing to avoid confusion.",
+      "timestamp": "2026-02-25T08:14:12.622Z"
+    },
+    {
+      "id": "act_dd8429f4",
+      "type": "memory_stored",
+      "description": "[FACT] Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check",
+      "details": "Full NextAuth import in Next.js middleware exceeds Vercel's 1.01MB limit, causing deployment failure. Fix: replace full NextAuth middleware with a lightweight cookie-based check that only reads the session cookie. This pattern applies to any heavy import in middleware -- Vercel enforces strict middleware size limits. Also: Next.js build fails without env vars if Stripe/NextAuth constructors run at build time. Use lazy initialization patterns (Proxy objects) to defer until runtime.",
+      "timestamp": "2026-02-25T08:14:19.436Z"
+    },
+    {
+      "id": "act_c020bd54",
+      "type": "memory_stored",
+      "description": "[FACT] Formspree: silent failure with placeholder URLs, always validate endpoint IDs",
+      "details": "Formspree forms with placeholder URLs (e.g., https://formspree.io/f/PLACEHOLDER) fail silently -- no error shown to user, leads are just lost. This was found as a critical production bug. Always validate that Formspree endpoint IDs are real before deploying. Similarly, Resend email (EMAIL_FROM in .env) must match a verified domain in your Resend account or emails silently fail. Pattern: any third-party service with placeholder config will fail silently -- add startup validation checks.",
+      "timestamp": "2026-02-25T08:14:24.116Z"
+    },
+    {
+      "id": "act_518a3be3",
+      "type": "memory_stored",
+      "description": "[FACT] GoatCounter: free privacy-friendly analytics, simple script tag integration",
+      "details": "GoatCounter is a privacy-friendly, open-source analytics alternative to Google Analytics. Integration is a single script tag: <script data-goatcounter='https://YOURSITE.goatcounter.com/count' async src='//gc.zgo.at/count.js'></script> placed before closing </body>. Free for personal use. Used across LaunchFast pages as the analytics solution. No cookie consent banner needed. Good choice for developer-focused sites where privacy matters.",
+      "timestamp": "2026-02-25T08:14:28.238Z"
+    },
+    {
+      "id": "act_e946ee3d",
+      "type": "memory_stored",
+      "description": "[PAIN] git push with node_modules/dist accidentally committed blocks all further pushes",
+      "details": "Accidentally staging and committing node_modules/ or .next/ directories makes git push fail because the files are too large for GitHub. The commit history retains the large files even after deletion. Fix requires either: (1) git filter-branch to rewrite history, (2) force push a clean state, or (3) create a new clean commit that removes the files. Prevention: always use specific file paths in git add (never 'git add .'), verify .gitignore includes node_modules, .next, dist before first commit. This happened multiple times across sessions.",
+      "timestamp": "2026-02-25T08:14:36.650Z"
+    },
+    {
+      "id": "act_6c3d8543",
+      "type": "memory_retrieved",
+      "description": "Retrieved 8 memories for: \"Tauri dev mode lib.rs crash worktree watcher spawnable\"",
+      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_d64e94b2: Stronghold plugin -- encrypted credential storage for Tauri\n- #mem_706d3714: Stripe SDK v17 typing: subscriptions.retrieve() wraps in Response<T>\n- #mem_1a0150bc: Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check\n- #mem_6599d4b1: Formspree: silent failure with placeholder URLs, always validate endpoint IDs\n- #mem_823838dc: Prisma 7 breaking changes: downgrade to Prisma 6 as workaround\n\nWIN MEMORY (you've handled this domain before):\n- #mem_c9dcdd3d: Completed: Add Cargo.toml release profile optimization\n- #mem_34d8b98f: Completed: Add Augment Context Engine MCP to setup\n- #mem_45431539: Completed: Add Perplexity + GitMCP + Package Version MCP servers",
+      "timestamp": "2026-02-25T08:14:40.478Z"
+    },
+    {
+      "id": "act_fc2a0d5e",
+      "type": "memory_stored",
+      "description": "[PAIN] Linters and formatters silently revert edits -- check for watchers before editing",
+      "details": "When Prettier, ESLint, or editor auto-save watchers are running, manual file edits (via Edit/Write tools) get silently reverted. This caused repeated frustration in LaunchFast sessions where SocialProof.tsx and webhook route changes kept disappearing. Symptoms: edit applies, then file reverts to previous state on next read. Fix: (1) check for running watchers/linters before editing, (2) use git to verify edits persist, (3) if edits keep reverting, use bash/Python scripts to write files atomically, (4) stage changes immediately after editing.",
+      "timestamp": "2026-02-25T08:14:43.155Z"
+    },
+    {
+      "id": "act_03eb5279",
+      "type": "memory_stored",
+      "description": "[PAIN] GitHub Pages branch confusion: gh-pages vs master have completely different content",
+      "details": "LaunchFast used a two-branch strategy: master = full Next.js source code (26 TSX files), gh-pages = static HTML marketing site. This caused constant confusion: edits on wrong branch, files not found, changes not deploying. The branches serve completely different purposes. Multiple debugging sessions were wasted editing on the wrong branch. Lesson: when a repo uses gh-pages for deployment, always verify which branch you are on before making changes. Use 'git branch' before every edit session. Consider documenting the branch strategy in the repo README.",
+      "timestamp": "2026-02-25T08:14:48.532Z"
+    },
+    {
+      "id": "act_fc9b89dc",
+      "type": "memory_stored",
+      "description": "[PAIN] Tauri dev mode hot-reload kills Claude PTY session",
+      "details": "When `cargo tauri dev` is running, editing lib.rs triggers Rust file watcher recompile. This closes the app window, killing the embedded PTY and Claude's session. Root cause: Claude lives inside the thing it's editing. Solution: hard-block lib.rs edits on master, force all Rust changes through a git worktree, spawnable watcher copies files on app shutdown.",
+      "timestamp": "2026-02-25T08:14:49.911Z"
+    },
+    {
+      "id": "act_f620d25f",
+      "type": "memory_stored",
+      "description": "[PAIN] sudo.py hook has no matcher -- fires on every tool call",
+      "details": "The auto-pilot plugin's sudo.py PreToolUse hook has no matcher configured, so it spawns python3 on every single tool call (Bash, Read, Grep, Edit, etc.). Over long sessions with hundreds of tool calls, this creates significant overhead from repeated python3 startup costs. Should add a matcher to only fire on Write/Edit events.",
+      "timestamp": "2026-02-25T08:14:54.558Z"
+    },
+    {
+      "id": "act_79a1f550",
+      "type": "memory_stored",
+      "description": "[DECISION] Product pricing: one-time payments over subscriptions for boilerplates/templates",
+      "details": "For digital developer tools (boilerplates, templates, configs), one-time pricing beats subscriptions because: (1) lower friction for first purchase (no commitment anxiety), (2) simpler to implement (no billing portal, dunning, churn management), (3) matches developer expectations for build-once assets, (4) Stripe Payment Links work great for static sites. Subscription model is better only for SaaS with ongoing value delivery. Price range for dev tools: $14-119, with bundles at $99. The Stripe checkout mode must be 'payment' not 'subscription' for one-time purchases.",
+      "timestamp": "2026-02-25T08:14:55.428Z"
+    },
+    {
+      "id": "act_1a10a723",
+      "type": "memory_stored",
+      "description": "[FACT] Tauri v2 separate windows share WebView localStorage",
+      "details": "In Tauri v2, separate windows (like the BuddyOverlay and main window) share the same WebView origin, so localStorage is shared between them. This means Zustand stores persisted to localStorage can be read by any window. However, cross-window event timing is unreliable -- if window B mounts after window A has already emitted an event, B misses it. Fix: read persisted state from localStorage on mount as baseline, use events for live updates.",
+      "timestamp": "2026-02-25T08:14:58.474Z"
+    },
+    {
+      "id": "act_6ee96865",
+      "type": "memory_stored",
+      "description": "[DECISION] Pat's marketing rule: developer audience has high BS detection, authenticity over virality",
+      "details": "Pat explicitly rejected guru-style marketing hooks like 'I built 6 products in a weekend with AI' as course-seller bait. Rules for developer marketing: (1) Lead with the problem (boilerplate fatigue), not the builder story, (2) Product-centric messaging, not productivity theater, (3) Sentiment matters more than virality of tactic -- focus on what developers actually respond to in comments/reviews, (4) No fake testimonials -- better to have zero social proof than unverifiable claims, (5) For pre-launch: use technical credibility (open source, automated tests) and risk reversal (money-back guarantee) instead of fake social proof.",
+      "timestamp": "2026-02-25T08:15:00.392Z"
+    },
+    {
+      "id": "act_22da6c6a",
+      "type": "memory_stored",
+      "description": "[PAIN] BuddyOverlay theme race condition on mount",
+      "details": "BuddyOverlay starts with hardcoded default theme ('void-protocol'). It listens for hw-theme-changed events from ClaudeBuddy, but if BuddyOverlay mounts after ClaudeBuddy has already emitted its initial theme, it never receives the event. The hw-buddy-sync-request listener existed but was wired backwards. Fix: read theme from localStorage (shared between Tauri windows) on init, use events only for subsequent changes.",
+      "timestamp": "2026-02-25T08:15:02.921Z"
+    },
+    {
+      "id": "act_4fb9b93c",
+      "type": "memory_stored",
+      "description": "[WIN] Multi-agent orchestrator pattern: planner + builder + tester + observer",
+      "details": "The LaunchFast experiment used a multi-agent orchestrator v2 with specialized roles: Planner (task creation, decomposition, prioritization), Builder (implementation), Tester (QA, bug finding), Observer (monitoring). Key innovations: (1) Two-Strike system -- same error twice = stop and escalate, (2) 5-minute escalation protocol with diagnostic feedback to planner, (3) Auto-decomposition on timeout -- breaks stuck tasks into smaller sub-tasks instead of blind retry, (4) Task decomposition patterns: Multi-Action, UI Feature Addition, Improvement Task, Bug Fix, Deployment Task. Agent mood tracking and streak-based risk appetite. This architecture influenced hello-world.",
+      "timestamp": "2026-02-25T08:15:06.039Z"
+    },
+    {
+      "id": "act_eebc1890",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Spawnable watchers as a deployable primitive",
+      "details": "Pat's design: watchers should be on-demand, spawnable, self-terminating -- not always-on daemons. hw_spawn_watcher takes a type and config, spawns a detached background process, returns immediately. Watcher runs until condition met, executes action, writes result to .hello-world/watcher-results.json, exits. Current type: app_shutdown_copy (polls app.pid every 2s, copies files when app exits). Pattern generalizable to file-change, build-ready, etc.",
+      "timestamp": "2026-02-25T08:15:10.698Z"
+    },
+    {
+      "id": "act_d6000824",
+      "type": "memory_stored",
+      "description": "[FACT] Chrome extension distribution: unpublished extensions require honest CTA language",
+      "details": "Chrome extensions not published to the Chrome Web Store require manual developer-mode installation. CTA buttons saying 'Add to Chrome' are misleading -- they should say 'Install from GitHub' or 'Get Extension (Manual Install)'. Framing manual install as a positive for developers: 'Open Source, Full control over your data, Install in 60 seconds from GitHub'. Publishing to Chrome Web Store requires review process. Until published, link to the GitHub repo and be transparent about the install process. Developer audience actually prefers GitHub-distributed tools for privacy/control reasons.",
+      "timestamp": "2026-02-25T08:15:13.804Z"
+    },
+    {
+      "id": "act_8c863e80",
+      "type": "memory_stored",
+      "description": "[DECISION] Claude-in-PTY is non-negotiable core vision",
+      "details": "Pat explicitly rejected the suggestion to run Claude outside the app's PTY. Claude embedded in the Tauri terminal is an essential part of the Hello World vision. Multiple sessions were spent getting this working. Never suggest removing it. When Rust editing conflicts with the PTY, the solution is worktrees + watchers, not decoupling Claude from the app.",
+      "timestamp": "2026-02-25T08:15:14.748Z"
+    },
+    {
+      "id": "act_bcfcfa0f",
+      "type": "memory_stored",
+      "description": "[FACT] Zod is the standard for Next.js API route validation",
+      "details": "Zod is the recommended validation library for Next.js API routes. It provides runtime type checking, input sanitization, and TypeScript type inference in one package. Pattern: define a schema per route, parse request body, return 400 with zodError.errors if invalid. Zod was already installed in the LaunchFast boilerplate but unused -- a common gap in boilerplate code. Always add input validation to API routes to prevent SQL injection, XSS, and DOS attacks. Zod + TypeScript = full type safety from API boundary to database.",
+      "timestamp": "2026-02-25T08:15:17.938Z"
+    },
+    {
+      "id": "act_0b3a8bc3",
+      "type": "memory_stored",
+      "description": "[PAIN] GitHub push blocked by Discord bot tokens in commit history",
+      "details": "GitHub secret scanning blocked pushes due to Discord bot tokens committed in old history (discord-listener.ts and server.ts). Two options: (1) visit the unblock URL GitHub provides to allow the push, or (2) scrub history with git filter-repo + force-push. The unblock URL is faster but the tokens remain in history. For production, scrub the history.",
+      "timestamp": "2026-02-25T08:15:18.712Z"
+    },
+    {
+      "id": "act_65c19fe5",
+      "type": "memory_stored",
+      "description": "[FACT] Playwright MCP: use real Chrome profile for saved passwords",
+      "details": "Playwright MCP by default uses an isolated profile at C:/Users/Patri/.claude/browser-profile. To use Pat's real Chrome with saved passwords, change --user-data-dir in ~/.mcp.json to C:/Users/Patri/AppData/Local/Google/Chrome/User Data. Caveat: Chrome can't have two instances using the same profile simultaneously -- must close Chrome before Playwright uses it. Requires Claude Code restart after config change.",
+      "timestamp": "2026-02-25T08:15:23.141Z"
+    },
+    {
+      "id": "act_ac114ad9",
+      "type": "memory_stored",
+      "description": "[PAIN] Multi-agent max-turn failures are silent by default -- must detect and count them",
+      "details": "When Claude CLI hits max turns, it exits with code 0 and includes 'Error: Reached max turns (30)' in stdout. This means the agent-runner resolves successfully, and the orchestrator calls completeTask instead of failTask. Result: 9+ wasted builder turns counted as 'done' with no work actually completed. Fix: (1) check agent output for 'max turns' string after completion, (2) if found, call failTask instead of completeTask, (3) track max-turn failures separately in metrics, (4) streak tracking gets corrupted if wins include silent failures. Applied in LaunchFast orchestrator -- streak losses must be incremented for max-turn exits.",
+      "timestamp": "2026-02-25T08:15:24.784Z"
+    },
+    {
+      "id": "act_2456050c",
+      "type": "memory_stored",
+      "description": "[WIN] Deliberation stdin pipe fix solved Windows agent subprocess issue",
+      "details": "The deliberation agent runner was failing on Windows because temp files with JSON content were getting quote-mangled by the shell. Fix: pipe stdin directly to the claude subprocess instead of using temp files. Set shell:true for Windows PATH resolution and HW_AGENT_MODE=1 env var. This made multi-agent deliberation work end-to-end for the first time.",
+      "timestamp": "2026-02-25T08:15:30.708Z"
+    },
+    {
+      "id": "act_7bbd1e13",
+      "type": "memory_stored",
+      "description": "[FACT] GitHub Pages + Vercel dual deployment: know which serves what",
+      "details": "A common pattern for developer products: GitHub Pages serves static HTML marketing/landing pages (free, zero config, trusted by devs), while Vercel serves the actual Next.js application (SSR, API routes, dynamic content). Problems arise when the two deployments get out of sync -- pricing can differ, features can be listed differently, pages can 404 on one but work on the other. Always document which deployment serves what purpose. LaunchFast had pricing contradictions between Vercel (SaaS-style tiers with 'requests/month') and GitHub Pages (correct one-time boilerplate pricing). The Vercel deployment is driven by master branch, GitHub Pages by gh-pages branch.",
+      "timestamp": "2026-02-25T08:15:32.758Z"
+    },
+    {
+      "id": "act_7f4d9267",
+      "type": "memory_stored",
+      "description": "[ARCHITECTURE] Deliberation sequential posting prevents agent collision",
+      "details": "The old runDeliberation background runner fired multiple API calls potentially in parallel, causing agents to write to chatroom.json simultaneously. Fix: removed the runner entirely. Claude calls hw_post_agent_message sequentially -- agents physically can't post at the same time. Each tool response shows last 6 messages so Claude reads the live thread and decides who speaks next naturally, skipping agents with nothing to add.",
+      "timestamp": "2026-02-25T08:15:34.936Z"
+    },
+    {
+      "id": "act_d6889b72",
+      "type": "memory_stored",
+      "description": "[DECISION] Pat's autonomy rule: execute first, report results, only ask for tool access",
+      "details": "Pat's explicit directive from the AI business experiment: 'That is not the rules of this experiment.' Context: Claude asked permission before executing a strategy. The rule is: execute autonomously, only ask for tool access or credentials. Asking 'should I?' is a failure mode in an autonomy experiment. Apply this pattern: make decisions, implement, report what you did. Exceptions: destructive operations (which go through approval gates), spending money, or architecture changes that affect other systems.",
+      "timestamp": "2026-02-25T08:15:37.823Z"
+    },
+    {
+      "id": "act_a81e85a1",
+      "type": "memory_stored",
+      "description": "[FACT] PreCompact hook for automated timeline and cost tracking",
+      "details": "PreCompact hook fires before every context compression. Used to auto-write timeline.md entries (session N with completed tasks and phase transitions) and backfill cost data from JSONL logs. Keyed on session ID so running multiple times in one session updates in place, never duplicates. This replaced manual timeline updates that drifted 22+ sessions behind.",
+      "timestamp": "2026-02-25T08:15:39.276Z"
+    },
+    {
+      "id": "act_c74c86d1",
+      "type": "memory_stored",
+      "description": "[FACT] Session cost data: $116 across 293M tokens, 95% cache reads",
+      "details": "Backfill of JSONL logs through session 43 showed $116.08 total spend across 293M tokens. Cache reads account for ~95% of tokens, which kept actual spend well below raw price. JSONL files contain costUsd and tokensUsed fields that can be extracted and written to sessions.json for the Cost view to display.",
+      "timestamp": "2026-02-25T08:15:43.354Z"
+    },
+    {
+      "id": "act_70354653",
+      "type": "memory_stored",
+      "description": "[FACT] Pat's product portfolio (Feb 2026): LaunchFast, PageBrain, TaxCreditCalculators, hello-world",
+      "details": "As of Feb 2026, Pat's active projects under CascadeProjects include: (1) LaunchFast SaaS Starter -- Next.js boilerplate with auth/payments/AI ($79-119), (2) PageBrain -- free Chrome extension for AI page summarization (Anthropic API), (3) TaxCreditCalculators.com -- solar lease vs buy calculator, content + lead gen model, (4) hello-world -- autonomous AI workspace Tauri desktop app, (5) continui -- project existed in CascadeProjects, (6) pokkit/pokkit-mini -- projects existed, (7) cortex, openclaw, leaselogic, agentflow, brain-dashboard, Microglia, Agent Arena, Anti, Dull Game -- various projects. Sibling product bundles: SEO Blog Engine ($29), Indie Hacker Toolkit ($19), PromptVault ($19), CursorRules Pro ($14).",
+      "timestamp": "2026-02-25T08:15:46.347Z"
+    },
+    {
+      "id": "act_e55c34e6",
+      "type": "memory_stored",
+      "description": "[PAIN] state.json race conditions can silently delete data",
+      "details": "Architecture audit (Session 39) found that concurrent reads/writes to state.json can cause data loss. Multiple tools writing to the same file without locking can overwrite each other's changes. The session.ts bug where decisionsMade are never persisted is a related symptom. The handoff file also gets deleted before it's safely consumed. Need file-level locking or atomic write-rename pattern for all .hello-world/ JSON files.",
+      "timestamp": "2026-02-25T08:15:51.163Z"
+    },
+    {
+      "id": "act_42494e9c",
+      "type": "memory_stored",
+      "description": "[FACT] Pino + Sentry: production logging and error tracking stack for Next.js",
+      "details": "Recommended monitoring stack for Next.js apps: Pino for structured logging (lightweight, JSON production logs, pretty dev logs), Sentry for error tracking + performance monitoring + session replay. Created in LaunchFast as optional infrastructure. Key setup: (1) logger.ts utility with debug/info/warn/error levels, (2) monitoring.ts for Sentry with lazy init, (3) .env config for SENTRY_DSN and LOG_LEVEL. Sentry free tier is sufficient for early-stage products. Log structured JSON in production, pretty-print in development. Never log sensitive data (API keys, PII).",
+      "timestamp": "2026-02-25T08:15:53.889Z"
+    },
+    {
+      "id": "act_0f5dbd53",
+      "type": "memory_stored",
+      "description": "[PAIN] Discord listener built send-only; receive side was missing",
+      "details": "hw_notify sends DMs to Pat via Discord bot -- works. But the listener (receive side) requires a separate always-on process (npm --workspace=packages/core run discord). The auto-start into lib.rs was never finished because it required editing Rust while the app was running. The listener understands: approve {id}, reject {id} [reason], note {text}. Must be running for the async approval loop to work.",
+      "timestamp": "2026-02-25T08:15:56.617Z"
+    },
+    {
+      "id": "act_e1d70f85",
+      "type": "memory_stored",
+      "description": "[PAIN] TypeScript 'as const' assertion breaks optional fields in config objects",
+      "details": "When using 'as const' on pricing/config arrays in TypeScript, objects without optional fields (like 'popular: true' on only some plans) cause TS errors because the const assertion creates a literal type where some items lack the field entirely. Fix: make the field optional in the type definition (e.g., popular?: boolean) before applying 'as const', or add the field explicitly to all items with false as default. This caused build-blocking errors in the LaunchFast Pricing component.",
+      "timestamp": "2026-02-25T08:15:58.505Z"
+    },
+    {
+      "id": "act_41389cee",
+      "type": "memory_stored",
+      "description": "[PAIN] Tasks marked done without verifying the work actually worked",
+      "details": "Audit found multiple tasks marked done that were incomplete. ChatView was marked done but still existed (should have been removed when Terminal replaced it). Timeline stopped updating at Session 21 despite the task being marked complete. Pattern: Claude marks task done after writing code, before verifying the code actually works in the running app. Verification requires app restart which Claude avoids.",
+      "timestamp": "2026-02-25T08:16:01.430Z"
+    },
+    {
+      "id": "act_20691047",
+      "type": "memory_stored",
+      "description": "[WIN] Task decomposition on timeout: 5 patterns that predict what will fail",
+      "details": "When an AI agent task times out, instead of blind retry, analyze the task description to detect common failure patterns and decompose accordingly. 5 patterns identified: (1) Multi-Action Task -- contains 'and', 'then', multiple verbs -- split into sequential sub-tasks, (2) UI Feature Addition -- 'add section/component to page' -- split into CSS + HTML + JS tasks, (3) Improvement Task -- 'improve/update/enhance' -- break into audit, implement, verify, (4) Bug Fix -- 'fix/broken/error' -- split into diagnose, implement fix, verify, (5) Deployment Task -- 'deploy/push/publish' -- split into build, test, deploy. Detection uses regex on task titles. This yielded 80% success rate on decomposed tasks vs 30% on vague retries.",
+      "timestamp": "2026-02-25T08:16:04.554Z"
+    },
+    {
+      "id": "act_ed7cdb21",
+      "type": "memory_stored",
+      "description": "[DECISION] Deliberation etiquette: 670 char limit, natural turns, silence when nothing to add",
+      "details": "Pat mandated conversational deliberation style. Rules: (1) 670 character hard limit per message (MAX_TOKENS=120), except closing statements. (2) Agents respond to what was actually said, not round-robin. (3) Agents stay silent when they have nothing to add. (4) Claude reads last 6 messages before each post to decide who speaks next. (5) Speaking order is natural, not forced rotation. This made deliberations feel like real conversations instead of sequential essays.",
+      "timestamp": "2026-02-25T08:16:05.688Z"
+    },
+    {
+      "id": "act_930139a5",
+      "type": "memory_stored",
+      "description": "[FACT] GitHub Pages requires Pro plan for private repos",
+      "details": "GitHub Pages deployment from a private repo requires GitHub Pro plan. For the TaxCreditCalculators project, the workaround was to make the repo public since it contained no secrets (config.js had empty values). Alternative: use Vercel via dashboard import which works with private repos on free tier.",
+      "timestamp": "2026-02-25T08:16:11.907Z"
+    },
+    {
+      "id": "act_57e596b7",
+      "type": "memory_stored",
+      "description": "[FACT] npm publish requires 2FA/OTP -- cannot be automated without human intervention",
+      "details": "Publishing packages to npm requires two-factor authentication with an OTP code. This cannot be automated by AI agents without human intervention. Similarly, Vercel CLI requires interactive browser-based login for initial auth, and Stripe CLI requires browser-based OAuth flow. Pattern: any service that requires browser-based auth/2FA is a human-required step. Plan for these as explicit handoff points in automated workflows. Workaround for Vercel: once authenticated, subsequent deploys can use API tokens.",
+      "timestamp": "2026-02-25T08:16:12.000Z"
+    },
+    {
+      "id": "act_b3b1477c",
+      "type": "memory_stored",
+      "description": "[FACT] FormSubmit.co requires email confirmation before hashed endpoint",
+      "details": "FormSubmit.co process: first form submission goes to the raw email address, they send a confirmation link, then you get a hash to use instead of the raw email. Cannot be set up without the email owner clicking the confirmation link. For no-dependency form handling, localStorage fallback works for testing. Alternative: Formspree, or a Cloudflare Worker / Vercel Edge function.",
+      "timestamp": "2026-02-25T08:16:15.881Z"
+    },
+    {
+      "id": "act_5d44f22e",
+      "type": "memory_stored",
+      "description": "[DECISION] GitHub Pages over custom domains for early-stage products",
+      "details": "For early-stage developer products, GitHub Pages is preferred over custom domains: (1) Free hosting, zero configuration, (2) Builds trust with developer audience (they are already on GitHub), (3) SEO benefit from github.io domain authority, (4) Can upgrade to custom domain later when revenue justifies it. Combined with Stripe Payment Links, this gives a fully functional sales page with zero hosting costs. The pattern: GitHub Pages for static marketing + Stripe Payment Links for checkout + GitHub Releases for distribution = $0 infrastructure cost.",
+      "timestamp": "2026-02-25T08:16:16.242Z"
+    },
+    {
+      "id": "act_7423d2bf",
+      "type": "memory_stored",
+      "description": "[WIN] Full 4-agent audit pattern: UI/UX + Architecture + Cognitive + Value/ROI",
+      "details": "Ran a comprehensive 4-agent parallel audit. Agents: (1) UI/UX -- found cryptic sidebar icons, zero shortcut discoverability, approval queue horizontal scroll. (2) Architecture -- found state.json race conditions, session.ts persistence bugs, C grade overall. (3) Cognitive/Memory -- brain learns nothing automatically, manual hw_store_memory calls. (4) Value/ROI -- 6.5/10, genuinely useful but automation missing. This pattern produced the most actionable feedback in a single session.",
+      "timestamp": "2026-02-25T08:16:20.405Z"
+    },
+    {
+      "id": "act_fe8215a8",
+      "type": "memory_retrieved",
+      "description": "Retrieved 7 memories for: \"all cross-project memories stripe vercel github pages deploy\"",
+      "details": "WARNING: DEPLOYMENT detected — check deployment memories\nPAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_1a0150bc: Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check\n- #mem_706d3714: Stripe SDK v17 typing: subscriptions.retrieve() wraps in Response<T>\n- #mem_76471b85: GitHub Pages + Vercel dual deployment: know which serves what\n- #mem_6599d4b1: Formspree: silent failure with placeholder URLs, always validate endpoint IDs\n- #mem_a16663aa: git push with node_modules/dist accidentally committed blocks all further pushes\n  -> Never use 'git add .' or 'git add -A' -- always add specific files by name. Verify .gitignore before first push.\n\nWIN MEMORY (you've handled this domain before):\n- #mem_c7d61dda: Multi-agent orchestrator pattern: planner + builder + tester + observer\n- #mem_e4b56693: Task decomposition on timeout: 5 patterns that predict what will fail",
+      "timestamp": "2026-02-25T08:16:20.710Z"
+    },
+    {
+      "id": "act_2dde9402",
+      "type": "memory_stored",
+      "description": "[FACT] Chime audio design: two-note ascending major sixth for notifications",
+      "details": "Buddy notification chime uses a two-note ascending major sixth (E5 659Hz then C#6 1109Hz, 90ms apart). Soft linear attack envelope (12-15ms) kills click-onset that reads as error tone. Five voices: two fundamentals, octave partial on each, plus G#6 fifth shimmer on landing note. Output compressor at -8 threshold, 4:1 ratio. Sounds pleasant and non-alarming.",
+      "timestamp": "2026-02-25T08:16:26.670Z"
+    },
+    {
+      "id": "act_76df01a0",
+      "type": "memory_stored",
+      "description": "[DECISION] Claude's role in deliberation: Reason (integrating intelligence), not just moderator",
+      "details": "Defined deliberation roles: Agents = cognitive lenses (Contrarian, Pre-mortem, First Principles, Steelman, etc.). Claude = Reason -- opens with context, synthesizes tensions, pushes back on agents, drives toward decisions. Pat = steers from outside, injects constraints mid-deliberation. Phase structure: Frame (Claude sets question) -> Deliberate (agents talk, Claude facilitates) -> Synthesis (Claude integrates) -> Pat Input -> Decision.",
+      "timestamp": "2026-02-25T08:16:34.019Z"
+    },
+    {
+      "id": "act_e1bac17a",
+      "type": "memory_stored",
+      "description": "[PAIN] Handoffs too vague -- new session can't tell merged from unmerged",
+      "details": "Handoff messages were too vague, mixing together work that was committed to master, work in worktree branches, and work still uncommitted. New sessions couldn't tell what was actually on master vs pending. Fix: the structured handoff format now requires separate sections for VERIFIED (done+tested), MERGED BUT UNTESTED (on master, not verified), STILL IN BRANCH (not on master), with specific git SHAs and verification steps.",
+      "timestamp": "2026-02-25T08:16:39.574Z"
+    },
+    {
+      "id": "act_ee7a23a1",
+      "type": "memory_stored",
+      "description": "[FACT] Stale deliberations persist across sessions until manually cleared",
+      "details": "chatroom.json retains deliberation state (including paused sessions) across session boundaries. Fix implemented: session start hook auto-archives any open deliberation to deliberations/{date}-{topic-slug}.json then resets chatroom to idle. The archiveAndReset() function in ChatroomStore handles this programmatically. Old deliberation history is preserved in the deliberations/ directory.",
+      "timestamp": "2026-02-25T08:16:43.698Z"
+    },
+    {
+      "id": "act_0046ca9b",
+      "type": "memory_stored",
+      "description": "[FACT] Pat's workflow rule: work in worktree, confirm before merge/restart",
+      "details": "Pat mandated this workflow after repeated crash loops: (1) Never edit files on main while the Tauri app is running. (2) All code changes go in a git worktree (isolated branch). (3) End of each work cycle, ask Pat 'restart app and commit changes?' before merging. This prevents the dev-mode hot-reload from killing the PTY session and losing Claude's work context.",
+      "timestamp": "2026-02-25T08:16:47.959Z"
+    },
+    {
+      "id": "act_539050d0",
+      "type": "memory_stored",
+      "description": "[PAIN] Brain memory learns nothing automatically -- requires manual hw_store_memory calls",
+      "details": "Audit found that pain/win memories are never auto-captured. Claude must manually call hw_store_memory() on every failure or success. The 9-stage hippocampal pipeline processes memories well once stored, but the intake is entirely manual. Missing: auto-capture on two-strike failures, auto-capture on task completion, auto-capture when a debugging insight resolves an issue. The brain has a sophisticated retrieval system feeding on manually curated input.",
+      "timestamp": "2026-02-25T08:16:55.531Z"
+    },
+    {
+      "id": "act_b8cc5843",
+      "type": "memory_stored",
+      "description": "[FACT] Cortex: static code indexing without API keys",
+      "details": "Cortex (our ACE replacement) works entirely via static analysis -- zero API calls at query time. Parses imports/exports with language-aware regex (TS, Rust, Python, Go), extracts function/class/struct names, infers concept tags from 3 signals: directory patterns, package names, code patterns. Stores in .cortex-index/index.json. Indexed 101 files in hello-world instantly. Covers TS/JS, Rust, Python, Go, Java, Kotlin, CSS, HTML, SQL, GraphQL. 54 directory pattern groups, 180+ package mappings.",
+      "timestamp": "2026-02-25T08:17:01.312Z"
+    },
+    {
+      "id": "act_8c96eee9",
+      "type": "memory_stored",
+      "description": "[FACT] Solar lead pricing: $100-300 exclusive, up to $500+ in CA/TX",
+      "details": "Market research for TaxCreditCalculators: solar leads sell for $100-300 exclusive, up to $500+ in high-value states like California and Texas. EnergySage does $35.7M/year on this exact model with 158 employees. The 'lease beats buy' angle post-OBBBA (One Big Beautiful Bill Act) is factually correct and underreported. July 4, 2026 safe harbor deadline creates urgency. A new domain will NOT rank for competitive solar keywords in 4 months.",
+      "timestamp": "2026-02-25T08:17:07.074Z"
+    },
+    {
+      "id": "act_8d82a35d",
+      "type": "memory_stored",
+      "description": "[WIN] TaxCreditCalculators deployed end-to-end in single CEO session",
+      "details": "Pat gave Claude full CEO authority over TaxCreditCalculators. In one session: researched market, deliberated strategy, built production landing page (hero, comparison cards, calculator, lead form, FAQ, legal), deployed to GitHub Pages, drafted installer outreach emails and social media posts for Reddit and Twitter. DNS was the only remaining manual step. Demonstrated the full autonomous build capability of the Hello World system.",
+      "timestamp": "2026-02-25T08:17:13.090Z"
+    },
+    {
+      "id": "act_0d424573",
+      "type": "memory_stored",
+      "description": "[FACT] Buddy states design: waiting/responding/shocked/happy/error",
+      "details": "Pat's buddy state design: (1) Waiting -- light blue, gentle bob, slow blink, relaxed expression. (2) Responding/active -- green, shaking, determined expression. (3) Error/blocked -- red pulse when pending approvals or errors need user attention. (4) Done responding -- ding chime + shocked expression with exclamation mark for 0.5 seconds. (5) After shock -- bounce with pulsing blue, happy expression. Buddy should always be in front (alwaysOnTop). Right-click to mute. Draggable. 7 themes: Void Protocol, Neon Bonsai, Solar Flare, Ghost Protocol, Infrared, Aquifer, Ember.",
+      "timestamp": "2026-02-25T08:17:22.258Z"
+    },
+    {
+      "id": "act_ffc44bfb",
+      "type": "memory_stored",
+      "description": "[PAIN] Direction notes lost on crash because direction.json wasn't written proactively",
+      "details": "When Pat discusses strategy/vision during a session, if Claude doesn't immediately write it to direction.json, a crash wipes the context entirely. Direction was being captured at end-of-session or not at all. Fix: CLAUDE.md now has a critical rule -- write to direction.json immediately when Pat discusses vision/scope/strategy. Don't wait for end of session. The file survives crashes; session memory doesn't.",
+      "timestamp": "2026-02-25T08:17:27.741Z"
+    },
+    {
+      "id": "act_5deca6c4",
+      "type": "task_updated",
+      "description": "[DONE] Update memory files and extend Cortex scope",
+      "details": "",
+      "timestamp": "2026-02-25T08:19:17.073Z"
+    },
+    {
+      "id": "act_08a8cadd",
+      "type": "task_added",
+      "description": "Task: Add system explorer to Hello World app",
+      "details": "Embed the interactive system architecture explorer (system-explorer.html) as a view in the Hello World desktop app. Could be a new sidebar tab or accessible from the Dashboard.",
+      "timestamp": "2026-02-25T08:21:56.749Z"
+    },
+    {
+      "id": "act_46072add",
+      "type": "task_added",
+      "description": "Task: Fix state.json race conditions with file locking",
+      "details": "Add file-level locking to all state.json reads/writes in the MCP server. Use proper-lockfile or a simple .lock file mechanism. This is the highest-risk bug -- concurrent writes from MCP server, file watcher, and discord listener can silently clobber data.",
+      "timestamp": "2026-02-25T08:29:00.167Z"
+    },
+    {
+      "id": "act_3e952e89",
+      "type": "task_added",
+      "description": "Task: Add fallback to SessionStart hook for corrupted files",
+      "details": "Wrap each JSON file read in session-start.mjs with individual try/catch so one corrupted file doesn't crash the entire hook. Output partial context with warnings instead of failing silently. Add a health check that reports which files loaded vs failed.",
+      "timestamp": "2026-02-25T08:29:02.573Z"
+    },
+    {
+      "id": "act_e7ec1225",
+      "type": "task_added",
+      "description": "Task: Add approval timeout with auto-escalation",
+      "details": "When a block-tier approval has been pending for >30 minutes, send a reminder DM to Pat. After 60 minutes, downgrade to notify-tier (proceed with caution, log the override). Prevents system from freezing when Pat is away.",
+      "timestamp": "2026-02-25T08:29:04.637Z"
+    },
+    {
+      "id": "act_54132a63",
+      "type": "task_added",
+      "description": "Task: Disable Tauri hot-reload for lib.rs specifically",
+      "details": "Configure Tauri dev mode to NOT hot-reload when lib.rs changes. This eliminates the root cause of PTY kills and removes the need for the worktree workflow on Rust changes. Check tauri.conf.json and Cargo.toml for watch/ignore config.",
+      "timestamp": "2026-02-25T08:29:06.697Z"
+    },
+    {
+      "id": "act_a4e4dc85",
+      "type": "task_added",
+      "description": "Task: [DELIBERATE] Memory quality feedback loop and staleness management",
+      "details": "86 memories stored with no mechanism to verify usefulness, prune stale facts, or detect when memories mislead. Needs deliberation on: (1) How to score memory relevance over time, (2) Auto-pruning rules for stale facts, (3) Whether to add semantic search (vs current keyword matching), (4) How to detect when a memory is actively harmful/outdated.",
+      "timestamp": "2026-02-25T08:29:13.160Z"
+    },
+    {
+      "id": "act_4e5adb7f",
+      "type": "task_added",
+      "description": "Task: [DELIBERATE] Knowledge intake scheduling and automation",
+      "details": "Research pipeline is currently manual -- someone has to trigger it. Needs deliberation on: (1) What cadence makes sense (weekly? on-demand?), (2) What sources to auto-scan (GitHub trending, HN, specific subreddits), (3) How to avoid memory bloat from automated intake, (4) Whether this should be a cron job, a hook, or triggered by the app.",
+      "timestamp": "2026-02-25T08:29:15.719Z"
+    },
+    {
+      "id": "act_b9505248",
+      "type": "task_added",
+      "description": "Task: [DELIBERATE] State storage architecture: JSON files vs SQLite",
+      "details": "Current JSON file storage has race conditions, no transactions, no query capability. SQLite would fix all of these but adds complexity and migration work. Needs deliberation on: (1) Is the migration worth it now or after multi-project, (2) Which files to migrate first, (3) How to maintain the file-watcher reactivity pattern with SQLite, (4) Impact on the MCP server and Tauri app.",
+      "timestamp": "2026-02-25T08:29:18.947Z"
+    },
+    {
+      "id": "act_3ab40769",
+      "type": "task_updated",
+      "description": "[TODO] Fix state.json race conditions with file locking",
+      "details": "State.json has race conditions where concurrent writes from MCP server, file watcher, and discord listener can silently clobber data. This is the highest-risk bug. Needs deliberation on: (1) File locking as a quick fix vs SQLite migration as the proper fix, (2) If locking, what mechanism (proper-lockfile, .lock file, OS-level), (3) If SQLite, should this be combined with t_f2d9ad7d, (4) How to detect and recover from data loss that may have already happened, (5) Whether to split state.json into separate files per concern (tasks.json, decisions.json, etc.) as an intermediate step.",
+      "timestamp": "2026-02-25T08:33:21.482Z"
+    },
+    {
+      "id": "act_6d569cc0",
+      "type": "task_started",
+      "description": "Started: Add fallback to SessionStart hook for corrupted files",
+      "details": "Task t_6cb166c0 → in_progress",
+      "timestamp": "2026-02-25T08:42:50.138Z"
+    },
+    {
+      "id": "act_405648d9",
+      "type": "task_updated",
+      "description": "[DONE] Add fallback to SessionStart hook for corrupted files",
+      "details": "",
+      "timestamp": "2026-02-25T08:43:16.402Z"
+    },
+    {
+      "id": "act_17ebd93c",
+      "type": "task_started",
+      "description": "Started: Disable Tauri hot-reload for lib.rs specifically",
+      "details": "Task t_5d5feda8 → in_progress",
+      "timestamp": "2026-02-25T08:43:20.156Z"
+    },
+    {
+      "id": "act_8529e1ff",
+      "type": "task_updated",
+      "description": "[DONE] Disable Tauri hot-reload for lib.rs specifically",
+      "details": "",
+      "timestamp": "2026-02-25T08:44:38.642Z"
+    },
+    {
+      "id": "act_72a5d404",
+      "type": "task_started",
+      "description": "Started: Add approval timeout with auto-escalation",
+      "details": "Task t_67c363db → in_progress",
+      "timestamp": "2026-02-25T08:44:42.896Z"
+    },
+    {
+      "id": "act_40fca6ba",
+      "type": "task_updated",
+      "description": "[DONE] Add approval timeout with auto-escalation",
+      "details": "",
+      "timestamp": "2026-02-25T08:46:00.562Z"
+    },
+    {
+      "id": "act_1cc8f5ab",
+      "type": "deliberation_planned",
+      "description": "Deliberation plan: \"State storage architecture: fixing state.json race condition\"",
+      "details": "Agents: Backend Architect, Pragmatist, Contrarian, Security\nSub-questions: 6\nBalance notes: 2",
+      "timestamp": "2026-02-25T09:05:02.128Z"
+    },
+    {
+      "id": "act_9f315b09",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_plan",
+      "details": "Pat approved in session",
+      "timestamp": "2026-02-25T09:22:41.386Z"
+    },
+    {
+      "id": "act_4e608622",
+      "type": "deliberation_started",
+      "description": "Deliberation: \"State storage architecture: fixing state.json race conditions and deciding JSON files vs SQLite\"",
+      "details": "Agents: backendarch, pragmatist, contrarian, security",
+      "timestamp": "2026-02-25T09:22:44.212Z"
+    },
+    {
+      "id": "act_ac7aefaf",
+      "type": "deliberation_phase",
+      "description": "Phase → frame",
+      "details": "",
+      "timestamp": "2026-02-25T09:22:47.436Z"
+    },
+    {
+      "id": "act_e3cde0e9",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Let's frame the problem. state.json is a single JSON file ho",
+      "details": "",
+      "timestamp": "2026-02-25T09:22:53.595Z"
+    },
+    {
+      "id": "act_34314eee",
+      "type": "agent_posted_to_chatroom",
+      "description": "Backend Architect: The core issue: JsonStore does read-modify-write on the enti",
+      "details": "",
+      "timestamp": "2026-02-25T09:22:59.101Z"
+    },
+    {
+      "id": "act_7db16023",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Before we go solution-shopping: has anyone actually lost dat",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:04.920Z"
+    },
+    {
+      "id": "act_46189d93",
+      "type": "agent_reacted",
+      "description": "backendarch: 🤔",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:08.213Z"
+    },
+    {
+      "id": "act_bb1b22fa",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Pragmatist is right to ask. But \"we haven't noticed data los",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:14.494Z"
+    },
+    {
+      "id": "act_07fceb41",
+      "type": "agent_reacted",
+      "description": "pragmatist: 👆",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:17.162Z"
+    },
+    {
+      "id": "act_00815394",
+      "type": "agent_posted_to_chatroom",
+      "description": "Security: The silent corruption angle is what concerns me most. state.",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:22.484Z"
+    },
+    {
+      "id": "act_27f090ff",
+      "type": "deliberation_phase",
+      "description": "Phase → deliberate",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:25.046Z"
+    },
+    {
+      "id": "act_94275e9b",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Good framing. Three positions emerging: (1) Pragmatist says ",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:31.017Z"
+    },
+    {
+      "id": "act_0385da63",
+      "type": "agent_posted_to_chatroom",
+      "description": "Backend Architect: Let me lay out the three options concretely. Option A: file ",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:38.290Z"
+    },
+    {
+      "id": "act_3bab6513",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Option B is the sweet spot. Here's why: splitting files cost",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:45.281Z"
+    },
+    {
+      "id": "act_ccc0dc2f",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: I agree with Pragmatist on B, which should make everyone sus",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:52.061Z"
+    },
+    {
+      "id": "act_88704fd6",
+      "type": "agent_reacted",
+      "description": "backendarch: 💡",
+      "details": "",
+      "timestamp": "2026-02-25T09:23:55.668Z"
+    },
+    {
+      "id": "act_72ef4870",
+      "type": "agent_posted_to_chatroom",
+      "description": "Security: Contrarian raises the right timing question. But I want to a",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:02.513Z"
+    },
+    {
+      "id": "act_2bf3cc60",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Security, the trigger file trick works in theory. But you're",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:10.258Z"
+    },
+    {
+      "id": "act_584ae55f",
+      "type": "agent_posted_to_chatroom",
+      "description": "Backend Architect: I'm shifting position. Pragmatist's point about multi-projec",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:17.692Z"
+    },
+    {
+      "id": "act_360af17e",
+      "type": "agent_posted_to_chatroom",
+      "description": "Contrarian: Backendarch shifted -- that's real signal. I'll concede: B+ ",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:25.127Z"
+    },
+    {
+      "id": "act_dc1e0c59",
+      "type": "agent_reacted",
+      "description": "security: ⚠️",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:28.075Z"
+    },
+    {
+      "id": "act_a7ba00ac",
+      "type": "agent_posted_to_chatroom",
+      "description": "Security: Contrarian's Windows NTFS point is critical. On Windows, if ",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:35.437Z"
+    },
+    {
+      "id": "act_d8e9ad96",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: Converging on B+ (split files + atomic writes + backup). Let",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:43.036Z"
+    },
+    {
+      "id": "act_6d2500e8",
+      "type": "agent_posted_to_chatroom",
+      "description": "Backend Architect: Q5 is easy. Session-start hook currently does safeRead('stat",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:49.615Z"
+    },
+    {
+      "id": "act_0577f0fc",
+      "type": "agent_posted_to_chatroom",
+      "description": "Pragmatist: Q6 -- multi-project. Split files actually helps here. Each p",
+      "details": "",
+      "timestamp": "2026-02-25T09:24:56.416Z"
+    },
+    {
+      "id": "act_93ee358c",
+      "type": "agent_posted_to_chatroom",
+      "description": "Security: I accept B+ with the backup mechanism. To be clear on what w",
+      "details": "",
+      "timestamp": "2026-02-25T09:25:03.293Z"
+    },
+    {
+      "id": "act_8bb42b93",
+      "type": "deliberation_phase",
+      "description": "Phase → synthesis",
+      "details": "",
+      "timestamp": "2026-02-25T09:25:06.542Z"
+    },
+    {
+      "id": "act_c6ef82ee",
+      "type": "claude_posted_to_chatroom",
+      "description": "Claude: SYNTHESIS: All agents converge on B+ -- split state.json int",
+      "details": "",
+      "timestamp": "2026-02-25T09:25:18.930Z"
+    },
+    {
+      "id": "act_a86a2ae4",
+      "type": "deliberation_coverage_complete",
+      "description": "All 6 sub-questions addressed",
+      "details": "Quality: 2 tension, 1 shifted, 3 consensus\n  1. [TENSION] Is the race condition actually causing data loss in practice, or is it theoretical? What evidence do we have? -> No confirmed data loss incidents but silent corruption is undetectable by design. Pragmatist challenged evidence, Security argued absence of evidence is not evidence of absence.\n  2. [SHIFTED] File locking (quick fix) vs SQLite (proper fix) vs splitting state.json into separate files per concern -- which approach gives the best effort/payoff ratio RIGHT NOW? -> B+ (split files + atomic writes + backup). Backendarch shifted from SQLite-leaning to B+ after Pragmatist's multi-project timing argument and MSVC compilation concern.\n  3. [TENSION] If SQLite: how do we maintain the file-watcher reactivity pattern that powers live UI updates? SQLite changes don't emit filesystem events the same way JSON writes do. -> Security proposed WAL file watching or trigger file pattern. Pragmatist countered that the total SQLite migration is still 2-3 days regardless. Moot for now since SQLite deferred.\n  4. [CONSENSUS] If SQLite: what's the migration path? Big bang rewrite or incremental (one data type at a time)? -> SQLite migration deferred to multi-project epic. Not needed now.\n  5. [CONSENSUS] What happens to the session-start hook, which currently reads raw JSON files? Does it need to talk to SQLite directly or go through the MCP server? -> Session-start hook reads 4 files instead of 1. Actually cleaner -- partial corruption gives partial context instead of total failure. Health check already added.\n  6. [CONSENSUS] Multi-project is coming (t_mp_epic). Does the storage decision change if each project has its own database vs shared global state? -> Split files are forward-compatible with multi-project. Each project gets own directory with own files. Global state already lives in memory/ directory.",
+      "timestamp": "2026-02-25T09:25:29.871Z"
+    },
+    {
+      "id": "act_95b072ae",
+      "type": "deliberation_concluded",
+      "description": "Deliberation concluded",
+      "details": "Decision: Option B+ -- split state.json into separate files with hardened writes. Split state.json into tasks.json, decisions.json, questions.json, memories.json. Add atomic writes (write-to-temp-then-rename with Windows NTFS retry loop, 50ms backoff, 5 attempts). Backup copy (.backup) before each write. Session-start hook reads split files with .backup fallback on parse failure. SQLite deferred to multi-project architecture deliberation. Key shift: Backendarch moved from SQLite to B+ after Pragmatist's timing argument (multi-project epic is unplanned) and MSVC compilation blocker for better-sqlite3 on Windows. Remaining risk: no ACID guarantees on file-based storage. Explicitly accepted as known limitation. Contrarian's Windows NTFS caveat incorporated into implementation spec.",
+      "timestamp": "2026-02-25T09:25:40.145Z"
+    },
+    {
+      "id": "act_99d3fef7",
+      "type": "decision_recorded",
+      "description": "Decision: State storage: split files + atomic writes (B+), defer SQLite",
+      "details": "Chosen: Split state.json into tasks.json, decisions.json, questions.json, memories.json. Atomic writes via write-to-temp-then-rename with Windows NTFS retry loop. Backup copy before each write. Session-start hook .backup fallback. SQLite deferred to multi-project epic.\nBackendarch shifted from SQLite to B+ after: (1) multi-project epic is unplanned so SQLite timing is premature, (2) better-sqlite3 has MSVC native compilation issues on Windows, (3) split files are forward-compatible with eventual SQLite migration. Remaining no-ACID risk explicitly accepted.",
+      "timestamp": "2026-02-25T09:25:49.988Z"
+    },
+    {
+      "id": "act_88b7690a",
+      "type": "deliberation_recommendations",
+      "description": "4 recommendations extracted",
+      "details": "From: \"State storage architecture: fixing state.json race conditions and deciding JSON \"",
+      "timestamp": "2026-02-25T09:25:58.164Z"
+    },
+    {
+      "id": "act_cc9223e0",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "Pat approved in session",
+      "timestamp": "2026-02-25T09:28:22.587Z"
+    },
+    {
+      "id": "act_2545a22d",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "Pat approved in session",
+      "timestamp": "2026-02-25T09:28:23.036Z"
+    },
+    {
+      "id": "act_ebbe31d2",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "Pat approved in session",
+      "timestamp": "2026-02-25T09:28:24.326Z"
+    },
+    {
+      "id": "act_8c3bdfed",
+      "type": "approval_resolved",
+      "description": "APPROVED: deliberation_recommendation",
+      "details": "Pat approved in session",
+      "timestamp": "2026-02-25T09:28:24.548Z"
+    },
+    {
+      "id": "act_1bbdf2d6",
+      "type": "task_added",
+      "description": "Task: Implement B+: split state.json + atomic writes + backup",
+      "details": "From deliberation: (1) Split state.json into tasks.json, decisions.json, questions.json, memories.json. (2) Update JsonStore with atomic write-to-temp-then-rename with Windows NTFS retry. (3) Backup copy before each write. (4) Session-start hook reads split files with .backup fallback. (5) Update Tauri file watcher to watch new files. (6) Migration: on first run, read old state.json and split into new files.",
+      "timestamp": "2026-02-25T09:28:32.418Z"
+    },
+    {
+      "id": "act_e108c9fc",
+      "type": "task_started",
+      "description": "Started: Implement B+: split state.json + atomic writes + backup",
+      "details": "Task t_a9d3b3d7 → in_progress",
+      "timestamp": "2026-02-25T09:28:36.685Z"
+    },
+    {
+      "id": "act_1a1f2e4d",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## IMPLEMENTING: B+ state.json split + atomic writes\n\n## WHAT'S CHANGING\n1. JsonStore.write() -- adding atomic write (te",
+      "timestamp": "2026-02-25T09:29:03.355Z"
+    },
+    {
+      "id": "act_52ac9b5c",
+      "type": "watcher_spawned",
+      "description": "Watcher [copy] swift-lemur spawned",
+      "details": "split-state-rust — 1 file(s)",
+      "timestamp": "2026-02-25T09:32:10.245Z"
+    },
+    {
+      "id": "act_4ab2cd38",
+      "type": "task_updated",
+      "description": "[DONE] Implement B+: split state.json + atomic writes + backup",
+      "details": "",
+      "timestamp": "2026-02-25T09:38:23.369Z"
+    },
+    {
+      "id": "act_222cd969",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- Cortex MCP server: built at C:/Users/Patri/CascadeProjects/cortex/, 101 ",
+      "timestamp": "2026-02-25T09:40:30.789Z"
     }
   ]
 }

@@ -13,25 +13,64 @@ import {
 import { JsonStore } from './storage.js';
 import { generateId, now } from './utils.js';
 
-interface StateData {
-  tasks: Task[];
-  milestones: Milestone[];
-  decisions: Decision[];
-  questions: Question[];
-}
+import { existsSync, readFileSync, renameSync as fsRenameSync } from 'node:fs';
+import { join } from 'node:path';
+import { HW_DIR } from './types.js';
 
-const EMPTY_STATE: StateData = {
-  tasks: [],
-  milestones: [],
-  decisions: [],
-  questions: [],
-};
+interface TasksData { tasks: Task[]; milestones: Milestone[]; }
+interface DecisionsData { decisions: Decision[]; }
+interface QuestionsData { questions: Question[]; }
 
 export class StateManager {
-  private store: JsonStore<StateData>;
+  private taskStore: JsonStore<TasksData>;
+  private decisionStore: JsonStore<DecisionsData>;
+  private questionStore: JsonStore<QuestionsData>;
 
   constructor(projectRoot: string) {
-    this.store = new JsonStore<StateData>(projectRoot, 'state.json', EMPTY_STATE);
+    this.taskStore = new JsonStore<TasksData>(projectRoot, 'tasks.json', { tasks: [], milestones: [] });
+    this.decisionStore = new JsonStore<DecisionsData>(projectRoot, 'decisions.json', { decisions: [] });
+    this.questionStore = new JsonStore<QuestionsData>(projectRoot, 'questions.json', { questions: [] });
+
+    // Migration: if old state.json exists, split it into new files
+    this.migrateFromStateJson(projectRoot);
+  }
+
+  private migrateFromStateJson(projectRoot: string): void {
+    const oldPath = join(projectRoot, HW_DIR, 'state.json');
+    if (!existsSync(oldPath)) return;
+
+    try {
+      const old = JSON.parse(readFileSync(oldPath, 'utf-8'));
+      if (old.tasks || old.milestones) {
+        // Only migrate if new files don't have data yet
+        const current = this.taskStore.read();
+        if (current.tasks.length === 0) {
+          this.taskStore.write({
+            tasks: old.tasks ?? [],
+            milestones: old.milestones ?? [],
+          });
+        }
+      }
+      if (old.decisions) {
+        const current = this.decisionStore.read();
+        if (current.decisions.length === 0) {
+          this.decisionStore.write({ decisions: old.decisions });
+        }
+      }
+      if (old.questions) {
+        const current = this.questionStore.read();
+        if (current.questions.length === 0) {
+          this.questionStore.write({ questions: old.questions });
+        }
+      }
+      // Mark as migrated by renaming
+      const migratedPath = join(projectRoot, HW_DIR, 'state.json.migrated');
+      if (!existsSync(migratedPath)) {
+        try { fsRenameSync(oldPath, migratedPath); } catch { /* idempotent */ }
+      }
+    } catch {
+      // Old file is corrupted or unreadable -- skip migration
+    }
   }
 
   // ── Tasks ───────────────────────────────────────────────────
@@ -46,7 +85,7 @@ export class StateManager {
       updatedAt: timestamp,
     });
 
-    this.store.update(data => ({
+    this.taskStore.update(data => ({
       ...data,
       tasks: [...data.tasks, task],
     }));
@@ -68,7 +107,7 @@ export class StateManager {
 
     let updated: Task | undefined;
 
-    this.store.update(data => ({
+    this.taskStore.update(data => ({
       ...data,
       tasks: data.tasks.map(t => {
         if (t.id !== id) return t;
@@ -82,27 +121,27 @@ export class StateManager {
   }
 
   getEpicChildren(epicId: string): Task[] {
-    return this.store.read().tasks.filter(t => t.parentId === epicId);
+    return this.taskStore.read().tasks.filter(t => t.parentId === epicId);
   }
 
   removeTask(id: string): void {
-    this.store.update(data => ({
+    this.taskStore.update(data => ({
       ...data,
       tasks: data.tasks.filter(t => t.id !== id),
     }));
   }
 
   getTask(id: string): Task | undefined {
-    return this.store.read().tasks.find(t => t.id === id);
+    return this.taskStore.read().tasks.find(t => t.id === id);
   }
 
   listTasks(status?: TaskStatus): Task[] {
-    const { tasks } = this.store.read();
+    const { tasks } = this.taskStore.read();
     return status ? tasks.filter(t => t.status === status) : tasks;
   }
 
   getUnblockedTasks(): Task[] {
-    const { tasks } = this.store.read();
+    const { tasks } = this.taskStore.read();
     const doneTasks = new Set(tasks.filter(t => t.status === 'done').map(t => t.id));
 
     return tasks
@@ -113,7 +152,7 @@ export class StateManager {
   getDependencies(taskId: string): Task[] {
     const task = this.getTask(taskId);
     if (!task) return [];
-    const { tasks } = this.store.read();
+    const { tasks } = this.taskStore.read();
     return tasks.filter(t => task.dependsOn.includes(t.id));
   }
 
@@ -127,7 +166,7 @@ export class StateManager {
       createdAt: now(),
     });
 
-    this.store.update(data => ({
+    this.taskStore.update(data => ({
       ...data,
       milestones: [...data.milestones, milestone],
     }));
@@ -138,7 +177,7 @@ export class StateManager {
   completeMilestone(id: string): Milestone {
     let updated: Milestone | undefined;
 
-    this.store.update(data => ({
+    this.taskStore.update(data => ({
       ...data,
       milestones: data.milestones.map(m => {
         if (m.id !== id) return m;
@@ -152,7 +191,7 @@ export class StateManager {
   }
 
   listMilestones(): Milestone[] {
-    return this.store.read().milestones;
+    return this.taskStore.read().milestones;
   }
 
   // ── Decisions ───────────────────────────────────────────────
@@ -174,7 +213,7 @@ export class StateManager {
       decidedAt: now(),
     });
 
-    this.store.update(data => ({
+    this.decisionStore.update(data => ({
       ...data,
       decisions: [...data.decisions, decision],
     }));
@@ -183,11 +222,11 @@ export class StateManager {
   }
 
   listDecisions(): Decision[] {
-    return this.store.read().decisions;
+    return this.decisionStore.read().decisions;
   }
 
   getRecentDecisions(count = 5): Decision[] {
-    return this.store.read().decisions.slice(-count);
+    return this.decisionStore.read().decisions.slice(-count);
   }
 
   // ── Questions (Known Unknowns) ──────────────────────────────
@@ -200,7 +239,7 @@ export class StateManager {
       createdAt: now(),
     });
 
-    this.store.update(data => ({
+    this.questionStore.update(data => ({
       ...data,
       questions: [...data.questions, q],
     }));
@@ -211,7 +250,7 @@ export class StateManager {
   answerQuestion(id: string, answer: string, opts?: { linkedTaskId?: string; linkedDecisionId?: string }): Question {
     let updated: Question | undefined;
 
-    this.store.update(data => ({
+    this.questionStore.update(data => ({
       ...data,
       questions: data.questions.map(q => {
         if (q.id !== id) return q;
@@ -227,7 +266,7 @@ export class StateManager {
   deferQuestion(id: string): Question {
     let updated: Question | undefined;
 
-    this.store.update(data => ({
+    this.questionStore.update(data => ({
       ...data,
       questions: data.questions.map(q => {
         if (q.id !== id) return q;
@@ -241,7 +280,7 @@ export class StateManager {
   }
 
   listQuestions(status?: QuestionStatus): Question[] {
-    const { questions } = this.store.read();
+    const { questions } = this.questionStore.read();
     return status ? questions.filter(q => q.status === status) : questions;
   }
 }

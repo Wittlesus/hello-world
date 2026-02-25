@@ -106,4 +106,43 @@ export class ApprovalGates {
   isBlocked(action: string): boolean {
     return this.classifyAction(action) === 'block';
   }
+
+  /** Check for stale approvals and return escalation info */
+  checkEscalations(): { reminders: ApprovalRequest[]; autoResolved: ApprovalRequest[] } {
+    const REMINDER_MS = 30 * 60 * 1000;  // 30 minutes
+    const AUTO_RESOLVE_MS = 60 * 60 * 1000; // 60 minutes
+    const nowMs = Date.now();
+
+    const data = this.store.read();
+    const reminders: ApprovalRequest[] = [];
+    const autoResolved: ApprovalRequest[] = [];
+
+    for (const req of data.pending) {
+      const ageMs = nowMs - new Date(req.createdAt).getTime();
+
+      if (ageMs >= AUTO_RESOLVE_MS) {
+        // Auto-resolve after 60 minutes: downgrade to notify tier
+        const resolved: ApprovalRequest = {
+          ...req,
+          status: 'approved' as ApprovalStatus,
+          resolution: `Auto-approved after ${Math.round(ageMs / 60000)} minutes (timeout escalation). Original tier: ${req.tier}.`,
+          resolvedAt: now(),
+        };
+        autoResolved.push(resolved);
+      } else if (ageMs >= REMINDER_MS) {
+        reminders.push(req);
+      }
+    }
+
+    // Apply auto-resolutions
+    if (autoResolved.length > 0) {
+      const resolvedIds = new Set(autoResolved.map(r => r.id));
+      this.store.update((d) => ({
+        pending: d.pending.filter(r => !resolvedIds.has(r.id)),
+        resolved: [...d.resolved, ...autoResolved],
+      }));
+    }
+
+    return { reminders, autoResolved };
+  }
 }
