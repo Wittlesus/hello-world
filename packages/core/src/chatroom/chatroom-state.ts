@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
-import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase, ChatReaction } from './types.js';
+import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase, ChatReaction, DeliberationPlan } from './types.js';
 import { EMPTY_CHATROOM } from './types.js';
 
 function uid(prefix: string): string {
@@ -160,6 +160,28 @@ export class ChatroomStore {
       ...state,
       session: { ...state.session, pendingPatMessage: message },
     }));
+  }
+
+  setDeliberationPlan(plan: DeliberationPlan): void {
+    this.update(state => ({
+      ...state,
+      session: { ...state.session, plan },
+    }));
+  }
+
+  updateSubQuestion(questionId: number, status: 'pending' | 'addressed' | 'lumped', addressedBy?: string[], resolution?: string): void {
+    this.update(state => {
+      if (!state.session.plan) return state;
+      const subQuestions = state.session.plan.subQuestions.map(sq =>
+        sq.id === questionId
+          ? { ...sq, status, ...(addressedBy && { addressedBy }), ...(resolution && { resolution }) }
+          : sq
+      );
+      return {
+        ...state,
+        session: { ...state.session, plan: { ...state.session.plan, subQuestions } },
+      };
+    });
   }
 
   // Archive the current session to deliberations/ and reset chatroom to idle.

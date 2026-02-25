@@ -20,6 +20,25 @@ export interface ChatMessage {
 
 export type DeliberationPhase = 'frame' | 'deliberate' | 'synthesis' | 'patinput' | 'decision';
 
+export interface SubQuestion {
+  id: number;
+  text: string;
+  status: 'pending' | 'addressed' | 'lumped';  // lumped = dismissed without engagement
+  addressedBy?: string[];  // agent IDs that substantively addressed it
+  resolution?: string;     // one-line summary of what was decided
+}
+
+export interface BalanceNote {
+  agentId: string;
+  risk: string;           // e.g. "will push to cut scope"
+  counterbalance: string; // e.g. "steelman anything they dismiss without specific engagement"
+}
+
+export interface DeliberationPlan {
+  subQuestions: SubQuestion[];
+  balanceNotes: BalanceNote[];
+}
+
 export interface ChatSession {
   id: string;
   topic: string;
@@ -31,6 +50,7 @@ export interface ChatSession {
   pendingPatMessage?: string;
   deliberationPhase?: DeliberationPhase;
   introRevealedCount?: number;  // undefined = no intro mode; 0..N = agents revealed so far
+  plan?: DeliberationPlan;      // mediator guardrails: sub-questions + balance assessment
 }
 
 export interface ChatReaction {

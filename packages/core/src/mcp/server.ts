@@ -142,6 +142,7 @@ function toolFiles(tool: string): string[] {
     hw_start_deliberation:     ['chatroom.json'],
     hw_pause_deliberation:     ['chatroom.json'],
     hw_resume_deliberation:    ['chatroom.json'],
+    hw_check_deliberation_coverage: ['chatroom.json'],
     hw_conclude_deliberation:  ['chatroom.json'],
     hw_post_to_chatroom:       ['chatroom.json'],
     hw_check_autonomous_timer: [],
@@ -895,22 +896,58 @@ server.registerTool('hw_list_agents', {
 
 server.registerTool('hw_plan_deliberation', {
   title: 'Plan Deliberation',
-  description: 'Plan a deliberation before running it. Creates a block-tier approval for Pat to review. Includes the topic framing, selected agents, and rationale. Pat must approve before tokens are spent. After approval, call hw_start_deliberation with the same agents.',
+  description: `Plan a deliberation before running it. Creates a block-tier approval for Pat to review.
+
+REQUIRED: You must provide numbered sub-questions and a balance assessment.
+- subQuestions: Break the topic into specific numbered questions that each need a substantive answer.
+- balanceNotes: For each agent that might dominate or skew consensus, state the risk and your counterbalance strategy.
+
+The plan is stored on the session and enforced: hw_conclude_deliberation will require a coverage report showing how each sub-question was resolved. After approval, call hw_start_deliberation with the same agents.`,
   inputSchema: z.object({
     topic: z.string().describe('The concrete, well-framed deliberation topic'),
     agents: z.array(z.string()).min(2).max(6).describe('Agent IDs selected for this topic'),
     framing: z.string().describe('Why this topic needs deliberation and what outcome you expect'),
     rationale: z.string().describe('Why these specific agents were chosen for this topic'),
+    subQuestions: z.array(z.string()).min(2).max(10).describe('Numbered sub-questions that each need a substantive answer. Every question must be addressed before synthesis.'),
+    balanceNotes: z.array(z.object({
+      agentId: z.string().describe('Agent ID that might skew the deliberation'),
+      risk: z.string().describe('How this agent might dominate or distort consensus'),
+      counterbalance: z.string().describe('What the mediator will do to counteract this risk'),
+    })).min(1).describe('Balance assessment: which agents might dominate and your counterbalance strategy for each'),
   }),
-}, async (args: { topic: string; agents: string[]; framing: string; rationale: string }) => {
+}, async (args: { topic: string; agents: string[]; framing: string; rationale: string; subQuestions: string[]; balanceNotes: { agentId: string; risk: string; counterbalance: string }[] }) => {
   const agentNames = args.agents.map(id => AGENT_DEFINITIONS[id]?.name ?? id);
-  const description = `Topic: ${args.topic}\n\nFraming: ${args.framing}\n\nAgents: ${agentNames.join(', ')}\n\nRationale: ${args.rationale}`;
+
+  const sqList = args.subQuestions.map((q, i) => `  ${i + 1}. ${q}`).join('\n');
+  const bnList = args.balanceNotes.map(b => `  - ${AGENT_DEFINITIONS[b.agentId]?.name ?? b.agentId}: Risk: ${b.risk} | Counter: ${b.counterbalance}`).join('\n');
+
+  const description = [
+    `Topic: ${args.topic}`,
+    `\nFraming: ${args.framing}`,
+    `\nAgents: ${agentNames.join(', ')}`,
+    `\nRationale: ${args.rationale}`,
+    `\nSub-questions (each must be addressed before synthesis):\n${sqList}`,
+    `\nBalance assessment:\n${bnList}`,
+  ].join('\n');
+
+  // Store the plan in a temp file so hw_start_deliberation can attach it to the session
+  const plan = {
+    subQuestions: args.subQuestions.map((q, i) => ({
+      id: i + 1,
+      text: q,
+      status: 'pending' as const,
+    })),
+    balanceNotes: args.balanceNotes,
+  };
+  const planPath = join(projectRoot, '.hello-world', 'deliberation-plan-pending.json');
+  writeFileSync(planPath, JSON.stringify(plan, null, 2), 'utf-8');
+
   const request = approvals.requestApproval('deliberation_plan', `Run deliberation: "${args.topic.slice(0, 80)}"`, description);
-  activity.append('deliberation_planned', `Deliberation plan: "${args.topic.slice(0, 60)}"`, `Agents: ${agentNames.join(', ')}`);
+  activity.append('deliberation_planned', `Deliberation plan: "${args.topic.slice(0, 60)}"`, `Agents: ${agentNames.join(', ')}\nSub-questions: ${args.subQuestions.length}\nBalance notes: ${args.balanceNotes.length}`);
 
-  sendDiscordDM(`Deliberation plan needs approval (${request.id})\nTopic: ${args.topic.slice(0, 100)}\nAgents: ${agentNames.join(', ')}\nReply "approve ${request.id}" or "reject ${request.id}"`).catch(() => {});
+  sendDiscordDM(`Deliberation plan needs approval (${request.id})\nTopic: ${args.topic.slice(0, 100)}\nAgents: ${agentNames.join(', ')}\n${args.subQuestions.length} sub-questions, ${args.balanceNotes.length} balance notes\nReply "approve ${request.id}" or "reject ${request.id}"`).catch(() => {});
 
-  return text(`Deliberation plan created. Approval required: ${request.id}\nTopic: "${args.topic}"\nAgents: ${agentNames.join(', ')}\nPat must approve before deliberation starts.`);
+  return text(`Deliberation plan created. Approval required: ${request.id}\nTopic: "${args.topic}"\nAgents: ${agentNames.join(', ')}\nSub-questions: ${args.subQuestions.length}\nBalance notes: ${args.balanceNotes.length}\nPat must approve before deliberation starts.`);
 });
 
 server.registerTool('hw_extract_deliberation_recommendations', {
@@ -953,9 +990,23 @@ server.registerTool('hw_start_deliberation', {
 }, async (args: { topic: string; mode?: 'default' | 'usersim'; agents?: string[] }) => {
   const agentIds = args.agents ?? (args.mode === 'usersim' ? USER_SIM_AGENTS : DEFAULT_AGENTS);
   const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
+
+  // Attach the deliberation plan if one was prepared via hw_plan_deliberation
+  const planPath = join(projectRoot, '.hello-world', 'deliberation-plan-pending.json');
+  try {
+    const plan = JSON.parse(readFileSync(planPath, 'utf-8'));
+    chatroom.setDeliberationPlan(plan);
+    unlinkSync(planPath);
+  } catch { /* no plan file = no guardrails, deliberation still works */ }
+
   activity.append('deliberation_started', `Deliberation: "${args.topic}"`, `Agents: ${agentIds.join(', ')}`);
   runDeliberation(chatroom, notifyRunner).catch(() => {});
-  return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"\nIntro sequence running — agents will appear one by one.`);
+
+  const planState = chatroom.read();
+  const sqCount = planState.session.plan?.subQuestions.length ?? 0;
+  const planNote = sqCount > 0 ? `\n${sqCount} sub-questions tracked. Coverage check required before synthesis.` : '';
+
+  return text(`Deliberation started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"\nIntro sequence running — agents will appear one by one.${planNote}`);
 });
 
 server.registerTool('hw_pause_deliberation', {
@@ -981,13 +1032,70 @@ server.registerTool('hw_resume_deliberation', {
   return text('Deliberation resumed.');
 });
 
+server.registerTool('hw_check_deliberation_coverage', {
+  title: 'Check Deliberation Coverage',
+  description: `REQUIRED before synthesis. Reports which sub-questions have been addressed vs skipped. You must call this and resolve any gaps before calling hw_conclude_deliberation.
+
+For each sub-question, provide its current status:
+- "addressed": agents engaged with the specific value/tradeoff of this question
+- "lumped": agents dismissed this without specific engagement (needs mediator intervention)
+- "pending": not yet discussed
+
+If any question is "lumped" or "pending", you must redirect the deliberation to address it before concluding.`,
+  inputSchema: z.object({
+    coverage: z.array(z.object({
+      questionId: z.number().describe('The sub-question number (1-based)'),
+      status: z.enum(['addressed', 'lumped', 'pending']).describe('Whether agents substantively engaged with this question'),
+      addressedBy: z.array(z.string()).optional().describe('Agent IDs that substantively addressed it'),
+      resolution: z.string().optional().describe('One-line summary of what was decided for this question'),
+    })),
+  }),
+}, async (args: { coverage: { questionId: number; status: 'addressed' | 'lumped' | 'pending'; addressedBy?: string[]; resolution?: string }[] }) => {
+  const state = chatroom.read();
+  if (!state.session.plan) {
+    return text('No deliberation plan found. Coverage check only applies to planned deliberations.');
+  }
+
+  // Update each sub-question status
+  for (const c of args.coverage) {
+    chatroom.updateSubQuestion(c.questionId, c.status, c.addressedBy, c.resolution);
+  }
+
+  const updated = chatroom.read();
+  const plan = updated.session.plan!;
+  const gaps = plan.subQuestions.filter(sq => sq.status === 'pending' || sq.status === 'lumped');
+  const addressed = plan.subQuestions.filter(sq => sq.status === 'addressed');
+
+  if (gaps.length > 0) {
+    const gapList = gaps.map(sq => `  ${sq.id}. [${sq.status.toUpperCase()}] ${sq.text}`).join('\n');
+    activity.append('deliberation_coverage_gap', `${gaps.length} sub-questions unresolved`, gapList);
+    return text(`COVERAGE GAP: ${gaps.length} of ${plan.subQuestions.length} sub-questions need attention:\n${gapList}\n\nYou must redirect the deliberation to address these before concluding. Use hw_post_to_chatroom to intervene as mediator.`);
+  }
+
+  const summary = addressed.map(sq => `  ${sq.id}. ${sq.text} -> ${sq.resolution ?? 'addressed'}`).join('\n');
+  activity.append('deliberation_coverage_complete', `All ${plan.subQuestions.length} sub-questions addressed`, summary);
+  return text(`COVERAGE COMPLETE: All ${plan.subQuestions.length} sub-questions addressed.\n${summary}\n\nYou may now call hw_conclude_deliberation.`);
+});
+
 server.registerTool('hw_conclude_deliberation', {
   title: 'Conclude Deliberation',
-  description: 'Conclude the deliberation with a summary decision.',
+  description: 'Conclude the deliberation with a summary decision. If a deliberation plan exists with sub-questions, you MUST call hw_check_deliberation_coverage first and all questions must be addressed.',
   inputSchema: z.object({
     summary: z.string().describe('Summary of the deliberation outcome / decision reached'),
   }),
 }, async (args: { summary: string }) => {
+  const state = chatroom.read();
+  const plan = state.session.plan;
+
+  // Enforce coverage gate if a plan exists
+  if (plan && plan.subQuestions.length > 0) {
+    const gaps = plan.subQuestions.filter(sq => sq.status === 'pending' || sq.status === 'lumped');
+    if (gaps.length > 0) {
+      const gapList = gaps.map(sq => `  ${sq.id}. [${sq.status.toUpperCase()}] ${sq.text}`).join('\n');
+      return text(`BLOCKED: Cannot conclude -- ${gaps.length} sub-questions unresolved:\n${gapList}\n\nCall hw_check_deliberation_coverage after addressing these gaps.`);
+    }
+  }
+
   chatroom.appendMessage('system', `Concluded: ${args.summary}`, 'system');
   chatroom.setSessionStatus('concluded');
   activity.append('deliberation_concluded', 'Deliberation concluded', args.summary);
@@ -1111,6 +1219,7 @@ const TOOL_CATALOG = [
   { name: 'hw_start_deliberation', category: 'chatroom' },
   { name: 'hw_pause_deliberation', category: 'chatroom' },
   { name: 'hw_resume_deliberation', category: 'chatroom' },
+  { name: 'hw_check_deliberation_coverage', category: 'chatroom' },
   { name: 'hw_conclude_deliberation', category: 'chatroom' },
   { name: 'hw_post_to_chatroom', category: 'chatroom' },
   { name: 'hw_post_agent_message', category: 'chatroom' },
