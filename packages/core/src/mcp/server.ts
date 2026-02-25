@@ -105,6 +105,7 @@ function generateSummary(tool: string, args: Record<string, unknown>): string {
     case 'hw_pause_deliberation':   return `Deliberation paused`;
     case 'hw_resume_deliberation':  return `Deliberation resumed`;
     case 'hw_conclude_deliberation': return `Deliberation concluded`;
+    case 'hw_quick_insights':       return `Quick insights: ${String(args.topic).slice(0, 50)}`;
     case 'hw_post_to_chatroom':     return `Claude: ${String(args.message).slice(0, 50)}`;
     default: return tool.replace('hw_', '').replace(/_/g, ' ');
   }
@@ -144,6 +145,7 @@ function toolFiles(tool: string): string[] {
     hw_resume_deliberation:    ['chatroom.json'],
     hw_check_deliberation_coverage: ['chatroom.json'],
     hw_conclude_deliberation:  ['chatroom.json'],
+    hw_quick_insights:         ['chatroom.json'],
     hw_post_to_chatroom:       ['chatroom.json'],
     hw_check_autonomous_timer: [],
     hw_start_task:            ['state.json', 'workflow.json'],
@@ -913,41 +915,47 @@ The plan is stored on the session and enforced: hw_conclude_deliberation will re
       agentId: z.string().describe('Agent ID that might skew the deliberation'),
       risk: z.string().describe('How this agent might dominate or distort consensus'),
       counterbalance: z.string().describe('What the mediator will do to counteract this risk'),
-    })).min(1).describe('Balance assessment: which agents might dominate and your counterbalance strategy for each'),
+    })).optional().describe('Optional balance assessment: which agents might dominate and your counterbalance strategy for each'),
   }),
-}, async (args: { topic: string; agents: string[]; framing: string; rationale: string; subQuestions: string[]; balanceNotes: { agentId: string; risk: string; counterbalance: string }[] }) => {
+}, async (args: { topic: string; agents: string[]; framing: string; rationale: string; subQuestions: string[]; balanceNotes?: { agentId: string; risk: string; counterbalance: string }[] }) => {
   const agentNames = args.agents.map(id => AGENT_DEFINITIONS[id]?.name ?? id);
 
   const sqList = args.subQuestions.map((q, i) => `  ${i + 1}. ${q}`).join('\n');
-  const bnList = args.balanceNotes.map(b => `  - ${AGENT_DEFINITIONS[b.agentId]?.name ?? b.agentId}: Risk: ${b.risk} | Counter: ${b.counterbalance}`).join('\n');
 
-  const description = [
+  const descParts = [
     `Topic: ${args.topic}`,
     `\nFraming: ${args.framing}`,
     `\nAgents: ${agentNames.join(', ')}`,
     `\nRationale: ${args.rationale}`,
     `\nSub-questions (each must be addressed before synthesis):\n${sqList}`,
-    `\nBalance assessment:\n${bnList}`,
-  ].join('\n');
+  ];
+  if (args.balanceNotes?.length) {
+    const bnList = args.balanceNotes.map(b => `  - ${AGENT_DEFINITIONS[b.agentId]?.name ?? b.agentId}: Risk: ${b.risk} | Counter: ${b.counterbalance}`).join('\n');
+    descParts.push(`\nBalance assessment:\n${bnList}`);
+  }
+  const description = descParts.join('\n');
 
   // Store the plan in a temp file so hw_start_deliberation can attach it to the session
-  const plan = {
+  const plan: { subQuestions: { id: number; text: string; status: 'pending' }[]; balanceNotes?: { agentId: string; risk: string; counterbalance: string }[] } = {
     subQuestions: args.subQuestions.map((q, i) => ({
       id: i + 1,
       text: q,
       status: 'pending' as const,
     })),
-    balanceNotes: args.balanceNotes,
   };
+  if (args.balanceNotes?.length) {
+    plan.balanceNotes = args.balanceNotes;
+  }
   const planPath = join(projectRoot, '.hello-world', 'deliberation-plan-pending.json');
   writeFileSync(planPath, JSON.stringify(plan, null, 2), 'utf-8');
 
+  const bnCount = args.balanceNotes?.length ?? 0;
   const request = approvals.requestApproval('deliberation_plan', `Run deliberation: "${args.topic.slice(0, 80)}"`, description);
-  activity.append('deliberation_planned', `Deliberation plan: "${args.topic.slice(0, 60)}"`, `Agents: ${agentNames.join(', ')}\nSub-questions: ${args.subQuestions.length}\nBalance notes: ${args.balanceNotes.length}`);
+  activity.append('deliberation_planned', `Deliberation plan: "${args.topic.slice(0, 60)}"`, `Agents: ${agentNames.join(', ')}\nSub-questions: ${args.subQuestions.length}${bnCount ? `\nBalance notes: ${bnCount}` : ''}`);
 
-  sendDiscordDM(`Deliberation plan needs approval (${request.id})\nTopic: ${args.topic.slice(0, 100)}\nAgents: ${agentNames.join(', ')}\n${args.subQuestions.length} sub-questions, ${args.balanceNotes.length} balance notes\nReply "approve ${request.id}" or "reject ${request.id}"`).catch(() => {});
+  sendDiscordDM(`Deliberation plan needs approval (${request.id})\nTopic: ${args.topic.slice(0, 100)}\nAgents: ${agentNames.join(', ')}\n${args.subQuestions.length} sub-questions${bnCount ? `, ${bnCount} balance notes` : ''}\nReply "approve ${request.id}" or "reject ${request.id}"`).catch(() => {});
 
-  return text(`Deliberation plan created. Approval required: ${request.id}\nTopic: "${args.topic}"\nAgents: ${agentNames.join(', ')}\nSub-questions: ${args.subQuestions.length}\nBalance notes: ${args.balanceNotes.length}\nPat must approve before deliberation starts.`);
+  return text(`Deliberation plan created. Approval required: ${request.id}\nTopic: "${args.topic}"\nAgents: ${agentNames.join(', ')}\nSub-questions: ${args.subQuestions.length}${bnCount ? `\nBalance notes: ${bnCount}` : ''}\nPat must approve before deliberation starts.`);
 });
 
 server.registerTool('hw_extract_deliberation_recommendations', {
@@ -1034,31 +1042,32 @@ server.registerTool('hw_resume_deliberation', {
 
 server.registerTool('hw_check_deliberation_coverage', {
   title: 'Check Deliberation Coverage',
-  description: `REQUIRED before synthesis. Reports which sub-questions have been addressed vs skipped. You must call this and resolve any gaps before calling hw_conclude_deliberation.
+  description: `REQUIRED before synthesis. Reports which sub-questions have been addressed and how. You must call this and resolve any gaps before calling hw_conclude_deliberation.
 
-For each sub-question, provide its current status:
-- "addressed": agents engaged with the specific value/tradeoff of this question
-- "lumped": agents dismissed this without specific engagement (needs mediator intervention)
-- "pending": not yet discussed
+For each sub-question, provide its current status AND quality tag:
+- status: "addressed" (engaged), "lumped" (dismissed without engagement), "pending" (not discussed)
+- quality: "consensus" (agents agreed quickly -- potential red flag), "tension" (real disagreement surfaced), "shifted" (an agent changed position)
 
-If any question is "lumped" or "pending", you must redirect the deliberation to address it before concluding.`,
+If any question is "lumped" or "pending", you must redirect the deliberation to address it before concluding.
+WARNING: All-consensus across every sub-question is a yellow flag -- it may indicate shallow deliberation or groupthink.`,
   inputSchema: z.object({
     coverage: z.array(z.object({
       questionId: z.number().describe('The sub-question number (1-based)'),
       status: z.enum(['addressed', 'lumped', 'pending']).describe('Whether agents substantively engaged with this question'),
+      quality: z.enum(['consensus', 'tension', 'shifted']).optional().describe('Quality of engagement: consensus = quick agreement (potential red flag), tension = real disagreement, shifted = position changed'),
       addressedBy: z.array(z.string()).optional().describe('Agent IDs that substantively addressed it'),
       resolution: z.string().optional().describe('One-line summary of what was decided for this question'),
     })),
   }),
-}, async (args: { coverage: { questionId: number; status: 'addressed' | 'lumped' | 'pending'; addressedBy?: string[]; resolution?: string }[] }) => {
+}, async (args: { coverage: { questionId: number; status: 'addressed' | 'lumped' | 'pending'; quality?: 'consensus' | 'tension' | 'shifted'; addressedBy?: string[]; resolution?: string }[] }) => {
   const state = chatroom.read();
   if (!state.session.plan) {
     return text('No deliberation plan found. Coverage check only applies to planned deliberations.');
   }
 
-  // Update each sub-question status
+  // Update each sub-question status with quality tag
   for (const c of args.coverage) {
-    chatroom.updateSubQuestion(c.questionId, c.status, c.addressedBy, c.resolution);
+    chatroom.updateSubQuestion(c.questionId, c.status, c.addressedBy, c.resolution, c.quality);
   }
 
   const updated = chatroom.read();
@@ -1072,16 +1081,38 @@ If any question is "lumped" or "pending", you must redirect the deliberation to 
     return text(`COVERAGE GAP: ${gaps.length} of ${plan.subQuestions.length} sub-questions need attention:\n${gapList}\n\nYou must redirect the deliberation to address these before concluding. Use hw_post_to_chatroom to intervene as mediator.`);
   }
 
-  const summary = addressed.map(sq => `  ${sq.id}. ${sq.text} -> ${sq.resolution ?? 'addressed'}`).join('\n');
-  activity.append('deliberation_coverage_complete', `All ${plan.subQuestions.length} sub-questions addressed`, summary);
-  return text(`COVERAGE COMPLETE: All ${plan.subQuestions.length} sub-questions addressed.\n${summary}\n\nYou may now call hw_conclude_deliberation.`);
+  // Check for all-consensus warning
+  const qualityTags = addressed.map(sq => sq.quality ?? 'consensus');
+  const allConsensus = qualityTags.every(q => q === 'consensus');
+  const tensionCount = qualityTags.filter(q => q === 'tension').length;
+  const shiftedCount = qualityTags.filter(q => q === 'shifted').length;
+  const consensusCount = qualityTags.filter(q => q === 'consensus').length;
+
+  const qualityLabel = (sq: typeof addressed[0]) => {
+    const q = sq.quality ?? 'consensus';
+    const tag = q === 'tension' ? 'TENSION' : q === 'shifted' ? 'SHIFTED' : 'CONSENSUS';
+    return `[${tag}]`;
+  };
+
+  const summary = addressed.map(sq => `  ${sq.id}. ${qualityLabel(sq)} ${sq.text} -> ${sq.resolution ?? 'addressed'}`).join('\n');
+  const qualitySummary = `Quality: ${tensionCount} tension, ${shiftedCount} shifted, ${consensusCount} consensus`;
+
+  if (allConsensus) {
+    activity.append('deliberation_coverage_warning', `All ${plan.subQuestions.length} sub-questions addressed but ALL CONSENSUS`, `${qualitySummary}\n${summary}`);
+    return text(`COVERAGE COMPLETE but ALL-CONSENSUS WARNING: Every sub-question reached quick agreement. This may indicate shallow deliberation or groupthink.\n${qualitySummary}\n${summary}\n\nConsider: Did any agent actually push back? Should you re-engage contrarian perspectives before concluding?`);
+  }
+
+  activity.append('deliberation_coverage_complete', `All ${plan.subQuestions.length} sub-questions addressed`, `${qualitySummary}\n${summary}`);
+  return text(`COVERAGE COMPLETE: All ${plan.subQuestions.length} sub-questions addressed.\n${qualitySummary}\n${summary}\n\nYou may now call hw_conclude_deliberation.`);
 });
 
 server.registerTool('hw_conclude_deliberation', {
   title: 'Conclude Deliberation',
-  description: 'Conclude the deliberation with a summary decision. If a deliberation plan exists with sub-questions, you MUST call hw_check_deliberation_coverage first and all questions must be addressed.',
+  description: `Conclude the deliberation with a summary decision. If a deliberation plan exists with sub-questions, you MUST call hw_check_deliberation_coverage first and all questions must be addressed.
+
+IMPORTANT: Your conclusion summary should reference the synthesis. If a synthesis message exists in the chatroom, your conclusion must align with it -- do not revert to earlier positions that were superseded during discussion.`,
   inputSchema: z.object({
-    summary: z.string().describe('Summary of the deliberation outcome / decision reached'),
+    summary: z.string().describe('Summary of the deliberation outcome / decision reached. Must align with the synthesis if one exists.'),
   }),
 }, async (args: { summary: string }) => {
   const state = chatroom.read();
@@ -1096,10 +1127,43 @@ server.registerTool('hw_conclude_deliberation', {
     }
   }
 
+  // Check for synthesis message and warn if conclusion might diverge
+  const synthMessages = state.messages.filter(m =>
+    m.agentId === 'claude' && m.type === 'claude' &&
+    (m.text.toLowerCase().includes('synthesis') || m.text.toLowerCase().includes('## synthesis'))
+  );
+  const synthesisWarning = synthMessages.length === 0
+    ? '\nWARNING: No synthesis message found in chatroom. Conclusion may not reflect the full discussion.'
+    : '';
+
   chatroom.appendMessage('system', `Concluded: ${args.summary}`, 'system');
   chatroom.setSessionStatus('concluded');
   activity.append('deliberation_concluded', 'Deliberation concluded', args.summary);
-  return text(`Deliberation concluded. Summary recorded: "${args.summary}"`);
+  return text(`Deliberation concluded. Summary recorded: "${args.summary}"${synthesisWarning}`);
+});
+
+server.registerTool('hw_quick_insights', {
+  title: 'Quick Insights',
+  description: `Run a lightweight, non-binding insight session. NOT a deliberation -- no sub-questions, no coverage tracking, no approval gates. Use this for flavor-testing ideas, quick sanity checks, or exploring a topic before deciding whether to run a full deliberation.
+
+Output is bulk-dismissable and clearly labeled as non-binding. If real tension surfaces, escalate to a full deliberation with hw_plan_deliberation.
+
+This is separate from deliberation by design. Do NOT use this as a shortcut to skip guardrails on decisions that matter.`,
+  inputSchema: z.object({
+    topic: z.string().describe('The question or topic to get quick insights on'),
+    agents: z.array(z.string()).min(2).max(4).optional().describe('Agent IDs (2-4). Defaults to contrarian + pragmatist + firstprinciples.'),
+  }),
+}, async (args: { topic: string; agents?: string[] }) => {
+  const agentIds = args.agents ?? ['contrarian', 'pragmatist', 'firstprinciples'];
+  const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
+
+  // Mark as quick-insights session (no plan, no guardrails)
+  chatroom.appendMessage('system', 'Quick insights session (non-binding). No coverage tracking. Escalate to full deliberation if real tension surfaces.', 'system');
+
+  activity.append('quick_insights_started', `Quick insights: "${args.topic.slice(0, 60)}"`, `Agents: ${agentIds.join(', ')}`);
+  runDeliberation(chatroom, notifyRunner).catch(() => {});
+
+  return text(`Quick insights session started with ${state.agents.length} agents: ${state.agents.map(a => a.name).join(', ')}\nTopic: "${args.topic}"\nThis is NON-BINDING flavor-testing. No sub-questions or coverage tracking.\nIf real tension surfaces, escalate to hw_plan_deliberation.`);
 });
 
 server.registerTool('hw_set_deliberation_phase', {
@@ -1221,6 +1285,7 @@ const TOOL_CATALOG = [
   { name: 'hw_resume_deliberation', category: 'chatroom' },
   { name: 'hw_check_deliberation_coverage', category: 'chatroom' },
   { name: 'hw_conclude_deliberation', category: 'chatroom' },
+  { name: 'hw_quick_insights', category: 'chatroom' },
   { name: 'hw_post_to_chatroom', category: 'chatroom' },
   { name: 'hw_post_agent_message', category: 'chatroom' },
   { name: 'hw_set_deliberation_phase', category: 'chatroom' },

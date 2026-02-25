@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import { randomBytes } from 'crypto';
-import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase, ChatReaction, DeliberationPlan } from './types.js';
+import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase, ChatReaction, DeliberationPlan, CoverageQuality } from './types.js';
 import { EMPTY_CHATROOM } from './types.js';
 
 function uid(prefix: string): string {
@@ -169,12 +169,12 @@ export class ChatroomStore {
     }));
   }
 
-  updateSubQuestion(questionId: number, status: 'pending' | 'addressed' | 'lumped', addressedBy?: string[], resolution?: string): void {
+  updateSubQuestion(questionId: number, status: 'pending' | 'addressed' | 'lumped', addressedBy?: string[], resolution?: string, quality?: CoverageQuality): void {
     this.update(state => {
       if (!state.session.plan) return state;
       const subQuestions = state.session.plan.subQuestions.map(sq =>
         sq.id === questionId
-          ? { ...sq, status, ...(addressedBy && { addressedBy }), ...(resolution && { resolution }) }
+          ? { ...sq, status, ...(addressedBy && { addressedBy }), ...(resolution && { resolution }), ...(quality && { quality }) }
           : sq
       );
       return {

@@ -20,10 +20,13 @@ export interface ChatMessage {
 
 export type DeliberationPhase = 'frame' | 'deliberate' | 'synthesis' | 'patinput' | 'decision';
 
+export type CoverageQuality = 'pending' | 'consensus' | 'tension' | 'shifted';
+
 export interface SubQuestion {
   id: number;
   text: string;
-  status: 'pending' | 'addressed' | 'lumped';  // lumped = dismissed without engagement
+  status: 'pending' | 'addressed' | 'lumped';  // legacy compat
+  quality?: CoverageQuality;  // consensus = fast agreement, tension = real disagreement, shifted = position changed
   addressedBy?: string[];  // agent IDs that substantively addressed it
   resolution?: string;     // one-line summary of what was decided
 }
@@ -36,7 +39,7 @@ export interface BalanceNote {
 
 export interface DeliberationPlan {
   subQuestions: SubQuestion[];
-  balanceNotes: BalanceNote[];
+  balanceNotes?: BalanceNote[];  // optional -- mediator handles bias correction on the fly
 }
 
 export interface ChatSession {

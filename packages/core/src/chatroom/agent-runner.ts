@@ -287,6 +287,10 @@ export async function runDeliberation(
       const state = store.read();
       if (state.session.status !== 'active') break;
 
+      // Stop auto-runner when mediator moves to synthesis or later phases
+      const phase = state.session.deliberationPhase;
+      if (phase === 'synthesis' || phase === 'patinput' || phase === 'decision') break;
+
       store.incrementRound();
       notify(['chatroom.json']);
 

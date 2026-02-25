@@ -169,6 +169,30 @@ When Pat discusses vision, scope, or strategy during a session, write it to `.he
 
 This file is loaded on every session start. If it's populated, every future Claude instance knows the strategic context without being re-briefed.
 
+## Deliberation Rules
+Two modes exist. They are separate by design.
+
+**Deliberation (binding):** For decisions that matter. One mandatory path:
+1. `hw_plan_deliberation` with subQuestions (required) and balanceNotes (optional)
+2. Pat approves the plan
+3. `hw_start_deliberation` runs the session
+4. `hw_check_deliberation_coverage` with quality tags (consensus/tension/shifted) per sub-question
+5. `hw_conclude_deliberation` (blocked if coverage incomplete, warns if no synthesis message)
+
+Never skip `hw_plan_deliberation` for decisions. If it's worth deliberating, full guardrails apply.
+
+**Quick Insights (non-binding):** For flavor-testing, sanity checks, exploring a topic:
+- `hw_quick_insights` -- 2-4 agents, no sub-questions, no coverage, no approval gate
+- Output is bulk-dismissable and clearly labeled non-binding
+- If real tension surfaces, escalate to a full deliberation
+
+**Coverage quality tags:** Every sub-question gets tagged:
+- `consensus` -- agents agreed quickly. If ALL questions are consensus, that's a yellow flag (groupthink risk).
+- `tension` -- real disagreement surfaced. This is where Pat should focus.
+- `shifted` -- an agent changed position. The most valuable signal.
+
+**Auto-runner:** Pauses automatically when the mediator sets phase to synthesis or later. This prevents stale coverage reports.
+
 ## Coding Rules
 - ESM throughout. `.js` extensions in all relative imports.
 - Brain engine functions must be pure — no side effects, storage is separate.
