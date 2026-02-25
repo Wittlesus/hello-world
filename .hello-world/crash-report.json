@@ -1,0 +1,36 @@
+{
+  "reportedAt": "2026-02-25T15:57:19.914Z",
+  "watcherId": "[copy] noble-cobra",
+  "triggerType": "app_shutdown_copy",
+  "appExitedAt": "2026-02-25T15:57:19.914Z",
+  "appliedCopies": [
+    {
+      "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/Cargo.toml",
+      "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.toml",
+      "status": "ok"
+    },
+    {
+      "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/src/browser.rs",
+      "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs",
+      "status": "ok"
+    },
+    {
+      "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/src/lib.rs",
+      "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+      "status": "ok"
+    },
+    {
+      "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/tauri.conf.json",
+      "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/tauri.conf.json",
+      "status": "ok"
+    },
+    {
+      "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src/components/BrowserView.tsx",
+      "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/BrowserView.tsx",
+      "status": "ok"
+    }
+  ],
+  "pendingChangesDescription": "embed-browser",
+  "lastContextFile": "C:\\Users\\Patri\\CascadeProjects\\hello-world\\.claude\\worktrees\\embed-browser\\packages\\app\\src-tauri\\tauri.conf.json",
+  "lastContextTask": "Build safe built-in browser for Hello World app"
+}

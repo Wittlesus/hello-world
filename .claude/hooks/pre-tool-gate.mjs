@@ -60,10 +60,10 @@ if (isRustSource && !inWorktree) {
 // ── Warnings (non-blocking) ───────────────────────────────────────
 
 const workflow = safeRead('workflow.json');
-const state    = safeRead('state.json');
+const tasks    = safeRead('tasks.json');
 
 const phase      = workflow?.phase ?? 'idle';
-const allTasks   = state?.tasks ?? [];
+const allTasks   = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
 const inProgress = allTasks.filter(t => t.status === 'in_progress');
 
 const warnings = [];

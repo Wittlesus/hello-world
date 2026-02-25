@@ -20,6 +20,7 @@ import { HelpModal } from './components/HelpModal.js';
 import { HistoryView } from './components/HistoryView.js';
 import { AgentsView } from './components/AgentsView.js';
 import { FilesView } from './components/FilesView.js';
+import { BrowserView } from './components/BrowserView.js';
 import { ErrorBoundary } from './components/ErrorBoundary.js';
 import { useAppStore, type View } from './stores/app.js';
 
@@ -39,6 +40,7 @@ const KEY_MAP: Record<string, View> = {
   'p': 'context',
   'w': 'watchers',
   'f': 'files',
+  'b': 'browser',
 };
 
 function MainContent() {
@@ -59,6 +61,7 @@ function MainContent() {
       {view === 'watchers'   && <WatchersView />}
       {view === 'context'    && <ProjectContextView />}
       {view === 'files'      && <FilesView />}
+      {view === 'browser'    && <BrowserView />}
 
       {/* Approvals as standalone full view */}
       {view === 'approvals'  && (
@@ -141,16 +144,18 @@ export function App() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-[#0a0a0f] text-gray-200">
-      <div className="flex-1 flex min-h-0">
-        <Sidebar onShowHelp={() => setShowHelp(true)} />
-        <main className="flex-1 flex flex-col min-w-0 min-h-0">
-          <MainContent />
-        </main>
+    <ErrorBoundary label="app">
+      <div className="h-screen flex flex-col bg-[#0a0a0f] text-gray-200">
+        <div className="flex-1 flex min-h-0">
+          <Sidebar onShowHelp={() => setShowHelp(true)} />
+          <main className="flex-1 flex flex-col min-w-0 min-h-0">
+            <MainContent />
+          </main>
+        </div>
+        <ApprovalQueue />
+        <ClaudeBuddy />
+        <HelpModal open={showHelp} onClose={() => setShowHelp(false)} />
       </div>
-      <ApprovalQueue />
-      <ClaudeBuddy />
-      <HelpModal open={showHelp} onClose={() => setShowHelp(false)} />
-    </div>
+    </ErrorBoundary>
   );
 }

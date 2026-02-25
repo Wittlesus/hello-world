@@ -259,6 +259,7 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
         @keyframes bubble-pop   { from{opacity:0;transform:translateY(4px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
         @keyframes agent-enter  { from{opacity:0;transform:translate(-50%,-50%) scale(0.35)} 65%{transform:translate(-50%,-50%) scale(1.1)} to{opacity:1;transform:translate(-50%,-50%) scale(1)} }
         @keyframes combat-float { 0%{opacity:1;transform:translate(-50%,0) scale(1)} 15%{opacity:1;transform:translate(-50%,-10px) scale(1.2)} 100%{opacity:0;transform:translate(-50%,-55px) scale(0.85)} }
+        @keyframes thinking-dot { 0%,80%,100%{opacity:0.2;transform:translateY(0)} 40%{opacity:1;transform:translateY(-3px)} }
         .hw-chat-scroll::-webkit-scrollbar       { width: 3px; }
         .hw-chat-scroll::-webkit-scrollbar-track { background: transparent; }
         .hw-chat-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.07); border-radius: 2px; }
@@ -441,7 +442,7 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
                   const raw = tw?.msgId === msg.id
                     ? msg.text.slice(0, tw.revealed) + (tw.revealed < msg.text.length ? '▋' : '')
                     : msg.text;
-                  bubbleTxt = raw.length > 85 ? raw.slice(0, 85) + '…' : raw;
+                  bubbleTxt = raw.length > 200 ? raw.slice(0, 200) + '...' : raw;
                 }
 
                 return (
@@ -457,14 +458,14 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
                   >
                     {/* Speech bubble */}
                     {bubbleTxt !== null && (
-                      <div style={{
-                        maxWidth: 165, padding: '4px 7px', borderRadius: 5,
+                      <div className="hw-chat-scroll" style={{
+                        maxWidth: 210, maxHeight: 90, padding: '5px 8px', borderRadius: 6,
                         background: `${color}0e`, border: `1px solid ${color}20`,
                         color: isGolden ? '#fde68a' : color,
-                        fontSize: 7.5, fontFamily: 'monospace', lineHeight: 1.45,
+                        fontSize: 8, fontFamily: 'monospace', lineHeight: 1.5,
                         wordBreak: 'break-word', opacity: bubbleOp,
                         animation: 'bubble-pop 0.12s ease', marginBottom: 2,
-                        pointerEvents: 'none',
+                        overflowY: 'auto', pointerEvents: 'auto',
                       }}>
                         {bubbleTxt}
                       </div>
@@ -505,13 +506,18 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
                       {agent.name}
                     </div>
 
-                    {/* Active status dot */}
-                    {agent.status !== 'idle' && (
-                      <div style={{
-                        width: 4, height: 4, borderRadius: '50%',
-                        background: agent.status === 'thinking' ? '#fb923c' : color,
-                        boxShadow: `0 0 5px ${agent.status === 'thinking' ? '#fb923c' : color}`,
-                      }} />
+                    {/* Thinking indicator */}
+                    {agent.status === 'thinking' && (
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 2, marginTop: 1 }}>
+                        <span style={{ fontSize: 9, color: '#fb923c', fontWeight: 700, textShadow: '0 0 6px #fb923c55' }}>!</span>
+                        {[0, 150, 300].map(delay => (
+                          <div key={delay} style={{
+                            width: 3, height: 3, borderRadius: '50%',
+                            background: '#fb923c',
+                            animation: `thinking-dot 1.2s ease infinite ${delay}ms`,
+                          }} />
+                        ))}
+                      </div>
                     )}
                   </div>
                 );
@@ -573,32 +579,39 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
                   }}
                 >
                   <div style={{
-                    fontSize: 8, fontFamily: 'monospace', color: '#818cf8',
-                    letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 10,
+                    fontSize: 9, fontFamily: 'monospace', color: '#818cf8',
+                    letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4,
                   }}>
-                    Deliberation Summary: {state.session.topic}
+                    Deliberation Timeline
+                  </div>
+                  <div style={{
+                    fontSize: 8, fontFamily: 'monospace', color: '#5a5a80',
+                    marginBottom: 12, lineHeight: 1.4,
+                  }}>
+                    {state.session.topic}
                   </div>
                   <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
                       <tr>
-                        <th style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#3a3a58', textAlign: 'left', padding: '2px 6px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>Time</th>
-                        <th style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#3a3a58', textAlign: 'left', padding: '2px 6px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>Agent</th>
-                        <th style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#3a3a58', textAlign: 'left', padding: '2px 6px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>Message</th>
+                        <th style={{ fontSize: 8, fontFamily: 'monospace', color: '#7878a0', textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(255,255,255,0.1)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Time</th>
+                        <th style={{ fontSize: 8, fontFamily: 'monospace', color: '#7878a0', textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(255,255,255,0.1)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Agent</th>
+                        <th style={{ fontSize: 8, fontFamily: 'monospace', color: '#7878a0', textAlign: 'left', padding: '4px 8px', borderBottom: '1px solid rgba(255,255,255,0.1)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Message</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {logMessages.map(msg => {
+                      {logMessages.map((msg, idx) => {
                         const color = agentColor(msg.agentId, state?.agents ?? []);
                         const name  = agentDisplayName(msg.agentId, state?.agents ?? []);
+                        const isEven = idx % 2 === 0;
                         return (
-                          <tr key={msg.id}>
-                            <td style={{ fontSize: 7.5, fontFamily: 'monospace', color: '#252535', padding: '3px 6px', verticalAlign: 'top', whiteSpace: 'nowrap' }}>
+                          <tr key={msg.id} style={{ background: isEven ? 'rgba(255,255,255,0.015)' : 'transparent' }}>
+                            <td style={{ fontSize: 8, fontFamily: 'monospace', color: '#5a5a80', padding: '4px 8px', verticalAlign: 'top', whiteSpace: 'nowrap' }}>
                               {formatTime(msg.timestamp)}
                             </td>
-                            <td style={{ fontSize: 8, fontFamily: 'monospace', fontWeight: 700, color, padding: '3px 6px', verticalAlign: 'top', whiteSpace: 'nowrap' }}>
+                            <td style={{ fontSize: 9, fontFamily: 'monospace', fontWeight: 700, color, padding: '4px 8px', verticalAlign: 'top', whiteSpace: 'nowrap' }}>
                               {name}
                             </td>
-                            <td style={{ fontSize: 8, fontFamily: 'monospace', color: '#c0c0d5', padding: '3px 6px', lineHeight: 1.45, wordBreak: 'break-word' }}>
+                            <td style={{ fontSize: 9, fontFamily: 'monospace', color: '#d0d0e5', padding: '4px 8px', lineHeight: 1.5, wordBreak: 'break-word' }}>
                               {msg.text}
                             </td>
                           </tr>

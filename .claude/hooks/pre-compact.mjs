@@ -28,7 +28,7 @@ function safeReadRaw(file) {
 
 const sessions  = safeRead('sessions.json') ?? [];
 const activities = safeRead('activity.json') ?? [];
-const state     = safeRead('state.json') ?? {};
+const tasks     = safeRead('tasks.json') ?? [];
 
 // Current session = last entry without endedAt
 const sessionList   = Array.isArray(sessions) ? sessions : (sessions.sessions ?? []);
@@ -41,7 +41,7 @@ const sessionId     = currentSession.id;
 
 // ── Resolve task IDs to titles ─────────────────────────────────────────────
 
-const allTasks = state.tasks ?? [];
+const allTasks = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
 function taskTitle(id) {
   return allTasks.find(t => t.id === id)?.title ?? id;
 }

@@ -20,14 +20,14 @@ function safeRead(file) {
 }
 
 const workflow  = safeRead('workflow.json');
-const state     = safeRead('state.json');
+const tasks     = safeRead('tasks.json') ?? [];
 const caps      = safeRead('capabilities.json');
 const direction = safeRead('direction.json');
 
 const phase   = workflow?.phase ?? 'idle';
 const taskId  = workflow?.currentTaskId ?? null;
 
-const allTasks    = state?.tasks ?? [];
+const allTasks    = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
 const inProgress  = allTasks.filter(t => t.status === 'in_progress').length;
 const pendingCount = allTasks.filter(t => t.status === 'todo').length;
 

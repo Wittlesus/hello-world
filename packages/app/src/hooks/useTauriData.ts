@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 
@@ -6,7 +6,7 @@ import { listen } from '@tauri-apps/api/event';
 const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_config: ['config.json'],
   save_config: ['config.json'],
-  get_state: ['state.json', 'tasks.json', 'decisions.json', 'questions.json'],
+  get_state: ['tasks.json', 'decisions.json', 'questions.json'],
   get_memories: ['memories.json'],
   get_sessions: ['sessions.json'],
   get_brain_state: ['brain-state.json'],
@@ -18,6 +18,48 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_watchers: ['watchers.json'],
   get_chatroom: ['chatroom.json'],
 };
+
+// ── Shared polling heartbeat ──────────────────────────────────────
+// One single 30s interval for ALL hooks, instead of per-hook 10s intervals.
+// Subscribers register their refetch callback; the heartbeat calls all of them.
+
+type RefetchFn = () => void;
+const pollSubscribers = new Set<RefetchFn>();
+let pollTimer: ReturnType<typeof setInterval> | null = null;
+
+function subscribePoll(fn: RefetchFn) {
+  pollSubscribers.add(fn);
+  if (!pollTimer) {
+    pollTimer = setInterval(() => {
+      pollSubscribers.forEach((f) => f());
+    }, 30_000);
+  }
+  return () => {
+    pollSubscribers.delete(fn);
+    if (pollSubscribers.size === 0 && pollTimer) {
+      clearInterval(pollTimer);
+      pollTimer = null;
+    }
+  };
+}
+
+// ── Debounce file watcher events ──────────────────────────────────
+// When MCP writes 3 files rapidly, batch the events so components
+// re-render once instead of 3 times within a short window.
+
+const pendingRefetches = new Map<string, ReturnType<typeof setTimeout>>();
+const DEBOUNCE_MS = 150;
+
+function debouncedRefetch(command: string, fn: () => void) {
+  const existing = pendingRefetches.get(command);
+  if (existing) clearTimeout(existing);
+  pendingRefetches.set(command, setTimeout(() => {
+    pendingRefetches.delete(command);
+    fn();
+  }, DEBOUNCE_MS));
+}
+
+// ──────────────────────────────────────────────────────────────────
 
 interface TauriDataState<T> {
   data: T | null;
@@ -43,7 +85,7 @@ export function useTauriData<T>(command: string, projectPath: string): TauriData
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  // Listen for file changes and refetch when our files change
+  // Listen for file changes and refetch when our files change (debounced)
   useEffect(() => {
     if (!projectPath) return;
     const relevantFiles = COMMAND_FILE_MAP[command] ?? [];
@@ -53,23 +95,28 @@ export function useTauriData<T>(command: string, projectPath: string): TauriData
       const changed = event.payload;
       const shouldRefetch = relevantFiles.some((f) => changed.includes(f));
       if (shouldRefetch) {
-        invoke<T>(command, { projectPath })
-          .then(setData)
-          .catch((err) => setError(String(err)));
+        debouncedRefetch(command, () => {
+          invoke<T>(command, { projectPath })
+            .then(setData)
+            .catch((err) => setError(String(err)));
+        });
       }
     });
 
     return () => { unlisten.then((fn) => fn()); };
   }, [command, projectPath]);
 
-  // 10-second polling fallback — catches anything the event listener misses
-  useEffect(() => {
+  // Shared 30s polling fallback — one global timer for all hooks
+  const refetchRef = useRef<RefetchFn>(() => {});
+  refetchRef.current = () => {
     if (!projectPath) return;
-    const id = setInterval(() => {
-      invoke<T>(command, { projectPath }).then(setData).catch(() => {});
-    }, 10_000);
-    return () => clearInterval(id);
-  }, [command, projectPath]);
+    invoke<T>(command, { projectPath }).then(setData).catch(() => {});
+  };
+
+  useEffect(() => {
+    const fn: RefetchFn = () => refetchRef.current();
+    return subscribePoll(fn);
+  }, []);
 
   return { data, loading, error, refetch: fetchData };
 }

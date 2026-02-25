@@ -116,123 +116,276 @@
 <script>
 const LAYERS={infra:{label:'Infrastructure',color:'#58a6ff',bg:'#1a2332'},mcp:{label:'MCP Servers',color:'#3fb950',bg:'#1a2d1f'},pipeline:{label:'Pipelines',color:'#d29922',bg:'#2d2517'},data:{label:'Data Stores',color:'#bc8cff',bg:'#231a2e'},workflow:{label:'Workflows',color:'#39d2c0',bg:'#172d2a'},external:{label:'External',color:'#f85149',bg:'#2d1a1a'}};
 const CONN_TYPES={data:{label:'Data Flow',color:'#58a6ff',dash:''},tool:{label:'Tool Call',color:'#3fb950',dash:'5,3'},event:{label:'Event/Trigger',color:'#d29922',dash:'8,4'},depends:{label:'Dependency',color:'#484f58',dash:'2,3'}};
+
+// Group boxes rendered behind nodes
+const GROUPS=[
+  {label:'TRIGGERS',x:280,y:15,w:420,h:70,color:'#f85149'},
+  {label:'HOOKS',x:30,y:105,w:310,h:195,color:'#58a6ff'},
+  {label:'CORE',x:360,y:105,w:260,h:195,color:'#58a6ff'},
+  {label:'PIPELINES',x:30,y:320,w:310,h:195,color:'#d29922'},
+  {label:'EXTERNAL MCP',x:660,y:105,w:320,h:310,color:'#3fb950'},
+  {label:'DATA STORES',x:30,y:535,w:610,h:130,color:'#bc8cff'},
+  {label:'ATOMIC-READ ZONE',x:125,y:548,w:410,h:50,color:'#f85149'},
+  {label:'WORKFLOWS',x:30,y:690,w:610,h:62,color:'#39d2c0'}
+];
+
 const nodes=[
-{id:'hw-app',label:'Hello World App',sub:'Tauri v2 + React 19',layer:'infra',x:460,y:60,w:160,h:48,icon:'\u{1F5A5}',detail:{desc:'Desktop app with sidebar navigation, 10+ views, live reactivity via file watcher.',tech:['Tauri v2','React 19','Tailwind 4','TypeScript'],files:['packages/app/src-tauri/src/lib.rs','packages/app/src/App.tsx']}},
-{id:'hw-mcp',label:'HW MCP Server',sub:'hw_* tools (40+)',layer:'infra',x:460,y:160,w:160,h:48,icon:'\u{1F527}',detail:{desc:'Core MCP server: tasks, memory, decisions, approvals, workflow, watchers, deliberation.',tech:['@modelcontextprotocol/sdk','TypeScript'],files:['packages/core/src/mcp/server.ts']}},
-{id:'session-hook',label:'SessionStart Hook',sub:'Context injection',layer:'infra',x:200,y:60,w:160,h:48,icon:'\u{1F680}',detail:{desc:'Fires on every session. Creates session, consumes handoff, injects full state.',files:['.claude/session-start.mjs']}},
-{id:'pretool-hook',label:'Pre-tool Gate',sub:'Blocks edits w/o task',layer:'infra',x:200,y:160,w:160,h:48,icon:'\u{1F6E1}',detail:{desc:'Blocks Edit/Write when no task is in_progress. Forces task tracking.',files:['.claude/hooks/pre-tool-gate.mjs']}},
-{id:'posttool-hook',label:'PostTool Thought',sub:'Feeds Claude Buddy',layer:'infra',x:200,y:260,w:160,h:48,icon:'\u{1F4AD}',detail:{desc:'Auto-generates thought stream from tool calls for Buddy display.'}},
-{id:'submit-hook',label:'UserPromptSubmit',sub:'Status + memory cue',layer:'infra',x:200,y:360,w:160,h:48,icon:'\u{1F4CA}',detail:{desc:'Shows status line, auto-retrieves pain/win memories from prompt keywords.'}},
-{id:'discord-bot',label:'Discord Bot',sub:'DMs Pat for approvals',layer:'infra',x:720,y:160,w:160,h:48,icon:'\u{1F916}',detail:{desc:'Sends DMs on block-tier approvals and blockers.',tech:['Discord.js']}},
-{id:'discord-listen',label:'Discord Listener',sub:'Receives Pat replies',layer:'infra',x:720,y:260,w:160,h:48,icon:'\u{1F442}',detail:{desc:'Listens for approve/reject/note commands from Pat.',files:['packages/core/src/discord-listener.ts']}},
-{id:'cortex',label:'Cortex MCP',sub:'Semantic code indexing',layer:'infra',x:460,y:260,w:160,h:48,icon:'\u{1F9E0}',detail:{desc:'Static analysis MCP server. Zero API calls. Parses imports/exports/symbols, infers concepts.',files:['C:/Users/Patri/CascadeProjects/cortex/src/server.ts']}},
-{id:'claude-buddy',label:'Claude Buddy',sub:'Floating status',layer:'infra',x:460,y:360,w:160,h:48,icon:'\u{1F431}',detail:{desc:'3-state overlay: Responding/Coding/Waiting. PTY feed + harmonic bell chime.'}},
-{id:'mcp-playwright',label:'Playwright',sub:'Browser automation',layer:'mcp',x:960,y:40,w:140,h:40,icon:'\u{1F3AD}',detail:{desc:'Chromium automation for social media and web research.'}},
-{id:'mcp-github',label:'GitHub',sub:'Repo management',layer:'mcp',x:960,y:90,w:140,h:40,icon:'\u{1F419}',detail:{desc:'GitHub API: repos, PRs, issues, code search.'}},
-{id:'mcp-stripe',label:'Stripe',sub:'Payments',layer:'mcp',x:960,y:140,w:140,h:40,icon:'\u{1F4B3}',detail:{desc:'Stripe payments, products, invoices, subscriptions.'}},
-{id:'mcp-twitter',label:'Twitter',sub:'Social media',layer:'mcp',x:960,y:190,w:140,h:40,icon:'\u{1F426}',detail:{desc:'@WSDevGuy account. Post, search, like, follow.'}},
-{id:'mcp-memory',label:'Memory Graph',sub:'Knowledge graph',layer:'mcp',x:960,y:240,w:140,h:40,icon:'\u{1F578}',detail:{desc:'Entity-relationship knowledge graph with persistent JSON.'}},
-{id:'mcp-filesystem',label:'Filesystem',sub:'File access',layer:'mcp',x:960,y:290,w:140,h:40,icon:'\u{1F4C1}',detail:{desc:'Read/write/search files. Scoped to C:/Users/Patri.'}},
-{id:'mcp-gitmcp',label:'GitMCP',sub:'GitHub repo docs',layer:'mcp',x:960,y:340,w:140,h:40,icon:'\u{1F4DA}',detail:{desc:'Fetch docs from any GitHub repo. 7.6k stars.'}},
-{id:'mcp-pkgver',label:'Pkg Versions',sub:'Latest versions',layer:'mcp',x:960,y:390,w:140,h:40,icon:'\u{1F4E6}',detail:{desc:'Latest versions for 14+ ecosystems.'}},
-{id:'mcp-coderesearch',label:'Code Research',sub:'SO/MDN/npm/PyPI',layer:'mcp',x:960,y:440,w:140,h:40,icon:'\u{1F50D}',detail:{desc:'Search StackOverflow, MDN, GitHub, npm, PyPI. Free.'}},
-{id:'mcp-context7',label:'Context7',sub:'Library docs',layer:'mcp',x:960,y:490,w:140,h:40,icon:'\u{1F4D6}',detail:{desc:'Up-to-date library docs and code examples.'}},
-{id:'data-state',label:'state.json',sub:'Tasks, decisions, questions',layer:'data',x:460,y:480,w:140,h:38,icon:'\u{1F4CB}'},
-{id:'data-workflow',label:'workflow.json',sub:'Current phase',layer:'data',x:300,y:480,w:140,h:38,icon:'\u{2699}'},
-{id:'data-activity',label:'activity.json',sub:'Event log',layer:'data',x:620,y:480,w:140,h:38,icon:'\u{1F4DC}'},
-{id:'data-memories',label:'memories.json',sub:'Brain memories',layer:'data',x:460,y:540,w:140,h:38,icon:'\u{1F9E0}'},
-{id:'data-direction',label:'direction.json',sub:'Vision, scope, notes',layer:'data',x:300,y:540,w:140,h:38,icon:'\u{1F9ED}'},
-{id:'data-sessions',label:'sessions.json',sub:'Session history',layer:'data',x:620,y:540,w:140,h:38,icon:'\u{1F4C5}'},
-{id:'data-approvals',label:'approvals.json',sub:'Pending approvals',layer:'data',x:780,y:480,w:140,h:38,icon:'\u{2705}'},
-{id:'data-chatroom',label:'chatroom.json',sub:'Deliberation state',layer:'data',x:780,y:540,w:140,h:38,icon:'\u{1F4AC}'},
-{id:'data-cortex',label:'.cortex-index/',sub:'Code index',layer:'data',x:160,y:540,w:140,h:38,icon:'\u{1F5C2}'},
-{id:'data-memory-md',label:'MEMORY.md',sub:'Persistent memory',layer:'data',x:160,y:480,w:140,h:38,icon:'\u{1F4DD}'},
-{id:'pipe-research',label:'Research Pipeline',sub:'Discover + store',layer:'pipeline',x:60,y:140,w:140,h:44,icon:'\u{1F52C}',detail:{desc:'WebSearch/GitMCP/CodeResearch -> Agents -> hw_store_memory -> SessionStart loads.'}},
-{id:'pipe-session',label:'Session Pipeline',sub:'Hook -> context -> work',layer:'pipeline',x:60,y:210,w:140,h:44,icon:'\u{1F504}',detail:{desc:'SessionStart -> Context -> Claude works -> PostTool -> Stop -> Buddy chime.'}},
-{id:'pipe-build',label:'Build Pipeline',sub:'Task -> worktree -> merge',layer:'pipeline',x:60,y:280,w:140,h:44,icon:'\u{1F3D7}',detail:{desc:'Task -> hw_start_task -> worktree -> code -> verify -> watcher copies -> merge.'}},
-{id:'pipe-approval',label:'Approval Pipeline',sub:'Auto/notify/block',layer:'pipeline',x:60,y:350,w:140,h:44,icon:'\u{1F512}',detail:{desc:'hw_check_approval -> tier evaluation -> Discord DM -> Pat responds -> resolve.'}},
-{id:'pipe-knowledge',label:'Knowledge Intake',sub:'Research -> memory',layer:'pipeline',x:60,y:420,w:140,h:44,icon:'\u{1F4E5}',detail:{desc:'Research tools find tech -> Mining agents extract -> Cortex indexes -> Memory updated.'}},
-{id:'wf-phases',label:'Workflow Phases',sub:'idle->scope->plan->build->verify->ship',layer:'workflow',x:460,y:630,w:200,h:44,icon:'\u{1F504}',detail:{desc:'Six-phase workflow. hw_advance_phase moves between phases.'}},
-{id:'wf-twostrike',label:'Two-Strike System',sub:'Same error 2x = halt',layer:'workflow',x:700,y:630,w:160,h:44,icon:'\u{26A0}',detail:{desc:'Same error class twice = automatic halt. Must present alternatives.'}},
-{id:'wf-deliberation',label:'Deliberation',sub:'Multi-agent decisions',layer:'workflow',x:460,y:700,w:200,h:44,icon:'\u{1F5E3}',detail:{desc:'Plan sub-questions -> agents deliberate -> coverage check -> synthesis -> conclude.'}},
-{id:'pat',label:'Pat (@Wittlesus)',sub:'President / Human',layer:'external',x:720,y:360,w:160,h:48,icon:'\u{1F464}',detail:{desc:'Strategic direction, approvals, scope control. Discord DMs for async.'}}
+// === TIER 0: Triggers (top) ===
+{id:'pat',label:'Pat (@Wittlesus)',sub:'President / Human',layer:'external',x:295,y:28,w:160,h:48,icon:'\u{1F464}',detail:{desc:'Strategic direction, approvals, scope control. Discord DMs for async.'}},
+{id:'discord-bot',label:'Discord Bot',sub:'DMs Pat for approvals',layer:'infra',x:480,y:28,w:165,h:44,icon:'\u{1F916}',detail:{desc:'Sends DMs on block-tier approvals and blockers.',tech:['Discord.js']}},
+
+// === TIER 1: Hooks (left) + Core (center) ===
+// -- Hooks --
+{id:'session-hook',label:'SessionStart Hook',sub:'Context injection',layer:'infra',x:42,y:120,w:172,h:42,icon:'\u{1F680}',detail:{desc:'Fires on every session. Creates session, consumes handoff, injects full state.',files:['.claude/session-start.mjs']}},
+{id:'pretool-hook',label:'Pre-tool Gate',sub:'Blocks edits w/o task',layer:'infra',x:42,y:175,w:172,h:42,icon:'\u{1F6E1}',detail:{desc:'Blocks Edit/Write when no task is in_progress. Forces task tracking.',files:['.claude/hooks/pre-tool-gate.mjs']}},
+{id:'posttool-hook',label:'PostTool Thought',sub:'Feeds Claude Buddy',layer:'infra',x:42,y:230,w:172,h:42,icon:'\u{1F4AD}',detail:{desc:'Auto-generates thought stream from tool calls for Buddy display.'}},
+{id:'submit-hook',label:'UserPromptSubmit',sub:'Status + memory cue',layer:'infra',x:225,y:120,w:108,h:42,icon:'\u{1F4CA}',detail:{desc:'Shows status line, auto-retrieves pain/win memories from prompt keywords.'}},
+{id:'discord-listen',label:'Discord Listener',sub:'Receives Pat replies',layer:'infra',x:225,y:175,w:108,h:42,icon:'\u{1F442}',detail:{desc:'Listens for approve/reject/note commands from Pat.',files:['packages/core/src/discord-listener.ts']}},
+
+// -- Core --
+{id:'hw-mcp',label:'HW MCP Server',sub:'hw_* tools (40+)',layer:'infra',x:375,y:120,w:230,h:56,icon:'\u{1F527}',detail:{desc:'Core MCP server: tasks, memory, decisions, approvals, workflow, watchers, deliberation. The central hub.',tech:['@modelcontextprotocol/sdk','TypeScript'],files:['packages/core/src/mcp/server.ts']}},
+{id:'hw-app',label:'Hello World App',sub:'Tauri v2 + React 19',layer:'infra',x:375,y:195,w:230,h:48,icon:'\u{1F5A5}',detail:{desc:'Desktop app with sidebar navigation, 10+ views, live reactivity via file watcher.',tech:['Tauri v2','React 19','Tailwind 4','TypeScript'],files:['packages/app/src-tauri/src/lib.rs','packages/app/src/App.tsx']}},
+{id:'claude-buddy',label:'Claude Buddy',sub:'Floating status overlay',layer:'infra',x:375,y:258,w:175,h:38,icon:'\u{1F431}',detail:{desc:'3-state overlay: Responding/Coding/Waiting. PTY feed + harmonic bell chime.'}},
+{id:'cortex',label:'Cortex MCP',sub:'Semantic code indexing',layer:'infra',x:560,y:258,w:168,h:38,icon:'\u{1F9E0}',detail:{desc:'Static analysis MCP server. Zero API calls. Parses imports/exports/symbols, infers concepts.',files:['C:/Users/Patri/CascadeProjects/cortex/src/server.ts']}},
+
+// === TIER 2: Pipelines (left, below hooks) ===
+{id:'pipe-session',label:'Session Pipeline',sub:'Hook -> context -> work',layer:'pipeline',x:42,y:335,w:158,h:40,icon:'\u{1F504}',detail:{desc:'SessionStart -> Context -> Claude works -> PostTool -> Stop -> Buddy chime.'}},
+{id:'pipe-build',label:'Build Pipeline',sub:'Task -> worktree -> merge',layer:'pipeline',x:42,y:385,w:158,h:40,icon:'\u{1F3D7}',detail:{desc:'Task -> hw_start_task -> worktree -> code -> verify -> watcher copies -> merge.'}},
+{id:'pipe-approval',label:'Approval Pipeline',sub:'Auto/notify/block',layer:'pipeline',x:42,y:435,w:158,h:40,icon:'\u{1F512}',detail:{desc:'hw_check_approval -> tier evaluation -> Discord DM -> Pat responds -> resolve.'}},
+{id:'pipe-research',label:'Research Pipeline',sub:'Discover + store',layer:'pipeline',x:215,y:335,w:158,h:40,icon:'\u{1F52C}',detail:{desc:'WebSearch/GitMCP/CodeResearch -> Agents -> hw_store_memory -> SessionStart loads.'}},
+{id:'pipe-knowledge',label:'Knowledge Intake',sub:'Research -> memory',layer:'pipeline',x:215,y:385,w:158,h:40,icon:'\u{1F4E5}',detail:{desc:'Research tools find tech -> Mining agents extract -> Cortex indexes -> Memory updated.'}},
+
+// === External MCP Servers (right edge, 2 columns) ===
+// Col 1
+{id:'mcp-playwright',label:'Playwright',sub:'Browser automation',layer:'mcp',x:675,y:120,w:140,h:36,icon:'\u{1F3AD}',detail:{desc:'Chromium automation for social media and web research.'}},
+{id:'mcp-github',label:'GitHub',sub:'Repo management',layer:'mcp',x:675,y:164,w:140,h:36,icon:'\u{1F419}',detail:{desc:'GitHub API: repos, PRs, issues, code search.'}},
+{id:'mcp-stripe',label:'Stripe',sub:'Payments',layer:'mcp',x:675,y:208,w:140,h:36,icon:'\u{1F4B3}',detail:{desc:'Stripe payments, products, invoices, subscriptions.'}},
+{id:'mcp-twitter',label:'Twitter',sub:'Social media',layer:'mcp',x:675,y:252,w:140,h:36,icon:'\u{1F426}',detail:{desc:'@WSDevGuy account. Post, search, like, follow.'}},
+{id:'mcp-memory',label:'Memory Graph',sub:'Knowledge graph',layer:'mcp',x:675,y:296,w:140,h:36,icon:'\u{1F578}',detail:{desc:'Entity-relationship knowledge graph with persistent JSON.'}},
+{id:'mcp-chrome',label:'Chrome',sub:'Browser control',layer:'mcp',x:675,y:340,w:140,h:36,icon:'\u{1F310}',detail:{desc:'Claude in Chrome. Page reading, clicks, form fill, screenshots.'}},
+// Col 2
+{id:'mcp-filesystem',label:'Filesystem',sub:'File access',layer:'mcp',x:830,y:120,w:140,h:36,icon:'\u{1F4C1}',detail:{desc:'Read/write/search files. Scoped to C:/Users/Patri.'}},
+{id:'mcp-gitmcp',label:'GitMCP',sub:'GitHub repo docs',layer:'mcp',x:830,y:164,w:140,h:36,icon:'\u{1F4DA}',detail:{desc:'Fetch docs from any GitHub repo.'}},
+{id:'mcp-pkgver',label:'Pkg Versions',sub:'Latest versions',layer:'mcp',x:830,y:208,w:140,h:36,icon:'\u{1F4E6}',detail:{desc:'Latest versions for 14+ ecosystems.'}},
+{id:'mcp-context7',label:'Context7',sub:'Library docs',layer:'mcp',x:830,y:252,w:140,h:36,icon:'\u{1F4D6}',detail:{desc:'Up-to-date library docs and code examples.'}},
+
+// === TIER 3: Data Stores ===
+// Row 1 — Atomic-read zone (split state files, high write freq)
+{id:'data-tasks',label:'tasks.json',sub:'HIGH writes/session',layer:'data',x:140,y:555,w:125,h:34,icon:'\u{1F4CB}'},
+{id:'data-decisions',label:'decisions.json',sub:'MED writes/session',layer:'data',x:275,y:555,w:130,h:34,icon:'\u{1F3AF}'},
+{id:'data-questions',label:'questions.json',sub:'LOW writes/session',layer:'data',x:415,y:555,w:130,h:34,icon:'\u{2753}'},
+// Row 2 — Other stores
+{id:'data-activity',label:'activity.json',sub:'HIGH — event log (185KB)',layer:'data',x:40,y:605,w:145,h:34,icon:'\u{1F4DC}'},
+{id:'data-memories',label:'memories.json',sub:'MED — brain (124KB)',layer:'data',x:195,y:605,w:140,h:34,icon:'\u{1F9E0}'},
+{id:'data-workflow',label:'workflow.json',sub:'Phase state',layer:'data',x:345,y:605,w:120,h:34,icon:'\u{2699}'},
+{id:'data-sessions',label:'sessions.json',sub:'Session history',layer:'data',x:475,y:605,w:130,h:34,icon:'\u{1F4C5}'},
+// Row 3
+{id:'data-direction',label:'direction.json',sub:'Vision + scope',layer:'data',x:40,y:645,w:130,h:34,icon:'\u{1F9ED}'},
+{id:'data-memory-md',label:'MEMORY.md',sub:'Persistent memory',layer:'data',x:180,y:645,w:130,h:34,icon:'\u{1F4DD}'},
+{id:'data-chatroom',label:'chatroom.json',sub:'Deliberation state',layer:'data',x:320,y:645,w:140,h:34,icon:'\u{1F4AC}'},
+{id:'data-approvals',label:'approvals.json',sub:'Pending approvals',layer:'data',x:470,y:645,w:130,h:34,icon:'\u{2705}'},
+{id:'data-cortex',label:'.cortex-index/',sub:'Code index',layer:'data',x:40,y:555,w:90,h:34,icon:'\u{1F5C2}'},
+
+// === TIER 4: Workflows ===
+{id:'wf-phases',label:'Workflow Phases',sub:'idle > scope > plan > build > verify > ship',layer:'workflow',x:42,y:702,w:205,h:40,icon:'\u{1F504}',detail:{desc:'Six-phase workflow. hw_advance_phase moves between phases.'}},
+{id:'wf-twostrike',label:'Two-Strike System',sub:'Same error 2x = halt',layer:'workflow',x:275,y:702,w:168,h:40,icon:'\u{26A0}',detail:{desc:'Same error class twice = automatic halt. Must present alternatives.'}},
+{id:'wf-deliberation',label:'Deliberation',sub:'Multi-agent decisions',layer:'workflow',x:470,y:702,w:160,h:40,icon:'\u{1F5E3}',detail:{desc:'Plan sub-questions -> agents deliberate -> coverage check -> synthesis -> conclude.'}}
 ];
+
 const connections=[
-{from:'session-hook',to:'hw-mcp',type:'event'},{from:'pretool-hook',to:'hw-mcp',type:'tool'},
-{from:'posttool-hook',to:'claude-buddy',type:'data'},{from:'submit-hook',to:'data-memories',type:'tool'},
-{from:'hw-mcp',to:'data-state',type:'data'},{from:'hw-mcp',to:'data-workflow',type:'data'},
-{from:'hw-mcp',to:'data-activity',type:'data'},{from:'hw-mcp',to:'data-memories',type:'data'},
-{from:'hw-mcp',to:'data-direction',type:'data'},{from:'hw-mcp',to:'data-sessions',type:'data'},
-{from:'hw-mcp',to:'data-approvals',type:'data'},{from:'hw-mcp',to:'data-chatroom',type:'data'},
-{from:'hw-app',to:'data-state',type:'data'},{from:'hw-app',to:'hw-mcp',type:'event'},
-{from:'hw-mcp',to:'discord-bot',type:'tool'},{from:'discord-bot',to:'pat',type:'event'},
-{from:'pat',to:'discord-listen',type:'data'},{from:'discord-listen',to:'data-approvals',type:'data'},
-{from:'discord-listen',to:'data-direction',type:'data'},{from:'cortex',to:'data-cortex',type:'data'},
-{from:'session-hook',to:'data-state',type:'tool'},{from:'session-hook',to:'data-memory-md',type:'tool'},
+// Communication layer
+{from:'hw-mcp',to:'discord-bot',type:'tool'},
+{from:'discord-bot',to:'pat',type:'event'},
+{from:'pat',to:'discord-listen',type:'data'},
+{from:'discord-listen',to:'data-approvals',type:'data'},
+{from:'discord-listen',to:'data-direction',type:'data'},
+
+// Hooks -> Core
+{from:'session-hook',to:'hw-mcp',type:'event'},
+{from:'pretool-hook',to:'hw-mcp',type:'tool'},
+{from:'posttool-hook',to:'claude-buddy',type:'data'},
+{from:'submit-hook',to:'data-memories',type:'tool'},
+
+// Core -> Data stores
+{from:'hw-mcp',to:'data-tasks',type:'data'},
+{from:'hw-mcp',to:'data-decisions',type:'data'},
+{from:'hw-mcp',to:'data-questions',type:'data'},
+{from:'hw-mcp',to:'data-workflow',type:'data'},
+{from:'hw-mcp',to:'data-activity',type:'data'},
+{from:'hw-mcp',to:'data-memories',type:'data'},
+{from:'hw-mcp',to:'data-direction',type:'data'},
+{from:'hw-mcp',to:'data-sessions',type:'data'},
+{from:'hw-mcp',to:'data-approvals',type:'data'},
+{from:'hw-mcp',to:'data-chatroom',type:'data'},
+
+// App reads data
+{from:'hw-app',to:'data-tasks',type:'data'},
+{from:'hw-app',to:'data-decisions',type:'data'},
+{from:'hw-app',to:'data-questions',type:'data'},
+{from:'hw-app',to:'hw-mcp',type:'event'},
+
+// SessionStart hook reads context
+{from:'session-hook',to:'data-tasks',type:'tool'},
+{from:'session-hook',to:'data-decisions',type:'tool'},
+{from:'session-hook',to:'data-questions',type:'tool'},
+{from:'session-hook',to:'data-memory-md',type:'tool'},
 {from:'session-hook',to:'data-direction',type:'tool'},
-{from:'pipe-research',to:'mcp-gitmcp',type:'tool'},{from:'pipe-research',to:'mcp-coderesearch',type:'tool'},
-{from:'pipe-research',to:'data-memories',type:'data'},{from:'pipe-research',to:'data-memory-md',type:'data'},
-{from:'pipe-session',to:'session-hook',type:'event'},{from:'pipe-session',to:'pretool-hook',type:'event'},
-{from:'pipe-session',to:'posttool-hook',type:'event'},{from:'pipe-session',to:'submit-hook',type:'event'},
-{from:'pipe-approval',to:'discord-bot',type:'event'},{from:'pipe-approval',to:'data-approvals',type:'data'},
-{from:'pipe-knowledge',to:'cortex',type:'tool'},{from:'pipe-knowledge',to:'data-memories',type:'data'},
+
+// Cortex
+{from:'cortex',to:'data-cortex',type:'data'},
+
+// Pipelines
+{from:'pipe-research',to:'mcp-gitmcp',type:'tool'},
+{from:'pipe-research',to:'data-memories',type:'data'},
+{from:'pipe-research',to:'data-memory-md',type:'data'},
+{from:'pipe-session',to:'session-hook',type:'event'},
+{from:'pipe-session',to:'pretool-hook',type:'event'},
+{from:'pipe-session',to:'posttool-hook',type:'event'},
+{from:'pipe-session',to:'submit-hook',type:'event'},
+{from:'pipe-approval',to:'discord-bot',type:'event'},
+{from:'pipe-approval',to:'data-approvals',type:'data'},
+{from:'pipe-knowledge',to:'cortex',type:'tool'},
+{from:'pipe-knowledge',to:'data-memories',type:'data'},
 {from:'pipe-knowledge',to:'data-memory-md',type:'data'},
-{from:'wf-phases',to:'data-workflow',type:'data'},{from:'wf-twostrike',to:'hw-mcp',type:'tool'},
+
+// Workflows -> Data
+{from:'wf-phases',to:'data-workflow',type:'data'},
+{from:'wf-twostrike',to:'hw-mcp',type:'tool'},
 {from:'wf-deliberation',to:'data-chatroom',type:'data'},
-{from:'mcp-context7',to:'pipe-research',type:'depends'},{from:'mcp-pkgver',to:'pipe-research',type:'depends'}
+
+// External MCP dependencies
+{from:'mcp-context7',to:'pipe-research',type:'depends'},
+{from:'mcp-pkgver',to:'pipe-research',type:'depends'}
 ];
+
 const state={layers:Object.fromEntries(Object.keys(LAYERS).map(k=>[k,true])),connTypes:Object.fromEntries(Object.keys(CONN_TYPES).map(k=>[k,true])),search:'',selectedNode:null,zoom:1,panX:0,panY:0,preset:'all'};
-const PRESETS={all:{layers:{infra:true,mcp:true,pipeline:true,data:true,workflow:true,external:true},highlight:[]},session:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:false,external:false},highlight:['session-hook','pretool-hook','posttool-hook','submit-hook','hw-mcp','claude-buddy','pipe-session','data-state','data-memories','data-memory-md']},build:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:true,external:false},highlight:['hw-mcp','pipe-build','data-state','data-workflow','wf-phases','cortex']},research:{layers:{infra:true,mcp:true,pipeline:true,data:true,workflow:false,external:false},highlight:['pipe-research','pipe-knowledge','mcp-gitmcp','mcp-coderesearch','mcp-context7','mcp-pkgver','cortex','data-memories','data-memory-md','data-cortex']},approval:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:false,external:true},highlight:['hw-mcp','discord-bot','discord-listen','pat','pipe-approval','data-approvals','data-direction']},memory:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:false,external:false},highlight:['session-hook','submit-hook','hw-mcp','data-memories','data-memory-md','data-direction','data-state','pipe-knowledge','cortex','data-cortex']},mcp:{layers:{infra:false,mcp:true,pipeline:false,data:false,workflow:false,external:false},highlight:[]}};
-const svg=document.getElementById('svg');let isPanning=false,panStart={x:0,y:0};
+
+const PRESETS={
+  all:{layers:{infra:true,mcp:true,pipeline:true,data:true,workflow:true,external:true},highlight:[]},
+  session:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:false,external:false},highlight:['session-hook','pretool-hook','posttool-hook','submit-hook','hw-mcp','claude-buddy','pipe-session','data-tasks','data-decisions','data-questions','data-memories','data-memory-md']},
+  build:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:true,external:false},highlight:['hw-mcp','pipe-build','data-tasks','data-decisions','data-questions','data-workflow','wf-phases','cortex']},
+  research:{layers:{infra:true,mcp:true,pipeline:true,data:true,workflow:false,external:false},highlight:['pipe-research','pipe-knowledge','mcp-gitmcp','mcp-context7','mcp-pkgver','cortex','data-memories','data-memory-md','data-cortex']},
+  approval:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:false,external:true},highlight:['hw-mcp','discord-bot','discord-listen','pat','pipe-approval','data-approvals','data-direction']},
+  memory:{layers:{infra:true,mcp:false,pipeline:true,data:true,workflow:false,external:false},highlight:['session-hook','submit-hook','hw-mcp','data-memories','data-memory-md','data-direction','data-tasks','data-decisions','data-questions','pipe-knowledge','cortex','data-cortex']},
+  mcp:{layers:{infra:false,mcp:true,pipeline:false,data:false,workflow:false,external:false},highlight:[]}
+};
+
+const svg=document.getElementById('svg');
+let isPanning=false,panStart={x:0,y:0};
 
 function render(){
-  const preset=PRESETS[state.preset];const highlightSet=new Set(preset?.highlight||[]);const hasHighlight=highlightSet.size>0;const searchLower=state.search.toLowerCase();
-  const visibleNodes=nodes.filter(n=>state.layers[n.layer]);const visibleIds=new Set(visibleNodes.map(n=>n.id));
+  const preset=PRESETS[state.preset];
+  const highlightSet=new Set(preset?.highlight||[]);
+  const hasHighlight=highlightSet.size>0;
+  const searchLower=state.search.toLowerCase();
+  const visibleNodes=nodes.filter(n=>state.layers[n.layer]);
+  const visibleIds=new Set(visibleNodes.map(n=>n.id));
   const searchMatch=searchLower?new Set(nodes.filter(n=>n.label.toLowerCase().includes(searchLower)||n.sub.toLowerCase().includes(searchLower)).map(n=>n.id)):null;
   const visibleConns=connections.filter(c=>state.connTypes[c.type]&&visibleIds.has(c.from)&&visibleIds.has(c.to));
-  let h='<defs>';Object.entries(CONN_TYPES).forEach(([k,v])=>{h+='<marker id="arrow-'+k+'" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="'+v.color+'" opacity="0.8"/></marker>';});h+='</defs>';
+
+  let h='<defs>';
+  Object.entries(CONN_TYPES).forEach(([k,v])=>{
+    h+='<marker id="arrow-'+k+'" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="'+v.color+'" opacity="0.8"/></marker>';
+  });
+  h+='</defs>';
   h+='<g id="mg" transform="translate('+state.panX+','+state.panY+') scale('+state.zoom+')">';
-  visibleConns.forEach(c=>{const fr=nodes.find(n=>n.id===c.from),to=nodes.find(n=>n.id===c.to);if(!fr||!to)return;const x1=fr.x+fr.w/2,y1=fr.y+fr.h/2,x2=to.x+to.w/2,y2=to.y+to.h/2,mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,cx=mx+dy*0.15,cy=my-dx*0.15;const ct=CONN_TYPES[c.type];const dim=(hasHighlight&&!highlightSet.has(c.from)&&!highlightSet.has(c.to))||(searchMatch&&!searchMatch.has(c.from)&&!searchMatch.has(c.to));h+='<path class="connection'+(ct.dash?' animated':'')+'" d="M'+x1+','+y1+' Q'+cx+','+cy+' '+x2+','+y2+'" stroke="'+ct.color+'" stroke-dasharray="'+ct.dash+'" marker-end="url(#arrow-'+c.type+')" opacity="'+(dim?0.08:0.5)+'"/>';});
-  visibleNodes.forEach(n=>{const L=LAYERS[n.layer];const dim=(hasHighlight&&!highlightSet.has(n.id))||(searchMatch&&!searchMatch.has(n.id));const hi=highlightSet.has(n.id)||(searchMatch&&searchMatch.has(n.id));const sel=state.selectedNode===n.id;const op=dim?0.15:1;const glow=hi?' filter="url(#glow)"':'';
-  h+='<g style="cursor:pointer;opacity:'+op+'" onclick="selectNode(\''+n.id+'\')">';
-  h+='<rect x="'+n.x+'" y="'+n.y+'" width="'+n.w+'" height="'+n.h+'" rx="8" ry="8" fill="'+L.bg+'" stroke="'+(sel?'#fff':L.color)+'" stroke-width="'+(sel?2.5:1.5)+'"/>';
-  h+='<text x="'+(n.x+10)+'" y="'+(n.y+n.h/2+5)+'" font-size="14">'+n.icon+'</text>';
-  h+='<text x="'+(n.x+28)+'" y="'+(n.y+n.h/2-3)+'" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#e6edf3">'+n.label+'</text>';
-  h+='<text x="'+(n.x+28)+'" y="'+(n.y+n.h/2+10)+'" font-family="-apple-system,sans-serif" font-size="9" fill="#8b949e">'+n.sub+'</text>';
-  h+='</g>';});
-  h+='</g>';svg.innerHTML=h;
-  document.getElementById('stat-nodes').textContent=visibleNodes.length;document.getElementById('stat-conns').textContent=visibleConns.length;document.getElementById('stat-mcp').textContent=nodes.filter(n=>n.layer==='mcp').length;
+
+  // Render group backgrounds
+  GROUPS.forEach(g=>{
+    const isAtomic=g.label==='ATOMIC-READ ZONE';
+    const dashArr=isAtomic?'6,4':'4,3';
+    const fillOp=isAtomic?'0.06':'0.04';
+    const strokeOp=isAtomic?'0.25':'0.12';
+    const strokeW=isAtomic?'1.5':'1';
+    h+='<rect x="'+g.x+'" y="'+g.y+'" width="'+g.w+'" height="'+g.h+'" rx="'+(isAtomic?6:12)+'" fill="'+g.color+'" fill-opacity="'+fillOp+'" stroke="'+g.color+'" stroke-opacity="'+strokeOp+'" stroke-width="'+strokeW+'" stroke-dasharray="'+dashArr+'"/>';
+    const labelY=isAtomic?(g.y+g.h+12):(g.y-5);
+    h+='<text x="'+(g.x+8)+'" y="'+labelY+'" font-family="-apple-system,sans-serif" font-size="9" font-weight="700" fill="'+g.color+'" opacity="'+(isAtomic?'0.6':'0.4')+'" letter-spacing="1.5">'+g.label+(isAtomic?' — reads can be stale if crash between writes':'')+'</text>';
+  });
+
+  // Render connections
+  visibleConns.forEach(c=>{
+    const fr=nodes.find(n=>n.id===c.from),to=nodes.find(n=>n.id===c.to);
+    if(!fr||!to)return;
+    const x1=fr.x+fr.w/2,y1=fr.y+fr.h/2,x2=to.x+to.w/2,y2=to.y+to.h/2;
+    const mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1;
+    const cx=mx+dy*0.12,cy=my-dx*0.12;
+    const ct=CONN_TYPES[c.type];
+    const dim=(hasHighlight&&!highlightSet.has(c.from)&&!highlightSet.has(c.to))||(searchMatch&&!searchMatch.has(c.from)&&!searchMatch.has(c.to));
+    h+='<path class="connection'+(ct.dash?' animated':'')+'" d="M'+x1+','+y1+' Q'+cx+','+cy+' '+x2+','+y2+'" stroke="'+ct.color+'" stroke-dasharray="'+ct.dash+'" marker-end="url(#arrow-'+c.type+')" opacity="'+(dim?0.06:0.45)+'"/>';
+  });
+
+  // Render nodes
+  visibleNodes.forEach(n=>{
+    const L=LAYERS[n.layer];
+    const dim=(hasHighlight&&!highlightSet.has(n.id))||(searchMatch&&!searchMatch.has(n.id));
+    const sel=state.selectedNode===n.id;
+    const op=dim?0.12:1;
+    const isHub=n.id==='hw-mcp';
+    const strokeW=sel?2.5:(isHub?2:1.5);
+    const strokeC=sel?'#fff':(isHub?'#58a6ff':L.color);
+    h+='<g style="cursor:pointer;opacity:'+op+'" onclick="selectNode(\''+n.id+'\')">';
+    if(isHub){
+      h+='<rect x="'+(n.x-2)+'" y="'+(n.y-2)+'" width="'+(n.w+4)+'" height="'+(n.h+4)+'" rx="10" fill="none" stroke="#58a6ff" stroke-opacity="0.15" stroke-width="1"/>';
+    }
+    h+='<rect x="'+n.x+'" y="'+n.y+'" width="'+n.w+'" height="'+n.h+'" rx="8" ry="8" fill="'+L.bg+'" stroke="'+strokeC+'" stroke-width="'+strokeW+'"/>';
+    h+='<text x="'+(n.x+10)+'" y="'+(n.y+n.h/2+5)+'" font-size="14">'+n.icon+'</text>';
+    h+='<text x="'+(n.x+28)+'" y="'+(n.y+n.h/2-3)+'" font-family="-apple-system,sans-serif" font-size="11" font-weight="600" fill="#e6edf3">'+n.label+'</text>';
+    h+='<text x="'+(n.x+28)+'" y="'+(n.y+n.h/2+10)+'" font-family="-apple-system,sans-serif" font-size="9" fill="#8b949e">'+n.sub+'</text>';
+    h+='</g>';
+  });
+
+  h+='</g>';
+  svg.innerHTML=h;
+  document.getElementById('stat-nodes').textContent=visibleNodes.length;
+  document.getElementById('stat-conns').textContent=visibleConns.length;
+  document.getElementById('stat-mcp').textContent=nodes.filter(n=>n.layer==='mcp').length;
 }
 
 function buildControls(){
-  const ld=document.getElementById('layer-toggles');ld.innerHTML=Object.entries(LAYERS).map(([k,v])=>'<label class="layer-toggle"><input type="checkbox" '+(state.layers[k]?'checked':'')+' onchange="toggleLayer(\''+k+'\',this.checked)"><span class="layer-check">'+(state.layers[k]?'\u2713':'')+'</span><span class="layer-dot" style="background:'+v.color+'"></span>'+v.label+'</label>').join('');
-  const cd=document.getElementById('conn-toggles');cd.innerHTML=Object.entries(CONN_TYPES).map(([k,v])=>'<label class="conn-toggle"><input type="checkbox" '+(state.connTypes[k]?'checked':'')+' onchange="toggleConn(\''+k+'\',this.checked)"><span class="conn-check">'+(state.connTypes[k]?'\u2713':'')+'</span><span class="conn-line" style="background:'+v.color+'"></span>'+v.label+'</label>').join('');
+  const ld=document.getElementById('layer-toggles');
+  ld.innerHTML=Object.entries(LAYERS).map(([k,v])=>'<label class="layer-toggle"><input type="checkbox" '+(state.layers[k]?'checked':'')+' onchange="toggleLayer(\''+k+'\',this.checked)"><span class="layer-check">'+(state.layers[k]?'\u2713':'')+'</span><span class="layer-dot" style="background:'+v.color+'"></span>'+v.label+'</label>').join('');
+  const cd=document.getElementById('conn-toggles');
+  cd.innerHTML=Object.entries(CONN_TYPES).map(([k,v])=>'<label class="conn-toggle"><input type="checkbox" '+(state.connTypes[k]?'checked':'')+' onchange="toggleConn(\''+k+'\',this.checked)"><span class="conn-check">'+(state.connTypes[k]?'\u2713':'')+'</span><span class="conn-line" style="background:'+v.color+'"></span>'+v.label+'</label>').join('');
 }
+
 function toggleLayer(k,v){state.layers[k]=v;buildControls();render();}
 function toggleConn(k,v){state.connTypes[k]=v;buildControls();render();}
 function setPreset(name){state.preset=name;const p=PRESETS[name];if(p.layers)Object.assign(state.layers,p.layers);state.selectedNode=null;closeDetail();document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active'));const btn=document.querySelector('[onclick="setPreset(\''+name+'\')"]');if(btn)btn.classList.add('active');buildControls();render();}
 function handleSearch(v){state.search=v;render();}
 function highlightWorkflow(t){const m={phases:['wf-phases','data-workflow','hw-mcp'],twostrike:['wf-twostrike','hw-mcp','pat','discord-bot'],deliberation:['wf-deliberation','data-chatroom','hw-mcp','pat']};state.preset='all';Object.keys(state.layers).forEach(k=>state.layers[k]=true);PRESETS.all.highlight=m[t]||[];buildControls();render();setTimeout(()=>{PRESETS.all.highlight=[];},100);}
-function selectNode(id){state.selectedNode=id;const n=nodes.find(x=>x.id===id);if(!n)return;const p=document.getElementById('detail-panel');
-  document.getElementById('detail-title').textContent=n.icon+' '+n.label;document.getElementById('detail-subtitle').textContent=n.sub;
-  let b='';if(n.detail?.desc)b+='<div class="detail-section"><h4>Description</h4><p>'+n.detail.desc+'</p></div>';
-  if(n.detail?.tech)b+='<div class="detail-section"><h4>Technology</h4><p>'+n.detail.tech.map(t=>'<span class="detail-tag">'+t+'</span>').join(' ')+'</p></div>';
-  if(n.detail?.files)b+='<div class="detail-section"><h4>Files</h4><p>'+n.detail.files.map(f=>'<span class="detail-tag" style="font-family:monospace;font-size:9px">'+f+'</span>').join(' ')+'</p></div>';
+
+function selectNode(id){
+  state.selectedNode=id;
+  const n=nodes.find(x=>x.id===id);
+  if(!n)return;
+  document.getElementById('detail-title').textContent=n.icon+' '+n.label;
+  document.getElementById('detail-subtitle').textContent=n.sub;
+  let b='';
+  if(n.detail?.desc) b+='<div class="detail-section"><h4>Description</h4><p>'+n.detail.desc+'</p></div>';
+  if(n.detail?.tech) b+='<div class="detail-section"><h4>Technology</h4><p>'+n.detail.tech.map(t=>'<span class="detail-tag">'+t+'</span>').join(' ')+'</p></div>';
+  if(n.detail?.files) b+='<div class="detail-section"><h4>Files</h4><p>'+n.detail.files.map(f=>'<span class="detail-tag" style="font-family:monospace;font-size:9px">'+f+'</span>').join(' ')+'</p></div>';
   const inc=connections.filter(c=>c.to===id).map(c=>{const f=nodes.find(x=>x.id===c.from);return f?f.icon+' '+f.label:null}).filter(Boolean);
   const out=connections.filter(c=>c.from===id).map(c=>{const t=nodes.find(x=>x.id===c.to);return t?t.icon+' '+t.label:null}).filter(Boolean);
-  if(inc.length)b+='<div class="detail-section"><h4>Receives from</h4><p style="font-size:11px">'+inc.join('<br>')+'</p></div>';
-  if(out.length)b+='<div class="detail-section"><h4>Sends to</h4><p style="font-size:11px">'+out.join('<br>')+'</p></div>';
-  document.getElementById('detail-body').innerHTML=b;p.classList.add('visible');render();}
+  if(inc.length) b+='<div class="detail-section"><h4>Receives from</h4><p style="font-size:11px">'+inc.join('<br>')+'</p></div>';
+  if(out.length) b+='<div class="detail-section"><h4>Sends to</h4><p style="font-size:11px">'+out.join('<br>')+'</p></div>';
+  document.getElementById('detail-body').innerHTML=b;
+  document.getElementById('detail-panel').classList.add('visible');
+  render();
+}
+
 function closeDetail(){state.selectedNode=null;document.getElementById('detail-panel').classList.remove('visible');render();}
 function zoomIn(){state.zoom=Math.min(state.zoom*1.2,3);render();}
 function zoomOut(){state.zoom=Math.max(state.zoom/1.2,0.3);render();}
 function resetView(){state.zoom=1;state.panX=0;state.panY=0;render();}
+
 const ca=document.getElementById('canvas-area');
 ca.addEventListener('wheel',e=>{e.preventDefault();state.zoom=Math.max(0.3,Math.min(3,state.zoom*(e.deltaY>0?0.9:1.1)));render();},{passive:false});
 ca.addEventListener('mousedown',e=>{if(e.target.closest('.detail-panel')||e.target.closest('.zoom-controls')||e.target.closest('.legend'))return;isPanning=true;panStart={x:e.clientX-state.panX,y:e.clientY-state.panY};ca.style.cursor='grabbing';});
 window.addEventListener('mousemove',e=>{if(!isPanning)return;state.panX=e.clientX-panStart.x;state.panY=e.clientY-panStart.y;render();});
 window.addEventListener('mouseup',()=>{isPanning=false;ca.style.cursor='default';});
-buildControls();render();
+
+buildControls();
+render();
 </script>
 </body>
 </html>

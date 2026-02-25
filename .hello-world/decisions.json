@@ -1,0 +1,201 @@
+{
+  "decisions": [
+    {
+      "id": "d_a6eabc7b",
+      "title": "Use Tauri over Electron",
+      "context": "Electron subprocess hangs after 6+ attempts. Need reliable process spawning.",
+      "chosen": "Tauri (Rust backend + webview)",
+      "alternatives": [
+        {
+          "option": "Electron",
+          "tradeoff": "Subprocess hangs, 150MB+ bundle"
+        },
+        {
+          "option": "VS Code extension",
+          "tradeoff": "Limited UX control, plugin not product"
+        }
+      ],
+      "rationale": "Smaller bundle, Rust process spawning is reliable, existing React code ports directly",
+      "decidedAt": "2026-02-22T04:00:09.031Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_c29246fe",
+      "title": "Hybrid stack: Rust I/O + TypeScript domain logic",
+      "context": "Need fast I/O (process spawning, file ops) but rapid iteration on domain logic",
+      "chosen": "Rust for I/O, TypeScript for brain/state/agents",
+      "alternatives": [],
+      "rationale": "Best of both worlds — reliability where it matters, iteration speed where it matters",
+      "decidedAt": "2026-02-22T04:00:09.032Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_02238108",
+      "title": "Port Synaptica brain engine as memory layer",
+      "context": "Need cross-session project memory. Synaptica already has hippocampal retrieval.",
+      "chosen": "Port 9-stage pipeline from Synaptica, adapt to project-scoped memory",
+      "alternatives": [],
+      "rationale": "Proven architecture, pain/win/fact types, plasticity/decay already battle-tested",
+      "decidedAt": "2026-02-22T04:00:09.032Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_a4f6022a",
+      "title": "JSON file storage, swappable to SQLite",
+      "context": "MSVC build tools not available at scaffold time for better-sqlite3",
+      "chosen": "JsonStore with same interface, migrate to SQLite when ready",
+      "alternatives": [],
+      "rationale": "Unblocks development immediately, storage is an implementation detail",
+      "decidedAt": "2026-02-22T04:00:09.033Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_bc50e845",
+      "title": "Remove max-w-3xl width constraint from all views",
+      "context": "All list views (Memory, Decisions, Questions, Sessions, Cost) had max-w-3xl on their content containers, leaving dead horizontal space on wider screens.",
+      "chosen": "Remove max-w-3xl, let cards span full width",
+      "alternatives": [
+        {
+          "option": "Keep max-w-3xl",
+          "tradeoff": "Consistent reading width but wastes screen space"
+        },
+        {
+          "option": "Center with max-w-3xl",
+          "tradeoff": "Looks better than left-aligned but adds complexity"
+        }
+      ],
+      "rationale": "Cards filling the full width looks better and uses the available space. No content benefit to constraining width in a desktop app.",
+      "decidedAt": "2026-02-22T07:39:03.670Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_ea09d5af",
+      "title": "Keep deliberations practical and actionable",
+      "context": "Pat observed that meta-philosophical topics like 'is this system valuable' cause agents to spiral into unfalsifiable positions",
+      "chosen": "Only run deliberations on concrete, actionable topics: feature design, code architecture, UX improvements, what to build next",
+      "alternatives": [],
+      "rationale": "The system proved its value through actual use. Abstract meta-questions waste tokens and produce no actionable output.",
+      "decidedAt": "2026-02-24T08:47:32.962Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_mp_scope_in",
+      "title": "Multi-project support is now IN scope",
+      "context": "Previously scoped out (Feb 22). Pat reversed this after experiencing the pain of opening Claude Code from tax-credit-calculators and having no HW tools available. The current single-project model doesn't work when Pat works across multiple projects.",
+      "chosen": "Full multi-project support: project switcher, global vs project memory, auto-onboard new projects",
+      "alternatives": [
+        {
+          "option": "Keep single-project",
+          "tradeoff": "Simpler but forces Pat to only use HW from one directory"
+        },
+        {
+          "option": "Manual project switching via config edit",
+          "tradeoff": "Works but terrible UX, no auto-onboard"
+        }
+      ],
+      "rationale": "Pat hit the real pain: opened Claude Code from a different project and had zero HW tools. Multi-project is a requirement, not a nice-to-have.",
+      "decidedAt": "2026-02-24T17:00:00.000Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_c92d5e5a",
+      "title": "Verification test decision (delete me)",
+      "context": "Testing the decision recording feature during verification run.",
+      "chosen": "Record and verify",
+      "alternatives": [],
+      "rationale": "Need to confirm the decision system works end-to-end.",
+      "decidedAt": "2026-02-24T09:17:32.717Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_d9b43d5b",
+      "title": "Always write handoff before suggesting app restart",
+      "context": "Pat noticed sessions losing context when Claude suggests restarting the app without saving state first",
+      "chosen": "Mandatory hw_write_handoff() call before any restart suggestion, no exceptions",
+      "alternatives": [],
+      "rationale": "A restart kills the current session. Without a handoff, the next session starts blind. This rule prevents context loss.",
+      "decidedAt": "2026-02-24T23:41:05.602Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_c0062113",
+      "title": "Deliberation v2: one mandatory path + quick-insights",
+      "context": "Self-audit of deliberation on guardrails found 5 structural failures. Deliberation panel (6 agents) converged on: one mandatory path for binding decisions, separate lightweight tool for flavor-testing.",
+      "chosen": "One mandatory deliberation path (plan+coverage+conclude) with quality tags (consensus/tension/shifted). Separate hw_quick_insights for non-binding sanity checks. Balance notes optional. Auto-runner pauses at synthesis.",
+      "alternatives": [
+        {
+          "option": "Two-tier mode (quick vs full deliberation)",
+          "tradeoff": "Rejected: user must predict uncertainty before having data. Quick mode becomes a loophole to skip rigor."
+        },
+        {
+          "option": "Keep balance notes required",
+          "tradeoff": "Rejected: never changed mediation behavior in practice. Paperwork without signal."
+        },
+        {
+          "option": "Keep binary coverage (addressed/not)",
+          "tradeoff": "Rejected: enables checkbox theater. Agents can 'address' without real engagement."
+        }
+      ],
+      "rationale": "Two-tier modes create prediction burden (user must guess stakes upfront). One path removes the choice. Quick-insights is clearly separate and non-binding. Quality tags replace binary coverage to catch checkbox theater and groupthink.",
+      "decidedAt": "2026-02-25T01:05:33.241Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_4c882ae9",
+      "title": "Buddy recap: hybrid rolling buffer + AI summary on clean exit",
+      "context": "Need crash-safe session recap for buddy to display on next startup. Must survive X, Alt+F4, crashes.",
+      "chosen": "Hybrid: rolling buffer continuously writes last ~10 activity items (crash-safe baseline). On clean exit, detached Node subprocess upgrades the raw buffer into an AI-generated summary. Buddy displays whichever exists -- polished if available, raw if crash.",
+      "alternatives": [
+        {
+          "option": "Detached subprocess only",
+          "tradeoff": "Nice summaries but no crash safety -- hard exits lose everything"
+        },
+        {
+          "option": "Rolling buffer only",
+          "tradeoff": "Crash-proof but raw activity data, not polished summaries"
+        }
+      ],
+      "rationale": "Rolling buffer costs nothing (same pattern as activity.json). AI summary on clean exit gives a nicer experience when possible. Crash fallback to raw buffer means we never lose context. Best of both worlds.",
+      "decidedAt": "2026-02-25T02:14:26.791Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_85462add",
+      "title": "Build Cortex as standalone ACE replacement",
+      "context": "Discussed adding Augment Context Engine MCP vs building our own. Pat wanted our own version tailored to our workflow.",
+      "chosen": "Build Cortex: standalone MCP server at C:/Users/Patri/CascadeProjects/cortex/. Claude Haiku for file summarization, structured JSON index, keyword/concept search. No vector DB. 5 MCP tools: cortex_index, cortex_search, cortex_context, cortex_architecture, cortex_related.",
+      "alternatives": [
+        {
+          "option": "Install Augment Context Engine MCP",
+          "tradeoff": "Immediate 70% boost claim but not tailored to our workflow, dependency on external service"
+        },
+        {
+          "option": "Install Perplexity MCP for research",
+          "tradeoff": "Deep research but requires API key, monthly cost, not code-specific"
+        }
+      ],
+      "rationale": "With agents we can build something more attuned to our needs. No vector DB infra complexity. Claude API handles the semantic understanding. Per-project index in .cortex-index/ directory.",
+      "decidedAt": "2026-02-25T03:04:00.051Z",
+      "decidedBy": "both"
+    },
+    {
+      "id": "d_e5d0b81b",
+      "title": "State storage: split files + atomic writes (B+), defer SQLite",
+      "context": "state.json holds all tasks, decisions, questions, memories in one file. Concurrent write risk from MCP server, Discord listener. Deliberation with 4 agents.",
+      "chosen": "Split state.json into tasks.json, decisions.json, questions.json, memories.json. Atomic writes via write-to-temp-then-rename with Windows NTFS retry loop. Backup copy before each write. Session-start hook .backup fallback. SQLite deferred to multi-project epic.",
+      "alternatives": [
+        {
+          "option": "File locking only (Option A)",
+          "tradeoff": "2 hours but doesn't fix truncation risk or reduce blast radius"
+        },
+        {
+          "option": "SQLite migration (Option C)",
+          "tradeoff": "Fixes everything but 2-3 days work, breaks file-watcher reactivity, MSVC compilation issues on Windows, premature given multi-project timeline"
+        }
+      ],
+      "rationale": "Backendarch shifted from SQLite to B+ after: (1) multi-project epic is unplanned so SQLite timing is premature, (2) better-sqlite3 has MSVC native compilation issues on Windows, (3) split files are forward-compatible with eventual SQLite migration. Remaining no-ACID risk explicitly accepted.",
+      "decidedAt": "2026-02-25T09:25:49.987Z",
+      "decidedBy": "claude"
+    }
+  ]
+}

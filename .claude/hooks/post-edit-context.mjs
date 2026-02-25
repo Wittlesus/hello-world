@@ -30,11 +30,12 @@ if (!['Write', 'Edit'].includes(toolName)) process.exit(0);
 const filePath = toolInput.file_path ?? toolInput.path ?? '';
 if (!filePath) process.exit(0);
 
-// Get current in-progress task from state.json
+// Get current in-progress task from tasks.json
 let task = null;
 try {
-  const state = JSON.parse(readFileSync(join(HW, 'state.json'), 'utf8'));
-  const inProgress = (state.tasks ?? []).find(t => t.status === 'in_progress');
+  const tasks = JSON.parse(readFileSync(join(HW, 'tasks.json'), 'utf8'));
+  const taskList = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
+  const inProgress = taskList.find(t => t.status === 'in_progress');
   if (inProgress) task = inProgress.title;
 } catch { /* no state yet */ }
 

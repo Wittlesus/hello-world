@@ -4,7 +4,8 @@ export type View =
   | 'terminal' | 'dashboard' | 'approvals' | 'files'
   | 'tasks' | 'decisions' | 'questions' | 'agents'
   | 'memory' | 'context' | 'history'
-  | 'settings' | 'cost' | 'skills' | 'watchers';
+  | 'settings' | 'cost' | 'skills' | 'watchers'
+  | 'browser';
 
 interface AppState {
   activeView: View;

@@ -1,0 +1,176 @@
+[
+  {
+    "text": "interface to make coding and organization easier for claude and user. Claude needs to actively understand and USE the system. Every instance of claude even a new one should be able to connect and understand immediately what has been done, needs to be done, and context of scope and vision IMMEDIATELY. transparency. guided building. built in context and memory that gets loaded into claude when claude is opened within the app. long term project development without data or memory loss",
+    "category": "vision",
+    "capturedAt": "2026-02-23T00:35:17.332Z",
+    "sessionId": "a660c686-f13d-4e1f-8804-0631c512370c"
+  },
+  {
+    "text": "interface to make coding and organization easier for claude and user. Claude needs to actively understand and USE the system. Every instance of claude even a new one should be able to connect and understand immediately what has been done, needs to be done, and context of scope and vision IMMEDIATELY. transparency. guided building. built in context and memory that gets loaded into claude when claude is opened within the app. long term project development without data or memory loss",
+    "category": "vision",
+    "capturedAt": "2026-02-23T00:51:25.292Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  },
+  {
+    "text": "i'd love autonomy that was essentially the vision but your past iterations made it difficult as you can see",
+    "category": "vision",
+    "capturedAt": "2026-02-22T23:07:29.345Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "ideally claude when attached to this will automatically set up agents who are primed for the job of all the things im supposed to be here for and find a way to receive phone notifications whenever the agent needs a choice from me",
+    "category": "vision",
+    "capturedAt": "2026-02-22T23:11:52.555Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "no, i want a bot to message me directly. Im in the server as pooter",
+    "category": "scope",
+    "capturedAt": "2026-02-22T23:18:07.373Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "no skills view keeps crashing us we'll hold off for now til we get everything else done right",
+    "category": "scope",
+    "capturedAt": "2026-02-23T00:59:00.339Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  },
+  {
+    "text": "Multi-project support: one project at a time for now. The setup screen already handles project selection. Multi-project can come later if there is demand.",
+    "category": "scope",
+    "capturedAt": "2026-02-22T07:41:30.496Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "add the bot to robopals then build the skills view",
+    "category": "scope",
+    "capturedAt": "2026-02-23T00:13:40.419Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "ugh when i had you set this up i expect you to make it work how i explained it... which is what you just explained. why is it not like that? why do we always have to have an extra convo about how you made something with clear instructions (everything you just said) you make a barebones version, i tell you what i actually wanted and you explain to me exactly what i wanted and tell me its buildable. its so incredibly annoying and wastes so much time and resources.",
+    "category": "preference",
+    "capturedAt": "2026-02-23T00:25:14.695Z",
+    "sessionId": "a660c686-f13d-4e1f-8804-0631c512370c"
+  },
+  {
+    "text": "do what makes sense in the order they make sense, just make sure you record every step and saving after each step so we know if it crashes why it crashed or what you did before it crashed. i know its going to be annoying but find a way to make it work",
+    "category": "preference",
+    "capturedAt": "2026-02-23T00:39:20.634Z",
+    "sessionId": "a660c686-f13d-4e1f-8804-0631c512370c"
+  },
+  {
+    "text": "i rather it be autonomous as i often forget. this client is for me as much as it is for you.",
+    "category": "preference",
+    "capturedAt": "2026-02-23T00:55:08.435Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  },
+  {
+    "text": "and what about specifics i say that matter to scope how does that get put in? with detail? copy and paste? a resummarization?",
+    "category": "preference",
+    "capturedAt": "2026-02-23T00:53:34.387Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  },
+  {
+    "text": "YES thats what i was hoping for a way where maybe user hits terminal for the first time on start up and it auto sends a message or ping to the terminal to initialize",
+    "category": "feature",
+    "capturedAt": "2026-02-22T13:07:57.986Z",
+    "sessionId": "893aa99f-4a38-4f61-824e-632aad109d0a"
+  },
+  {
+    "text": "yep and and track it in hello world",
+    "category": "feature",
+    "capturedAt": "2026-02-22T13:09:06.299Z",
+    "sessionId": "893aa99f-4a38-4f61-824e-632aad109d0a"
+  },
+  {
+    "text": "our memory tabs, all our tabs are rarely seeing use and most times i have to get you to do it. this isn't automation. We literally talked about this. this whole project needs an audit i feel like our direction and scope got lost which is annoying because we have a workflow system we came up and should be following but idk if we're even utilizing that anymore as i don't know what context each claude has of old systems we put in place to continually make you better. idk if i need to remind you every launch of the systems or if you automatically aware or what its quite frustrating, idk where we stand.",
+    "category": "feature",
+    "capturedAt": "2026-02-23T00:31:15.322Z",
+    "sessionId": "a660c686-f13d-4e1f-8804-0631c512370c"
+  },
+  {
+    "text": "ok it feels like the app is just a shelf and you're the one putting things on and off rather than the shelf doing it itself. how true is this? whats the point of this app",
+    "category": "feature",
+    "capturedAt": "2026-02-22T23:03:05.356Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "android, can't we use discord? aren't we already hooked in an api? can't you just have it message me or set up a bot that you can attach to?",
+    "category": "feature",
+    "capturedAt": "2026-02-22T23:14:31.050Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "wait seriously? that makes so many things simpler? how am i just now finding out about this? lets utilize this to our advantage! first have agents scour the logs and retroactively add pertinent context for everything involving this project and a detailed and accurate timeline file that shows all our progress nice and neatly.",
+    "category": "feature",
+    "capturedAt": "2026-02-23T00:57:35.523Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  },
+  {
+    "text": "yes essentially what you said, everything you don't have. those are all important. before we continue trying to figure out what you were working on lets find a way to fix those issues so we never have to go through this annoying rigamaroll over and over everytime you accidentally crash the client",
+    "category": "constraint",
+    "capturedAt": "2026-02-23T00:47:11.372Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  },
+  {
+    "text": "why do we still have a chat feature? that was suppose to go with a task that said it was completed. Its made defunct by the terminal",
+    "category": "constraint",
+    "capturedAt": "2026-02-22T22:51:37.330Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "Yes -- basic view-switching shortcuts (1-8 for each view) would be a quick win. Low effort, high power user value.",
+    "category": "feature",
+    "capturedAt": "2026-02-22T07:43:54.041Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "check if all the other are done correctly too",
+    "category": "preference",
+    "capturedAt": "2026-02-22T22:55:41.812Z",
+    "sessionId": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1"
+  },
+  {
+    "text": "well yes and no, we were setting up the terminal launch. you launched with knowing you're in the hello world app right?",
+    "category": "feature",
+    "capturedAt": "2026-02-22T13:00:31.513Z",
+    "sessionId": "893aa99f-4a38-4f61-824e-632aad109d0a"
+  },
+  {
+    "text": "it launched with bypass on but im not sure if it launched with the injection",
+    "category": "feature",
+    "capturedAt": "2026-02-22T13:03:05.357Z",
+    "sessionId": "893aa99f-4a38-4f61-824e-632aad109d0a"
+  },
+  {
+    "text": "you are supposed to always create a new one when you see a project missing one [referring to MEMORY.md]",
+    "category": "preference",
+    "capturedAt": "2026-02-22T13:50:48.648Z",
+    "sessionId": "6f1e57a0-0ac5-44eb-81e1-26a527bab2b3"
+  },
+  {
+    "text": "why are you not remembering the last things we worked on? we were working on that intro message i just sent that is supposed to auto send",
+    "category": "constraint",
+    "capturedAt": "2026-02-22T13:48:59.056Z",
+    "sessionId": "6f1e57a0-0ac5-44eb-81e1-26a527bab2b3"
+  },
+  {
+    "text": "yes but ideally i'd like a way to where if it happens again you automatically spawn the next time with context of what you just did how can we achieve this",
+    "category": "feature",
+    "capturedAt": "2026-02-23T00:18:40.785Z",
+    "sessionId": "a660c686-f13d-4e1f-8804-0631c512370c"
+  },
+  {
+    "text": "yes and the disc bot will message me when you need approval for something or when you need more direction correct?",
+    "category": "feature",
+    "capturedAt": "2026-02-23T00:22:25.074Z",
+    "sessionId": "a660c686-f13d-4e1f-8804-0631c512370c"
+  },
+  {
+    "text": "do you have context of the scope and vision that i discussed with the last claude?",
+    "category": "constraint",
+    "capturedAt": "2026-02-23T00:45:34.663Z",
+    "sessionId": "0ccae34f-82d5-4318-a086-c74ce01ec3fd"
+  }
+]

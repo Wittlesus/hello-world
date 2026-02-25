@@ -7,7 +7,14 @@ import './styles.css';
 
 const root = document.getElementById('root')!;
 
-if (getCurrentWindow().label === 'buddy') {
+let isBuddy = false;
+try {
+  isBuddy = getCurrentWindow().label === 'buddy';
+} catch {
+  // fallback: render main app
+}
+
+if (isBuddy) {
   createRoot(root).render(
     <StrictMode>
       <BuddyOverlay />

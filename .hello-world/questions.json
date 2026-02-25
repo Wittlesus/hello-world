@@ -1,0 +1,40 @@
+{
+  "questions": [
+    {
+      "id": "q_1ddfadfc",
+      "question": "Should Hello World support multiple projects or just one at a time?",
+      "context": "Currently the app is pointed at a single project path. Multi-project support would require a project switcher UI and separate data stores per project.",
+      "status": "answered",
+      "createdAt": "2026-02-22T07:41:26.170Z",
+      "answer": "One project at a time for now. The setup screen already handles project selection. Multi-project can come later if there's demand.",
+      "answeredAt": "2026-02-22T07:41:30.495Z"
+    },
+    {
+      "id": "q_24979e5f",
+      "question": "Should we add keyboard shortcuts to the Hello World desktop app?",
+      "context": "Currently everything is mouse-driven. Power users might want hotkeys to switch views or trigger actions.",
+      "status": "answered",
+      "createdAt": "2026-02-22T07:43:47.529Z",
+      "answer": "Yes — basic view-switching shortcuts (1-8 for each view) would be a quick win. Low effort, high power-user appeal.",
+      "answeredAt": "2026-02-22T07:43:54.040Z"
+    },
+    {
+      "id": "q_a524cf58",
+      "question": "Should the Settings view allow changing the project path without reinstalling?",
+      "context": "Currently project path is set once on first launch. Changing it requires manual config edits.",
+      "status": "answered",
+      "createdAt": "2026-02-22T08:08:52.713Z",
+      "answer": "Yes -- this is now part of the multi-project support epic. A proper project switcher will replace the current one-time setup. Settings will include project management.",
+      "answeredAt": "2026-02-24T17:00:00.000Z"
+    },
+    {
+      "id": "q_01e1b2f3",
+      "question": "Verification test question -- does the question system work?",
+      "context": "Feature verification run",
+      "status": "answered",
+      "createdAt": "2026-02-24T09:17:36.768Z",
+      "answer": "Yes, it works. Verified during feature verification run.",
+      "answeredAt": "2026-02-24T09:17:40.178Z"
+    }
+  ]
+}

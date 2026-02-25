@@ -128,15 +128,18 @@ const pendingChanges = safeRead('pending-changes.json');
 const crashReport    = safeRead('crash-report.json');
 const activeState    = safeReadText(join(MEMORY_DIR, 'active-state.md'));
 
-// Read split state files (with fallback to old state.json for migration)
+// Read split state files (B+ storage)
 const tasksData     = safeRead('tasks.json');
 const decisionsData = safeRead('decisions.json');
 const questionsData = safeRead('questions.json');
-const oldState      = safeRead('state.json'); // backward compat
 
-const allTasks  = tasksData?.tasks ?? oldState?.tasks ?? [];
-const allDecisions = decisionsData?.decisions ?? oldState?.decisions ?? [];
-const allQuestions = questionsData?.questions ?? oldState?.questions ?? [];
+// Silent fallback to old state.json for migration (no health tracking -- file was migrated)
+let oldState = null;
+try { oldState = JSON.parse(readFileSync(join(HW, 'state.json'), 'utf8')); } catch { /* expected: file was migrated */ }
+
+const allTasks  = tasksData?.tasks ?? (Array.isArray(tasksData) ? tasksData : null) ?? oldState?.tasks ?? [];
+const allDecisions = decisionsData?.decisions ?? (Array.isArray(decisionsData) ? decisionsData : null) ?? oldState?.decisions ?? [];
+const allQuestions = questionsData?.questions ?? (Array.isArray(questionsData) ? questionsData : null) ?? oldState?.questions ?? [];
 
 const projectName   = config?.config?.name ?? 'Claude AI Interface';
 const phase         = workflow?.phase ?? 'idle';

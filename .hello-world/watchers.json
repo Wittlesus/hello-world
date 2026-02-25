@@ -1,24 +1,5 @@
 {
-  "active": [
-    {
-      "id": "[copy] swift-lemur",
-      "type": "app_shutdown_copy",
-      "label": "split-state-rust",
-      "pid": 28340,
-      "config": {
-        "copies": [
-          {
-            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/split-state/packages/app/src-tauri/src/lib.rs",
-            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
-          }
-        ],
-        "label": "split-state-rust",
-        "timeoutMinutes": 120
-      },
-      "spawnedAt": "2026-02-25T09:32:10.244Z",
-      "status": "active"
-    }
-  ],
+  "active": [],
   "completed": [
     {
       "id": "w_rust20260222",
@@ -199,6 +180,190 @@
       "status": "completed",
       "completedAt": "2026-02-23T14:49:11.128Z",
       "resultSummary": "Applied 1/1 file(s)"
+    },
+    {
+      "id": "[copy] swift-lemur",
+      "type": "app_shutdown_copy",
+      "label": "split-state-rust",
+      "pid": 28340,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/split-state/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "split-state-rust",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-25T09:32:10.244Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T09:46:25.422Z",
+      "resultSummary": "Applied 1/1 file(s)"
+    },
+    {
+      "id": "[copy] windy-thrush",
+      "type": "app_shutdown_copy",
+      "label": "browser-cors-fix",
+      "pid": 27604,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-cors-fix/packages/app/src-tauri/src/browser.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-cors-fix/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "browser-cors-fix",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-25T12:08:49.921Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T12:22:57.917Z",
+      "resultSummary": "Applied 2/2 file(s)"
+    },
+    {
+      "id": "[copy] jade-otter",
+      "type": "app_shutdown_copy",
+      "label": "fix-state-read",
+      "pid": 16736,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/fix-state-read/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "fix-state-read",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-25T12:56:30.714Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T13:05:59.970Z",
+      "resultSummary": "Applied 1/1 file(s)"
+    },
+    {
+      "id": "[copy] rusty-panda",
+      "type": "app_shutdown_copy",
+      "label": "fix-state-split",
+      "pid": 7368,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/fix-answer-question/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "fix-state-split",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-25T14:20:36.278Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T14:21:06.775Z",
+      "resultSummary": "Applied 1/1 file(s)"
+    },
+    {
+      "id": "[copy] lunar-cobra",
+      "type": "app_shutdown_copy",
+      "label": "browser-loopback-routing",
+      "pid": 19392,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/src/browser.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/tauri.conf.json",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/tauri.conf.json"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/Cargo.toml",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.toml"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/Cargo.lock",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.lock"
+          }
+        ],
+        "label": "browser-loopback-routing",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-25T14:33:33.052Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T14:37:30.180Z",
+      "resultSummary": "Applied 5/5 file(s)"
+    },
+    {
+      "id": "[copy] pale-lemur",
+      "type": "app_shutdown_copy",
+      "label": "browser-extract-fix",
+      "pid": 27860,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-extract-fix/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-extract-fix/packages/app/src-tauri/src/browser.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-extract-fix/packages/core/src/mcp/server.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/mcp/server.ts"
+          }
+        ],
+        "label": "browser-extract-fix",
+        "timeoutMinutes": 120
+      },
+      "spawnedAt": "2026-02-25T14:48:30.171Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T15:01:02.002Z",
+      "resultSummary": "Applied 3/3 file(s)"
+    },
+    {
+      "id": "[copy] noble-cobra",
+      "type": "app_shutdown_copy",
+      "label": "embed-browser",
+      "pid": 24384,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/Cargo.toml",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.toml"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/src/browser.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/tauri.conf.json",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/tauri.conf.json"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src/components/BrowserView.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/BrowserView.tsx"
+          }
+        ],
+        "label": "embed-browser",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-25T15:53:34.247Z",
+      "status": "completed",
+      "completedAt": "2026-02-25T15:57:19.914Z",
+      "resultSummary": "Applied 5/5 file(s)"
     }
   ]
 }

@@ -2156,8 +2156,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:16:01.429Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:16:01.429Z",
+      "lastAccessed": "2026-02-25T10:14:42.843Z"
     },
     {
       "id": "mem_e4b56693",
@@ -2585,6 +2586,204 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-25T09:38:23.368Z"
+    },
+    {
+      "id": "mem_a307a00c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Feature verification run",
+      "content": "Testing all Hello World features one by one using the project itself as the template. Tasks → Memory → Decisions → Questions → Workflow → Approval → Two-Strike → Cost → Sessions.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "test",
+        "verification"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T09:53:07.850Z"
+    },
+    {
+      "id": "mem_c9dae5af",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add auto-tagging to hw_add_task",
+      "content": "Parse task title/description for keywords and auto-assign tags when none are provided. Prevents untagged tasks from appearing on the board.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug-fix",
+        "mcp",
+        "dx"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:12:31.630Z"
+    },
+    {
+      "id": "mem_38ad45b4",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Update system-explorer.html to reflect split-state architecture",
+      "content": "The system explorer node graph still shows the old single state.json flow. Update to show tasks.json, decisions.json, questions.json as separate nodes with individual write paths from MCP and merged read path to Tauri get_state.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:20:01.919Z"
+    },
+    {
+      "id": "mem_bff85b0b",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Used hw_quick_insights to bypass full deliberation guardrails on a real decision",
+      "content": "Ran quick insights on \"system explorer layout\" which was clearly a design decision. All agents converged in 2 rounds with no tension. Then listed the missing guardrails as \"unsolved problems\" when they were already built. Root cause: context compaction lost working knowledge of deliberation system. Fix applied: hw_quick_insights now blocks decision-like topics with pattern matching and redirects to hw_plan_deliberation.",
+      "rule": "If agents will deliberate something that changes code, architecture, layout, or strategy, ALWAYS use hw_plan_deliberation with sub-questions. hw_quick_insights is ONLY for vague exploration with no action planned. The tool now enforces this in code.",
+      "tags": [
+        "deliberation",
+        "guardrails",
+        "regression"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:42:01.133Z"
+    },
+    {
+      "id": "mem_4ec22657",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix deliberation system: prevent bypassing guardrails with quick insights",
+      "content": "Problem: Claude used hw_quick_insights for a topic that needed full deliberation, bypassing all guardrails (sub-questions, coverage tracking, consensus flagging, phases). The system allowed it silently. Fix: (1) quick insights should warn/block when topic complexity exceeds threshold, (2) mediator protocol needs to be enforced in code not just instructions, (3) agent definitions need deeper expertise prompts, (4) session-start context must include deliberation system capabilities so Claude doesn't forget what tools exist.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:42:04.541Z"
+    },
+    {
+      "id": "mem_4811c285",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix deliberation UI: summary format, dialogue sizing, thinking animation, table visibility",
+      "content": "4 issues: (1) End summary should be a timeline with short sentences per agent, not a blob. (2) Agent dialogue boxes need more space -- either larger or scrollable or both. (3) Need dot animation with exclamation when agents are thinking so user knows it's not stuck. (4) Table is barely visible.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "ux",
+        "deliberation",
+        "chatroom"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:46:48.942Z"
+    },
+    {
+      "id": "mem_57fa6aa8",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix state.json race conditions with file locking",
+      "content": "State.json has race conditions where concurrent writes from MCP server, file watcher, and discord listener can silently clobber data. This is the highest-risk bug. Needs deliberation on: (1) File locking as a quick fix vs SQLite migration as the proper fix, (2) If locking, what mechanism (proper-lockfile, .lock file, OS-level), (3) If SQLite, should this be combined with t_f2d9ad7d, (4) How to detect and recover from data loss that may have already happened, (5) Whether to split state.json into separate files per concern (tasks.json, decisions.json, etc.) as an intermediate step.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:46:49.673Z"
+    },
+    {
+      "id": "mem_6c02b0af",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Test auto-tagging verification",
+      "content": "Temporary task to verify auto-tagging infers tags from title/description. Should get tags like ['testing', 'verification'] or similar, not empty or ['untagged'].",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "testing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T10:54:06.157Z"
+    },
+    {
+      "id": "mem_95467655",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Rebuild system-explorer.html with clean tiered layout and group boxes",
+      "content": "Complete rewrite of the system explorer flow chart. Add group background rectangles with labels, reorganize nodes into clear horizontal tiers (Human -> Communication -> Processing -> Data -> Workflows), update MCP server list (remove stale code-research, add Gmail + Chrome), reduce edge crossings. Keep same sidebar/controls/interaction code.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "feature",
+        "mcp",
+        "workflow",
+        "research"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T11:02:10.524Z"
+    },
+    {
+      "id": "mem_f6f237c4",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix sidebar subtabs showing for all sections",
+      "content": "Sidebar.tsx line 148: subtabs render for ALL sections when sidebar is expanded. Missing isActiveSection check. Fix: change `{!sidebarCollapsed && (` to `{!sidebarCollapsed && isActiveSection && (`",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T17:14:21.694Z"
+    },
+    {
+      "id": "mem_57afcfd2",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Apply system explorer layout changes (keep pipelines)",
+      "content": "Apply deliberation changes to system-explorer.html BUT keep the 5 pipeline nodes. Changes: (1) top-to-bottom data flow layout -- hooks/Pat at top, MCP hub center, storage bottom. (2) MCP servers as right-edge leaf nodes. (3) Dashed \"atomic-read zone\" line around split files (tasks/decisions/questions). (4) Write-frequency labels on hot files. (5) Reduce connection crossings via new spatial arrangement. Keep all 5 pipeline nodes -- they show flows as first-class objects.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T17:16:33.371Z"
+    },
+    {
+      "id": "mem_9a5f3276",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "State.json split broke Rust get_state -- white screen",
+      "content": "Split state.json into tasks.json/decisions.json/questions.json but forgot to update Rust get_state() command. It still read state.json which was deleted. Frontend components got null data, TerminalView (always mounted) crashed, whole app white-screened. Fix: merge the 3 files in Rust. Also added top-level ErrorBoundary to App.tsx.",
+      "rule": "When splitting a data file, update ALL consumers -- not just the writer. Check Rust commands, frontend hooks, useTauriData COMMAND_FILE_MAP, and any direct file reads. The writer working is not enough -- every reader must be migrated.",
+      "tags": [
+        "state-split",
+        "rust",
+        "white-screen",
+        "data-migration"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T17:47:27.049Z"
     }
   ]
 }

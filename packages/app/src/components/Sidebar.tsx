@@ -36,6 +36,7 @@ const SECTIONS: SectionDef[] = [
       { view: 'dashboard', label: 'Dashboard',         key: '1' },
       { view: 'approvals', label: 'Approvals',         key: 'A' },
       { view: 'files',     label: 'Files',             key: 'F' },
+      { view: 'browser',   label: 'Browser',           key: 'B' },
     ],
   },
   {
@@ -75,7 +76,7 @@ const SECTIONS: SectionDef[] = [
 ];
 
 function getSection(view: View): Section {
-  if (['terminal', 'agents', 'dashboard', 'approvals', 'files'].includes(view)) return 'claude';
+  if (['terminal', 'agents', 'dashboard', 'approvals', 'files', 'browser'].includes(view)) return 'claude';
   if (['tasks', 'decisions', 'questions'].includes(view)) return 'tasks';
   if (['memory', 'context', 'history'].includes(view)) return 'brain';
   return 'settings';
@@ -143,8 +144,8 @@ export function Sidebar({ onShowHelp }: SidebarProps) {
                 )}
               </button>
 
-              {/* Subtabs (expanded only) */}
-              {!sidebarCollapsed && (
+              {/* Subtabs (expanded only, active section only) */}
+              {!sidebarCollapsed && isActiveSection && (
                 <div className="mb-1">
                   {section.tabs.map(({ view, label, key }) => (
                     <button

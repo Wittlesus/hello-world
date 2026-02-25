@@ -301,6 +301,166 @@
       "tasksCompleted": [],
       "decisionsMade": [],
       "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T09:47:00.524Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_4fc86777",
+      "startedAt": "2026-02-25T09:47:00.524Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T10:50:54.419Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_8924618b",
+      "startedAt": "2026-02-25T10:50:54.419Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T11:39:53.133Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_7f6c13b5",
+      "startedAt": "2026-02-25T11:39:53.133Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T11:59:54.962Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_5d9234d7",
+      "startedAt": "2026-02-25T11:59:54.962Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T12:23:36.171Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_bc9daacd",
+      "startedAt": "2026-02-25T12:23:36.171Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T14:16:40.553Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_15d58e79",
+      "startedAt": "2026-02-25T14:16:40.553Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T14:23:08.230Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_b78d3af5",
+      "startedAt": "2026-02-25T14:23:08.230Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T14:38:08.918Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_4abc0a2e",
+      "startedAt": "2026-02-25T14:38:08.918Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T14:38:26.875Z",
+      "summary": "(orphaned — auto-closed)"
+    },
+    {
+      "id": "s_a3007273",
+      "startedAt": "2026-02-25T14:38:26.876Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "summary": "(orphaned -- auto-closed)",
+      "endedAt": "2026-02-25T15:01:32.985Z"
+    },
+    {
+      "id": "s_f655bc9e",
+      "startedAt": "2026-02-25T15:01:32.985Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T15:01:51.933Z",
+      "summary": "(orphaned — auto-closed)"
+    },
+    {
+      "id": "s_b4f02001",
+      "startedAt": "2026-02-25T15:01:51.933Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "summary": "(orphaned -- auto-closed)",
+      "endedAt": "2026-02-25T15:58:14.262Z"
+    },
+    {
+      "id": "s_00320b10",
+      "startedAt": "2026-02-25T15:58:14.262Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T16:48:36.196Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_bc56cc43",
+      "startedAt": "2026-02-25T16:48:36.196Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T17:01:19.345Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_967d8fd3",
+      "startedAt": "2026-02-25T17:01:19.345Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T17:34:06.291Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_6994b38b",
+      "startedAt": "2026-02-25T17:34:06.291Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T17:51:50.846Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_93622989",
+      "startedAt": "2026-02-25T17:51:50.846Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
       "tokensUsed": 0
     }
   ]

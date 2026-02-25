@@ -18,7 +18,7 @@
         "height": 900,
         "minWidth": 1000,
         "minHeight": 600,
-        "fileDropEnabled": false
+        "dragDropEnabled": false
       },
       {
         "label": "buddy",

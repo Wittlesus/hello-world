@@ -4,8 +4,8 @@
 An autonomous AI workspace where Claude operates as the primary developer and Pat steers strategy. Any Claude instance — new or resumed — opens already knowing the project vision, what's built, what's in progress, and what to do next. No re-orienting. No memory loss. Pat approves decisions and unblocks blockers via Discord. Claude builds continuously.
 
 ## The Core Loop
-1. Session starts → Claude reads full context (this file + hw_get_context())
-2. Claude picks up the active task or the next pending task
+1. Session starts → SessionStart hook injects full context (no need to call hw_get_context())
+2. Claude picks up the active task or the next pending one
 3. Claude works, logs activity, advances the workflow phase
 4. Claude hits a blocker or needs approval → sends Discord DM to Pat, stops and waits
 5. Pat approves/rejects via Discord → Claude continues
@@ -40,7 +40,7 @@ Storage: JSON files in `.hello-world/` (local-first, no cloud dependency)
 ## MCP Tools — Use These Actively
 
 ### Context & Memory
-- `hw_get_context()` — call at session start. Returns tasks, decisions, questions, session info.
+- `hw_get_context()` — available on demand, but NOT needed at session start (the SessionStart hook already injects full context).
 - `hw_retrieve_memories(prompt)` — search pain/win/fact memories before starting any task.
 - `hw_store_memory(type, title, content, rule, severity)` — record lessons as you learn them. Types: pain, win, fact, decision, architecture.
 
@@ -181,10 +181,13 @@ Two modes exist. They are separate by design.
 
 Never skip `hw_plan_deliberation` for decisions. If it's worth deliberating, full guardrails apply.
 
-**Quick Insights (non-binding):** For flavor-testing, sanity checks, exploring a topic:
+**Quick Insights (non-binding):** ONLY for low-stakes flavor-testing where no action will be taken based on the result:
 - `hw_quick_insights` -- 2-4 agents, no sub-questions, no coverage, no approval gate
 - Output is bulk-dismissable and clearly labeled non-binding
 - If real tension surfaces, escalate to a full deliberation
+- **The tool will BLOCK decision-like topics** (contains "should we", "how to redesign", "which approach", etc.) and redirect you to hw_plan_deliberation. This is enforced in code, not just instructions.
+
+**How to tell the difference:** If the outcome will change code, architecture, layout, or strategy, it's a DECISION -- use full deliberation. If you're just exploring what agents think about a vague idea with no action planned, it's quick insights.
 
 **Coverage quality tags:** Every sub-question gets tagged:
 - `consensus` -- agents agreed quickly. If ALL questions are consensus, that's a yellow flag (groupthink risk).

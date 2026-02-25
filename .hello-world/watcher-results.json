@@ -1,0 +1,312 @@
+[
+  {
+    "watcherId": "w_rust20260222",
+    "status": "completed",
+    "completedAt": "2026-02-23T04:24:55.648Z",
+    "label": "Add get_direction, get_watchers, get_timeline to lib.rs",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/rust-edits/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "w_cc55695a",
+    "status": "completed",
+    "completedAt": "2026-02-23T04:31:23.709Z",
+    "label": "direction-notes lib.rs + frontend",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/direction-notes/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/direction-notes/packages/app/src/hooks/useTauriData.ts",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/hooks/useTauriData.ts",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/direction-notes/packages/app/src/components/Dashboard.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/Dashboard.tsx",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "w_6fb7d786",
+    "status": "completed",
+    "completedAt": "2026-02-23T04:54:24.764Z",
+    "label": "watcher names + hook slug",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/watcher-names/packages/core/src/utils.ts",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/utils.ts",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/watcher-names/packages/core/src/watchers/store.ts",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/watchers/store.ts",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/watcher-names/.claude/hooks/user-prompt.mjs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/.claude/hooks/user-prompt.mjs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] buddy-merge",
+    "status": "completed",
+    "completedAt": "2026-02-23T08:41:04.459Z",
+    "label": "claude-buddy merge on shutdown",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/components/ClaudeBuddy.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/App.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/App.tsx",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/components/TerminalView.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/TerminalView.tsx",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] buddy-merge",
+    "status": "completed",
+    "completedAt": "2026-02-23T08:41:04.477Z",
+    "label": "claude-buddy merge on shutdown",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/components/ClaudeBuddy.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/App.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/App.tsx",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/claude-buddy/packages/app/src/components/TerminalView.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/TerminalView.tsx",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] sleepy-jackal",
+    "status": "completed",
+    "completedAt": "2026-02-23T09:47:55.863Z",
+    "label": "loopback-notify merge on shutdown",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/core/src/mcp/server.ts",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/mcp/server.ts",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/app/src/hooks/useTauriData.ts",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/hooks/useTauriData.ts",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/loopback-notify/packages/app/src/components/ClaudeBuddy.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] rusty-stoat",
+    "status": "completed",
+    "completedAt": "2026-02-23T11:23:10.477Z",
+    "label": "buddy-pty-feed merge on shutdown",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/buddy-pty-feed/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/buddy-pty-feed/packages/app/src/components/ClaudeBuddy.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/ClaudeBuddy.tsx",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] rusty-ibis",
+    "status": "completed",
+    "completedAt": "2026-02-23T14:49:11.128Z",
+    "label": "[copy] chatroom-rust",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/feat/chatroom-deliberation/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] swift-lemur",
+    "status": "completed",
+    "completedAt": "2026-02-25T09:46:25.422Z",
+    "label": "split-state-rust",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/split-state/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] windy-thrush",
+    "status": "completed",
+    "completedAt": "2026-02-25T12:22:57.917Z",
+    "label": "browser-cors-fix",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-cors-fix/packages/app/src-tauri/src/browser.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-cors-fix/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] jade-otter",
+    "status": "completed",
+    "completedAt": "2026-02-25T13:05:59.970Z",
+    "label": "fix-state-read",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/fix-state-read/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] rusty-panda",
+    "status": "completed",
+    "completedAt": "2026-02-25T14:21:06.775Z",
+    "label": "fix-state-split",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/fix-answer-question/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] lunar-cobra",
+    "status": "completed",
+    "completedAt": "2026-02-25T14:37:30.180Z",
+    "label": "browser-loopback-routing",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/src/browser.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/tauri.conf.json",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/tauri.conf.json",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/Cargo.toml",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.toml",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-loopback-fix/packages/app/src-tauri/Cargo.lock",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.lock",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] pale-lemur",
+    "status": "completed",
+    "completedAt": "2026-02-25T15:01:02.002Z",
+    "label": "browser-extract-fix",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-extract-fix/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-extract-fix/packages/app/src-tauri/src/browser.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/browser-extract-fix/packages/core/src/mcp/server.ts",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/core/src/mcp/server.ts",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "watcherId": "[copy] noble-cobra",
+    "status": "completed",
+    "completedAt": "2026-02-25T15:57:19.914Z",
+    "label": "embed-browser",
+    "copies": [
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/Cargo.toml",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/Cargo.toml",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/src/browser.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/browser.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/src/lib.rs",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src-tauri/tauri.conf.json",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/tauri.conf.json",
+        "status": "ok"
+      },
+      {
+        "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/embed-browser/packages/app/src/components/BrowserView.tsx",
+        "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/BrowserView.tsx",
+        "status": "ok"
+      }
+    ]
+  }
+]

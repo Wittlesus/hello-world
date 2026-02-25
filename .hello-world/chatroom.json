@@ -1,0 +1,13 @@
+{
+  "session": {
+    "id": "",
+    "topic": "",
+    "status": "idle",
+    "startedAt": "",
+    "startedBy": "claude",
+    "waitingForInput": false,
+    "roundNumber": 0
+  },
+  "agents": [],
+  "messages": []
+}

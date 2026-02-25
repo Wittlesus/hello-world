@@ -133,7 +133,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-22T07:01:06.058Z",
-      "updatedAt": "2026-02-24T09:18:18.590Z"
+      "updatedAt": "2026-02-25T09:53:07.846Z"
     },
     {
       "id": "t_c7674e29",
@@ -261,7 +261,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-24T10:36:13.908Z",
-      "updatedAt": "2026-02-24T10:36:13.908Z"
+      "updatedAt": "2026-02-25T10:08:28.514Z"
     },
     {
       "id": "t_mp_epic",
@@ -611,7 +611,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:51:33.119Z",
-      "updatedAt": "2026-02-25T02:51:33.119Z"
+      "updatedAt": "2026-02-25T10:08:29.050Z"
     },
     {
       "id": "t_caa32ae8",
@@ -631,7 +631,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:54.308Z",
-      "updatedAt": "2026-02-25T02:56:54.308Z"
+      "updatedAt": "2026-02-25T10:08:29.608Z"
     },
     {
       "id": "t_a699fbb8",
@@ -641,7 +641,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:56.643Z",
-      "updatedAt": "2026-02-25T02:56:56.643Z"
+      "updatedAt": "2026-02-25T10:08:30.229Z"
     },
     {
       "id": "t_aa0ac87a",
@@ -651,7 +651,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:58.931Z",
-      "updatedAt": "2026-02-25T02:56:58.931Z"
+      "updatedAt": "2026-02-25T10:08:30.840Z"
     },
     {
       "id": "t_0a24900d",
@@ -661,7 +661,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:57:01.182Z",
-      "updatedAt": "2026-02-25T02:57:01.182Z"
+      "updatedAt": "2026-02-25T10:08:31.449Z"
     },
     {
       "id": "t_72f4f388",
@@ -691,17 +691,17 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:21:56.749Z",
-      "updatedAt": "2026-02-25T08:21:56.749Z"
+      "updatedAt": "2026-02-25T10:08:32.092Z"
     },
     {
       "id": "t_c7e913a3",
       "title": "Fix state.json race conditions with file locking",
       "description": "State.json has race conditions where concurrent writes from MCP server, file watcher, and discord listener can silently clobber data. This is the highest-risk bug. Needs deliberation on: (1) File locking as a quick fix vs SQLite migration as the proper fix, (2) If locking, what mechanism (proper-lockfile, .lock file, OS-level), (3) If SQLite, should this be combined with t_f2d9ad7d, (4) How to detect and recover from data loss that may have already happened, (5) Whether to split state.json into separate files per concern (tasks.json, decisions.json, etc.) as an intermediate step.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:00.166Z",
-      "updatedAt": "2026-02-25T08:33:21.482Z"
+      "updatedAt": "2026-02-25T10:46:49.670Z"
     },
     {
       "id": "t_6cb166c0",
@@ -741,7 +741,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:13.159Z",
-      "updatedAt": "2026-02-25T08:29:13.159Z"
+      "updatedAt": "2026-02-25T10:08:33.277Z"
     },
     {
       "id": "t_fee42a1a",
@@ -751,7 +751,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:15.718Z",
-      "updatedAt": "2026-02-25T08:29:15.718Z"
+      "updatedAt": "2026-02-25T10:08:33.804Z"
     },
     {
       "id": "t_f2d9ad7d",
@@ -761,7 +761,7 @@
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:18.946Z",
-      "updatedAt": "2026-02-25T08:29:18.946Z"
+      "updatedAt": "2026-02-25T10:08:34.370Z"
     },
     {
       "id": "t_a9d3b3d7",
@@ -772,244 +772,131 @@
       "dependsOn": [],
       "createdAt": "2026-02-25T09:28:32.417Z",
       "updatedAt": "2026-02-25T09:38:23.367Z"
+    },
+    {
+      "id": "t_5a8ec0cf",
+      "title": "Add auto-tagging to hw_add_task",
+      "description": "Parse task title/description for keywords and auto-assign tags when none are provided. Prevents untagged tasks from appearing on the board.",
+      "status": "done",
+      "tags": [
+        "bug-fix",
+        "mcp",
+        "dx"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T10:11:32.267Z",
+      "updatedAt": "2026-02-25T10:12:31.628Z"
+    },
+    {
+      "id": "t_91f267d0",
+      "title": "Update system-explorer.html to reflect split-state architecture",
+      "description": "The system explorer node graph still shows the old single state.json flow. Update to show tasks.json, decisions.json, questions.json as separate nodes with individual write paths from MCP and merged read path to Tauri get_state.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T10:18:44.628Z",
+      "updatedAt": "2026-02-25T10:20:01.917Z"
+    },
+    {
+      "id": "t_856059b4",
+      "title": "Fix deliberation system: prevent bypassing guardrails with quick insights",
+      "description": "Problem: Claude used hw_quick_insights for a topic that needed full deliberation, bypassing all guardrails (sub-questions, coverage tracking, consensus flagging, phases). The system allowed it silently. Fix: (1) quick insights should warn/block when topic complexity exceeds threshold, (2) mediator protocol needs to be enforced in code not just instructions, (3) agent definitions need deeper expertise prompts, (4) session-start context must include deliberation system capabilities so Claude doesn't forget what tools exist.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T10:40:31.296Z",
+      "updatedAt": "2026-02-25T10:42:04.538Z"
+    },
+    {
+      "id": "t_e5257b7e",
+      "title": "Fix deliberation UI: summary format, dialogue sizing, thinking animation, table visibility",
+      "description": "4 issues: (1) End summary should be a timeline with short sentences per agent, not a blob. (2) Agent dialogue boxes need more space -- either larger or scrollable or both. (3) Need dot animation with exclamation when agents are thinking so user knows it's not stuck. (4) Table is barely visible.",
+      "status": "done",
+      "tags": [
+        "ux",
+        "deliberation",
+        "chatroom"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T10:44:24.721Z",
+      "updatedAt": "2026-02-25T10:46:48.940Z"
+    },
+    {
+      "id": "t_61d680e8",
+      "title": "Test auto-tagging verification",
+      "description": "Temporary task to verify auto-tagging infers tags from title/description. Should get tags like ['testing', 'verification'] or similar, not empty or ['untagged'].",
+      "status": "done",
+      "tags": [
+        "testing"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T10:53:53.337Z",
+      "updatedAt": "2026-02-25T10:54:06.155Z"
+    },
+    {
+      "id": "t_faa74cd0",
+      "title": "Rebuild system-explorer.html with clean tiered layout and group boxes",
+      "description": "Complete rewrite of the system explorer flow chart. Add group background rectangles with labels, reorganize nodes into clear horizontal tiers (Human -> Communication -> Processing -> Data -> Workflows), update MCP server list (remove stale code-research, add Gmail + Chrome), reduce edge crossings. Keep same sidebar/controls/interaction code.",
+      "status": "done",
+      "tags": [
+        "feature",
+        "mcp",
+        "workflow",
+        "research"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T10:59:23.093Z",
+      "updatedAt": "2026-02-25T11:02:10.521Z"
+    },
+    {
+      "id": "t_6b98dde2",
+      "title": "Build safe built-in browser for Hello World app",
+      "description": "5-phase implementation: (1) Rust browser.rs with WebviewWindow, navigation guard, single-agent lock (2) Content extraction init_script + loopback HTTP bridge (3) MCP hw_browser_* tools in server.ts (4) React BrowserView panel (5) Window position tracking. Key security: browser window excluded from capabilities.json, no Tauri IPC access for web content.",
+      "status": "in_progress",
+      "tags": [
+        "feature",
+        "ux",
+        "mcp",
+        "rust",
+        "react",
+        "storage",
+        "workflow",
+        "agents"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T11:23:18.467Z",
+      "updatedAt": "2026-02-25T14:29:03.421Z"
+    },
+    {
+      "id": "t_12f983d2",
+      "title": "Fix sidebar subtabs showing for all sections",
+      "description": "Sidebar.tsx line 148: subtabs render for ALL sections when sidebar is expanded. Missing isActiveSection check. Fix: change `{!sidebarCollapsed && (` to `{!sidebarCollapsed && isActiveSection && (`",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T17:13:52.014Z",
+      "updatedAt": "2026-02-25T17:14:21.692Z"
+    },
+    {
+      "id": "t_6fa93e41",
+      "title": "Apply system explorer layout changes (keep pipelines)",
+      "description": "Apply deliberation changes to system-explorer.html BUT keep the 5 pipeline nodes. Changes: (1) top-to-bottom data flow layout -- hooks/Pat at top, MCP hub center, storage bottom. (2) MCP servers as right-edge leaf nodes. (3) Dashed \"atomic-read zone\" line around split files (tasks/decisions/questions). (4) Write-frequency labels on hot files. (5) Reduce connection crossings via new spatial arrangement. Keep all 5 pipeline nodes -- they show flows as first-class objects.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T17:13:55.890Z",
+      "updatedAt": "2026-02-25T17:16:33.368Z"
+    },
+    {
+      "id": "t_ae39bd4f",
+      "title": "Fix all fallout from state.json split -- full system audit and optimization",
+      "description": "The state.json -> split files migration was incomplete. Fix everything:\n\n1. ENOENT fix: Find and update all references to the old state.json path (session-start hook, MCP server, Rust commands)\n2. Rust read cache: Add TTL-based file cache in lib.rs so multiple components reading the same file within 2-3s get cached results instead of hitting disk\n3. Shared polling: Replace per-hook 10s intervals in useTauriData.ts with a single global 30s heartbeat that deduplicates\n4. File watcher debounce: When MCP writes 3 files rapidly, batch the watcher events so components re-render once, not 3 times\n5. Verify all hooks work with split files: session-start, pre-tool-gate, user-prompt-submit, post-edit-context\n6. Test the full flow end-to-end\n\nThis is cleanup debt from the B+ state storage decision. Should have been caught during the original migration.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-25T17:25:00.133Z",
+      "updatedAt": "2026-02-25T17:40:31.422Z"
     }
   ],
-  "milestones": [],
-  "decisions": [
-    {
-      "id": "d_a6eabc7b",
-      "title": "Use Tauri over Electron",
-      "context": "Electron subprocess hangs after 6+ attempts. Need reliable process spawning.",
-      "chosen": "Tauri (Rust backend + webview)",
-      "alternatives": [
-        {
-          "option": "Electron",
-          "tradeoff": "Subprocess hangs, 150MB+ bundle"
-        },
-        {
-          "option": "VS Code extension",
-          "tradeoff": "Limited UX control, plugin not product"
-        }
-      ],
-      "rationale": "Smaller bundle, Rust process spawning is reliable, existing React code ports directly",
-      "decidedAt": "2026-02-22T04:00:09.031Z",
-      "decidedBy": "both"
-    },
-    {
-      "id": "d_c29246fe",
-      "title": "Hybrid stack: Rust I/O + TypeScript domain logic",
-      "context": "Need fast I/O (process spawning, file ops) but rapid iteration on domain logic",
-      "chosen": "Rust for I/O, TypeScript for brain/state/agents",
-      "alternatives": [],
-      "rationale": "Best of both worlds — reliability where it matters, iteration speed where it matters",
-      "decidedAt": "2026-02-22T04:00:09.032Z",
-      "decidedBy": "claude"
-    },
-    {
-      "id": "d_02238108",
-      "title": "Port Synaptica brain engine as memory layer",
-      "context": "Need cross-session project memory. Synaptica already has hippocampal retrieval.",
-      "chosen": "Port 9-stage pipeline from Synaptica, adapt to project-scoped memory",
-      "alternatives": [],
-      "rationale": "Proven architecture, pain/win/fact types, plasticity/decay already battle-tested",
-      "decidedAt": "2026-02-22T04:00:09.032Z",
-      "decidedBy": "both"
-    },
-    {
-      "id": "d_a4f6022a",
-      "title": "JSON file storage, swappable to SQLite",
-      "context": "MSVC build tools not available at scaffold time for better-sqlite3",
-      "chosen": "JsonStore with same interface, migrate to SQLite when ready",
-      "alternatives": [],
-      "rationale": "Unblocks development immediately, storage is an implementation detail",
-      "decidedAt": "2026-02-22T04:00:09.033Z",
-      "decidedBy": "claude"
-    },
-    {
-      "id": "d_bc50e845",
-      "title": "Remove max-w-3xl width constraint from all views",
-      "context": "All list views (Memory, Decisions, Questions, Sessions, Cost) had max-w-3xl on their content containers, leaving dead horizontal space on wider screens.",
-      "chosen": "Remove max-w-3xl, let cards span full width",
-      "alternatives": [
-        {
-          "option": "Keep max-w-3xl",
-          "tradeoff": "Consistent reading width but wastes screen space"
-        },
-        {
-          "option": "Center with max-w-3xl",
-          "tradeoff": "Looks better than left-aligned but adds complexity"
-        }
-      ],
-      "rationale": "Cards filling the full width looks better and uses the available space. No content benefit to constraining width in a desktop app.",
-      "decidedAt": "2026-02-22T07:39:03.670Z",
-      "decidedBy": "both"
-    },
-    {
-      "id": "d_ea09d5af",
-      "title": "Keep deliberations practical and actionable",
-      "context": "Pat observed that meta-philosophical topics like 'is this system valuable' cause agents to spiral into unfalsifiable positions",
-      "chosen": "Only run deliberations on concrete, actionable topics: feature design, code architecture, UX improvements, what to build next",
-      "alternatives": [],
-      "rationale": "The system proved its value through actual use. Abstract meta-questions waste tokens and produce no actionable output.",
-      "decidedAt": "2026-02-24T08:47:32.962Z",
-      "decidedBy": "pat"
-    },
-    {
-      "id": "d_mp_scope_in",
-      "title": "Multi-project support is now IN scope",
-      "context": "Previously scoped out (Feb 22). Pat reversed this after experiencing the pain of opening Claude Code from tax-credit-calculators and having no HW tools available. The current single-project model doesn't work when Pat works across multiple projects.",
-      "chosen": "Full multi-project support: project switcher, global vs project memory, auto-onboard new projects",
-      "alternatives": [
-        {
-          "option": "Keep single-project",
-          "tradeoff": "Simpler but forces Pat to only use HW from one directory"
-        },
-        {
-          "option": "Manual project switching via config edit",
-          "tradeoff": "Works but terrible UX, no auto-onboard"
-        }
-      ],
-      "rationale": "Pat hit the real pain: opened Claude Code from a different project and had zero HW tools. Multi-project is a requirement, not a nice-to-have.",
-      "decidedAt": "2026-02-24T17:00:00.000Z",
-      "decidedBy": "pat"
-    },
-    {
-      "id": "d_c92d5e5a",
-      "title": "Verification test decision (delete me)",
-      "context": "Testing the decision recording feature during verification run.",
-      "chosen": "Record and verify",
-      "alternatives": [],
-      "rationale": "Need to confirm the decision system works end-to-end.",
-      "decidedAt": "2026-02-24T09:17:32.717Z",
-      "decidedBy": "claude"
-    },
-    {
-      "id": "d_d9b43d5b",
-      "title": "Always write handoff before suggesting app restart",
-      "context": "Pat noticed sessions losing context when Claude suggests restarting the app without saving state first",
-      "chosen": "Mandatory hw_write_handoff() call before any restart suggestion, no exceptions",
-      "alternatives": [],
-      "rationale": "A restart kills the current session. Without a handoff, the next session starts blind. This rule prevents context loss.",
-      "decidedAt": "2026-02-24T23:41:05.602Z",
-      "decidedBy": "pat"
-    },
-    {
-      "id": "d_c0062113",
-      "title": "Deliberation v2: one mandatory path + quick-insights",
-      "context": "Self-audit of deliberation on guardrails found 5 structural failures. Deliberation panel (6 agents) converged on: one mandatory path for binding decisions, separate lightweight tool for flavor-testing.",
-      "chosen": "One mandatory deliberation path (plan+coverage+conclude) with quality tags (consensus/tension/shifted). Separate hw_quick_insights for non-binding sanity checks. Balance notes optional. Auto-runner pauses at synthesis.",
-      "alternatives": [
-        {
-          "option": "Two-tier mode (quick vs full deliberation)",
-          "tradeoff": "Rejected: user must predict uncertainty before having data. Quick mode becomes a loophole to skip rigor."
-        },
-        {
-          "option": "Keep balance notes required",
-          "tradeoff": "Rejected: never changed mediation behavior in practice. Paperwork without signal."
-        },
-        {
-          "option": "Keep binary coverage (addressed/not)",
-          "tradeoff": "Rejected: enables checkbox theater. Agents can 'address' without real engagement."
-        }
-      ],
-      "rationale": "Two-tier modes create prediction burden (user must guess stakes upfront). One path removes the choice. Quick-insights is clearly separate and non-binding. Quality tags replace binary coverage to catch checkbox theater and groupthink.",
-      "decidedAt": "2026-02-25T01:05:33.241Z",
-      "decidedBy": "both"
-    },
-    {
-      "id": "d_4c882ae9",
-      "title": "Buddy recap: hybrid rolling buffer + AI summary on clean exit",
-      "context": "Need crash-safe session recap for buddy to display on next startup. Must survive X, Alt+F4, crashes.",
-      "chosen": "Hybrid: rolling buffer continuously writes last ~10 activity items (crash-safe baseline). On clean exit, detached Node subprocess upgrades the raw buffer into an AI-generated summary. Buddy displays whichever exists -- polished if available, raw if crash.",
-      "alternatives": [
-        {
-          "option": "Detached subprocess only",
-          "tradeoff": "Nice summaries but no crash safety -- hard exits lose everything"
-        },
-        {
-          "option": "Rolling buffer only",
-          "tradeoff": "Crash-proof but raw activity data, not polished summaries"
-        }
-      ],
-      "rationale": "Rolling buffer costs nothing (same pattern as activity.json). AI summary on clean exit gives a nicer experience when possible. Crash fallback to raw buffer means we never lose context. Best of both worlds.",
-      "decidedAt": "2026-02-25T02:14:26.791Z",
-      "decidedBy": "both"
-    },
-    {
-      "id": "d_85462add",
-      "title": "Build Cortex as standalone ACE replacement",
-      "context": "Discussed adding Augment Context Engine MCP vs building our own. Pat wanted our own version tailored to our workflow.",
-      "chosen": "Build Cortex: standalone MCP server at C:/Users/Patri/CascadeProjects/cortex/. Claude Haiku for file summarization, structured JSON index, keyword/concept search. No vector DB. 5 MCP tools: cortex_index, cortex_search, cortex_context, cortex_architecture, cortex_related.",
-      "alternatives": [
-        {
-          "option": "Install Augment Context Engine MCP",
-          "tradeoff": "Immediate 70% boost claim but not tailored to our workflow, dependency on external service"
-        },
-        {
-          "option": "Install Perplexity MCP for research",
-          "tradeoff": "Deep research but requires API key, monthly cost, not code-specific"
-        }
-      ],
-      "rationale": "With agents we can build something more attuned to our needs. No vector DB infra complexity. Claude API handles the semantic understanding. Per-project index in .cortex-index/ directory.",
-      "decidedAt": "2026-02-25T03:04:00.051Z",
-      "decidedBy": "both"
-    },
-    {
-      "id": "d_e5d0b81b",
-      "title": "State storage: split files + atomic writes (B+), defer SQLite",
-      "context": "state.json holds all tasks, decisions, questions, memories in one file. Concurrent write risk from MCP server, Discord listener. Deliberation with 4 agents.",
-      "chosen": "Split state.json into tasks.json, decisions.json, questions.json, memories.json. Atomic writes via write-to-temp-then-rename with Windows NTFS retry loop. Backup copy before each write. Session-start hook .backup fallback. SQLite deferred to multi-project epic.",
-      "alternatives": [
-        {
-          "option": "File locking only (Option A)",
-          "tradeoff": "2 hours but doesn't fix truncation risk or reduce blast radius"
-        },
-        {
-          "option": "SQLite migration (Option C)",
-          "tradeoff": "Fixes everything but 2-3 days work, breaks file-watcher reactivity, MSVC compilation issues on Windows, premature given multi-project timeline"
-        }
-      ],
-      "rationale": "Backendarch shifted from SQLite to B+ after: (1) multi-project epic is unplanned so SQLite timing is premature, (2) better-sqlite3 has MSVC native compilation issues on Windows, (3) split files are forward-compatible with eventual SQLite migration. Remaining no-ACID risk explicitly accepted.",
-      "decidedAt": "2026-02-25T09:25:49.987Z",
-      "decidedBy": "claude"
-    }
-  ],
-  "questions": [
-    {
-      "id": "q_1ddfadfc",
-      "question": "Should Hello World support multiple projects or just one at a time?",
-      "context": "Currently the app is pointed at a single project path. Multi-project support would require a project switcher UI and separate data stores per project.",
-      "status": "answered",
-      "createdAt": "2026-02-22T07:41:26.170Z",
-      "answer": "One project at a time for now. The setup screen already handles project selection. Multi-project can come later if there's demand.",
-      "answeredAt": "2026-02-22T07:41:30.495Z"
-    },
-    {
-      "id": "q_24979e5f",
-      "question": "Should we add keyboard shortcuts to the Hello World desktop app?",
-      "context": "Currently everything is mouse-driven. Power users might want hotkeys to switch views or trigger actions.",
-      "status": "answered",
-      "createdAt": "2026-02-22T07:43:47.529Z",
-      "answer": "Yes — basic view-switching shortcuts (1-8 for each view) would be a quick win. Low effort, high power-user appeal.",
-      "answeredAt": "2026-02-22T07:43:54.040Z"
-    },
-    {
-      "id": "q_a524cf58",
-      "question": "Should the Settings view allow changing the project path without reinstalling?",
-      "context": "Currently project path is set once on first launch. Changing it requires manual config edits.",
-      "status": "answered",
-      "createdAt": "2026-02-22T08:08:52.713Z",
-      "answer": "Yes -- this is now part of the multi-project support epic. A proper project switcher will replace the current one-time setup. Settings will include project management.",
-      "answeredAt": "2026-02-24T17:00:00.000Z"
-    },
-    {
-      "id": "q_01e1b2f3",
-      "question": "Verification test question -- does the question system work?",
-      "context": "Feature verification run",
-      "status": "answered",
-      "createdAt": "2026-02-24T09:17:36.768Z",
-      "answer": "Yes, it works. Verified during feature verification run.",
-      "answeredAt": "2026-02-24T09:17:40.178Z"
-    }
-  ]
+  "milestones": []
 }

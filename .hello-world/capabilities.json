@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-02-25T17:51:55.603Z",
+  "status": "running",
+  "pid": 28340,
+  "tools": [
+    {
+      "name": "hw_get_context",
+      "category": "context"
+    },
+    {
+      "name": "hw_write_handoff",
+      "category": "context"
+    },
+    {
+      "name": "hw_retrieve_memories",
+      "category": "memory"
+    },
+    {
+      "name": "hw_store_memory",
+      "category": "memory"
+    },
+    {
+      "name": "hw_list_tasks",
+      "category": "tasks"
+    },
+    {
+      "name": "hw_add_task",
+      "category": "tasks"
+    },
+    {
+      "name": "hw_update_task",
+      "category": "tasks"
+    },
+    {
+      "name": "hw_record_decision",
+      "category": "decisions"
+    },
+    {
+      "name": "hw_add_question",
+      "category": "questions"
+    },
+    {
+      "name": "hw_answer_question",
+      "category": "questions"
+    },
+    {
+      "name": "hw_update_direction",
+      "category": "direction"
+    },
+    {
+      "name": "hw_process_direction_note",
+      "category": "direction"
+    },
+    {
+      "name": "hw_notify",
+      "category": "notifications"
+    },
+    {
+      "name": "hw_check_approval",
+      "category": "approvals"
+    },
+    {
+      "name": "hw_list_approvals",
+      "category": "approvals"
+    },
+    {
+      "name": "hw_resolve_approval",
+      "category": "approvals"
+    },
+    {
+      "name": "hw_record_failure",
+      "category": "safety"
+    },
+    {
+      "name": "hw_end_session",
+      "category": "sessions"
+    },
+    {
+      "name": "hw_get_workflow_state",
+      "category": "workflow"
+    },
+    {
+      "name": "hw_advance_phase",
+      "category": "workflow"
+    },
+    {
+      "name": "hw_check_autonomous_timer",
+      "category": "workflow"
+    },
+    {
+      "name": "hw_spawn_watcher",
+      "category": "watchers"
+    },
+    {
+      "name": "hw_list_watchers",
+      "category": "watchers"
+    },
+    {
+      "name": "hw_kill_watcher",
+      "category": "watchers"
+    },
+    {
+      "name": "hw_list_agents",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_plan_deliberation",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_extract_deliberation_recommendations",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_start_deliberation",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_pause_deliberation",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_resume_deliberation",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_check_deliberation_coverage",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_conclude_deliberation",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_quick_insights",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_post_to_chatroom",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_post_agent_message",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_set_deliberation_phase",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_react",
+      "category": "chatroom"
+    },
+    {
+      "name": "hw_browser_navigate",
+      "category": "browser"
+    },
+    {
+      "name": "hw_browser_read_page",
+      "category": "browser"
+    },
+    {
+      "name": "hw_browser_get_state",
+      "category": "browser"
+    },
+    {
+      "name": "hw_browser_close",
+      "category": "browser"
+    }
+  ]
+}

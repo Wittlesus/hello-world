@@ -1,6 +1,6 @@
 {
   "state": {
-    "sessionStart": "2026-02-22T14:02:57.405Z",
+    "sessionStart": "2026-02-25T15:01:51.938Z",
     "messageCount": 0,
     "contextPhase": "early",
     "synapticActivity": {
@@ -29,8 +29,8 @@
         "lastHit": "2026-02-22T06:30:33.616Z"
       },
       "tauri": {
-        "count": 1,
-        "lastHit": "2026-02-22T06:30:33.616Z"
+        "count": 2,
+        "lastHit": "2026-02-25T08:14:40.476Z"
       },
       "bug": {
         "count": 1,
@@ -47,6 +47,86 @@
       "hello-world": {
         "count": 1,
         "lastHit": "2026-02-22T08:08:51.218Z"
+      },
+      "verification": {
+        "count": 1,
+        "lastHit": "2026-02-24T09:17:27.601Z"
+      },
+      "test": {
+        "count": 1,
+        "lastHit": "2026-02-24T09:17:27.601Z"
+      },
+      "mcp": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:10:32.668Z"
+      },
+      "tooling": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:10:32.668Z"
+      },
+      "documentation": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:10:32.668Z"
+      },
+      "immediate-win": {
+        "count": 2,
+        "lastHit": "2026-02-25T08:14:40.476Z"
+      },
+      "dependencies": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:10:32.668Z"
+      },
+      "debugging": {
+        "count": 2,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "rust": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:14:40.476Z"
+      },
+      "performance": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:14:40.476Z"
+      },
+      "typescript": {
+        "count": 2,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "adopt": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:14:40.476Z"
+      },
+      "evaluate": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:14:40.476Z"
+      },
+      "stripe": {
+        "count": 2,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "cross-project": {
+        "count": 2,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "vercel": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "github": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "deployment": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "analytics": {
+        "count": 1,
+        "lastHit": "2026-02-25T08:16:20.708Z"
+      },
+      "tasks": {
+        "count": 1,
+        "lastHit": "2026-02-25T10:14:42.842Z"
       }
     },
     "memoryTraces": {
@@ -73,6 +153,91 @@
       "mem_862c1185": {
         "count": 1,
         "lastAccessed": "2026-02-22T08:08:51.218Z",
+        "synapticStrength": 1
+      },
+      "mem_cd42f521": {
+        "count": 1,
+        "lastAccessed": "2026-02-24T09:17:27.601Z",
+        "synapticStrength": 1
+      },
+      "mem_0fcd3606": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:10:25.123Z",
+        "synapticStrength": 1
+      },
+      "mem_b0e6759c": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:10:32.668Z",
+        "synapticStrength": 1
+      },
+      "mem_4255a1af": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:10:32.668Z",
+        "synapticStrength": 1
+      },
+      "mem_34d8b98f": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:14:40.476Z",
+        "synapticStrength": 1
+      },
+      "mem_45431539": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:14:40.476Z",
+        "synapticStrength": 1
+      },
+      "mem_c9dcdd3d": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:14:40.476Z",
+        "synapticStrength": 1
+      },
+      "mem_d64e94b2": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:14:40.476Z",
+        "synapticStrength": 1
+      },
+      "mem_706d3714": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_1a0150bc": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_6599d4b1": {
+        "count": 2,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_823838dc": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:14:40.476Z",
+        "synapticStrength": 1
+      },
+      "mem_76471b85": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_a16663aa": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_c7d61dda": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_e4b56693": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T08:16:20.708Z",
+        "synapticStrength": 1
+      },
+      "mem_8d1255da": {
+        "count": 1,
+        "lastAccessed": "2026-02-25T10:14:42.842Z",
         "synapticStrength": 1
       }
     },
