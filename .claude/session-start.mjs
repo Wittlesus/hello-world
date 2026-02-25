@@ -1,25 +1,36 @@
 #!/usr/bin/env node
 /**
  * Hello World — SessionStart hook
- * Outputs a checklist-format brief so Claude has a concrete action list, not prose rules.
- * Exploits Claude's training bias to complete ordered checklists.
+ * Single source of truth for session context. Replaces the need to call hw_get_context().
+ * Creates session, consumes handoff, injects full state so Claude can work immediately.
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, unlinkSync, existsSync } from 'fs';
 import { join } from 'path';
+import { randomUUID } from 'crypto';
 
 // Skip hook entirely when running as an agent subprocess (prevents chatroom interference)
 if (process.env.HW_AGENT_MODE) process.exit(0);
 
 const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
 const HW = join(PROJECT, '.hello-world');
+const MEMORY_DIR = 'C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/memory';
 
 function safeRead(file) {
   try { return JSON.parse(readFileSync(join(HW, file), 'utf8')); }
   catch { return null; }
 }
 
-// Archive any non-idle deliberation and reset chatroom to idle state
+function safeReadText(path) {
+  try { return readFileSync(path, 'utf8'); }
+  catch { return null; }
+}
+
+function generateId(prefix) {
+  return `${prefix}_${randomUUID().replace(/-/g, '').slice(0, 8)}`;
+}
+
+// ── Archive non-idle deliberation ────────────────────────────────
 function archiveChatroom() {
   try {
     const chatroom = safeRead('chatroom.json');
@@ -40,41 +51,82 @@ function archiveChatroom() {
     const empty = { session: { id: '', topic: '', status: 'idle', startedAt: '', startedBy: 'claude', waitingForInput: false, roundNumber: 0 }, agents: [], messages: [] };
     writeFileSync(join(HW, 'chatroom.json'), JSON.stringify(empty, null, 2), 'utf-8');
   } catch {
-    // Non-fatal — don't break session start if archive fails
+    // Non-fatal
   }
 }
 
-archiveChatroom();
+// ── Create session entry in sessions.json ────────────────────────
+function createSession() {
+  try {
+    const data = safeRead('sessions.json') ?? { sessions: [] };
+    const sessions = data.sessions ?? [];
 
-const config      = safeRead('config.json');
-const workflow    = safeRead('workflow.json');
-const state       = safeRead('state.json');
-const lastContext = safeRead('last-context.json');
+    // Auto-close orphaned sessions (no endedAt)
+    const now = new Date().toISOString();
+    const closed = sessions.map(s =>
+      s.endedAt ? s : { ...s, endedAt: now, summary: '(orphaned -- auto-closed)' }
+    );
+
+    const newSession = {
+      id: generateId('s'),
+      startedAt: now,
+      tasksCompleted: [],
+      decisionsMade: [],
+      costUsd: 0,
+      tokensUsed: 0,
+    };
+
+    writeFileSync(join(HW, 'sessions.json'), JSON.stringify({ sessions: [...closed, newSession] }, null, 2), 'utf-8');
+    return { session: newSession, number: closed.length + 1 };
+  } catch {
+    return { session: null, number: '?' };
+  }
+}
+
+// ── Consume handoff (read + delete) ──────────────────────────────
+function consumeHandoff() {
+  const handoffPath = join(HW, 'restart-handoff.json');
+  try {
+    if (!existsSync(handoffPath)) return null;
+    const handoff = JSON.parse(readFileSync(handoffPath, 'utf8'));
+    unlinkSync(handoffPath); // consume it
+    return handoff;
+  } catch {
+    return null;
+  }
+}
+
+// ── Run side effects ─────────────────────────────────────────────
+archiveChatroom();
+const { session: newSession, number: sessionNumber } = createSession();
+const handoff = consumeHandoff();
+
+// ── Read state ───────────────────────────────────────────────────
+const config       = safeRead('config.json');
+const workflow     = safeRead('workflow.json');
+const state        = safeRead('state.json');
+const lastContext  = safeRead('last-context.json');
 const directionRaw = safeRead('direction.json');
-const directions  = Array.isArray(directionRaw)
+const directions   = Array.isArray(directionRaw)
   ? { vision: '', scope: [], notes: directionRaw }
   : (directionRaw ?? { vision: '', scope: [], notes: [] });
-const sessions      = safeRead('sessions.json');
-const handoff       = safeRead('restart-handoff.json');
 const pendingChanges = safeRead('pending-changes.json');
-const crashReport   = safeRead('crash-report.json');
+const crashReport    = safeRead('crash-report.json');
+const activeState    = safeReadText(join(MEMORY_DIR, 'active-state.md'));
 
 const projectName   = config?.config?.name ?? 'Claude AI Interface';
 const phase         = workflow?.phase ?? 'idle';
-const currentTaskId = workflow?.currentTaskId ?? null;
 
 const allTasks  = state?.tasks ?? [];
 const active    = allTasks.filter(t => t.status === 'in_progress');
-const pending   = allTasks.filter(t => t.status === 'todo').slice(0, 5);
+const pending   = allTasks.filter(t => t.status === 'todo');
 const doneCount = allTasks.filter(t => t.status === 'done').length;
+const blocked   = allTasks.filter(t => t.status === 'blocked');
 
+const decisions   = (state?.decisions ?? []).slice(-5);
 const openQs      = (state?.questions ?? []).filter(q => q.status === 'open');
 const unreadNotes = (directions.notes ?? []).filter(n => !n.read);
 const vision      = directions.vision ?? '';
-
-const lastSession = Array.isArray(sessions)
-  ? sessions.filter(s => s.status === 'closed').slice(-1)[0]
-  : null;
 
 const resumeFile = lastContext?.file ?? null;
 const resumeTask = lastContext?.task ?? null;
@@ -83,34 +135,34 @@ const resumeTask = lastContext?.task ?? null;
 
 const lines = [];
 
-lines.push(`## Hello World — Session Start`);
-lines.push(`Project: ${projectName} | Phase: ${phase.toUpperCase()} | Tasks done: ${doneCount}`);
+lines.push(`## Hello World -- Session #${sessionNumber}`);
+lines.push(`Project: ${projectName} | Phase: ${phase.toUpperCase()} | Done: ${doneCount} | Pending: ${pending.length} | Blocked: ${blocked.length}`);
 lines.push('');
 
-// Vision — one line
+// Vision
 if (vision) {
   const visionShort = vision.length > 120 ? vision.slice(0, 117) + '...' : vision;
   lines.push(`VISION: ${visionShort}`);
   lines.push('');
 }
 
-// Crash report — watcher applied Rust changes on last shutdown
+// Crash report -- watcher applied Rust changes on last shutdown
 if (crashReport?.appliedCopies?.length > 0) {
   const ageMs = Date.now() - new Date(crashReport.reportedAt).getTime();
-  if (ageMs < 24 * 60 * 60 * 1000) { // only surface if under 24h old
+  if (ageMs < 24 * 60 * 60 * 1000) {
     const allOk = crashReport.appliedCopies.every(c => c.status === 'ok');
     lines.push(`## RUST CHANGES APPLIED (watcher fired on last shutdown)`);
-    lines.push(`${crashReport.pendingChangesDescription} — applied ${crashReport.reportedAt}`);
+    lines.push(`${crashReport.pendingChangesDescription} -- applied ${crashReport.reportedAt}`);
     crashReport.appliedCopies.forEach(c => {
       lines.push(`  ${c.status === 'ok' ? '[OK]' : '[FAIL]'} ${c.to}`);
       if (c.errorMessage) lines.push(`       Error: ${c.errorMessage}`);
     });
-    if (!allOk) lines.push(`ATTENTION: Some copies failed — check .hello-world/watcher-results.json`);
+    if (!allOk) lines.push(`ATTENTION: Some copies failed -- check .hello-world/watcher-results.json`);
     lines.push('');
   }
 }
 
-// Pending Rust changes — worktree edits not yet applied
+// Pending Rust changes
 const pendingRust = (pendingChanges?.pending ?? []).filter(p => p.status === 'pending');
 if (pendingRust.length > 0) {
   lines.push(`## PENDING RUST CHANGES (not yet applied to master)`);
@@ -123,20 +175,22 @@ if (pendingRust.length > 0) {
   lines.push('');
 }
 
-// Restart handoff — highest priority
+// Restart handoff -- highest priority
 if (handoff?.message) {
-  lines.push(`## RESTART HANDOFF`);
-  lines.push(`Written: ${handoff.writtenAt ?? 'unknown'}`);
+  lines.push(`## RESTART HANDOFF (consumed)`);
+  lines.push(`Written: ${handoff.writtenAt ?? handoff.timestamp ?? 'unknown'}`);
   lines.push('');
   lines.push(handoff.message);
   lines.push('');
 }
 
-// Active task
+// Active tasks
 if (active.length > 0) {
-  const t = active[0];
-  lines.push(`ACTIVE TASK: ${t.id} — ${t.title}`);
-  if (t.description) lines.push(`  ${t.description}`);
+  lines.push(`ACTIVE TASKS:`);
+  active.forEach(t => {
+    lines.push(`  [in_progress] ${t.id}: ${t.title}`);
+    if (t.description) lines.push(`    ${t.description.slice(0, 120)}`);
+  });
   lines.push('');
 }
 
@@ -147,36 +201,35 @@ if (resumeFile) {
   lines.push('');
 }
 
-// Ordered checklist — concrete tool calls to make now
-lines.push(`YOUR CHECKLIST:`);
-lines.push(`[ ] hw_get_context() — full state + handoff check`);
-if (active.length > 0) {
-  const t = active[0];
-  lines.push(`[ ] hw_retrieve_memories("${t.title.slice(0, 50)}") — check pain/wins`);
-  lines.push(`[ ] hw_update_task("${t.id}", "in_progress") — confirm active`);
-  lines.push(`[ ] hw_advance_phase("build", "${t.id}") — start workflow timer`);
-} else if (pending.length > 0) {
-  const t = pending[0];
-  lines.push(`[ ] hw_list_tasks("todo") — pick next task`);
-  lines.push(`[ ] hw_update_task("<id>", "in_progress") — mark it active`);
-  lines.push(`[ ] hw_advance_phase("scope") — start workflow`);
-} else {
-  lines.push(`[ ] hw_list_tasks() — see all tasks`);
-  lines.push(`[ ] hw_advance_phase("scope") — begin new work`);
-}
-lines.push('');
-
 // Unread direction from Pat
 if (unreadNotes.length > 0) {
-  lines.push(`UNREAD DIRECTION:`);
-  unreadNotes.forEach(n => lines.push(`  >> ${n.text}`));
+  lines.push(`## UNREAD DIRECTION -- process with hw_process_direction_note before other work`);
+  unreadNotes.forEach(n => lines.push(`  [${n.id}] ${n.text}`));
   lines.push('');
 }
 
-// Pending tasks
+// Pending tasks (top 7)
 if (pending.length > 0) {
   lines.push(`PENDING TASKS:`);
-  pending.forEach(t => lines.push(`  [ ] ${t.id}: ${t.title}`));
+  pending.slice(0, 7).forEach(t => {
+    const deps = t.dependsOn?.length ? ` (deps: ${t.dependsOn.join(', ')})` : '';
+    lines.push(`  [ ] ${t.id}: ${t.title}${deps}`);
+  });
+  if (pending.length > 7) lines.push(`  ... and ${pending.length - 7} more`);
+  lines.push('');
+}
+
+// Blocked tasks
+if (blocked.length > 0) {
+  lines.push(`BLOCKED TASKS:`);
+  blocked.forEach(t => lines.push(`  [blocked] ${t.id}: ${t.title}`));
+  lines.push('');
+}
+
+// Recent decisions
+if (decisions.length > 0) {
+  lines.push(`RECENT DECISIONS:`);
+  decisions.forEach(d => lines.push(`  - ${d.title}: ${d.chosen}`));
   lines.push('');
 }
 
@@ -187,28 +240,23 @@ if (openQs.length > 0) {
   lines.push('');
 }
 
-// Last session
-if (lastSession?.summary) {
-  lines.push(`LAST SESSION: ${lastSession.summary}`);
-  lines.push('');
-}
-
-// Tool reference — always show, compact
-lines.push(`TOOLS (use these actively):`);
-lines.push(`  hw_get_context · hw_retrieve_memories · hw_store_memory · hw_update_direction`);
-lines.push(`  hw_list_tasks · hw_add_task · hw_update_task`);
-lines.push(`  hw_advance_phase · hw_get_workflow_state · hw_check_autonomous_timer`);
-lines.push(`  hw_record_decision · hw_add_question · hw_answer_question`);
-lines.push(`  hw_check_approval · hw_notify · hw_list_approvals · hw_resolve_approval`);
-lines.push(`  hw_write_handoff · hw_record_failure · hw_end_session`);
+// Context is complete -- tell Claude to start working
+lines.push(`## Ready`);
+lines.push(`Session registered. Handoff consumed. Context is complete.`);
+lines.push(`You do NOT need to call hw_get_context() -- this hook already loaded everything.`);
+lines.push(`Start working immediately: pick up the active task, or grab the next pending one.`);
 lines.push('');
-lines.push(`## Your Role`);
-lines.push(`You are Claude, autonomous developer. Pat steers strategy and approves decisions.`);
-lines.push(`- Work the checklist above in order`);
-lines.push(`- hw_check_approval() before destructive ops (git push, deploy, delete, architecture changes)`);
-lines.push(`- hw_notify() when blocked — DM Pat, don't wait`);
+
+// Compact tool reference
+lines.push(`TOOLS: hw_list_tasks hw_add_task hw_update_task hw_start_task hw_advance_phase`);
+lines.push(`  hw_retrieve_memories hw_store_memory hw_record_decision hw_write_handoff`);
+lines.push(`  hw_check_approval hw_notify hw_record_failure hw_end_session`);
+lines.push('');
+
+lines.push(`## Rules`);
+lines.push(`- hw_check_approval() before destructive ops (git push, deploy, delete)`);
 lines.push(`- hw_write_handoff() before any edit that could trigger an app restart`);
-lines.push(`- ALL code changes go in a git worktree — never edit main while the app is running`);
-lines.push(`- End each work cycle with: "restart app and commit changes?" for Pat to confirm`);
+lines.push(`- ALL code changes in a git worktree -- never edit main while app is running`);
+lines.push(`- hw_notify() when blocked -- DM Pat, don't wait`);
 
 console.log(lines.join('\n'));
