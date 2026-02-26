@@ -38,6 +38,12 @@ import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
 import { analyzeGaps, learnFromObservations, createEmptyCortexStore } from '../brain/cortex-learner.js';
 import type { CortexLearnedStore } from '../brain/cortex-learner.js';
+import { generateHealthReport, formatHealthReport } from '../brain/health.js';
+import { pruneMemories } from '../brain/pruner.js';
+import type { MemoryArchiveStore } from '../brain/pruner.js';
+import { extractRuleCandidates, learnRules, createEmptyRulesStore } from '../brain/rules.js';
+import type { LearnedRulesStore } from '../brain/rules.js';
+import { DEFAULT_CORTEX } from '../types.js';
 import { JsonStore } from '../storage.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
@@ -54,6 +60,8 @@ let activity: ActivityStore;
 let workflow: WorkflowEngine;
 let watchers: WatcherStore;
 let cortexStore: JsonStore<CortexLearnedStore>;
+let rulesStore: JsonStore<LearnedRulesStore>;
+let archiveStore: JsonStore<MemoryArchiveStore>;
 
 try {
   project = Project.open(projectRoot);
@@ -65,6 +73,8 @@ try {
   workflow = new WorkflowEngine(projectRoot);
   watchers = new WatcherStore(projectRoot);
   cortexStore = new JsonStore<CortexLearnedStore>(projectRoot, 'cortex-learned.json', createEmptyCortexStore());
+  rulesStore = new JsonStore<LearnedRulesStore>(projectRoot, 'learned-rules.json', createEmptyRulesStore());
+  archiveStore = new JsonStore<MemoryArchiveStore>(projectRoot, 'memories-archive.json', { archived: [], totalArchived: 0, lastPruned: new Date().toISOString() });
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -125,7 +135,8 @@ function toolFiles(tool: string): string[] {
     hw_write_handoff:     [],
     hw_record_failure:    ['workflow.json'],
     hw_get_context:       ['sessions.json', 'activity.json'],
-    hw_end_session:       ['sessions.json'],
+    hw_end_session:       ['sessions.json', 'memories-archive.json', 'learned-rules.json'],
+    hw_brain_health:      [],
     hw_update_direction:  ['direction.json'],
     hw_process_direction_note: ['direction.json'],
     hw_spawn_watcher:     ['watchers.json'],
@@ -624,10 +635,69 @@ server.registerTool('hw_end_session', {
     }
   }
 
+  // End-of-session maintenance: prune stale memories
+  const allMems = memoryStore.getAllMemories();
+  const pruneResult = pruneMemories(allMems);
+  if (pruneResult.archived.length > 0) {
+    // Move archived memories out of active store
+    const archiveData = archiveStore.read();
+    archiveStore.write({
+      archived: [...archiveData.archived, ...pruneResult.archived],
+      totalArchived: archiveData.totalArchived + pruneResult.archived.length,
+      lastPruned: new Date().toISOString(),
+    });
+    // Delete archived from active store
+    for (const a of pruneResult.archived) {
+      memoryStore.deleteMemory(a.memory.id);
+    }
+    activity.append('brain_pruning', `Archived ${pruneResult.archived.length} memories (${pruneResult.stats.supersededCount} superseded, ${pruneResult.stats.staleCount} stale, ${pruneResult.stats.lowQualityCount} low quality)`);
+  }
+
+  // End-of-session maintenance: extract learned rules
+  const rulesData = rulesStore.read();
+  const candidates = extractRuleCandidates(allMems);
+  if (candidates.length > 0) {
+    const { newRules, reinforced } = learnRules(candidates, rulesData.rules);
+    if (newRules.length > 0 || reinforced.length > 0) {
+      const existingIds = new Set(reinforced.map(r => r.id));
+      const updatedRules = [
+        ...rulesData.rules.filter(r => !existingIds.has(r.id)),
+        ...reinforced,
+        ...newRules,
+      ];
+      rulesStore.write({ rules: updatedRules, lastUpdated: new Date().toISOString() });
+      if (newRules.length > 0) {
+        activity.append('brain_rules', `Learned ${newRules.length} new rule(s), reinforced ${reinforced.length}`);
+      }
+    }
+  }
+
   activity.append('session_end', 'Session ended', args.summary);
   const session = sessions.end(args.summary);
   if (!session) return text('No active session.');
   return text(`Session ${session.id} ended. ${session.startedAt} -> ${session.endedAt}`);
+});
+
+// ── Brain Health ─────────────────────────────────────────────────
+
+server.registerTool('hw_brain_health', {
+  title: 'Brain Health',
+  description: 'Get brain health metrics: memory counts by type/health, review queue, cortex stats, learned rules, overall grade.',
+  inputSchema: z.object({}),
+}, async () => {
+  const memories = memoryStore.getAllMemories();
+  const brainState = memoryStore.getBrainState();
+  const cortexData = cortexStore.read();
+  const rulesData = rulesStore.read();
+  const report = generateHealthReport(
+    memories,
+    brainState,
+    cortexData.entries,
+    rulesData.rules,
+    Object.keys(DEFAULT_CORTEX).length,
+    cortexData.totalGapsProcessed,
+  );
+  return text(formatHealthReport(report));
 });
 
 // ── Questions ───────────────────────────────────────────────────
@@ -935,6 +1005,7 @@ const TOOL_CATALOG = [
   { name: 'hw_resolve_approval', category: 'approvals' },
   { name: 'hw_record_failure', category: 'safety' },
   { name: 'hw_end_session', category: 'sessions' },
+  { name: 'hw_brain_health', category: 'brain' },
   { name: 'hw_get_workflow_state', category: 'workflow' },
   { name: 'hw_advance_phase', category: 'workflow' },
   { name: 'hw_check_autonomous_timer', category: 'workflow' },

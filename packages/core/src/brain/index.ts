@@ -86,3 +86,7 @@ export {
   createEmptyArchiveStore,
 } from './pruner.js';
 export type { PruneResult, ArchivedMemory, MemoryArchiveStore, PruneOptions } from './pruner.js';
+
+// S51: Brain health observability
+export { generateHealthReport, formatHealthReport } from './health.js';
+export type { BrainHealthReport } from './health.js';
