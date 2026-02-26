@@ -17,6 +17,7 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_timeline: ['timeline.md'],
   get_watchers: ['watchers.json'],
   get_chatroom: ['chatroom.json'],
+  get_mode: ['mode.json'],
 };
 
 // ── Shared polling heartbeat ──────────────────────────────────────

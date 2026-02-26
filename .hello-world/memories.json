@@ -1022,8 +1022,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:11:51.826Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:11:51.826Z",
+      "lastAccessed": "2026-02-26T07:08:03.240Z"
     },
     {
       "id": "mem_2a873e28",
@@ -1131,8 +1132,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:12:20.977Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:12:20.977Z",
+      "lastAccessed": "2026-02-26T07:08:03.240Z"
     },
     {
       "id": "mem_0a1a97db",
@@ -1149,8 +1151,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:12:25.289Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:12:25.289Z",
+      "lastAccessed": "2026-02-26T07:08:03.240Z"
     },
     {
       "id": "mem_bf94a580",
@@ -1167,8 +1170,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:12:30.536Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:12:30.536Z",
+      "lastAccessed": "2026-02-26T07:08:03.240Z"
     },
     {
       "id": "mem_6232a8f2",
@@ -1529,9 +1533,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 2,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-25T08:16:20.709Z"
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_823838dc",
@@ -1570,9 +1574,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 2,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-25T08:16:20.709Z"
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1591,9 +1595,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 2,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:14:24.115Z",
-      "lastAccessed": "2026-02-25T08:16:20.709Z"
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_254f24ba",
@@ -1650,8 +1654,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:14:43.154Z"
+      "accessCount": 2,
+      "createdAt": "2026-02-25T08:14:43.154Z",
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_286ad94e",
@@ -1798,9 +1803,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 3,
       "createdAt": "2026-02-25T08:15:06.038Z",
-      "lastAccessed": "2026-02-25T08:16:20.709Z"
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_9fdb8bf1",
@@ -1970,9 +1975,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 3,
       "createdAt": "2026-02-25T08:15:32.757Z",
-      "lastAccessed": "2026-02-25T08:16:20.709Z"
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_8b2f53c8",
@@ -2176,9 +2181,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 3,
       "createdAt": "2026-02-25T08:16:04.553Z",
-      "lastAccessed": "2026-02-25T08:16:20.709Z"
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_59e03bc4",
@@ -2401,8 +2406,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:16:55.529Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:16:55.529Z",
+      "lastAccessed": "2026-02-26T07:08:03.240Z"
     },
     {
       "id": "mem_db5022fa",
@@ -2456,8 +2462,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:17:13.088Z"
+      "accessCount": 2,
+      "createdAt": "2026-02-25T08:17:13.088Z",
+      "lastAccessed": "2026-02-26T07:56:08.558Z"
     },
     {
       "id": "mem_9e1a9d2b",
@@ -3206,6 +3213,149 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T04:04:36.923Z"
+    },
+    {
+      "id": "mem_83338377",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Overdrive + Bypass mode toggle",
+      "content": "Add a toggleable mode Pat can cycle Claude into that encourages liberal use of parallel agents, thoroughness over token conservation. When ON, Claude prioritizes parallel agent swarms, deep research, and comprehensive execution. When OFF, normal cost-conscious behavior. Implementation: flag in .hello-world/ that the UserPromptSubmit hook reads and injects mode-specific instructions.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:32:00.393Z"
+    },
+    {
+      "id": "mem_618aeecb",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Watcher system: repurpose from per-task file copies to persistent crash-safety sentinel",
+      "content": "Context: The watcher system (hw_spawn_watcher, app_shutdown_copy type) was used for merging worktree Rust changes on app exit. Pat flagged watchers as more trouble than worth for that use case (terminal flashing, per-task overhead). Discussion revealed the real value: crash recovery. A detached process that survives app crashes can backup state, write crash markers, and enable graceful recovery.\nChosen: Redesign watchers as a single persistent crash-safety sentinel spawned by buddy on startup. Hidden process (no console window), polls Tauri PID, runs recovery on crash/exit. Visual indicator on buddy shows sentinel health. Replaces dozens of per-task throwaway watchers with one always-on guardian.\nRationale: The sentinel survives crashes (detached process), is invisible to the user (windowsHide), and provides crash recovery that no in-process hook can offer. Buddy is the natural owner since it's the persistent visual element. For worktree Rust merges, manual file copy is simpler and more reliable.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T05:18:58.795Z"
+    },
+    {
+      "id": "mem_44372cae",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix clean shutdown: write endedAt to sessions.json on window close",
+      "content": "The sentinel always thinks window-close is a crash because no code writes endedAt to sessions.json before the process exits. Fix: intercept CloseRequested in Rust, read sessions.json, stamp endedAt on the latest session, write back. Then sentinel correctly distinguishes crash vs clean exit.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T05:43:12.326Z"
+    },
+    {
+      "id": "mem_c8a9245a",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Don't spawn copy watchers -- just copy the file directly",
+      "content": "The old per-task watcher pattern (spawn watcher, wait for app shutdown, copy files) was replaced by the sentinel. For Rust changes in worktrees, just copy the file directly to main. The running binary doesn't read lib.rs -- it only matters at next compile. No watcher needed.",
+      "rule": "When making Rust changes: edit in worktree, then cp the file to main. No watcher. Clean up worktree after.",
+      "tags": [],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T05:44:56.526Z"
+    },
+    {
+      "id": "mem_676a65b3",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy overdrive: change from circle to glow effect",
+      "content": "Current overdrive visual is a circular aura (box-shadow rings). Change to a more subtle ambient glow effect instead. Should look like the buddy is radiating energy, not surrounded by rings.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T05:48:17.559Z"
+    },
+    {
+      "id": "mem_29e5436a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Questions tab: make it constructive and allow answering questions",
+      "content": "Two issues: (1) Questions tab needs a more constructive purpose beyond just listing questions. (2) Can't actually answer questions from the app UI -- the answer flow needs to work end-to-end. Fix the answer panel, wire up the MCP call, make the tab useful.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T05:52:28.099Z"
+    },
+    {
+      "id": "mem_5cbe2275",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Terminal dash: replace sessions panel with brain model visualization",
+      "content": "Remove the sessions list from the terminal dashboard panel. Replace it with a working brain model visualization (similar to one built previously). Shows memory activity, connections, active state.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T05:52:28.388Z"
+    },
+    {
+      "id": "mem_a170ca8a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Dual flowchart system -- real-time brain + infrastructure visualization",
+      "content": "Built a collapsible dual-panel flowchart in the terminal view. Left side shows the 9-stage hippocampal retrieval pipeline (Input->Attention->Hippocampus->Tags->Amygdala/Consolidation/Dopamine->Output). Right side shows system infrastructure (Claude PTY, Hooks, MCP Server, File Watcher, stores, Sentinel, Approvals). Both driven by real Tauri events, no polling. Compact bar by default, click to expand.",
+      "rule": "",
+      "tags": [],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T07:08:12.103Z"
+    },
+    {
+      "id": "mem_65fba772",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Flowchart cascade animation: 120ms stagger, 4-5s hold",
+      "content": "Brain pipeline and system infrastructure flowcharts use staggered node activation. Each node lights up 120ms after the previous one, creating a visible cascade along the data path. Nodes stay lit for 4-5 seconds.",
+      "rule": "",
+      "tags": [],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T07:56:23.212Z"
+    },
+    {
+      "id": "mem_5327db25",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Wire brain engine end-to-end -- Pat's top priority",
+      "content": "Session 47 audit revealed the brain system is disconnected pieces: (1) hook does simple keyword matching, (2) 9-stage engine exists but isn't called, (3) scoring module exists but isn't integrated, (4) plasticity is tracked but doesn't affect ranking, (5) memory storage is manual. Pat wants one cohesive pipeline that automatically retrieves, stores, indexes, ranks, and evolves. Next session: wire it all together.",
+      "rule": "The brain engine in packages/core/src/brain/engine.ts must be the ACTUAL retrieval path, not decoration. If the flowchart shows 9 stages, 9 stages must actually run.",
+      "tags": [],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T08:02:38.890Z"
     }
   ]
 }

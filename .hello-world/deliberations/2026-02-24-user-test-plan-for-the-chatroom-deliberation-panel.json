@@ -1,0 +1,102 @@
+{
+  "agents": [
+    {
+      "color": "#f87171",
+      "currentThought": "...",
+      "id": "contrarian",
+      "name": "Contrarian",
+      "status": "thinking"
+    },
+    {
+      "color": "#fb923c",
+      "currentThought": "",
+      "id": "premortem",
+      "name": "Pre-mortem",
+      "status": "idle"
+    },
+    {
+      "color": "#34d399",
+      "currentThought": "",
+      "id": "newuser",
+      "name": "New User",
+      "status": "idle"
+    },
+    {
+      "color": "#818cf8",
+      "currentThought": "",
+      "id": "poweruser",
+      "name": "Power User",
+      "status": "idle"
+    }
+  ],
+  "messages": [
+    {
+      "agentId": "system",
+      "id": "msg_f5902ccc",
+      "text": "Deliberation started: \"User test plan for the chatroom deliberation panel — what should we verify, what could break, and is the feature ready for real use?\"",
+      "timestamp": "2026-02-24T04:48:41.729Z",
+      "type": "system"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_983f692d",
+      "text": "Starting deliberation: \"User test plan for the chatroom deliberation panel — what should we verify, what could break, and is the feature ready for real use?\". Bringing in the panel.",
+      "timestamp": "2026-02-24T04:48:41.732Z",
+      "type": "claude"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_47f8588e",
+      "text": "Contrarian: challenges everything that seems obvious. If the room is converging, they find the real objection — the one that actually matters.",
+      "timestamp": "2026-02-24T04:48:45.244Z",
+      "type": "claude"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_2a4da631",
+      "text": "Pre-mortem: already watched this fail. They trace back from the wreckage to the exact decision that caused it.",
+      "timestamp": "2026-02-24T04:48:48.757Z",
+      "type": "claude"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_5f886b2c",
+      "text": "New User joins the deliberation.",
+      "timestamp": "2026-02-24T04:48:52.264Z",
+      "type": "claude"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_8076d44c",
+      "text": "Power User joins the deliberation.",
+      "timestamp": "2026-02-24T04:48:55.799Z",
+      "type": "claude"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_c7550243",
+      "text": "Panel assembled. Round 1 — what does each of you make of this?",
+      "timestamp": "2026-02-24T04:48:58.615Z",
+      "type": "claude"
+    },
+    {
+      "agentId": "pat",
+      "id": "msg_1771908591339",
+      "text": "well?",
+      "timestamp": "1771908591339",
+      "type": "pat"
+    }
+  ],
+  "reactions": [],
+  "session": {
+    "deliberationPhase": "frame",
+    "id": "chat_fd39d495",
+    "pendingPatMessage": "well?",
+    "roundNumber": 1,
+    "startedAt": "2026-02-24T04:48:41.729Z",
+    "startedBy": "claude",
+    "status": "active",
+    "topic": "User test plan for the chatroom deliberation panel — what should we verify, what could break, and is the feature ready for real use?",
+    "waitingForInput": false
+  }
+}

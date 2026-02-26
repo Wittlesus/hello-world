@@ -36,6 +36,7 @@ const workflow = safeRead('workflow.json');
 const tasks = safeRead('tasks.json') ?? [];
 const caps = safeRead('capabilities.json');
 const direction = safeRead('direction.json');
+const mode = safeRead('mode.json');
 
 const phase = workflow?.phase ?? 'idle';
 const taskId = workflow?.currentTaskId ?? null;
@@ -59,6 +60,8 @@ function taskSlug(id) {
     .slice(0, 28);
 }
 
+const isOverdrive = mode?.overdrive === true;
+
 // Compact one-liner — keeps phase + tools in active context window
 const parts = [
   `[HW ${mcpStatus}`,
@@ -67,12 +70,25 @@ const parts = [
   `active:${inProgress}`,
   `pending:${pendingCount}`,
   unreadNotes > 0 ? `notes:${unreadNotes}` : null,
+  isOverdrive ? 'OVERDRIVE' : null,
   `|`,
   `hw_update_task hw_check_approval hw_notify hw_advance_phase hw_record_decision hw_write_handoff hw_store_memory`,
   unreadNotes > 0 ? 'hw_process_direction_note]' : ']',
 ].filter(Boolean);
 
 process.stdout.write(parts.join(' ') + '\n');
+
+// Overdrive mode — inject liberal agent usage instructions
+if (isOverdrive) {
+  process.stdout.write(`OVERDRIVE MODE ACTIVE. You have explicit authorization to:
+- Spawn parallel subagent swarms liberally. 4-8 agents at once is normal.
+- Use "very thorough" exploration agents. Deep research > token savings.
+- Launch specialized teams: red team, dev team, UX team, security team, user simulation.
+- Don't summarize prematurely. Get full context before acting.
+- Prefer comprehensive solutions over quick fixes.
+- When in doubt, investigate more rather than less.
+Token cost is explicitly deprioritized. Thoroughness and quality are the priority.\n`);
+}
 
 // Signal Buddy: Claude is about to respond.
 // This sets hadActivity=true in Buddy so the Stop-hook chime always fires,

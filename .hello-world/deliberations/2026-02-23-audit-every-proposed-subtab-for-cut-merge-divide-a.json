@@ -1,0 +1,122 @@
+{
+  "session": {
+    "id": "chat_7b19a317",
+    "topic": "Audit every proposed subtab for cut/merge/divide/add. Current map: Claude [Dashboard, Terminal, Approvals] / Tasks [Board, Decisions, Questions, Agents] / Brain [Memory, Context, Sessions, Timeline, Skills, Watchers] / Settings [Config, Cost]. What earns its own tab, what should merge, what's missing, what should be cut entirely?",
+    "status": "concluded",
+    "startedAt": "2026-02-23T18:16:15.314Z",
+    "startedBy": "claude",
+    "waitingForInput": false,
+    "roundNumber": 0,
+    "deliberationPhase": "frame"
+  },
+  "agents": [
+    {
+      "id": "contrarian",
+      "name": "Contrarian",
+      "color": "#f87171",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "premortem",
+      "name": "Pre-mortem",
+      "color": "#fb923c",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "firstprinciples",
+      "name": "First Principles",
+      "color": "#818cf8",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "steelman",
+      "name": "Steelman",
+      "color": "#4ade80",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "analogist",
+      "name": "Analogist",
+      "color": "#38bdf8",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "constraint",
+      "name": "Constraint",
+      "color": "#facc15",
+      "status": "idle",
+      "currentThought": ""
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg_ffb47a6b",
+      "agentId": "system",
+      "text": "Deliberation started: \"Audit every proposed subtab for cut/merge/divide/add. Current map: Claude [Dashboard, Terminal, Approvals] / Tasks [Board, Decisions, Questions, Agents] / Brain [Memory, Context, Sessions, Timeline, Skills, Watchers] / Settings [Config, Cost]. What earns its own tab, what should merge, what's missing, what should be cut entirely?\"",
+      "timestamp": "2026-02-23T18:16:15.314Z",
+      "type": "system"
+    },
+    {
+      "id": "msg_ea665d7f",
+      "agentId": "firstprinciples",
+      "text": "A tab earns its existence only if it has a distinct primary action or distinct information that doesn't belong anywhere else. By that test: Timeline and Sessions are the same thing — both are \"what happened in the past, in order.\" Sessions is a list of Claude sessions; Timeline is a log of events. Merge them into one \"History\" tab under Brain. Agents under Tasks is also suspect — Agents are not a task artifact, they're a Brain artifact (they ARE Claude's cognitive components). Cut Agents from Tasks, move to Brain. Questions and Decisions both belong under Tasks but could merge into one \"Log\" tab since both are read-heavy reference views.",
+      "timestamp": "2026-02-23T18:16:22.004Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_5c9b3ddb",
+      "agentId": "contrarian",
+      "text": "Merging Questions and Decisions destroys discoverability. They have completely different interaction patterns — Decisions are append-only architecture records you reference, Questions are open items that need answering and get resolved. Combining them into a \"Log\" makes both harder to use because neither dominates. Keep them separate. The real cut candidate is Watchers — it's a developer-facing internal mechanism, not a user-facing view. Pat never opens Watchers to get value, he opens it to debug. That belongs in Settings or behind an advanced toggle, not as a peer subtab of Memory and Skills.",
+      "timestamp": "2026-02-23T18:16:28.350Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_463f8fdb",
+      "agentId": "analogist",
+      "text": "Git's model is useful here: working tree (Claude), staging/index (Tasks), object store (Brain), config (Settings). In Git you never need a dedicated view for \"what refs exist\" — that's surfaced contextually. Sessions and Timeline are like git reflog — useful when debugging, not a primary view. Contrarian is right that Watchers is a reflog-equivalent: diagnostic, not navigational. What's missing from this map that Git has: a \"diff\" view — something that shows what changed between now and the last session. That's not Timeline (which is an event log), it's a delta summary. Could live as Dashboard's secondary panel.",
+      "timestamp": "2026-02-23T18:16:34.512Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_1dfe84e4",
+      "agentId": "premortem",
+      "text": "Skills is the tab that fails silently. It shows Claude's capabilities — MCP servers, plugins, accounts. But when does Pat actually open it? Probably never during normal operation, only when something is broken or when setting up a new capability. That's a Settings-tier tab, not a Brain-tier tab. If it stays in Brain, it becomes the tab that's always there but never visited, making Brain feel cluttered. Move Skills to Settings. What IS missing from Brain that would be visited regularly: a Memories tab that surfaces searchable pain/win/fact entries — currently Memory view exists but the name is vague and the interface probably needs work.",
+      "timestamp": "2026-02-23T18:16:41.004Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_00be0514",
+      "agentId": "steelman",
+      "text": "Best case for keeping Skills in Brain: Skills represents what Claude *can do* — it's cognitive capability, not configuration. Knowing Claude has the Stripe MCP server available is directly relevant when reading Memory or Context about what Claude has built. They're co-located for a reason. The real question is whether Skills needs to be a full tab at all — it might work better as a panel sidebar within Brain rather than a peer tab. Also: Agents under Tasks has a genuine steelman — you check on agents specifically while reviewing deliberation tasks. The deliberation panel IS a task artifact. Agents are task participants, not brain components, in this context.",
+      "timestamp": "2026-02-23T18:16:48.203Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_95cefb70",
+      "agentId": "constraint",
+      "text": "Max 4 subtabs per section. Brain currently has 6 (Memory, Context, Sessions, Timeline, Skills, Watchers). That's too many — cognitive overhead per section should be low or the grouping stops helping. Forced cuts: Sessions+Timeline → History (one tab, two views inside or a toggle). Watchers → Settings/Advanced (diagnostic tool, not daily use). Skills → stays in Brain but as a panel, not a full tab. Result: Brain gets Memory, Context, History, Agents. Tasks gets Board, Decisions, Questions. Claude gets Dashboard, Terminal, Approvals. Settings gets Config, Cost, Skills, Watchers. Clean.",
+      "timestamp": "2026-02-23T18:16:54.488Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_de453192",
+      "agentId": "claude",
+      "text": "Synthesis: Three cuts held up. Sessions+Timeline → History (toggle inside). Watchers → Settings. Skills stays Brain but lowest-priority tab. Agents moves to Brain — deliberation is a cognitive process, not a task artifact. Final: Claude [Dashboard, Terminal, Approvals] / Tasks [Board, Decisions, Questions] / Brain [Memory, Context, History, Agents, Skills] / Settings [Config, Cost, Watchers].",
+      "timestamp": "2026-02-23T18:17:04.243Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_8d43ad44",
+      "agentId": "system",
+      "text": "Concluded: Cut/merge/move decisions: Sessions+Timeline merged into History (Brain, toggle inside). Watchers demoted to Settings. Agents moved from Tasks to Brain. Skills stays in Brain. Final: Claude [Dashboard, Terminal, Approvals] / Tasks [Board, Decisions, Questions] / Brain [Memory, Context, History, Agents, Skills] / Settings [Config, Cost, Watchers].",
+      "timestamp": "2026-02-23T18:17:07.624Z",
+      "type": "system"
+    }
+  ],
+  "reactions": []
+}

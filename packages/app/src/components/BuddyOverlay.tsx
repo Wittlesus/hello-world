@@ -192,6 +192,8 @@ export function BuddyOverlay() {
   });
   const [muted, setMuted] = useState(false);
   const [recap, setRecap] = useState<RecapData | null>(null);
+  const [overdrive, setOverdrive] = useState(false);
+  const [sentinelAlive, setSentinelAlive] = useState(false);
   const mutedRef = useRef(false);
   const activityRef = useRef<ActivityState>('waiting');
   const shockTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -245,13 +247,43 @@ export function BuddyOverlay() {
     })();
   }, []);
 
-  // Get project path for approvals check
+  // Get project path, check overdrive mode, spawn sentinel
   useEffect(() => {
     invoke<string | null>('get_app_project_path')
       .then((p) => {
         projectPathRef.current = p;
+        if (p) {
+          invoke<{ overdrive?: boolean }>('get_mode', { projectPath: p })
+            .then((m) => setOverdrive(m?.overdrive === true))
+            .catch(() => {});
+          // Spawn sentinel (crash-safety guardian)
+          invoke<{ status: string }>('spawn_sentinel', { projectPath: p })
+            .then((r) => setSentinelAlive(r.status === 'spawned' || r.status === 'already_running'))
+            .catch(() => setSentinelAlive(false));
+        }
       })
       .catch(() => {});
+  }, []);
+
+  // Health-check sentinel every 10s, respawn if dead
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const pp = projectPathRef.current;
+      if (!pp) return;
+      invoke<{ status: string }>('get_sentinel_status', { projectPath: pp })
+        .then((r) => {
+          const alive = r.status === 'polling' || r.status === 'already_running';
+          setSentinelAlive(alive);
+          if (!alive) {
+            // Respawn
+            invoke<{ status: string }>('spawn_sentinel', { projectPath: pp })
+              .then((s) => setSentinelAlive(s.status === 'spawned' || s.status === 'already_running'))
+              .catch(() => {});
+          }
+        })
+        .catch(() => setSentinelAlive(false));
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   // Sync theme from main window
@@ -265,9 +297,17 @@ export function BuddyOverlay() {
   // State machine
   useEffect(() => {
     const filesU = listen<string[]>('hw-files-changed', async (e) => {
-      if (!e.payload.includes('approvals.json')) return;
       const pp = projectPathRef.current;
       if (!pp) return;
+      // Overdrive mode toggle
+      if (e.payload.includes('mode.json')) {
+        try {
+          const m = await invoke<{ overdrive?: boolean }>('get_mode', { projectPath: pp });
+          setOverdrive(m?.overdrive === true);
+        } catch { /* ignore */ }
+      }
+      // Approvals check
+      if (!e.payload.includes('approvals.json')) return;
       try {
         const raw = await invoke<string>('get_approvals', { projectPath: pp });
         const arr = JSON.parse(raw) as Array<{ status: string }>;
@@ -388,6 +428,14 @@ export function BuddyOverlay() {
           from { opacity: 0; transform: scale(0.8) translateY(4px); }
           to   { opacity: 1; transform: scale(1) translateY(0); }
         }
+        @keyframes overdrive-glow {
+          0%, 100% { filter: drop-shadow(0 0 6px #fbbf2466) drop-shadow(0 0 12px #f59e0b22); }
+          50%      { filter: drop-shadow(0 0 10px #fbbf2488) drop-shadow(0 0 20px #f59e0b44); }
+        }
+        @keyframes overdrive-label {
+          0%, 100% { opacity: 0.6; text-shadow: 0 0 4px #fbbf2488; }
+          50%      { opacity: 1; text-shadow: 0 0 8px #fbbf24cc, 0 0 16px #f59e0b66; }
+        }
       `}</style>
 
       <div
@@ -459,26 +507,67 @@ export function BuddyOverlay() {
         )}
 
         {/* Block-art avatar — animated container */}
-        <div style={{ animation: bodyAnim }}>
+        <div style={{ animation: bodyAnim, position: 'relative', zIndex: 1 }}>
           <div
             style={{
               fontFamily: '"Courier New", Courier, monospace',
               fontSize: '15px',
               lineHeight: '0.95',
-              color: bodyColor,
-              transition: 'color 0.25s ease',
+              color: overdrive ? '#fbbf24' : bodyColor,
+              transition: 'color 0.25s ease, filter 0.3s ease',
               whiteSpace: 'pre',
               textAlign: 'left',
+              filter: overdrive ? 'none' : 'none',
+              animation: overdrive ? 'overdrive-glow 2s ease-in-out infinite' : 'none',
             }}
           >{`▐▛███▜▌\n▝▜█████▛▘\n  ▘▘ ▝▝  `}</div>
         </div>
 
-        {/* Mute dot */}
+        {/* Overdrive label */}
+        {overdrive && (
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '4px',
+              fontFamily: '"Courier New", monospace',
+              fontSize: '7px',
+              fontWeight: '700',
+              letterSpacing: '1.5px',
+              color: '#fbbf24',
+              animation: 'overdrive-label 1.5s ease infinite',
+              pointerEvents: 'none',
+              zIndex: 2,
+            }}
+          >
+            OVERDRIVE
+          </div>
+        )}
+
+        {/* Sentinel shield -- bottom-left */}
+        <div
+          title={sentinelAlive ? 'Crash safety: active' : 'Crash safety: inactive'}
+          style={{
+            position: 'absolute',
+            bottom: '6px',
+            left: '16px',
+            fontSize: '8px',
+            lineHeight: 1,
+            color: sentinelAlive ? '#4ade80' : '#374151',
+            transition: 'color 0.5s ease',
+            pointerEvents: 'none',
+            filter: sentinelAlive ? 'drop-shadow(0 0 3px #4ade8066)' : 'none',
+          }}
+        >
+          {'\u25C6'}
+        </div>
+
+        {/* Mute dot -- bottom-right */}
         {muted && (
           <div
             style={{
               position: 'absolute',
               bottom: '8px',
+              right: '16px',
               width: '5px',
               height: '5px',
               borderRadius: '50%',

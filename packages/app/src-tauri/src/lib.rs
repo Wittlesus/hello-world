@@ -9,6 +9,40 @@ use tauri::{Emitter, Manager};
 use notify_debouncer_mini::{new_debouncer, DebouncedEventKind};
 use portable_pty::{native_pty_system, CommandBuilder, PtySize};
 
+// ── UTC timestamp helper (no chrono dependency) ─────────────────
+
+/// Convert days since Unix epoch to (year, month, day).
+/// Howard Hinnant's civil_from_days algorithm.
+fn civil_from_days(days: i64) -> (i64, u32, u32) {
+    let z = days + 719468;
+    let era = if z >= 0 { z } else { z - 146096 } / 146097;
+    let doe = (z - era * 146097) as u32;
+    let yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
+    let y = yoe as i64 + era * 400;
+    let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
+    let mp = (5 * doy + 2) / 153;
+    let d = doy - (153 * mp + 2) / 5 + 1;
+    let m = if mp < 10 { mp + 3 } else { mp - 9 };
+    let y = if m <= 2 { y + 1 } else { y };
+    (y, m, d)
+}
+
+/// Returns current UTC time as ISO 8601 string (e.g. "2026-02-26T05:30:00.123Z").
+fn utc_now_iso() -> String {
+    let millis = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis() as u64;
+    let secs = (millis / 1000) as i64;
+    let ms = millis % 1000;
+    let time_of_day = secs.rem_euclid(86400);
+    let hours = time_of_day / 3600;
+    let minutes = (time_of_day % 3600) / 60;
+    let seconds = time_of_day % 60;
+    let (y, m, d) = civil_from_days(secs / 86400);
+    format!("{y:04}-{m:02}-{d:02}T{hours:02}:{minutes:02}:{seconds:02}.{ms:03}Z")
+}
+
 // ── Capabilities (Claude settings + known tools) ────────────────
 
 #[tauri::command]
@@ -223,6 +257,144 @@ fn mark_direction_note_read(project_path: &str, note_id: String) -> Result<(), S
 }
 
 #[tauri::command]
+fn get_mode(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "mode.json")
+        .or_else(|_| Ok(serde_json::json!({"overdrive": false})))
+}
+
+#[tauri::command]
+fn set_mode(project_path: &str, overdrive: bool) -> Result<Value, String> {
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_millis();
+    let data = serde_json::json!({
+        "overdrive": overdrive,
+        "toggledAt": now,
+        "toggledBy": "pat",
+    });
+    write_json_file(project_path, "mode.json", &data)?;
+    Ok(data)
+}
+
+#[tauri::command]
+fn spawn_sentinel(project_path: String) -> Result<Value, String> {
+    let app_pid = std::process::id();
+    let sentinel_script = PathBuf::from(&project_path)
+        .join(".claude")
+        .join("sentinel.mjs");
+
+    if !sentinel_script.exists() {
+        return Err("sentinel.mjs not found".to_string());
+    }
+
+    // Check if sentinel is already running
+    let sentinel_json = hw_path(&project_path, "sentinel.json");
+    if sentinel_json.exists() {
+        if let Ok(contents) = fs::read_to_string(&sentinel_json) {
+            if let Ok(data) = serde_json::from_str::<Value>(&contents) {
+                if let Some(pid) = data["pid"].as_u64() {
+                    // Check if that PID is still alive
+                    #[cfg(windows)]
+                    {
+                        let output = std::process::Command::new("tasklist")
+                            .args(["/FI", &format!("PID eq {}", pid), "/NH"])
+                            .output();
+                        if let Ok(out) = output {
+                            let stdout = String::from_utf8_lossy(&out.stdout);
+                            if stdout.contains(&pid.to_string()) {
+                                return Ok(serde_json::json!({
+                                    "status": "already_running",
+                                    "sentinelPid": pid,
+                                    "appPid": app_pid,
+                                }));
+                            }
+                        }
+                    }
+                    #[cfg(not(windows))]
+                    {
+                        let output = std::process::Command::new("kill")
+                            .args(["-0", &pid.to_string()])
+                            .output();
+                        if let Ok(out) = output {
+                            if out.status.success() {
+                                return Ok(serde_json::json!({
+                                    "status": "already_running",
+                                    "sentinelPid": pid,
+                                    "appPid": app_pid,
+                                }));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Spawn sentinel as a detached hidden process
+    let mut cmd = std::process::Command::new("node");
+    cmd.arg(sentinel_script.to_string_lossy().to_string())
+        .arg(&project_path)
+        .arg(app_pid.to_string())
+        .stdin(std::process::Stdio::null())
+        .stdout(std::process::Stdio::null())
+        .stderr(std::process::Stdio::null());
+
+    // Hide console window on Windows
+    #[cfg(windows)]
+    {
+        use std::os::windows::process::CommandExt;
+        cmd.creation_flags(0x08000000); // CREATE_NO_WINDOW
+    }
+
+    let child = cmd.spawn()
+        .map_err(|e| format!("Failed to spawn sentinel: {}", e))?;
+
+    let sentinel_pid = child.id();
+
+    Ok(serde_json::json!({
+        "status": "spawned",
+        "sentinelPid": sentinel_pid,
+        "appPid": app_pid,
+    }))
+}
+
+#[tauri::command]
+fn get_sentinel_status(project_path: &str) -> Result<Value, String> {
+    let data = read_json_file(project_path, "sentinel.json")
+        .unwrap_or_else(|_| serde_json::json!({"status": "not_running"}));
+
+    // Verify the sentinel PID is actually alive
+    if let Some(pid) = data["pid"].as_u64() {
+        #[cfg(windows)]
+        {
+            let output = std::process::Command::new("tasklist")
+                .args(["/FI", &format!("PID eq {}", pid), "/NH"])
+                .output();
+            if let Ok(out) = output {
+                let stdout = String::from_utf8_lossy(&out.stdout);
+                if !stdout.contains(&pid.to_string()) {
+                    return Ok(serde_json::json!({"status": "dead", "lastPid": pid}));
+                }
+            }
+        }
+        #[cfg(not(windows))]
+        {
+            let output = std::process::Command::new("kill")
+                .args(["-0", &pid.to_string()])
+                .output();
+            if let Ok(out) = output {
+                if !out.status.success() {
+                    return Ok(serde_json::json!({"status": "dead", "lastPid": pid}));
+                }
+            }
+        }
+    }
+
+    Ok(data)
+}
+
+#[tauri::command]
 fn get_watchers(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "watchers.json")
 }
@@ -378,11 +550,11 @@ fn resolve_approval(project_path: &str, request_id: String, decision: String) ->
 
 #[tauri::command]
 fn answer_question(project_path: &str, id: String, answer: String) -> Result<Value, String> {
-    let mut data = read_json_file(project_path, "state.json")?;
+    let mut data = read_json_file(project_path, "questions.json")?;
 
     let questions = data["questions"]
         .as_array_mut()
-        .ok_or("state.json missing questions array")?;
+        .ok_or("questions.json missing questions array")?;
 
     let q = questions
         .iter_mut()
@@ -394,7 +566,7 @@ fn answer_question(project_path: &str, id: String, answer: String) -> Result<Val
     q["answeredAt"] = serde_json::json!(epoch_ms());
 
     let result = q.clone();
-    write_json_file(project_path, "state.json", &data)?;
+    write_json_file(project_path, "questions.json", &data)?;
     Ok(result)
 }
 
@@ -1012,6 +1184,10 @@ pub fn run() {
             get_workflow,
             get_direction,
             mark_direction_note_read,
+            get_mode,
+            set_mode,
+            spawn_sentinel,
+            get_sentinel_status,
             get_watchers,
             kill_watcher,
             save_shared_file,
@@ -1028,9 +1204,32 @@ pub fn run() {
             start_watching,
             get_capabilities,
             resolve_approval,
+            answer_question,
         ])
         .on_window_event(|window, event| {
             if window.label() == "main" {
+                if let tauri::WindowEvent::CloseRequested { .. } = event {
+                    // Stamp endedAt on the latest session so sentinel knows this was a clean exit
+                    if let Some(project_path) = get_app_project_path() {
+                        let sessions_path = PathBuf::from(&project_path)
+                            .join(".hello-world")
+                            .join("sessions.json");
+                        if let Ok(contents) = fs::read_to_string(&sessions_path) {
+                            if let Ok(mut data) = serde_json::from_str::<Value>(&contents) {
+                                if let Some(sessions) = data.get_mut("sessions").and_then(|s| s.as_array_mut()) {
+                                    if let Some(latest) = sessions.last_mut() {
+                                        if latest.get("endedAt").and_then(|v| v.as_str()).is_none() {
+                                            latest["endedAt"] = Value::String(utc_now_iso());
+                                            if let Ok(out) = serde_json::to_string_pretty(&data) {
+                                                let _ = fs::write(&sessions_path, out);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 if let tauri::WindowEvent::Destroyed = event {
                     window.app_handle().exit(0);
                 }

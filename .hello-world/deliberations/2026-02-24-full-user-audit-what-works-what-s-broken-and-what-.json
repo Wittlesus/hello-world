@@ -1,0 +1,60 @@
+{
+  "session": {
+    "id": "chat_dddc4fcf",
+    "topic": "Full user audit: what works, what's broken, and what's missing in the Hello World app experience",
+    "status": "paused",
+    "startedAt": "2026-02-24T04:44:55.703Z",
+    "startedBy": "claude",
+    "waitingForInput": false,
+    "roundNumber": 0,
+    "deliberationPhase": "frame",
+    "introRevealedCount": 0
+  },
+  "agents": [
+    {
+      "id": "contrarian",
+      "name": "Contrarian",
+      "color": "#f87171",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "premortem",
+      "name": "Pre-mortem",
+      "color": "#fb923c",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "newuser",
+      "name": "New User",
+      "color": "#34d399",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "poweruser",
+      "name": "Power User",
+      "color": "#818cf8",
+      "status": "idle",
+      "currentThought": ""
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg_6783d953",
+      "agentId": "system",
+      "text": "Deliberation started: \"Full user audit: what works, what's broken, and what's missing in the Hello World app experience\"",
+      "timestamp": "2026-02-24T04:44:55.703Z",
+      "type": "system"
+    },
+    {
+      "id": "msg_81c8f057",
+      "agentId": "system",
+      "text": "Error: ANTHROPIC_API_KEY not set. Cannot run agents.",
+      "timestamp": "2026-02-24T04:44:55.706Z",
+      "type": "system"
+    }
+  ],
+  "reactions": []
+}

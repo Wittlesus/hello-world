@@ -191,6 +191,24 @@
       "capturedAt": "2026-02-25T02:08:04.071Z",
       "actionTaken": "task",
       "actionId": "t_ecdd0782"
+    },
+    {
+      "id": "n_mm2y8t83",
+      "text": "Overdrive + Bypass mode: an alt mode Pat can cycle Claude into that encourages liberal use of intelligently designed agents and teams, thoroughness over token conservation. Should be toggleable -- when ON, Claude prioritizes parallel agent swarms, deep research, and comprehensive execution. When OFF, normal cost-conscious behavior. Implementation: could be a flag in .hello-world/ that the UserPromptSubmit hook reads and injects mode-specific instructions.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-26T04:14:31.923Z",
+      "actionTaken": "task",
+      "actionId": "t_0f1cf64b"
+    },
+    {
+      "id": "n_mm2yglcl",
+      "text": "Questions UX is broken. Pat can't answer questions from the app. The whole \"copy to MCP\" flow is wrong. Need: text field in QuestionsView, hit Answer, it writes directly to questions.json, then triggers routing (to task, decision, or scope) automatically. Should also work from Discord -- reply to a question DM and the answer gets routed. No Claude in the loop for the ANSWERING part. Claude handles the ROUTING after.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-26T04:20:34.965Z",
+      "actionTaken": "task",
+      "actionId": "t_f7899ace"
     }
   ]
 }

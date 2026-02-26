@@ -1,3 +1,4 @@
+import { invoke } from '@tauri-apps/api/core';
 import { useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
@@ -31,68 +32,32 @@ function formatDate(iso: string): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
-type RouteType = 'none' | 'task' | 'decision';
-
 interface AnswerPanelProps {
   q: Question;
   onClose: () => void;
 }
 
 function AnswerPanel({ q, onClose }: AnswerPanelProps) {
+  const projectPath = useProjectPath();
   const [answer, setAnswer] = useState('');
-  const [routeType, setRouteType] = useState<RouteType>('none');
-  const [taskTitle, setTaskTitle] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
-  const [decisionTitle, setDecisionTitle] = useState('');
-  const [decisionContext, setDecisionContext] = useState('');
-  const [decisionChosen, setDecisionChosen] = useState('');
-  const [decisionRationale, setDecisionRationale] = useState('');
-  const [decisionDecidedBy, setDecisionDecidedBy] = useState<'pat' | 'claude' | 'both'>('pat');
-  const [copied, setCopied] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  function buildCommand(): string {
-    const lines: string[] = [];
-    lines.push(`hw_answer_question({`);
-    lines.push(`  id: "${q.id}",`);
-    lines.push(`  answer: ${JSON.stringify(answer || 'your answer here')},`);
-
-    if (routeType === 'task' && taskTitle.trim()) {
-      lines.push(`  route: {`);
-      lines.push(`    type: "task",`);
-      lines.push(`    title: ${JSON.stringify(taskTitle)},`);
-      if (taskDescription.trim()) {
-        lines.push(`    description: ${JSON.stringify(taskDescription)},`);
-      }
-      lines.push(`  },`);
-    } else if (routeType === 'decision' && decisionTitle.trim()) {
-      lines.push(`  route: {`);
-      lines.push(`    type: "decision",`);
-      lines.push(`    title: ${JSON.stringify(decisionTitle)},`);
-      lines.push(`    context: ${JSON.stringify(decisionContext || '')},`);
-      lines.push(`    chosen: ${JSON.stringify(decisionChosen || '')},`);
-      lines.push(`    rationale: ${JSON.stringify(decisionRationale || '')},`);
-      lines.push(`    decidedBy: "${decisionDecidedBy}",`);
-      lines.push(`  },`);
-    }
-
-    lines.push(`})`);
-    return lines.join('\n');
-  }
-
-  async function handleCopy() {
-    const cmd = buildCommand();
+  async function handleSubmit() {
+    if (!answer.trim() || !projectPath) return;
+    setSubmitting(true);
+    setError(null);
     try {
-      await navigator.clipboard.writeText(cmd);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // clipboard not available — ignore
+      await invoke('answer_question', { projectPath, id: q.id, answer: answer.trim() });
+      setSuccess(true);
+      setTimeout(() => onClose(), 1200);
+    } catch (err) {
+      setError(String(err));
+    } finally {
+      setSubmitting(false);
     }
   }
-
-  const inputClass =
-    'w-full bg-[#0a0a0f] border border-gray-700 rounded p-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500';
-  const labelClass = 'text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1 block';
 
   return (
     <div className="mt-2 bg-[#1a1a24] border border-gray-700 rounded-lg p-4 space-y-4">
@@ -100,149 +65,46 @@ function AnswerPanel({ q, onClose }: AnswerPanelProps) {
         Answer this question
       </div>
 
-      <div>
-        <label className={labelClass}>Answer</label>
-        <textarea
-          className={`${inputClass} resize-none`}
-          rows={3}
-          placeholder="Type your answer..."
-          value={answer}
-          onChange={(e) => setAnswer(e.target.value)}
-        />
-      </div>
+      {success ? (
+        <div className="text-sm text-green-400 py-2">Answer saved.</div>
+      ) : (
+        <>
+          <div>
+            <textarea
+              className="w-full bg-[#0a0a0f] border border-gray-700 rounded p-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500 resize-none"
+              rows={3}
+              placeholder="Type your answer..."
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+            />
+          </div>
 
-      <div>
-        <label className={labelClass}>Route (optional)</label>
-        <div className="flex gap-4">
-          {(['none', 'task', 'decision'] as RouteType[]).map((rt) => (
-            <label key={rt} className="flex items-center gap-1.5 cursor-pointer">
-              <input
-                type="radio"
-                name={`route-${q.id}`}
-                value={rt}
-                checked={routeType === rt}
-                onChange={() => setRouteType(rt)}
-                className="accent-blue-500"
-              />
-              <span className="text-xs text-gray-400">
-                {rt === 'none' ? 'No route' : rt === 'task' ? 'Create task' : 'Record decision'}
-              </span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {routeType === 'task' && (
-        <div className="space-y-3 pl-3 border-l border-gray-700">
-          <div>
-            <label className={labelClass}>Task title</label>
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="Task title..."
-              value={taskTitle}
-              onChange={(e) => setTaskTitle(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>Description (optional)</label>
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="Task description..."
-              value={taskDescription}
-              onChange={(e) => setTaskDescription(e.target.value)}
-            />
-          </div>
-        </div>
-      )}
-
-      {routeType === 'decision' && (
-        <div className="space-y-3 pl-3 border-l border-gray-700">
-          <div>
-            <label className={labelClass}>Decision title</label>
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="Decision title..."
-              value={decisionTitle}
-              onChange={(e) => setDecisionTitle(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>Context</label>
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="Why this decision was needed..."
-              value={decisionContext}
-              onChange={(e) => setDecisionContext(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>Chosen option</label>
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="What was chosen..."
-              value={decisionChosen}
-              onChange={(e) => setDecisionChosen(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>Rationale</label>
-            <input
-              type="text"
-              className={inputClass}
-              placeholder="Why this option was chosen..."
-              value={decisionRationale}
-              onChange={(e) => setDecisionRationale(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className={labelClass}>Decided by</label>
-            <div className="flex gap-4">
-              {(['pat', 'claude', 'both'] as const).map((by) => (
-                <label key={by} className="flex items-center gap-1.5 cursor-pointer">
-                  <input
-                    type="radio"
-                    name={`decidedBy-${q.id}`}
-                    value={by}
-                    checked={decisionDecidedBy === by}
-                    onChange={() => setDecisionDecidedBy(by)}
-                    className="accent-blue-500"
-                  />
-                  <span className="text-xs text-gray-400 capitalize">{by}</span>
-                </label>
-              ))}
+          {error && (
+            <div className="text-xs text-red-400 bg-red-500/10 border border-red-500/20 rounded px-3 py-2">
+              {error}
             </div>
+          )}
+
+          <div className="flex items-center gap-2 pt-1">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={submitting || !answer.trim()}
+              className="px-3 py-1.5 text-xs bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-600/30 rounded transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              {submitting ? 'Submitting...' : 'Submit'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={submitting}
+              className="px-3 py-1.5 text-xs bg-gray-700/30 hover:bg-gray-700/50 text-gray-400 border border-gray-700 rounded transition-colors disabled:opacity-40"
+            >
+              Cancel
+            </button>
           </div>
-        </div>
+        </>
       )}
-
-      <div>
-        <label className={labelClass}>MCP command</label>
-        <pre className="bg-[#0a0a0f] border border-gray-700 rounded p-2 text-[11px] text-green-300 font-mono whitespace-pre overflow-x-auto">
-          {buildCommand()}
-        </pre>
-      </div>
-
-      <div className="flex items-center gap-2 pt-1">
-        <button
-          type="button"
-          onClick={handleCopy}
-          className="px-3 py-1.5 text-xs bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-600/30 rounded transition-colors"
-        >
-          {copied ? 'Copied!' : 'Copy MCP command'}
-        </button>
-        <button
-          type="button"
-          onClick={onClose}
-          className="px-3 py-1.5 text-xs bg-gray-700/30 hover:bg-gray-700/50 text-gray-400 border border-gray-700 rounded transition-colors"
-        >
-          Close
-        </button>
-      </div>
     </div>
   );
 }

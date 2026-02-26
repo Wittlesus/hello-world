@@ -3,7 +3,7 @@ import { listen } from '@tauri-apps/api/event';
 import { FitAddon } from '@xterm/addon-fit';
 import { WebLinksAddon } from '@xterm/addon-web-links';
 import { Terminal } from '@xterm/xterm';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import '@xterm/xterm/css/xterm.css';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
@@ -29,14 +29,19 @@ interface ActivityData {
 interface WorkflowData {
   phase: string;
 }
-interface Session {
+interface Memory {
   id: string;
-  startedAt: string;
-  endedAt?: string;
-  tasksCompleted: string[];
+  type: 'pain' | 'win' | 'fact' | 'decision' | 'architecture';
+  title: string;
+  severity: 'low' | 'medium' | 'high';
+  createdAt: string;
 }
-interface SessionsData {
-  sessions: Session[];
+interface MemoriesData {
+  memories: Memory[];
+}
+interface ApprovalsData {
+  pending: Array<{ id: string; status: string }>;
+  resolved: Array<{ id: string }>;
 }
 
 const PHASE_DOT: Record<string, string> = {
@@ -48,19 +53,386 @@ const PHASE_DOT: Record<string, string> = {
   ship: 'bg-green-400',
 };
 
-function formatSessionDate(iso: string): string {
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return '';
-  return `${d.getMonth() + 1}/${d.getDate()} ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+// -- Dual-panel bottom flowchart types --
+
+interface ToolSummaryPayload {
+  type: string;
+  files?: string[];
+  events?: Array<{ tool: string; summary: string }>;
+  summary?: string;
 }
 
-function formatDuration(start: string, end?: string): string {
-  const s = new Date(start);
-  const e = end ? new Date(end) : new Date();
-  if (isNaN(s.getTime())) return '';
-  const mins = Math.floor((e.getTime() - s.getTime()) / 60000);
-  if (mins < 60) return `${mins}m`;
-  return `${Math.floor(mins / 60)}h${mins % 60 ? `${mins % 60}m` : ''}`;
+// Map filenames to system node IDs
+const FILE_TO_SYS_NODE: Record<string, string> = {
+  'tasks.json': 'sys-tasks',
+  'memories.json': 'sys-memory',
+  'workflow.json': 'sys-workflow',
+  'approvals.json': 'sys-approvals',
+};
+
+// Map filenames to brain node IDs
+const FILE_TO_BRAIN_NODE: Record<string, string> = {
+  'memories.json': 'brain-hippocampus',
+  'brain-state.json': 'brain-consolidation',
+};
+
+// CSS injected once for glow animations
+const DUAL_FLOW_CSS = `
+@keyframes node-glow {
+  0%, 100% { box-shadow: 0 0 12px var(--glow-color, rgba(0,229,255,0.3)); }
+  50% { box-shadow: 0 0 24px var(--glow-color, rgba(0,229,255,0.5)); }
+}
+@keyframes pain-pulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(255,45,85,0.35); }
+  50% { box-shadow: 0 0 30px rgba(255,45,85,0.55); }
+}
+`;
+
+interface FlowNodeProps {
+  label: string;
+  accent: string;
+  active: boolean;
+  stat?: string;
+  pulse?: 'glow' | 'pain';
+}
+
+function FlowNode({ label, accent, active, stat, pulse }: FlowNodeProps) {
+  const baseBg = active ? `${accent}26` : '#0a0a0f';
+  const borderColor = active ? accent : '#1a1a30';
+  const animation = active && pulse === 'pain'
+    ? 'pain-pulse 1.5s ease-in-out infinite'
+    : active && pulse === 'glow'
+      ? 'node-glow 1.5s ease-in-out infinite'
+      : 'none';
+
+  return (
+    <div
+      style={{
+        padding: '8px 12px',
+        borderRadius: 4,
+        fontSize: 8,
+        textTransform: 'uppercase',
+        letterSpacing: 1,
+        fontFamily: 'monospace',
+        border: `1px solid ${borderColor}`,
+        background: baseBg,
+        color: active ? accent : '#5a5a72',
+        transition: 'all 0.4s ease',
+        animation,
+        ['--glow-color' as string]: `${accent}50`,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: 2,
+        minWidth: 52,
+      }}
+    >
+      <span>{label}</span>
+      {stat != null && (
+        <span style={{ fontSize: 6, opacity: 0.6, color: active ? accent : '#3a3a52' }}>
+          {stat}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function FlowArrow({ direction, active }: { direction: 'right' | 'down'; active: boolean }) {
+  const ch = direction === 'right' ? '\u2192' : '\u2193';
+  return (
+    <span
+      style={{
+        color: active ? '#00e5ff' : '#5a5a72',
+        fontSize: 10,
+        fontFamily: 'monospace',
+        transition: 'color 0.4s ease',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: direction === 'right' ? '0 2px' : '2px 0',
+      }}
+    >
+      {ch}
+    </span>
+  );
+}
+
+// ---- Brain Pipeline ----
+
+function BrainPipeline({
+  memories,
+  phase,
+}: {
+  memories: Memory[];
+  phase: string;
+}) {
+  const [activeNodes, setActiveNodes] = useState<Set<string>>(new Set());
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  const activateNode = useCallback((nodeId: string, durationMs = 4000) => {
+    setActiveNodes((prev) => {
+      const next = new Set(prev);
+      next.add(nodeId);
+      return next;
+    });
+    const existing = timeoutsRef.current.get(nodeId);
+    if (existing) clearTimeout(existing);
+    const tid = setTimeout(() => {
+      setActiveNodes((prev) => {
+        const next = new Set(prev);
+        next.delete(nodeId);
+        return next;
+      });
+      timeoutsRef.current.delete(nodeId);
+    }, durationMs);
+    timeoutsRef.current.set(nodeId, tid);
+  }, []);
+
+  // Staggered activation -- lights nodes up one by one along a path
+  const activateSequence = useCallback((nodes: string[], delayMs = 150, holdMs = 4000) => {
+    const staggerTimeouts: ReturnType<typeof setTimeout>[] = [];
+    nodes.forEach((nodeId, i) => {
+      const tid = setTimeout(() => activateNode(nodeId, holdMs), i * delayMs);
+      staggerTimeouts.push(tid);
+    });
+    // Store for cleanup
+    const cleanupKey = `_seq_${Date.now()}`;
+    timeoutsRef.current.set(cleanupKey, setTimeout(() => {
+      timeoutsRef.current.delete(cleanupKey);
+    }, nodes.length * delayMs + holdMs));
+    // Also store individual stagger timeouts for unmount cleanup
+    staggerTimeouts.forEach((t, i) => timeoutsRef.current.set(`_stg_${i}_${Date.now()}`, t));
+  }, [activateNode]);
+
+  // Listen for hw-tool-summary -- activate brain nodes on hw_retrieve_memories
+  useEffect(() => {
+    const unlistenPromise = listen<ToolSummaryPayload>('hw-tool-summary', (event) => {
+      const payload = event.payload;
+      const events = payload.events ?? [];
+      const hasRetrieval = events.some((e) => e.tool === 'hw_retrieve_memories');
+      if (hasRetrieval) {
+        const summaryText = (payload.summary ?? '') + events.map((e) => e.summary).join(' ');
+        const lower = summaryText.toLowerCase();
+
+        // Row 1: cascade left to right (150ms between each)
+        const row1 = [
+          'brain-input', 'brain-arrow-1', 'brain-attention',
+          'brain-arrow-2', 'brain-hippocampus', 'brain-arrow-3', 'brain-tags',
+        ];
+
+        // Row 2: fan out after row 1 completes
+        const row2: string[] = ['brain-arrow-down-1'];
+        if (lower.includes('pain')) row2.push('brain-amygdala');
+        row2.push('brain-consolidation');
+        if (lower.includes('win')) row2.push('brain-dopamine');
+
+        // Row 3: output after row 2
+        const row3 = ['brain-arrow-down-2', 'brain-output'];
+
+        // Stagger everything: row1 first, then row2, then row3
+        const all = [...row1, ...row2, ...row3];
+        activateSequence(all, 120, 5000);
+      }
+    });
+    return () => { unlistenPromise.then((fn) => fn()); };
+  }, [activateSequence]);
+
+  // Listen for hw-files-changed -- brief flash on relevant brain nodes
+  useEffect(() => {
+    const unlistenPromise = listen<string[]>('hw-files-changed', (event) => {
+      for (const f of event.payload) {
+        const nodeId = FILE_TO_BRAIN_NODE[f];
+        if (nodeId) {
+          activateNode(nodeId, 3000);
+        }
+      }
+    });
+    return () => { unlistenPromise.then((fn) => fn()); };
+  }, [activateNode]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    return () => {
+      for (const tid of timeouts.values()) clearTimeout(tid);
+      timeouts.clear();
+    };
+  }, []);
+
+  const a = (id: string) => activeNodes.has(id);
+  const painCount = memories.filter((m) => m.type === 'pain').length;
+  const winCount = memories.filter((m) => m.type === 'win').length;
+
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '8px 12px', gap: 6, minWidth: 0 }}>
+      <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: 2, color: '#5a5a72', fontFamily: 'monospace' }}>
+        Brain Pipeline
+      </span>
+
+      {/* Row 1: Input -> Attention -> Hippocampus -> Tags */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+        <FlowNode label="Input" accent="#64748b" active={a('brain-input')} />
+        <FlowArrow direction="right" active={a('brain-arrow-1')} />
+        <FlowNode label="Attention" accent="#7c4dff" active={a('brain-attention')} stat={a('brain-attention') ? 'triggered' : 'filter'} />
+        <FlowArrow direction="right" active={a('brain-arrow-2')} />
+        <FlowNode label="Hippocampus" accent="#00e5ff" active={a('brain-hippocampus')} stat={`${memories.length} memories`} pulse="glow" />
+        <FlowArrow direction="right" active={a('brain-arrow-3')} />
+        <FlowNode label="Tags" accent="#00bcd4" active={a('brain-tags')} />
+      </div>
+
+      {/* Connector: down arrow */}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <FlowArrow direction="down" active={a('brain-arrow-down-1') || a('brain-hippocampus')} />
+      </div>
+
+      {/* Row 2: Amygdala, Consolidation, Dopamine */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
+        <FlowNode label="Amygdala" accent="#ff2d55" active={a('brain-amygdala')} stat={`${painCount} pain`} pulse="pain" />
+        <FlowNode label="Consolidation" accent="#00e676" active={a('brain-consolidation')} stat={phase} />
+        <FlowNode label="Dopamine" accent="#ffb300" active={a('brain-dopamine')} stat={`${winCount} wins`} />
+      </div>
+
+      {/* Connector: down arrow */}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <FlowArrow direction="down" active={a('brain-arrow-down-2')} />
+      </div>
+
+      {/* Row 3: Output */}
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <FlowNode label="Output" accent="#00e5ff" active={a('brain-output')} stat={a('brain-output') ? 'injected' : undefined} pulse="glow" />
+      </div>
+    </div>
+  );
+}
+
+// ---- System Infrastructure ----
+
+function SystemInfrastructure({
+  tasks,
+  memories,
+  phase,
+  pendingApprovals,
+}: {
+  tasks: Task[];
+  memories: Memory[];
+  phase: string;
+  pendingApprovals: number;
+}) {
+  const [activeNodes, setActiveNodes] = useState<Set<string>>(new Set());
+  const [lastTool, setLastTool] = useState<string>('idle');
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+
+  const activateNode = useCallback((nodeId: string, durationMs = 4000) => {
+    setActiveNodes((prev) => {
+      const next = new Set(prev);
+      next.add(nodeId);
+      return next;
+    });
+    const existing = timeoutsRef.current.get(nodeId);
+    if (existing) clearTimeout(existing);
+    const tid = setTimeout(() => {
+      setActiveNodes((prev) => {
+        const next = new Set(prev);
+        next.delete(nodeId);
+        return next;
+      });
+      timeoutsRef.current.delete(nodeId);
+    }, durationMs);
+    timeoutsRef.current.set(nodeId, tid);
+  }, []);
+
+  // Staggered activation
+  const activateSequence = useCallback((nodes: string[], delayMs = 150, holdMs = 4000) => {
+    nodes.forEach((nodeId, i) => {
+      const tid = setTimeout(() => activateNode(nodeId, holdMs), i * delayMs);
+      timeoutsRef.current.set(`_stg_${nodeId}_${Date.now()}`, tid);
+    });
+  }, [activateNode]);
+
+  // Listen for hw-tool-summary
+  useEffect(() => {
+    const unlistenPromise = listen<ToolSummaryPayload>('hw-tool-summary', (event) => {
+      const payload = event.payload;
+      if (payload.events && payload.events.length > 0) {
+        setLastTool(payload.events[0].tool.replace(/^hw_/, ''));
+      } else if (payload.summary) {
+        setLastTool(payload.summary.slice(0, 16));
+      }
+
+      // Build cascade: Claude -> MCP -> relevant stores
+      const sequence = ['sys-claude', 'sys-arrow-claude-mcp', 'sys-mcp'];
+      if (payload.files) {
+        // Add hooks node when tools fire
+        sequence.push('sys-hooks');
+        for (const f of payload.files) {
+          const nodeId = FILE_TO_SYS_NODE[f];
+          if (nodeId) sequence.push(nodeId);
+        }
+        // File watcher picks up the writes
+        sequence.push('sys-filewatcher');
+      }
+      activateSequence(sequence, 120, 4500);
+    });
+    return () => { unlistenPromise.then((fn) => fn()); };
+  }, [activateSequence]);
+
+  // Listen for hw-files-changed
+  useEffect(() => {
+    const unlistenPromise = listen<string[]>('hw-files-changed', (event) => {
+      const fileNodes = event.payload
+        .map((f) => FILE_TO_SYS_NODE[f])
+        .filter(Boolean);
+      activateSequence(['sys-filewatcher', ...fileNodes], 100, 3000);
+    });
+    return () => { unlistenPromise.then((fn) => fn()); };
+  }, [activateSequence]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    const timeouts = timeoutsRef.current;
+    return () => {
+      for (const tid of timeouts.values()) clearTimeout(tid);
+      timeouts.clear();
+    };
+  }, []);
+
+  const a = (id: string) => activeNodes.has(id);
+  const inProgressCount = tasks.filter((t) => t.status === 'in_progress').length;
+
+  return (
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '8px 12px', gap: 6, minWidth: 0, borderLeft: '1px solid #1a1a30' }}>
+      <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: 2, color: '#5a5a72', fontFamily: 'monospace' }}>
+        System Infrastructure
+      </span>
+
+      {/* Row 1: Claude PTY -> Hooks */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+        <FlowNode label="Claude PTY" accent="#818cf8" active={a('sys-claude')} stat="pty" />
+        <FlowArrow direction="right" active={a('sys-arrow-claude-mcp')} />
+        <FlowNode label="Hooks" accent="#10b981" active={a('sys-hooks')} stat={a('sys-hooks') ? 'firing' : 'every msg'} />
+      </div>
+
+      {/* Row 2: MCP Server -> File Watcher */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+        <FlowNode label="MCP Server" accent="#a78bfa" active={a('sys-mcp')} stat={lastTool} />
+        <FlowArrow direction="right" active={a('sys-filewatcher')} />
+        <FlowNode label="File Watcher" accent="#3b82f6" active={a('sys-filewatcher')} stat={a('sys-filewatcher') ? 'changed' : 'watching'} />
+      </div>
+
+      {/* Row 3: stores */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+        <FlowNode label="Tasks" accent="#6366f1" active={a('sys-tasks')} stat={`${inProgressCount} active`} />
+        <FlowNode label="Memory" accent="#f59e0b" active={a('sys-memory')} stat={`${memories.length} stored`} />
+        <FlowNode label="Workflow" accent="#10b981" active={a('sys-workflow')} stat={phase} />
+      </div>
+
+      {/* Row 4: sentinel + approvals */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+        <FlowNode label="Sentinel" accent="#4ade80" active={a('sys-sentinel')} stat="alive" />
+        <FlowNode label="Approvals" accent="#ef4444" active={a('sys-approvals')} stat={`${pendingApprovals} pending`} />
+      </div>
+    </div>
+  );
 }
 
 function formatTime(ts: string): string {
@@ -77,28 +449,18 @@ function SidePanel() {
   const { data: stateData } = useTauriData<StateData>('get_state', projectPath);
   const { data: activityData } = useTauriData<ActivityData>('get_activity', projectPath);
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
-  const { data: sessionsData } = useTauriData<SessionsData>('get_sessions', projectPath);
-
   const tasks = stateData?.tasks ?? [];
   const activeTask = tasks.find((t) => t.status === 'in_progress');
   const todoTasks = tasks.filter((t) => t.status === 'todo');
   const phase = workflowData?.phase ?? 'idle';
   const phaseDot = PHASE_DOT[phase] ?? 'bg-gray-500';
 
-  const activities = activityData?.activities
-    ? [...activityData.activities].reverse().slice(0, 8)
-    : [];
-
-  const allSessions = sessionsData?.sessions ?? [];
-  const recentSessions = [...allSessions].reverse().slice(0, 5);
-  const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
-  const toggleSession = useCallback((id: string) => {
-    setExpandedSessions((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }, []);
+  const activities = useMemo(
+    () => activityData?.activities
+      ? [...activityData.activities].reverse().slice(0, 8)
+      : [],
+    [activityData],
+  );
 
   return (
     <div className="w-64 flex flex-col border-l border-gray-800 bg-[#0d0d14] shrink-0 overflow-hidden">
@@ -140,58 +502,6 @@ function SidePanel() {
         </div>
       )}
 
-      {/* Recent sessions */}
-      {recentSessions.length > 0 && (
-        <div className="px-3 py-3 border-b border-gray-800/60">
-          <p className="text-[9px] uppercase tracking-widest text-gray-600 mb-1.5">Sessions</p>
-          <div className="flex flex-col gap-0.5">
-            {recentSessions.map((s, i) => {
-              const sessionNum = allSessions.length - i;
-              const isActive = !s.endedAt;
-              const isExpanded = expandedSessions.has(s.id);
-              const hasTasks = s.tasksCompleted.length > 0;
-              const duration = formatDuration(s.startedAt, s.endedAt);
-              return (
-                <div key={s.id}>
-                  <button
-                    onClick={() => hasTasks && toggleSession(s.id)}
-                    className={`w-full flex items-center gap-1 text-left py-0.5 ${hasTasks ? 'cursor-pointer' : 'cursor-default'}`}
-                  >
-                    <span className="text-[9px] text-gray-700 shrink-0 w-2">
-                      {hasTasks ? (isExpanded ? '▼' : '▶') : '\u00a0'}
-                    </span>
-                    {isActive && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 animate-pulse" />
-                    )}
-                    <span className="text-[10px] text-gray-500 font-mono shrink-0">
-                      #{sessionNum}
-                    </span>
-                    <span className="text-[10px] text-gray-600 font-mono shrink-0 ml-1">
-                      {formatSessionDate(s.startedAt)}
-                    </span>
-                    <span className="text-[10px] text-gray-700 ml-auto shrink-0 font-mono">
-                      {hasTasks ? `${s.tasksCompleted.length}t` : '\u2014'} · {duration}
-                    </span>
-                  </button>
-                  {isExpanded && hasTasks && (
-                    <div className="ml-3.5 mb-1 flex flex-col gap-0.5 border-l border-gray-800/80 pl-2">
-                      {s.tasksCompleted.map((tid) => {
-                        const task = tasks.find((t) => t.id === tid);
-                        return (
-                          <p key={tid} className="text-[10px] text-gray-500 truncate">
-                            {'\u21b3'} {task ? task.title : tid}
-                          </p>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
       {/* Recent activity */}
       <div className="flex-1 overflow-y-auto px-3 py-3">
         <p className="text-[9px] uppercase tracking-widest text-gray-600 mb-2">Activity</p>
@@ -213,6 +523,97 @@ function SidePanel() {
   );
 }
 
+// Inject CSS once at module scope
+let _cssInjected = false;
+function injectDualFlowCSS() {
+  if (_cssInjected) return;
+  _cssInjected = true;
+  const style = document.createElement('style');
+  style.textContent = DUAL_FLOW_CSS;
+  document.head.appendChild(style);
+}
+
+function BottomPanel({ expanded, onToggle }: { expanded: boolean; onToggle: () => void }) {
+  const projectPath = useProjectPath();
+  const { data: stateData } = useTauriData<StateData>('get_state', projectPath);
+  const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
+  const { data: memoriesData } = useTauriData<MemoriesData>('get_memories', projectPath);
+  const { data: approvalsData } = useTauriData<ApprovalsData>('get_approvals', projectPath);
+
+  const tasks = stateData?.tasks ?? [];
+  const memories = memoriesData?.memories ?? [];
+  const phase = workflowData?.phase ?? 'idle';
+  const pendingApprovals = approvalsData?.pending?.length ?? 0;
+  const painCount = memories.filter((m) => m.type === 'pain').length;
+  const winCount = memories.filter((m) => m.type === 'win').length;
+  const inProgress = tasks.filter((t) => t.status === 'in_progress').length;
+
+  useEffect(() => {
+    injectDualFlowCSS();
+  }, []);
+
+  if (!expanded) {
+    // Compact bar -- clickable to expand
+    return (
+      <button
+        type="button"
+        onClick={onToggle}
+        className="border-t border-gray-800 bg-[#0a0a12] hover:bg-[#0e0e1a] transition-colors shrink-0 w-full"
+        style={{ height: 32, display: 'flex', alignItems: 'center', gap: 12, padding: '0 16px', cursor: 'pointer' }}
+      >
+        <span style={{ fontSize: 8, textTransform: 'uppercase', letterSpacing: 1.5, color: '#5a5a72', fontFamily: 'monospace' }}>
+          Systems
+        </span>
+        {/* Compact node dots */}
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+          {[
+            { label: 'Brain', color: '#00e5ff', stat: `${memories.length}` },
+            { label: 'Pain', color: '#ff2d55', stat: `${painCount}` },
+            { label: 'Wins', color: '#ffb300', stat: `${winCount}` },
+            { label: 'MCP', color: '#a78bfa', stat: phase },
+            { label: 'Tasks', color: '#6366f1', stat: `${inProgress}` },
+            { label: 'Sentinel', color: '#4ade80', stat: '' },
+          ].map((n) => (
+            <div key={n.label} style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+              <span style={{ width: 5, height: 5, borderRadius: '50%', background: n.color, opacity: 0.7, display: 'inline-block' }} />
+              <span style={{ fontSize: 7, color: '#4a4a62', fontFamily: 'monospace' }}>{n.label}</span>
+              {n.stat && <span style={{ fontSize: 7, color: n.color, fontFamily: 'monospace', opacity: 0.5 }}>{n.stat}</span>}
+            </div>
+          ))}
+        </div>
+        <span style={{ marginLeft: 'auto', fontSize: 8, color: '#3a3a52', fontFamily: 'monospace' }}>click to expand</span>
+      </button>
+    );
+  }
+
+  // Expanded view -- full dual flowchart
+  return (
+    <div className="border-t border-gray-800 bg-[#0a0a12] shrink-0" style={{ height: 220, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      {/* Header bar with collapse button */}
+      <button
+        type="button"
+        onClick={onToggle}
+        className="hover:bg-[#0e0e1a] transition-colors shrink-0 w-full border-b border-gray-800/40"
+        style={{ height: 24, display: 'flex', alignItems: 'center', padding: '0 12px', cursor: 'pointer' }}
+      >
+        <span style={{ fontSize: 8, textTransform: 'uppercase', letterSpacing: 1.5, color: '#5a5a72', fontFamily: 'monospace' }}>
+          Systems
+        </span>
+        <span style={{ marginLeft: 'auto', fontSize: 8, color: '#3a3a52', fontFamily: 'monospace' }}>collapse</span>
+      </button>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'row', overflow: 'hidden' }}>
+        <BrainPipeline memories={memories} phase={phase} />
+        <SystemInfrastructure
+          tasks={tasks}
+          memories={memories}
+          phase={phase}
+          pendingApprovals={pendingApprovals}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function TerminalView() {
   const projectPath = useProjectPath();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -222,6 +623,7 @@ export function TerminalView() {
   const [status, setStatus] = useState<'starting' | 'ready' | 'error'>('starting');
   const [error, setError] = useState<string | null>(null);
   const [panelOpen, setPanelOpen] = useState(true);
+  const [systemsExpanded, setSystemsExpanded] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -250,8 +652,8 @@ export function TerminalView() {
         brightWhite: '#ffffff',
       },
       fontFamily: '"Cascadia Code", "Fira Code", "Consolas", monospace',
-      fontSize: 13,
-      lineHeight: 1.4,
+      fontSize: 11,
+      lineHeight: 1.3,
       cursorBlink: true,
       allowProposedApi: true,
     });
@@ -326,14 +728,15 @@ export function TerminalView() {
     };
   }, []);
 
-  // Refit when panel opens/closes
+  // Refit when panel opens/closes or layout changes
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       fitRef.current?.fit();
       const t = termRef.current;
       if (t) invoke('resize_pty', { rows: t.rows, cols: t.cols }).catch(() => {});
     }, 150);
-  }, [panelOpen]);
+    return () => clearTimeout(timer);
+  }, [panelOpen, systemsExpanded]);
 
   return (
     <div className="flex-1 flex flex-col min-h-0">
@@ -367,15 +770,18 @@ export function TerminalView() {
         </div>
       )}
 
-      {/* Terminal + optional side panel */}
-      <div className="flex-1 flex min-h-0">
+      {/* Terminal + side panel -- takes remaining space */}
+      <div className="flex flex-1 min-h-0">
         <div
           ref={containerRef}
-          className="flex-1 min-h-0 min-w-0 p-2 bg-[#0d0d14]"
+          className="flex-1 min-h-0 min-w-0 p-1 bg-[#0d0d14]"
           style={{ overflow: 'hidden' }}
         />
         {panelOpen && <SidePanel />}
       </div>
+
+      {/* Bottom: systems bar (compact) or expanded flowchart */}
+      <BottomPanel expanded={systemsExpanded} onToggle={() => setSystemsExpanded((p) => !p)} />
     </div>
   );
 }

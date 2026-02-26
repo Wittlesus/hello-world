@@ -2,12 +2,7 @@
   "active": [],
   "completed": [
     {
-      "id": "w_rust20260222",
-      "type": "app_shutdown_copy",
-      "label": "Add get_direction, get_watchers, get_timeline to lib.rs",
-      "pid": 94911,
-      "spawnedAt": "2026-02-23T04:22:05.959Z",
-      "status": "completed",
+      "completedAt": "2026-02-23T04:24:55.648Z",
       "config": {
         "copies": [
           {
@@ -18,14 +13,16 @@
         "label": "Add get_direction, get_watchers, get_timeline to lib.rs",
         "timeoutMinutes": 120
       },
-      "completedAt": "2026-02-23T04:24:55.648Z",
-      "resultSummary": "Applied 1/1 file(s)"
+      "id": "w_rust20260222",
+      "label": "Add get_direction, get_watchers, get_timeline to lib.rs",
+      "pid": 94911,
+      "resultSummary": "Applied 1/1 file(s)",
+      "spawnedAt": "2026-02-23T04:22:05.959Z",
+      "status": "completed",
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "w_cc55695a",
-      "type": "app_shutdown_copy",
-      "label": "direction-notes lib.rs + frontend",
-      "pid": 47168,
+      "completedAt": "2026-02-23T04:31:23.709Z",
       "config": {
         "copies": [
           {
@@ -44,16 +41,16 @@
         "label": "direction-notes lib.rs + frontend",
         "timeoutMinutes": 120
       },
+      "id": "w_cc55695a",
+      "label": "direction-notes lib.rs + frontend",
+      "pid": 47168,
+      "resultSummary": "Applied 3/3 file(s)",
       "spawnedAt": "2026-02-23T04:29:35.858Z",
       "status": "completed",
-      "completedAt": "2026-02-23T04:31:23.709Z",
-      "resultSummary": "Applied 3/3 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "w_6fb7d786",
-      "type": "app_shutdown_copy",
-      "label": "watcher names + hook slug",
-      "pid": 53264,
+      "completedAt": "2026-02-23T04:54:24.764Z",
       "config": {
         "copies": [
           {
@@ -72,18 +69,16 @@
         "label": "watcher names + hook slug",
         "timeoutMinutes": 60
       },
+      "id": "w_6fb7d786",
+      "label": "watcher names + hook slug",
+      "pid": 53264,
+      "resultSummary": "Applied 3/3 file(s)",
       "spawnedAt": "2026-02-23T04:53:34.687Z",
       "status": "completed",
-      "completedAt": "2026-02-23T04:54:24.764Z",
-      "resultSummary": "Applied 3/3 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] buddy-merge",
-      "type": "app_shutdown_copy",
-      "label": "claude-buddy merge on shutdown",
-      "pid": 44920,
-      "spawnedAt": "2026-02-23T05:30:00.000Z",
-      "status": "completed",
+      "completedAt": "2026-02-23T08:41:04.459Z",
       "config": {
         "copies": [
           {
@@ -102,14 +97,16 @@
         "label": "claude-buddy merge on shutdown",
         "timeoutMinutes": 120
       },
-      "completedAt": "2026-02-23T08:41:04.459Z",
-      "resultSummary": "Applied 3/3 file(s)"
+      "id": "[copy] buddy-merge",
+      "label": "claude-buddy merge on shutdown",
+      "pid": 44920,
+      "resultSummary": "Applied 3/3 file(s)",
+      "spawnedAt": "2026-02-23T05:30:00.000Z",
+      "status": "completed",
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] sleepy-jackal",
-      "type": "app_shutdown_copy",
-      "label": "loopback-notify merge on shutdown",
-      "pid": 36776,
+      "completedAt": "2026-02-23T09:47:55.863Z",
       "config": {
         "copies": [
           {
@@ -132,16 +129,16 @@
         "label": "loopback-notify merge on shutdown",
         "timeoutMinutes": 120
       },
+      "id": "[copy] sleepy-jackal",
+      "label": "loopback-notify merge on shutdown",
+      "pid": 36776,
+      "resultSummary": "Applied 4/4 file(s)",
       "spawnedAt": "2026-02-23T09:43:59.020Z",
       "status": "completed",
-      "completedAt": "2026-02-23T09:47:55.863Z",
-      "resultSummary": "Applied 4/4 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] rusty-stoat",
-      "type": "app_shutdown_copy",
-      "label": "buddy-pty-feed merge on shutdown",
-      "pid": 30280,
+      "completedAt": "2026-02-23T11:23:10.477Z",
       "config": {
         "copies": [
           {
@@ -156,16 +153,16 @@
         "label": "buddy-pty-feed merge on shutdown",
         "timeoutMinutes": 120
       },
+      "id": "[copy] rusty-stoat",
+      "label": "buddy-pty-feed merge on shutdown",
+      "pid": 30280,
+      "resultSummary": "Applied 2/2 file(s)",
       "spawnedAt": "2026-02-23T11:22:38.423Z",
       "status": "completed",
-      "completedAt": "2026-02-23T11:23:10.477Z",
-      "resultSummary": "Applied 2/2 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] rusty-ibis",
-      "type": "app_shutdown_copy",
-      "label": "[copy] chatroom-rust",
-      "pid": 29700,
+      "completedAt": "2026-02-23T14:49:11.128Z",
       "config": {
         "copies": [
           {
@@ -176,16 +173,16 @@
         "label": "[copy] chatroom-rust",
         "timeoutMinutes": 120
       },
+      "id": "[copy] rusty-ibis",
+      "label": "[copy] chatroom-rust",
+      "pid": 29700,
+      "resultSummary": "Applied 1/1 file(s)",
       "spawnedAt": "2026-02-23T14:47:17.083Z",
       "status": "completed",
-      "completedAt": "2026-02-23T14:49:11.128Z",
-      "resultSummary": "Applied 1/1 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] swift-lemur",
-      "type": "app_shutdown_copy",
-      "label": "split-state-rust",
-      "pid": 28340,
+      "completedAt": "2026-02-25T09:46:25.422Z",
       "config": {
         "copies": [
           {
@@ -196,16 +193,16 @@
         "label": "split-state-rust",
         "timeoutMinutes": 120
       },
+      "id": "[copy] swift-lemur",
+      "label": "split-state-rust",
+      "pid": 28340,
+      "resultSummary": "Applied 1/1 file(s)",
       "spawnedAt": "2026-02-25T09:32:10.244Z",
       "status": "completed",
-      "completedAt": "2026-02-25T09:46:25.422Z",
-      "resultSummary": "Applied 1/1 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] windy-thrush",
-      "type": "app_shutdown_copy",
-      "label": "browser-cors-fix",
-      "pid": 27604,
+      "completedAt": "2026-02-25T12:22:57.917Z",
       "config": {
         "copies": [
           {
@@ -220,16 +217,16 @@
         "label": "browser-cors-fix",
         "timeoutMinutes": 60
       },
+      "id": "[copy] windy-thrush",
+      "label": "browser-cors-fix",
+      "pid": 27604,
+      "resultSummary": "Applied 2/2 file(s)",
       "spawnedAt": "2026-02-25T12:08:49.921Z",
       "status": "completed",
-      "completedAt": "2026-02-25T12:22:57.917Z",
-      "resultSummary": "Applied 2/2 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] jade-otter",
-      "type": "app_shutdown_copy",
-      "label": "fix-state-read",
-      "pid": 16736,
+      "completedAt": "2026-02-25T13:05:59.970Z",
       "config": {
         "copies": [
           {
@@ -240,16 +237,16 @@
         "label": "fix-state-read",
         "timeoutMinutes": 60
       },
+      "id": "[copy] jade-otter",
+      "label": "fix-state-read",
+      "pid": 16736,
+      "resultSummary": "Applied 1/1 file(s)",
       "spawnedAt": "2026-02-25T12:56:30.714Z",
       "status": "completed",
-      "completedAt": "2026-02-25T13:05:59.970Z",
-      "resultSummary": "Applied 1/1 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] rusty-panda",
-      "type": "app_shutdown_copy",
-      "label": "fix-state-split",
-      "pid": 7368,
+      "completedAt": "2026-02-25T14:21:06.775Z",
       "config": {
         "copies": [
           {
@@ -260,16 +257,16 @@
         "label": "fix-state-split",
         "timeoutMinutes": 60
       },
+      "id": "[copy] rusty-panda",
+      "label": "fix-state-split",
+      "pid": 7368,
+      "resultSummary": "Applied 1/1 file(s)",
       "spawnedAt": "2026-02-25T14:20:36.278Z",
       "status": "completed",
-      "completedAt": "2026-02-25T14:21:06.775Z",
-      "resultSummary": "Applied 1/1 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] lunar-cobra",
-      "type": "app_shutdown_copy",
-      "label": "browser-loopback-routing",
-      "pid": 19392,
+      "completedAt": "2026-02-25T14:37:30.180Z",
       "config": {
         "copies": [
           {
@@ -296,16 +293,16 @@
         "label": "browser-loopback-routing",
         "timeoutMinutes": 60
       },
+      "id": "[copy] lunar-cobra",
+      "label": "browser-loopback-routing",
+      "pid": 19392,
+      "resultSummary": "Applied 5/5 file(s)",
       "spawnedAt": "2026-02-25T14:33:33.052Z",
       "status": "completed",
-      "completedAt": "2026-02-25T14:37:30.180Z",
-      "resultSummary": "Applied 5/5 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] pale-lemur",
-      "type": "app_shutdown_copy",
-      "label": "browser-extract-fix",
-      "pid": 27860,
+      "completedAt": "2026-02-25T15:01:02.002Z",
       "config": {
         "copies": [
           {
@@ -324,16 +321,16 @@
         "label": "browser-extract-fix",
         "timeoutMinutes": 120
       },
+      "id": "[copy] pale-lemur",
+      "label": "browser-extract-fix",
+      "pid": 27860,
+      "resultSummary": "Applied 3/3 file(s)",
       "spawnedAt": "2026-02-25T14:48:30.171Z",
       "status": "completed",
-      "completedAt": "2026-02-25T15:01:02.002Z",
-      "resultSummary": "Applied 3/3 file(s)"
+      "type": "app_shutdown_copy"
     },
     {
-      "id": "[copy] noble-cobra",
-      "type": "app_shutdown_copy",
-      "label": "embed-browser",
-      "pid": 24384,
+      "completedAt": "2026-02-25T15:57:19.914Z",
       "config": {
         "copies": [
           {
@@ -360,10 +357,62 @@
         "label": "embed-browser",
         "timeoutMinutes": 60
       },
+      "id": "[copy] noble-cobra",
+      "label": "embed-browser",
+      "pid": 24384,
+      "resultSummary": "Applied 5/5 file(s)",
       "spawnedAt": "2026-02-25T15:53:34.247Z",
       "status": "completed",
-      "completedAt": "2026-02-25T15:57:19.914Z",
-      "resultSummary": "Applied 5/5 file(s)"
+      "type": "app_shutdown_copy"
+    },
+    {
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/overdrive-visuals/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/overdrive-visuals/packages/app/src/components/BuddyOverlay.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/BuddyOverlay.tsx"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/overdrive-visuals/packages/app/src/components/Sidebar.tsx",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/components/Sidebar.tsx"
+          },
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/overdrive-visuals/packages/app/src/hooks/useTauriData.ts",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src/hooks/useTauriData.ts"
+          }
+        ],
+        "label": "overdrive-visuals",
+        "timeoutMinutes": 60
+      },
+      "id": "[copy] jade-gecko",
+      "label": "overdrive-visuals",
+      "pid": 29068,
+      "spawnedAt": "2026-02-26T05:07:35.704Z",
+      "status": "killed",
+      "type": "app_shutdown_copy"
+    },
+    {
+      "id": "[copy] lunar-heron",
+      "type": "app_shutdown_copy",
+      "label": "clean-shutdown",
+      "pid": 29060,
+      "config": {
+        "copies": [
+          {
+            "from": "C:/Users/Patri/CascadeProjects/hello-world/.claude/worktrees/clean-shutdown/packages/app/src-tauri/src/lib.rs",
+            "to": "C:/Users/Patri/CascadeProjects/hello-world/packages/app/src-tauri/src/lib.rs"
+          }
+        ],
+        "label": "clean-shutdown",
+        "timeoutMinutes": 60
+      },
+      "spawnedAt": "2026-02-26T05:42:58.359Z",
+      "status": "killed",
+      "completedAt": "2026-02-26T05:44:05.118Z"
     }
   ]
 }

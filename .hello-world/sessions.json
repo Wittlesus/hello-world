@@ -491,6 +491,26 @@
       "tasksCompleted": [],
       "decisionsMade": [],
       "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-26T04:25:38.600Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_06112d9b",
+      "startedAt": "2026-02-26T04:25:38.600Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-26T05:30:24.776Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_d66d73f3",
+      "startedAt": "2026-02-26T05:30:24.776Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
       "tokensUsed": 0
     }
   ]

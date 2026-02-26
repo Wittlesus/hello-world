@@ -158,6 +158,7 @@ const directions = Array.isArray(directionRaw)
   : (directionRaw ?? { vision: '', scope: [], notes: [] });
 const pendingChanges = safeRead('pending-changes.json');
 const crashReport = safeRead('crash-report.json');
+const crashMarker = safeRead('crash-marker.json');
 const activeState = safeReadText(join(MEMORY_DIR, 'active-state.md'));
 
 // Read split state files (B+ storage)
@@ -234,6 +235,28 @@ if (crashReport?.appliedCopies?.length > 0) {
       lines.push(`ATTENTION: Some copies failed -- check .hello-world/watcher-results.json`);
     lines.push('');
   }
+}
+
+// Crash marker -- sentinel detected app exit/crash
+if (crashMarker && !crashMarker.recovered) {
+  const crashAge = Date.now() - new Date(crashMarker.detectedAt).getTime();
+  if (crashAge < 24 * 60 * 60 * 1000) {
+    if (crashMarker.wasCrash) {
+      lines.push(`## CRASH DETECTED`);
+      lines.push(`The sentinel detected the app crashed at ${crashMarker.detectedAt}.`);
+      lines.push(`State files were backed up to .hello-world/crash-backup/.`);
+      lines.push(`The previous session was NOT cleanly ended. Check for data loss.`);
+    } else {
+      lines.push(`## CLEAN EXIT DETECTED`);
+      lines.push(`App exited cleanly at ${crashMarker.detectedAt}. State backed up.`);
+    }
+    lines.push('');
+  }
+  // Mark as recovered so we don't show this again
+  try {
+    crashMarker.recovered = true;
+    writeFileSync(join(HW, 'crash-marker.json'), JSON.stringify(crashMarker, null, 2));
+  } catch { /* best effort */ }
 }
 
 // Pending Rust changes

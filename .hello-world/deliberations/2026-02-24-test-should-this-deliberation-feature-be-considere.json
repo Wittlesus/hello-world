@@ -1,0 +1,94 @@
+{
+  "session": {
+    "id": "chat_e3826d55",
+    "topic": "Test: should this deliberation feature be considered working?",
+    "status": "active",
+    "startedAt": "2026-02-24T05:18:38.422Z",
+    "startedBy": "claude",
+    "waitingForInput": false,
+    "roundNumber": 1,
+    "deliberationPhase": "frame"
+  },
+  "agents": [
+    {
+      "id": "contrarian",
+      "name": "Contrarian",
+      "color": "#f87171",
+      "status": "thinking",
+      "currentThought": "..."
+    },
+    {
+      "id": "premortem",
+      "name": "Pre-mortem",
+      "color": "#fb923c",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "firstprinciples",
+      "name": "First Principles",
+      "color": "#818cf8",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "steelman",
+      "name": "Steelman",
+      "color": "#4ade80",
+      "status": "idle",
+      "currentThought": ""
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg_942b43f4",
+      "agentId": "system",
+      "text": "Deliberation started: \"Test: should this deliberation feature be considered working?\"",
+      "timestamp": "2026-02-24T05:18:38.422Z",
+      "type": "system"
+    },
+    {
+      "id": "msg_bd61468d",
+      "agentId": "claude",
+      "text": "Starting deliberation: \"Test: should this deliberation feature be considered working?\". Bringing in the panel.",
+      "timestamp": "2026-02-24T05:18:38.424Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_6df22d5f",
+      "agentId": "claude",
+      "text": "Contrarian: challenges everything that seems obvious. If the room is converging, they find the real objection — the one that actually matters.",
+      "timestamp": "2026-02-24T05:18:41.945Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_6477d414",
+      "agentId": "claude",
+      "text": "Pre-mortem: already watched this fail. They trace back from the wreckage to the exact decision that caused it.",
+      "timestamp": "2026-02-24T05:18:45.476Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_c799a4ae",
+      "agentId": "claude",
+      "text": "First Principles: strips convention away and rebuilds from what is actually true. No inherited assumptions.",
+      "timestamp": "2026-02-24T05:18:48.993Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_f5ca8d23",
+      "agentId": "claude",
+      "text": "Steelman: makes the strongest possible case for whatever the room dismissed. No idea dies without a fair hearing.",
+      "timestamp": "2026-02-24T05:18:52.530Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_694099fe",
+      "agentId": "claude",
+      "text": "Panel assembled. Round 1 — what does each of you make of this?",
+      "timestamp": "2026-02-24T05:18:55.346Z",
+      "type": "claude"
+    }
+  ],
+  "reactions": []
+}

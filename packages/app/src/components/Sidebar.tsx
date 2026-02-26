@@ -1,4 +1,6 @@
+import { invoke } from '@tauri-apps/api/core';
 import { Brain, CheckSquare, HelpCircle, Settings } from 'lucide-react';
+import { useCallback } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useAppStore, type View } from '../stores/app.js';
@@ -120,16 +122,27 @@ interface SidebarProps {
   onShowHelp?: () => void;
 }
 
+interface ModeData {
+  overdrive?: boolean;
+}
+
 export function Sidebar({ onShowHelp }: SidebarProps) {
   const { activeView, setView, projectName, sidebarCollapsed, toggleSidebar } = useAppStore();
   const projectPath = useProjectPath();
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
+  const { data: modeData } = useTauriData<ModeData>('get_mode', projectPath);
 
   const phase = workflowData?.phase ?? 'idle';
   const strikes = workflowData?.strikes ?? 0;
-  const phaseColor = PHASE_COLOR[phase] ?? 'text-gray-400';
-  const phaseDot = PHASE_DOT[phase] ?? 'bg-gray-500';
+  const isOverdrive = modeData?.overdrive === true;
+  const phaseColor = isOverdrive ? 'text-amber-400' : (PHASE_COLOR[phase] ?? 'text-gray-400');
+  const phaseDot = isOverdrive ? 'bg-amber-400' : (PHASE_DOT[phase] ?? 'bg-gray-500');
   const activeSection = getSection(activeView);
+
+  const toggleOverdrive = useCallback(() => {
+    if (!projectPath) return;
+    invoke('set_mode', { projectPath, overdrive: !isOverdrive }).catch(() => {});
+  }, [projectPath, isOverdrive]);
 
   return (
     <aside
@@ -196,27 +209,38 @@ export function Sidebar({ onShowHelp }: SidebarProps) {
         })}
       </nav>
 
-      {/* Phase indicator */}
-      <div className="border-t border-gray-800/60 px-3 py-2 shrink-0">
+      {/* Phase indicator + overdrive toggle */}
+      <button
+        type="button"
+        onClick={toggleOverdrive}
+        title={isOverdrive ? 'Click to disable overdrive' : 'Click to enable overdrive'}
+        className={`border-t px-3 py-2 shrink-0 w-full text-left transition-colors ${isOverdrive ? 'border-amber-900/40 bg-amber-950/20 hover:bg-amber-950/30' : 'border-gray-800/60 hover:bg-white/[0.02]'}`}
+      >
         {sidebarCollapsed ? (
           <div
             className="flex justify-center"
-            title={`Phase: ${phase}${strikes > 0 ? ` (${strikes}/2 strikes)` : ''}`}
+            title={isOverdrive ? 'OVERDRIVE (click to toggle)' : `Phase: ${phase} (click for overdrive)`}
           >
-            <span className={`w-2 h-2 rounded-full ${phaseDot}`} />
+            <span className={`w-2 h-2 rounded-full ${phaseDot} ${isOverdrive ? 'animate-pulse' : ''}`} />
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${phaseDot}`} />
-            <span className={`text-[10px] font-mono uppercase tracking-wider ${phaseColor}`}>
-              {phase}
-            </span>
+            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${phaseDot} ${isOverdrive ? 'animate-pulse' : ''}`} />
+            {isOverdrive ? (
+              <span className="text-[10px] font-mono uppercase tracking-wider text-amber-400">
+                overdrive
+              </span>
+            ) : (
+              <span className={`text-[10px] font-mono uppercase tracking-wider ${phaseColor}`}>
+                {phase}
+              </span>
+            )}
             {strikes > 0 && (
               <span className="ml-auto text-[10px] text-yellow-500">{strikes}/2</span>
             )}
           </div>
         )}
-      </div>
+      </button>
 
       {/* Help + collapse */}
       {onShowHelp && (

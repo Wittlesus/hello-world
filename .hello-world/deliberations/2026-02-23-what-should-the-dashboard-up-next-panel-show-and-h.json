@@ -1,0 +1,113 @@
+{
+  "session": {
+    "id": "chat_5a601c4a",
+    "topic": "What should the Dashboard UP NEXT panel show and how should it work?",
+    "status": "paused",
+    "startedAt": "2026-02-23T15:36:24.461Z",
+    "startedBy": "claude",
+    "waitingForInput": true,
+    "roundNumber": 0
+  },
+  "agents": [
+    {
+      "id": "contrarian",
+      "name": "Contrarian",
+      "color": "#f87171",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "premortem",
+      "name": "Pre-mortem",
+      "color": "#fb923c",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "firstprinciples",
+      "name": "First Principles",
+      "color": "#818cf8",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "steelman",
+      "name": "Steelman",
+      "color": "#4ade80",
+      "status": "idle",
+      "currentThought": ""
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg_08878392",
+      "agentId": "system",
+      "text": "Deliberation started: \"What should the Dashboard UP NEXT panel show and how should it work?\"",
+      "timestamp": "2026-02-23T15:36:24.461Z",
+      "type": "system"
+    },
+    {
+      "id": "msg_9b82d462",
+      "agentId": "claude",
+      "text": "The UP NEXT panel is meant to show Pat what's coming. Right now it pulls from pending tasks. Question is: should it be smarter than that — priority-ranked, phase-aware, something else entirely?",
+      "timestamp": "2026-02-23T15:36:32.581Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_b31649ff",
+      "agentId": "firstprinciples",
+      "text": "What does Pat actually need from this panel? He needs to know what Claude will do next without asking. So UP NEXT = the single most actionable item right now — workflow step if active, else next unblocked task.",
+      "timestamp": "2026-02-23T15:36:41.176Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_33619087",
+      "agentId": "contrarian",
+      "text": "Showing one item is too narrow. Pat needs enough context to redirect Claude if it's heading somewhere wrong. One item and he can't tell if Claude's about to do something dumb.",
+      "timestamp": "2026-02-23T15:36:45.599Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_91b90047",
+      "agentId": "firstprinciples",
+      "text": "Fair. Show the active step prominently, then 2-3 queued items below it. Hierarchy matters — Pat's eye should land on \"what's happening now\" first, not a flat list.",
+      "timestamp": "2026-02-23T15:36:49.513Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_e6d2d186",
+      "agentId": "premortem",
+      "text": "Risk: if UP NEXT is phase-driven, a stalled workflow phase makes the panel useless — it shows \"verify\" forever while 5 real tasks pile up. Need a fallback when the workflow is stuck.",
+      "timestamp": "2026-02-23T15:36:52.891Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_8ddf6952",
+      "agentId": "steelman",
+      "text": "Premortem's right, but that's an argument for smarter logic not less ambition. Active workflow step at top, then next unblocked tasks ranked by priority. Stalled phase gets a \"blocked — reason\" indicator instead of hiding it.",
+      "timestamp": "2026-02-23T15:36:56.430Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_b0fa931b",
+      "agentId": "contrarian",
+      "text": "Who sets priority? If it's just task creation order we're back to where we started. This only works if tasks have explicit priority or the phase logic is airtight.",
+      "timestamp": "2026-02-23T15:37:01.354Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_f43f32e7",
+      "agentId": "premortem",
+      "text": "Tasks don't have priority fields right now. Adding that is scope creep — do we ship a dumb panel now or block on a priority system first?",
+      "timestamp": "2026-02-23T15:37:04.291Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_37ae5292",
+      "agentId": "firstprinciples",
+      "text": "Ship the phase-aware logic now, use task creation order as a stand-in for priority. Add explicit priority later when it's actually needed. Don't block.",
+      "timestamp": "2026-02-23T15:37:07.264Z",
+      "type": "message"
+    }
+  ]
+}

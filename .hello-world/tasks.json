@@ -994,6 +994,126 @@
       "dependsOn": [],
       "createdAt": "2026-02-26T04:03:37.980Z",
       "updatedAt": "2026-02-26T04:04:36.921Z"
+    },
+    {
+      "id": "t_4ca8cab7",
+      "title": "Implement Overdrive + Bypass mode toggle",
+      "description": "Add a toggleable \"Overdrive\" mode. When ON, UserPromptSubmit hook injects instructions encouraging: (1) liberal parallel agent usage, (2) thoroughness over token conservation, (3) deep research before implementation, (4) team-based execution with multiple agents per task. Toggle via: slash command in Claude Code, app UI button, or direct file edit. Storage: .hello-world/mode.json with { \"overdrive\": true/false }. Hook reads this and prepends mode instructions to the status line. Pat's words: \"intelligently designed agents and teams, thorough and precise, don't worry about token or usage.\"",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:14:36.174Z",
+      "updatedAt": "2026-02-26T04:14:36.174Z"
+    },
+    {
+      "id": "t_ab93a68e",
+      "title": "Questions: in-app answer flow (no MCP needed)",
+      "description": "Pat can't answer questions from the app UI -- has to go through Claude/MCP which is backwards. Fix: (1) Add answer text input + Answer button to QuestionsView.tsx. (2) Add Rust command answer_question(project_path, question_id, answer_text) that writes to questions.json. (3) On next session start, SessionStart hook detects newly answered questions and surfaces them so Claude can route (to task, decision, scope, or dismiss). (4) BONUS: Discord listener should also handle question answers -- Pat replies to a question DM, listener writes the answer. The key insight: Pat ANSWERS, Claude ROUTES. No Claude needed for the answering step.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:20:39.328Z",
+      "updatedAt": "2026-02-26T04:20:39.328Z"
+    },
+    {
+      "id": "t_0f1cf64b",
+      "title": "Overdrive + Bypass mode toggle",
+      "description": "Add a toggleable mode Pat can cycle Claude into that encourages liberal use of parallel agents, thoroughness over token conservation. When ON, Claude prioritizes parallel agent swarms, deep research, and comprehensive execution. When OFF, normal cost-conscious behavior. Implementation: flag in .hello-world/ that the UserPromptSubmit hook reads and injects mode-specific instructions.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:26:42.948Z",
+      "updatedAt": "2026-02-26T04:32:00.391Z"
+    },
+    {
+      "id": "t_f7899ace",
+      "title": "Questions: in-app answer flow (no MCP needed)",
+      "description": "Pat can't answer questions from the app. Need: text input + Answer button in QuestionsView.tsx, Rust command answer_question(project_path, question_id, answer_text) that writes to questions.json, SessionStart hook detects newly answered questions and surfaces them for routing. Principle: Pat acts, Claude routes. No Claude in the loop for ANSWERING, only for ROUTING after. Bonus: Discord reply-to-DM also routes answers.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:26:48.043Z",
+      "updatedAt": "2026-02-26T04:26:48.043Z"
+    },
+    {
+      "id": "t_87a8735d",
+      "title": "App loading screen or faster startup",
+      "description": "The app shows a blank white screen while loading, making it impossible to tell if it's broken or just slow. Either: (1) reduce load times so the white screen is negligible, or (2) add a loading/splash screen with the Hello World branding so the user knows the app is starting up and not stuck. Investigate what's causing the slow load -- could be heavy JS bundle, synchronous state reads, or Rust init. A Tauri splash screen (native window) or an inline HTML loading indicator in index.html (before React mounts) are both viable approaches.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:26:52.470Z",
+      "updatedAt": "2026-02-26T04:26:52.470Z"
+    },
+    {
+      "id": "t_e60b91e0",
+      "title": "Design and implement subagent team strategy",
+      "description": "Design a comprehensive team strategy where specialized subagent teams work together on different aspects of the Hello World project. Teams: Red Team (security, exploit finding, adversarial testing), Dev Team (feature implementation, code quality), UX Team (user personas of varying skill levels), Strategy Team (tech CEO perspectives, product direction), Security Team (audit, hardening), QA Team (testing, edge cases). Each team needs: defined roles, coordination patterns, when to spawn, how results feed back. Pat wants liberal agent usage -- no token conservation.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:32:08.982Z",
+      "updatedAt": "2026-02-26T04:32:13.174Z"
+    },
+    {
+      "id": "t_8b568003",
+      "title": "Crash-safety sentinel: buddy-spawned hidden process that survives crashes",
+      "description": "Redesign the watcher system as a persistent crash-safety sentinel. Buddy spawns a hidden Node.js process (windowsHide: true) on startup that polls the Tauri PID. On app death (crash or clean exit), sentinel runs recovery: backup state files, write crash-marker.json, preserve activity log. Buddy shows a shield indicator (lit=polling, dark=inactive). If sentinel dies, buddy respawns it. Replaces the per-task app_shutdown_copy pattern. Needs: (1) Rust command in lib.rs to spawn hidden process and report app PID, (2) sentinel.mjs script that polls and runs recovery, (3) BuddyOverlay shield indicator with health check, (4) SessionStart hook reads crash-marker.json on next boot.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T05:18:46.800Z",
+      "updatedAt": "2026-02-26T05:20:55.293Z"
+    },
+    {
+      "id": "t_c7ac2792",
+      "title": "Fix clean shutdown: write endedAt to sessions.json on window close",
+      "description": "The sentinel always thinks window-close is a crash because no code writes endedAt to sessions.json before the process exits. Fix: intercept CloseRequested in Rust, read sessions.json, stamp endedAt on the latest session, write back. Then sentinel correctly distinguishes crash vs clean exit.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T05:39:29.674Z",
+      "updatedAt": "2026-02-26T05:43:12.323Z"
+    },
+    {
+      "id": "t_184712e1",
+      "title": "Terminal dash: replace sessions panel with brain model visualization",
+      "description": "Remove the sessions list from the terminal dashboard panel. Replace it with a working brain model visualization (similar to one built previously). Shows memory activity, connections, active state.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T05:46:57.147Z",
+      "updatedAt": "2026-02-26T05:52:28.385Z"
+    },
+    {
+      "id": "t_30fef69f",
+      "title": "Buddy avatar gallery: 6 agents each design a unique buddy with animations",
+      "description": "Spawn 6 creative agents, each given BuddyOverlay.tsx as a template. Each designs a completely unique buddy avatar with its own personality, look, and animations. They can take screenshots and iterate in real time. Build a gallery/selector so Pat can switch between buddy designs.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T05:46:59.547Z",
+      "updatedAt": "2026-02-26T05:46:59.547Z"
+    },
+    {
+      "id": "t_d5477c56",
+      "title": "Buddy overdrive: change from circle to glow effect",
+      "description": "Current overdrive visual is a circular aura (box-shadow rings). Change to a more subtle ambient glow effect instead. Should look like the buddy is radiating energy, not surrounded by rings.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T05:47:01.333Z",
+      "updatedAt": "2026-02-26T05:48:17.557Z"
+    },
+    {
+      "id": "t_17b7a105",
+      "title": "Questions tab: make it constructive and allow answering questions",
+      "description": "Two issues: (1) Questions tab needs a more constructive purpose beyond just listing questions. (2) Can't actually answer questions from the app UI -- the answer flow needs to work end-to-end. Fix the answer panel, wire up the MCP call, make the tab useful.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T05:47:04.066Z",
+      "updatedAt": "2026-02-26T05:52:28.096Z"
     }
   ],
   "milestones": []

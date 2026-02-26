@@ -63,6 +63,13 @@
       "context": "Three tasks tagged [DELIBERATE]: (1) Memory quality feedback loop (t_e215a18e), (2) Knowledge intake scheduling (t_fee42a1a), (3) State storage JSON vs SQLite (t_f2d9ad7d). State storage was already decided (d_a9d3b3d7: split files + atomic writes, defer SQLite). Memory quality and knowledge intake could be implemented with a lightweight design pass instead of full deliberation, since the system is already functional and iterating fast. Full deliberation adds overhead (plan + approval + agents + coverage + conclude). Trade-off: thoroughness vs. velocity.",
       "status": "open",
       "createdAt": "2026-02-26T03:53:05.276Z"
+    },
+    {
+      "id": "q_18abb1df",
+      "question": "Is the staggered cascade animation visible and smooth in the bottom panel?",
+      "context": "Testing the dual flowchart visualization in session 47",
+      "status": "open",
+      "createdAt": "2026-02-26T07:56:16.310Z"
     }
   ]
 }

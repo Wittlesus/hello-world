@@ -225,6 +225,29 @@
       "rationale": "Subagents are production-ready and cover our needs. Agent Teams adds inter-agent messaging and shared task lists, but instability on Windows and no split-pane support make it impractical. Will re-evaluate when it exits experimental.",
       "decidedAt": "2026-02-26T03:45:24.057Z",
       "decidedBy": "claude"
+    },
+    {
+      "id": "d_814e624f",
+      "title": "Watcher system: repurpose from per-task file copies to persistent crash-safety sentinel",
+      "context": "The watcher system (hw_spawn_watcher, app_shutdown_copy type) was used for merging worktree Rust changes on app exit. Pat flagged watchers as more trouble than worth for that use case (terminal flashing, per-task overhead). Discussion revealed the real value: crash recovery. A detached process that survives app crashes can backup state, write crash markers, and enable graceful recovery.",
+      "chosen": "Redesign watchers as a single persistent crash-safety sentinel spawned by buddy on startup. Hidden process (no console window), polls Tauri PID, runs recovery on crash/exit. Visual indicator on buddy shows sentinel health. Replaces dozens of per-task throwaway watchers with one always-on guardian.",
+      "alternatives": [
+        {
+          "option": "Remove watchers entirely",
+          "tradeoff": "Lose crash recovery capability -- no process survives a Tauri crash"
+        },
+        {
+          "option": "Keep per-task watchers as-is",
+          "tradeoff": "Terminal flashing, overhead, Pat already rejected this"
+        },
+        {
+          "option": "Make buddy a separate executable",
+          "tradeoff": "Architecturally cleaner but massive effort, separate build pipeline"
+        }
+      ],
+      "rationale": "The sentinel survives crashes (detached process), is invisible to the user (windowsHide), and provides crash recovery that no in-process hook can offer. Buddy is the natural owner since it's the persistent visual element. For worktree Rust merges, manual file copy is simpler and more reliable.",
+      "decidedAt": "2026-02-26T05:18:58.790Z",
+      "decidedBy": "both"
     }
   ]
 }
