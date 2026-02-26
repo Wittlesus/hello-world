@@ -239,14 +239,16 @@ describe('Brain State', () => {
     let state = initBrainState(null);
     state = recordSynapticActivity(state, ['git']);
     state = recordMemoryTraces(state, ['mem_1']);
-    state = tickMessageCount(state);
+    // Boost mem_1 so it has non-neutral strength and survives pruning
+    const { state: boosted } = applySynapticPlasticity(state, 0.5);
+    state = tickMessageCount(boosted);
 
     // Re-init (new session)
     const newState = initBrainState(state);
     expect(newState.messageCount).toBe(0);
     expect(newState.firingFrequency).toEqual({});
     expect(newState.activeTraces).toHaveLength(0);
-    // Cross-session data preserved
+    // Cross-session data preserved (non-neutral traces survive pruning)
     expect(newState.synapticActivity['git'].count).toBe(1);
     expect(newState.memoryTraces['mem_1']).toBeDefined();
   });

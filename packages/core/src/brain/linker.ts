@@ -9,6 +9,7 @@
  */
 
 import type { Memory } from '../types.js';
+import { STOP_WORDS } from './stop-words.js';
 
 // ── Link Types and Weights ─────────────────────────────────────
 
@@ -62,18 +63,6 @@ export interface TraversedMemory {
 /** Extract meaningful keywords from text. Strips noise words and
  *  returns lowercased tokens of 3+ characters. */
 function extractKeywords(text: string): Set<string> {
-  const STOP_WORDS = new Set([
-    'the', 'and', 'for', 'that', 'this', 'with', 'from', 'are', 'was',
-    'were', 'been', 'have', 'has', 'had', 'not', 'but', 'all', 'can',
-    'her', 'his', 'its', 'our', 'they', 'them', 'who', 'will', 'would',
-    'could', 'should', 'may', 'might', 'shall', 'each', 'every', 'any',
-    'some', 'when', 'where', 'how', 'what', 'which', 'there', 'then',
-    'than', 'also', 'just', 'about', 'into', 'over', 'after', 'before',
-    'more', 'most', 'other', 'only', 'very', 'such', 'like', 'does',
-    'did', 'doing', 'done', 'being', 'because', 'through', 'between',
-    'use', 'used', 'using',
-  ]);
-
   const matches = text.toLowerCase().match(/\b[\w][\w.-]*\b/g);
   if (!matches) return new Set();
 

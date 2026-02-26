@@ -8,6 +8,7 @@
  */
 
 import type { Memory, MemoryType } from '../types.js';
+import { STOP_WORDS } from './stop-words.js';
 
 // ── Types ──────────────────────────────────────────────────────────
 
@@ -55,23 +56,6 @@ export interface QualityGateOptions {
   /** Auto-resolve conflicts instead of just flagging them. Default: false */
   autoResolve?: boolean;
 }
-
-// ── Stop words (excluded from fingerprinting and similarity) ─────
-
-const STOP_WORDS = new Set([
-  'the', 'a', 'an', 'is', 'was', 'are', 'were', 'be', 'been', 'being',
-  'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could',
-  'should', 'may', 'might', 'can', 'shall', 'to', 'of', 'in', 'for',
-  'on', 'with', 'at', 'by', 'from', 'as', 'into', 'through', 'during',
-  'before', 'after', 'above', 'below', 'between', 'out', 'off', 'over',
-  'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when',
-  'where', 'why', 'how', 'all', 'each', 'every', 'both', 'few', 'more',
-  'most', 'other', 'some', 'such', 'no', 'not', 'only', 'own', 'same',
-  'so', 'than', 'too', 'very', 'just', 'because', 'but', 'and', 'or',
-  'if', 'while', 'about', 'up', 'that', 'this', 'it', 'its', 'i', 'we',
-  'they', 'them', 'he', 'she', 'you', 'me', 'my', 'your', 'our', 'their',
-  'what', 'which', 'who', 'whom',
-]);
 
 // ── Helpers ─────────────────────────────────────────────────────────
 

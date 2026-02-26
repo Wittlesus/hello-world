@@ -242,8 +242,9 @@ export function retrieveMemories(
 
   // Pre-filter: binary gate -- remove truly stale memories before pattern recognition
   // scoreMemory is NOT also used as post-multiply (removed to avoid compound penalty)
+  const nowMs = Date.now();
   const viable = memories.filter(m =>
-    scoreMemory({ ...m, failureCorrelations: (m as Record<string, unknown>).failureCorrelations as number ?? 0 }) >= 0.15,
+    scoreMemory({ ...m, failureCorrelations: 0 }, nowMs) >= 0.15,
   );
   const viableMap = new Map(viable.map(m => [m.id, m]));
 
@@ -308,12 +309,17 @@ export function retrieveMemories(
   // Stage 5.5: Link traversal via linker module
   const directIds = new Set(Object.keys(chained.scores));
   const scoredIdMap = new Map(Object.entries(weighted));
-  const linkResult = traverseLinksForRetrieval(scoredIdMap, viableMap);
-  const linkTraversalCount = linkResult.traversalCount;
-  for (const [id, score] of linkResult.additionalScores) {
-    weighted[id] = Math.max(weighted[id] ?? 0, score);
-    const target = viableMap.get(id);
-    if (target) for (const tag of target.tags) chained.matchedTags.add(tag);
+  let linkTraversalCount = 0;
+  try {
+    const linkResult = traverseLinksForRetrieval(scoredIdMap, viableMap);
+    linkTraversalCount = linkResult.traversalCount;
+    for (const [id, score] of linkResult.additionalScores) {
+      weighted[id] = Math.max(weighted[id] ?? 0, score);
+      const target = viableMap.get(id);
+      if (target) for (const tag of target.tags) chained.matchedTags.add(tag);
+    }
+  } catch {
+    linkTraversalCount = 0;
   }
 
   // Stage 7: Rank and select

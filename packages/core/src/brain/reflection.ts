@@ -13,6 +13,8 @@
 
 import type { Memory, BrainState, MemorySeverity } from '../types.js';
 import type { ScoredMemory } from './types.js';
+import { computeFingerprint } from './quality-gate.js';
+import { STOP_WORDS } from './stop-words.js';
 
 // ── Reflection Subtypes ─────────────────────────────────────────
 
@@ -92,23 +94,6 @@ const OUTCOME_VALUE: Record<string, number> = {
   failure: 0.0,
 };
 
-// ── Fingerprint helper ──────────────────────────────────────────
-
-/**
- * Generate a 12-char content fingerprint for dedup.
- * Uses a simple but effective hash: DJB2 on the normalized text.
- */
-function fingerprint(text: string): string {
-  const normalized = text.toLowerCase().replace(/\s+/g, ' ').trim();
-  let hash = 5381;
-  for (let i = 0; i < normalized.length; i++) {
-    hash = ((hash << 5) + hash + normalized.charCodeAt(i)) & 0xffffffff;
-  }
-  // Convert to base36 and pad/truncate to 12 chars
-  const base36 = Math.abs(hash).toString(36);
-  return base36.padStart(12, '0').slice(0, 12);
-}
-
 // ── Quality score for reflections ───────────────────────────────
 
 /**
@@ -175,7 +160,8 @@ export function createReflection(
   const tags = buildReflectionTags(content);
   const quality = computeQualityScore(content);
   const severity = reflectionSeverity(content);
-  const fp = fingerprint(content.summary + content.detail);
+  const title = `[${content.kind}] ${content.summary}`;
+  const fp = computeFingerprint({ title, content: content.detail });
 
   // Build the rule string from the reflection
   let rule = '';
@@ -198,7 +184,7 @@ export function createReflection(
 
   return {
     type: 'reflection',
-    title: `[${content.kind}] ${content.summary}`,
+    title,
     content: content.detail,
     rule,
     tags,
@@ -238,13 +224,6 @@ function buildReflectionTags(content: ReflectionContent): string[] {
   const words = content.summary
     .toLowerCase()
     .match(/\b[\w][\w.-]*\b/g) ?? [];
-  const STOP_WORDS = new Set([
-    'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'has',
-    'was', 'one', 'our', 'out', 'this', 'that', 'with', 'have', 'from',
-    'been', 'will', 'into', 'when', 'what', 'than', 'more', 'some', 'very',
-    'about', 'which', 'their', 'would', 'there', 'these', 'other', 'could',
-    'should', 'being', 'after', 'between', 'while', 'same', 'each', 'also',
-  ]);
   for (const word of words) {
     if (word.length > 4 && !STOP_WORDS.has(word)) {
       tags.add(word);
@@ -860,6 +839,7 @@ export function isDuplicateReflection(
   newContent: ReflectionContent,
   existingReflections: Memory[],
 ): boolean {
-  const newFp = fingerprint(newContent.summary + newContent.detail);
+  const title = `[${newContent.kind}] ${newContent.summary}`;
+  const newFp = computeFingerprint({ title, content: newContent.detail });
   return existingReflections.some(m => m.fingerprint === newFp);
 }

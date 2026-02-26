@@ -30,6 +30,10 @@ export function initBrainState(existing: BrainState | null): BrainState {
         significantEventsSinceCheckpoint: 0,
       };
 
+  // Prune carried-over maps to prevent unbounded growth
+  const prunedTraces = pruneMemoryTraces(base.memoryTraces);
+  const prunedActivity = pruneSynapticActivity(base.synapticActivity);
+
   return {
     ...base,
     sessionStart: now(),
@@ -37,7 +41,59 @@ export function initBrainState(existing: BrainState | null): BrainState {
     contextPhase: 'early',
     firingFrequency: {},
     activeTraces: [],
+    memoryTraces: prunedTraces,
+    synapticActivity: prunedActivity,
   };
+}
+
+const MAX_MEMORY_TRACES = 500;
+const MAX_SYNAPTIC_ACTIVITY = 500;
+const DECAY_THRESHOLD = 0.05; // within this distance of 1.0 = fully decayed
+const STALE_ACTIVITY_DAYS = 7;
+
+/**
+ * Remove fully-decayed memory traces (synapticStrength within 0.05 of 1.0),
+ * then cap at 500 entries keeping highest synapticStrength.
+ */
+function pruneMemoryTraces(
+  traces: BrainState['memoryTraces'],
+): BrainState['memoryTraces'] {
+  // Filter out fully-decayed entries
+  const entries = Object.entries(traces).filter(
+    ([, t]) => Math.abs(t.synapticStrength - 1.0) > DECAY_THRESHOLD,
+  );
+
+  // If still over cap, keep top N by synapticStrength
+  if (entries.length > MAX_MEMORY_TRACES) {
+    entries.sort((a, b) => b[1].synapticStrength - a[1].synapticStrength);
+    entries.length = MAX_MEMORY_TRACES;
+  }
+
+  return Object.fromEntries(entries);
+}
+
+/**
+ * Remove stale single-hit synaptic activity (count=1 and older than 7 days),
+ * then cap at 500 entries keeping highest count.
+ */
+function pruneSynapticActivity(
+  activity: BrainState['synapticActivity'],
+): BrainState['synapticActivity'] {
+  const cutoff = Date.now() - STALE_ACTIVITY_DAYS * 86400000;
+
+  // Filter out stale single-hit entries
+  const entries = Object.entries(activity).filter(([, a]) => {
+    if (a.count === 1 && new Date(a.lastHit).getTime() < cutoff) return false;
+    return true;
+  });
+
+  // If still over cap, keep top N by count
+  if (entries.length > MAX_SYNAPTIC_ACTIVITY) {
+    entries.sort((a, b) => b[1].count - a[1].count);
+    entries.length = MAX_SYNAPTIC_ACTIVITY;
+  }
+
+  return Object.fromEntries(entries);
 }
 
 /**

@@ -119,7 +119,7 @@ export const MemorySchema = z.object({
   // Link graph
   links: z.array(z.object({
     targetId: z.string(),
-    relationship: z.enum(['resolves', 'supersedes', 'extends', 'contradicts', 'related']),
+    relationship: z.enum(['resolves', 'supersedes', 'superseded_by', 'extends', 'contradicts', 'similar', 'related']),
     createdAt: z.string().datetime(),
   })).default([]),
   supersededBy: z.string().optional(),
@@ -129,6 +129,7 @@ export const MemorySchema = z.object({
   relatedTaskId: z.string().optional(),
   surfacedMemoryIds: z.array(z.string()).optional(),
   outcome: z.enum(['success', 'partial', 'failure']).optional(),
+  predictionError: z.number().optional(),
 });
 
 export type Memory = z.infer<typeof MemorySchema>;

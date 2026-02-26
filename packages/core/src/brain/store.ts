@@ -189,16 +189,40 @@ export class MemoryStore {
     }));
   }
 
+  private reverseRelationship(rel: Memory['links'][number]['relationship']): Memory['links'][number]['relationship'] {
+    switch (rel) {
+      case 'similar': return 'similar';
+      case 'contradicts': return 'contradicts';
+      case 'supersedes': return 'superseded_by';
+      case 'superseded_by': return 'supersedes';
+      case 'related': return 'related';
+      default: return 'related';
+    }
+  }
+
   addLink(memoryId: string, targetId: string, relationship: Memory['links'][number]['relationship']): void {
+    const reverse = this.reverseRelationship(relationship);
+    const timestamp = now();
+
     this.store.update(data => ({
       memories: data.memories.map(m => {
-        if (m.id !== memoryId) return m;
-        // Skip if link already exists
-        if (m.links.some(l => l.targetId === targetId && l.relationship === relationship)) return m;
-        return {
-          ...m,
-          links: [...m.links, { targetId, relationship, createdAt: now() }],
-        };
+        if (m.id === memoryId) {
+          // Forward link: source -> target
+          if (m.links.some(l => l.targetId === targetId && l.relationship === relationship)) return m;
+          return {
+            ...m,
+            links: [...m.links, { targetId, relationship, createdAt: timestamp }],
+          };
+        }
+        if (m.id === targetId) {
+          // Reverse link: target -> source
+          if (m.links.some(l => l.targetId === memoryId && l.relationship === reverse)) return m;
+          return {
+            ...m,
+            links: [...m.links, { targetId: memoryId, relationship: reverse, createdAt: timestamp }],
+          };
+        }
+        return m;
       }),
     }));
   }
@@ -210,6 +234,23 @@ export class MemoryStore {
         return { ...m, ...updates };
       }),
     }));
+  }
+
+  cleanDanglingLinks(validIds: Set<string>): number {
+    let removed = 0;
+
+    this.store.update(data => ({
+      memories: data.memories.map(m => {
+        if (m.links.length === 0) return m;
+        const cleaned = m.links.filter(l => validIds.has(l.targetId));
+        const delta = m.links.length - cleaned.length;
+        if (delta === 0) return m;
+        removed += delta;
+        return { ...m, links: cleaned };
+      }),
+    }));
+
+    return removed;
   }
 
   deleteMemory(id: string): void {

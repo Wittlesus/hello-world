@@ -212,7 +212,7 @@ function BrainPipeline({
       const hasRetrieval = events.some((e) =>
         e.tool === 'hw_retrieve_memories' || e.tool === 'auto_cue'
       );
-      const isBrainRetrieval = hasRetrieval || (payload as Record<string, unknown>).type === 'brain_retrieval';
+      const isBrainRetrieval = hasRetrieval || (payload as unknown as Record<string, unknown>).type === 'brain_retrieval';
       if (isBrainRetrieval) {
         const summaryText = (payload.summary ?? '') + events.map((e) => e.summary).join(' ');
         const lower = summaryText.toLowerCase();
