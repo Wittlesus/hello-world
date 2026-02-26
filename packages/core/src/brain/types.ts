@@ -1,5 +1,5 @@
-import type { BrainState, ContextPhase, Memory } from '../types.js';
-import { ATTENTION_PATTERNS, DEFAULT_CORTEX } from '../types.js';
+import type { Memory, BrainState, ContextPhase } from '../types.js';
+import { DEFAULT_CORTEX, ATTENTION_PATTERNS } from '../types.js';
 
 export interface ScoredMemory {
   memory: Memory;
@@ -45,6 +45,22 @@ export const DEFAULT_CONFIG: EngineConfig = {
 
 export type TagIndex = Record<string, string[]>;
 
+export interface RetrievalTelemetry {
+  queryLength: number;
+  tokenCount: number;
+  candidateCount: number;
+  directMatchCount: number;
+  associativeMatchCount: number;
+  linkTraversalCount: number;
+  fuzzyFallback: boolean;
+  resultCount: number;
+  topScore: number;
+  executionMs: number;
+  contextPhase: string;
+  hotTagsTriggered: number;
+  cortexGaps: string[]; // tokens that matched via fuzzy but not cortex
+}
+
 export interface RetrievalResult {
   painMemories: ScoredMemory[];
   winMemories: ScoredMemory[];
@@ -53,6 +69,7 @@ export interface RetrievalResult {
   contextPhase: ContextPhase;
   hotTags: string[];
   injectionText: string;
+  telemetry?: RetrievalTelemetry;
 }
 
 export type { Memory, BrainState, ContextPhase };

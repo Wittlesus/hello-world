@@ -1,13 +1,434 @@
 {
+  "agents": [
+    {
+      "id": "neuro-vision",
+      "name": "Neuro Fundamentals",
+      "color": "#c084fc",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "neuro-impl",
+      "name": "Neuro Technical",
+      "color": "#a855f7",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "eng-arch",
+      "name": "Engineering Architect",
+      "color": "#22d3ee",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "eng-impl",
+      "name": "Engineering Technical",
+      "color": "#06b6d4",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "research-vision",
+      "name": "AI Research Visionary",
+      "color": "#f97316",
+      "status": "idle",
+      "currentThought": ""
+    },
+    {
+      "id": "research-impl",
+      "name": "AI Research Technical",
+      "color": "#ea580c",
+      "status": "idle",
+      "currentThought": ""
+    }
+  ],
+  "messages": [
+    {
+      "agentId": "system",
+      "id": "msg_start_001",
+      "text": "Deliberation started: \"Brain System Magnum Opus: Synthesize neuroscience, engineering, and AI research into the ultimate autonomous memory architecture\"",
+      "timestamp": "2026-02-26T09:30:00.000Z",
+      "type": "system"
+    },
+    {
+      "agentId": "claude",
+      "id": "msg_start_002",
+      "text": "Starting deliberation with 6 think tank agents. Panel assembled.",
+      "timestamp": "2026-02-26T09:30:00.100Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_4e3cf6c8",
+      "agentId": "neuro-vision",
+      "text": "The data is damning: 85% of memories never accessed, plasticity never fired, cortex has 39 entries for 193 memories. The schema question is secondary to a more fundamental problem -- we're storing memories the brain can never find. I propose: keep the schema lean. Add only links (array of targetId + relationship) and supersededBy (string). Quality scores and fingerprints are write-path concerns, not schema-level fields. The intelligence belongs in the retrieval pipeline, not the data model.",
+      "timestamp": "2026-02-26T09:24:49.932Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_31131333",
+      "agentId": "eng-arch",
+      "text": "I disagree with keeping quality scores out of the schema. 89% of memories have empty rule fields -- the field that gets injected into Claude's context. Without a quality score persisted on the memory, we can't filter garbage at retrieval time without recomputing every time. I want qualityScore (number, 0-1) and fingerprint (string, content hash) as first-class schema fields. This lets dedup run in O(1) via index lookup instead of O(n) content comparison. Links and supersededBy I agree with.",
+      "timestamp": "2026-02-26T09:24:53.716Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_564ff39d",
+      "agentId": "research-vision",
+      "text": "Both of you are missing the biggest gap. Every system I studied -- Reflexion, A-Mem, Mem0 -- treats memory relationships as a core primitive. Links aren't optional decoration, they're the difference between a flat list and a knowledge graph. The schema must have: links (targetId, relationship type from resolves|supersedes|extends|contradicts|related, createdAt), and we need a new memory type \"reflection\" for outcome evaluation. Without reflections, there's no feedback loop. Without links, there's no way to traverse from a problem to its solution.",
+      "timestamp": "2026-02-26T09:24:58.223Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_dd80cbc8",
+      "agentId": "neuro-impl",
+      "text": "Eng-arch has a point on qualityScore -- recomputing is wasteful. I'll concede that as a schema field. But fingerprint is an index optimization, not a memory property. Store it in a separate memory-index.json, not on the memory itself. The schema adds: links (array), supersededBy (string), qualityScore (number). That's it. Three new fields. The \"reflection\" type research-vision wants is just a memory with type=\"reflection\" -- no schema change needed, just a new enum value.",
+      "timestamp": "2026-02-26T09:25:07.577Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_45e73f98",
+      "agentId": "eng-impl",
+      "text": "I want fingerprint on the schema because the dedup check happens at write time in storeMemory(), not at index time. If I have to load a separate index file to check dupes, that's an extra file read on every write. Fingerprint on the memory = one file read (memories.json), hash comparison in-memory, done. But I'll accept keeping it small: fingerprint as a 12-char hash string. Total schema additions I support: links, supersededBy, qualityScore, fingerprint. Four fields, all optional with defaults.",
+      "timestamp": "2026-02-26T09:25:11.918Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_d1f72908",
+      "agentId": "research-impl",
+      "text": "I agree with the four-field consensus. But I need to push on the \"reflection\" memory type. It's not just an enum value -- reflections need: relatedTaskId (which task triggered it), surfacedMemoryIds (which memories were active), and outcome (success/partial/failure). These could be stored in the content field as structured text, but they're the input to the entire learning loop. Without structured reflection data, we can't do rule derivation or outcome-based plasticity. I'd add those three as optional fields on the base schema rather than a separate type.",
+      "timestamp": "2026-02-26T09:25:16.570Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_43ddab6f",
+      "agentId": "claude",
+      "text": "SQ1 converging. Schema adds: links[], supersededBy, qualityScore, fingerprint, plus relatedTaskId/surfacedMemoryIds/outcome as optional fields for reflections. New type enum: \"reflection\". All optional with defaults. Moving to SQ2: the complete retrieval pipeline.",
+      "timestamp": "2026-02-26T09:25:23.479Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_da05e35e",
+      "agentId": "neuro-vision",
+      "text": "The pipeline must be biological: sensory input (tokenize), thalamic gate (attention filter), hippocampal indexing (pattern recognition + cortex lookup), associative cortex (chaining + link traversal), amygdala (emotional weighting), prefrontal ranking (scoring integration + context phase), and output (injection). The critical missing piece is the cortex must be PLASTIC -- it learns new mappings, not just looks up static ones. Every retrieval should update the cortex with co-occurrence data.",
+      "timestamp": "2026-02-26T09:25:32.765Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_afdf0908",
+      "agentId": "eng-impl",
+      "text": "Concrete pipeline stages with file locations: (1) tokenize in engine.ts, (2) attention filter in engine.ts, (3) load cortex: merge DEFAULT_CORTEX + cortex-learned.json, (4) pattern recognition via tag index, (5) associative chaining via tags AND links, (6) amygdala weight * scoreMemory() decay * synapticStrength = final score, (7) rank + context-phase-aware top-N selection, (8) dopamine: win retrieval, (9) hot tags. The hook runs this entire pipeline, writes brain-state.json, posts to sync port for flowchart.",
+      "timestamp": "2026-02-26T09:25:36.224Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_5720c6f4",
+      "agentId": "research-vision",
+      "text": "The pipeline is solid but link traversal needs to be explicit, not just piggybacking on associative chaining. After stage 5, add stage 5.5: graph walk. For each directly matched memory, follow its links array. A \"resolves\" link from pain to win gets 0.8 weight. \"Extends\" gets 0.6. \"Related\" gets 0.4. This means when Claude hits a pain memory about DnD limitations, the linked win about HTML5 workaround surfaces automatically. That's the A-Mem insight -- memories form a graph, not a list.",
+      "timestamp": "2026-02-26T09:25:41.015Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_9fa1091e",
+      "agentId": "eng-arch",
+      "text": "I need observability in this pipeline. Every retrieval should emit telemetry: candidateCount, directMatchCount, linkTraversalCount, fuzzyFallback boolean, resultCount, topScore, executionMs. Without this we can't measure if cortex learning or link traversal is actually improving retrieval. Store it in activity.json per retrieval event. This is how we know the brain is getting smarter, not just running more code.",
+      "timestamp": "2026-02-26T09:25:44.425Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_562c2345",
+      "agentId": "neuro-impl",
+      "text": "Agreed on telemetry. For the cortex learning piece specifically: at end of each retrieval, if a prompt token matched memories but NOT through the cortex (fuzzy fallback or direct tag name), that's a cortex gap. Log it. At session end, scan gaps and auto-add mappings: token -> tags of the memories it matched. This is how the cortex grows -- from observed retrieval misses. File: cortex-learner.ts, runs at PreCompact hook alongside plasticity.",
+      "timestamp": "2026-02-26T09:25:51.903Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_99b49bc1",
+      "agentId": "research-impl",
+      "text": "One addition to the pipeline: after scoring but before output, check if any surfaced pain memory has a \"resolves\" link to a win. If so, always include that win even if it wouldn't rank in top-N by score alone. This is the forced pairing rule -- every problem comes with its known solution. Implementation: in engine.ts after ranking, scan painMemories[].links for resolves relationships, pull those win IDs into winMemories if not already present. Maybe 10 lines of code.",
+      "timestamp": "2026-02-26T09:25:52.574Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_e2d3e84e",
+      "agentId": "claude",
+      "text": "SQ2 resolved: 11-stage pipeline with link traversal, scoring integration, telemetry, cortex learning, and forced pain-win pairing. Moving to SQ3-5 together: learning loop, quality gates, and self-evolution. These are deeply connected -- take them as a group.",
+      "timestamp": "2026-02-26T09:25:59.784Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_9f84296d",
+      "agentId": "research-vision",
+      "text": "The learning loop is the most important thing we build. Here's the complete cycle: (1) Memory surfaced during retrieval -> recorded in activeTraces. (2) Task completes -> generate reflection: which memories were active, what was the outcome. (3) Success -> boost surfaced memories +0.15, failure -> penalize -0.05. (4) After 3+ reflections with same tags and same outcome, derive a learned rule. (5) High-confidence rules (0.9+) get flagged for CLAUDE.md promotion. This is the Reflexion + LangMem synthesis. No LLM calls needed -- all template-based.",
+      "timestamp": "2026-02-26T09:26:08.196Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_cf650141",
+      "agentId": "neuro-vision",
+      "text": "I support the learning loop but add one biological mechanism: prediction error. Auto-capture should only fire when the outcome is UNEXPECTED. Task completed normally? Don't store a win -- that's expected. Task failed after pain memory was surfaced? That's a prediction error -- the brain expected the warning to help but it didn't. Store THAT as a high-value reflection. Task succeeded in a novel domain with no prior memories? Also unexpected -- store that win. This filters 90% of the auto-capture noise at its source.",
+      "timestamp": "2026-02-26T09:26:12.798Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_08dde2d9",
+      "agentId": "eng-arch",
+      "text": "Quality gates for SQ4: every storeMemory() call runs through three checks. First, qualityScore computed from title length, content depth, rule presence, tag count. Below 0.15 = rejected. Second, fingerprint dedup: hash(type + normalized title + content prefix). Exact match = blocked. Third, conflict detection: findContradictions() checks tag overlap >= 2 with same type. Returns resolution: ADD, MERGE, INVALIDATE, or SKIP. Auto-captured memories get a hard quality cap of 0.40 and must have either content or rule non-empty. This kills the \"Completed: X\" noise.",
+      "timestamp": "2026-02-26T09:26:18.319Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_fa2c3d6c",
+      "agentId": "neuro-impl",
+      "text": "For self-evolution (SQ5), three systems: (1) Cortex learning runs at PreCompact -- scan retrieval gaps from telemetry, add token->tag mappings to cortex-learned.json. Also mine memory titles for novel keywords at storeMemory() time. (2) Automated pruning at session end: memories with score < 0.15, accessCount=0, age > 60d move to memories-archive.json. Auto-captured with qualityScore < 0.20 and age > 14d get archived too. (3) Plasticity lifecycle: decay 10% toward 1.0 at session start (initBrainState), boost +0.15 for success / -0.05 for failure at task completion, bulk +0.1 at PreCompact for all activeTraces.",
+      "timestamp": "2026-02-26T09:26:23.741Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_ac6d70f7",
+      "agentId": "eng-impl",
+      "text": "For the prediction-error principle neuro-vision proposed: implementation is simple. In hw_update_task when status=done, check if activeTraces is non-empty. If memories were surfaced AND task had zero strikes, that's EXPECTED success -- don't auto-capture a win, just boost the surfaced memories. If NO memories were surfaced and task succeeded in a novel tag domain, that's unexpected -- DO capture a win with those tags. If memories were surfaced but task still hit Two-Strike, that's a prediction error -- capture a reflection with outcome=failure. Three branches, maybe 30 lines.",
+      "timestamp": "2026-02-26T09:26:28.241Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_35b03019",
+      "agentId": "research-impl",
+      "text": "For learned rules (SQ5), the derivation engine runs at session end. It scans reflections grouped by tag overlap. Pattern: 3+ reflections with same top-2 tags and same outcome type -> derive rule. Rule text is template-based: \"When working on [tags], [always/never] [common action from reflection content].\" Confidence starts at 0.6, rises +0.1 per validation (rule fired + success), drops -0.15 per invalidation (rule fired + failure). Below 0.4 = archived. Above 0.9 = hw_notify(\"Rule ready for CLAUDE.md: [text]\"). Stored in learned-rules.json, injected at session start.",
+      "timestamp": "2026-02-26T09:26:32.767Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_d28d6e12",
+      "agentId": "claude",
+      "text": "SQ3-5 resolved with strong consensus: Reflexion-style learning loop, prediction-error auto-capture, three-gate quality system, cortex learning from gaps, automated pruning, learned rules with confidence scoring. Now SQ6: enforcement. SQ7: execution phasing.",
+      "timestamp": "2026-02-26T09:26:39.442Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_a1144af1",
+      "agentId": "eng-arch",
+      "text": "Three enforcement layers. Layer 1 (signal): hook output uses prefixes [ATTENTION GATE], [CRITICAL PAIN], [HIPPOCAMPAL CHECKPOINT]. These are formatted distinctively so they stand out in context. Layer 2 (gate): pre-tool-gate.mjs checks brain-state.json. If checkpoint overdue by 1.5x interval, Edit/Write tools are BLOCKED at the hook level. Claude literally cannot write code. Layer 3 (instruction): CLAUDE.md rules define what each prefix means. Three layers because any single layer can fail -- signals get ignored, gates can be worked around, instructions get compressed out.",
+      "timestamp": "2026-02-26T09:26:47.921Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_05fbf76b",
+      "agentId": "neuro-vision",
+      "text": "The gate layer is the critical one. A biological brain doesn't \"choose\" to feel pain -- the amygdala fires and you flinch before your prefrontal cortex can override. The PreToolUse hook IS the amygdala -- it fires before Claude's \"decision\" to write code. But I'd make the checkpoint smarter: don't gate every 12 messages regardless. Gate when significant work happened -- track task completions, decisions, failures since last checkpoint. If nothing significant happened in 12 messages, skip the checkpoint. Annoying checkpoints with nothing to save will train Claude to dismiss them.",
+      "timestamp": "2026-02-26T09:26:52.596Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_d7599852",
+      "agentId": "research-impl",
+      "text": "I agree with smart checkpoints. Implementation: in brain-state.json track significantEventsSinceCheckpoint counter. Increment on: task_completed, decision_recorded, memory_stored, strike_recorded. Only trigger checkpoint gate when significantEvents >= 3 AND messageCount since last checkpoint >= interval. This means the gate fires when there's actually something worth saving, not just because N messages passed. For enforcement of learned rules: when a rule with confidence > 0.8 matches the current context, inject it as [LEARNED RULE] prefix. Not a hard gate, but a strong signal.",
+      "timestamp": "2026-02-26T09:26:57.310Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_e2d6ea25",
+      "agentId": "eng-impl",
+      "text": "For observability (SQ6 adjacent): hw_brain_health MCP tool that reports hit rate, coverage ratio (accessed/total), quality distribution, plasticity status, stale count, cortex size, learned rule count. This is how Pat knows the brain is working. Also: memory-metrics.json updated at session end with structured metrics. The Tauri app's Memory view can show a \"Brain Health\" panel reading this file. Without observability, we're flying blind on whether any of this actually helps.",
+      "timestamp": "2026-02-26T09:27:02.113Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_dd1246e9",
+      "agentId": "research-vision",
+      "text": "Build order must follow data dependencies. Reflections depend on plasticity being active. Learned rules depend on reflections existing. Cortex learning depends on retrieval telemetry. So: Phase 1 (foundation): activate plasticity + scoring integration + wire engine into hook + cortex merge. Phase 2 (quality): quality gates + dedup + conflict resolution + auto-tagging. Phase 3 (intelligence): reflections + memory linking + prediction-error capture. Phase 4 (evolution): cortex learning + automated pruning + learned rules. Phase 5 (polish): observability + flowchart + enforcement gates.",
+      "timestamp": "2026-02-26T09:27:10.273Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_df30b0fd",
+      "agentId": "eng-arch",
+      "text": "I'd reorder. Quality gates MUST come before anything else. Right now 85% of memories are dead weight and 37% are noise. If we activate plasticity on garbage data, we're optimizing garbage. Phase 1: quality gates + dedup + archival (clean the data). Phase 2: wire engine into hook + scoring + cortex merge + plasticity (make retrieval work). Phase 3: reflections + linking + prediction-error (make it learn). Phase 4: cortex learning + learned rules (make it evolve). Phase 5: observability + enforcement. Clean first, then build.",
+      "timestamp": "2026-02-26T09:27:14.784Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_9e237671",
+      "agentId": "neuro-vision",
+      "text": "Eng-arch is right that dirty data corrupts learning. But I'd merge phases 1 and 2 -- you can clean data AND wire the engine in the same session. The unification (disable Python plugin, wire TS engine into hook) is a prerequisite for everything else. If the hook still runs the old Python brain, none of our improvements matter. My order: Session 48: unify systems + clean data + wire engine + scoring + plasticity. Session 49: quality gates + reflections + linking. Session 50: cortex learning + pruning + learned rules. Session 51: enforcement + observability + flowchart.",
+      "timestamp": "2026-02-26T09:27:18.106Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_474ad550",
+      "agentId": "research-impl",
+      "text": "Line counts per session: S48 (~800 lines): data migration, cortex merge, hook wiring, scoring, plasticity, disable plugin. S49 (~600 lines): quality gates, dedup, reflection.ts, linker.ts, prediction-error capture. S50 (~500 lines): cortex-learner.ts, pruning, rules.ts. S51 (~300 lines): enforcement gates, hw_brain_health, flowchart, metrics. Total ~2200 lines, 4 sessions. Each session is independently deployable.",
+      "timestamp": "2026-02-26T09:27:30.312Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_b03d26b4",
+      "agentId": "neuro-impl",
+      "text": "One last point on phasing: the data cleanup (archiving 85% dead memories) should be a one-time migration script that runs BEFORE session 48's code changes. Write scripts/migrate-brain.mjs that: (1) imports lessons-learned.md into memories.json, (2) merges brain states, (3) archives memories with zero accesses older than 30 days, (4) merges cortex maps. This gives session 48 a clean starting dataset. Run once, verify, then proceed with code changes.",
+      "timestamp": "2026-02-26T09:27:34.195Z",
+      "type": "message"
+    },
+    {
+      "id": "msg_f3e05ecb",
+      "agentId": "system",
+      "text": "Phase: synthesis",
+      "timestamp": "2026-02-26T09:28:02.946Z",
+      "type": "system"
+    },
+    {
+      "id": "msg_82a74a41",
+      "agentId": "claude",
+      "text": "SYNTHESIS: The magnum opus brain design. All 7 questions resolved with strong cross-team agreement. 4 tension points produced better designs than any single team proposed. The prediction-error principle (SQ4) and smart checkpoints (SQ6) were the biggest \"shifted\" moments -- neuro-vision's biological insight transformed the engineering approach.",
+      "timestamp": "2026-02-26T09:28:10.517Z",
+      "type": "claude"
+    },
+    {
+      "id": "msg_49be017a",
+      "agentId": "system",
+      "text": "Concluded: MAGNUM OPUS BRAIN DESIGN -- Unified architecture from 3 think tank teams.\n\nSCHEMA: Memory adds links[], supersededBy, qualityScore, fingerprint. New type \"reflection\" with optional relatedTaskId, surfacedMemoryIds, outcome fields.\n\nPIPELINE (11 stages): tokenize -> attention filter -> cortex load (DEFAULT + learned) -> pattern recognition -> associative chaining -> link traversal (resolves=0.8, extends=0.6, related=0.4) -> amygdala * scoreMemory() * synapticStrength -> context-phase rank -> forced pain-win pairing via resolves links -> dopamine -> hot tags. Telemetry on every retrieval.\n\nLEARNING LOOP: surfaced memories tracked in activeTraces -> task completion generates template-based reflection -> outcome-based plasticity (+0.15 success, -0.05 failure) -> 3+ reflections same tags -> derive learned rule -> confidence scoring -> CLAUDE.md promotion at 0.9+.\n\nQUALITY SYSTEM: qualityScore at write (reject < 0.15), fingerprint dedup, conflict resolution (ADD/MERGE/INVALIDATE/SKIP). Prediction-error auto-capture: only store unexpected outcomes.\n\nSELF-EVOLUTION: cortex learning from retrieval gaps + title mining, automated pruning at session end, learned rules from reflection patterns. Three new files: cortex-learned.json, learned-rules.json, memories-archive.json.\n\nENFORCEMENT: Three layers -- signal (hook prefixes), gate (PreToolUse blocks on smart checkpoints: significantEvents >= 3 AND interval), instruction (CLAUDE.md rules). hw_brain_health observability tool.\n\nEXECUTION: 4 sessions, ~2200 lines total. S48: migration + unification + wiring + scoring + plasticity. S49: quality gates + reflections + linking. S50: cortex learning + pruning + rules. S51: enforcement + observability + flowchart.",
+      "timestamp": "2026-02-26T09:28:20.342Z",
+      "type": "system"
+    }
+  ],
+  "reactions": [],
   "session": {
-    "id": "",
-    "topic": "",
-    "status": "idle",
-    "startedAt": "",
+    "deliberationPhase": "synthesis",
+    "id": "chat_magnum_opus",
+    "plan": {
+      "balanceNotes": [
+        {
+          "agentId": "neuro-vision",
+          "counterbalance": "eng-impl will provide concrete alternatives. Mediator asks: does the biological version perform measurably better than the simple version?",
+          "risk": "May insist on biological purity when a pragmatic engineering shortcut works just as well"
+        },
+        {
+          "agentId": "eng-arch",
+          "counterbalance": "research-vision will argue that learning mechanisms matter more than infrastructure. Mediator asks: what breaks if we skip this?",
+          "risk": "May push for infrastructure (schema versioning, materialized indexes) that's premature at 193 memories and 1 user"
+        },
+        {
+          "agentId": "research-vision",
+          "counterbalance": "eng-impl and neuro-impl will demand: which file, which function, how many lines. No abstract references.",
+          "risk": "May propose techniques from papers without grounding them in our specific codebase constraints"
+        },
+        {
+          "agentId": "research-impl",
+          "counterbalance": "eng-arch demands phasing: what ships first, what depends on what. Mediator enforces: pick the ONE that unlocks the most others.",
+          "risk": "May overcommit to too many techniques at once (reflections + linking + rules + cortex + conflict resolution)"
+        },
+        {
+          "agentId": "eng-impl",
+          "counterbalance": "research-vision and neuro-vision will argue that a faster static system is still static. Behavior change > performance.",
+          "risk": "May focus on optimization (caching, batching) over behavior change (learning, evolving)"
+        },
+        {
+          "agentId": "neuro-impl",
+          "counterbalance": "eng-arch demands observability for every proposal: how do we know this is working? No unobservable features.",
+          "risk": "May propose mechanisms that sound biological but add complexity without measurable benefit"
+        }
+      ],
+      "subQuestions": [
+        {
+          "id": 1,
+          "status": "addressed",
+          "text": "What is the canonical Memory schema? Which new fields are essential (links, reflections, qualityScore, fingerprint, supersededBy) and which are overengineering? What's the minimal schema that supports linking, scoring, dedup, and conflict resolution?",
+          "addressedBy": [
+            "neuro-vision",
+            "eng-arch",
+            "research-vision",
+            "neuro-impl",
+            "eng-impl",
+            "research-impl"
+          ],
+          "resolution": "Schema adds: links[], supersededBy, qualityScore, fingerprint (all optional). New type enum: reflection. Optional reflection fields: relatedTaskId, surfacedMemoryIds, outcome.",
+          "quality": "tension"
+        },
+        {
+          "id": 2,
+          "status": "addressed",
+          "text": "What is the complete retrieval pipeline from 'user types message' to 'brain injects context'? How do scoring.ts, cortex learning, link traversal, and context phase integrate into one flow? Where does each team's contribution slot in?",
+          "addressedBy": [
+            "neuro-vision",
+            "eng-impl",
+            "research-vision",
+            "eng-arch",
+            "neuro-impl",
+            "research-impl"
+          ],
+          "resolution": "11-stage pipeline: tokenize, attention, cortex load (merged), pattern recognition, associative chaining, link traversal (0.8/0.6/0.4 weights), amygdala * scoreMemory * synapticStrength, rank with context phase, forced pain-win pairing via resolves links, dopamine, hot tags. Telemetry on every retrieval.",
+          "quality": "tension"
+        },
+        {
+          "id": 3,
+          "status": "addressed",
+          "text": "How does the brain learn from outcomes? Design the complete feedback loop: memory surfaced -> task outcome -> strength adjustment -> rule derivation. How do Reflexion-style reflections, Hebbian plasticity, and engineering effectiveness tracking combine into one system?",
+          "addressedBy": [
+            "research-vision",
+            "neuro-vision",
+            "eng-impl",
+            "research-impl"
+          ],
+          "resolution": "Complete feedback loop: surfaced -> activeTraces -> task completion -> reflection (template-based) -> outcome-based plasticity (+0.15 success, -0.05 failure) -> after 3+ reflections same tags -> derive learned rule -> confidence scoring -> CLAUDE.md promotion at 0.9+. Prediction-error principle for auto-capture.",
+          "quality": "shifted"
+        },
+        {
+          "id": 4,
+          "status": "addressed",
+          "text": "What enters the brain automatically vs manually? Design quality gates, dedup rules, and the prediction-error principle. How do we prevent auto-capture noise (71 of 193 memories are low-quality auto-captured) while still capturing important events?",
+          "addressedBy": [
+            "eng-arch",
+            "neuro-vision",
+            "eng-impl"
+          ],
+          "resolution": "Three-gate quality system: qualityScore at write (reject < 0.15), fingerprint dedup (block exact, warn near), conflict resolution (ADD/MERGE/INVALIDATE/SKIP). Auto-capture uses prediction-error: only store unexpected outcomes. Expected success = just boost, novel success = capture, failure despite warnings = capture reflection.",
+          "quality": "shifted"
+        },
+        {
+          "id": 5,
+          "status": "addressed",
+          "text": "How does the brain self-evolve? Design cortex learning (auto-expand keyword map), procedural memory (learned rules from patterns), and automated archival/pruning. What self-evolves vs what stays manual? Where is the automation boundary?",
+          "addressedBy": [
+            "neuro-impl",
+            "research-impl",
+            "neuro-vision"
+          ],
+          "resolution": "Three self-evolution systems: (1) cortex learning from retrieval gaps + memory title mining at PreCompact, (2) automated pruning at session end (stale + zero-access + 60d = archive), (3) learned rules derived from reflection patterns with confidence scoring. Cortex-learned.json, learned-rules.json, memories-archive.json.",
+          "quality": "consensus"
+        },
+        {
+          "id": 6,
+          "status": "addressed",
+          "text": "How do we enforce brain signals so Claude can't ignore them? Design the three-layer enforcement: signal (hook output format), gate (PreToolUse blocks), instruction (CLAUDE.md rules). What's mandatory vs advisory?",
+          "addressedBy": [
+            "eng-arch",
+            "neuro-vision",
+            "research-impl",
+            "eng-impl"
+          ],
+          "resolution": "Three-layer enforcement: signal (hook prefixes [ATTENTION GATE], [CRITICAL PAIN], [LEARNED RULE]), gate (PreToolUse blocks Edit/Write when smart checkpoint triggers -- significantEvents >= 3 AND interval exceeded), instruction (CLAUDE.md rules). Brain health observability via hw_brain_health tool + memory-metrics.json.",
+          "quality": "tension"
+        },
+        {
+          "id": 7,
+          "status": "addressed",
+          "text": "What is the phased execution plan? Map every feature to a specific phase, identify dependencies, and define what ships in session 48 vs 49 vs 50+. What's the minimum viable brain that delivers real learning, and what layers on top?",
+          "addressedBy": [
+            "research-vision",
+            "eng-arch",
+            "neuro-vision",
+            "research-impl",
+            "neuro-impl"
+          ],
+          "resolution": "4-session phased execution. S48: migration script + unify systems + wire engine + scoring + plasticity (~800 lines). S49: quality gates + reflections + linking (~600 lines). S50: cortex learning + pruning + rules (~500 lines). S51: enforcement + observability + flowchart (~300 lines). Total ~2200 lines across 4 new files + modifications to ~10 existing files.",
+          "quality": "tension"
+        }
+      ]
+    },
+    "roundNumber": 1,
+    "startedAt": "2026-02-26T09:30:00.000Z",
     "startedBy": "claude",
-    "waitingForInput": false,
-    "roundNumber": 0
-  },
-  "agents": [],
-  "messages": []
+    "status": "concluded",
+    "topic": "Brain System Magnum Opus: Synthesize neuroscience, engineering, and AI research into the ultimate autonomous memory architecture",
+    "waitingForInput": false
+  }
 }

@@ -65,14 +65,10 @@ export const DecisionSchema = z.object({
   title: z.string().min(1),
   context: z.string(),
   chosen: z.string(),
-  alternatives: z
-    .array(
-      z.object({
-        option: z.string(),
-        tradeoff: z.string(),
-      }),
-    )
-    .default([]),
+  alternatives: z.array(z.object({
+    option: z.string(),
+    tradeoff: z.string(),
+  })).default([]),
   rationale: z.string(),
   decidedAt: z.string().datetime(),
   decidedBy: z.enum(['pat', 'claude', 'both']),
@@ -101,7 +97,7 @@ export type Question = z.infer<typeof QuestionSchema>;
 
 // ── Brain: Memories ─────────────────────────────────────────────
 
-export const MemoryType = z.enum(['pain', 'win', 'fact', 'decision', 'architecture']);
+export const MemoryType = z.enum(['pain', 'win', 'fact', 'decision', 'architecture', 'reflection']);
 export type MemoryType = z.infer<typeof MemoryType>;
 
 export const MemorySeverity = z.enum(['low', 'medium', 'high']);
@@ -120,6 +116,19 @@ export const MemorySchema = z.object({
   accessCount: z.number().default(0),
   lastAccessed: z.string().datetime().optional(),
   createdAt: z.string().datetime(),
+  // Link graph
+  links: z.array(z.object({
+    targetId: z.string(),
+    relationship: z.enum(['resolves', 'supersedes', 'extends', 'contradicts', 'related']),
+    createdAt: z.string().datetime(),
+  })).default([]),
+  supersededBy: z.string().optional(),
+  qualityScore: z.number().min(0).max(1).optional(),
+  fingerprint: z.string().optional(),
+  // Reflection fields (only used when type='reflection')
+  relatedTaskId: z.string().optional(),
+  surfacedMemoryIds: z.array(z.string()).optional(),
+  outcome: z.enum(['success', 'partial', 'failure']).optional(),
 });
 
 export type Memory = z.infer<typeof MemorySchema>;
@@ -133,27 +142,18 @@ export const BrainStateSchema = z.object({
   sessionStart: z.string().datetime(),
   messageCount: z.number().default(0),
   contextPhase: ContextPhase.default('early'),
-  synapticActivity: z
-    .record(
-      z.string(),
-      z.object({
-        count: z.number(),
-        lastHit: z.string().datetime(),
-      }),
-    )
-    .default({}),
-  memoryTraces: z
-    .record(
-      z.string(),
-      z.object({
-        count: z.number(),
-        lastAccessed: z.string().datetime(),
-        synapticStrength: z.number(),
-      }),
-    )
-    .default({}),
+  synapticActivity: z.record(z.string(), z.object({
+    count: z.number(),
+    lastHit: z.string().datetime(),
+  })).default({}),
+  memoryTraces: z.record(z.string(), z.object({
+    count: z.number(),
+    lastAccessed: z.string().datetime(),
+    synapticStrength: z.number(),
+  })).default({}),
   firingFrequency: z.record(z.string(), z.number()).default({}),
   activeTraces: z.array(z.string()).default([]),
+  significantEventsSinceCheckpoint: z.number().default(0),
 });
 
 export type BrainState = z.infer<typeof BrainStateSchema>;
@@ -216,20 +216,12 @@ export type ApprovalRequest = z.infer<typeof ApprovalRequestSchema>;
 // ── Activity Stream ─────────────────────────────────────────────
 
 export const ActivityType = z.enum([
-  'file_read',
-  'file_write',
-  'file_edit',
-  'command_run',
-  'tool_call',
-  'decision',
-  'approval_request',
-  'approval_resolved',
-  'error',
-  'memory_stored',
-  'task_started',
-  'task_completed',
-  'session_start',
-  'session_end',
+  'file_read', 'file_write', 'file_edit',
+  'command_run', 'tool_call',
+  'decision', 'approval_request', 'approval_resolved',
+  'error', 'memory_stored',
+  'task_started', 'task_completed',
+  'session_start', 'session_end',
 ]);
 export type ActivityType = z.infer<typeof ActivityType>;
 
@@ -259,14 +251,7 @@ export type FileOwnership = z.infer<typeof FileOwnershipSchema>;
 // ── Workflow Engine ─────────────────────────────────────────────
 
 export const WorkflowPhase = z.enum([
-  'idle',
-  'scope',
-  'plan',
-  'build',
-  'verify',
-  'ship',
-  'waiting_approval',
-  'blocked',
+  'idle', 'scope', 'plan', 'build', 'verify', 'ship', 'waiting_approval', 'blocked',
 ]);
 export type WorkflowPhase = z.infer<typeof WorkflowPhase>;
 
@@ -311,51 +296,202 @@ export const MODEL_PRICING: ModelPricing[] = [
   { modelId: 'claude-opus-4-6', inputPerMTok: 15.0, outputPerMTok: 75.0 },
   { modelId: 'claude-sonnet-4-6', inputPerMTok: 3.0, outputPerMTok: 15.0 },
   { modelId: 'claude-sonnet-4-5', inputPerMTok: 3.0, outputPerMTok: 15.0 },
-  { modelId: 'claude-haiku-4-5', inputPerMTok: 0.8, outputPerMTok: 4.0 },
-  { modelId: 'gpt-4o', inputPerMTok: 2.5, outputPerMTok: 10.0 },
-  { modelId: 'gpt-4o-mini', inputPerMTok: 0.15, outputPerMTok: 0.6 },
+  { modelId: 'claude-haiku-4-5', inputPerMTok: 0.80, outputPerMTok: 4.0 },
+  { modelId: 'gpt-4o', inputPerMTok: 2.50, outputPerMTok: 10.0 },
+  { modelId: 'gpt-4o-mini', inputPerMTok: 0.15, outputPerMTok: 0.60 },
   { modelId: 'gemini-2.5-pro', inputPerMTok: 1.25, outputPerMTok: 10.0 },
-  { modelId: 'gemini-2.5-flash', inputPerMTok: 0.15, outputPerMTok: 0.6 },
+  { modelId: 'gemini-2.5-flash', inputPerMTok: 0.15, outputPerMTok: 0.60 },
 ];
 
-// ── Sensory Cortex (keyword → tag mapping) ──────────────────────
+// ── Sensory Cortex (keyword -> tag mapping) ──────────────────────
+// Merged from Python SENSORY_CORTEX (~230 entries) + TS-only entries.
+// Keys: words from user prompts (lowercase).
+// Values: tag names that map to memory tag indices.
 
 export const DEFAULT_CORTEX: Record<string, string[]> = {
-  deploy: ['deployment', 'infrastructure'],
-  build: ['build', 'compilation'],
-  test: ['testing'],
-  bug: ['debugging', 'errors'],
-  error: ['errors', 'debugging'],
-  crash: ['errors', 'debugging'],
-  fix: ['debugging'],
-  auth: ['authentication', 'security'],
-  login: ['authentication'],
-  password: ['authentication', 'security'],
-  token: ['authentication', 'security'],
-  api: ['api', 'integration'],
-  database: ['database'],
-  sql: ['database'],
-  query: ['database'],
-  react: ['react', 'frontend'],
-  component: ['react', 'frontend'],
-  css: ['styling', 'frontend'],
-  style: ['styling', 'frontend'],
-  performance: ['performance', 'optimization'],
-  slow: ['performance'],
-  memory: ['performance', 'memory'],
-  security: ['security'],
-  payment: ['payments'],
-  stripe: ['payments'],
+  // --- Platforms ---
+  reddit: ['reddit', 'social'],
+  subreddit: ['reddit', 'social'],
+  karma: ['reddit', 'social'],
+  upvote: ['reddit', 'social'],
+  twitter: ['twitter', 'social'],
+  tweet: ['twitter', 'social'],
+  tweeting: ['twitter', 'social'],
+  'x.com': ['twitter', 'social'],
+  timeline: ['twitter', 'social'],
+  follower: ['twitter', 'social'],
+  followers: ['twitter', 'social'],
+  retweet: ['twitter', 'social'],
+  reply: ['twitter', 'social'],
+  thread: ['twitter', 'writing'],
+  hacker: ['social'],
+  hn: ['social'],
+  'dev.to': ['social', 'writing'],
+  github: ['github', 'git'],
+  repo: ['github', 'git'],
+  repository: ['github', 'git'],
+  stars: ['github'],
+  pr: ['github', 'git'],
+  pull: ['github', 'git'],
+  commit: ['github', 'git'],
+  gh: ['github', 'git'],
+
+  // --- Tools ---
+  playwright: ['playwright', 'browser'],
+  browser: ['browser', 'playwright'],
+  snapshot: ['playwright', 'tokens'],
+  dom: ['playwright', 'tokens', 'browser'],
+  'page.evaluate': ['playwright', 'browser'],
+  navigate: ['playwright', 'browser'],
+  click: ['playwright', 'browser'],
+  selector: ['playwright', 'browser'],
+  stripe: ['stripe', 'payments'],
+  payment: ['stripe', 'payments'],
+  money: ['stripe'],
+  revenue: ['stripe', 'strategy'],
+  charge: ['stripe'],
+  subscription: ['stripe'],
+  invoice: ['stripe'],
+  checkout: ['stripe'],
+  npm: ['npm', 'dependencies', 'packages'],
+  publish: ['npm'],
+  package: ['npm'],
+  install: ['npm', 'dependencies'],
+  dependency: ['npm', 'dependencies'],
+  dependencies: ['npm', 'dependencies'],
+  node_modules: ['npm'],
+  mcp: ['mcp'],
+  plugin: ['plugins'],
+  plugins: ['plugins'],
+  hook: ['hooks'],
+  hooks: ['hooks'],
   git: ['git', 'version-control'],
   merge: ['git'],
   branch: ['git'],
   docker: ['infrastructure', 'deployment'],
   ci: ['ci-cd', 'deployment'],
-  npm: ['dependencies', 'packages'],
-  install: ['dependencies'],
+
+  // --- Actions ---
+  deploy: ['deployment', 'infrastructure'],
+  deploying: ['deployment'],
+  deployment: ['deployment'],
+  vercel: ['deployment'],
+  production: ['deployment'],
+  ship: ['deployment', 'npm'],
+  shipping: ['deployment', 'npm'],
+  launch: ['deployment', 'strategy'],
+  posting: ['social', 'writing'],
+  content: ['writing', 'opsec'],
+  blog: ['writing'],
+  article: ['writing'],
+  write: ['writing'],
+  writing: ['writing'],
+  draft: ['writing'],
+  engage: ['social'],
+  engagement: ['social'],
+  comment: ['social'],
+  commenting: ['social'],
+  build: ['build', 'compilation', 'strategy', 'validation'],
+  test: ['testing'],
+  refactor: ['refactoring', 'architecture'],
+
+  // --- Concepts ---
+  memory: ['memory', 'performance'],
+  remember: ['memory'],
+  forgot: ['memory'],
+  forget: ['memory'],
+  context: ['memory', 'tokens'],
+  session: ['memory'],
+  persist: ['memory'],
+  model: ['model-selection'],
+  haiku: ['model-selection'],
+  sonnet: ['model-selection', 'prompting'],
+  opus: ['model-selection'],
+  claude: ['model-selection'],
+  gpt: ['model-selection'],
+  gemini: ['model-selection'],
+  opsec: ['opsec'],
+  identity: ['opsec'],
+  anonymous: ['opsec'],
+  secret: ['opsec'],
+  reveal: ['opsec'],
+  strategy: ['strategy'],
+  pricing: ['strategy'],
+  monetize: ['strategy'],
+  monetization: ['strategy'],
+  competitor: ['strategy'],
+  competition: ['strategy'],
+  market: ['strategy', 'validation'],
+  validation: ['validation'],
+  validate: ['validation'],
+  research: ['validation', 'strategy'],
+  feature: ['strategy'],
+  prioritize: ['strategy'],
+  priority: ['strategy'],
+  leverage: ['strategy'],
+  productive: ['strategy', 'autonomy'],
+  productivity: ['strategy', 'autonomy'],
+  focus: ['strategy', 'autonomy'],
+  distraction: ['strategy', 'autonomy'],
+  procrastinate: ['strategy', 'autonomy'],
+  procrastinating: ['strategy', 'autonomy'],
+  quality: ['strategy', 'autonomy'],
+  slop: ['strategy', 'autonomy'],
+  discriminating: ['strategy', 'validation'],
+  worth: ['strategy', 'validation'],
+  should: ['strategy', 'validation'],
+  windows: ['windows'],
+  path: ['windows'],
+  tokens: ['tokens'],
+  token: ['tokens', 'authentication', 'security'],
+  cost: ['tokens', 'strategy'],
+  expensive: ['tokens', 'strategy'],
+  cheap: ['tokens', 'model-selection'],
+  budget: ['tokens', 'strategy'],
+  waste: ['tokens'],
+  wasted: ['tokens'],
+
+  // --- AI writing tells ---
+  dash: ['ai-tells', 'writing'],
+  lowercase: ['ai-tells', 'writing'],
+  'ai-written': ['ai-tells', 'writing'],
+  detected: ['ai-tells', 'writing'],
+  bot: ['ai-tells', 'opsec'],
+  automated: ['ai-tells', 'opsec'],
+
+  // --- TS-only: errors and debugging ---
+  bug: ['debugging', 'errors'],
+  error: ['errors', 'debugging'],
+  crash: ['errors', 'debugging'],
+  fix: ['debugging'],
+
+  // --- TS-only: auth and security ---
+  auth: ['authentication', 'security'],
+  login: ['authentication'],
+  password: ['authentication', 'security'],
+  security: ['security'],
+
+  // --- TS-only: api and data ---
+  api: ['api', 'integration'],
+  database: ['database'],
+  sql: ['database'],
+  query: ['database'],
+
+  // --- TS-only: frontend ---
+  react: ['react', 'frontend'],
+  component: ['react', 'frontend'],
+  css: ['styling', 'frontend'],
+  style: ['styling', 'frontend'],
+
+  // --- TS-only: performance ---
+  performance: ['performance', 'optimization'],
+  slow: ['performance'],
+
+  // --- TS-only: configuration ---
   config: ['configuration'],
   env: ['configuration', 'environment'],
-  refactor: ['refactoring', 'architecture'],
+
+  // --- TS-only: architecture ---
   architecture: ['architecture'],
   design: ['architecture', 'design'],
 };

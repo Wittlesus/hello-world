@@ -2,67 +2,58 @@
 /**
  * Hello World — UserPromptSubmit hook
  * Fires before every user message Claude processes.
- * Injects a compact one-liner with current phase, task, and tool names.
- * Keeps hw_* tools top-of-mind throughout the session, not just at start.
- * Also signals Buddy that Claude is about to respond (typing signal).
+ * 1. Injects a compact one-liner with current phase, task, and tool names.
+ * 2. Runs hippocampal retrieval (brain engine) to auto-surface relevant memories.
+ * 3. Signals Buddy that Claude is about to respond (typing signal).
+ *
+ * Brain retrieval is the core addition: reads the user prompt from stdin,
+ * runs the 9-stage retrieval pipeline, updates brain-state.json, and
+ * injects matched memories into Claude's context window.
  */
 
-import { existsSync, readFileSync } from 'fs';
-import { request } from 'http';
-import { homedir } from 'os';
+import { readFileSync, writeFileSync, renameSync, existsSync } from 'fs';
 import { join } from 'path';
+import { request } from 'http';
+import { pathToFileURL } from 'url';
 
-// Read active project from app config; fall back to hello-world
-const DEFAULT_PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
-const PROJECT = (() => {
-  try {
-    const cfg = JSON.parse(readFileSync(join(homedir(), '.hello-world-app.json'), 'utf8'));
-    return cfg?.projectPath || DEFAULT_PROJECT;
-  } catch {
-    return DEFAULT_PROJECT;
-  }
-})();
+const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
 const HW = join(PROJECT, '.hello-world');
+const DIST_BRAIN = join(PROJECT, 'packages/core/dist/brain');
 
 function safeRead(file) {
-  try {
-    return JSON.parse(readFileSync(join(HW, file), 'utf8'));
-  } catch {
-    return null;
-  }
+  try { return JSON.parse(readFileSync(join(HW, file), 'utf8')); }
+  catch { return null; }
 }
 
-const workflow = safeRead('workflow.json');
-const tasks = safeRead('tasks.json') ?? [];
-const caps = safeRead('capabilities.json');
+function atomicWrite(filePath, data) {
+  const tmp = filePath + '.tmp';
+  writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
+  renameSync(tmp, filePath);
+}
+
+const workflow  = safeRead('workflow.json');
+const appState  = safeRead('state.json');
+const caps      = safeRead('capabilities.json');
 const direction = safeRead('direction.json');
-const mode = safeRead('mode.json');
 
-const phase = workflow?.phase ?? 'idle';
-const taskId = workflow?.currentTaskId ?? null;
+const phase   = workflow?.phase ?? 'idle';
+const taskId  = workflow?.currentTaskId ?? null;
 
-const allTasks = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
-const inProgress = allTasks.filter((t) => t.status === 'in_progress').length;
-const pendingCount = allTasks.filter((t) => t.status === 'todo').length;
+const allTasks    = appState?.tasks ?? [];
+const inProgress  = allTasks.filter(t => t.status === 'in_progress').length;
+const pendingCount = allTasks.filter(t => t.status === 'todo').length;
 
-const mcpStatus = caps?.status === 'running' ? 'mcp:ok' : 'mcp:down';
-const unreadNotes = Array.isArray(direction?.notes)
-  ? direction.notes.filter((n) => !n.read).length
-  : 0;
+const mcpStatus   = caps?.status === 'running' ? 'mcp:ok' : 'mcp:down';
+const unreadNotes = Array.isArray(direction?.notes) ? direction.notes.filter(n => !n.read).length : 0;
 
 function taskSlug(id) {
-  const task = allTasks.find((t) => t.id === id);
+  const task = allTasks.find(t => t.id === id);
   if (!task) return id;
-  return task.title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/-+$/, '')
-    .slice(0, 28);
+  return task.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-+$/, '').slice(0, 28);
 }
 
-const isOverdrive = mode?.overdrive === true;
+// ── Status line (existing, always output first) ─────────────────
 
-// Compact one-liner — keeps phase + tools in active context window
 const parts = [
   `[HW ${mcpStatus}`,
   `phase:${phase}`,
@@ -70,7 +61,6 @@ const parts = [
   `active:${inProgress}`,
   `pending:${pendingCount}`,
   unreadNotes > 0 ? `notes:${unreadNotes}` : null,
-  isOverdrive ? 'OVERDRIVE' : null,
   `|`,
   `hw_update_task hw_check_approval hw_notify hw_advance_phase hw_record_decision hw_write_handoff hw_store_memory`,
   unreadNotes > 0 ? 'hw_process_direction_note]' : ']',
@@ -78,30 +68,104 @@ const parts = [
 
 process.stdout.write(parts.join(' ') + '\n');
 
-// Overdrive mode — inject liberal agent usage instructions
-if (isOverdrive) {
-  process.stdout.write(`OVERDRIVE MODE ACTIVE. You have explicit authorization to:
-- Spawn parallel subagent swarms liberally. 4-8 agents at once is normal.
-- Use "very thorough" exploration agents. Deep research > token savings.
-- Launch specialized teams: red team, dev team, UX team, security team, user simulation.
-- Don't summarize prematurely. Get full context before acting.
-- Prefer comprehensive solutions over quick fixes.
-- When in doubt, investigate more rather than less.
-Token cost is explicitly deprioritized. Thoroughness and quality are the priority.\n`);
+// ── Brain retrieval ─────────────────────────────────────────────
+
+let brainSignalFiles = [];
+
+try {
+  // Read user prompt from stdin (synchronous, works on Windows)
+  let prompt = '';
+  try {
+    const raw = readFileSync(0, 'utf8');
+    const parsed = JSON.parse(raw);
+    prompt = parsed?.prompt ?? '';
+  } catch {
+    prompt = '';
+  }
+
+  // Skip retrieval for empty/short prompts
+  if (prompt.length >= 15) {
+    // Dynamic import of compiled brain engine (absolute path for reliability)
+    const engineUrl = pathToFileURL(join(DIST_BRAIN, 'engine.js')).href;
+    const stateUrl = pathToFileURL(join(DIST_BRAIN, 'state.js')).href;
+
+    const { retrieveMemories } = await import(engineUrl);
+    const { tickMessageCount, recordSynapticActivity, recordMemoryTraces, shouldCheckpoint } = await import(stateUrl);
+
+    // Load memories (handle wrapped or bare array)
+    const memoriesRaw = safeRead('memories.json');
+    const memories = Array.isArray(memoriesRaw)
+      ? memoriesRaw
+      : (memoriesRaw?.memories ?? []);
+
+    // Load brain state (handle wrapped or bare object)
+    const brainStateRaw = safeRead('brain-state.json');
+    let brainState = brainStateRaw;
+    if (brainStateRaw && brainStateRaw.state && typeof brainStateRaw.state === 'object' && !Array.isArray(brainStateRaw.state)) {
+      brainState = brainStateRaw.state;
+    }
+    if (!brainState || typeof brainState !== 'object') {
+      brainState = {
+        sessionStart: new Date().toISOString(),
+        messageCount: 0,
+        contextPhase: 'early',
+        synapticActivity: {},
+        memoryTraces: {},
+        firingFrequency: {},
+        activeTraces: [],
+        significantEventsSinceCheckpoint: 0,
+      };
+    }
+
+    // Pipeline: tick -> retrieve -> record activity -> record traces
+    let state = tickMessageCount(brainState);
+    const result = retrieveMemories(prompt, memories, state);
+    state = recordSynapticActivity(state, result.matchedTags);
+
+    const surfacedIds = [
+      ...result.painMemories.map(sm => sm.memory.id),
+      ...result.winMemories.map(sm => sm.memory.id),
+    ];
+    state = recordMemoryTraces(state, surfacedIds);
+
+    // Write updated brain-state.json (atomic)
+    const brainStatePath = join(HW, 'brain-state.json');
+    atomicWrite(brainStatePath, { state });
+    brainSignalFiles.push('brain-state.json');
+
+    // Output injection text (memories surfaced for Claude)
+    if (result.injectionText) {
+      process.stdout.write(result.injectionText + '\n');
+    }
+
+    // Hippocampal checkpoint signal
+    if (shouldCheckpoint(state) && (state.activeTraces?.length ?? 0) >= 3) {
+      process.stdout.write(
+        '\n[HIPPOCAMPAL CHECKPOINT] Memory consolidation due. ' +
+        `Phase: ${state.contextPhase}, messages: ${state.messageCount}, ` +
+        `active traces: ${state.activeTraces.length}. ` +
+        'Consider hw_store_memory for any new lessons learned this session.\n'
+      );
+    }
+  }
+} catch {
+  // Brain retrieval is non-fatal. Status line was already output.
 }
 
-// Signal Buddy: Claude is about to respond.
+// ── Signal Buddy: Claude is about to respond ────────────────────
 // This sets hadActivity=true in Buddy so the Stop-hook chime always fires,
 // even for pure text responses that produce no PTY or file-change events.
 const sync = (() => {
-  try {
-    return JSON.parse(readFileSync(join(HW, 'sync.json'), 'utf8'));
-  } catch {
-    return null;
-  }
+  try { return JSON.parse(readFileSync(join(HW, 'sync.json'), 'utf8')); }
+  catch { return null; }
 })();
 if (sync?.port) {
-  const body = JSON.stringify({ type: 'typing', summary: 'Responding...' });
+  const signalData = { type: 'typing', summary: 'Responding...' };
+  if (brainSignalFiles.length > 0) {
+    signalData.type = 'brain_retrieval';
+    signalData.filesChanged = brainSignalFiles;
+  }
+  const body = JSON.stringify(signalData);
   const req = request(
     {
       hostname: '127.0.0.1',
@@ -111,16 +175,13 @@ if (sync?.port) {
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': Buffer.byteLength(body),
-        Connection: 'close',
+        'Connection': 'close',
       },
     },
-    () => {
-      process.exit(0);
-    },
+    () => { process.exit(0); }
   );
-  req.on('error', () => {
-    process.exit(0);
-  });
+  req.setTimeout(1500, () => { req.destroy(); process.exit(0); });
+  req.on('error', () => { process.exit(0); });
   req.write(body);
   req.end();
 }

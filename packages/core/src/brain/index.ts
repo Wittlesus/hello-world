@@ -1,20 +1,21 @@
-export { buildTagIndex, inferSeverity, retrieveMemories, tokenize } from './engine.js';
+export { retrieveMemories, inferSeverity, tokenize, buildTagIndex } from './engine.js';
 export {
-  applyDecay,
-  applySynapticPlasticity,
-  findDecayedMemories,
   initBrainState,
-  recordMemoryTraces,
-  recordSynapticActivity,
-  shouldCheckpoint,
   tickMessageCount,
+  recordSynapticActivity,
+  recordMemoryTraces,
+  applySynapticPlasticity,
+  applyDecay,
+  shouldCheckpoint,
+  findDecayedMemories,
 } from './state.js';
 export { MemoryStore } from './store.js';
 export type {
-  AttentionFilterResult,
-  EngineConfig,
-  RetrievalResult,
   ScoredMemory,
+  AttentionFilterResult,
+  RetrievalResult,
+  RetrievalTelemetry,
+  EngineConfig,
   TagIndex,
 } from './types.js';
 export { DEFAULT_CONFIG } from './types.js';

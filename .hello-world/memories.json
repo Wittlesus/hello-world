@@ -3356,6 +3356,87 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T08:02:38.890Z"
+    },
+    {
+      "id": "mem_aa89e84e",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Create custom deliberation agents for brain design think tanks",
+      "content": "Add 6 custom agents to agent-definitions.ts representing the 3 think tank teams (2 per team: fundamental + technical). Each agent's system prompt should contain their team's key findings and proposals so they can argue from an informed position during the deliberation.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T09:20:22.784Z"
+    },
+    {
+      "id": "mem_68788675",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Brain Magnum Opus: Unified architecture from 6-agent deliberation",
+      "content": "Context: Three think tank teams (Neuroscience, Engineering, AI Research) independently analyzed the brain system, then 6 agents deliberated across 7 sub-questions to synthesize one unified design.\nChosen: 4-session phased build: S48 (wire+plasticity), S49 (quality+reflections+links), S50 (cortex+pruning+rules), S51 (enforcement+observability). Schema adds links[], supersededBy, qualityScore, fingerprint, reflection type. 11-stage pipeline with link traversal and scoring integration. Prediction-error auto-capture. Learned rules with CLAUDE.md promotion. Smart checkpoints. ~2200 lines total.\nRationale: All 3 teams converged on the same diagnosis (85% dead memories, zero plasticity, disconnected scoring) and agreed on core architecture. Key tensions resolved: prediction-error capture (neuro shifted eng), smart checkpoints (research shifted neuro), fingerprint location (eng shifted neuro). No embeddings, no LLM calls, no external DB required.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T09:30:16.927Z"
+    },
+    {
+      "id": "mem_c13412bd",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain Magnum Opus Session 48: Wire foundation + plasticity + scoring",
+      "content": "Session 48 of the brain magnum opus build. Migration script, hook wiring (user-prompt.mjs imports engine), engine enhancements (scoring integration, link traversal, telemetry, cortex merge), schema updates (links, supersededBy, qualityScore, fingerprint, reflection type), store updates (auto-tagging, plasticity wiring), disable auto-pilot plugin. ~800 lines across parallel agent teams.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T09:46:29.556Z"
+    },
+    {
+      "id": "mem_9deb47ac",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Brain Magnum Opus S48: 4-agent parallel build shipped entire foundation",
+      "content": "Session 48 of the brain magnum opus. 3 think tank teams, 6-agent deliberation, 4 parallel build agents in worktrees. Shipped: scoring integration into 11-stage engine, link traversal, forced pain-win pairing, telemetry, cortex merge (39->150 keywords), schema additions (links, supersededBy, qualityScore, fingerprint, reflection type), auto-tagging, plasticity wiring (session start decay + session end boost), migration of 68 lessons + 11 wins from Python brain, brain state unification, auto-pilot plugin disabled, flowchart updated.",
+      "rule": "Use parallel agent worktrees for non-overlapping file changes. Merge manually where shared files overlap. Run migration scripts before code changes. Disable old system AFTER new one is wired.",
+      "tags": [
+        "brain",
+        "architecture",
+        "parallel-agents",
+        "migration",
+        "plasticity",
+        "scoring"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T09:46:37.875Z"
+    },
+    {
+      "id": "mem_e847972f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Audit Brain Magnum Opus S48 build with 4 specialist teams",
+      "content": "Run parallel audit teams against all Session 48 brain changes: hooks, engine, types, store, server, migration script. Find bugs, logic errors, missed edge cases, type mismatches before we test live.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T09:53:20.510Z"
     }
   ]
 }

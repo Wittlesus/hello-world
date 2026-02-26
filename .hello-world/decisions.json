@@ -248,6 +248,16 @@
       "rationale": "The sentinel survives crashes (detached process), is invisible to the user (windowsHide), and provides crash recovery that no in-process hook can offer. Buddy is the natural owner since it's the persistent visual element. For worktree Rust merges, manual file copy is simpler and more reliable.",
       "decidedAt": "2026-02-26T05:18:58.790Z",
       "decidedBy": "both"
+    },
+    {
+      "id": "d_0b40da28",
+      "title": "Brain Magnum Opus: Unified architecture from 6-agent deliberation",
+      "context": "Three think tank teams (Neuroscience, Engineering, AI Research) independently analyzed the brain system, then 6 agents deliberated across 7 sub-questions to synthesize one unified design.",
+      "chosen": "4-session phased build: S48 (wire+plasticity), S49 (quality+reflections+links), S50 (cortex+pruning+rules), S51 (enforcement+observability). Schema adds links[], supersededBy, qualityScore, fingerprint, reflection type. 11-stage pipeline with link traversal and scoring integration. Prediction-error auto-capture. Learned rules with CLAUDE.md promotion. Smart checkpoints. ~2200 lines total.",
+      "alternatives": [],
+      "rationale": "All 3 teams converged on the same diagnosis (85% dead memories, zero plasticity, disconnected scoring) and agreed on core architecture. Key tensions resolved: prediction-error capture (neuro shifted eng), smart checkpoints (research shifted neuro), fingerprint location (eng shifted neuro). No embeddings, no LLM calls, no external DB required.",
+      "decidedAt": "2026-02-26T09:30:16.920Z",
+      "decidedBy": "both"
     }
   ]
 }

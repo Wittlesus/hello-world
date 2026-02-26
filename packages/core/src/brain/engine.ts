@@ -14,48 +14,29 @@
  */
 
 import type {
-  AttentionFilterResult,
-  BrainState,
-  EngineConfig,
   Memory,
-  RetrievalResult,
-  ScoredMemory,
+  BrainState,
   TagIndex,
+  ScoredMemory,
+  AttentionFilterResult,
+  RetrievalResult,
+  RetrievalTelemetry,
+  EngineConfig,
 } from './types.js';
 import { DEFAULT_CONFIG } from './types.js';
+import { scoreMemory } from './scoring.js';
 
 // ── Severity keywords ───────────────────────────────────────────
 
 const HIGH_SEVERITY = new Set([
-  'critical',
-  'never',
-  'always',
-  'hours',
-  'broke',
-  'lost',
-  'destroyed',
-  'catastrophe',
-  'disaster',
-  'data loss',
-  'irreversible',
-  'production',
-  'security',
-  'credential',
-  'password',
-  'secret',
+  'critical', 'never', 'always', 'hours', 'broke', 'lost', 'destroyed',
+  'catastrophe', 'disaster', 'data loss', 'irreversible', 'production',
+  'security', 'credential', 'password', 'secret',
 ]);
 
 const MEDIUM_SEVERITY = new Set([
-  'important',
-  'careful',
-  'warning',
-  'gotcha',
-  'tricky',
-  'subtle',
-  'mistake',
-  'bug',
-  'wrong',
-  'broke',
+  'important', 'careful', 'warning', 'gotcha', 'tricky', 'subtle',
+  'mistake', 'bug', 'wrong', 'broke',
 ]);
 
 // ── Stage 1: Tokenize ───────────────────────────────────────────
@@ -173,19 +154,16 @@ function fuzzyMatch(
 ): { scores: Record<string, number>; tags: Set<string> } {
   const scores: Record<string, number> = {};
   const tags = new Set<string>();
-  const words = prompt
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((w) => w.length > 3);
+  const words = prompt.toLowerCase().split(/\s+/).filter(w => w.length > 3);
 
   for (const mem of memories) {
     const title = mem.title.toLowerCase();
     const rule = mem.rule.toLowerCase();
     const content = mem.content.toLowerCase();
 
-    const titleMatch = words.some((w) => title.includes(w));
-    const ruleMatch = words.some((w) => rule.includes(w));
-    const contentMatch = words.some((w) => w.length > 4 && content.includes(w));
+    const titleMatch = words.some(w => title.includes(w));
+    const ruleMatch = words.some(w => rule.includes(w));
+    const contentMatch = words.some(w => w.length > 4 && content.includes(w));
 
     if (titleMatch || ruleMatch || contentMatch) {
       scores[mem.id] = titleMatch ? 1.0 : ruleMatch ? 0.8 : 0.5;
@@ -198,7 +176,7 @@ function fuzzyMatch(
 
 // ── Format Injection Text ───────────────────────────────────────
 
-function formatInjection(result: Omit<RetrievalResult, 'injectionText'>): string {
+function formatInjection(result: Omit<RetrievalResult, 'injectionText' | 'telemetry'>): string {
   const parts: string[] = [];
 
   if (result.attentionFilter) {
@@ -215,7 +193,7 @@ function formatInjection(result: Omit<RetrievalResult, 'injectionText'>): string
   }
 
   if (result.winMemories.length > 0) {
-    parts.push("\nWIN MEMORY (you've handled this domain before):");
+    parts.push('\nWIN MEMORY (you\'ve handled this domain before):');
     for (const sm of result.winMemories) {
       let line = `- #${sm.memory.id}: ${sm.memory.title}`;
       if (sm.memory.rule) line += `\n  -> ${sm.memory.rule.slice(0, 200)}`;
@@ -224,10 +202,8 @@ function formatInjection(result: Omit<RetrievalResult, 'injectionText'>): string
   }
 
   if (result.hotTags.length > 0) {
-    const tagList = result.hotTags.map((t) => `\`${t}\``).join(', ');
-    parts.push(
-      `\nPATTERN DETECTED: Tags ${tagList} have fired repeatedly. Consider addressing the root cause.`,
-    );
+    const tagList = result.hotTags.map(t => `\`${t}\``).join(', ');
+    parts.push(`\nPATTERN DETECTED: Tags ${tagList} have fired repeatedly. Consider addressing the root cause.`);
   }
 
   return parts.join('\n');
@@ -241,14 +217,16 @@ export function retrieveMemories(
   state: BrainState | null,
   config: Partial<EngineConfig> = {},
 ): RetrievalResult {
+  const startTime = performance.now();
   const cfg = { ...DEFAULT_CONFIG, ...config };
+  const phase = getContextPhase(state?.messageCount ?? 0, cfg);
 
   const empty: RetrievalResult = {
     painMemories: [],
     winMemories: [],
     matchedTags: [],
     attentionFilter: null,
-    contextPhase: getContextPhase(state?.messageCount ?? 0, cfg),
+    contextPhase: phase,
     hotTags: [],
     injectionText: '',
   };
@@ -256,24 +234,51 @@ export function retrieveMemories(
   if (prompt.trim().length < cfg.minPromptLength) return empty;
 
   const tokens = tokenize(prompt);
-  const memMap = new Map(memories.map((m) => [m.id, m]));
+  const memMap = new Map(memories.map(m => [m.id, m]));
 
   // Stage 2: Attention filter
   const attentionFilter = runAttentionFilter(prompt, cfg.attentionPatterns);
 
-  // Split by type
-  const painMems = memories.filter((m) => m.type === 'pain' || m.type === 'fact');
-  const winMems = memories.filter((m) => m.type === 'win');
+  // Pre-filter: binary gate -- remove truly stale memories before pattern recognition
+  // scoreMemory is NOT also used as post-multiply (removed to avoid compound penalty)
+  const viable = memories.filter(m =>
+    scoreMemory({ ...m, failureCorrelations: (m as Record<string, unknown>).failureCorrelations as number ?? 0 }) >= 0.15,
+  );
+  const viableMap = new Map(viable.map(m => [m.id, m]));
+
+  // Split by type (from viable pool only)
+  const painMems = viable.filter(m => m.type === 'pain' || m.type === 'fact');
+  const winMems = viable.filter(m => m.type === 'win');
 
   // Stage 3: Pattern recognition
   const painIndex = buildTagIndex(painMems);
   const { scores: rawScores, matchedTags } = patternRecognition(tokens, painIndex, cfg.cortex);
 
-  // Fuzzy fallback
+  // Track direct match count before fuzzy
+  const directMatchCount = Object.keys(rawScores).length;
+
+  // Fuzzy fallback -- track which tokens matched via fuzzy but not cortex
+  let fuzzyFallback = false;
+  const cortexGaps: string[] = [];
   if (Object.keys(rawScores).length === 0) {
+    fuzzyFallback = true;
     const fuzzy = fuzzyMatch(prompt, painMems);
     Object.assign(rawScores, fuzzy.scores);
     for (const t of fuzzy.tags) matchedTags.add(t);
+
+    // Identify cortex gaps: prompt tokens that found fuzzy matches
+    // but had no cortex entry
+    for (const word of tokens) {
+      if (!(word in cfg.cortex) && word.length > 3) {
+        const lower = word.toLowerCase();
+        const hitFuzzy = painMems.some(m =>
+          m.title.toLowerCase().includes(lower) ||
+          m.rule.toLowerCase().includes(lower) ||
+          (lower.length > 4 && m.content.toLowerCase().includes(lower)),
+        );
+        if (hitFuzzy) cortexGaps.push(word);
+      }
+    }
   }
 
   if (Object.keys(rawScores).length === 0 && !attentionFilter) {
@@ -282,9 +287,9 @@ export function retrieveMemories(
 
   // Stage 4: Associative chaining
   const chained = associativeChaining(rawScores, matchedTags, painIndex, memMap);
+  const associativeMatchCount = Object.keys(chained.scores).length - directMatchCount;
 
-  // Stage 5-6: Amygdala + synaptic strength
-  const phase = getContextPhase(state?.messageCount ?? 0, cfg);
+  // Stage 5-6: Amygdala + synaptic strength + quality score
   const maxPain = phase === 'late' ? cfg.lateMaxPain : cfg.maxPain;
   const maxWins = phase === 'late' ? cfg.lateMaxWins : cfg.maxWins;
 
@@ -294,7 +299,37 @@ export function retrieveMemories(
     if (!mem) continue;
     const severity = amygdalaWeight(mem);
     const synaptic = state?.memoryTraces[id]?.synapticStrength ?? mem.synapticStrength;
+    // scoreMemory is used ONLY as pre-filter (binary gate above), not here
+    // Post-multiply removed to avoid compound penalty with the pre-filter
     weighted[id] = score * severity * synaptic;
+  }
+
+  // Stage 5.5: Link traversal -- follow memory links to discover related memories
+  let linkTraversalCount = 0;
+  const directIds = new Set(Object.keys(chained.scores));
+  for (const id of directIds) {
+    const mem = viableMap.get(id);
+    if (!mem?.links?.length) continue;
+    for (const link of mem.links) {
+      if (link.relationship === 'contradicts' || link.relationship === 'supersedes') continue;
+      const target = viableMap.get(link.targetId);
+      if (!target) continue;
+
+      let linkWeight = 0;
+      if (link.relationship === 'resolves') linkWeight = 0.8;
+      else if (link.relationship === 'extends') linkWeight = 0.6;
+      else if (link.relationship === 'related') linkWeight = 0.4;
+
+      if (linkWeight > 0) {
+        const existing = weighted[link.targetId] ?? 0;
+        const baseScore = weighted[id] ?? 0;
+        if (baseScore === 0) continue;
+        weighted[link.targetId] = Math.max(existing, baseScore * linkWeight);
+        linkTraversalCount++;
+        // Add linked memory's tags to matched set
+        for (const tag of target.tags) chained.matchedTags.add(tag);
+      }
+    }
   }
 
   // Stage 7: Rank and select
@@ -304,17 +339,17 @@ export function retrieveMemories(
 
   const scoredPain: ScoredMemory[] = [];
   for (const [id, score] of rankedPain) {
-    const mem = memMap.get(id);
+    const mem = viableMap.get(id) ?? memMap.get(id);
     if (!mem) continue;
     scoredPain.push({
       memory: mem,
       score,
-      matchedTags: mem.tags.filter((t) => chained.matchedTags.has(t)),
-      source: 'direct',
+      matchedTags: mem.tags.filter(t => chained.matchedTags.has(t)),
+      source: directIds.has(id) ? 'direct' : 'associative',
     });
   }
 
-  // Stage 8: Dopamine — wins using same matched tags
+  // Stage 8: Dopamine -- wins using same matched tags
   const winIndex = buildTagIndex(winMems);
   const winScores: Record<string, number> = {};
   for (const tag of chained.matchedTags) {
@@ -326,18 +361,38 @@ export function retrieveMemories(
   }
 
   const scoredWins: ScoredMemory[] = [];
-  const rankedWins = Object.entries(winScores)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, maxWins);
+  const rankedWins = Object.entries(winScores).sort(([, a], [, b]) => b - a).slice(0, maxWins);
+  const winIdSet = new Set(rankedWins.map(([id]) => id));
   for (const [id, score] of rankedWins) {
     const mem = memMap.get(id);
     if (!mem) continue;
     scoredWins.push({
       memory: mem,
       score,
-      matchedTags: mem.tags.filter((t) => chained.matchedTags.has(t)),
+      matchedTags: mem.tags.filter(t => chained.matchedTags.has(t)),
       source: 'dopamine',
     });
+  }
+
+  // Forced pain-win pairing: if a pain memory links to a 'resolves' win, pull it in (respecting maxWins cap)
+  for (const pm of scoredPain) {
+    if (scoredWins.length >= maxWins) break;
+    const links = pm.memory.links;
+    if (!links?.length) continue;
+    for (const link of links) {
+      if (scoredWins.length >= maxWins) break;
+      if (link.relationship !== 'resolves') continue;
+      if (winIdSet.has(link.targetId)) continue;
+      const winMem = viableMap.get(link.targetId);
+      if (!winMem || winMem.type !== 'win') continue;
+      scoredWins.push({
+        memory: winMem,
+        score: 0.5,
+        matchedTags: winMem.tags.filter(t => chained.matchedTags.has(t)),
+        source: 'dopamine',
+      });
+      winIdSet.add(link.targetId);
+    }
   }
 
   // Stage 9: Hot tags
@@ -349,6 +404,23 @@ export function retrieveMemories(
     }
   }
 
+  // Build telemetry
+  const telemetry: RetrievalTelemetry = {
+    queryLength: prompt.length,
+    tokenCount: tokens.size,
+    candidateCount: viable.length,
+    directMatchCount,
+    associativeMatchCount,
+    linkTraversalCount,
+    fuzzyFallback,
+    resultCount: scoredPain.length + scoredWins.length,
+    topScore: rankedPain.length > 0 ? rankedPain[0][1] : 0,
+    executionMs: performance.now() - startTime,
+    contextPhase: phase,
+    hotTagsTriggered: hotTags.length,
+    cortexGaps,
+  };
+
   const result = {
     painMemories: scoredPain,
     winMemories: scoredWins,
@@ -356,6 +428,7 @@ export function retrieveMemories(
     attentionFilter,
     contextPhase: phase,
     hotTags,
+    telemetry,
   };
 
   return { ...result, injectionText: formatInjection(result) };

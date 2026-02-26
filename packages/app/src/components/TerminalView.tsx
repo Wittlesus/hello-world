@@ -204,32 +204,34 @@ function BrainPipeline({
     staggerTimeouts.forEach((t, i) => timeoutsRef.current.set(`_stg_${i}_${Date.now()}`, t));
   }, [activateNode]);
 
-  // Listen for hw-tool-summary -- activate brain nodes on hw_retrieve_memories
+  // Listen for hw-tool-summary -- activate brain nodes on retrieval (MCP or auto-cue hook)
   useEffect(() => {
     const unlistenPromise = listen<ToolSummaryPayload>('hw-tool-summary', (event) => {
       const payload = event.payload;
       const events = payload.events ?? [];
-      const hasRetrieval = events.some((e) => e.tool === 'hw_retrieve_memories');
-      if (hasRetrieval) {
+      const hasRetrieval = events.some((e) =>
+        e.tool === 'hw_retrieve_memories' || e.tool === 'auto_cue'
+      );
+      const isBrainRetrieval = hasRetrieval || (payload as Record<string, unknown>).type === 'brain_retrieval';
+      if (isBrainRetrieval) {
         const summaryText = (payload.summary ?? '') + events.map((e) => e.summary).join(' ');
         const lower = summaryText.toLowerCase();
 
-        // Row 1: cascade left to right (150ms between each)
+        // Row 1: Input -> Attention -> Cortex -> Pattern Recognition
         const row1 = [
           'brain-input', 'brain-arrow-1', 'brain-attention',
           'brain-arrow-2', 'brain-hippocampus', 'brain-arrow-3', 'brain-tags',
         ];
 
-        // Row 2: fan out after row 1 completes
+        // Row 2: Chaining -> Links -> Amygdala*Score -> Dopamine
         const row2: string[] = ['brain-arrow-down-1'];
-        if (lower.includes('pain')) row2.push('brain-amygdala');
+        if (lower.includes('pain') || lower.includes('memories')) row2.push('brain-amygdala');
         row2.push('brain-consolidation');
-        if (lower.includes('win')) row2.push('brain-dopamine');
+        if (lower.includes('win') || lower.includes('memories')) row2.push('brain-dopamine');
 
-        // Row 3: output after row 2
+        // Row 3: Output
         const row3 = ['brain-arrow-down-2', 'brain-output'];
 
-        // Stagger everything: row1 first, then row2, then row3
         const all = [...row1, ...row2, ...row3];
         activateSequence(all, 120, 5000);
       }
@@ -269,15 +271,15 @@ function BrainPipeline({
         Brain Pipeline
       </span>
 
-      {/* Row 1: Input -> Attention -> Hippocampus -> Tags */}
+      {/* Row 1: Tokenize -> Attention -> Cortex+Pattern -> Links */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
-        <FlowNode label="Input" accent="#64748b" active={a('brain-input')} />
+        <FlowNode label="Tokenize" accent="#64748b" active={a('brain-input')} />
         <FlowArrow direction="right" active={a('brain-arrow-1')} />
-        <FlowNode label="Attention" accent="#7c4dff" active={a('brain-attention')} stat={a('brain-attention') ? 'triggered' : 'filter'} />
+        <FlowNode label="Attention" accent="#7c4dff" active={a('brain-attention')} stat={a('brain-attention') ? 'gate' : 'filter'} />
         <FlowArrow direction="right" active={a('brain-arrow-2')} />
-        <FlowNode label="Hippocampus" accent="#00e5ff" active={a('brain-hippocampus')} stat={`${memories.length} memories`} pulse="glow" />
+        <FlowNode label="Cortex" accent="#00e5ff" active={a('brain-hippocampus')} stat={`${memories.length} mem`} pulse="glow" />
         <FlowArrow direction="right" active={a('brain-arrow-3')} />
-        <FlowNode label="Tags" accent="#00bcd4" active={a('brain-tags')} />
+        <FlowNode label="Links" accent="#00bcd4" active={a('brain-tags')} stat="graph" />
       </div>
 
       {/* Connector: down arrow */}
@@ -285,10 +287,10 @@ function BrainPipeline({
         <FlowArrow direction="down" active={a('brain-arrow-down-1') || a('brain-hippocampus')} />
       </div>
 
-      {/* Row 2: Amygdala, Consolidation, Dopamine */}
+      {/* Row 2: Amygdala*Score, Plasticity, Dopamine */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
         <FlowNode label="Amygdala" accent="#ff2d55" active={a('brain-amygdala')} stat={`${painCount} pain`} pulse="pain" />
-        <FlowNode label="Consolidation" accent="#00e676" active={a('brain-consolidation')} stat={phase} />
+        <FlowNode label="Plasticity" accent="#00e676" active={a('brain-consolidation')} stat={phase} />
         <FlowNode label="Dopamine" accent="#ffb300" active={a('brain-dopamine')} stat={`${winCount} wins`} />
       </div>
 
@@ -299,7 +301,7 @@ function BrainPipeline({
 
       {/* Row 3: Output */}
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <FlowNode label="Output" accent="#00e5ff" active={a('brain-output')} stat={a('brain-output') ? 'injected' : undefined} pulse="glow" />
+        <FlowNode label="Inject" accent="#00e5ff" active={a('brain-output')} stat={a('brain-output') ? 'fired' : undefined} pulse="glow" />
       </div>
     </div>
   );

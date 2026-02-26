@@ -1114,6 +1114,36 @@
       "dependsOn": [],
       "createdAt": "2026-02-26T05:47:04.066Z",
       "updatedAt": "2026-02-26T05:52:28.096Z"
+    },
+    {
+      "id": "t_c3bfdc37",
+      "title": "Create custom deliberation agents for brain design think tanks",
+      "description": "Add 6 custom agents to agent-definitions.ts representing the 3 think tank teams (2 per team: fundamental + technical). Each agent's system prompt should contain their team's key findings and proposals so they can argue from an informed position during the deliberation.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T09:18:03.302Z",
+      "updatedAt": "2026-02-26T09:20:22.781Z"
+    },
+    {
+      "id": "t_917a7a9b",
+      "title": "Brain Magnum Opus Session 48: Wire foundation + plasticity + scoring",
+      "description": "Session 48 of the brain magnum opus build. Migration script, hook wiring (user-prompt.mjs imports engine), engine enhancements (scoring integration, link traversal, telemetry, cortex merge), schema updates (links, supersededBy, qualityScore, fingerprint, reflection type), store updates (auto-tagging, plasticity wiring), disable auto-pilot plugin. ~800 lines across parallel agent teams.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T09:30:46.832Z",
+      "updatedAt": "2026-02-26T09:46:29.553Z"
+    },
+    {
+      "id": "t_cf7fd5a7",
+      "title": "Audit Brain Magnum Opus S48 build with 4 specialist teams",
+      "description": "Run parallel audit teams against all Session 48 brain changes: hooks, engine, types, store, server, migration script. Find bugs, logic errors, missed edge cases, type mismatches before we test live.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T09:48:04.087Z",
+      "updatedAt": "2026-02-26T09:53:20.507Z"
     }
   ],
   "milestones": []

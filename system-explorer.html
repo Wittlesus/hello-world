@@ -154,6 +154,7 @@ const nodes=[
 {id:'pipe-approval',label:'Approval Pipeline',sub:'Auto/notify/block',layer:'pipeline',x:42,y:435,w:158,h:40,icon:'\u{1F512}',detail:{desc:'hw_check_approval -> tier evaluation -> Discord DM -> Pat responds -> resolve.'}},
 {id:'pipe-research',label:'Research Pipeline',sub:'Discover + store',layer:'pipeline',x:215,y:335,w:158,h:40,icon:'\u{1F52C}',detail:{desc:'WebSearch/GitMCP/CodeResearch -> Agents -> hw_store_memory -> SessionStart loads.'}},
 {id:'pipe-knowledge',label:'Knowledge Intake',sub:'Research -> memory',layer:'pipeline',x:215,y:385,w:158,h:40,icon:'\u{1F4E5}',detail:{desc:'Research tools find tech -> Mining agents extract -> Cortex indexes -> Memory updated.'}},
+{id:'pipe-brain',label:'Brain Pipeline',sub:'11-stage retrieval',layer:'pipeline',x:215,y:435,w:158,h:40,icon:'\u{1F9E0}',detail:{desc:'Tokenize -> Attention -> Cortex (150 keywords) -> Pattern -> Chaining -> Link Traversal -> Amygdala*Score*Plasticity -> Rank -> Forced Pain-Win Pairing -> Dopamine -> Hot Tags. Fires every message via hook. Scoring integration, link traversal, telemetry. Auto-cue from UserPromptSubmit hook imports compiled TS engine.'}},
 
 // === External MCP Servers (right edge, 2 columns) ===
 // Col 1
@@ -176,7 +177,7 @@ const nodes=[
 {id:'data-questions',label:'questions.json',sub:'LOW writes/session',layer:'data',x:415,y:555,w:130,h:34,icon:'\u{2753}'},
 // Row 2 — Other stores
 {id:'data-activity',label:'activity.json',sub:'HIGH — event log (185KB)',layer:'data',x:40,y:605,w:145,h:34,icon:'\u{1F4DC}'},
-{id:'data-memories',label:'memories.json',sub:'MED — brain (124KB)',layer:'data',x:195,y:605,w:140,h:34,icon:'\u{1F9E0}'},
+{id:'data-memories',label:'memories.json',sub:'274 memories + links',layer:'data',x:195,y:605,w:140,h:34,icon:'\u{1F9E0}',detail:{desc:'Schema: type (pain/win/fact/decision/architecture/reflection), links[], supersededBy, qualityScore, fingerprint. 274 memories. Scoring: exponential decay by type, access boost, plasticity. Auto-tagged via cortex.'}},
 {id:'data-workflow',label:'workflow.json',sub:'Phase state',layer:'data',x:345,y:605,w:120,h:34,icon:'\u{2699}'},
 {id:'data-sessions',label:'sessions.json',sub:'Session history',layer:'data',x:475,y:605,w:130,h:34,icon:'\u{1F4C5}'},
 // Row 3
