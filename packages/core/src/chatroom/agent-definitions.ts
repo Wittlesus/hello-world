@@ -13,7 +13,6 @@ export interface AgentDefinition {
 // User-sim agents represent end-user perspectives.
 
 export const AGENT_DEFINITIONS: Record<string, AgentDefinition> = {
-
   // ── Cognitive lenses ─────────────────────────────────────────────
 
   contrarian: {
@@ -289,7 +288,6 @@ Speak from accumulated frustration or satisfaction. Be specific about what you w
 
 FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Just write natural sentences.`,
   },
-
 };
 
 // Default set — covers divergent, critical, structural, and creative modes
@@ -299,7 +297,7 @@ export const DEFAULT_AGENTS = ['contrarian', 'premortem', 'firstprinciples', 'st
 export const USER_SIM_AGENTS = ['contrarian', 'premortem', 'newuser', 'poweruser'];
 
 // Full roster for agent selection — used by hw_list_agents
-export const AGENT_ROSTER = Object.values(AGENT_DEFINITIONS).map(a => ({
+export const AGENT_ROSTER = Object.values(AGENT_DEFINITIONS).map((a) => ({
   id: a.id,
   name: a.name,
   category: a.category,

@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect, type ReactNode } from 'react';
-import { useTauriData } from '../hooks/useTauriData.js';
+import { type ReactNode, useEffect, useRef, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
-import { useThemeStore, getTheme } from '../stores/theme.js';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { getTheme, useThemeStore } from '../stores/theme.js';
 
 interface ActivityEvent {
   id: string;
@@ -16,42 +16,62 @@ interface ActivityData {
 }
 
 const TYPE_CONFIG: Record<string, { label: string; badge: string; color: string; bg: string }> = {
-  context_loaded:      { label: 'START',   badge: 'SS', color: 'text-gray-400',   bg: 'bg-gray-500/15' },
-  session_end:         { label: 'END',     badge: 'SE', color: 'text-gray-400',   bg: 'bg-gray-500/15' },
-  memory_stored:       { label: 'MEMORY',  badge: 'MS', color: 'text-green-400',  bg: 'bg-green-500/15' },
-  memory_retrieved:    { label: 'RECALL',  badge: 'MR', color: 'text-teal-400',   bg: 'bg-teal-500/15' },
-  task_added:          { label: 'TASK+',   badge: 'T+', color: 'text-blue-400',   bg: 'bg-blue-500/15' },
-  task_updated:        { label: 'TASK',    badge: 'TK', color: 'text-blue-400',   bg: 'bg-blue-500/15' },
-  decision_recorded:   { label: 'DECIDE',  badge: 'DC', color: 'text-orange-400', bg: 'bg-orange-500/15' },
-  approval_requested:  { label: 'BLOCK',   badge: '!!', color: 'text-red-400',    bg: 'bg-red-500/15' },
-  approval_auto:       { label: 'AUTO',    badge: 'OK', color: 'text-gray-400',   bg: 'bg-gray-500/15' },
-  strike_recorded:     { label: 'STRIKE',  badge: 'S1', color: 'text-yellow-400', bg: 'bg-yellow-500/15' },
-  strike_halt:         { label: 'HALT',    badge: 'S2', color: 'text-red-400',    bg: 'bg-red-500/15' },
-  question_added:      { label: 'QUEST',   badge: 'Q+', color: 'text-purple-400', bg: 'bg-purple-500/15' },
-  question_answered:   { label: 'ANSWR',   badge: 'QA', color: 'text-purple-400', bg: 'bg-purple-500/15' },
+  context_loaded: { label: 'START', badge: 'SS', color: 'text-gray-400', bg: 'bg-gray-500/15' },
+  session_end: { label: 'END', badge: 'SE', color: 'text-gray-400', bg: 'bg-gray-500/15' },
+  memory_stored: { label: 'MEMORY', badge: 'MS', color: 'text-green-400', bg: 'bg-green-500/15' },
+  memory_retrieved: { label: 'RECALL', badge: 'MR', color: 'text-teal-400', bg: 'bg-teal-500/15' },
+  task_added: { label: 'TASK+', badge: 'T+', color: 'text-blue-400', bg: 'bg-blue-500/15' },
+  task_updated: { label: 'TASK', badge: 'TK', color: 'text-blue-400', bg: 'bg-blue-500/15' },
+  decision_recorded: {
+    label: 'DECIDE',
+    badge: 'DC',
+    color: 'text-orange-400',
+    bg: 'bg-orange-500/15',
+  },
+  approval_requested: { label: 'BLOCK', badge: '!!', color: 'text-red-400', bg: 'bg-red-500/15' },
+  approval_auto: { label: 'AUTO', badge: 'OK', color: 'text-gray-400', bg: 'bg-gray-500/15' },
+  strike_recorded: {
+    label: 'STRIKE',
+    badge: 'S1',
+    color: 'text-yellow-400',
+    bg: 'bg-yellow-500/15',
+  },
+  strike_halt: { label: 'HALT', badge: 'S2', color: 'text-red-400', bg: 'bg-red-500/15' },
+  question_added: { label: 'QUEST', badge: 'Q+', color: 'text-purple-400', bg: 'bg-purple-500/15' },
+  question_answered: {
+    label: 'ANSWR',
+    badge: 'QA',
+    color: 'text-purple-400',
+    bg: 'bg-purple-500/15',
+  },
 };
 
-const DEFAULT_CONFIG = { label: 'EVENT', badge: 'EV', color: 'text-gray-400', bg: 'bg-gray-500/15' };
+const DEFAULT_CONFIG = {
+  label: 'EVENT',
+  badge: 'EV',
+  color: 'text-gray-400',
+  bg: 'bg-gray-500/15',
+};
 
 function getConfig(type: string) {
   return TYPE_CONFIG[type] ?? DEFAULT_CONFIG;
 }
 
 const BRACKET_COLORS: Record<string, string> = {
-  DONE:        '#4ade80',
+  DONE: '#4ade80',
   IN_PROGRESS: '#fbbf24',
-  BLOCKED:     '#f87171',
-  TODO:        '#94a3b8',
-  STARTED:     '#60a5fa',
-  SCOPE:       '#a78bfa',
-  PLAN:        '#818cf8',
-  BUILD:       '#22d3ee',
-  VERIFY:      '#fb923c',
-  SHIP:        '#4ade80',
-  HALT:        '#f87171',
-  STRIKE:      '#fbbf24',
-  BLOCK:       '#f87171',
-  AUTO:        '#94a3b8',
+  BLOCKED: '#f87171',
+  TODO: '#94a3b8',
+  STARTED: '#60a5fa',
+  SCOPE: '#a78bfa',
+  PLAN: '#818cf8',
+  BUILD: '#22d3ee',
+  VERIFY: '#fb923c',
+  SHIP: '#4ade80',
+  HALT: '#f87171',
+  STRIKE: '#fbbf24',
+  BLOCK: '#f87171',
+  AUTO: '#94a3b8',
 };
 
 function colorBrackets(text: string, accent: string): ReactNode {
@@ -65,7 +85,9 @@ function colorBrackets(text: string, accent: string): ReactNode {
     const label = match[1];
     const color = BRACKET_COLORS[label] ?? accent;
     parts.push(
-      <span key={key++} style={{ color, fontWeight: 600 }}>[{label}]</span>
+      <span key={key++} style={{ color, fontWeight: 600 }}>
+        [{label}]
+      </span>,
     );
     last = bracketRegex.lastIndex;
   }
@@ -154,7 +176,9 @@ export function ActivityStream() {
   if (activities.length === 0) {
     return (
       <div className="flex-1 flex items-center justify-center bg-[#0a0a0f]">
-        <p className="text-sm text-gray-500">No activity yet. Activity appears here as Claude uses MCP tools during sessions.</p>
+        <p className="text-sm text-gray-500">
+          No activity yet. Activity appears here as Claude uses MCP tools during sessions.
+        </p>
       </div>
     );
   }

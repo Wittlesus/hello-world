@@ -1,7 +1,7 @@
-import { Command } from 'commander';
 import { resolve } from 'node:path';
-import chalk from 'chalk';
 import { Project } from '@hello-world/core';
+import chalk from 'chalk';
+import { Command } from 'commander';
 
 const STATUS_ICONS: Record<string, string> = {
   todo: chalk.yellow('[ ]'),
@@ -39,7 +39,10 @@ export const tasksCommand = new Command('tasks')
       console.log();
       for (const task of tasks) {
         const icon = STATUS_ICONS[task.status as string] ?? '[ ]';
-        const deps = task.dependsOn.length > 0 ? chalk.gray(` (depends on: ${task.dependsOn.join(', ')})`) : '';
+        const deps =
+          task.dependsOn.length > 0
+            ? chalk.gray(` (depends on: ${task.dependsOn.join(', ')})`)
+            : '';
         const tags = task.tags.length > 0 ? chalk.cyan(` [${task.tags.join(', ')}]`) : '';
         console.log(`  ${icon} ${chalk.gray(task.id)} ${task.title}${deps}${tags}`);
       }

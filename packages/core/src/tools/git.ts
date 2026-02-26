@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
+import type { GitCommit, GitStatus } from '../types.js';
 import type { Tool, ToolResult } from './types.js';
-import type { GitStatus, GitCommit } from '../types.js';
 
 function git(args: string[], cwd: string): string {
   return execFileSync('git', args, { cwd, encoding: 'utf-8', timeout: 10000 }).trim();
@@ -89,10 +89,13 @@ export const gitLogTool: Tool = {
     const count = (input.count as number | undefined) ?? 10;
     try {
       const raw = git(['log', `--max-count=${count}`, '--format=%H|%s|%an|%ai'], cwd);
-      const commits: GitCommit[] = raw.split('\n').filter(Boolean).map(line => {
-        const [hash, message, author, date] = line.split('|');
-        return { hash, message, author, date };
-      });
+      const commits: GitCommit[] = raw
+        .split('\n')
+        .filter(Boolean)
+        .map((line) => {
+          const [hash, message, author, date] = line.split('|');
+          return { hash, message, author, date };
+        });
       return { success: true, output: JSON.stringify(commits, null, 2) };
     } catch (err: unknown) {
       return { success: false, output: '', error: (err as Error).message };

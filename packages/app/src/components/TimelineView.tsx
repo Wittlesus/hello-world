@@ -1,5 +1,5 @@
-import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
 
 function renderLine(line: string, index: number): React.ReactElement | null {
   if (!line.trim()) return null;
@@ -38,7 +38,13 @@ function renderLine(line: string, index: number): React.ReactElement | null {
     return (
       <li key={index} className="text-xs text-gray-400 leading-relaxed ml-4 list-disc">
         {parts.map((part, i) =>
-          i % 2 === 1 ? <strong key={i} className="text-gray-300">{part}</strong> : part
+          i % 2 === 1 ? (
+            <strong key={i} className="text-gray-300">
+              {part}
+            </strong>
+          ) : (
+            part
+          ),
         )}
       </li>
     );
@@ -49,11 +55,16 @@ function renderLine(line: string, index: number): React.ReactElement | null {
 
   // Table row
   if (line.startsWith('| ') && line.endsWith(' |')) {
-    const cells = line.split('|').map((c) => c.trim()).filter(Boolean);
+    const cells = line
+      .split('|')
+      .map((c) => c.trim())
+      .filter(Boolean);
     return (
       <div key={index} className="flex gap-4 text-[11px] text-gray-500 font-mono">
         {cells.map((c, i) => (
-          <span key={i} className="truncate">{c}</span>
+          <span key={i} className="truncate">
+            {c}
+          </span>
         ))}
       </div>
     );
@@ -83,7 +94,13 @@ function renderLine(line: string, index: number): React.ReactElement | null {
     return (
       <p key={index} className="text-xs text-gray-500 leading-relaxed">
         {parts.map((part, i) =>
-          i % 2 === 1 ? <strong key={i} className="text-gray-300">{part}</strong> : part
+          i % 2 === 1 ? (
+            <strong key={i} className="text-gray-300">
+              {part}
+            </strong>
+          ) : (
+            part
+          ),
         )}
       </p>
     );
@@ -130,7 +147,9 @@ export function TimelineView() {
       </div>
       <div className="flex-1 overflow-y-auto px-5 py-4">
         {isEmpty ? (
-          <p className="text-sm text-gray-500 text-center mt-16">No timeline entries yet. The timeline builds as Claude logs activity across sessions.</p>
+          <p className="text-sm text-gray-500 text-center mt-16">
+            No timeline entries yet. The timeline builds as Claude logs activity across sessions.
+          </p>
         ) : (
           lines.map((line, i) => renderLine(line, i))
         )}

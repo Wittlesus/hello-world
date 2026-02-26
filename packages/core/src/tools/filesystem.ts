@@ -1,5 +1,5 @@
-import { readFileSync, writeFileSync, readdirSync, existsSync, statSync, mkdirSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 import type { Tool, ToolResult } from './types.js';
 
 export const readFileTool: Tool = {
@@ -25,7 +25,8 @@ export const readFileTool: Tool = {
 export const writeFileTool: Tool = {
   definition: {
     name: 'write_file',
-    description: 'Write content to a file, creating directories if needed. Overwrites existing files.',
+    description:
+      'Write content to a file, creating directories if needed. Overwrites existing files.',
     input_schema: {
       type: 'object',
       properties: {
@@ -59,8 +60,9 @@ export const listDirectoryTool: Tool = {
   },
   execute: async (input): Promise<ToolResult> => {
     const path = input.path as string;
-    if (!existsSync(path)) return { success: false, output: '', error: `Directory not found: ${path}` };
-    const entries = readdirSync(path).map(name => {
+    if (!existsSync(path))
+      return { success: false, output: '', error: `Directory not found: ${path}` };
+    const entries = readdirSync(path).map((name) => {
       const full = join(path, name);
       const isDir = statSync(full).isDirectory();
       return `${isDir ? 'd' : 'f'} ${name}`;

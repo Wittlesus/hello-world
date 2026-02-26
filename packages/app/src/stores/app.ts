@@ -1,11 +1,21 @@
 import { create } from 'zustand';
 
 export type View =
-  | 'terminal' | 'dashboard' | 'approvals' | 'files'
-  | 'tasks' | 'decisions' | 'questions' | 'agents'
-  | 'memory' | 'context' | 'history'
-  | 'settings' | 'cost' | 'skills' | 'watchers'
-  | 'browser';
+  | 'terminal'
+  | 'dashboard'
+  | 'approvals'
+  | 'files'
+  | 'tasks'
+  | 'decisions'
+  | 'questions'
+  | 'agents'
+  | 'memory'
+  | 'context'
+  | 'history'
+  | 'settings'
+  | 'cost'
+  | 'skills'
+  | 'watchers';
 
 interface AppState {
   activeView: View;

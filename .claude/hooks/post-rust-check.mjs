@@ -7,7 +7,7 @@
 
 import { spawnSync } from 'child_process';
 import { existsSync } from 'fs';
-import { join, dirname } from 'path';
+import { dirname, join } from 'path';
 
 let raw = '';
 process.stdin.setEncoding('utf8');

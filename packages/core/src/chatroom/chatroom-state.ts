@@ -1,7 +1,16 @@
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { join } from 'path';
 import { randomBytes } from 'crypto';
-import type { ChatroomState, ChatAgent, ChatMessage, SessionStatus, DeliberationPhase, ChatReaction, DeliberationPlan, CoverageQuality } from './types.js';
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import type {
+  ChatAgent,
+  ChatMessage,
+  ChatReaction,
+  ChatroomState,
+  CoverageQuality,
+  DeliberationPhase,
+  DeliberationPlan,
+  SessionStatus,
+} from './types.js';
 import { EMPTY_CHATROOM } from './types.js';
 
 function uid(prefix: string): string {
@@ -35,10 +44,15 @@ export class ChatroomStore {
     return next;
   }
 
-  startSession(topic: string, agentIds: string[], startedBy: 'claude' | 'pat', agentDefs: Record<string, { id: string; name: string; color: string }>): ChatroomState {
+  startSession(
+    topic: string,
+    agentIds: string[],
+    startedBy: 'claude' | 'pat',
+    agentDefs: Record<string, { id: string; name: string; color: string }>,
+  ): ChatroomState {
     const agents: ChatAgent[] = agentIds
-      .filter(id => agentDefs[id])
-      .map(id => ({
+      .filter((id) => agentDefs[id])
+      .map((id) => ({
         id,
         name: agentDefs[id].name,
         color: agentDefs[id].color,
@@ -76,7 +90,7 @@ export class ChatroomStore {
   }
 
   appendMessage(agentId: string, text: string, type: ChatMessage['type'] = 'message'): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       messages: [
         ...state.messages,
@@ -86,51 +100,53 @@ export class ChatroomStore {
   }
 
   updateAgentStatus(agentId: string, status: ChatAgent['status'], currentThought = ''): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
-      agents: state.agents.map(a =>
-        a.id === agentId ? { ...a, status, currentThought } : a
-      ),
+      agents: state.agents.map((a) => (a.id === agentId ? { ...a, status, currentThought } : a)),
     }));
   }
 
   setSessionStatus(status: SessionStatus, waitingForInput = false): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       session: { ...state.session, status, waitingForInput },
     }));
   }
 
   incrementRound(): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
-      session: { ...state.session, roundNumber: state.session.roundNumber + 1, waitingForInput: false },
+      session: {
+        ...state.session,
+        roundNumber: state.session.roundNumber + 1,
+        waitingForInput: false,
+      },
     }));
   }
 
   setWaitingForInput(waiting: boolean): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       session: { ...state.session, waitingForInput: waiting },
     }));
   }
 
   setDeliberationPhase(phase: DeliberationPhase): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       session: { ...state.session, deliberationPhase: phase },
     }));
   }
 
   setIntroRevealedCount(n: number): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       session: { ...state.session, introRevealedCount: n },
     }));
   }
 
   clearIntroMode(): void {
-    this.update(state => {
+    this.update((state) => {
       const session = { ...state.session };
       delete session.introRevealedCount;
       return { ...state, session };
@@ -145,37 +161,46 @@ export class ChatroomStore {
       timestamp: new Date().toISOString(),
     };
     const cutoff = new Date(Date.now() - 30_000).toISOString();
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
-      reactions: [
-        ...(state.reactions ?? []).filter(r => r.timestamp > cutoff),
-        reaction,
-      ],
+      reactions: [...(state.reactions ?? []).filter((r) => r.timestamp > cutoff), reaction],
     }));
     return reaction;
   }
 
   setPendingPatMessage(message: string | undefined): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       session: { ...state.session, pendingPatMessage: message },
     }));
   }
 
   setDeliberationPlan(plan: DeliberationPlan): void {
-    this.update(state => ({
+    this.update((state) => ({
       ...state,
       session: { ...state.session, plan },
     }));
   }
 
-  updateSubQuestion(questionId: number, status: 'pending' | 'addressed' | 'lumped', addressedBy?: string[], resolution?: string, quality?: CoverageQuality): void {
-    this.update(state => {
+  updateSubQuestion(
+    questionId: number,
+    status: 'pending' | 'addressed' | 'lumped',
+    addressedBy?: string[],
+    resolution?: string,
+    quality?: CoverageQuality,
+  ): void {
+    this.update((state) => {
       if (!state.session.plan) return state;
-      const subQuestions = state.session.plan.subQuestions.map(sq =>
+      const subQuestions = state.session.plan.subQuestions.map((sq) =>
         sq.id === questionId
-          ? { ...sq, status, ...(addressedBy && { addressedBy }), ...(resolution && { resolution }), ...(quality && { quality }) }
-          : sq
+          ? {
+              ...sq,
+              status,
+              ...(addressedBy && { addressedBy }),
+              ...(resolution && { resolution }),
+              ...(quality && { quality }),
+            }
+          : sq,
       );
       return {
         ...state,

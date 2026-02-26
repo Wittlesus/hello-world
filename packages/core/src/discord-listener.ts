@@ -11,7 +11,7 @@
  */
 
 import 'dotenv/config';
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
 const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN ?? '';
@@ -27,7 +27,7 @@ async function discordFetch(path: string, options: RequestInit = {}) {
   return fetch(`${DISCORD_API}${path}`, {
     ...options,
     headers: {
-      'Authorization': `Bot ${BOT_TOKEN}`,
+      Authorization: `Bot ${BOT_TOKEN}`,
       'Content-Type': 'application/json',
       ...options.headers,
     },
@@ -39,7 +39,7 @@ async function sendDM(userId: string, content: string) {
     method: 'POST',
     body: JSON.stringify({ recipient_id: userId }),
   });
-  const dm = await dmRes.json() as { id?: string };
+  const dm = (await dmRes.json()) as { id?: string };
   if (!dm.id) return;
   await discordFetch(`/channels/${dm.id}/messages`, {
     method: 'POST',
@@ -73,9 +73,13 @@ function writeApprovals(data: ApprovalsData) {
   writeFileSync(join(HW_DIR, 'approvals.json'), JSON.stringify(data, null, 2));
 }
 
-function resolveApproval(id: string, decision: 'approved' | 'rejected', notes = ''): ApprovalRequest | null {
+function resolveApproval(
+  id: string,
+  decision: 'approved' | 'rejected',
+  notes = '',
+): ApprovalRequest | null {
   const data = readApprovals();
-  const idx = data.pending.findIndex(r => r.id === id);
+  const idx = data.pending.findIndex((r) => r.id === id);
   if (idx === -1) return null;
 
   const [request] = data.pending.splice(idx, 1);
@@ -106,11 +110,21 @@ function appendDirection(text: string) {
       const parsed = JSON.parse(readFileSync(path, 'utf8'));
       // Support old array format (migrate on the fly)
       data = Array.isArray(parsed)
-        ? { vision: '', scope: [], notes: parsed.map((n: { text: string; ts: string }) => ({
-            id: `n_discord_${Date.now()}`, text: n.text, source: 'discord', read: false, capturedAt: n.ts,
-          })) }
+        ? {
+            vision: '',
+            scope: [],
+            notes: parsed.map((n: { text: string; ts: string }) => ({
+              id: `n_discord_${Date.now()}`,
+              text: n.text,
+              source: 'discord',
+              read: false,
+              capturedAt: n.ts,
+            })),
+          }
         : parsed;
-    } catch { /* ok */ }
+    } catch {
+      /* ok */
+    }
   }
   if (!Array.isArray(data.notes)) data.notes = [];
   data.notes.push({
@@ -150,7 +164,10 @@ async function handleMessage(content: string, authorId: string) {
     const reason = reasonParts.join(' ');
     const resolved = resolveApproval(id, 'rejected', reason);
     if (resolved) {
-      await sendDM(PAT_USER_ID, `Rejected: **${resolved.action}** (${id}).${reason ? ` Reason: ${reason}` : ''}`);
+      await sendDM(
+        PAT_USER_ID,
+        `Rejected: **${resolved.action}** (${id}).${reason ? ` Reason: ${reason}` : ''}`,
+      );
     } else {
       await sendDM(PAT_USER_ID, `No pending request found with ID: ${id}`);
     }
@@ -171,7 +188,9 @@ async function handleMessage(content: string, authorId: string) {
     if (data.pending.length === 0) {
       await sendDM(PAT_USER_ID, 'No pending approvals.');
     } else {
-      const lines = data.pending.map(r => `\`${r.id}\` **${r.action}** — ${r.description}`).join('\n');
+      const lines = data.pending
+        .map((r) => `\`${r.id}\` **${r.action}** — ${r.description}`)
+        .join('\n');
       await sendDM(PAT_USER_ID, `Pending approvals:\n${lines}`);
     }
     return;
@@ -179,13 +198,16 @@ async function handleMessage(content: string, authorId: string) {
 
   // help
   if (lower === 'help') {
-    await sendDM(PAT_USER_ID, [
-      '**Hello World bot commands:**',
-      '`approve <id>` — approve a pending request',
-      '`reject <id> [reason]` — reject a pending request',
-      '`note <text>` — leave direction for next Claude session',
-      '`list` — show pending approvals',
-    ].join('\n'));
+    await sendDM(
+      PAT_USER_ID,
+      [
+        '**Hello World bot commands:**',
+        '`approve <id>` — approve a pending request',
+        '`reject <id> [reason]` — reject a pending request',
+        '`note <text>` — leave direction for next Claude session',
+        '`list` — show pending approvals',
+      ].join('\n'),
+    );
   }
 }
 
@@ -214,24 +236,28 @@ function connect() {
     if (payload.s != null) sequence = payload.s;
 
     switch (payload.op) {
-      case 10: { // HELLO — start heartbeat and identify
+      case 10: {
+        // HELLO — start heartbeat and identify
         const d = payload.d as { heartbeat_interval: number };
         heartbeatInterval = setInterval(() => {
           ws.send(JSON.stringify({ op: 1, d: sequence }));
         }, d.heartbeat_interval);
 
-        ws.send(JSON.stringify({
-          op: 2, // IDENTIFY
-          d: {
-            token: BOT_TOKEN,
-            intents: INTENTS,
-            properties: { os: 'windows', browser: 'hw-bot', device: 'hw-bot' },
-          },
-        }));
+        ws.send(
+          JSON.stringify({
+            op: 2, // IDENTIFY
+            d: {
+              token: BOT_TOKEN,
+              intents: INTENTS,
+              properties: { os: 'windows', browser: 'hw-bot', device: 'hw-bot' },
+            },
+          }),
+        );
         break;
       }
 
-      case 0: { // DISPATCH
+      case 0: {
+        // DISPATCH
         if (payload.t === 'MESSAGE_CREATE') {
           const msg = payload.d as {
             content: string;
@@ -246,8 +272,8 @@ function connect() {
         break;
       }
 
-      case 7:  // RECONNECT
-      case 9:  // INVALID SESSION
+      case 7: // RECONNECT
+      case 9: // INVALID SESSION
         ws.close();
         break;
     }

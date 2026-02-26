@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { EmptyState, ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
-import { LoadingState, ErrorState, EmptyState } from './LoadingState.js';
 
 interface Question {
   id: string;
@@ -21,7 +21,7 @@ interface StateData {
 }
 
 const STATUS_STYLE: Record<string, string> = {
-  open:     'bg-yellow-500/20 text-yellow-300',
+  open: 'bg-yellow-500/20 text-yellow-300',
   answered: 'bg-green-500/20 text-green-300',
   deferred: 'bg-gray-500/20 text-gray-400',
 };
@@ -90,12 +90,15 @@ function AnswerPanel({ q, onClose }: AnswerPanelProps) {
     }
   }
 
-  const inputClass = 'w-full bg-[#0a0a0f] border border-gray-700 rounded p-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500';
+  const inputClass =
+    'w-full bg-[#0a0a0f] border border-gray-700 rounded p-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500';
   const labelClass = 'text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1 block';
 
   return (
     <div className="mt-2 bg-[#1a1a24] border border-gray-700 rounded-lg p-4 space-y-4">
-      <div className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Answer this question</div>
+      <div className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+        Answer this question
+      </div>
 
       <div>
         <label className={labelClass}>Answer</label>
@@ -257,7 +260,13 @@ function QuestionCard({ q }: { q: Question }) {
           role={hasContent ? 'button' : undefined}
           tabIndex={hasContent ? 0 : undefined}
           onClick={hasContent ? () => setExpanded((prev) => !prev) : undefined}
-          onKeyDown={hasContent ? (e) => { if (e.key === 'Enter' || e.key === ' ') setExpanded((prev) => !prev); } : undefined}
+          onKeyDown={
+            hasContent
+              ? (e) => {
+                  if (e.key === 'Enter' || e.key === ' ') setExpanded((prev) => !prev);
+                }
+              : undefined
+          }
           className={hasContent ? 'cursor-pointer' : undefined}
         >
           <div className="flex items-start justify-between gap-3">
@@ -266,7 +275,9 @@ function QuestionCard({ q }: { q: Question }) {
           </div>
 
           <div className="flex items-center gap-2 mt-2">
-            <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${STATUS_STYLE[q.status] ?? 'bg-gray-500/20 text-gray-300'}`}>
+            <span
+              className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${STATUS_STYLE[q.status] ?? 'bg-gray-500/20 text-gray-300'}`}
+            >
               {q.status}
             </span>
             {hasContent && (
@@ -279,16 +290,22 @@ function QuestionCard({ q }: { q: Question }) {
           <div className="mt-3 pt-3 border-t border-gray-800 space-y-3">
             {q.context && (
               <div>
-                <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Context</span>
+                <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">
+                  Context
+                </span>
                 <p className="text-xs text-gray-400 mt-1 leading-relaxed">{q.context}</p>
               </div>
             )}
             {q.answer && (
               <div>
-                <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">Answer</span>
+                <span className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">
+                  Answer
+                </span>
                 <p className="text-xs text-gray-300 mt-1 leading-relaxed">{q.answer}</p>
                 {q.answeredAt && (
-                  <p className="text-[10px] text-gray-600 mt-1">Answered {formatDate(q.answeredAt)}</p>
+                  <p className="text-[10px] text-gray-600 mt-1">
+                    Answered {formatDate(q.answeredAt)}
+                  </p>
                 )}
               </div>
             )}
@@ -323,9 +340,7 @@ function QuestionCard({ q }: { q: Question }) {
         )}
       </div>
 
-      {isOpen && answerOpen && (
-        <AnswerPanel q={q} onClose={() => setAnswerOpen(false)} />
-      )}
+      {isOpen && answerOpen && <AnswerPanel q={q} onClose={() => setAnswerOpen(false)} />}
     </div>
   );
 }
@@ -338,9 +353,9 @@ export function QuestionsView() {
   if (error) return <ErrorState message={error} onRetry={refetch} />;
 
   const questions = data?.questions ?? [];
-  const open = questions.filter(q => q.status === 'open');
-  const answered = questions.filter(q => q.status === 'answered');
-  const deferred = questions.filter(q => q.status === 'deferred');
+  const open = questions.filter((q) => q.status === 'open');
+  const answered = questions.filter((q) => q.status === 'answered');
+  const deferred = questions.filter((q) => q.status === 'deferred');
 
   return (
     <ViewShell
@@ -353,25 +368,37 @@ export function QuestionsView() {
         <div className="space-y-6">
           {open.length > 0 && (
             <section>
-              <h3 className="text-[10px] uppercase tracking-wider text-yellow-500/70 font-semibold mb-2">Open</h3>
+              <h3 className="text-[10px] uppercase tracking-wider text-yellow-500/70 font-semibold mb-2">
+                Open
+              </h3>
               <div className="space-y-2">
-                {[...open].reverse().map(q => <QuestionCard key={q.id} q={q} />)}
+                {[...open].reverse().map((q) => (
+                  <QuestionCard key={q.id} q={q} />
+                ))}
               </div>
             </section>
           )}
           {answered.length > 0 && (
             <section>
-              <h3 className="text-[10px] uppercase tracking-wider text-green-500/70 font-semibold mb-2">Answered</h3>
+              <h3 className="text-[10px] uppercase tracking-wider text-green-500/70 font-semibold mb-2">
+                Answered
+              </h3>
               <div className="space-y-2">
-                {[...answered].reverse().map(q => <QuestionCard key={q.id} q={q} />)}
+                {[...answered].reverse().map((q) => (
+                  <QuestionCard key={q.id} q={q} />
+                ))}
               </div>
             </section>
           )}
           {deferred.length > 0 && (
             <section>
-              <h3 className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">Deferred</h3>
+              <h3 className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-2">
+                Deferred
+              </h3>
               <div className="space-y-2">
-                {[...deferred].reverse().map(q => <QuestionCard key={q.id} q={q} />)}
+                {[...deferred].reverse().map((q) => (
+                  <QuestionCard key={q.id} q={q} />
+                ))}
               </div>
             </section>
           )}

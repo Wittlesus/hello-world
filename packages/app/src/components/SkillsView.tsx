@@ -1,7 +1,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { useEffect, useState } from 'react';
+import { ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
-import { LoadingState, ErrorState } from './LoadingState.js';
 
 interface Plugin {
   name: string;
@@ -33,13 +33,20 @@ interface Capabilities {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="mb-6">
-      <h3 className="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mb-3">{title}</h3>
+      <h3 className="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mb-3">
+        {title}
+      </h3>
       <div className="space-y-2">{children}</div>
     </div>
   );
 }
 
-function Row({ label, sub, badge, badgeColor = 'bg-gray-700 text-gray-300' }: {
+function Row({
+  label,
+  sub,
+  badge,
+  badgeColor = 'bg-gray-700 text-gray-300',
+}: {
   label: string;
   sub?: string;
   badge?: string;

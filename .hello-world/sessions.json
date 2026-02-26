@@ -461,6 +461,36 @@
       "tasksCompleted": [],
       "decisionsMade": [],
       "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T17:58:48.321Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_21775048",
+      "startedAt": "2026-02-25T17:58:48.321Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-25T18:05:42.713Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_b4eb8308",
+      "startedAt": "2026-02-25T18:05:42.713Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
+      "tokensUsed": 0,
+      "endedAt": "2026-02-26T03:32:39.611Z",
+      "summary": "(orphaned -- auto-closed)"
+    },
+    {
+      "id": "s_5210c6e4",
+      "startedAt": "2026-02-26T03:32:39.611Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 0,
       "tokensUsed": 0
     }
   ]

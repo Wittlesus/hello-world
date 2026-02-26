@@ -1,5 +1,3 @@
-mod browser;
-
 use std::fs;
 use std::io::{BufRead, BufReader, Read, Write};
 use std::path::PathBuf;
@@ -838,15 +836,6 @@ fn base64_encode(data: &[u8]) -> String {
 // We emit hw-files-changed (for tab refresh) and hw-tool-summary (for buddy).
 // Port is written to .hello-world/sync.json so the MCP server can discover it.
 
-fn respond_json(stream: &mut std::net::TcpStream, status: u16, body: &str) {
-    let phrase = if status == 200 { "OK" } else if status == 204 { "No Content" } else { "Error" };
-    let resp = format!(
-        "HTTP/1.1 {} {}\r\nContent-Type: application/json\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
-        status, phrase, body.len(), body
-    );
-    let _ = stream.write_all(resp.as_bytes());
-}
-
 fn start_notify_listener(app: tauri::AppHandle, project_path: String) {
     use std::net::TcpListener;
     use std::io::{BufRead, BufReader, Read, Write};
@@ -873,7 +862,6 @@ fn start_notify_listener(app: tauri::AppHandle, project_path: String) {
         for stream in listener.incoming() {
             let Ok(mut stream) = stream else { continue };
             let app_handle = app.clone();
-            let pp = project_path.clone();
 
             std::thread::spawn(move || {
                 let mut reader = BufReader::new(&stream);
@@ -930,110 +918,19 @@ fn start_notify_listener(app: tauri::AppHandle, project_path: String) {
                 };
 
                 // ── Route by path ──────────────────────────────
-                match path.as_str() {
-                    "/browser/navigate" => {
-                        let url = payload["url"].as_str().unwrap_or("").to_string();
-                        if url.is_empty() {
-                            respond_json(&mut stream, 500, r#"{"error":"missing url"}"#);
-                            return;
-                        }
-                        match browser::browser_open(app_handle, pp, url) {
-                            Ok(result) => {
-                                let body = serde_json::to_string(&result).unwrap_or_default();
-                                respond_json(&mut stream, 200, &body);
-                            }
-                            Err(e) => {
-                                let body = serde_json::json!({"error": e}).to_string();
-                                respond_json(&mut stream, 500, &body);
-                            }
-                        }
-                    }
-
-                    "/browser/state" => {
-                        match browser::browser_get_state() {
-                            Ok(result) => {
-                                let body = serde_json::to_string(&result).unwrap_or_default();
-                                respond_json(&mut stream, 200, &body);
-                            }
-                            Err(e) => {
-                                let body = serde_json::json!({"error": e}).to_string();
-                                respond_json(&mut stream, 500, &body);
-                            }
-                        }
-                    }
-
-                    "/browser/close" => {
-                        match browser::browser_close(app_handle) {
-                            Ok(()) => respond_json(&mut stream, 200, r#"{"ok":true}"#),
-                            Err(e) => {
-                                let body = serde_json::json!({"error": e}).to_string();
-                                respond_json(&mut stream, 500, &body);
-                            }
-                        }
-                    }
-
-                    "/browser/extract" => {
-                        let selector = payload["selector"].as_str().unwrap_or("").replace('\'', "\\'");
-                        let max_chars = payload["max_chars"].as_u64().unwrap_or(8000);
-
-                        let webview = match app_handle.get_webview("hw-browser") {
-                            Some(w) => w,
-                            None => {
-                                respond_json(&mut stream, 500, r#"{"error":"Browser not open"}"#);
-                                return;
-                            }
-                        };
-
-                        // Clear pending result
-                        if let Ok(mut guard) = browser::BROWSER_EXTRACT_RESULT.lock() {
-                            *guard = None;
-                        }
-
-                        let script = format!(
-                            "window.__HW_EXTRACT__.extractAndPost('{}', {}, 'extract');",
-                            selector, max_chars
-                        );
-                        if let Err(e) = webview.eval(&script) {
-                            let body = serde_json::json!({"error": format!("Eval: {}", e)}).to_string();
-                            respond_json(&mut stream, 500, &body);
-                            return;
-                        }
-
-                        match browser::wait_for_extract_result_pub(10000) {
-                            Ok(result) => {
-                                let data_str = result["data"].as_str().unwrap_or("{}");
-                                let parsed: Value = serde_json::from_str(data_str).unwrap_or(result.clone());
-                                let body = serde_json::to_string(&parsed).unwrap_or_default();
-                                respond_json(&mut stream, 200, &body);
-                            }
-                            Err(e) => {
-                                let body = serde_json::json!({"error": e}).to_string();
-                                respond_json(&mut stream, 500, &body);
-                            }
-                        }
-                    }
-
-                    "/browser-result" => {
-                        browser::store_browser_result(payload);
-                        respond_json(&mut stream, 200, r#"{"ok":true}"#);
-                    }
-
-                    _ => {
-                        // Default: notify handler (existing behavior)
-                        if let Some(files) = payload["files"].as_array() {
-                            let names: Vec<String> = files.iter()
-                                .filter_map(|f| f.as_str().map(String::from))
-                                .collect();
-                            if !names.is_empty() {
-                                let _ = app_handle.emit("hw-files-changed", &names);
-                            }
-                        }
-                        if payload["summary"].is_string() {
-                            let _ = app_handle.emit("hw-tool-summary", &payload);
-                        }
-                        let _ = stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n");
+                // Default: notify handler
+                if let Some(files) = payload["files"].as_array() {
+                    let names: Vec<String> = files.iter()
+                        .filter_map(|f| f.as_str().map(String::from))
+                        .collect();
+                    if !names.is_empty() {
+                        let _ = app_handle.emit("hw-files-changed", &names);
                     }
                 }
+                if payload["summary"].is_string() {
+                    let _ = app_handle.emit("hw-tool-summary", &payload);
+                }
+                let _ = stream.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n");
             });
         }
     });
@@ -1131,18 +1028,6 @@ pub fn run() {
             start_watching,
             get_capabilities,
             resolve_approval,
-            browser::browser_open,
-            browser::browser_navigate,
-            browser::browser_extract_content,
-            browser::browser_get_links,
-            browser::browser_click_element,
-            browser::browser_fill_field,
-            browser::browser_get_state,
-            browser::browser_close,
-            browser::browser_set_bounds,
-            browser::browser_set_visible,
-            browser::browser_acquire_lock,
-            browser::browser_release_lock,
         ])
         .on_window_event(|window, event| {
             if window.label() == "main" {

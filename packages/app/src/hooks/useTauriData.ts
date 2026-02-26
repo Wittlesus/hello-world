@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 // Map commands to the JSON files they read
 const COMMAND_FILE_MAP: Record<string, string[]> = {
@@ -53,10 +53,13 @@ const DEBOUNCE_MS = 150;
 function debouncedRefetch(command: string, fn: () => void) {
   const existing = pendingRefetches.get(command);
   if (existing) clearTimeout(existing);
-  pendingRefetches.set(command, setTimeout(() => {
-    pendingRefetches.delete(command);
-    fn();
-  }, DEBOUNCE_MS));
+  pendingRefetches.set(
+    command,
+    setTimeout(() => {
+      pendingRefetches.delete(command);
+      fn();
+    }, DEBOUNCE_MS),
+  );
 }
 
 // ──────────────────────────────────────────────────────────────────
@@ -83,7 +86,9 @@ export function useTauriData<T>(command: string, projectPath: string): TauriData
       .finally(() => setLoading(false));
   }, [command, projectPath]);
 
-  useEffect(() => { fetchData(); }, [fetchData]);
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   // Listen for file changes and refetch when our files change (debounced)
   useEffect(() => {
@@ -103,14 +108,18 @@ export function useTauriData<T>(command: string, projectPath: string): TauriData
       }
     });
 
-    return () => { unlisten.then((fn) => fn()); };
+    return () => {
+      unlisten.then((fn) => fn());
+    };
   }, [command, projectPath]);
 
   // Shared 30s polling fallback — one global timer for all hooks
   const refetchRef = useRef<RefetchFn>(() => {});
   refetchRef.current = () => {
     if (!projectPath) return;
-    invoke<T>(command, { projectPath }).then(setData).catch(() => {});
+    invoke<T>(command, { projectPath })
+      .then(setData)
+      .catch(() => {});
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { MODEL_PRICING, type ModelPricing } from '../types.js';
 
-const pricingMap = new Map(MODEL_PRICING.map(p => [p.modelId, p]));
+const pricingMap = new Map(MODEL_PRICING.map((p) => [p.modelId, p]));
 
 /** Fallback pricing for unknown models */
 const FALLBACK_PRICING: ModelPricing = {

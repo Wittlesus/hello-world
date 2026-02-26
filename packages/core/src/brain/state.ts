@@ -7,10 +7,10 @@
  */
 
 import type { BrainState } from '../types.js';
+import { now } from '../utils.js';
+import { getContextPhase } from './engine.js';
 import type { EngineConfig } from './types.js';
 import { DEFAULT_CONFIG } from './types.js';
-import { getContextPhase } from './engine.js';
-import { now } from '../utils.js';
 
 /**
  * Initialize session state. Applies decay to existing state,
@@ -148,12 +148,16 @@ export function applyDecay(state: BrainState): BrainState {
  * Check if a consolidation checkpoint should fire.
  * More frequent in late-session phases.
  */
-export function shouldCheckpoint(state: BrainState, config: EngineConfig = DEFAULT_CONFIG): boolean {
-  const interval = state.contextPhase === 'late'
-    ? Math.floor(config.checkpointInterval / 2)
-    : state.contextPhase === 'mid'
-    ? Math.floor(config.checkpointInterval * 0.75)
-    : config.checkpointInterval;
+export function shouldCheckpoint(
+  state: BrainState,
+  config: EngineConfig = DEFAULT_CONFIG,
+): boolean {
+  const interval =
+    state.contextPhase === 'late'
+      ? Math.floor(config.checkpointInterval / 2)
+      : state.contextPhase === 'mid'
+        ? Math.floor(config.checkpointInterval * 0.75)
+        : config.checkpointInterval;
 
   return state.messageCount > 0 && state.messageCount % interval === 0;
 }

@@ -3,22 +3,22 @@
  * Persisted to workflow.json so phase survives MCP server restarts.
  */
 
+import { JsonStore } from '../storage.js';
 import type { WorkflowPhase, WorkflowState } from '../types.js';
 import { WorkflowStateSchema } from '../types.js';
-import { JsonStore } from '../storage.js';
 import { now } from '../utils.js';
 
 type TransitionResult = { ok: true; state: WorkflowState } | { ok: false; reason: string };
 
 const VALID_TRANSITIONS: Record<string, WorkflowPhase[]> = {
-  idle:             ['scope'],
-  scope:            ['plan', 'build'],
-  plan:             ['build'],
-  build:            ['verify', 'waiting_approval'],
-  verify:           ['ship', 'build', 'blocked'],
-  ship:             ['idle'],
+  idle: ['scope'],
+  scope: ['plan', 'build'],
+  plan: ['build'],
+  build: ['verify', 'waiting_approval'],
+  verify: ['ship', 'build', 'blocked'],
+  ship: ['idle'],
   waiting_approval: ['build', 'scope', 'idle', 'blocked'],
-  blocked:          ['idle'],
+  blocked: ['idle'],
 };
 
 export class WorkflowEngine {

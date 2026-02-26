@@ -40,8 +40,10 @@ export class TwoStrikeEngine {
 
   private detectErrorType(message: string): string {
     const lower = message.toLowerCase();
-    if (lower.includes('compile') || lower.includes('syntax') || lower.includes('ts(')) return 'compile';
-    if (lower.includes('test') || lower.includes('assert') || lower.includes('expect')) return 'test';
+    if (lower.includes('compile') || lower.includes('syntax') || lower.includes('ts('))
+      return 'compile';
+    if (lower.includes('test') || lower.includes('assert') || lower.includes('expect'))
+      return 'test';
     if (lower.includes('timeout')) return 'timeout';
     if (lower.includes('permission') || lower.includes('eacces')) return 'permission';
     if (lower.includes('not found') || lower.includes('enoent')) return 'not_found';
@@ -49,7 +51,12 @@ export class TwoStrikeEngine {
     return 'runtime';
   }
 
-  recordFailure(taskId: string, errorMessage: string, approach: string, affectedFile?: string): StrikeCheck {
+  recordFailure(
+    taskId: string,
+    errorMessage: string,
+    approach: string,
+    affectedFile?: string,
+  ): StrikeCheck {
     const errorClass = this.classifyError(errorMessage, affectedFile);
     const key = `${taskId}:${errorClass}`;
 
@@ -79,7 +86,7 @@ export class TwoStrikeEngine {
   resetStrikes(taskId: string): void {
     this.store.update((d) => {
       const filtered = Object.fromEntries(
-        Object.entries(d.strikes).filter(([key]) => !key.startsWith(`${taskId}:`))
+        Object.entries(d.strikes).filter(([key]) => !key.startsWith(`${taskId}:`)),
       );
       return { strikes: filtered };
     });
@@ -89,7 +96,11 @@ export class TwoStrikeEngine {
     const check = this.checkStrikes(taskId);
     if (check.history.length === 0) return 'No failures recorded.';
 
-    const lines = [`TWO-STRIKE HALT: ${check.count} failures on same error class.`, '', 'Attempts:'];
+    const lines = [
+      `TWO-STRIKE HALT: ${check.count} failures on same error class.`,
+      '',
+      'Attempts:',
+    ];
     for (const s of check.history) {
       lines.push(`  ${s.timestamp}: "${s.approach}"`);
       lines.push(`    Error: ${s.errorMessage.slice(0, 200)}`);

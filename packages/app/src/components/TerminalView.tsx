@@ -1,24 +1,51 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
-import { Terminal } from '@xterm/xterm';
 import { FitAddon } from '@xterm/addon-fit';
 import { WebLinksAddon } from '@xterm/addon-web-links';
+import { Terminal } from '@xterm/xterm';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import '@xterm/xterm/css/xterm.css';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 
-interface Task { id: string; title: string; description?: string; status: string }
-interface StateData { tasks: Task[] }
-interface ActivityEvent { id: string; type: string; description: string; timestamp: string }
-interface ActivityData { activities: ActivityEvent[] }
-interface WorkflowData { phase: string }
-interface Session { id: string; startedAt: string; endedAt?: string; tasksCompleted: string[] }
-interface SessionsData { sessions: Session[] }
+interface Task {
+  id: string;
+  title: string;
+  description?: string;
+  status: string;
+}
+interface StateData {
+  tasks: Task[];
+}
+interface ActivityEvent {
+  id: string;
+  type: string;
+  description: string;
+  timestamp: string;
+}
+interface ActivityData {
+  activities: ActivityEvent[];
+}
+interface WorkflowData {
+  phase: string;
+}
+interface Session {
+  id: string;
+  startedAt: string;
+  endedAt?: string;
+  tasksCompleted: string[];
+}
+interface SessionsData {
+  sessions: Session[];
+}
 
 const PHASE_DOT: Record<string, string> = {
-  idle: 'bg-gray-500', scope: 'bg-yellow-400', plan: 'bg-blue-400',
-  build: 'bg-indigo-400', verify: 'bg-orange-400', ship: 'bg-green-400',
+  idle: 'bg-gray-500',
+  scope: 'bg-yellow-400',
+  plan: 'bg-blue-400',
+  build: 'bg-indigo-400',
+  verify: 'bg-orange-400',
+  ship: 'bg-green-400',
 };
 
 function formatSessionDate(iso: string): string {
@@ -47,22 +74,22 @@ function formatTime(ts: string): string {
 
 function SidePanel() {
   const projectPath = useProjectPath();
-  const { data: stateData }    = useTauriData<StateData>('get_state', projectPath);
+  const { data: stateData } = useTauriData<StateData>('get_state', projectPath);
   const { data: activityData } = useTauriData<ActivityData>('get_activity', projectPath);
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
   const { data: sessionsData } = useTauriData<SessionsData>('get_sessions', projectPath);
 
-  const tasks      = stateData?.tasks ?? [];
+  const tasks = stateData?.tasks ?? [];
   const activeTask = tasks.find((t) => t.status === 'in_progress');
-  const todoTasks  = tasks.filter((t) => t.status === 'todo');
-  const phase      = workflowData?.phase ?? 'idle';
-  const phaseDot   = PHASE_DOT[phase] ?? 'bg-gray-500';
+  const todoTasks = tasks.filter((t) => t.status === 'todo');
+  const phase = workflowData?.phase ?? 'idle';
+  const phaseDot = PHASE_DOT[phase] ?? 'bg-gray-500';
 
   const activities = activityData?.activities
     ? [...activityData.activities].reverse().slice(0, 8)
     : [];
 
-  const allSessions    = sessionsData?.sessions ?? [];
+  const allSessions = sessionsData?.sessions ?? [];
   const recentSessions = [...allSessions].reverse().slice(0, 5);
   const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
   const toggleSession = useCallback((id: string) => {
@@ -88,7 +115,9 @@ function SidePanel() {
           <>
             <p className="text-xs text-white leading-snug font-medium">{activeTask.title}</p>
             {activeTask.description && (
-              <p className="text-[10px] text-gray-500 mt-1 leading-relaxed line-clamp-2">{activeTask.description}</p>
+              <p className="text-[10px] text-gray-500 mt-1 leading-relaxed line-clamp-2">
+                {activeTask.description}
+              </p>
             )}
           </>
         ) : (
@@ -103,7 +132,8 @@ function SidePanel() {
           <div className="flex flex-col gap-1.5">
             {todoTasks.slice(0, 3).map((t) => (
               <p key={t.id} className="text-[10px] text-gray-400 leading-snug">
-                <span className="text-gray-700 mr-1">·</span>{t.title}
+                <span className="text-gray-700 mr-1">·</span>
+                {t.title}
               </p>
             ))}
           </div>
@@ -117,10 +147,10 @@ function SidePanel() {
           <div className="flex flex-col gap-0.5">
             {recentSessions.map((s, i) => {
               const sessionNum = allSessions.length - i;
-              const isActive   = !s.endedAt;
+              const isActive = !s.endedAt;
               const isExpanded = expandedSessions.has(s.id);
-              const hasTasks   = s.tasksCompleted.length > 0;
-              const duration   = formatDuration(s.startedAt, s.endedAt);
+              const hasTasks = s.tasksCompleted.length > 0;
+              const duration = formatDuration(s.startedAt, s.endedAt);
               return (
                 <div key={s.id}>
                   <button
@@ -130,9 +160,15 @@ function SidePanel() {
                     <span className="text-[9px] text-gray-700 shrink-0 w-2">
                       {hasTasks ? (isExpanded ? '▼' : '▶') : '\u00a0'}
                     </span>
-                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 animate-pulse" />}
-                    <span className="text-[10px] text-gray-500 font-mono shrink-0">#{sessionNum}</span>
-                    <span className="text-[10px] text-gray-600 font-mono shrink-0 ml-1">{formatSessionDate(s.startedAt)}</span>
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0 animate-pulse" />
+                    )}
+                    <span className="text-[10px] text-gray-500 font-mono shrink-0">
+                      #{sessionNum}
+                    </span>
+                    <span className="text-[10px] text-gray-600 font-mono shrink-0 ml-1">
+                      {formatSessionDate(s.startedAt)}
+                    </span>
                     <span className="text-[10px] text-gray-700 ml-auto shrink-0 font-mono">
                       {hasTasks ? `${s.tasksCompleted.length}t` : '\u2014'} · {duration}
                     </span>
@@ -162,7 +198,9 @@ function SidePanel() {
         <div className="flex flex-col gap-2">
           {activities.map((a) => (
             <div key={a.id} className="flex items-start gap-2">
-              <span className="text-[9px] text-gray-700 shrink-0 mt-px w-5">{formatTime(a.timestamp)}</span>
+              <span className="text-[9px] text-gray-700 shrink-0 mt-px w-5">
+                {formatTime(a.timestamp)}
+              </span>
               <span className="text-[10px] text-gray-400 leading-snug">{a.description}</span>
             </div>
           ))}
@@ -304,8 +342,12 @@ export function TerminalView() {
         <span className="text-sm font-semibold text-gray-200">⌨ Terminal</span>
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className={`w-1.5 h-1.5 rounded-full ${status === 'ready' ? 'bg-green-400' : status === 'error' ? 'bg-red-400' : 'bg-yellow-400 animate-pulse'}`} />
-            <span className={`text-xs ${status === 'ready' ? 'text-green-400' : status === 'error' ? 'text-red-400' : 'text-yellow-400'}`}>
+            <span
+              className={`w-1.5 h-1.5 rounded-full ${status === 'ready' ? 'bg-green-400' : status === 'error' ? 'bg-red-400' : 'bg-yellow-400 animate-pulse'}`}
+            />
+            <span
+              className={`text-xs ${status === 'ready' ? 'text-green-400' : status === 'error' ? 'text-red-400' : 'text-yellow-400'}`}
+            >
               {status === 'ready' ? 'Claude running' : status === 'error' ? 'Error' : 'Starting...'}
             </span>
           </div>
@@ -334,7 +376,6 @@ export function TerminalView() {
         />
         {panelOpen && <SidePanel />}
       </div>
-
     </div>
   );
 }

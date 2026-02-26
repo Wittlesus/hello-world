@@ -1,7 +1,7 @@
-import { Command } from 'commander';
 import { resolve } from 'node:path';
+import { MemoryStore, Project, SessionManager } from '@hello-world/core';
 import chalk from 'chalk';
-import { Project, SessionManager, MemoryStore } from '@hello-world/core';
+import { Command } from 'commander';
 
 export const startCommand = new Command('start')
   .description('Start a new session — Claude sees the project context')

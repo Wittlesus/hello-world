@@ -1,6 +1,6 @@
+import { getCurrentWindow } from '@tauri-apps/api/window';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { getCurrentWindow } from '@tauri-apps/api/window';
 import { App } from './App.js';
 import { BuddyOverlay } from './components/BuddyOverlay.js';
 import './styles.css';

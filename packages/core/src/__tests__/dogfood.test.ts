@@ -6,12 +6,12 @@
  * the build process, and verifies the system works on itself.
  */
 
-import { describe, it, expect } from 'vitest';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { Project } from '../project.js';
-import { SessionManager } from '../orchestration/session.js';
+import { describe, expect, it } from 'vitest';
 import { MemoryStore } from '../brain/store.js';
+import { SessionManager } from '../orchestration/session.js';
+import { Project } from '../project.js';
 
 const PROJECT_ROOT = resolve(import.meta.dirname, '../../../..');
 
@@ -33,7 +33,8 @@ describe('Dogfood: Hello World manages itself', () => {
       project.state.addDecision('Use Tauri over Electron', {
         context: 'Electron subprocess hangs after 6+ attempts. Need reliable process spawning.',
         chosen: 'Tauri (Rust backend + webview)',
-        rationale: 'Smaller bundle, Rust process spawning is reliable, existing React code ports directly',
+        rationale:
+          'Smaller bundle, Rust process spawning is reliable, existing React code ports directly',
         decidedBy: 'both',
         alternatives: [
           { option: 'Electron', tradeoff: 'Subprocess hangs, 150MB+ bundle' },
@@ -44,14 +45,16 @@ describe('Dogfood: Hello World manages itself', () => {
       project.state.addDecision('Hybrid stack: Rust I/O + TypeScript domain logic', {
         context: 'Need fast I/O (process spawning, file ops) but rapid iteration on domain logic',
         chosen: 'Rust for I/O, TypeScript for brain/state/agents',
-        rationale: 'Best of both worlds — reliability where it matters, iteration speed where it matters',
+        rationale:
+          'Best of both worlds — reliability where it matters, iteration speed where it matters',
         decidedBy: 'claude',
       });
 
       project.state.addDecision('Port Synaptica brain engine as memory layer', {
         context: 'Need cross-session project memory. Synaptica already has hippocampal retrieval.',
         chosen: 'Port 9-stage pipeline from Synaptica, adapt to project-scoped memory',
-        rationale: 'Proven architecture, pain/win/fact types, plasticity/decay already battle-tested',
+        rationale:
+          'Proven architecture, pain/win/fact types, plasticity/decay already battle-tested',
         decidedBy: 'both',
       });
 
@@ -73,7 +76,8 @@ describe('Dogfood: Hello World manages itself', () => {
       memoryStore.storeMemory({
         type: 'pain',
         title: 'Electron subprocess hangs with claude -p',
-        content: '6+ attempts to spawn Claude as subprocess in Electron. Shell:true, named pipes, direct spawn — all fail.',
+        content:
+          '6+ attempts to spawn Claude as subprocess in Electron. Shell:true, named pipes, direct spawn — all fail.',
         rule: 'Do not attempt shell spawning in Electron for Claude. Use API directly or Tauri.',
         tags: ['electron', 'subprocess', 'architecture'],
         severity: 'high',
@@ -91,7 +95,8 @@ describe('Dogfood: Hello World manages itself', () => {
       memoryStore.storeMemory({
         type: 'win',
         title: 'Brain engine ported in one session — 20 tests passing',
-        content: 'Ported Synaptica 9-stage hippocampal pipeline to Hello World. All stages working.',
+        content:
+          'Ported Synaptica 9-stage hippocampal pipeline to Hello World. All stages working.',
         tags: ['brain', 'architecture', 'testing'],
       });
 
@@ -113,8 +118,8 @@ describe('Dogfood: Hello World manages itself', () => {
     const memories = memoryStore.getAllMemories();
     expect(memories.length).toBeGreaterThanOrEqual(5);
 
-    const pains = memories.filter(m => m.type === 'pain');
-    const wins = memories.filter(m => m.type === 'win');
+    const pains = memories.filter((m) => m.type === 'pain');
+    const wins = memories.filter((m) => m.type === 'win');
     expect(pains.length).toBeGreaterThanOrEqual(2);
     expect(wins.length).toBeGreaterThanOrEqual(3);
   });
@@ -126,12 +131,7 @@ describe('Dogfood: Hello World manages itself', () => {
 
     // Start a session and compile context
     sessions.start();
-    const context = sessions.compileContext(
-      project.config.name,
-      project.state,
-      memoryStore,
-      5.0,
-    );
+    const context = sessions.compileContext(project.config.name, project.state, memoryStore, 5.0);
 
     // The context should contain our real decisions
     expect(context.compiledText).toContain('Hello World');

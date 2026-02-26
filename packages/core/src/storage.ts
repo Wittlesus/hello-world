@@ -1,4 +1,12 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync, renameSync, copyFileSync, unlinkSync } from 'node:fs';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  renameSync,
+  unlinkSync,
+  writeFileSync,
+} from 'node:fs';
 import { join } from 'node:path';
 import { HW_DIR } from './types.js';
 
@@ -67,14 +75,22 @@ export class JsonStore<T> {
 
     // Step 2: backup current file (if it exists)
     if (existsSync(this.filePath)) {
-      try { copyFileSync(this.filePath, backupPath); } catch { /* non-fatal */ }
+      try {
+        copyFileSync(this.filePath, backupPath);
+      } catch {
+        /* non-fatal */
+      }
     }
 
     // Step 3: atomic rename with Windows NTFS retry
     if (!this.atomicRename(tmpPath, this.filePath)) {
       // Fallback: direct write (not atomic but better than losing data)
       writeFileSync(this.filePath, content, 'utf-8');
-      try { unlinkSync(tmpPath); } catch { /* cleanup */ }
+      try {
+        unlinkSync(tmpPath);
+      } catch {
+        /* cleanup */
+      }
     }
   }
 
@@ -106,7 +122,9 @@ export class JsonStore<T> {
         if (i < MAX_RETRIES - 1) {
           // Sync sleep for retry (acceptable in file I/O path)
           const start = Date.now();
-          while (Date.now() - start < RETRY_MS * (i + 1)) { /* spin */ }
+          while (Date.now() - start < RETRY_MS * (i + 1)) {
+            /* spin */
+          }
         }
       }
     }

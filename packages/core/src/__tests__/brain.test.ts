@@ -1,18 +1,18 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
-import { join } from 'node:path';
 import { tmpdir } from 'node:os';
-import { MemoryStore } from '../brain/store.js';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { retrieveMemories } from '../brain/engine.js';
 import {
-  initBrainState,
-  tickMessageCount,
-  recordSynapticActivity,
-  recordMemoryTraces,
-  applySynapticPlasticity,
   applyDecay,
+  applySynapticPlasticity,
+  initBrainState,
+  recordMemoryTraces,
+  recordSynapticActivity,
   shouldCheckpoint,
+  tickMessageCount,
 } from '../brain/state.js';
+import { MemoryStore } from '../brain/store.js';
 import type { BrainState, Memory } from '../types.js';
 
 describe('MemoryStore', () => {
@@ -75,7 +75,9 @@ describe('MemoryStore', () => {
 });
 
 describe('Hippocampal Retrieval Engine', () => {
-  function makeMemory(overrides: Partial<Memory> & { id: string; type: Memory['type']; title: string }): Memory {
+  function makeMemory(
+    overrides: Partial<Memory> & { id: string; type: Memory['type']; title: string },
+  ): Memory {
     return {
       projectId: 'test',
       content: '',
@@ -90,12 +92,53 @@ describe('Hippocampal Retrieval Engine', () => {
   }
 
   const testMemories: Memory[] = [
-    makeMemory({ id: 'p1', type: 'pain', title: 'Deploy broke production', content: 'Deployed without testing', rule: 'Always run tests before deploy', tags: ['deployment', 'testing'], severity: 'high' }),
-    makeMemory({ id: 'p2', type: 'pain', title: 'SQL injection in login', content: 'Used raw SQL queries', rule: 'Use parameterized queries', tags: ['security', 'database', 'authentication'], severity: 'high' }),
-    makeMemory({ id: 'p3', type: 'pain', title: 'CSS overflow bug', content: 'Flex items not scrolling', rule: 'Check min-w-0 on flex parents', tags: ['styling', 'frontend'] }),
-    makeMemory({ id: 'p4', type: 'pain', title: 'API rate limited', content: 'Hit rate limit on external API', tags: ['api', 'performance'] }),
-    makeMemory({ id: 'w1', type: 'win', title: 'Auth system working', content: 'JWT tokens validated correctly', tags: ['authentication', 'security'] }),
-    makeMemory({ id: 'w2', type: 'win', title: 'Deployment pipeline automated', content: 'CI/CD runs tests and deploys', tags: ['deployment', 'ci-cd'] }),
+    makeMemory({
+      id: 'p1',
+      type: 'pain',
+      title: 'Deploy broke production',
+      content: 'Deployed without testing',
+      rule: 'Always run tests before deploy',
+      tags: ['deployment', 'testing'],
+      severity: 'high',
+    }),
+    makeMemory({
+      id: 'p2',
+      type: 'pain',
+      title: 'SQL injection in login',
+      content: 'Used raw SQL queries',
+      rule: 'Use parameterized queries',
+      tags: ['security', 'database', 'authentication'],
+      severity: 'high',
+    }),
+    makeMemory({
+      id: 'p3',
+      type: 'pain',
+      title: 'CSS overflow bug',
+      content: 'Flex items not scrolling',
+      rule: 'Check min-w-0 on flex parents',
+      tags: ['styling', 'frontend'],
+    }),
+    makeMemory({
+      id: 'p4',
+      type: 'pain',
+      title: 'API rate limited',
+      content: 'Hit rate limit on external API',
+      tags: ['api', 'performance'],
+    }),
+    makeMemory({
+      id: 'w1',
+      type: 'win',
+      title: 'Auth system working',
+      content: 'JWT tokens validated correctly',
+      tags: ['authentication', 'security'],
+    }),
+    makeMemory({
+      id: 'w2',
+      type: 'win',
+      title: 'Deployment pipeline automated',
+      content: 'CI/CD runs tests and deploys',
+      tags: ['deployment', 'ci-cd'],
+    }),
     makeMemory({ id: 'f1', type: 'fact', title: 'Database uses PostgreSQL', tags: ['database'] }),
   ];
 
@@ -103,7 +146,7 @@ describe('Hippocampal Retrieval Engine', () => {
     const result = retrieveMemories('I need to deploy the app to production', testMemories, null);
 
     expect(result.painMemories.length).toBeGreaterThan(0);
-    const ids = result.painMemories.map(s => s.memory.id);
+    const ids = result.painMemories.map((s) => s.memory.id);
     expect(ids).toContain('p1'); // deploy broke production
   });
 
@@ -113,21 +156,25 @@ describe('Hippocampal Retrieval Engine', () => {
     expect(result.painMemories.length).toBeGreaterThan(0);
     expect(result.winMemories.length).toBeGreaterThan(0);
 
-    const winIds = result.winMemories.map(s => s.memory.id);
+    const winIds = result.winMemories.map((s) => s.memory.id);
     expect(winIds).toContain('w1'); // auth system working
   });
 
   it('applies severity weighting (high severity scores higher)', () => {
     const result = retrieveMemories('Deploying to production now', testMemories, null);
 
-    const p1Score = result.painMemories.find(s => s.memory.id === 'p1')?.score;
+    const p1Score = result.painMemories.find((s) => s.memory.id === 'p1')?.score;
     expect(p1Score).toBeDefined();
     // High severity memory should have amplified score
     expect(p1Score!).toBeGreaterThan(1.0);
   });
 
   it('fires attention filter for security prompt', () => {
-    const result = retrieveMemories('Need to fix the security vulnerability in the login', testMemories, null);
+    const result = retrieveMemories(
+      'Need to fix the security vulnerability in the login',
+      testMemories,
+      null,
+    );
     expect(result.attentionFilter).not.toBeNull();
     expect(result.attentionFilter!.type).toBe('security');
   });

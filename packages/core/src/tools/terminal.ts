@@ -4,7 +4,8 @@ import type { Tool, ToolResult } from './types.js';
 export const runCommandTool: Tool = {
   definition: {
     name: 'run_command',
-    description: 'Execute a shell command and return its output. Use for builds, tests, git operations, etc.',
+    description:
+      'Execute a shell command and return its output. Use for builds, tests, git operations, etc.',
     input_schema: {
       type: 'object',
       properties: {

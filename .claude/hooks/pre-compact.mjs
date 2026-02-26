@@ -8,42 +8,58 @@
  * Idempotent: safe to fire multiple times.
  */
 
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { homedir } from 'os';
 import { join } from 'path';
 
-const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
-const HW      = join(PROJECT, '.hello-world');
+// Read active project from app config; fall back to hello-world
+const DEFAULT_PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
+const PROJECT = (() => {
+  try {
+    const cfg = JSON.parse(readFileSync(join(homedir(), '.hello-world-app.json'), 'utf8'));
+    return cfg?.projectPath || DEFAULT_PROJECT;
+  } catch {
+    return DEFAULT_PROJECT;
+  }
+})();
+const HW = join(PROJECT, '.hello-world');
 
 function safeRead(file) {
-  try { return JSON.parse(readFileSync(join(HW, file), 'utf8')); }
-  catch { return null; }
+  try {
+    return JSON.parse(readFileSync(join(HW, file), 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
 function safeReadRaw(file) {
-  try { return readFileSync(join(HW, file), 'utf8'); }
-  catch { return ''; }
+  try {
+    return readFileSync(join(HW, file), 'utf8');
+  } catch {
+    return '';
+  }
 }
 
 // ── Load data ──────────────────────────────────────────────────────────────
 
-const sessions  = safeRead('sessions.json') ?? [];
+const sessions = safeRead('sessions.json') ?? [];
 const activities = safeRead('activity.json') ?? [];
-const tasks     = safeRead('tasks.json') ?? [];
+const tasks = safeRead('tasks.json') ?? [];
 
 // Current session = last entry without endedAt
-const sessionList   = Array.isArray(sessions) ? sessions : (sessions.sessions ?? []);
-const currentSession = sessionList.findLast(s => !s.endedAt);
+const sessionList = Array.isArray(sessions) ? sessions : (sessions.sessions ?? []);
+const currentSession = sessionList.findLast((s) => !s.endedAt);
 if (!currentSession) process.exit(0);
 
-const sessionIndex  = sessionList.indexOf(currentSession);
+const sessionIndex = sessionList.indexOf(currentSession);
 const sessionNumber = sessionIndex + 1;
-const sessionId     = currentSession.id;
+const sessionId = currentSession.id;
 
 // ── Resolve task IDs to titles ─────────────────────────────────────────────
 
 const allTasks = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
 function taskTitle(id) {
-  return allTasks.find(t => t.id === id)?.title ?? id;
+  return allTasks.find((t) => t.id === id)?.title ?? id;
 }
 
 // ── Extract key events from this session ──────────────────────────────────
@@ -51,19 +67,19 @@ function taskTitle(id) {
 const actArr = Array.isArray(activities) ? activities : (activities.activities ?? []);
 const sessionStart = new Date(currentSession.startedAt);
 
-const sessionActivities = actArr.filter(a => new Date(a.timestamp) >= sessionStart);
+const sessionActivities = actArr.filter((a) => new Date(a.timestamp) >= sessionStart);
 
 const completions = sessionActivities
-  .filter(a => a.type === 'task_updated' && a.description?.startsWith('[DONE]'))
-  .map(a => a.description.replace('[DONE]', '').trim());
+  .filter((a) => a.type === 'task_updated' && a.description?.startsWith('[DONE]'))
+  .map((a) => a.description.replace('[DONE]', '').trim());
 
 const decisions = sessionActivities
-  .filter(a => a.type === 'decision_recorded')
-  .map(a => a.description ?? a.details ?? '');
+  .filter((a) => a.type === 'decision_recorded')
+  .map((a) => a.description ?? a.details ?? '');
 
 const phases = sessionActivities
-  .filter(a => a.type === 'context_loaded' && a.description?.startsWith('Workflow'))
-  .map(a => a.description.replace('Workflow → ', '').toLowerCase());
+  .filter((a) => a.type === 'context_loaded' && a.description?.startsWith('Workflow'))
+  .map((a) => a.description.replace('Workflow → ', '').toLowerCase());
 
 // Also capture completions via tasksCompleted array on session object
 const completedIds = currentSession.tasksCompleted ?? [];
@@ -75,11 +91,19 @@ const allCompletions = [...new Set([...completions, ...completedTitles])].filter
 // ── Format the timeline entry ──────────────────────────────────────────────
 
 const startTime = sessionStart.toLocaleTimeString('en-US', {
-  hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'America/Chicago'
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+  timeZone: 'America/Chicago',
 });
-const dateStr = sessionStart.toLocaleDateString('en-US', {
-  year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'America/Chicago'
-}).replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
+const dateStr = sessionStart
+  .toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    timeZone: 'America/Chicago',
+  })
+  .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
 
 const lines = [];
 lines.push(`## Session ${sessionNumber} -- ${dateStr} (~${startTime} CST)`);
@@ -87,13 +111,13 @@ lines.push(`## Session ${sessionNumber} -- ${dateStr} (~${startTime} CST)`);
 if (allCompletions.length > 0) {
   lines.push('');
   lines.push('### Completed');
-  allCompletions.forEach(t => lines.push(`- ${t}`));
+  allCompletions.forEach((t) => lines.push(`- ${t}`));
 }
 
 if (decisions.length > 0) {
   lines.push('');
   lines.push('### Decisions');
-  decisions.forEach(d => lines.push(`- ${d}`));
+  decisions.forEach((d) => lines.push(`- ${d}`));
 }
 
 if (phases.length > 0) {
@@ -124,15 +148,13 @@ if (existing.includes(marker)) {
   // Find the ## heading before the marker and replace up to the next ## or EOF
   const markerIdx = existing.indexOf(marker);
   // Find start of this session block (last ## before marker)
-  const before   = existing.slice(0, markerIdx);
+  const before = existing.slice(0, markerIdx);
   const headingMatch = before.lastIndexOf('\n## Session ');
   const blockStart = headingMatch >= 0 ? headingMatch + 1 : 0;
   // Find end: next ## heading after marker, or EOF
-  const after       = existing.slice(markerIdx + marker.length);
+  const after = existing.slice(markerIdx + marker.length);
   const nextHeading = after.search(/\n## /);
-  const blockEnd    = nextHeading >= 0
-    ? markerIdx + marker.length + nextHeading + 1
-    : existing.length;
+  const blockEnd = nextHeading >= 0 ? markerIdx + marker.length + nextHeading + 1 : existing.length;
 
   existing = existing.slice(0, blockStart) + entry + '\n' + existing.slice(blockEnd);
 } else {
@@ -151,49 +173,60 @@ writeFileSync(timelinePath, existing, 'utf8');
 
 // ── Cost tracking: scan JSONL for current session token usage ──────────────
 
-const JSONL_DIR = 'C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world';
+// Derive JSONL dir from project path: ~/.claude/projects/C--path-segments
+const JSONL_DIR = (() => {
+  const normalized = PROJECT.replace(/\\/g, '/').replace(/^([A-Z]):/, '$1-');
+  const encoded = 'C--' + normalized.replace(/^C-\//, '').replace(/\//g, '-');
+  return join(homedir(), '.claude', 'projects', encoded);
+})();
 
 // Pricing per 1M tokens (claude-sonnet-4-x)
 const PRICE = {
-  input:          3.00,
+  input: 3.0,
   cache_creation: 3.75,
-  cache_read:     0.30,
-  output:        15.00,
+  cache_read: 0.3,
+  output: 15.0,
 };
 
 function computeCost(usage) {
   return (
-    (usage.input          * PRICE.input +
-     usage.cache_creation * PRICE.cache_creation +
-     usage.cache_read     * PRICE.cache_read +
-     usage.output         * PRICE.output) / 1_000_000
+    (usage.input * PRICE.input +
+      usage.cache_creation * PRICE.cache_creation +
+      usage.cache_read * PRICE.cache_read +
+      usage.output * PRICE.output) /
+    1_000_000
   );
 }
 
 try {
   const sessionStartMs = sessionStart.getTime();
-  const sessionEndMs   = currentSession.endedAt
+  const sessionEndMs = currentSession.endedAt
     ? new Date(currentSession.endedAt).getTime()
     : Date.now() + 5 * 60 * 1000; // open session: look up to 5min in future
 
   const SLACK = 5 * 60 * 1000; // 5 minute boundary slack
 
   let totalTokens = 0;
-  let totalCost   = 0;
+  let totalCost = 0;
 
-  const files = readdirSync(JSONL_DIR).filter(f => f.endsWith('.jsonl'));
+  const files = readdirSync(JSONL_DIR).filter((f) => f.endsWith('.jsonl'));
 
   for (const file of files) {
     const filePath = `${JSONL_DIR}/${file}`;
     let content;
-    try { content = readFileSync(filePath, 'utf8'); } catch { continue; }
+    try {
+      content = readFileSync(filePath, 'utf8');
+    } catch {
+      continue;
+    }
 
     const lines = content.split('\n').filter(Boolean);
     if (lines.length === 0) continue;
 
     // Quick check: does this file's time range overlap with the session?
     // Sample first + last line timestamps to avoid parsing everything
-    let fileMinMs = Infinity, fileMaxMs = -Infinity;
+    let fileMinMs = Infinity,
+      fileMaxMs = -Infinity;
     for (const idx of [0, Math.floor(lines.length / 2), lines.length - 1]) {
       try {
         const ts = JSON.parse(lines[idx]).timestamp;
@@ -202,7 +235,9 @@ try {
           if (ms < fileMinMs) fileMinMs = ms;
           if (ms > fileMaxMs) fileMaxMs = ms;
         }
-      } catch { /* skip */ }
+      } catch {
+        /* skip */
+      }
     }
 
     // No overlap with session window (with slack)
@@ -212,35 +247,60 @@ try {
     for (const line of lines) {
       try {
         const rec = JSON.parse(line);
-        const ts  = rec.timestamp ? new Date(rec.timestamp).getTime() : null;
+        const ts = rec.timestamp ? new Date(rec.timestamp).getTime() : null;
         if (!ts || ts < sessionStartMs - SLACK || ts > sessionEndMs + SLACK) continue;
 
         const u = rec.message?.usage;
         if (!u) continue;
 
-        const input          = (u.input_tokens ?? 0);
-        const cache_creation = (u.cache_creation_input_tokens ?? 0);
-        const cache_read     = (u.cache_read_input_tokens ?? 0);
-        const output         = (u.output_tokens ?? 0);
+        const input = u.input_tokens ?? 0;
+        const cache_creation = u.cache_creation_input_tokens ?? 0;
+        const cache_read = u.cache_read_input_tokens ?? 0;
+        const output = u.output_tokens ?? 0;
 
         totalTokens += input + cache_creation + cache_read + output;
-        totalCost   += computeCost({ input, cache_creation, cache_read, output });
-      } catch { /* skip malformed lines */ }
+        totalCost += computeCost({ input, cache_creation, cache_read, output });
+      } catch {
+        /* skip malformed lines */
+      }
     }
   }
 
   // Update sessions.json with real numbers
   if (totalTokens > 0) {
     const sessionsPath = join(HW, 'sessions.json');
-    const sessionsRaw  = safeRead('sessions.json');
-    const isBare       = Array.isArray(sessionsRaw);
-    const list         = isBare ? sessionsRaw : (sessionsRaw?.sessions ?? []);
-    const idx          = list.findIndex(s => s.id === sessionId);
+    const sessionsRaw = safeRead('sessions.json');
+    const isBare = Array.isArray(sessionsRaw);
+    const list = isBare ? sessionsRaw : (sessionsRaw?.sessions ?? []);
+    const idx = list.findIndex((s) => s.id === sessionId);
     if (idx >= 0) {
       list[idx].tokensUsed = totalTokens;
-      list[idx].costUsd    = Math.round(totalCost * 10000) / 10000;
+      list[idx].costUsd = Math.round(totalCost * 10000) / 10000;
       const out = isBare ? list : { ...sessionsRaw, sessions: list };
       writeFileSync(sessionsPath, JSON.stringify(out, null, 2), 'utf8');
     }
   }
-} catch { /* cost tracking is non-fatal */ }
+} catch {
+  /* cost tracking is non-fatal */
+}
+
+// ── Recap buffer: crash-safe baseline for buddy recap ─────────────────────
+
+try {
+  const recapBuffer = {
+    sessionNumber,
+    sessionId,
+    startedAt: currentSession.startedAt,
+    updatedAt: new Date().toISOString(),
+    completedTasks: allCompletions.slice(0, 10),
+    decisions: decisions.slice(0, 5),
+    highlights: sessionActivities
+      .filter((a) => ['task_completed', 'decision_recorded', 'memory_stored'].includes(a.type))
+      .slice(-8)
+      .map((a) => a.description || a.details || '')
+      .filter(Boolean),
+  };
+  writeFileSync(join(HW, 'recap-buffer.json'), JSON.stringify(recapBuffer, null, 2), 'utf8');
+} catch {
+  /* recap buffer is non-fatal */
+}

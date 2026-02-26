@@ -1,12 +1,8 @@
-import { mkdirSync, existsSync } from 'node:fs';
+import { existsSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import {
-  HW_DIR,
-  type ProjectConfig,
-  ProjectConfigSchema,
-} from './types.js';
-import { JsonStore } from './storage.js';
 import { StateManager } from './state.js';
+import { JsonStore } from './storage.js';
+import { HW_DIR, type ProjectConfig, ProjectConfigSchema } from './types.js';
 import { now } from './utils.js';
 
 export class Project {
@@ -65,7 +61,9 @@ export class Project {
 
   updateConfig(updates: Partial<ProjectConfig>): void {
     Object.assign(this.config, updates, { updatedAt: now() });
-    const configStore = new JsonStore<{ config: ProjectConfig }>(this.root, 'config.json', { config: this.config });
+    const configStore = new JsonStore<{ config: ProjectConfig }>(this.root, 'config.json', {
+      config: this.config,
+    });
     configStore.write({ config: this.config });
   }
 }

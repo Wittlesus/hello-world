@@ -1,7 +1,7 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
-import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { Project } from '../project.js';
 
 describe('StateManager', () => {
@@ -51,8 +51,8 @@ describe('StateManager', () => {
 
       const deps = project.state.getDependencies(c.id);
       expect(deps).toHaveLength(2);
-      expect(deps.map(d => d.id)).toContain(a.id);
-      expect(deps.map(d => d.id)).toContain(b.id);
+      expect(deps.map((d) => d.id)).toContain(a.id);
+      expect(deps.map((d) => d.id)).toContain(b.id);
     });
 
     it('finds unblocked tasks', () => {
@@ -63,12 +63,12 @@ describe('StateManager', () => {
       // A and C are unblocked, B is blocked by A
       let unblocked = project.state.getUnblockedTasks();
       expect(unblocked).toHaveLength(2);
-      expect(unblocked.map(t => t.id)).not.toContain(b.id);
+      expect(unblocked.map((t) => t.id)).not.toContain(b.id);
 
       // Complete A → B becomes unblocked
       project.state.updateTask(a.id, { status: 'done' });
       unblocked = project.state.getUnblockedTasks();
-      expect(unblocked.map(t => t.id)).toContain(b.id);
+      expect(unblocked.map((t) => t.id)).toContain(b.id);
     });
 
     it('removes tasks', () => {

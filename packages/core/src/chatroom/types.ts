@@ -12,7 +12,7 @@ export interface ChatAgent {
 
 export interface ChatMessage {
   id: string;
-  agentId: string;  // 'pat' | 'claude' | agent id
+  agentId: string; // 'pat' | 'claude' | agent id
   text: string;
   timestamp: string;
   type: MessageType;
@@ -25,21 +25,21 @@ export type CoverageQuality = 'pending' | 'consensus' | 'tension' | 'shifted';
 export interface SubQuestion {
   id: number;
   text: string;
-  status: 'pending' | 'addressed' | 'lumped';  // legacy compat
-  quality?: CoverageQuality;  // consensus = fast agreement, tension = real disagreement, shifted = position changed
-  addressedBy?: string[];  // agent IDs that substantively addressed it
-  resolution?: string;     // one-line summary of what was decided
+  status: 'pending' | 'addressed' | 'lumped'; // legacy compat
+  quality?: CoverageQuality; // consensus = fast agreement, tension = real disagreement, shifted = position changed
+  addressedBy?: string[]; // agent IDs that substantively addressed it
+  resolution?: string; // one-line summary of what was decided
 }
 
 export interface BalanceNote {
   agentId: string;
-  risk: string;           // e.g. "will push to cut scope"
+  risk: string; // e.g. "will push to cut scope"
   counterbalance: string; // e.g. "steelman anything they dismiss without specific engagement"
 }
 
 export interface DeliberationPlan {
   subQuestions: SubQuestion[];
-  balanceNotes?: BalanceNote[];  // optional -- mediator handles bias correction on the fly
+  balanceNotes?: BalanceNote[]; // optional -- mediator handles bias correction on the fly
 }
 
 export interface ChatSession {
@@ -52,8 +52,8 @@ export interface ChatSession {
   roundNumber: number;
   pendingPatMessage?: string;
   deliberationPhase?: DeliberationPhase;
-  introRevealedCount?: number;  // undefined = no intro mode; 0..N = agents revealed so far
-  plan?: DeliberationPlan;      // mediator guardrails: sub-questions + balance assessment
+  introRevealedCount?: number; // undefined = no intro mode; 0..N = agents revealed so far
+  plan?: DeliberationPlan; // mediator guardrails: sub-questions + balance assessment
 }
 
 export interface ChatReaction {

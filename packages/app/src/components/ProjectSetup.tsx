@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-dialog';
+import { useState } from 'react';
 
 interface Props {
   onProjectSet: (path: string) => void;
@@ -12,7 +12,11 @@ export function ProjectSetup({ onProjectSet }: Props) {
   const [saving, setSaving] = useState(false);
 
   async function browse() {
-    const selected = await open({ directory: true, multiple: false, title: 'Select Hello World project folder' });
+    const selected = await open({
+      directory: true,
+      multiple: false,
+      title: 'Select Hello World project folder',
+    });
     if (selected && typeof selected === 'string') {
       setPath(selected);
       setError('');
@@ -40,7 +44,10 @@ export function ProjectSetup({ onProjectSet }: Props) {
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white mb-2">Hello World</h1>
           <p className="text-sm text-gray-400">
-            Select a project initialized with <code className="text-gray-300 bg-gray-800 px-1.5 py-0.5 rounded">hello-world init</code>
+            Select a project initialized with{' '}
+            <code className="text-gray-300 bg-gray-800 px-1.5 py-0.5 rounded">
+              hello-world init
+            </code>
           </p>
         </div>
 
@@ -53,8 +60,13 @@ export function ProjectSetup({ onProjectSet }: Props) {
               <input
                 type="text"
                 value={path}
-                onChange={(e) => { setPath(e.target.value); setError(''); }}
-                onKeyDown={(e) => { if (e.key === 'Enter') handleSave(); }}
+                onChange={(e) => {
+                  setPath(e.target.value);
+                  setError('');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSave();
+                }}
                 placeholder="Browse or paste a path..."
                 className="flex-1 bg-[#1a1a24] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-100 placeholder-gray-600 outline-none focus:border-blue-500/50 transition-colors font-mono min-w-0"
                 autoFocus

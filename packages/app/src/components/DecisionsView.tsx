@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { EmptyState, ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
-import { LoadingState, ErrorState, EmptyState } from './LoadingState.js';
 
 interface Decision {
   id: string;
@@ -20,9 +20,9 @@ interface StateData {
 }
 
 const DECIDED_BY_CONFIG: Record<string, { style: string; emoji: string; label: string }> = {
-  pat:    { style: 'bg-blue-500/20 text-blue-300',    emoji: '👤', label: 'Pat decided' },
+  pat: { style: 'bg-blue-500/20 text-blue-300', emoji: '👤', label: 'Pat decided' },
   claude: { style: 'bg-purple-500/20 text-purple-300', emoji: '🤖', label: 'Claude decided' },
-  both:   { style: 'bg-emerald-500/20 text-emerald-300', emoji: '🤝', label: 'Together' },
+  both: { style: 'bg-emerald-500/20 text-emerald-300', emoji: '🤝', label: 'Together' },
 };
 
 function formatDate(iso: string): string {
@@ -32,7 +32,11 @@ function formatDate(iso: string): string {
 
 function DecisionCard({ decision }: { decision: Decision }) {
   const [expanded, setExpanded] = useState(false);
-  const by = DECIDED_BY_CONFIG[decision.decidedBy] ?? { style: 'bg-gray-500/20 text-gray-300', emoji: '❓', label: decision.decidedBy };
+  const by = DECIDED_BY_CONFIG[decision.decidedBy] ?? {
+    style: 'bg-gray-500/20 text-gray-300',
+    emoji: '❓',
+    label: decision.decidedBy,
+  };
 
   return (
     <button
@@ -60,7 +64,9 @@ function DecisionCard({ decision }: { decision: Decision }) {
         <div className="mt-3 pt-3 border-t border-gray-800 space-y-3">
           {decision.context && (
             <div>
-              <span className="text-[10px] font-semibold text-gray-500">🗺️ Why we needed to decide</span>
+              <span className="text-[10px] font-semibold text-gray-500">
+                🗺️ Why we needed to decide
+              </span>
               <p className="text-xs text-gray-400 mt-1 leading-relaxed">{decision.context}</p>
             </div>
           )}
@@ -101,7 +107,10 @@ export function DecisionsView() {
   const decisions = data?.decisions ?? [];
 
   return (
-    <ViewShell title="🧭 Decisions" description={`${decisions.length} choice${decisions.length !== 1 ? 's' : ''} made so far`}>
+    <ViewShell
+      title="🧭 Decisions"
+      description={`${decisions.length} choice${decisions.length !== 1 ? 's' : ''} made so far`}
+    >
       {decisions.length === 0 ? (
         <EmptyState message="No decisions recorded yet. Use hw_record_decision when an architectural choice is made — these accumulate into your project's decision log." />
       ) : (

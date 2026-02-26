@@ -1,11 +1,11 @@
-import type { Session, Task, Decision, Question } from '../types.js';
-import { SessionSchema } from '../types.js';
-import { JsonStore } from '../storage.js';
-import { generateId, now } from '../utils.js';
-import { StateManager } from '../state.js';
-import { MemoryStore } from '../brain/store.js';
 import { retrieveMemories } from '../brain/engine.js';
 import { initBrainState } from '../brain/state.js';
+import type { MemoryStore } from '../brain/store.js';
+import type { StateManager } from '../state.js';
+import { JsonStore } from '../storage.js';
+import type { Decision, Question, Session, Task } from '../types.js';
+import { SessionSchema } from '../types.js';
+import { generateId, now } from '../utils.js';
 
 export interface ContextSnapshot {
   projectName: string;
@@ -25,14 +25,18 @@ export class SessionManager {
   private current: Session | null = null;
 
   constructor(private readonly projectRoot: string) {
-    this.store = new JsonStore<{ sessions: Session[] }>(projectRoot, 'sessions.json', { sessions: [] });
+    this.store = new JsonStore<{ sessions: Session[] }>(projectRoot, 'sessions.json', {
+      sessions: [],
+    });
   }
 
   start(): Session {
     // Auto-close any orphaned sessions (no endedAt) from previous runs
-    const closedSessions = this.store.read().sessions.map(s =>
-      s.endedAt ? s : { ...s, endedAt: now(), summary: '(orphaned — auto-closed)' }
-    );
+    const closedSessions = this.store
+      .read()
+      .sessions.map((s) =>
+        s.endedAt ? s : { ...s, endedAt: now(), summary: '(orphaned — auto-closed)' },
+      );
 
     const session = SessionSchema.parse({
       id: generateId('s'),
@@ -53,8 +57,8 @@ export class SessionManager {
       tokensUsed,
     };
     this.current = null;
-    this.store.update(data => ({
-      sessions: data.sessions.map(s => s.id === ended.id ? ended : s),
+    this.store.update((data) => ({
+      sessions: data.sessions.map((s) => (s.id === ended.id ? ended : s)),
     }));
     return ended;
   }
@@ -62,16 +66,16 @@ export class SessionManager {
   recordTaskCompleted(taskId: string): void {
     if (!this.current) return;
     this.current.tasksCompleted.push(taskId);
-    this.store.update(data => ({
-      sessions: data.sessions.map(s => s.id === this.current!.id ? this.current! : s),
+    this.store.update((data) => ({
+      sessions: data.sessions.map((s) => (s.id === this.current!.id ? this.current! : s)),
     }));
   }
 
   recordDecisionMade(decisionId: string): void {
     if (!this.current) return;
     this.current.decisionsMade.push(decisionId);
-    this.store.update(data => ({
-      sessions: data.sessions.map(s => s.id === this.current!.id ? this.current! : s),
+    this.store.update((data) => ({
+      sessions: data.sessions.map((s) => (s.id === this.current!.id ? this.current! : s)),
     }));
   }
 
@@ -108,9 +112,7 @@ export class SessionManager {
     memoryStore.saveBrainState(brainState);
 
     // Run retrieval against current task context
-    const taskContext = [...activeTasks, ...todoTasks]
-      .map(t => t.title)
-      .join('. ');
+    const taskContext = [...activeTasks, ...todoTasks].map((t) => t.title).join('. ');
     const memories = memoryStore.getAllMemories();
     const retrieval = retrieveMemories(taskContext || projectName, memories, brainState);
 
@@ -118,13 +120,12 @@ export class SessionManager {
     const lifetimeUsd = sessions.reduce((sum, s) => sum + s.costUsd, 0);
 
     // Compile human-readable text
-    const lines: string[] = [
-      `Project: ${projectName}`,
-      `Session: #${sessionNumber}`,
-    ];
+    const lines: string[] = [`Project: ${projectName}`, `Session: #${sessionNumber}`];
 
     if (previous) {
-      lines.push(`Last session: ${previous.startedAt.split('T')[0]} — ${previous.summary || '(no summary)'}`);
+      lines.push(
+        `Last session: ${previous.startedAt.split('T')[0]} — ${previous.summary || '(no summary)'}`,
+      );
     }
 
     if (activeTasks.length > 0) {
@@ -153,7 +154,10 @@ export class SessionManager {
       for (const q of openQuestions) lines.push(`  - ${q.question}`);
     }
 
-    lines.push('', `Cost: $${lifetimeUsd.toFixed(2)} lifetime | $${(dailyBudget - lifetimeUsd).toFixed(2)} remaining`);
+    lines.push(
+      '',
+      `Cost: $${lifetimeUsd.toFixed(2)} lifetime | $${(dailyBudget - lifetimeUsd).toFixed(2)} remaining`,
+    );
 
     if (retrieval.injectionText) {
       lines.push('', '--- Memory ---', retrieval.injectionText);

@@ -1,7 +1,7 @@
-import { Command } from 'commander';
 import { resolve } from 'node:path';
-import chalk from 'chalk';
 import { Project } from '@hello-world/core';
+import chalk from 'chalk';
+import { Command } from 'commander';
 
 export const initCommand = new Command('init')
   .description('Initialize a new Hello World project')

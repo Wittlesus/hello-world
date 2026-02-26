@@ -31,8 +31,9 @@ export const useActivityStore = create<ActivityState>((set) => ({
   approvals: [],
   addActivity: (item) => set((s) => ({ activities: [item, ...s.activities].slice(0, 200) })),
   addApproval: (item) => set((s) => ({ approvals: [...s.approvals, item] })),
-  resolveApproval: (id, status) => set((s) => ({
-    approvals: s.approvals.map(a => a.id === id ? { ...a, status } : a),
-  })),
+  resolveApproval: (id, status) =>
+    set((s) => ({
+      approvals: s.approvals.map((a) => (a.id === id ? { ...a, status } : a)),
+    })),
   clearActivities: () => set({ activities: [] }),
 }));

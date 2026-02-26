@@ -40,7 +40,10 @@ export class WatcherStore {
   private store: JsonStore<WatchersData>;
 
   constructor(projectRoot: string) {
-    this.store = new JsonStore<WatchersData>(projectRoot, 'watchers.json', { active: [], completed: [] });
+    this.store = new JsonStore<WatchersData>(projectRoot, 'watchers.json', {
+      active: [],
+      completed: [],
+    });
   }
 
   add(entry: Omit<WatcherEntry, 'spawnedAt' | 'status'> & { id?: string }): WatcherEntry {
@@ -72,7 +75,11 @@ export class WatcherStore {
     if (!watcher) {
       return data.completed.find((w) => w.id === watcherId) ? 'already_terminated' : 'not_found';
     }
-    try { process.kill(watcher.pid, 'SIGTERM'); } catch { /* already gone */ }
+    try {
+      process.kill(watcher.pid, 'SIGTERM');
+    } catch {
+      /* already gone */
+    }
     this.store.update((d) => ({
       active: d.active.filter((w) => w.id !== watcherId),
       completed: [...d.completed, { ...watcher, status: 'killed', completedAt: now() }],
@@ -85,7 +92,11 @@ export class WatcherStore {
     const data = this.store.read();
     const stale: string[] = [];
     for (const w of data.active) {
-      try { process.kill(w.pid, 0); } catch { stale.push(w.id); }
+      try {
+        process.kill(w.pid, 0);
+      } catch {
+        stale.push(w.id);
+      }
     }
     if (stale.length > 0) {
       this.store.update((d) => ({
@@ -94,7 +105,12 @@ export class WatcherStore {
           ...d.completed,
           ...d.active
             .filter((w) => stale.includes(w.id))
-            .map((w) => ({ ...w, status: 'failed' as WatcherStatus, completedAt: now(), resultSummary: 'Process died unexpectedly' })),
+            .map((w) => ({
+              ...w,
+              status: 'failed' as WatcherStatus,
+              completedAt: now(),
+              resultSummary: 'Process died unexpectedly',
+            })),
         ],
       }));
     }

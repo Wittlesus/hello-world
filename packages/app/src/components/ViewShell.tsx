@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface ViewShellProps {
   title: string;
@@ -18,9 +18,7 @@ export function ViewShell({ title, description, children, actions }: ViewShellPr
         {actions && <div className="flex items-center gap-2">{actions}</div>}
       </div>
       <div className="flex-1 overflow-y-auto min-h-0">
-        <div className="p-6">
-          {children}
-        </div>
+        <div className="p-6">{children}</div>
       </div>
     </div>
   );

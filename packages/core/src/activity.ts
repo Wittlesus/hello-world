@@ -50,7 +50,7 @@ export class ActivityStore {
       timestamp: now(),
     };
 
-    this.store.update(data => {
+    this.store.update((data) => {
       const activities = [...data.activities, event];
       // Cap at MAX_EVENTS, keeping newest
       return { activities: activities.slice(-MAX_EVENTS) };

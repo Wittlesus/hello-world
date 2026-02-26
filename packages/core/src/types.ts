@@ -65,10 +65,14 @@ export const DecisionSchema = z.object({
   title: z.string().min(1),
   context: z.string(),
   chosen: z.string(),
-  alternatives: z.array(z.object({
-    option: z.string(),
-    tradeoff: z.string(),
-  })).default([]),
+  alternatives: z
+    .array(
+      z.object({
+        option: z.string(),
+        tradeoff: z.string(),
+      }),
+    )
+    .default([]),
   rationale: z.string(),
   decidedAt: z.string().datetime(),
   decidedBy: z.enum(['pat', 'claude', 'both']),
@@ -129,15 +133,25 @@ export const BrainStateSchema = z.object({
   sessionStart: z.string().datetime(),
   messageCount: z.number().default(0),
   contextPhase: ContextPhase.default('early'),
-  synapticActivity: z.record(z.string(), z.object({
-    count: z.number(),
-    lastHit: z.string().datetime(),
-  })).default({}),
-  memoryTraces: z.record(z.string(), z.object({
-    count: z.number(),
-    lastAccessed: z.string().datetime(),
-    synapticStrength: z.number(),
-  })).default({}),
+  synapticActivity: z
+    .record(
+      z.string(),
+      z.object({
+        count: z.number(),
+        lastHit: z.string().datetime(),
+      }),
+    )
+    .default({}),
+  memoryTraces: z
+    .record(
+      z.string(),
+      z.object({
+        count: z.number(),
+        lastAccessed: z.string().datetime(),
+        synapticStrength: z.number(),
+      }),
+    )
+    .default({}),
   firingFrequency: z.record(z.string(), z.number()).default({}),
   activeTraces: z.array(z.string()).default([]),
 });
@@ -202,12 +216,20 @@ export type ApprovalRequest = z.infer<typeof ApprovalRequestSchema>;
 // ── Activity Stream ─────────────────────────────────────────────
 
 export const ActivityType = z.enum([
-  'file_read', 'file_write', 'file_edit',
-  'command_run', 'tool_call',
-  'decision', 'approval_request', 'approval_resolved',
-  'error', 'memory_stored',
-  'task_started', 'task_completed',
-  'session_start', 'session_end',
+  'file_read',
+  'file_write',
+  'file_edit',
+  'command_run',
+  'tool_call',
+  'decision',
+  'approval_request',
+  'approval_resolved',
+  'error',
+  'memory_stored',
+  'task_started',
+  'task_completed',
+  'session_start',
+  'session_end',
 ]);
 export type ActivityType = z.infer<typeof ActivityType>;
 
@@ -237,7 +259,14 @@ export type FileOwnership = z.infer<typeof FileOwnershipSchema>;
 // ── Workflow Engine ─────────────────────────────────────────────
 
 export const WorkflowPhase = z.enum([
-  'idle', 'scope', 'plan', 'build', 'verify', 'ship', 'waiting_approval', 'blocked',
+  'idle',
+  'scope',
+  'plan',
+  'build',
+  'verify',
+  'ship',
+  'waiting_approval',
+  'blocked',
 ]);
 export type WorkflowPhase = z.infer<typeof WorkflowPhase>;
 
@@ -282,11 +311,11 @@ export const MODEL_PRICING: ModelPricing[] = [
   { modelId: 'claude-opus-4-6', inputPerMTok: 15.0, outputPerMTok: 75.0 },
   { modelId: 'claude-sonnet-4-6', inputPerMTok: 3.0, outputPerMTok: 15.0 },
   { modelId: 'claude-sonnet-4-5', inputPerMTok: 3.0, outputPerMTok: 15.0 },
-  { modelId: 'claude-haiku-4-5', inputPerMTok: 0.80, outputPerMTok: 4.0 },
-  { modelId: 'gpt-4o', inputPerMTok: 2.50, outputPerMTok: 10.0 },
-  { modelId: 'gpt-4o-mini', inputPerMTok: 0.15, outputPerMTok: 0.60 },
+  { modelId: 'claude-haiku-4-5', inputPerMTok: 0.8, outputPerMTok: 4.0 },
+  { modelId: 'gpt-4o', inputPerMTok: 2.5, outputPerMTok: 10.0 },
+  { modelId: 'gpt-4o-mini', inputPerMTok: 0.15, outputPerMTok: 0.6 },
   { modelId: 'gemini-2.5-pro', inputPerMTok: 1.25, outputPerMTok: 10.0 },
-  { modelId: 'gemini-2.5-flash', inputPerMTok: 0.15, outputPerMTok: 0.60 },
+  { modelId: 'gemini-2.5-flash', inputPerMTok: 0.15, outputPerMTok: 0.6 },
 ];
 
 // ── Sensory Cortex (keyword → tag mapping) ──────────────────────

@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { useTauriData } from '../hooks/useTauriData.js';
+import { useEffect, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
-import { ViewShell } from './ViewShell.js';
-import { LoadingState, ErrorState } from './LoadingState.js';
+import { useTauriData } from '../hooks/useTauriData.js';
 import { THEMES, useThemeStore } from '../stores/theme.js';
+import { ErrorState, LoadingState } from './LoadingState.js';
+import { ViewShell } from './ViewShell.js';
 
 interface ProjectConfig {
   name: string;
@@ -32,8 +32,11 @@ const MODELS = [
 
 function formatDateTime(iso: string): string {
   return new Date(iso).toLocaleString('en-US', {
-    month: 'short', day: 'numeric', year: 'numeric',
-    hour: '2-digit', minute: '2-digit',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   });
 }
 
@@ -53,16 +56,16 @@ export function SettingsView() {
   if (error) return <ErrorState message={error} onRetry={refetch} />;
   if (!form) return <LoadingState />;
 
-  const isDirty = data?.config && (
-    form.name !== data.config.name ||
-    form.description !== data.config.description ||
-    form.defaultModel !== data.config.defaultModel ||
-    form.dailyBudgetUsd !== data.config.dailyBudgetUsd ||
-    form.gitIntegration !== data.config.gitIntegration
-  );
+  const isDirty =
+    data?.config &&
+    (form.name !== data.config.name ||
+      form.description !== data.config.description ||
+      form.defaultModel !== data.config.defaultModel ||
+      form.dailyBudgetUsd !== data.config.dailyBudgetUsd ||
+      form.gitIntegration !== data.config.gitIntegration);
 
   function update<K extends keyof ProjectConfig>(key: K, value: ProjectConfig[K]) {
-    setForm((prev) => prev ? { ...prev, [key]: value } : prev);
+    setForm((prev) => (prev ? { ...prev, [key]: value } : prev));
     setSaved(false);
   }
 
@@ -82,8 +85,10 @@ export function SettingsView() {
     }
   }
 
-  const inputClass = 'w-full bg-[#1a1a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 outline-none focus:border-blue-500/50 transition-colors';
-  const labelClass = 'block text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1.5';
+  const inputClass =
+    'w-full bg-[#1a1a24] border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-100 outline-none focus:border-blue-500/50 transition-colors';
+  const labelClass =
+    'block text-[10px] uppercase tracking-wider text-gray-500 font-semibold mb-1.5';
 
   return (
     <ViewShell
@@ -107,7 +112,6 @@ export function SettingsView() {
       }
     >
       <div className="max-w-3xl space-y-8">
-
         {/* Appearance */}
         <section>
           <h2 className="text-sm font-semibold text-gray-200 mb-4">Appearance</h2>
@@ -125,25 +129,35 @@ export function SettingsView() {
                       ? 'border-current bg-[#1a1a24]'
                       : 'border-gray-800 bg-[#0f0f18] hover:border-gray-600'
                   }`}
-                  style={active ? { borderColor: t.accent, boxShadow: `0 0 8px ${t.accent}40` } : {}}
+                  style={
+                    active ? { borderColor: t.accent, boxShadow: `0 0 8px ${t.accent}40` } : {}
+                  }
                 >
                   {/* Mini block-art buddy preview */}
-                  <div style={{
-                    fontFamily: '"Cascadia Code", "Fira Code", Consolas, monospace',
-                    fontSize: '7px',
-                    lineHeight: '1.15',
-                    color: t.buddyIdle,
-                    whiteSpace: 'pre',
-                    textShadow: `0 0 4px ${t.buddyIdle}88`,
-                    letterSpacing: '0',
-                  }}>
+                  <div
+                    style={{
+                      fontFamily: '"Cascadia Code", "Fira Code", Consolas, monospace',
+                      fontSize: '7px',
+                      lineHeight: '1.15',
+                      color: t.buddyIdle,
+                      whiteSpace: 'pre',
+                      textShadow: `0 0 4px ${t.buddyIdle}88`,
+                      letterSpacing: '0',
+                    }}
+                  >
                     {'▐▛██▜▌\n▝▜●  ●▛▘\n ▘▘ ▝▝'}
                   </div>
-                  <span className="text-[9px] font-medium text-center leading-tight" style={{ color: active ? t.accent : '#6b7280' }}>
+                  <span
+                    className="text-[9px] font-medium text-center leading-tight"
+                    style={{ color: active ? t.accent : '#6b7280' }}
+                  >
                     {t.name}
                   </span>
                   {active && (
-                    <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: t.accent }} />
+                    <div
+                      className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full"
+                      style={{ backgroundColor: t.accent }}
+                    />
                   )}
                 </button>
               );
@@ -159,11 +173,21 @@ export function SettingsView() {
           <div className="space-y-4">
             <div>
               <label className={labelClass}>Name</label>
-              <input type="text" value={form.name} onChange={(e) => update('name', e.target.value)} className={inputClass} />
+              <input
+                type="text"
+                value={form.name}
+                onChange={(e) => update('name', e.target.value)}
+                className={inputClass}
+              />
             </div>
             <div>
               <label className={labelClass}>Version</label>
-              <input type="text" value={form.version} disabled className={`${inputClass} opacity-50 cursor-not-allowed`} />
+              <input
+                type="text"
+                value={form.version}
+                disabled
+                className={`${inputClass} opacity-50 cursor-not-allowed`}
+              />
             </div>
             <div>
               <label className={labelClass}>Description</label>
@@ -187,7 +211,11 @@ export function SettingsView() {
                 onChange={(e) => update('defaultModel', e.target.value)}
                 className={inputClass}
               >
-                {MODELS.map((m) => <option key={m} value={m}>{m}</option>)}
+                {MODELS.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -220,9 +248,15 @@ export function SettingsView() {
         <section>
           <h2 className="text-sm font-semibold text-gray-200 mb-4">Metadata</h2>
           <div className="space-y-2 text-xs text-gray-400">
-            <div>Created: <span className="text-gray-300">{formatDateTime(form.createdAt)}</span></div>
-            <div>Updated: <span className="text-gray-300">{formatDateTime(form.updatedAt)}</span></div>
-            <div>Path: <span className="text-gray-300 font-mono">{projectPath}</span></div>
+            <div>
+              Created: <span className="text-gray-300">{formatDateTime(form.createdAt)}</span>
+            </div>
+            <div>
+              Updated: <span className="text-gray-300">{formatDateTime(form.updatedAt)}</span>
+            </div>
+            <div>
+              Path: <span className="text-gray-300 font-mono">{projectPath}</span>
+            </div>
           </div>
         </section>
       </div>

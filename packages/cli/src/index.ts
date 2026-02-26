@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { initCommand } from './commands/init.js';
+import { startCommand } from './commands/start.js';
 import { statusCommand } from './commands/status.js';
 import { tasksCommand } from './commands/tasks.js';
-import { startCommand } from './commands/start.js';
 
 const program = new Command();
 

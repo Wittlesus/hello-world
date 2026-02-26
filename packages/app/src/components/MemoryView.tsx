@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
+import { EmptyState, ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
-import { LoadingState, ErrorState, EmptyState } from './LoadingState.js';
 
 interface Memory {
   id: string;
@@ -88,27 +88,44 @@ function MemoryCard({ memory }: { memory: Memory }) {
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2">
-          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${TYPE_STYLE[memory.type]}`}>
+          <span
+            className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${TYPE_STYLE[memory.type]}`}
+          >
             {memory.type}
           </span>
-          <span className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${SEVERITY_STYLE[memory.severity]}`}>
+          <span
+            className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${SEVERITY_STYLE[memory.severity]}`}
+          >
             {memory.severity}
           </span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-[10px] text-gray-600" title="Access count">{memory.accessCount}x</span>
-          <div className="w-12 h-1.5 bg-gray-800 rounded-full overflow-hidden" title={`Synaptic strength: ${memory.synapticStrength.toFixed(2)}`}>
-            <div className="h-full bg-emerald-500/60 rounded-full" style={{ width: `${strengthPercent}%` }} />
+          <span className="text-[10px] text-gray-600" title="Access count">
+            {memory.accessCount}x
+          </span>
+          <div
+            className="w-12 h-1.5 bg-gray-800 rounded-full overflow-hidden"
+            title={`Synaptic strength: ${memory.synapticStrength.toFixed(2)}`}
+          >
+            <div
+              className="h-full bg-emerald-500/60 rounded-full"
+              style={{ width: `${strengthPercent}%` }}
+            />
           </div>
         </div>
       </div>
 
-      <span className="block text-sm font-medium text-gray-100 mt-2 leading-snug">{memory.title}</span>
+      <span className="block text-sm font-medium text-gray-100 mt-2 leading-snug">
+        {memory.title}
+      </span>
 
       {memory.tags.length > 0 && (
         <div className="flex flex-wrap gap-1 mt-2">
           {memory.tags.map((tag) => (
-            <span key={tag} className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${tagColor(tag)}`}>
+            <span
+              key={tag}
+              className={`text-[10px] font-medium px-1.5 py-0.5 rounded-full ${tagColor(tag)}`}
+            >
               {tag}
             </span>
           ))}
@@ -122,7 +139,9 @@ function MemoryCard({ memory }: { memory: Memory }) {
           )}
           {memory.rule && (
             <div className="bg-yellow-500/5 border border-yellow-500/20 rounded px-3 py-2">
-              <span className="text-[10px] uppercase tracking-wider text-yellow-500/80 font-semibold">Rule</span>
+              <span className="text-[10px] uppercase tracking-wider text-yellow-500/80 font-semibold">
+                Rule
+              </span>
               <p className="text-xs text-yellow-300/80 mt-0.5">{memory.rule}</p>
             </div>
           )}
@@ -134,8 +153,17 @@ function MemoryCard({ memory }: { memory: Memory }) {
 
 export function MemoryView() {
   const projectPath = useProjectPath();
-  const { data: memoriesData, loading: memLoading, error: memError, refetch: memRefetch } = useTauriData<MemoriesData>('get_memories', projectPath);
-  const { data: brainData, loading: brainLoading, error: brainError } = useTauriData<BrainState>('get_brain_state', projectPath);
+  const {
+    data: memoriesData,
+    loading: memLoading,
+    error: memError,
+    refetch: memRefetch,
+  } = useTauriData<MemoriesData>('get_memories', projectPath);
+  const {
+    data: brainData,
+    loading: brainLoading,
+    error: brainError,
+  } = useTauriData<BrainState>('get_brain_state', projectPath);
   const [filter, setFilter] = useState<MemoryType>('all');
 
   if (memLoading || brainLoading) return <LoadingState />;
@@ -152,13 +180,22 @@ export function MemoryView() {
       {brain && (
         <div className="flex items-center gap-4 mb-6 px-4 py-3 bg-[#1a1a24] border border-gray-800 rounded-lg">
           <div className="flex items-center gap-2">
-            <span className={`w-2 h-2 rounded-full ${PHASE_STYLE[brain.contextPhase] ?? 'bg-gray-500'}`} />
-            <span className="text-xs text-gray-400">Phase: <span className="text-gray-200">{brain.contextPhase}</span></span>
+            <span
+              className={`w-2 h-2 rounded-full ${PHASE_STYLE[brain.contextPhase] ?? 'bg-gray-500'}`}
+            />
+            <span className="text-xs text-gray-400">
+              Phase: <span className="text-gray-200">{brain.contextPhase}</span>
+            </span>
           </div>
-          <div className="text-xs text-gray-400">Messages: <span className="text-gray-200">{brain.messageCount}</span></div>
-          <div className="text-xs text-gray-400">Active traces: <span className="text-gray-200">{brain.activeTraces.length}</span></div>
           <div className="text-xs text-gray-400">
-            Hot tags: <span className="text-gray-200">
+            Messages: <span className="text-gray-200">{brain.messageCount}</span>
+          </div>
+          <div className="text-xs text-gray-400">
+            Active traces: <span className="text-gray-200">{brain.activeTraces.length}</span>
+          </div>
+          <div className="text-xs text-gray-400">
+            Hot tags:{' '}
+            <span className="text-gray-200">
               {Object.entries(brain.firingFrequency).filter(([, v]) => (v as number) >= 3).length}
             </span>
           </div>
@@ -186,7 +223,13 @@ export function MemoryView() {
       </div>
 
       {filtered.length === 0 ? (
-        <EmptyState message={filter === 'all' ? 'No memories stored yet. Claude auto-captures pain, win, and decision memories as it works. You can also call hw_store_memory directly.' : `No ${filter} memories`} />
+        <EmptyState
+          message={
+            filter === 'all'
+              ? 'No memories stored yet. Claude auto-captures pain, win, and decision memories as it works. You can also call hw_store_memory directly.'
+              : `No ${filter} memories`
+          }
+        />
       ) : (
         <div className="space-y-3">
           {filtered.map((m) => (

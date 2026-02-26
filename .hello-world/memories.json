@@ -2784,6 +2784,428 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-25T17:47:27.049Z"
+    },
+    {
+      "id": "mem_4d2a5a04",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix all fallout from state.json split -- full system audit and optimization",
+      "content": "The state.json -> split files migration was incomplete. Fix everything:\n\n1. ENOENT fix: Find and update all references to the old state.json path (session-start hook, MCP server, Rust commands)\n2. Rust read cache: Add TTL-based file cache in lib.rs so multiple components reading the same file within 2-3s get cached results instead of hitting disk\n3. Shared polling: Replace per-hook 10s intervals in useTauriData.ts with a single global 30s heartbeat that deduplicates\n4. File watcher debounce: When MCP writes 3 files rapidly, batch the watcher events so components re-render once, not 3 times\n5. Verify all hooks work with split files: session-start, pre-tool-gate, user-prompt-submit, post-edit-context\n6. Test the full flow end-to-end\n\nThis is cleanup debt from the B+ state storage decision. Should have been caught during the original migration.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-25T17:54:25.369Z"
+    },
+    {
+      "id": "mem_fc7cdf37",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build safe built-in browser for Hello World app",
+      "content": "Browser feature removed per Pat's direction. Task complete (removal, not build).",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "feature",
+        "ux",
+        "mcp",
+        "rust",
+        "react",
+        "storage",
+        "workflow",
+        "agents"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:30:24.851Z"
+    },
+    {
+      "id": "mem_49c7b3ae",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Remove all browser feature remnants from UI",
+      "content": "BrowserView.tsx still exists, and App.tsx/Sidebar.tsx/store still reference it. The watcher copied files back. Delete BrowserView.tsx and remove all browser references from App.tsx, Sidebar.tsx, and stores/app.ts.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:31:22.912Z"
+    },
+    {
+      "id": "mem_d419826e",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Defer tauri-specta until Rust type refactor",
+      "content": "Context: Researched tauri-specta v2.0.0-rc.21 for type-safe IPC. All our Rust commands use serde_json::Value, so specta would just export JsonValue types -- zero benefit. The useTauriData hook pattern (dynamic string-based dispatch) is also incompatible with specta's static named functions. Still in RC with breaking changes between versions.\nChosen: Defer tauri-specta adoption until we refactor Rust commands to use proper typed structs\nRationale: Three blockers: (1) Value types everywhere means no actual type safety gain, (2) useTauriData hook pattern incompatible, (3) still RC with fragile dependency chain. When we do the Rust type refactor, adding specta at that point is nearly free.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:39:32.099Z"
+    },
+    {
+      "id": "mem_90cfe6f1",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy animations don't work on non-HW projects",
+      "content": "Buddy's state machine is driven by hw-tool-summary events emitted by the MCP server loopback notify. When HW points at a project where MCP isn't running, those events never fire and buddy stays in 'waiting' state permanently -- no twitch, no bounce, no sound. Fix options: (1) Have buddy watch PTY output directly for activity signals (regex on terminal output), (2) Have the Tauri Rust backend emit hw-tool-summary based on file watcher activity instead of relying on MCP push, (3) Both -- MCP push for HW-aware projects, file watcher fallback for others.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug",
+        "multi-project",
+        "buddy"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:40:18.090Z"
+    },
+    {
+      "id": "mem_3b6218c4",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix all hardcoded project paths in Claude hooks",
+      "content": "All 6 .claude/hooks/*.mjs files hardcode PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world'. This breaks buddy animations and context tracking on non-HW projects. Fix: read from ~/.hello-world-app.json with fallback. Already fixed user-prompt.mjs and stop-thought.mjs. Remaining: pre-tool-gate.mjs, post-edit-context.mjs, pre-compact.mjs, post-tool-thought.mjs.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:41:15.850Z"
+    },
+    {
+      "id": "mem_8caf5509",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Defer Agent Teams, continue using subagents",
+      "content": "Context: Researched Claude Code Agent Teams (experimental). Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1. Split-pane mode unsupported on Windows Terminal. Known issues: orphaned sessions, task status lag, no session resumption. Community reports UI crashes with 4+ agents.\nChosen: Continue using subagents (Task tool) for parallel work. Defer Agent Teams until stable release.\nRationale: Subagents are production-ready and cover our needs. Agent Teams adds inter-agent messaging and shared task lists, but instability on Windows and no split-pane support make it impractical. Will re-evaluate when it exits experimental.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:45:24.062Z"
+    },
+    {
+      "id": "mem_eb60cc01",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Set up Biome linter/formatter (greenfield)",
+      "content": "No existing ESLint/Prettier config. Fresh Biome setup: add @biomejs/biome dev dep, create biome.json at root, wire to turbo.json lint task, add check/fix scripts. Should take ~10 minutes. Research confirmed full coverage for our stack (TS + React + JSON + Tailwind).",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:46:07.224Z"
+    },
+    {
+      "id": "mem_5b6508a9",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Enable Claude Code Agent Teams (experimental)",
+      "content": "Researched. Agent Teams is experimental, unsupported on Windows Terminal for split-pane, known stability issues. Deferred until stable release. Decision: d_8b644ccd.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:46:07.426Z"
+    },
+    {
+      "id": "mem_7a20b18c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Set up Biome linter/formatter (greenfield)",
+      "content": "No existing ESLint/Prettier config. Fresh Biome setup: add @biomejs/biome dev dep, create biome.json at root, wire to turbo.json lint task, add check/fix scripts. Should take ~10 minutes. Research confirmed full coverage for our stack (TS + React + JSON + Tailwind).",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:49:23.095Z"
+    },
+    {
+      "id": "mem_621434c3",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Evaluate Tech Radar MCP as a product",
+      "content": "Already evaluated as t_72f4f388. Duplicate task closed.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "product",
+        "mcp",
+        "evaluate",
+        "tech-radar"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:49:24.098Z"
+    },
+    {
+      "id": "mem_77f8045c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build deep web research MCP server",
+      "content": "No longer needed. We now have Context7, GitMCP, Package Version Check, and Cortex MCP servers covering research needs. No custom build required.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:49:26.000Z"
+    },
+    {
+      "id": "mem_1d7e279a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Adopt React 19.2 Activity for view preservation",
+      "content": "Replace conditional rendering ({view === 'x' && Component}) with Activity wrappers in App.tsx MainContent. Already on React 19.2.4, Activity is stable and available. Preserves scroll position, form state, component state across all 15 views. Also removes the manual display:none hack on TerminalView. Must use worktree since it edits App.tsx.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:52:03.661Z"
+    },
+    {
+      "id": "mem_3721e1bc",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "6-agent parallel research sprint: 6 research tasks in 3 minutes",
+      "content": "Launched 6 agents simultaneously to research: CWD bug, buddy animation bug, tauri-specta, React Activity, Biome, buddy recap. All returned with actionable intel in ~3 minutes. Led to immediate execution of 4 fixes/upgrades in the same session.",
+      "rule": "",
+      "tags": [
+        "agents",
+        "parallel",
+        "productivity"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:52:11.644Z"
+    },
+    {
+      "id": "mem_afbf36b7",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy startup recap: summarize last session context in chat bubble",
+      "content": "Merged into t_ecdd0782. Both describe buddy recap on startup -- t_ecdd0782 is the canonical task with the detached subprocess approach.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "buddy",
+        "ux",
+        "session",
+        "feature"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:52:36.003Z"
+    },
+    {
+      "id": "mem_25ed653b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: [DELIBERATE] State storage architecture: JSON files vs SQLite",
+      "content": "Already decided in d_a9d3b3d7: split files + atomic writes (B+), defer SQLite to multi-project epic. Implemented in t_a9d3b3d7. Deliberation not needed.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:53:44.725Z"
+    },
+    {
+      "id": "mem_7657fa48",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix all hardcoded project paths in Claude hooks",
+      "content": "Fixed ALL 7 files with hardcoded project paths: user-prompt.mjs, stop-thought.mjs, pre-tool-gate.mjs, post-edit-context.mjs, pre-compact.mjs, post-tool-thought.mjs, AND session-start.mjs. All now read from ~/.hello-world-app.json with fallback. Also fixed hardcoded MEMORY_DIR and JSONL_DIR paths.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:54:09.362Z"
+    },
+    {
+      "id": "mem_9e2495a9",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy recap: rolling buffer writer in PreCompact hook",
+      "content": "Add to pre-compact.mjs: write last ~10 activity items and session stats to .hello-world/recap-buffer.json. This runs on every context compression, providing a crash-safe baseline recap. Format: { completedTasks: string[], decisions: string[], highlights: string[], sessionNumber: number, startedAt: string }. No API calls needed -- pure extraction from existing data already loaded by the hook.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:55:46.440Z"
+    },
+    {
+      "id": "mem_3990e20c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Adopt React 19.2 Activity component for view preservation",
+      "content": "Done. Implemented as t_2d227aa3. All 15 views now wrapped in Activity components in App.tsx MainContent. View state (scroll, forms, component state) preserved across tab switches. TypeScript compiles clean.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "react",
+        "adopt",
+        "tech-radar",
+        "ux"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:56:18.123Z"
+    },
+    {
+      "id": "mem_eedd2cc0",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Replace ESLint + Prettier with Biome",
+      "content": "Done. Implemented as t_75a2434c. Biome 2.4.4 installed, biome.json configured with VCS integration, turbo.json wired. 177 files auto-fixed. No existing ESLint/Prettier -- greenfield setup.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T03:56:20.500Z"
+    },
+    {
+      "id": "mem_7da3f91d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy recap: speech bubble UI in BuddyOverlay",
+      "content": "Extend BuddyOverlay.tsx with a speech bubble component. On startup, listen for hw-buddy-recap event. Display recap text in a pixel-art speech bubble above the buddy's head, with character-by-character typing animation and chat sound effects (reuse deliberation sounds). Auto-dismiss after 15s or click to dismiss. Show recap-buffer.json data if pending-recap.json doesn't exist (crash fallback).",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:00:51.927Z"
+    },
+    {
+      "id": "mem_f71c2107",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy recap: detached AI summary subprocess",
+      "content": "Create .claude/recap-generator.mjs -- a standalone Node script that reads recap-buffer.json + sessions.json, calls Claude Haiku to generate a polished 3-5 bullet summary, writes to .hello-world/pending-recap.json. Spawned detached on clean session exit (hw_end_session). Falls back gracefully if API unavailable. Uses existing watcher pattern (child.unref()).",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:01:24.549Z"
+    },
+    {
+      "id": "mem_2aee7f6b",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Multi-project architecture: 12 systems audited, 2 blockers",
+      "content": "Full audit of 12 systems for multi-project support. Already project-aware: State storage, sessions, activity, workflow, approvals, file watcher, terminal, session hook, memory dir. TWO BLOCKERS: (1) MCP server -- single project loaded at startup via HW_PROJECT_ROOT, needs hw_set_context(projectPath) tool. (2) Discord listener -- single project monitor. MEMORY needs global tier (projectId: null for cross-project pains/wins). Frontend has setProject() already, just needs switcher UI.",
+      "rule": "",
+      "tags": [
+        "multi-project",
+        "architecture",
+        "mcp"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:03:06.113Z"
+    },
+    {
+      "id": "mem_18c4495a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Verify project swapping works with zero bleedover",
+      "content": "Verified: All 7 hook files now read project path dynamically from ~/.hello-world-app.json. TCC project has its own .hello-world/ with isolated state. Data isolation is structural -- each project has its own directory. Architecture audit confirms 10 of 12 systems are already project-aware. Two blockers remain (MCP server + Discord listener) tracked in t_mp_epic. Zero bleedover at the data layer is confirmed.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:03:09.313Z"
+    },
+    {
+      "id": "mem_1cbc713a",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Memory scoring formula: exponential decay + access boost + failure penalty",
+      "content": "Scoring: decay = e^(-lambda * ageDays) where lambda varies by type (fact:0.04, pain:0.025, win:0.015, decision:0.008, arch:0.004). Plus accessBoost (recency of last access), freqBonus (log2 of accessCount), minus failurePenalty (0.15 per correlated failure), minus supersededPenalty (0.6). Health classification: active (>0.5), aging (0.25-0.5), stale (<0.25), harmful (2+ failure correlations), superseded. Review queue surfaces stale/harmful to Pat. Contradiction detection at write time via tag overlap (2+ shared tags + same type). Research sources: A-Mem, MemEngine, SimpleMem, Letta.",
+      "rule": "",
+      "tags": [
+        "memory",
+        "scoring",
+        "staleness",
+        "brain"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:03:34.826Z"
+    },
+    {
+      "id": "mem_48680874",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Implement memory scoring module (82-line TypeScript)",
+      "content": "Write packages/core/src/brain/scoring.ts with: scoreMemory(), classifyHealth(), rankMemories(), getReviewQueue(), findContradictions(). Add lastAccessedAt, accessCount, failureCorrelations, supersededBy fields to Memory schema. Integrate into hw_retrieve_memories for filtered/ranked results. Formula: exponential decay (type-specific rates) + access boost + freq bonus - failure penalty - superseded penalty. Half-lives: fact 17d, pain 28d, win 46d, decision 87d, architecture 173d.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T04:04:36.923Z"
     }
   ]
 }

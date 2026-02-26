@@ -196,6 +196,35 @@
       "rationale": "Backendarch shifted from SQLite to B+ after: (1) multi-project epic is unplanned so SQLite timing is premature, (2) better-sqlite3 has MSVC native compilation issues on Windows, (3) split files are forward-compatible with eventual SQLite migration. Remaining no-ACID risk explicitly accepted.",
       "decidedAt": "2026-02-25T09:25:49.987Z",
       "decidedBy": "claude"
+    },
+    {
+      "id": "d_53e538a6",
+      "title": "Defer tauri-specta until Rust type refactor",
+      "context": "Researched tauri-specta v2.0.0-rc.21 for type-safe IPC. All our Rust commands use serde_json::Value, so specta would just export JsonValue types -- zero benefit. The useTauriData hook pattern (dynamic string-based dispatch) is also incompatible with specta's static named functions. Still in RC with breaking changes between versions.",
+      "chosen": "Defer tauri-specta adoption until we refactor Rust commands to use proper typed structs",
+      "alternatives": [
+        {
+          "option": "Adopt now with Value types",
+          "tradeoff": "Zero type safety benefit, adds RC dependency fragility for no gain"
+        },
+        {
+          "option": "Adopt now and refactor all commands to typed structs",
+          "tradeoff": "2-3 day effort, high risk of breaking running app, not the current priority"
+        }
+      ],
+      "rationale": "Three blockers: (1) Value types everywhere means no actual type safety gain, (2) useTauriData hook pattern incompatible, (3) still RC with fragile dependency chain. When we do the Rust type refactor, adding specta at that point is nearly free.",
+      "decidedAt": "2026-02-26T03:39:32.092Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_8b644ccd",
+      "title": "Defer Agent Teams, continue using subagents",
+      "context": "Researched Claude Code Agent Teams (experimental). Requires CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1. Split-pane mode unsupported on Windows Terminal. Known issues: orphaned sessions, task status lag, no session resumption. Community reports UI crashes with 4+ agents.",
+      "chosen": "Continue using subagents (Task tool) for parallel work. Defer Agent Teams until stable release.",
+      "alternatives": [],
+      "rationale": "Subagents are production-ready and cover our needs. Agent Teams adds inter-agent messaging and shared task lists, but instability on Windows and no split-pane support make it impractical. Will re-evaluate when it exits experimental.",
+      "decidedAt": "2026-02-26T03:45:24.057Z",
+      "decidedBy": "claude"
     }
   ]
 }

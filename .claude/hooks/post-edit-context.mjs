@@ -5,9 +5,19 @@
  */
 
 import { readFileSync, writeFileSync } from 'fs';
+import { homedir } from 'os';
 import { join } from 'path';
 
-const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
+// Read active project from app config; fall back to hello-world
+const DEFAULT_PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
+const PROJECT = (() => {
+  try {
+    const cfg = JSON.parse(readFileSync(join(homedir(), '.hello-world-app.json'), 'utf8'));
+    return cfg?.projectPath || DEFAULT_PROJECT;
+  } catch {
+    return DEFAULT_PROJECT;
+  }
+})();
 const HW = join(PROJECT, '.hello-world');
 
 // Read tool input from stdin
@@ -35,9 +45,11 @@ let task = null;
 try {
   const tasks = JSON.parse(readFileSync(join(HW, 'tasks.json'), 'utf8'));
   const taskList = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
-  const inProgress = taskList.find(t => t.status === 'in_progress');
+  const inProgress = taskList.find((t) => t.status === 'in_progress');
   if (inProgress) task = inProgress.title;
-} catch { /* no state yet */ }
+} catch {
+  /* no state yet */
+}
 
 // Write context snapshot
 const ctx = {
@@ -48,4 +60,6 @@ const ctx = {
 
 try {
   writeFileSync(join(HW, 'last-context.json'), JSON.stringify(ctx, null, 2));
-} catch { /* ignore write errors */ }
+} catch {
+  /* ignore write errors */
+}

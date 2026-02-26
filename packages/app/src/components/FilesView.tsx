@@ -1,6 +1,6 @@
-import { useState, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { X, FileImage, Upload, File } from 'lucide-react';
+import { File, FileImage, Upload, X } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 
 interface SharedFile {
@@ -12,7 +12,8 @@ interface SharedFile {
 
 function fileType(name: string): 'image' | 'video' | 'other' {
   const ext = (name.split('.').pop() ?? '').toLowerCase();
-  if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'ico', 'avif'].includes(ext)) return 'image';
+  if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'ico', 'avif'].includes(ext))
+    return 'image';
   if (['mp4', 'webm', 'mov', 'avi', 'mkv', 'ogg'].includes(ext)) return 'video';
   return 'other';
 }
@@ -40,7 +41,10 @@ export function FilesView() {
         const previewUrl = URL.createObjectURL(file);
         setFiles((prev) => {
           if (prev.some((f) => f.path === savedPath)) return prev;
-          return [...prev, { path: savedPath, name: file.name, type: fileType(file.name), previewUrl }];
+          return [
+            ...prev,
+            { path: savedPath, name: file.name, type: fileType(file.name), previewUrl },
+          ];
         });
       } catch (err) {
         console.error('save_shared_file failed:', err);
@@ -59,7 +63,9 @@ export function FilesView() {
     dragCounter.current--;
     if (dragCounter.current === 0) setDragOver(false);
   };
-  const onDragOver = (e: React.DragEvent) => { e.preventDefault(); };
+  const onDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
   const onDrop = (e: React.DragEvent) => {
     e.preventDefault();
     dragCounter.current = 0;
@@ -72,7 +78,6 @@ export function FilesView() {
 
   return (
     <div className="flex-1 flex flex-col min-h-0 p-4">
-
       <div className="flex items-center justify-between mb-3 shrink-0">
         <div>
           <h2 className="text-sm font-semibold text-white">Shared Files</h2>
@@ -83,7 +88,10 @@ export function FilesView() {
         <div className="flex items-center gap-3">
           {saving && <span className="text-[11px] text-gray-500">Saving...</span>}
           {files.length > 0 && (
-            <button onClick={clear} className="text-[11px] text-gray-600 hover:text-gray-400 transition-colors">
+            <button
+              onClick={clear}
+              className="text-[11px] text-gray-600 hover:text-gray-400 transition-colors"
+            >
               Clear all
             </button>
           )}
@@ -100,7 +108,12 @@ export function FilesView() {
             multiple
             accept="image/*,video/*"
             className="hidden"
-            onChange={(e) => { if (e.target.files?.length) { processFiles(e.target.files); e.target.value = ''; } }}
+            onChange={(e) => {
+              if (e.target.files?.length) {
+                processFiles(e.target.files);
+                e.target.value = '';
+              }
+            }}
           />
         </div>
       </div>
@@ -114,8 +127,8 @@ export function FilesView() {
           dragOver
             ? 'border-indigo-500/60 bg-indigo-500/5'
             : files.length === 0
-            ? 'border-gray-700/50'
-            : 'border-transparent'
+              ? 'border-gray-700/50'
+              : 'border-transparent'
         }`}
       >
         {files.length === 0 ? (
@@ -125,7 +138,14 @@ export function FilesView() {
             <p className="text-[11px] opacity-60">Files are saved to .hello-world/shared-files/</p>
           </div>
         ) : (
-          <div className="p-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: '12px' }}>
+          <div
+            className="p-3"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
+              gap: '12px',
+            }}
+          >
             {files.map((f) => (
               <FileCard key={f.path} file={f} onRemove={() => remove(f.path)} />
             ))}
@@ -155,20 +175,35 @@ function FileCard({ file, onRemove }: { file: SharedFile; onRemove: () => void }
         <X size={10} />
       </button>
 
-      <div className="w-full bg-black/30 flex items-center justify-center" style={{ height: '120px' }}>
+      <div
+        className="w-full bg-black/30 flex items-center justify-center"
+        style={{ height: '120px' }}
+      >
         {file.type === 'image' ? (
           <img src={file.previewUrl} alt={file.name} className="w-full h-full object-contain" />
         ) : file.type === 'video' ? (
-          <video src={file.previewUrl} className="w-full h-full object-contain" muted preload="metadata" />
+          <video
+            src={file.previewUrl}
+            className="w-full h-full object-contain"
+            muted
+            preload="metadata"
+          />
         ) : (
           <File size={28} className="text-gray-700" />
         )}
       </div>
 
       <div className="p-2">
-        <p className="text-[11px] font-medium text-gray-200 truncate" title={file.name}>{file.name}</p>
-        <p className="text-[10px] text-gray-600 truncate mt-0.5 font-mono" title={file.path}>{file.path}</p>
-        <button onClick={copyPath} className="mt-1.5 text-[10px] text-gray-600 hover:text-indigo-400 transition-colors">
+        <p className="text-[11px] font-medium text-gray-200 truncate" title={file.name}>
+          {file.name}
+        </p>
+        <p className="text-[10px] text-gray-600 truncate mt-0.5 font-mono" title={file.path}>
+          {file.path}
+        </p>
+        <button
+          onClick={copyPath}
+          className="mt-1.5 text-[10px] text-gray-600 hover:text-indigo-400 transition-colors"
+        >
           {copied ? 'Copied!' : 'Copy path'}
         </button>
       </div>

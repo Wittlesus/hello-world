@@ -17,9 +17,7 @@ export function HistoryView() {
             type="button"
             onClick={() => setTab(t)}
             className={`px-3 py-1 text-[11px] font-medium rounded transition-colors capitalize ${
-              tab === t
-                ? 'bg-gray-800 text-white'
-                : 'text-gray-500 hover:text-gray-300'
+              tab === t ? 'bg-gray-800 text-white' : 'text-gray-500 hover:text-gray-300'
             }`}
           >
             {t}

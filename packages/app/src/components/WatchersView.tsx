@@ -1,11 +1,14 @@
-import { useState, useCallback } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { useTauriData } from '../hooks/useTauriData.js';
+import { useCallback, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
-import { ViewShell } from './ViewShell.js';
+import { useTauriData } from '../hooks/useTauriData.js';
 import { EmptyState } from './LoadingState.js';
+import { ViewShell } from './ViewShell.js';
 
-interface CopySpec { from: string; to: string }
+interface CopySpec {
+  from: string;
+  to: string;
+}
 
 interface WatcherConfig {
   copies: CopySpec[];
@@ -44,18 +47,18 @@ function shortPath(p: string): string {
 }
 
 const STATUS_STYLE: Record<string, string> = {
-  active:    'text-cyan-300 bg-cyan-500/15',
+  active: 'text-cyan-300 bg-cyan-500/15',
   completed: 'text-green-300 bg-green-500/15',
-  failed:    'text-red-300 bg-red-500/15',
-  killed:    'text-gray-400 bg-gray-500/15',
+  failed: 'text-red-300 bg-red-500/15',
+  killed: 'text-gray-400 bg-gray-500/15',
   timed_out: 'text-orange-300 bg-orange-500/15',
 };
 
 const STATUS_LABEL: Record<string, string> = {
-  active:    'active',
+  active: 'active',
   completed: 'done',
-  failed:    'failed',
-  killed:    'killed',
+  failed: 'failed',
+  killed: 'killed',
   timed_out: 'timed out',
 };
 
@@ -73,7 +76,9 @@ function WatcherCard({
   const statusLabel = STATUS_LABEL[watcher.status] ?? watcher.status;
 
   return (
-    <div className={`bg-[#1a1a24] border rounded-lg overflow-hidden ${isActive ? 'border-cyan-800/50' : 'border-gray-800'}`}>
+    <div
+      className={`bg-[#1a1a24] border rounded-lg overflow-hidden ${isActive ? 'border-cyan-800/50' : 'border-gray-800'}`}
+    >
       {/* Header */}
       <div className="px-4 py-3 flex items-center justify-between gap-3">
         <span className="font-mono text-sm text-white font-medium truncate">{watcher.id}</span>
@@ -96,8 +101,10 @@ function WatcherCard({
       {/* Active progress bar */}
       {isActive && (
         <div className="h-1 bg-gray-800 mx-4 mb-3 rounded-full overflow-hidden">
-          <div className="h-full bg-cyan-500/70 rounded-full"
-               style={{ animation: 'progress-slide 2s ease-in-out infinite' }} />
+          <div
+            className="h-full bg-cyan-500/70 rounded-full"
+            style={{ animation: 'progress-slide 2s ease-in-out infinite' }}
+          />
         </div>
       )}
 
@@ -111,9 +118,13 @@ function WatcherCard({
             {watcher.config.copies.map((c, i) => (
               <div key={i} className="flex items-center gap-2 text-[10px] font-mono text-gray-600">
                 <span className="text-cyan-900 shrink-0">copy</span>
-                <span className="truncate text-gray-500" title={c.from}>{shortPath(c.from)}</span>
+                <span className="truncate text-gray-500" title={c.from}>
+                  {shortPath(c.from)}
+                </span>
                 <span className="text-gray-700 shrink-0">→</span>
-                <span className="truncate text-gray-500" title={c.to}>{shortPath(c.to)}</span>
+                <span className="truncate text-gray-500" title={c.to}>
+                  {shortPath(c.to)}
+                </span>
               </div>
             ))}
           </div>
@@ -125,9 +136,7 @@ function WatcherCard({
           {watcher.completedAt && (
             <span>ran {elapsed(watcher.spawnedAt, watcher.completedAt)}</span>
           )}
-          {watcher.resultSummary && (
-            <span className="text-gray-500">{watcher.resultSummary}</span>
-          )}
+          {watcher.resultSummary && <span className="text-gray-500">{watcher.resultSummary}</span>}
           <span className="ml-auto">pid {watcher.pid}</span>
         </div>
       </div>
@@ -140,19 +149,26 @@ export function WatchersView() {
   const { data, refetch } = useTauriData<WatchersData>('get_watchers', projectPath);
   const [killing, setKilling] = useState<Set<string>>(new Set());
 
-  const handleKill = useCallback(async (watcherId: string) => {
-    setKilling((prev) => new Set(prev).add(watcherId));
-    try {
-      await invoke('kill_watcher', { projectPath, watcherId });
-      refetch();
-    } catch (err) {
-      console.error('kill_watcher failed:', err);
-    } finally {
-      setKilling((prev) => { const s = new Set(prev); s.delete(watcherId); return s; });
-    }
-  }, [projectPath, refetch]);
+  const handleKill = useCallback(
+    async (watcherId: string) => {
+      setKilling((prev) => new Set(prev).add(watcherId));
+      try {
+        await invoke('kill_watcher', { projectPath, watcherId });
+        refetch();
+      } catch (err) {
+        console.error('kill_watcher failed:', err);
+      } finally {
+        setKilling((prev) => {
+          const s = new Set(prev);
+          s.delete(watcherId);
+          return s;
+        });
+      }
+    },
+    [projectPath, refetch],
+  );
 
-  const active    = data?.active ?? [];
+  const active = data?.active ?? [];
   const completed = [...(data?.completed ?? [])].reverse().slice(0, 10);
   const totalDesc = `${active.length} active · ${data?.completed?.length ?? 0} completed`;
 
@@ -171,12 +187,7 @@ export function WatchersView() {
           <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-3">Active</p>
           <div className="space-y-3">
             {active.map((w) => (
-              <WatcherCard
-                key={w.id}
-                watcher={w}
-                onKill={handleKill}
-                killing={killing.has(w.id)}
-              />
+              <WatcherCard key={w.id} watcher={w} onKill={handleKill} killing={killing.has(w.id)} />
             ))}
           </div>
         </section>

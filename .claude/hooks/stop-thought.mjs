@@ -6,15 +6,28 @@
  */
 
 import { readFileSync } from 'fs';
-import { join } from 'path';
 import { request } from 'http';
+import { homedir } from 'os';
+import { join } from 'path';
 
-const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
+// Read active project from app config; fall back to hello-world
+const DEFAULT_PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
+const PROJECT = (() => {
+  try {
+    const cfg = JSON.parse(readFileSync(join(homedir(), '.hello-world-app.json'), 'utf8'));
+    return cfg?.projectPath || DEFAULT_PROJECT;
+  } catch {
+    return DEFAULT_PROJECT;
+  }
+})();
 const HW = join(PROJECT, '.hello-world');
 
 function safeRead(path) {
-  try { return JSON.parse(readFileSync(path, 'utf8')); }
-  catch { return null; }
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
 const sync = safeRead(join(HW, 'sync.json'));
@@ -30,11 +43,15 @@ const req = request(
     headers: {
       'Content-Type': 'application/json',
       'Content-Length': Buffer.byteLength(body),
-      'Connection': 'close',
+      Connection: 'close',
     },
   },
-  () => { process.exit(0); }
+  () => {
+    process.exit(0);
+  },
 );
-req.on('error', () => { process.exit(0); });
+req.on('error', () => {
+  process.exit(0);
+});
 req.write(body);
 req.end();

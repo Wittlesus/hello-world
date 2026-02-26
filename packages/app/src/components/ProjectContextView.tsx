@@ -1,5 +1,5 @@
-import { useTauriData } from '../hooks/useTauriData.js';
 import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
 
 interface ScopeEntry {
   area: string;
@@ -36,13 +36,13 @@ export function ProjectContextView() {
     );
   }
 
-  const vision      = data?.vision ?? '';
-  const scope       = data?.scope ?? [];
-  const notes       = data?.notes ?? [];
-  const unread      = notes.filter((n) => !n.read);
-  const processed   = notes.filter((n) => n.read);
+  const vision = data?.vision ?? '';
+  const scope = data?.scope ?? [];
+  const notes = data?.notes ?? [];
+  const unread = notes.filter((n) => !n.read);
+  const processed = notes.filter((n) => n.read);
 
-  const inScope  = scope.filter((s) => s.decision === 'in');
+  const inScope = scope.filter((s) => s.decision === 'in');
   const outScope = scope.filter((s) => s.decision === 'out');
 
   return (
@@ -61,14 +61,15 @@ export function ProjectContextView() {
       </div>
 
       <div className="flex-1 overflow-y-auto">
-
         {/* Vision */}
         <section className="px-5 py-4 border-b border-gray-800/40">
           <p className="text-[10px] uppercase tracking-widest text-gray-600 mb-2">Vision</p>
           {vision ? (
             <p className="text-sm text-gray-300 leading-relaxed">{vision}</p>
           ) : (
-            <p className="text-sm text-gray-600 italic">No vision captured — use hw_update_direction(vision: "...")</p>
+            <p className="text-sm text-gray-600 italic">
+              No vision captured — use hw_update_direction(vision: "...")
+            </p>
           )}
         </section>
 
@@ -79,10 +80,14 @@ export function ProjectContextView() {
             <div className="flex flex-col gap-2.5">
               {inScope.map((entry, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="shrink-0 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded mt-0.5 text-green-400 bg-green-500/10">IN</span>
+                  <span className="shrink-0 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded mt-0.5 text-green-400 bg-green-500/10">
+                    IN
+                  </span>
                   <div>
                     <p className="text-sm text-gray-300 font-medium leading-snug">{entry.area}</p>
-                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{entry.rationale}</p>
+                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                      {entry.rationale}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -97,10 +102,14 @@ export function ProjectContextView() {
             <div className="flex flex-col gap-2.5">
               {outScope.map((entry, i) => (
                 <div key={i} className="flex items-start gap-3">
-                  <span className="shrink-0 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded mt-0.5 text-red-400 bg-red-500/10">OUT</span>
+                  <span className="shrink-0 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded mt-0.5 text-red-400 bg-red-500/10">
+                    OUT
+                  </span>
                   <div>
                     <p className="text-sm text-gray-300 font-medium leading-snug">{entry.area}</p>
-                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">{entry.rationale}</p>
+                    <p className="text-xs text-gray-500 mt-0.5 leading-relaxed">
+                      {entry.rationale}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -111,7 +120,9 @@ export function ProjectContextView() {
         {/* Unread notes */}
         {unread.length > 0 && (
           <section className="px-5 py-4 border-b border-amber-900/30 bg-amber-950/10">
-            <p className="text-[10px] uppercase tracking-widest text-amber-600 mb-3">Unread Notes from Pat</p>
+            <p className="text-[10px] uppercase tracking-widest text-amber-600 mb-3">
+              Unread Notes from Pat
+            </p>
             <div className="flex flex-col gap-3">
               {unread.map((note) => (
                 <div key={note.id} className="flex flex-col gap-0.5">
@@ -148,7 +159,6 @@ export function ProjectContextView() {
             </div>
           </section>
         )}
-
       </div>
     </div>
   );

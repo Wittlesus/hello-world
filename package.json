@@ -16,9 +16,13 @@
     "app": "npm run build:ts && npm run --workspace=packages/app dev",
     "test": "turbo test",
     "lint": "turbo lint",
+    "check": "biome check .",
+    "check:fix": "biome check . --write",
+    "format": "biome format . --write",
     "clean": "turbo clean"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.4.4",
     "turbo": "^2.4.0",
     "typescript": "^5.7.0"
   },

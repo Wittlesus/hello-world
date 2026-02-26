@@ -1,6 +1,6 @@
 import { spawn } from 'child_process';
-import { ChatroomStore } from './chatroom-state.js';
 import { AGENT_DEFINITIONS } from './agent-definitions.js';
+import type { ChatroomStore } from './chatroom-state.js';
 import type { ChatMessage } from './types.js';
 
 const MODEL = 'claude-haiku-4-5-20251001';
@@ -48,30 +48,47 @@ let activeRunner: AbortController | null = null;
 // Agents sometimes output **Bold**, ## Headers, or prefix with their name.
 function stripMarkdown(text: string): string {
   return text
-    .replace(/^#{1,4}\s+/gm, '')           // ## Headers
-    .replace(/\*\*([^*]+)\*\*/g, '$1')      // **bold**
-    .replace(/\*([^*]+)\*/g, '$1')          // *italic*
-    .replace(/^[-*]\s+/gm, '')              // - bullet points
-    .replace(/^\d+\.\s+/gm, '')            // 1. numbered lists
-    .replace(/^>\s+/gm, '')                // > blockquotes
-    .replace(/`([^`]+)`/g, '$1')           // `inline code`
-    .replace(/^(Contrarian|Pre-mortem|First Principles|Steelman|Analogist|Constraint|Pragmatist|UX Designer|Backend Architect|Product Manager|Cost Analyst|DevOps|Security|New User|Power User)(\s*(responds?|synthesizes?|observes?|notes?|adds?|counters?|replies?|clarifies?|argues?|warns?|concludes?|opens?|challenges?|asks?|—[^:]*)?)\s*:\s*/im, '')
+    .replace(/^#{1,4}\s+/gm, '') // ## Headers
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // **bold**
+    .replace(/\*([^*]+)\*/g, '$1') // *italic*
+    .replace(/^[-*]\s+/gm, '') // - bullet points
+    .replace(/^\d+\.\s+/gm, '') // 1. numbered lists
+    .replace(/^>\s+/gm, '') // > blockquotes
+    .replace(/`([^`]+)`/g, '$1') // `inline code`
+    .replace(
+      /^(Contrarian|Pre-mortem|First Principles|Steelman|Analogist|Constraint|Pragmatist|UX Designer|Backend Architect|Product Manager|Cost Analyst|DevOps|Security|New User|Power User)(\s*(responds?|synthesizes?|observes?|notes?|adds?|counters?|replies?|clarifies?|argues?|warns?|concludes?|opens?|challenges?|asks?|—[^:]*)?)\s*:\s*/im,
+      '',
+    )
     .trim();
 }
 
 function sleep(ms: number, signal: AbortSignal): Promise<void> {
   return new Promise((resolve, reject) => {
     const t = setTimeout(resolve, ms);
-    signal.addEventListener('abort', () => { clearTimeout(t); reject(new Error('aborted')); }, { once: true });
+    signal.addEventListener(
+      'abort',
+      () => {
+        clearTimeout(t);
+        reject(new Error('aborted'));
+      },
+      { once: true },
+    );
   });
 }
 
 // Spawn claude CLI subprocess with CLAUDECODE unset to allow nesting.
 // Uses existing Claude Code OAuth — no separate API key needed.
 // Pipes prompt via stdin to avoid all Windows cmd.exe escaping issues.
-function callClaude(systemPrompt: string, userMessage: string, signal: AbortSignal): Promise<string> {
+function callClaude(
+  systemPrompt: string,
+  userMessage: string,
+  signal: AbortSignal,
+): Promise<string> {
   return new Promise((resolve, reject) => {
-    if (signal.aborted) { reject(new Error('aborted')); return; }
+    if (signal.aborted) {
+      reject(new Error('aborted'));
+      return;
+    }
 
     const env = { ...process.env };
     delete env['CLAUDECODE'];
@@ -84,7 +101,16 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
     // stdin piped so we can write the prompt directly — no temp files, no escaping
     const child = spawn(
       'claude',
-      ['--print', '--model', MODEL, '--output-format', 'text', '--max-turns', '1', '--dangerously-skip-permissions'],
+      [
+        '--print',
+        '--model',
+        MODEL,
+        '--output-format',
+        'text',
+        '--max-turns',
+        '1',
+        '--dangerously-skip-permissions',
+      ],
       { env, stdio: ['pipe', 'pipe', 'pipe'], shell: true },
     );
 
@@ -93,15 +119,23 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
 
     let stdout = '';
     let stderr = '';
-    child.stdout.on('data', (d: Buffer) => { stdout += d.toString(); });
-    child.stderr.on('data', (d: Buffer) => { stderr += d.toString(); });
+    child.stdout.on('data', (d: Buffer) => {
+      stdout += d.toString();
+    });
+    child.stderr.on('data', (d: Buffer) => {
+      stderr += d.toString();
+    });
 
     const timeout = setTimeout(() => {
       child.kill();
       reject(new Error('agent timed out after 45s'));
     }, 45_000);
 
-    const onAbort = () => { clearTimeout(timeout); child.kill(); reject(new Error('aborted')); };
+    const onAbort = () => {
+      clearTimeout(timeout);
+      child.kill();
+      reject(new Error('aborted'));
+    };
     signal.addEventListener('abort', onAbort, { once: true });
 
     child.on('error', (err: Error) => {
@@ -122,11 +156,11 @@ function callClaude(systemPrompt: string, userMessage: string, signal: AbortSign
 
 function buildConversation(history: ChatMessage[], topic: string): string {
   const conversation = history
-    .filter(m => m.type !== 'thinking')
+    .filter((m) => m.type !== 'thinking')
     .slice(-16)
-    .map(m => {
+    .map((m) => {
       if (m.type === 'system') return `[System: ${m.text}]`;
-      if (m.type === 'pat')    return `[Pat: ${m.text}]`;
+      if (m.type === 'pat') return `[Pat: ${m.text}]`;
       if (m.type === 'claude') return `[Claude: ${m.text}]`;
       const def = AGENT_DEFINITIONS[m.agentId];
       return `[${def?.name ?? m.agentId}: ${m.text}]`;
@@ -154,7 +188,11 @@ async function runSingleAgent(
   if (state.session.status !== 'active') return;
 
   try {
-    const raw = await callClaude(def.systemPrompt, buildConversation(state.messages, state.session.topic), signal);
+    const raw = await callClaude(
+      def.systemPrompt,
+      buildConversation(state.messages, state.session.topic),
+      signal,
+    );
     if (signal.aborted) return;
     store.appendMessage(agentId, stripMarkdown(raw), 'message');
     store.updateAgentStatus(agentId, 'idle', '');
@@ -176,10 +214,18 @@ async function runIntroSequence(
   const state = store.read();
   const agents = state.agents;
 
-  store.appendMessage('claude', `Starting deliberation: "${state.session.topic}". Bringing in the panel.`, 'claude');
+  store.appendMessage(
+    'claude',
+    `Starting deliberation: "${state.session.topic}". Bringing in the panel.`,
+    'claude',
+  );
   notify(['chatroom.json']);
 
-  try { await sleep(INTRO_DELAY_MS, signal); } catch { return; }
+  try {
+    await sleep(INTRO_DELAY_MS, signal);
+  } catch {
+    return;
+  }
 
   for (let i = 0; i < agents.length; i++) {
     if (signal.aborted) return;
@@ -190,26 +236,42 @@ async function runIntroSequence(
     store.setIntroRevealedCount(i + 1);
     notify(['chatroom.json']);
 
-    try { await sleep(700, signal); } catch { return; }
+    try {
+      await sleep(700, signal);
+    } catch {
+      return;
+    }
 
     store.appendMessage('claude', introLine, 'claude');
     notify(['chatroom.json']);
 
-    try { await sleep(INTRO_DELAY_MS, signal); } catch { return; }
+    try {
+      await sleep(INTRO_DELAY_MS, signal);
+    } catch {
+      return;
+    }
   }
 
   store.clearIntroMode();
-  store.appendMessage('claude', `Panel assembled. Round 1 — what does each of you make of this?`, 'claude');
+  store.appendMessage(
+    'claude',
+    `Panel assembled. Round 1 — what does each of you make of this?`,
+    'claude',
+  );
   notify(['chatroom.json']);
 
-  try { await sleep(1200, signal); } catch { return; }
+  try {
+    await sleep(1200, signal);
+  } catch {
+    return;
+  }
 }
 
 async function checkConsensus(messages: ChatMessage[], topic: string): Promise<boolean> {
   const recent = messages
-    .filter(m => m.type === 'message')
+    .filter((m) => m.type === 'message')
     .slice(-10)
-    .map(m => `${AGENT_DEFINITIONS[m.agentId]?.name ?? m.agentId}: ${m.text.slice(0, 120)}`)
+    .map((m) => `${AGENT_DEFINITIONS[m.agentId]?.name ?? m.agentId}: ${m.text.slice(0, 120)}`)
     .join('\n');
 
   if (!recent) return false;
@@ -240,8 +302,8 @@ async function runSynthesis(
 
   const state = store.read();
   const discussion = state.messages
-    .filter(m => m.type === 'message' || m.type === 'claude')
-    .map(m => {
+    .filter((m) => m.type === 'message' || m.type === 'claude')
+    .map((m) => {
       const def = AGENT_DEFINITIONS[m.agentId];
       const name = m.agentId === 'claude' ? 'Claude' : (def?.name ?? m.agentId);
       return `${name}: ${m.text}`;
@@ -294,11 +356,15 @@ export async function runDeliberation(
       store.incrementRound();
       notify(['chatroom.json']);
 
-      const agentIds = state.agents.map(a => a.id);
+      const agentIds = state.agents.map((a) => a.id);
       for (const agentId of agentIds) {
         if (ctrl.signal.aborted) break;
         await runSingleAgent(store, agentId, notify, ctrl.signal);
-        try { await sleep(BETWEEN_AGENT_MS, ctrl.signal); } catch { break; }
+        try {
+          await sleep(BETWEEN_AGENT_MS, ctrl.signal);
+        } catch {
+          break;
+        }
       }
 
       if (ctrl.signal.aborted) break;
@@ -317,7 +383,11 @@ export async function runDeliberation(
       store.setWaitingForInput(true);
       notify(['chatroom.json']);
 
-      try { await sleep(INPUT_WINDOW_MS, ctrl.signal); } catch { break; }
+      try {
+        await sleep(INPUT_WINDOW_MS, ctrl.signal);
+      } catch {
+        break;
+      }
 
       const afterWait = store.read();
       if (afterWait.session.pendingPatMessage) {

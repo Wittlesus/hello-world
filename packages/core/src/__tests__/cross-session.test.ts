@@ -1,11 +1,11 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { mkdtempSync, rmSync } from 'node:fs';
-import { join } from 'node:path';
 import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { MemoryStore } from '../brain/store.js';
+import { SessionManager } from '../orchestration/session.js';
 import { Project } from '../project.js';
 import { StateManager } from '../state.js';
-import { SessionManager } from '../orchestration/session.js';
-import { MemoryStore } from '../brain/store.js';
 
 describe('Cross-Session Memory', () => {
   let tmpDir: string;
@@ -28,7 +28,9 @@ describe('Cross-Session Memory', () => {
     sessions1.start();
 
     // Simulate work: create tasks, make decisions, store memories
-    const taskA = project.state.addTask('Build authentication module', { tags: ['auth', 'security'] });
+    const taskA = project.state.addTask('Build authentication module', {
+      tags: ['auth', 'security'],
+    });
     const taskB = project.state.addTask('Write auth tests', { dependsOn: [taskA.id] });
     project.state.updateTask(taskA.id, { status: 'done' });
 
@@ -80,12 +82,7 @@ describe('Cross-Session Memory', () => {
     sessions2.start();
 
     // Compile context — this is what Claude would see
-    const context = sessions2.compileContext(
-      project2.config.name,
-      project2.state,
-      memory2,
-      5.0,
-    );
+    const context = sessions2.compileContext(project2.config.name, project2.state, memory2, 5.0);
 
     // === ASSERTIONS: Session 2 knows everything from Session 1 ===
 
@@ -94,12 +91,12 @@ describe('Cross-Session Memory', () => {
     expect(context.previousSession!.summary).toContain('auth');
 
     // 2. It knows task A is done and task B is ready
-    const taskTitles = context.activeTasks.map(t => t.title);
+    const taskTitles = context.activeTasks.map((t) => t.title);
     expect(taskTitles).toContain('Write auth tests');
 
     // 3. It knows the JWT decision
     expect(context.recentDecisions.length).toBeGreaterThan(0);
-    const jwtDecision = context.recentDecisions.find(d => d.chosen.includes('JWT'));
+    const jwtDecision = context.recentDecisions.find((d) => d.chosen.includes('JWT'));
     expect(jwtDecision).toBeDefined();
 
     // 4. It knows the open question

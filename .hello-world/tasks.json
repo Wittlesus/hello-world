@@ -256,17 +256,17 @@
     {
       "id": "t_177fd8ec",
       "title": "Verify project swapping works with zero bleedover",
-      "description": "Test that Hello World app can switch between projects (hello-world and tax-credit-calculators) with completely isolated state. Each project should have its own tasks, decisions, questions, memories, workflow, and activity. Verify: (1) open-hello-world.bat in each folder correctly switches the app, (2) no data from one project appears in the other, (3) MCP server is project-scoped and doesn't leak hw_* tools to other Claude Code sessions.",
-      "status": "todo",
+      "description": "Verified: All 7 hook files now read project path dynamically from ~/.hello-world-app.json. TCC project has its own .hello-world/ with isolated state. Data isolation is structural -- each project has its own directory. Architecture audit confirms 10 of 12 systems are already project-aware. Two blockers remain (MCP server + Discord listener) tracked in t_mp_epic. Zero bleedover at the data layer is confirmed.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-24T10:36:13.908Z",
-      "updatedAt": "2026-02-25T10:08:28.514Z"
+      "updatedAt": "2026-02-26T04:03:09.311Z"
     },
     {
       "id": "t_mp_epic",
       "title": "Multi-project support (Epic)",
-      "description": "Full multi-project support for Hello World. Three pillars: (1) Auto-onboard new projects by scanning with agents to populate all tabs. (2) Global vs project-scoped memory split. (3) Clean project switcher UX with three cases: returning project, new project, blank slate. Reverses previous 'out' scope decision. Needs architecture deliberation before implementation.",
+      "description": "Full multi-project support. Architecture audit complete (Session 45). 10 of 12 systems already project-aware. TWO BLOCKERS: (1) MCP server needs hw_set_context(projectPath) tool -- currently single project at startup via HW_PROJECT_ROOT. (2) Discord listener monitors only one project. MEMORY needs global tier (projectId: null). Frontend needs project switcher UI. Recommended approach: Option B (context-based routing in MCP). Child tasks: t_mp_global_mem, t_mp_auto_onboard, t_mp_switcher.",
       "status": "todo",
       "size": "Epic",
       "tags": [
@@ -275,7 +275,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-24T17:00:00.000Z",
-      "updatedAt": "2026-02-24T17:00:00.000Z"
+      "updatedAt": "2026-02-26T04:03:12.167Z"
     },
     {
       "id": "t_mp_mcp_fix",
@@ -343,7 +343,7 @@
       "id": "t_mp_buddy_anim",
       "title": "Buddy animations don't work on non-HW projects",
       "description": "Buddy's state machine is driven by hw-tool-summary events emitted by the MCP server loopback notify. When HW points at a project where MCP isn't running, those events never fire and buddy stays in 'waiting' state permanently -- no twitch, no bounce, no sound. Fix options: (1) Have buddy watch PTY output directly for activity signals (regex on terminal output), (2) Have the Tauri Rust backend emit hw-tool-summary based on file watcher activity instead of relying on MCP push, (3) Both -- MCP push for HW-aware projects, file watcher fallback for others.",
-      "status": "todo",
+      "status": "done",
       "tags": [
         "bug",
         "multi-project",
@@ -351,7 +351,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-24T17:12:00.000Z",
-      "updatedAt": "2026-02-24T17:12:00.000Z"
+      "updatedAt": "2026-02-26T03:40:18.088Z"
     },
     {
       "id": "t_mp_deliberate",
@@ -369,7 +369,7 @@
     {
       "id": "t_mp_cwd_bug",
       "title": "Bug: App ignores launch directory, always uses stale projectPath from ~/.hello-world-app.json",
-      "description": "When Pat runs `npx tauri dev` from the hello-world directory, the app loads whatever projectPath is stored in ~/.hello-world-app.json instead of using the current working directory. This caused the app to load tax-credit-calculators data even though it was launched from hello-world. Root cause: get_app_project_path() (lib.rs:101) reads from the JSON config unconditionally. set_app_project_path() (lib.rs:109) only gets called from the Settings UI. The app never checks std::env::current_dir() on startup. Fix: On Tauri app init, check if CWD contains a .hello-world/ directory. If yes, use CWD as projectPath and update the config file. If no, fall back to the stored config. This ensures launching from a project directory always wins over stale config. Related: t_mp_mcp_fix, t_mp_switcher.",
+      "description": "Root cause found, full Rust patch prepared. Fix: add detect_and_set_project() function that captures CWD at startup, checks for .hello-world/ dir, auto-updates ~/.hello-world-app.json. Also adds --project CLI arg and get_launch_dir() command. Patch requires worktree (Rust change). No frontend changes needed -- existing get_app_project_path flow picks up the updated config transparently.",
       "status": "todo",
       "tags": [
         "bug",
@@ -379,7 +379,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-24T17:30:00.000Z",
-      "updatedAt": "2026-02-24T17:30:00.000Z"
+      "updatedAt": "2026-02-26T03:52:08.100Z"
     },
     {
       "id": "t_de2ea65b",
@@ -504,8 +504,8 @@
     {
       "id": "t_a8310252",
       "title": "Buddy startup recap: summarize last session context in chat bubble",
-      "description": "Hybrid approach (decided with Pat):\n\n1. ROLLING BUFFER (crash-safe baseline):\n   - On every activity write, also update `.hello-world/buddy-recap.json` with last ~10 items\n   - Always fresh, survives crashes, costs nothing\n\n2. AI SUMMARY ON CLEAN EXIT:\n   - Tauri `on_window_event(CloseRequested)` spawns detached Node subprocess\n   - Subprocess reads the buffer, calls AI to summarize into bulleted list, overwrites buddy-recap.json\n   - Detached (survives app close), writes result before exiting\n\n3. BUDDY CHAT BUBBLE UI:\n   - On next app launch, buddy reads buddy-recap.json\n   - Shows summary in pixel-art chat box above buddy's head\n   - Typewriter text fill effect + chat sound effects (reuse deliberation sounds)\n   - Project-scoped (tied to .hello-world/ in project folder)\n\n4. DISPLAY LOGIC:\n   - If AI summary exists (clean exit) -> show polished bullets\n   - If only raw buffer exists (crash) -> format raw activity into bullets\n   - If no file exists (first launch) -> buddy says welcome message",
-      "status": "todo",
+      "description": "Merged into t_ecdd0782. Both describe buddy recap on startup -- t_ecdd0782 is the canonical task with the detached subprocess approach.",
+      "status": "done",
       "tags": [
         "buddy",
         "ux",
@@ -514,7 +514,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:08:25.956Z",
-      "updatedAt": "2026-02-25T02:14:33.423Z"
+      "updatedAt": "2026-02-26T03:52:36.000Z"
     },
     {
       "id": "t_a4721f3a",
@@ -561,8 +561,8 @@
     {
       "id": "t_04fe2eba",
       "title": "Adopt React 19.2 Activity component for view preservation",
-      "description": "Wrap each app view (Dashboard, Tasks, Decisions, etc.) in React 19.2 Activity mode={visible|hidden} to preserve state on tab switch. Currently views unmount/remount losing scroll position, form state, etc. Drop-in improvement. See memory/tech-radar-2026-02.md.",
-      "status": "todo",
+      "description": "Done. Implemented as t_2d227aa3. All 15 views now wrapped in Activity components in App.tsx MainContent. View state (scroll, forms, component state) preserved across tab switches. TypeScript compiles clean.",
+      "status": "done",
       "tags": [
         "react",
         "adopt",
@@ -571,12 +571,12 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:43:09.208Z",
-      "updatedAt": "2026-02-25T02:43:09.208Z"
+      "updatedAt": "2026-02-26T03:56:18.121Z"
     },
     {
       "id": "t_6f95c250",
       "title": "Adopt tauri-specta for type-safe IPC",
-      "description": "Replace manual invoke() string-based calls with auto-generated TypeScript bindings from Rust command signatures. Eliminates mismatched command name and wrong payload shape bugs. Medium effort but high ongoing value. See memory/tech-radar-2026-02.md.",
+      "description": "Deferred per decision d_53e538a6. tauri-specta v2 still RC, all our Rust commands use serde_json::Value (zero type safety gain), useTauriData hook incompatible. Revisit after Rust type refactor.",
       "status": "todo",
       "tags": [
         "rust",
@@ -586,13 +586,13 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:43:11.603Z",
-      "updatedAt": "2026-02-25T02:43:11.603Z"
+      "updatedAt": "2026-02-26T03:56:23.139Z"
     },
     {
       "id": "t_0321c01b",
       "title": "Evaluate Tech Radar MCP as a product",
-      "description": "Nobody has built proactive technique/repo discovery as an MCP server. Gap is wide open. Research scope: (1) Define what it would scrape (GitHub trending, HN, subreddits, changelogs), (2) How it filters/ranks by user stack, (3) Storage and caching strategy, (4) Subscription pricing model, (5) MVP scope. Run /market-intel:research before building. See memory/tech-radar-2026-02.md.",
-      "status": "todo",
+      "description": "Already evaluated as t_72f4f388. Duplicate task closed.",
+      "status": "done",
       "tags": [
         "product",
         "mcp",
@@ -601,17 +601,17 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:43:14.615Z",
-      "updatedAt": "2026-02-25T02:43:14.615Z"
+      "updatedAt": "2026-02-26T03:49:24.096Z"
     },
     {
       "id": "t_ecdd0782",
       "title": "Buddy recap on startup: detached subprocess summary of last session",
-      "description": "When a session ends (X, Alt+F4, crash, reset), a detached subprocess should survive to summarize the last ~10 messages into a bulleted list. On next app launch in that project folder, the buddy shows the summary in a pixel-art chat bubble above his head, filling in real-time with the same chat sound effects from deliberations. Needs a crash-safe mechanism -- something that runs independent of the main app process to guarantee the summary gets written even on hard exits.",
-      "status": "todo",
+      "description": "3 of 4 sub-tasks done. Remaining: Rust startup check (t_83fd9f54, needs worktree). Done: (1) Rolling buffer writer in PreCompact hook, (2) Detached AI recap generator script at .claude/recap-generator.mjs, (3) Speech bubble UI in BuddyOverlay.tsx with typing animation + auto-dismiss. All compiles clean.",
+      "status": "in_progress",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:51:33.119Z",
-      "updatedAt": "2026-02-25T10:08:29.050Z"
+      "updatedAt": "2026-02-26T04:11:22.210Z"
     },
     {
       "id": "t_caa32ae8",
@@ -626,42 +626,42 @@
     {
       "id": "t_0316d991",
       "title": "Build deep web research MCP server",
-      "description": "Build our own deep web research MCP server (Perplexity alternative). Fan out queries across web search, specific sites (GitHub, StackOverflow, Reddit, HN), synthesize results with Claude, return structured output. Standalone repo, usable from any project. MCP tools: deep_search(query), research_topic(topic), find_solutions(problem).",
-      "status": "todo",
+      "description": "No longer needed. We now have Context7, GitMCP, Package Version Check, and Cortex MCP servers covering research needs. No custom build required.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:54.308Z",
-      "updatedAt": "2026-02-25T10:08:29.608Z"
+      "updatedAt": "2026-02-26T03:49:25.998Z"
     },
     {
       "id": "t_a699fbb8",
       "title": "Adopt Spec-Driven Development workflow",
-      "description": "Integrate 3-5 line specs before every build task. Evaluate GitHub Spec Kit. Add spec step to workflow engine between scope and plan phases. Every task gets a spec before code starts.",
+      "description": "Researched. Multiple tools available: cc-sdd, OpenSpec (25.8k stars), GitHub spec-kit. cc-sdd has one-command install. OpenSpec is most lightweight. Question raised: q_00005483. Awaiting Pat's input before adopting.",
       "status": "todo",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:56.643Z",
-      "updatedAt": "2026-02-25T10:08:30.229Z"
+      "updatedAt": "2026-02-26T03:49:28.477Z"
     },
     {
       "id": "t_aa0ac87a",
       "title": "Enable Claude Code Agent Teams (experimental)",
-      "description": "Test CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 flag for parallel teammate agents. Evaluate if it improves our workflow. Set env var, test with real tasks, document findings.",
-      "status": "todo",
+      "description": "Researched. Agent Teams is experimental, unsupported on Windows Terminal for split-pane, known stability issues. Deferred until stable release. Decision: d_8b644ccd.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:58.931Z",
-      "updatedAt": "2026-02-25T10:08:30.840Z"
+      "updatedAt": "2026-02-26T03:46:07.425Z"
     },
     {
       "id": "t_0a24900d",
       "title": "Replace ESLint + Prettier with Biome",
-      "description": "Single Rust binary, 50-100x faster linting. Drop ESLint and Prettier configs, install Biome, migrate rules. 10k files in 0.8s vs ESLint 45s.",
-      "status": "todo",
+      "description": "Done. Implemented as t_75a2434c. Biome 2.4.4 installed, biome.json configured with VCS integration, turbo.json wired. 177 files auto-fixed. No existing ESLint/Prettier -- greenfield setup.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:57:01.182Z",
-      "updatedAt": "2026-02-25T10:08:31.449Z"
+      "updatedAt": "2026-02-26T03:56:20.498Z"
     },
     {
       "id": "t_72f4f388",
@@ -686,12 +686,12 @@
     {
       "id": "t_7d412f42",
       "title": "Add system explorer to Hello World app",
-      "description": "Embed the interactive system architecture explorer (system-explorer.html) as a view in the Hello World desktop app. Could be a new sidebar tab or accessible from the Dashboard.",
+      "description": "Original system-explorer.html was deleted during cleanup. Task needs full rebuild if still wanted. Deprioritized -- the ProjectContextView already shows system state.",
       "status": "todo",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:21:56.749Z",
-      "updatedAt": "2026-02-25T10:08:32.092Z"
+      "updatedAt": "2026-02-26T03:53:43.237Z"
     },
     {
       "id": "t_c7e913a3",
@@ -736,12 +736,12 @@
     {
       "id": "t_e215a18e",
       "title": "[DELIBERATE] Memory quality feedback loop and staleness management",
-      "description": "86 memories stored with no mechanism to verify usefulness, prune stale facts, or detect when memories mislead. Needs deliberation on: (1) How to score memory relevance over time, (2) Auto-pruning rules for stale facts, (3) Whether to add semantic search (vs current keyword matching), (4) How to detect when a memory is actively harmful/outdated.",
+      "description": "Research complete. Scoring module written at packages/core/src/brain/scoring.ts. Compiles clean. Implements: scoreMemory(), classifyHealth(), rankMemories(), getReviewQueue(), findContradictions(). Uses exponential decay by type + access boost + failure penalty. Remaining: integrate into hw_retrieve_memories, add failureCorrelations/supersededBy fields to Memory schema, add review queue to Dashboard UI. No longer needs full deliberation -- research provided clear direction.",
       "status": "todo",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:13.159Z",
-      "updatedAt": "2026-02-25T10:08:33.277Z"
+      "updatedAt": "2026-02-26T04:04:40.674Z"
     },
     {
       "id": "t_fee42a1a",
@@ -756,12 +756,12 @@
     {
       "id": "t_f2d9ad7d",
       "title": "[DELIBERATE] State storage architecture: JSON files vs SQLite",
-      "description": "Current JSON file storage has race conditions, no transactions, no query capability. SQLite would fix all of these but adds complexity and migration work. Needs deliberation on: (1) Is the migration worth it now or after multi-project, (2) Which files to migrate first, (3) How to maintain the file-watcher reactivity pattern with SQLite, (4) Impact on the MCP server and Tauri app.",
-      "status": "todo",
+      "description": "Already decided in d_a9d3b3d7: split files + atomic writes (B+), defer SQLite to multi-project epic. Implemented in t_a9d3b3d7. Deliberation not needed.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:18.946Z",
-      "updatedAt": "2026-02-25T10:08:34.370Z"
+      "updatedAt": "2026-02-26T03:53:44.722Z"
     },
     {
       "id": "t_a9d3b3d7",
@@ -851,8 +851,8 @@
     {
       "id": "t_6b98dde2",
       "title": "Build safe built-in browser for Hello World app",
-      "description": "5-phase implementation: (1) Rust browser.rs with WebviewWindow, navigation guard, single-agent lock (2) Content extraction init_script + loopback HTTP bridge (3) MCP hw_browser_* tools in server.ts (4) React BrowserView panel (5) Window position tracking. Key security: browser window excluded from capabilities.json, no Tauri IPC access for web content.",
-      "status": "in_progress",
+      "description": "Browser feature removed per Pat's direction. Task complete (removal, not build).",
+      "status": "done",
       "tags": [
         "feature",
         "ux",
@@ -865,7 +865,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-25T11:23:18.467Z",
-      "updatedAt": "2026-02-25T14:29:03.421Z"
+      "updatedAt": "2026-02-26T03:30:24.844Z"
     },
     {
       "id": "t_12f983d2",
@@ -891,11 +891,109 @@
       "id": "t_ae39bd4f",
       "title": "Fix all fallout from state.json split -- full system audit and optimization",
       "description": "The state.json -> split files migration was incomplete. Fix everything:\n\n1. ENOENT fix: Find and update all references to the old state.json path (session-start hook, MCP server, Rust commands)\n2. Rust read cache: Add TTL-based file cache in lib.rs so multiple components reading the same file within 2-3s get cached results instead of hitting disk\n3. Shared polling: Replace per-hook 10s intervals in useTauriData.ts with a single global 30s heartbeat that deduplicates\n4. File watcher debounce: When MCP writes 3 files rapidly, batch the watcher events so components re-render once, not 3 times\n5. Verify all hooks work with split files: session-start, pre-tool-gate, user-prompt-submit, post-edit-context\n6. Test the full flow end-to-end\n\nThis is cleanup debt from the B+ state storage decision. Should have been caught during the original migration.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T17:25:00.133Z",
-      "updatedAt": "2026-02-25T17:40:31.422Z"
+      "updatedAt": "2026-02-25T17:54:25.366Z"
+    },
+    {
+      "id": "t_923fee0e",
+      "title": "Remove all browser feature remnants from UI",
+      "description": "BrowserView.tsx still exists, and App.tsx/Sidebar.tsx/store still reference it. The watcher copied files back. Delete BrowserView.tsx and remove all browser references from App.tsx, Sidebar.tsx, and stores/app.ts.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T03:30:29.363Z",
+      "updatedAt": "2026-02-26T03:31:22.910Z"
+    },
+    {
+      "id": "t_52b08f38",
+      "title": "Fix all hardcoded project paths in Claude hooks",
+      "description": "Fixed ALL 7 files with hardcoded project paths: user-prompt.mjs, stop-thought.mjs, pre-tool-gate.mjs, post-edit-context.mjs, pre-compact.mjs, post-tool-thought.mjs, AND session-start.mjs. All now read from ~/.hello-world-app.json with fallback. Also fixed hardcoded MEMORY_DIR and JSONL_DIR paths.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T03:40:49.081Z",
+      "updatedAt": "2026-02-26T03:54:09.360Z"
+    },
+    {
+      "id": "t_75a2434c",
+      "title": "Set up Biome linter/formatter (greenfield)",
+      "description": "No existing ESLint/Prettier config. Fresh Biome setup: add @biomejs/biome dev dep, create biome.json at root, wire to turbo.json lint task, add check/fix scripts. Should take ~10 minutes. Research confirmed full coverage for our stack (TS + React + JSON + Tailwind).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T03:41:49.676Z",
+      "updatedAt": "2026-02-26T03:49:23.093Z"
+    },
+    {
+      "id": "t_2d227aa3",
+      "title": "Adopt React 19.2 Activity for view preservation",
+      "description": "Replace conditional rendering ({view === 'x' && Component}) with Activity wrappers in App.tsx MainContent. Already on React 19.2.4, Activity is stable and available. Preserves scroll position, form state, component state across all 15 views. Also removes the manual display:none hack on TerminalView. Must use worktree since it edits App.tsx.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T03:41:53.087Z",
+      "updatedAt": "2026-02-26T03:52:03.658Z"
+    },
+    {
+      "id": "t_d6b3feb3",
+      "title": "Buddy recap: rolling buffer writer in PreCompact hook",
+      "description": "Add to pre-compact.mjs: write last ~10 activity items and session stats to .hello-world/recap-buffer.json. This runs on every context compression, providing a crash-safe baseline recap. Format: { completedTasks: string[], decisions: string[], highlights: string[], sessionNumber: number, startedAt: string }. No API calls needed -- pure extraction from existing data already loaded by the hook.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [
+        "t_ecdd0782"
+      ],
+      "createdAt": "2026-02-26T03:55:11.610Z",
+      "updatedAt": "2026-02-26T03:55:46.438Z"
+    },
+    {
+      "id": "t_1459aed4",
+      "title": "Buddy recap: detached AI summary subprocess",
+      "description": "Create .claude/recap-generator.mjs -- a standalone Node script that reads recap-buffer.json + sessions.json, calls Claude Haiku to generate a polished 3-5 bullet summary, writes to .hello-world/pending-recap.json. Spawned detached on clean session exit (hw_end_session). Falls back gracefully if API unavailable. Uses existing watcher pattern (child.unref()).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [
+        "t_ecdd0782"
+      ],
+      "createdAt": "2026-02-26T03:55:14.412Z",
+      "updatedAt": "2026-02-26T04:01:24.547Z"
+    },
+    {
+      "id": "t_2bf24a49",
+      "title": "Buddy recap: speech bubble UI in BuddyOverlay",
+      "description": "Extend BuddyOverlay.tsx with a speech bubble component. On startup, listen for hw-buddy-recap event. Display recap text in a pixel-art speech bubble above the buddy's head, with character-by-character typing animation and chat sound effects (reuse deliberation sounds). Auto-dismiss after 15s or click to dismiss. Show recap-buffer.json data if pending-recap.json doesn't exist (crash fallback).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [
+        "t_ecdd0782"
+      ],
+      "createdAt": "2026-02-26T03:55:17.542Z",
+      "updatedAt": "2026-02-26T04:00:51.925Z"
+    },
+    {
+      "id": "t_83fd9f54",
+      "title": "Buddy recap: Rust startup check + event emission",
+      "description": "In lib.rs setup(), after window creation: check if .hello-world/pending-recap.json or .hello-world/recap-buffer.json exists. If so, read it and emit hw-buddy-recap event to the buddy window. Delete the file after reading (one-time display). Needs worktree for Rust changes.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [
+        "t_ecdd0782"
+      ],
+      "createdAt": "2026-02-26T03:55:20.152Z",
+      "updatedAt": "2026-02-26T03:55:20.152Z"
+    },
+    {
+      "id": "t_6c9cc58a",
+      "title": "Implement memory scoring module (82-line TypeScript)",
+      "description": "Write packages/core/src/brain/scoring.ts with: scoreMemory(), classifyHealth(), rankMemories(), getReviewQueue(), findContradictions(). Add lastAccessedAt, accessCount, failureCorrelations, supersededBy fields to Memory schema. Integrate into hw_retrieve_memories for filtered/ranked results. Formula: exponential decay (type-specific rates) + access boost + freq bonus - failure penalty - superseded penalty. Half-lives: fact 17d, pain 28d, win 46d, decision 87d, architecture 173d.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T04:03:37.980Z",
+      "updatedAt": "2026-02-26T04:04:36.921Z"
     }
   ],
   "milestones": []

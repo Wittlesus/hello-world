@@ -1,27 +1,26 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
-import { Sidebar } from './components/Sidebar.js';
-import { Dashboard } from './components/Dashboard.js';
-import { TaskBoard } from './components/TaskBoard.js';
+import { Activity, useCallback, useEffect, useRef, useState } from 'react';
+import { AgentsView } from './components/AgentsView.js';
 import { ApprovalQueue } from './components/ApprovalQueue.js';
-import { DecisionsView } from './components/DecisionsView.js';
-import { QuestionsView } from './components/QuestionsView.js';
-import { MemoryView } from './components/MemoryView.js';
-import { CostView } from './components/CostView.js';
-import { SettingsView } from './components/SettingsView.js';
-import { SkillsView } from './components/SkillsView.js';
-import { WatchersView } from './components/WatchersView.js';
-import { ProjectContextView } from './components/ProjectContextView.js';
-import { TerminalView } from './components/TerminalView.js';
-import { ProjectSetup } from './components/ProjectSetup.js';
 import { ClaudeBuddy } from './components/ClaudeBuddy.js';
+import { CostView } from './components/CostView.js';
+import { Dashboard } from './components/Dashboard.js';
+import { DecisionsView } from './components/DecisionsView.js';
+import { ErrorBoundary } from './components/ErrorBoundary.js';
+import { FilesView } from './components/FilesView.js';
 import { HelpModal } from './components/HelpModal.js';
 import { HistoryView } from './components/HistoryView.js';
-import { AgentsView } from './components/AgentsView.js';
-import { FilesView } from './components/FilesView.js';
-import { BrowserView } from './components/BrowserView.js';
-import { ErrorBoundary } from './components/ErrorBoundary.js';
+import { MemoryView } from './components/MemoryView.js';
+import { ProjectContextView } from './components/ProjectContextView.js';
+import { ProjectSetup } from './components/ProjectSetup.js';
+import { QuestionsView } from './components/QuestionsView.js';
+import { SettingsView } from './components/SettingsView.js';
+import { Sidebar } from './components/Sidebar.js';
+import { SkillsView } from './components/SkillsView.js';
+import { TaskBoard } from './components/TaskBoard.js';
+import { TerminalView } from './components/TerminalView.js';
+import { WatchersView } from './components/WatchersView.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -32,15 +31,14 @@ const KEY_MAP: Record<string, View> = {
   '5': 'memory',
   '7': 'cost',
   '8': 'settings',
-  't': 'terminal',
-  'a': 'approvals',
-  'g': 'agents',
-  'h': 'history',
-  'k': 'skills',
-  'p': 'context',
-  'w': 'watchers',
-  'f': 'files',
-  'b': 'browser',
+  t: 'terminal',
+  a: 'approvals',
+  g: 'agents',
+  h: 'history',
+  k: 'skills',
+  p: 'context',
+  w: 'watchers',
+  f: 'files',
 };
 
 function MainContent() {
@@ -48,32 +46,29 @@ function MainContent() {
 
   return (
     <>
-      {view === 'dashboard'  && <Dashboard />}
-      {view === 'tasks'      && <TaskBoard />}
-      {view === 'decisions'  && <DecisionsView />}
-      {view === 'questions'  && <QuestionsView />}
-      {view === 'memory'     && <MemoryView />}
-      {view === 'history'    && <HistoryView />}
-      {view === 'agents'     && <ErrorBoundary label="agents"><AgentsView /></ErrorBoundary>}
-      {view === 'cost'       && <CostView />}
-      {view === 'settings'   && <SettingsView />}
-      {view === 'skills'     && <SkillsView />}
-      {view === 'watchers'   && <WatchersView />}
-      {view === 'context'    && <ProjectContextView />}
-      {view === 'files'      && <FilesView />}
-      {view === 'browser'    && <BrowserView />}
-
-      {/* Approvals as standalone full view */}
-      {view === 'approvals'  && (
+      <Activity mode={view === 'dashboard' ? 'visible' : 'hidden'}><Dashboard /></Activity>
+      <Activity mode={view === 'tasks' ? 'visible' : 'hidden'}><TaskBoard /></Activity>
+      <Activity mode={view === 'decisions' ? 'visible' : 'hidden'}><DecisionsView /></Activity>
+      <Activity mode={view === 'questions' ? 'visible' : 'hidden'}><QuestionsView /></Activity>
+      <Activity mode={view === 'memory' ? 'visible' : 'hidden'}><MemoryView /></Activity>
+      <Activity mode={view === 'history' ? 'visible' : 'hidden'}><HistoryView /></Activity>
+      <Activity mode={view === 'agents' ? 'visible' : 'hidden'}>
+        <ErrorBoundary label="agents"><AgentsView /></ErrorBoundary>
+      </Activity>
+      <Activity mode={view === 'cost' ? 'visible' : 'hidden'}><CostView /></Activity>
+      <Activity mode={view === 'settings' ? 'visible' : 'hidden'}><SettingsView /></Activity>
+      <Activity mode={view === 'skills' ? 'visible' : 'hidden'}><SkillsView /></Activity>
+      <Activity mode={view === 'watchers' ? 'visible' : 'hidden'}><WatchersView /></Activity>
+      <Activity mode={view === 'context' ? 'visible' : 'hidden'}><ProjectContextView /></Activity>
+      <Activity mode={view === 'files' ? 'visible' : 'hidden'}><FilesView /></Activity>
+      <Activity mode={view === 'approvals' ? 'visible' : 'hidden'}>
         <div className="flex-1 flex flex-col min-h-0 overflow-y-auto p-4">
           <ApprovalQueue standalone />
         </div>
-      )}
-
-      {/* Terminal stays mounted always — PTY + xterm survive tab switches */}
-      <div className="flex-1 flex flex-col min-h-0" style={{ display: view === 'terminal' ? 'flex' : 'none' }}>
+      </Activity>
+      <Activity mode={view === 'terminal' ? 'visible' : 'hidden'}>
         <TerminalView />
-      </div>
+      </Activity>
     </>
   );
 }
@@ -84,13 +79,19 @@ export function App() {
   const [bootstrapping, setBootstrapping] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
-    if (e.key === '?') { setShowHelp(true); return; }
-    const view = KEY_MAP[e.key.toLowerCase()];
-    if (view) setView(view);
-  }, [setView]);
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === '?') {
+        setShowHelp(true);
+        return;
+      }
+      const view = KEY_MAP[e.key.toLowerCase()];
+      if (view) setView(view);
+    },
+    [setView],
+  );
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -99,7 +100,9 @@ export function App() {
 
   useEffect(() => {
     invoke<string | null>('get_app_project_path')
-      .then((path) => { if (path) setProject(path, ''); })
+      .then((path) => {
+        if (path) setProject(path, '');
+      })
       .catch(() => {})
       .finally(() => setBootstrapping(false));
   }, []);
@@ -126,9 +129,13 @@ export function App() {
           setView('agents');
         }
         prevDelibStatus.current = status;
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
     });
-    return () => { unlisten.then(fn => fn()); };
+    return () => {
+      unlisten.then((fn) => fn());
+    };
   }, [projectPath, setView]);
 
   if (bootstrapping) {

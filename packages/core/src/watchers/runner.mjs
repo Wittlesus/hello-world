@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 /**
  * Hello World — Watcher Runner
  * Standalone ESM script. Spawned detached by hw_spawn_watcher.
@@ -7,12 +8,12 @@
  * Usage: node runner.mjs <watcherId> <projectRoot> <configJson>
  */
 
-import { readFileSync, writeFileSync, copyFileSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { execFileSync } from 'node:child_process';
 
-const [,, watcherId, projectRoot, configJson] = process.argv;
+const [, , watcherId, projectRoot, configJson] = process.argv;
 
 if (!watcherId || !projectRoot || !configJson) {
   process.stderr.write('Usage: runner.mjs <watcherId> <projectRoot> <configJson>\n');
@@ -29,13 +30,19 @@ const startedAt = Date.now();
 // ── Helpers ───────────────────────────────────────────────────────
 
 function safeRead(file) {
-  try { return JSON.parse(readFileSync(join(hwDir, file), 'utf8')); }
-  catch { return null; }
+  try {
+    return JSON.parse(readFileSync(join(hwDir, file), 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
 function safeWrite(file, data) {
-  try { writeFileSync(join(hwDir, file), JSON.stringify(data, null, 2), 'utf8'); }
-  catch { /* non-fatal */ }
+  try {
+    writeFileSync(join(hwDir, file), JSON.stringify(data, null, 2), 'utf8');
+  } catch {
+    /* non-fatal */
+  }
 }
 
 function getTrackedPid() {
@@ -43,7 +50,9 @@ function getTrackedPid() {
     const raw = readFileSync(join(hwDir, 'app.pid'), 'utf8').trim();
     const pid = parseInt(raw, 10);
     return isNaN(pid) ? null : pid;
-  } catch { return null; }
+  } catch {
+    return null;
+  }
 }
 
 function isProcessAlive(pid) {
@@ -60,10 +69,13 @@ function fallbackAliveCheck() {
   // No user input — hardcoded args, no injection risk
   try {
     const out = execFileSync('tasklist', ['/FI', 'IMAGENAME eq hello-world.exe', '/NH'], {
-      encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
     });
     return out.toLowerCase().includes('hello-world.exe');
-  } catch { return false; }
+  } catch {
+    return false;
+  }
 }
 
 function writeResults(status, appliedCopies, errorMsg) {
@@ -79,11 +91,15 @@ function writeResults(status, appliedCopies, errorMsg) {
         ...entry,
         status,
         completedAt,
-        resultSummary: errorMsg ?? `Applied ${appliedCopies.filter(c => c.status === 'ok').length}/${appliedCopies.length} file(s)`,
+        resultSummary:
+          errorMsg ??
+          `Applied ${appliedCopies.filter((c) => c.status === 'ok').length}/${appliedCopies.length} file(s)`,
       });
     }
     safeWrite('watchers.json', data);
-  } catch { /* non-fatal */ }
+  } catch {
+    /* non-fatal */
+  }
 
   // Write crash-report.json
   const lastContext = safeRead('last-context.json');
@@ -101,10 +117,14 @@ function writeResults(status, appliedCopies, errorMsg) {
   // Append to watcher-results.json
   try {
     let results = [];
-    try { results = JSON.parse(readFileSync(join(hwDir, 'watcher-results.json'), 'utf8')); } catch {}
+    try {
+      results = JSON.parse(readFileSync(join(hwDir, 'watcher-results.json'), 'utf8'));
+    } catch {}
     results.push({ watcherId, status, completedAt, label: config.label, copies: appliedCopies });
     writeFileSync(join(hwDir, 'watcher-results.json'), JSON.stringify(results, null, 2), 'utf8');
-  } catch { /* non-fatal */ }
+  } catch {
+    /* non-fatal */
+  }
 }
 
 // ── Main ──────────────────────────────────────────────────────────
@@ -133,7 +153,7 @@ async function main() {
 
   // App has exited — execute file copies
   const appliedCopies = [];
-  for (const { from, to } of (config.copies ?? [])) {
+  for (const { from, to } of config.copies ?? []) {
     if (!existsSync(from)) {
       appliedCopies.push({ from, to, status: 'error', errorMessage: 'source not found' });
       continue;

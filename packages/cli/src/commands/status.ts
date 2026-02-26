@@ -1,7 +1,7 @@
-import { Command } from 'commander';
 import { resolve } from 'node:path';
+import { MemoryStore, Project, SessionManager } from '@hello-world/core';
 import chalk from 'chalk';
-import { Project, SessionManager, MemoryStore } from '@hello-world/core';
+import { Command } from 'commander';
 
 export const statusCommand = new Command('status')
   .description('Show project state summary')
@@ -25,16 +25,18 @@ export const statusCommand = new Command('status')
       console.log();
 
       // Tasks summary
-      const todo = tasks.filter(t => t.status === 'todo').length;
-      const inProgress = tasks.filter(t => t.status === 'in_progress').length;
-      const done = tasks.filter(t => t.status === 'done').length;
-      const blocked = tasks.filter(t => t.status === 'blocked').length;
+      const todo = tasks.filter((t) => t.status === 'todo').length;
+      const inProgress = tasks.filter((t) => t.status === 'in_progress').length;
+      const done = tasks.filter((t) => t.status === 'done').length;
+      const blocked = tasks.filter((t) => t.status === 'blocked').length;
 
       console.log(chalk.white('  Tasks:'));
       if (tasks.length === 0) {
         console.log(chalk.gray('    (none)'));
       } else {
-        console.log(`    ${chalk.yellow(todo.toString())} todo  ${chalk.blue(inProgress.toString())} active  ${chalk.green(done.toString())} done  ${chalk.red(blocked.toString())} blocked`);
+        console.log(
+          `    ${chalk.yellow(todo.toString())} todo  ${chalk.blue(inProgress.toString())} active  ${chalk.green(done.toString())} done  ${chalk.red(blocked.toString())} blocked`,
+        );
       }
 
       // Decisions
@@ -57,15 +59,23 @@ export const statusCommand = new Command('status')
 
       // Memory
       console.log();
-      const pains = memories.filter(m => m.type === 'pain').length;
-      const wins = memories.filter(m => m.type === 'win').length;
-      const facts = memories.filter(m => m.type === 'fact').length;
-      console.log(chalk.white(`  Memory: ${chalk.red(pains.toString())} pain  ${chalk.green(wins.toString())} win  ${chalk.blue(facts.toString())} fact`));
+      const pains = memories.filter((m) => m.type === 'pain').length;
+      const wins = memories.filter((m) => m.type === 'win').length;
+      const facts = memories.filter((m) => m.type === 'fact').length;
+      console.log(
+        chalk.white(
+          `  Memory: ${chalk.red(pains.toString())} pain  ${chalk.green(wins.toString())} win  ${chalk.blue(facts.toString())} fact`,
+        ),
+      );
 
       // Sessions
       console.log();
       const totalCost = sessionList.reduce((s, sess) => s + sess.costUsd, 0);
-      console.log(chalk.white(`  Sessions: ${sessionList.length}  |  Lifetime cost: $${totalCost.toFixed(2)}`));
+      console.log(
+        chalk.white(
+          `  Sessions: ${sessionList.length}  |  Lifetime cost: $${totalCost.toFixed(2)}`,
+        ),
+      );
 
       console.log();
     } catch (err) {

@@ -1,5 +1,5 @@
-import type { Memory, BrainState, ContextPhase } from '../types.js';
-import { DEFAULT_CORTEX, ATTENTION_PATTERNS } from '../types.js';
+import type { BrainState, ContextPhase, Memory } from '../types.js';
+import { ATTENTION_PATTERNS, DEFAULT_CORTEX } from '../types.js';
 
 export interface ScoredMemory {
   memory: Memory;
