@@ -271,7 +271,7 @@ server.registerTool('hw_store_memory', {
     severity: z.enum(['low', 'medium', 'high']).optional(),
   }),
 }, async (args: { type: string; title: string; content?: string; rule?: string; tags?: string[]; severity?: string }) => {
-  const mem = memoryStore.storeMemory({
+  const result = memoryStore.storeMemory({
     type: args.type as MemoryType,
     title: args.title,
     content: args.content,
@@ -279,6 +279,11 @@ server.registerTool('hw_store_memory', {
     tags: args.tags,
     severity: args.severity as MemorySeverity | undefined,
   });
+  const mem = result.memory;
+  if (result.gateResult.action === 'reject') {
+    return text(`Memory rejected: ${result.gateResult.reason}`);
+  }
+  const suffix = result.merged ? ' (merged with existing)' : result.superseded?.length ? ` (superseded ${result.superseded.join(', ')})` : '';
   activity.append('memory_stored', `[${mem.type.toUpperCase()}] ${mem.title}`, mem.content ?? mem.rule ?? '');
   // Track significant event for checkpoint logic
   const bs = memoryStore.getBrainState();
@@ -286,7 +291,7 @@ server.registerTool('hw_store_memory', {
     bs.significantEventsSinceCheckpoint = (bs.significantEventsSinceCheckpoint ?? 0) + 1;
     memoryStore.saveBrainState(bs);
   }
-  return text(`Memory stored: ${mem.id} (${mem.type}) "${mem.title}"`);
+  return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}`);
 });
 
 // ── Tasks ───────────────────────────────────────────────────────

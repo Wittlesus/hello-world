@@ -19,3 +19,42 @@ export type {
   TagIndex,
 } from './types.js';
 export { DEFAULT_CONFIG } from './types.js';
+
+// S49: Quality gates, linking, reflection, prediction
+export {
+  qualityGate,
+  computeFingerprint,
+  isDuplicate,
+  assessQuality,
+  detectConflict,
+  resolveConflict,
+} from './quality-gate.js';
+export type { QualityGateResult, QualityGateOptions, ConflictInfo, DuplicateResult } from './quality-gate.js';
+
+export {
+  computeSimilarity,
+  findLinks,
+  applyLinks,
+  buildLinkGraph,
+  traverseLinks,
+  detectContradiction,
+  detectSupersession,
+} from './linker.js';
+
+export {
+  createReflection,
+  shouldReflect,
+  generateMetaObservations,
+  detectSurprise,
+  clusterByTagOverlap,
+} from './reflection.js';
+
+export {
+  estimateExpectedness,
+  shouldAutoCapture,
+  createSurpriseMemory,
+  updateExpectations,
+  processPredictionEvent,
+  createExpectationModel,
+  decayExpectationModel,
+} from './prediction.js';

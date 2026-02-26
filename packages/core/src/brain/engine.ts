@@ -25,6 +25,7 @@ import type {
 } from './types.js';
 import { DEFAULT_CONFIG } from './types.js';
 import { scoreMemory } from './scoring.js';
+import { traverseLinksForRetrieval } from './linker.js';
 
 // ── Severity keywords ───────────────────────────────────────────
 
@@ -304,32 +305,15 @@ export function retrieveMemories(
     weighted[id] = score * severity * synaptic;
   }
 
-  // Stage 5.5: Link traversal -- follow memory links to discover related memories
-  let linkTraversalCount = 0;
+  // Stage 5.5: Link traversal via linker module
   const directIds = new Set(Object.keys(chained.scores));
-  for (const id of directIds) {
-    const mem = viableMap.get(id);
-    if (!mem?.links?.length) continue;
-    for (const link of mem.links) {
-      if (link.relationship === 'contradicts' || link.relationship === 'supersedes') continue;
-      const target = viableMap.get(link.targetId);
-      if (!target) continue;
-
-      let linkWeight = 0;
-      if (link.relationship === 'resolves') linkWeight = 0.8;
-      else if (link.relationship === 'extends') linkWeight = 0.6;
-      else if (link.relationship === 'related') linkWeight = 0.4;
-
-      if (linkWeight > 0) {
-        const existing = weighted[link.targetId] ?? 0;
-        const baseScore = weighted[id] ?? 0;
-        if (baseScore === 0) continue;
-        weighted[link.targetId] = Math.max(existing, baseScore * linkWeight);
-        linkTraversalCount++;
-        // Add linked memory's tags to matched set
-        for (const tag of target.tags) chained.matchedTags.add(tag);
-      }
-    }
+  const scoredIdMap = new Map(Object.entries(weighted));
+  const linkResult = traverseLinksForRetrieval(scoredIdMap, viableMap);
+  const linkTraversalCount = linkResult.traversalCount;
+  for (const [id, score] of linkResult.additionalScores) {
+    weighted[id] = Math.max(weighted[id] ?? 0, score);
+    const target = viableMap.get(id);
+    if (target) for (const tag of target.tags) chained.matchedTags.add(tag);
   }
 
   // Stage 7: Rank and select

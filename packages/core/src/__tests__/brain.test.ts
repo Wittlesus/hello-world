@@ -32,7 +32,7 @@ describe('MemoryStore', () => {
   });
 
   it('stores and retrieves memories', () => {
-    const pain = store.storeMemory({
+    const result = store.storeMemory({
       type: 'pain',
       title: 'Never use git push --force on main',
       content: 'Force pushed and lost 3 hours of work',
@@ -41,16 +41,17 @@ describe('MemoryStore', () => {
       severity: 'high',
     });
 
-    expect(pain.id).toMatch(/^mem_/);
-    expect(pain.severity).toBe('high');
-    expect(store.getMemory(pain.id)).toBeDefined();
+    expect(result.memory.id).toMatch(/^mem_/);
+    expect(result.memory.severity).toBe('high');
+    expect(result.gateResult.action).toBe('accept');
+    expect(store.getMemory(result.memory.id)).toBeDefined();
     expect(store.getAllMemories()).toHaveLength(1);
   });
 
   it('filters by type and tags', () => {
-    store.storeMemory({ type: 'pain', title: 'DB crash', tags: ['database'] });
-    store.storeMemory({ type: 'win', title: 'Fixed auth', tags: ['authentication'] });
-    store.storeMemory({ type: 'fact', title: 'API rate limit', tags: ['api'] });
+    store.storeMemory({ type: 'pain', title: 'Database crash during migration', tags: ['database'], content: 'Migration failed', skipGate: true });
+    store.storeMemory({ type: 'win', title: 'Fixed authentication flow', tags: ['authentication'], content: 'Auth works now', skipGate: true });
+    store.storeMemory({ type: 'fact', title: 'API rate limit is 1000/min', tags: ['api'], content: 'Rate limiting', skipGate: true });
 
     expect(store.getMemoriesByType('pain')).toHaveLength(1);
     expect(store.getMemoriesByType('win')).toHaveLength(1);
@@ -58,7 +59,7 @@ describe('MemoryStore', () => {
   });
 
   it('increments access counts', () => {
-    const mem = store.storeMemory({ type: 'pain', title: 'Bug', tags: ['debugging'] });
+    const { memory: mem } = store.storeMemory({ type: 'pain', title: 'Debugging bug in parser module', tags: ['debugging'], content: 'Parser crashes on invalid input', skipGate: true });
     store.incrementAccess([mem.id]);
     store.incrementAccess([mem.id]);
 
@@ -68,9 +69,15 @@ describe('MemoryStore', () => {
   });
 
   it('deletes memories', () => {
-    const mem = store.storeMemory({ type: 'fact', title: 'Temp', tags: [] });
+    const { memory: mem } = store.storeMemory({ type: 'fact', title: 'Temporary test data for cleanup', tags: [], skipGate: true });
     store.deleteMemory(mem.id);
     expect(store.getMemory(mem.id)).toBeUndefined();
+  });
+
+  it('quality gate rejects low-quality memories', () => {
+    const result = store.storeMemory({ type: 'fact', title: 'x', content: '', tags: [] });
+    expect(result.gateResult.action).toBe('reject');
+    expect(store.getAllMemories()).toHaveLength(0);
   });
 });
 

@@ -3,9 +3,18 @@ import { MemorySchema, BrainStateSchema, DEFAULT_CORTEX } from '../types.js';
 import { JsonStore } from '../storage.js';
 import { generateId, now } from '../utils.js';
 import { inferSeverity } from './engine.js';
+import { qualityGate } from './quality-gate.js';
+import type { QualityGateResult } from './quality-gate.js';
 
 interface MemoryStoreData {
   memories: Memory[];
+}
+
+export interface StoreMemoryResult {
+  memory: Memory;
+  gateResult: QualityGateResult;
+  merged?: boolean;
+  superseded?: string[];
 }
 
 export class MemoryStore {
@@ -40,30 +49,90 @@ export class MemoryStore {
     rule?: string;
     tags?: string[];
     severity?: MemorySeverity;
-  }): Memory {
+    relatedTaskId?: string;
+    surfacedMemoryIds?: string[];
+    outcome?: 'success' | 'partial' | 'failure';
+    skipGate?: boolean;
+  }): StoreMemoryResult {
     let tags = opts.tags ?? [];
     if (tags.length < 2) {
       const autoTags = this.inferTags(opts.title, opts.content ?? '', opts.rule ?? '');
       tags = [...new Set([...tags, ...autoTags])];
     }
 
+    const severity = opts.severity ?? inferSeverity(opts.content ?? '', opts.rule);
+    const candidate = { type: opts.type, title: opts.title, content: opts.content ?? '', rule: opts.rule ?? '', tags, severity };
+
+    // Run quality gate (unless explicitly skipped for system-generated memories)
+    const existingMemories = this.getAllMemories();
+    const gateResult = opts.skipGate
+      ? { action: 'accept' as const, reason: 'Gate skipped', qualityScore: 0.5, fingerprint: '' }
+      : qualityGate(candidate, existingMemories, { autoResolve: true });
+
+    if (gateResult.action === 'reject') {
+      // Return a memory object but do NOT persist it
+      const rejected = MemorySchema.parse({
+        id: generateId('mem'),
+        projectId: this.projectId,
+        ...candidate,
+        qualityScore: gateResult.qualityScore,
+        fingerprint: gateResult.fingerprint,
+        createdAt: now(),
+      });
+      return { memory: rejected, gateResult };
+    }
+
+    if (gateResult.action === 'merge' && gateResult.mergeTarget) {
+      // Update the existing memory with merged content
+      const target = gateResult.mergeTarget;
+      this.store.update(data => ({
+        memories: data.memories.map(m => {
+          if (m.id !== target.id) return m;
+          return {
+            ...m,
+            title: gateResult.mergedTitle ?? m.title,
+            content: gateResult.mergedContent ?? m.content,
+            rule: gateResult.mergedRule ?? m.rule,
+            qualityScore: gateResult.qualityScore,
+            fingerprint: gateResult.fingerprint,
+            tags: [...new Set([...m.tags, ...tags])],
+          };
+        }),
+      }));
+      // Re-read the merged memory from store for accurate snapshot
+      const merged = this.getMemory(target.id) ?? { ...target, qualityScore: gateResult.qualityScore };
+      return { memory: merged, gateResult, merged: true };
+    }
+
+    // Accept path: store the new memory
     const memory = MemorySchema.parse({
       id: generateId('mem'),
       projectId: this.projectId,
-      type: opts.type,
-      title: opts.title,
-      content: opts.content ?? '',
-      rule: opts.rule ?? '',
-      tags,
-      severity: opts.severity ?? inferSeverity(opts.content ?? '', opts.rule),
+      ...candidate,
+      qualityScore: gateResult.qualityScore,
+      fingerprint: gateResult.fingerprint,
+      relatedTaskId: opts.relatedTaskId,
+      surfacedMemoryIds: opts.surfacedMemoryIds,
+      outcome: opts.outcome,
       createdAt: now(),
     });
+
+    // Handle supersession: mark conflicting same-type memories as superseded
+    const superseded: string[] = [];
+    if (gateResult.conflicts?.length) {
+      for (const conflict of gateResult.conflicts) {
+        if (conflict.confidence > 0.7 && conflict.existingMemory.type === opts.type) {
+          this.markSuperseded(conflict.existingMemory.id, memory.id);
+          superseded.push(conflict.existingMemory.id);
+        }
+      }
+    }
 
     this.store.update(data => ({
       memories: [...data.memories, memory],
     }));
 
-    return memory;
+    return { memory, gateResult, superseded: superseded.length > 0 ? superseded : undefined };
   }
 
   getMemory(id: string): Memory | undefined {
@@ -107,6 +176,38 @@ export class MemoryStore {
           accessCount: m.accessCount + 1,
           lastAccessed: timestamp,
         };
+      }),
+    }));
+  }
+
+  markSuperseded(id: string, supersededBy: string): void {
+    this.store.update(data => ({
+      memories: data.memories.map(m => {
+        if (m.id !== id) return m;
+        return { ...m, supersededBy };
+      }),
+    }));
+  }
+
+  addLink(memoryId: string, targetId: string, relationship: Memory['links'][number]['relationship']): void {
+    this.store.update(data => ({
+      memories: data.memories.map(m => {
+        if (m.id !== memoryId) return m;
+        // Skip if link already exists
+        if (m.links.some(l => l.targetId === targetId && l.relationship === relationship)) return m;
+        return {
+          ...m,
+          links: [...m.links, { targetId, relationship, createdAt: now() }],
+        };
+      }),
+    }));
+  }
+
+  updateMemory(id: string, updates: Partial<Pick<Memory, 'title' | 'content' | 'rule' | 'tags' | 'qualityScore' | 'fingerprint'>>): void {
+    this.store.update(data => ({
+      memories: data.memories.map(m => {
+        if (m.id !== id) return m;
+        return { ...m, ...updates };
       }),
     }));
   }
