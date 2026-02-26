@@ -36,6 +36,9 @@ import { retrieveMemories } from '../brain/engine.js';
 import { recordSynapticActivity, recordMemoryTraces, applySynapticPlasticity } from '../brain/state.js';
 import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
+import { analyzeGaps, learnFromObservations, createEmptyCortexStore } from '../brain/cortex-learner.js';
+import type { CortexLearnedStore } from '../brain/cortex-learner.js';
+import { JsonStore } from '../storage.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
@@ -50,6 +53,7 @@ let strikes: TwoStrikeEngine;
 let activity: ActivityStore;
 let workflow: WorkflowEngine;
 let watchers: WatcherStore;
+let cortexStore: JsonStore<CortexLearnedStore>;
 
 try {
   project = Project.open(projectRoot);
@@ -60,6 +64,7 @@ try {
   activity = new ActivityStore(projectRoot);
   workflow = new WorkflowEngine(projectRoot);
   watchers = new WatcherStore(projectRoot);
+  cortexStore = new JsonStore<CortexLearnedStore>(projectRoot, 'cortex-learned.json', createEmptyCortexStore());
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -254,6 +259,20 @@ server.registerTool('hw_retrieve_memories', {
     memoryStore.saveBrainState(updated);
     memoryStore.incrementAccess(ids);
   }
+  // Cortex learning: process any gaps from fuzzy fallback
+  if (result.telemetry?.cortexGaps?.length) {
+    const observations = analyzeGaps(result.telemetry.cortexGaps, args.prompt, memories);
+    if (observations.length > 0) {
+      const cortexData = cortexStore.read();
+      const learnResult = learnFromObservations(observations, cortexData.entries);
+      cortexStore.write({
+        entries: [...cortexData.entries.filter(e => !learnResult.updatedEntries.some(u => u.word === e.word)), ...learnResult.updatedEntries, ...learnResult.newEntries],
+        totalGapsProcessed: cortexData.totalGapsProcessed + observations.length,
+        lastUpdated: new Date().toISOString(),
+      });
+    }
+  }
+
   const count = result.painMemories.length + result.winMemories.length;
   activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}"`, result.injectionText || 'No matches.');
   return text(result.injectionText || 'No relevant memories found.');
@@ -263,7 +282,7 @@ server.registerTool('hw_store_memory', {
   title: 'Store Memory',
   description: 'Store a memory. Types: pain (mistakes), win (successes), fact (reference), decision, architecture.',
   inputSchema: z.object({
-    type: z.enum(['pain', 'win', 'fact', 'decision', 'architecture']),
+    type: z.enum(['pain', 'win', 'fact', 'decision', 'architecture', 'reflection']),
     title: z.string(),
     content: z.string().optional(),
     rule: z.string().optional(),

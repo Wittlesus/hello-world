@@ -58,3 +58,31 @@ export {
   createExpectationModel,
   decayExpectationModel,
 } from './prediction.js';
+
+// S50: Cortex learning, rules, pruning
+export {
+  analyzeGaps,
+  learnFromObservations,
+  mergeCortex,
+  getPromotionCandidates,
+  pruneStaleEntries,
+  createEmptyCortexStore,
+} from './cortex-learner.js';
+export type { LearnedCortexEntry, CortexLearnedStore, CortexGapObservation } from './cortex-learner.js';
+
+export {
+  extractRuleCandidates,
+  learnRules,
+  getClaudeMdCandidates,
+  createEmptyRulesStore,
+} from './rules.js';
+export type { LearnedRule, LearnedRulesStore, ClaudeMdCandidate } from './rules.js';
+
+export {
+  pruneMemories,
+  previewPrune,
+  restoreFromArchive,
+  archiveStats,
+  createEmptyArchiveStore,
+} from './pruner.js';
+export type { PruneResult, ArchivedMemory, MemoryArchiveStore, PruneOptions } from './pruner.js';
