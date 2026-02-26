@@ -35,6 +35,8 @@ interface Memory {
   title: string;
   severity: 'low' | 'medium' | 'high';
   createdAt: string;
+  links?: Array<{ targetId: string; type: string }>;
+  qualityScore?: number;
 }
 interface MemoriesData {
   memories: Memory[];
@@ -68,12 +70,18 @@ const FILE_TO_SYS_NODE: Record<string, string> = {
   'memories.json': 'sys-memory',
   'workflow.json': 'sys-workflow',
   'approvals.json': 'sys-approvals',
+  'brain-state.json': 'sys-brainstate',
+  'cortex-learned.json': 'sys-cortexlearn',
+  'learned-rules.json': 'sys-rules',
 };
 
 // Map filenames to brain node IDs
 const FILE_TO_BRAIN_NODE: Record<string, string> = {
-  'memories.json': 'brain-hippocampus',
-  'brain-state.json': 'brain-consolidation',
+  'memories.json': 'brain-linker',
+  'brain-state.json': 'brain-health',
+  'cortex-learned.json': 'brain-cortex',
+  'learned-rules.json': 'brain-rules',
+  'memories-archive.json': 'brain-pruner',
 };
 
 // CSS injected once for glow animations
@@ -157,7 +165,7 @@ function FlowArrow({ direction, active }: { direction: 'right' | 'down'; active:
   );
 }
 
-// ---- Brain Pipeline ----
+// ---- Brain Pipeline (Magnum Opus S48-S51) ----
 
 function BrainPipeline({
   memories,
@@ -188,23 +196,19 @@ function BrainPipeline({
     timeoutsRef.current.set(nodeId, tid);
   }, []);
 
-  // Staggered activation -- lights nodes up one by one along a path
   const activateSequence = useCallback((nodes: string[], delayMs = 150, holdMs = 4000) => {
     const staggerTimeouts: ReturnType<typeof setTimeout>[] = [];
     nodes.forEach((nodeId, i) => {
       const tid = setTimeout(() => activateNode(nodeId, holdMs), i * delayMs);
       staggerTimeouts.push(tid);
     });
-    // Store for cleanup
     const cleanupKey = `_seq_${Date.now()}`;
     timeoutsRef.current.set(cleanupKey, setTimeout(() => {
       timeoutsRef.current.delete(cleanupKey);
     }, nodes.length * delayMs + holdMs));
-    // Also store individual stagger timeouts for unmount cleanup
     staggerTimeouts.forEach((t, i) => timeoutsRef.current.set(`_stg_${i}_${Date.now()}`, t));
   }, [activateNode]);
 
-  // Listen for hw-tool-summary -- activate brain nodes on retrieval (MCP or auto-cue hook)
   useEffect(() => {
     const unlistenPromise = listen<ToolSummaryPayload>('hw-tool-summary', (event) => {
       const payload = event.payload;
@@ -213,46 +217,42 @@ function BrainPipeline({
         e.tool === 'hw_retrieve_memories' || e.tool === 'auto_cue'
       );
       const isBrainRetrieval = hasRetrieval || (payload as unknown as Record<string, unknown>).type === 'brain_retrieval';
+      const hasStore = events.some((e) => e.tool === 'hw_store_memory');
+      const hasEndSession = events.some((e) => e.tool === 'hw_end_session');
+      const hasHealth = events.some((e) => e.tool === 'hw_brain_health');
+
       if (isBrainRetrieval) {
-        const summaryText = (payload.summary ?? '') + events.map((e) => e.summary).join(' ');
-        const lower = summaryText.toLowerCase();
-
-        // Row 1: Input -> Attention -> Cortex -> Pattern Recognition
-        const row1 = [
-          'brain-input', 'brain-arrow-1', 'brain-attention',
-          'brain-arrow-2', 'brain-hippocampus', 'brain-arrow-3', 'brain-tags',
-        ];
-
-        // Row 2: Chaining -> Links -> Amygdala*Score -> Dopamine
-        const row2: string[] = ['brain-arrow-down-1'];
-        if (lower.includes('pain') || lower.includes('memories')) row2.push('brain-amygdala');
-        row2.push('brain-consolidation');
-        if (lower.includes('win') || lower.includes('memories')) row2.push('brain-dopamine');
-
-        // Row 3: Output
-        const row3 = ['brain-arrow-down-2', 'brain-output'];
-
-        const all = [...row1, ...row2, ...row3];
-        activateSequence(all, 120, 5000);
+        activateSequence([
+          'brain-engine', 'brain-arrow-e-l', 'brain-linker',
+          'brain-arrow-l-c', 'brain-cortex', 'brain-arrow-c-out', 'brain-scorer',
+        ], 120, 5000);
+      }
+      if (hasStore) {
+        activateSequence([
+          'brain-qgate', 'brain-arrow-q-l', 'brain-linker',
+          'brain-arrow-l-s', 'brain-scorer',
+        ], 120, 5000);
+      }
+      if (hasEndSession) {
+        activateSequence(['brain-rules', 'brain-pruner'], 200, 5000);
+      }
+      if (hasHealth) {
+        activateSequence(['brain-health', 'brain-scorer'], 150, 4000);
       }
     });
     return () => { unlistenPromise.then((fn) => fn()); };
   }, [activateSequence]);
 
-  // Listen for hw-files-changed -- brief flash on relevant brain nodes
   useEffect(() => {
     const unlistenPromise = listen<string[]>('hw-files-changed', (event) => {
       for (const f of event.payload) {
         const nodeId = FILE_TO_BRAIN_NODE[f];
-        if (nodeId) {
-          activateNode(nodeId, 3000);
-        }
+        if (nodeId) activateNode(nodeId, 3000);
       }
     });
     return () => { unlistenPromise.then((fn) => fn()); };
   }, [activateNode]);
 
-  // Cleanup on unmount
   useEffect(() => {
     const timeouts = timeoutsRef.current;
     return () => {
@@ -263,45 +263,43 @@ function BrainPipeline({
 
   const a = (id: string) => activeNodes.has(id);
   const painCount = memories.filter((m) => m.type === 'pain').length;
-  const winCount = memories.filter((m) => m.type === 'win').length;
+  const linkedCount = memories.filter((m) => m.links && m.links.length > 0).length;
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '8px 12px', gap: 6, minWidth: 0 }}>
-      <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: 2, color: '#5a5a72', fontFamily: 'monospace' }}>
-        Brain Pipeline
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '8px 12px', gap: 5, minWidth: 0 }}>
+      <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: 2, color: '#f778ba', fontFamily: 'monospace', opacity: 0.7 }}>
+        Brain Engine
+        <span style={{ fontSize: 7, color: '#5a5a72', marginLeft: 8 }}>Magnum Opus</span>
       </span>
 
-      {/* Row 1: Tokenize -> Attention -> Cortex+Pattern -> Links */}
+      {/* Row 1 (Store path): QGate -> Linker -> Scorer */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
-        <FlowNode label="Tokenize" accent="#64748b" active={a('brain-input')} />
-        <FlowArrow direction="right" active={a('brain-arrow-1')} />
-        <FlowNode label="Attention" accent="#7c4dff" active={a('brain-attention')} stat={a('brain-attention') ? 'gate' : 'filter'} />
-        <FlowArrow direction="right" active={a('brain-arrow-2')} />
-        <FlowNode label="Cortex" accent="#00e5ff" active={a('brain-hippocampus')} stat={`${memories.length} mem`} pulse="glow" />
-        <FlowArrow direction="right" active={a('brain-arrow-3')} />
-        <FlowNode label="Links" accent="#00bcd4" active={a('brain-tags')} stat="graph" />
+        <span style={{ fontSize: 6, color: '#5a5a72', fontFamily: 'monospace', width: 36, textAlign: 'right', marginRight: 4 }}>STORE</span>
+        <FlowNode label="Q.Gate" accent="#f778ba" active={a('brain-qgate')} stat="dedup" />
+        <FlowArrow direction="right" active={a('brain-arrow-q-l')} />
+        <FlowNode label="Linker" accent="#00bcd4" active={a('brain-linker')} stat={`${linkedCount} linked`} pulse="glow" />
+        <FlowArrow direction="right" active={a('brain-arrow-l-s')} />
+        <FlowNode label="Scorer" accent="#ffb300" active={a('brain-scorer')} stat={`${memories.length} mem`} />
       </div>
 
-      {/* Connector: down arrow */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <FlowArrow direction="down" active={a('brain-arrow-down-1') || a('brain-hippocampus')} />
+      {/* Row 2 (Retrieve path): Engine -> Linker -> Cortex -> Scorer */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+        <span style={{ fontSize: 6, color: '#5a5a72', fontFamily: 'monospace', width: 36, textAlign: 'right', marginRight: 4 }}>FETCH</span>
+        <FlowNode label="Engine" accent="#7c4dff" active={a('brain-engine')} stat="9-stage" />
+        <FlowArrow direction="right" active={a('brain-arrow-e-l')} />
+        <FlowNode label="Linker" accent="#00bcd4" active={a('brain-linker')} stat="traverse" />
+        <FlowArrow direction="right" active={a('brain-arrow-l-c')} />
+        <FlowNode label="Cortex" accent="#00e5ff" active={a('brain-cortex')} stat="learn" pulse="glow" />
+        <FlowArrow direction="right" active={a('brain-arrow-c-out')} />
+        <FlowNode label="Scorer" accent="#ffb300" active={a('brain-scorer')} stat="rank" />
       </div>
 
-      {/* Row 2: Amygdala*Score, Plasticity, Dopamine */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
-        <FlowNode label="Amygdala" accent="#ff2d55" active={a('brain-amygdala')} stat={`${painCount} pain`} pulse="pain" />
-        <FlowNode label="Plasticity" accent="#00e676" active={a('brain-consolidation')} stat={phase} />
-        <FlowNode label="Dopamine" accent="#ffb300" active={a('brain-dopamine')} stat={`${winCount} wins`} />
-      </div>
-
-      {/* Connector: down arrow */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <FlowArrow direction="down" active={a('brain-arrow-down-2')} />
-      </div>
-
-      {/* Row 3: Output */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <FlowNode label="Inject" accent="#00e5ff" active={a('brain-output')} stat={a('brain-output') ? 'fired' : undefined} pulse="glow" />
+      {/* Row 3 (Maintenance + Monitoring) */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, flexWrap: 'wrap' }}>
+        <FlowNode label="Rules" accent="#10b981" active={a('brain-rules')} stat="extract" />
+        <FlowNode label="Pruner" accent="#ef4444" active={a('brain-pruner')} stat="archive" />
+        <FlowNode label="Health" accent="#3b82f6" active={a('brain-health')} stat={phase} />
+        <FlowNode label="Pain" accent="#ff2d55" active={a('brain-qgate') || a('brain-engine')} stat={`${painCount}`} pulse="pain" />
       </div>
     </div>
   );
@@ -421,17 +419,20 @@ function SystemInfrastructure({
         <FlowNode label="File Watcher" accent="#3b82f6" active={a('sys-filewatcher')} stat={a('sys-filewatcher') ? 'changed' : 'watching'} />
       </div>
 
-      {/* Row 3: stores */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+      {/* Row 3: core stores */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flexWrap: 'wrap' }}>
         <FlowNode label="Tasks" accent="#6366f1" active={a('sys-tasks')} stat={`${inProgressCount} active`} />
         <FlowNode label="Memory" accent="#f59e0b" active={a('sys-memory')} stat={`${memories.length} stored`} />
         <FlowNode label="Workflow" accent="#10b981" active={a('sys-workflow')} stat={phase} />
+        <FlowNode label="Approvals" accent="#ef4444" active={a('sys-approvals')} stat={`${pendingApprovals} pending`} />
       </div>
 
-      {/* Row 4: sentinel + approvals */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap' }}>
+      {/* Row 4: brain stores + sentinel */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, flexWrap: 'wrap' }}>
+        <FlowNode label="Brain St." accent="#f778ba" active={a('sys-brainstate')} stat="neural" />
+        <FlowNode label="Cortex" accent="#00e5ff" active={a('sys-cortexlearn')} stat="tags" />
+        <FlowNode label="Rules" accent="#10b981" active={a('sys-rules')} stat="learned" />
         <FlowNode label="Sentinel" accent="#4ade80" active={a('sys-sentinel')} stat="alive" />
-        <FlowNode label="Approvals" accent="#ef4444" active={a('sys-approvals')} stat={`${pendingApprovals} pending`} />
       </div>
     </div>
   );
@@ -569,7 +570,7 @@ function BottomPanel({ expanded, onToggle }: { expanded: boolean; onToggle: () =
         {/* Compact node dots */}
         <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           {[
-            { label: 'Brain', color: '#00e5ff', stat: `${memories.length}` },
+            { label: 'Engine', color: '#f778ba', stat: `${memories.length} mem` },
             { label: 'Pain', color: '#ff2d55', stat: `${painCount}` },
             { label: 'Wins', color: '#ffb300', stat: `${winCount}` },
             { label: 'MCP', color: '#a78bfa', stat: phase },

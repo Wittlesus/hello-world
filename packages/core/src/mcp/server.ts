@@ -44,9 +44,56 @@ import type { MemoryArchiveStore } from '../brain/pruner.js';
 import { extractRuleCandidates, learnRules, createEmptyRulesStore } from '../brain/rules.js';
 import type { LearnedRulesStore } from '../brain/rules.js';
 import { DEFAULT_CORTEX } from '../types.js';
+import { findLinks } from '../brain/linker.js';
 import { JsonStore } from '../storage.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
+
+// ── Circuit breaker: graceful degradation for brain modules ─────
+
+function safeBrainOp<T>(
+  label: string,
+  operation: () => T,
+  fallback: T,
+): { result: T; degraded: boolean; error?: string } {
+  try {
+    return { result: operation(), degraded: false };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    try { activity.append('brain_error', `${label} failed (degraded)`, msg); } catch { /* double-fault */ }
+    console.error(`[circuit-breaker] ${label}: ${msg}`);
+    return { result: fallback, degraded: true, error: msg };
+  }
+}
+
+// ── Deferred cortex learning: accumulate gaps, flush periodically ─
+
+let pendingCortexGaps: Array<{ gaps: string[]; prompt: string }> = [];
+let lastCortexFlush = Date.now();
+const CORTEX_FLUSH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes
+
+function flushCortexGaps(): void {
+  if (pendingCortexGaps.length === 0) return;
+  try {
+    const memories = memoryStore.getAllMemories();
+    const allObservations = pendingCortexGaps.flatMap(p =>
+      analyzeGaps(p.gaps, p.prompt, memories),
+    );
+    if (allObservations.length > 0) {
+      const cortexData = cortexStore.read();
+      const learnResult = learnFromObservations(allObservations, cortexData.entries);
+      cortexStore.write({
+        entries: [...cortexData.entries.filter(e => !learnResult.updatedEntries.some(u => u.word === e.word)), ...learnResult.updatedEntries, ...learnResult.newEntries],
+        totalGapsProcessed: cortexData.totalGapsProcessed + allObservations.length,
+        lastUpdated: new Date().toISOString(),
+      });
+    }
+  } catch (err) {
+    console.error('[cortex-flush]', err instanceof Error ? err.message : err);
+  }
+  pendingCortexGaps = [];
+  lastCortexFlush = Date.now();
+}
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
 
 const RUNNER_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', 'watchers', 'runner.mjs');
@@ -121,8 +168,8 @@ function toolFiles(tool: string): string[] {
     hw_add_task:          ['state.json'],
     hw_update_task:       ['state.json'],
     hw_list_tasks:        [],
-    hw_store_memory:      ['memories.json'],
-    hw_retrieve_memories: [],
+    hw_store_memory:      ['memories.json', 'brain-state.json'],
+    hw_retrieve_memories: ['brain-state.json', 'memories.json'],
     hw_advance_phase:     ['workflow.json'],
     hw_get_workflow_state:[],
     hw_record_decision:   ['state.json'],
@@ -197,7 +244,13 @@ function scheduleNotify(tool: string, args: Record<string, unknown>): void {
     name: string, schema: unknown, handler: (args: Record<string, unknown>) => Promise<unknown>
   ) => {
     return _register(name as never, schema as never, async (args: Record<string, unknown>) => {
-      const result = await handler(args);
+      let result: unknown;
+      try {
+        result = await handler(args);
+      } catch (err) {
+        try { scheduleNotify(name, args ?? {}); } catch { /* double-fault */ }
+        throw err;
+      }
       scheduleNotify(name, args ?? {});
       return result;
     });
@@ -260,32 +313,36 @@ server.registerTool('hw_retrieve_memories', {
 }, async (args: { prompt: string }) => {
   const memories = memoryStore.getAllMemories();
   const brainState = memoryStore.getBrainState();
+
+  // Zone A: Core retrieval (primary -- circuit breaker wraps link traversal inside engine)
   const result = retrieveMemories(args.prompt, memories, brainState);
+
+  // Zone B: Brain state update (degradable)
   if (brainState) {
-    // tickMessageCount is now called by UserPromptSubmit hook -- avoid double-increment
-    let updated = brainState;
-    updated = recordSynapticActivity(updated, result.matchedTags);
-    const ids = [...result.painMemories, ...result.winMemories].map(s => s.memory.id);
-    updated = recordMemoryTraces(updated, ids);
-    memoryStore.saveBrainState(updated);
-    memoryStore.incrementAccess(ids);
+    safeBrainOp('retrieve:brain_state', () => {
+      let updated = brainState;
+      updated = recordSynapticActivity(updated, result.matchedTags);
+      const ids = [...result.painMemories, ...result.winMemories].map(s => s.memory.id);
+      updated = recordMemoryTraces(updated, ids);
+      memoryStore.saveBrainState(updated);
+      memoryStore.incrementAccess(ids);
+    }, undefined);
   }
-  // Cortex learning: process any gaps from fuzzy fallback
+
+  // Zone C: Cortex learning (deferred -- accumulate gaps, flush periodically)
   if (result.telemetry?.cortexGaps?.length) {
-    const observations = analyzeGaps(result.telemetry.cortexGaps, args.prompt, memories);
-    if (observations.length > 0) {
-      const cortexData = cortexStore.read();
-      const learnResult = learnFromObservations(observations, cortexData.entries);
-      cortexStore.write({
-        entries: [...cortexData.entries.filter(e => !learnResult.updatedEntries.some(u => u.word === e.word)), ...learnResult.updatedEntries, ...learnResult.newEntries],
-        totalGapsProcessed: cortexData.totalGapsProcessed + observations.length,
-        lastUpdated: new Date().toISOString(),
-      });
+    pendingCortexGaps.push({ gaps: result.telemetry.cortexGaps, prompt: args.prompt });
+    if (Date.now() - lastCortexFlush > CORTEX_FLUSH_INTERVAL_MS) {
+      flushCortexGaps();
     }
   }
 
+  // Zone D: Activity logging (degradable)
   const count = result.painMemories.length + result.winMemories.length;
-  activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}"`, result.injectionText || 'No matches.');
+  safeBrainOp('retrieve:activity', () => {
+    activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}"`, result.injectionText || 'No matches.');
+  }, undefined);
+
   return text(result.injectionText || 'No relevant memories found.');
 });
 
@@ -301,6 +358,7 @@ server.registerTool('hw_store_memory', {
     severity: z.enum(['low', 'medium', 'high']).optional(),
   }),
 }, async (args: { type: string; title: string; content?: string; rule?: string; tags?: string[]; severity?: string }) => {
+  // Zone A: Core store (primary -- quality gate runs inside)
   const result = memoryStore.storeMemory({
     type: args.type as MemoryType,
     title: args.title,
@@ -314,13 +372,30 @@ server.registerTool('hw_store_memory', {
     return text(`Memory rejected: ${result.gateResult.reason}`);
   }
   const suffix = result.merged ? ' (merged with existing)' : result.superseded?.length ? ` (superseded ${result.superseded.join(', ')})` : '';
-  activity.append('memory_stored', `[${mem.type.toUpperCase()}] ${mem.title}`, mem.content ?? mem.rule ?? '');
-  // Track significant event for checkpoint logic
-  const bs = memoryStore.getBrainState();
-  if (bs) {
-    bs.significantEventsSinceCheckpoint = (bs.significantEventsSinceCheckpoint ?? 0) + 1;
-    memoryStore.saveBrainState(bs);
-  }
+
+  // Zone B: Link discovery (degradable -- new memory gets linked to existing graph)
+  safeBrainOp('store:linker', () => {
+    const allMems = memoryStore.getAllMemories();
+    const links = findLinks(mem, allMems.filter(m => m.id !== mem.id));
+    for (const link of links) {
+      memoryStore.addLink(mem.id, link.targetId, link.relationship);
+    }
+  }, undefined);
+
+  // Zone C: Activity logging (degradable)
+  safeBrainOp('store:activity', () => {
+    activity.append('memory_stored', `[${mem.type.toUpperCase()}] ${mem.title}`, mem.content ?? mem.rule ?? '');
+  }, undefined);
+
+  // Zone D: Brain state tracking (degradable)
+  safeBrainOp('store:brain_state', () => {
+    const bs = memoryStore.getBrainState();
+    if (bs) {
+      bs.significantEventsSinceCheckpoint = (bs.significantEventsSinceCheckpoint ?? 0) + 1;
+      memoryStore.saveBrainState(bs);
+    }
+  }, undefined);
+
   return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}`);
 });
 
@@ -620,62 +695,82 @@ server.registerTool('hw_end_session', {
   description: 'End current session with a summary.',
   inputSchema: z.object({ summary: z.string() }),
 }, async (args: { summary: string }) => {
-  // Apply synaptic plasticity before ending session
-  const brainState = memoryStore.getBrainState();
-  if (brainState) {
-    const { state: plasticState, boosted } = applySynapticPlasticity(brainState);
-    memoryStore.saveBrainState(plasticState);
-    // Write strength changes back to individual memories
-    // Write fixed boost delta (0.1), not distance-from-neutral which compounds incorrectly
-    for (const id of boosted) {
-      memoryStore.updateStrength(id, 0.1);
-    }
-    if (boosted.length > 0) {
-      activity.append('brain_plasticity', `Boosted ${boosted.length} memory traces at session end`);
-    }
-  }
+  const degradations: string[] = [];
 
-  // End-of-session maintenance: prune stale memories
-  const allMems = memoryStore.getAllMemories();
-  const pruneResult = pruneMemories(allMems);
-  if (pruneResult.archived.length > 0) {
-    // Move archived memories out of active store
-    const archiveData = archiveStore.read();
-    archiveStore.write({
-      archived: [...archiveData.archived, ...pruneResult.archived],
-      totalArchived: archiveData.totalArchived + pruneResult.archived.length,
-      lastPruned: new Date().toISOString(),
-    });
-    // Delete archived from active store
-    for (const a of pruneResult.archived) {
-      memoryStore.deleteMemory(a.memory.id);
-    }
-    activity.append('brain_pruning', `Archived ${pruneResult.archived.length} memories (${pruneResult.stats.supersededCount} superseded, ${pruneResult.stats.staleCount} stale, ${pruneResult.stats.lowQualityCount} low quality)`);
-  }
-
-  // End-of-session maintenance: extract learned rules
-  const rulesData = rulesStore.read();
-  const candidates = extractRuleCandidates(allMems);
-  if (candidates.length > 0) {
-    const { newRules, reinforced } = learnRules(candidates, rulesData.rules);
-    if (newRules.length > 0 || reinforced.length > 0) {
-      const existingIds = new Set(reinforced.map(r => r.id));
-      const updatedRules = [
-        ...rulesData.rules.filter(r => !existingIds.has(r.id)),
-        ...reinforced,
-        ...newRules,
-      ];
-      rulesStore.write({ rules: updatedRules, lastUpdated: new Date().toISOString() });
-      if (newRules.length > 0) {
-        activity.append('brain_rules', `Learned ${newRules.length} new rule(s), reinforced ${reinforced.length}`);
+  // Zone A: Synaptic plasticity (degradable)
+  safeBrainOp('end_session:plasticity', () => {
+    const brainState = memoryStore.getBrainState();
+    if (brainState) {
+      const { state: plasticState, boosted } = applySynapticPlasticity(brainState);
+      memoryStore.saveBrainState(plasticState);
+      for (const id of boosted) {
+        memoryStore.updateStrength(id, 0.1);
+      }
+      if (boosted.length > 0) {
+        activity.append('brain_plasticity', `Boosted ${boosted.length} memory traces at session end`);
       }
     }
-  }
+  }, undefined).degraded && degradations.push('plasticity');
 
+  // Zone B: Pruning (degradable)
+  safeBrainOp('end_session:pruning', () => {
+    const allMems = memoryStore.getAllMemories();
+    const pruneResult = pruneMemories(allMems);
+    if (pruneResult.archived.length > 0) {
+      const archiveData = archiveStore.read();
+      archiveStore.write({
+        archived: [...archiveData.archived, ...pruneResult.archived],
+        totalArchived: archiveData.totalArchived + pruneResult.archived.length,
+        lastPruned: new Date().toISOString(),
+      });
+      for (const a of pruneResult.archived) {
+        memoryStore.deleteMemory(a.memory.id);
+      }
+      // Clean dangling links pointing to pruned memories
+      const keptIds = new Set(memoryStore.getAllMemories().map(m => m.id));
+      const danglingRemoved = memoryStore.cleanDanglingLinks(keptIds);
+      const danglingNote = danglingRemoved > 0 ? `, cleaned ${danglingRemoved} dangling links` : '';
+      activity.append('brain_pruning', `Archived ${pruneResult.archived.length} memories (${pruneResult.stats.supersededCount} superseded, ${pruneResult.stats.staleCount} stale, ${pruneResult.stats.lowQualityCount} low quality${danglingNote})`);
+    }
+  }, undefined).degraded && degradations.push('pruning');
+
+  // Zone C: Rule learning (degradable) -- re-read memories after pruning
+  safeBrainOp('end_session:rules', () => {
+    const currentMems = memoryStore.getAllMemories();
+    const rulesData = rulesStore.read();
+    const candidates = extractRuleCandidates(currentMems);
+    if (candidates.length > 0) {
+      const { newRules, reinforced } = learnRules(candidates, rulesData.rules);
+      if (newRules.length > 0 || reinforced.length > 0) {
+        const existingIds = new Set(reinforced.map(r => r.id));
+        const updatedRules = [
+          ...rulesData.rules.filter(r => !existingIds.has(r.id)),
+          ...reinforced,
+          ...newRules,
+        ];
+        rulesStore.write({ rules: updatedRules, lastUpdated: new Date().toISOString() });
+        if (newRules.length > 0) {
+          activity.append('brain_rules', `Learned ${newRules.length} new rule(s), reinforced ${reinforced.length}`);
+        }
+      }
+    }
+  }, undefined).degraded && degradations.push('rules');
+
+  // Zone D: Flush deferred cortex gaps (degradable)
+  safeBrainOp('end_session:cortex_flush', () => {
+    flushCortexGaps();
+  }, undefined).degraded && degradations.push('cortex');
+
+  // Zone E: Session end (critical -- NOT degradable)
   activity.append('session_end', 'Session ended', args.summary);
   const session = sessions.end(args.summary);
   if (!session) return text('No active session.');
-  return text(`Session ${session.id} ended. ${session.startedAt} -> ${session.endedAt}`);
+
+  let response = `Session ${session.id} ended. ${session.startedAt} -> ${session.endedAt}`;
+  if (degradations.length > 0) {
+    response += ` [DEGRADED: ${degradations.join(', ')} failed]`;
+  }
+  return text(response);
 });
 
 // ── Brain Health ─────────────────────────────────────────────────
