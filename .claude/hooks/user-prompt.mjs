@@ -43,7 +43,18 @@ const allTasks    = Array.isArray(tasksData?.tasks) ? tasksData.tasks : (Array.i
 const inProgress  = allTasks.filter(t => t.status === 'in_progress').length;
 const pendingCount = allTasks.filter(t => t.status === 'todo').length;
 
-const mcpStatus   = caps?.status === 'running' ? 'mcp:ok' : 'mcp:down';
+// MCP watchdog: verify PID is actually alive, not just what capabilities.json claims
+let mcpStatus = 'mcp:down';
+if (caps?.status === 'running' && caps?.pid) {
+  try {
+    process.kill(caps.pid, 0); // signal 0 = existence check
+    mcpStatus = 'mcp:ok';
+  } catch {
+    mcpStatus = 'mcp:dead'; // PID in capabilities.json is stale
+  }
+} else if (caps?.status === 'running') {
+  mcpStatus = 'mcp:ok'; // no PID to check, trust status
+}
 const unreadNotes = Array.isArray(direction?.notes) ? direction.notes.filter(n => !n.read).length : 0;
 
 function taskSlug(id) {
@@ -151,6 +162,31 @@ try {
 } catch {
   // Brain retrieval is non-fatal. Status line was already output.
 }
+
+// ── MCP watchdog: warn if server PID is dead ──────────────────────
+if (mcpStatus === 'mcp:dead') {
+  process.stdout.write(
+    '\n[MCP WATCHDOG] The MCP server process (PID ' + caps.pid + ') is DEAD. ' +
+    'All hw_* tools will fail silently. Restart it:\n' +
+    '  npm --workspace=packages/core run mcp\n' +
+    'Or check if a new instance already started (capabilities.json may be stale).\n\n'
+  );
+}
+
+// ── Proactive task creation nudge ──────────────────────────────────
+try {
+  if (prompt && prompt.length >= 10) {
+    const { detectActionableItems } =
+      await import(pathToFileURL(join(PROJECT, '.claude/hooks/signal-detector.mjs')).href);
+    if (detectActionableItems(prompt)) {
+      process.stdout.write(
+        '\n[ACTIONABLE ITEMS] Pat\'s message contains work items. ' +
+        'Scan for implied tasks and hw_add_task() for each before starting work. ' +
+        'Multiple items = multiple tasks.\n'
+      );
+    }
+  }
+} catch { /* non-fatal */ }
 
 // ── Signal Queue: inject uncaptured signal nudges ─────────────────
 try {

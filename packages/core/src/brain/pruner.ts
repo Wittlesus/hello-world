@@ -51,6 +51,38 @@ export interface PruneOptions {
   minMemoryCount?: number;
 }
 
+// ── Capacity ──────────────────────────────────────────────────────
+
+/** Max memories before pruning is recommended. */
+export const MEMORY_CAPACITY = 300;
+
+/** Warning threshold (percentage of capacity). */
+export const CAPACITY_WARNING_PCT = 0.80;
+
+export interface CapacityStatus {
+  total: number;
+  capacity: number;
+  pct: number;
+  level: 'ok' | 'warning' | 'critical';
+  shouldPrune: boolean;
+}
+
+/**
+ * Check memory count against capacity threshold.
+ * Returns status and whether pruning should be triggered.
+ */
+export function checkCapacity(memoryCount: number): CapacityStatus {
+  const pct = memoryCount / MEMORY_CAPACITY;
+  const level = pct >= 1.0 ? 'critical' : pct >= CAPACITY_WARNING_PCT ? 'warning' : 'ok';
+  return {
+    total: memoryCount,
+    capacity: MEMORY_CAPACITY,
+    pct,
+    level,
+    shouldPrune: pct >= 1.0,
+  };
+}
+
 // ── Core Functions ─────────────────────────────────────────────────
 
 /**

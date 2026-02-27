@@ -449,6 +449,33 @@ export function MemoryView() {
         </div>
       )}
 
+      {/* Memory capacity bar */}
+      <div className="mb-5 px-4 py-2.5 bg-[#1a1a24] border border-gray-800 rounded-lg">
+        <div className="flex items-center justify-between mb-1.5">
+          <span className="text-[11px] text-gray-400">Memory Capacity</span>
+          <span className="text-[11px] font-mono text-gray-300">
+            {memories.length} / 300
+          </span>
+        </div>
+        <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full transition-all ${
+              memories.length >= 300
+                ? 'bg-red-500'
+                : memories.length >= 240
+                  ? 'bg-amber-500'
+                  : 'bg-emerald-500'
+            }`}
+            style={{ width: `${Math.min(100, (memories.length / 300) * 100)}%` }}
+          />
+        </div>
+        {memories.length >= 300 && (
+          <div className="text-[10px] text-red-400 mt-1">
+            At capacity. Run /clean-quit or prune memories.
+          </div>
+        )}
+      </div>
+
       {/* Search */}
       <div className="mb-5">
         <input

@@ -93,6 +93,18 @@ const PATTERNS = {
   ],
 };
 
+// Patterns for detecting actionable items in user messages (task creation nudge)
+const USER_ACTIONABLE = [
+  /\b(fix|build|add|implement|create|set up|wire|remove|delete|refactor|update|upgrade|migrate)\s+/i,
+  /\b(we need|i need|you need|needs? to)\s+/i,
+  /\b(make (it|the|this|a)|finish|ship|deploy|push)\s+/i,
+  /\b(bug|broken|crash|doesn't work|not working|failing)\b/i,
+  /\b(feature|task|todo|backlog|next up)\b/i,
+  /\b(also[,.]?\s+(fix|add|build|do|make|handle|wire))\b/i,
+  /\b(and then|after that|once that's done)\b/i,
+  /\bfinish\s+(the\s+)?(tasks?|work|remaining|pending)\b/i,
+];
+
 // Patterns for detecting user pushback (applied to user messages)
 const USER_PUSHBACK = [
   /\b(no[,.]?\s+(that's|it's|you're)\s+(not|wrong))\b/i,
@@ -182,6 +194,20 @@ export function detectUserSignals(text) {
   }
 
   return signals;
+}
+
+/**
+ * Detect actionable items in a user message.
+ * Returns true if the message likely contains work items that should become tasks.
+ */
+export function detectActionableItems(text) {
+  if (!text || text.length < 10) return false;
+  let matchCount = 0;
+  for (const p of USER_ACTIONABLE) {
+    if (p.test(text)) matchCount++;
+  }
+  // Need at least 2 pattern matches to trigger (reduces false positives)
+  return matchCount >= 2;
 }
 
 /**

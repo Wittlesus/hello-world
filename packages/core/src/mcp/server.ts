@@ -41,7 +41,7 @@ import type { CortexLearnedStore } from '../brain/cortex-learner.js';
 import { processPredictionEvent, createExpectationModel, createEventSignature, decayExpectationModel } from '../brain/prediction.js';
 import type { ExpectationModel } from '../brain/prediction-types.js';
 import { generateHealthReport, formatHealthReport } from '../brain/health.js';
-import { pruneMemories } from '../brain/pruner.js';
+import { pruneMemories, checkCapacity } from '../brain/pruner.js';
 import type { MemoryArchiveStore } from '../brain/pruner.js';
 import { extractRuleCandidates, learnRules, createEmptyRulesStore } from '../brain/rules.js';
 import type { LearnedRulesStore } from '../brain/rules.js';
@@ -590,7 +590,19 @@ server.registerTool('hw_store_memory', {
     } catch { /* non-fatal */ }
   }, undefined);
 
-  return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}${linkWarnings}`);
+  // Zone H: Capacity check (nudge Claude when nearing limit)
+  let capacityWarning = '';
+  safeBrainOp('store:capacity', () => {
+    const total = memoryStore.getAllMemories().length;
+    const cap = checkCapacity(total);
+    if (cap.level === 'critical') {
+      capacityWarning = `\nCAPACITY CRITICAL: ${cap.total}/${cap.capacity} memories (${Math.round(cap.pct * 100)}%). Run /clean-quit or manually prune before storing more.`;
+    } else if (cap.level === 'warning') {
+      capacityWarning = `\nCapacity warning: ${cap.total}/${cap.capacity} memories (${Math.round(cap.pct * 100)}%).`;
+    }
+  }, undefined);
+
+  return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}${linkWarnings}${capacityWarning}`);
 });
 
 // ── Tasks ───────────────────────────────────────────────────────
@@ -861,27 +873,14 @@ server.registerTool('hw_end_session', {
     }
   }, undefined).degraded && degradations.push('plasticity');
 
-  // Zone B: Pruning (degradable)
-  safeBrainOp('end_session:pruning', () => {
+  // Zone B: Capacity check (informational -- pruning is capacity-based, not session-based)
+  safeBrainOp('end_session:capacity_check', () => {
     const allMems = memoryStore.getAllMemories();
-    const pruneResult = pruneMemories(allMems);
-    if (pruneResult.archived.length > 0) {
-      const archiveData = archiveStore.read();
-      archiveStore.write({
-        archived: [...archiveData.archived, ...pruneResult.archived],
-        totalArchived: archiveData.totalArchived + pruneResult.archived.length,
-        lastPruned: new Date().toISOString(),
-      });
-      for (const a of pruneResult.archived) {
-        memoryStore.deleteMemory(a.memory.id);
-      }
-      // Clean dangling links pointing to pruned memories
-      const keptIds = new Set(memoryStore.getAllMemories().map(m => m.id));
-      const danglingRemoved = memoryStore.cleanDanglingLinks(keptIds);
-      const danglingNote = danglingRemoved > 0 ? `, cleaned ${danglingRemoved} dangling links` : '';
-      activity.append('brain_pruning', `Archived ${pruneResult.archived.length} memories (${pruneResult.stats.supersededCount} superseded, ${pruneResult.stats.staleCount} stale, ${pruneResult.stats.lowQualityCount} low quality${danglingNote})`);
+    const cap = checkCapacity(allMems.length);
+    if (cap.level !== 'ok') {
+      activity.append('brain_capacity', `Memory capacity ${cap.level}: ${cap.total}/${cap.capacity} (${Math.round(cap.pct * 100)}%)`);
     }
-  }, undefined).degraded && degradations.push('pruning');
+  }, undefined);
 
   // Zone C: Rule learning (degradable) -- re-read memories after pruning
   safeBrainOp('end_session:rules', () => {

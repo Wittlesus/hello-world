@@ -84,8 +84,11 @@ export {
   restoreFromArchive,
   archiveStats,
   createEmptyArchiveStore,
+  checkCapacity,
+  MEMORY_CAPACITY,
+  CAPACITY_WARNING_PCT,
 } from './pruner.js';
-export type { PruneResult, ArchivedMemory, MemoryArchiveStore, PruneOptions } from './pruner.js';
+export type { PruneResult, ArchivedMemory, MemoryArchiveStore, PruneOptions, CapacityStatus } from './pruner.js';
 
 // S51: Brain health observability
 export { generateHealthReport, formatHealthReport } from './health.js';
