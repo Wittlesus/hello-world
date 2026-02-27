@@ -49,6 +49,7 @@ export class ChatroomStore {
     agentIds: string[],
     startedBy: 'claude' | 'pat',
     agentDefs: Record<string, { id: string; name: string; color: string }>,
+    providerOverrides?: Record<string, 'claude' | 'qwen'>,
   ): ChatroomState {
     const agents: ChatAgent[] = agentIds
       .filter((id) => agentDefs[id])
@@ -71,6 +72,7 @@ export class ChatroomStore {
         roundNumber: 0,
         deliberationPhase: 'frame',
         introRevealedCount: 0,
+        providerOverrides: providerOverrides && Object.keys(providerOverrides).length > 0 ? providerOverrides : undefined,
       },
       agents,
       messages: [

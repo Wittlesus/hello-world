@@ -54,6 +54,7 @@ export interface ChatSession {
   deliberationPhase?: DeliberationPhase;
   introRevealedCount?: number; // undefined = no intro mode; 0..N = agents revealed so far
   plan?: DeliberationPlan; // mediator guardrails: sub-questions + balance assessment
+  providerOverrides?: Record<string, 'claude' | 'qwen'>; // per-agent provider override for this session
 }
 
 export interface ChatReaction {

@@ -1695,10 +1695,11 @@ server.registerTool('hw_start_deliberation', {
     topic: z.string().describe('The topic or question to deliberate on'),
     mode: z.enum(['default', 'usersim']).optional().describe('Agent set to use. default = cognitive lenses, usersim = user perspectives.'),
     agents: z.array(z.string()).optional().describe('Override: specific agent IDs. Overrides mode.'),
+    providerOverrides: z.record(z.enum(['claude', 'qwen'])).optional().describe('Per-agent provider override. E.g. {"contrarian": "qwen", "pragmatist": "qwen"} to run those agents on Qwen instead of Claude.'),
   }),
-}, async (args: { topic: string; mode?: 'default' | 'usersim'; agents?: string[] }) => {
+}, async (args: { topic: string; mode?: 'default' | 'usersim'; agents?: string[]; providerOverrides?: Record<string, 'claude' | 'qwen'> }) => {
   const agentIds = args.agents ?? (args.mode === 'usersim' ? USER_SIM_AGENTS : DEFAULT_AGENTS);
-  const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
+  const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS, args.providerOverrides);
 
   const planPath = join(projectRoot, '.hello-world', 'deliberation-plan-pending.json');
   try {
@@ -1847,10 +1848,11 @@ This is separate from deliberation by design. Do NOT use this as a shortcut to s
   inputSchema: z.object({
     topic: z.string().describe('The question or topic to get quick insights on'),
     agents: z.array(z.string()).min(2).max(4).optional().describe('Agent IDs (2-4). Defaults to contrarian + pragmatist + firstprinciples.'),
+    providerOverrides: z.record(z.enum(['claude', 'qwen'])).optional().describe('Per-agent provider override. E.g. {"contrarian": "qwen"} to run that agent on Qwen.'),
   }),
-}, async (args: { topic: string; agents?: string[] }) => {
+}, async (args: { topic: string; agents?: string[]; providerOverrides?: Record<string, 'claude' | 'qwen'> }) => {
   const agentIds = args.agents ?? ['contrarian', 'pragmatist', 'firstprinciples'];
-  const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS);
+  const state = chatroom.startSession(args.topic, agentIds, 'claude', AGENT_DEFINITIONS, args.providerOverrides);
 
   chatroom.appendMessage('system', 'Quick insights session (non-binding). No coverage tracking. Escalate to full deliberation if real tension surfaces.', 'system');
 

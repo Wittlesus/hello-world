@@ -281,7 +281,8 @@ async function runSingleAgent(
 
   try {
     const conversation = buildConversation(state.messages, state.session.topic);
-    const raw = def.provider === 'qwen'
+    const provider = state.session.providerOverrides?.[agentId] ?? def.provider;
+    const raw = provider === 'qwen'
       ? await callQwen(def.systemPrompt, conversation, signal, def.thinking ?? false)
       : await callClaude(def.systemPrompt, conversation, signal);
     if (signal.aborted) return;
