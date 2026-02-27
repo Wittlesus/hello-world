@@ -5,6 +5,7 @@ import { useClaudeUsage } from '../hooks/useClaudeUsage.js';
 interface QwenEntry {
   timestamp: string;
   provider: string;
+  model: string;
   totalTokens: number;
   costUsd: number;
   context?: string;
@@ -21,20 +22,7 @@ interface BrainState {
   };
 }
 
-const DAILY_LIMIT = 300;
-
-function todayEntries(entries: QwenEntry[]): QwenEntry[] {
-  const todayStart = new Date();
-  todayStart.setHours(0, 0, 0, 0);
-  const cutoff = todayStart.toISOString();
-  return entries.filter(e => e.timestamp >= cutoff);
-}
-
-function formatCost(n: number): string {
-  if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
-  if (n >= 100) return `$${n.toFixed(0)}`;
-  return `$${n.toFixed(2)}`;
-}
+const QWEN_BUDGET = 5.0;
 
 function barColor(pct: number): string {
   if (pct >= 80) return 'bg-red-500/70';
@@ -48,11 +36,33 @@ function barTextColor(pct: number): string {
   return 'text-sky-400';
 }
 
-function MiniBar({ label, pct, detail }: { label: string; pct: number; detail: string }) {
+function glowColor(pct: number): string {
+  if (pct >= 80) return 'text-red-400 drop-shadow-[0_0_4px_rgba(248,113,113,0.6)]';
+  if (pct >= 50) return 'text-yellow-400 drop-shadow-[0_0_4px_rgba(250,204,21,0.6)]';
+  return 'text-sky-400 drop-shadow-[0_0_4px_rgba(56,189,248,0.6)]';
+}
+
+function detectService(entries: QwenEntry[]): string {
+  if (!entries.length) return 'OpenRouter';
+  const last = entries[entries.length - 1];
+  const model = last.model ?? '';
+  if (model.startsWith('qwen/')) return 'OpenRouter';
+  if (model.startsWith('Qwen/')) return 'Chutes.ai';
+  return 'OpenRouter';
+}
+
+function MiniBar({ label, pct, detail, service }: { label: string; pct: number; detail: string; service?: string }) {
   return (
     <div>
       <div className="flex items-center justify-between mb-0.5">
-        <span className="text-[9px] text-gray-500 uppercase tracking-wider">{label}</span>
+        <div className="flex items-center gap-1.5">
+          <span className="text-[9px] text-gray-500 uppercase tracking-wider">{label}</span>
+          {service && (
+            <span className={`text-[8px] font-mono ${glowColor(pct)}`}>
+              {service}
+            </span>
+          )}
+        </div>
         <span className={`text-[9px] font-mono ${barTextColor(pct)}`}>{detail}</span>
       </div>
       <div className="h-1 rounded-full bg-gray-800 overflow-hidden">
@@ -71,8 +81,11 @@ export function UsageBars({ collapsed }: { collapsed: boolean }) {
   const { data: brainData } = useTauriData<BrainState>('get_brain_state', projectPath);
   const { data: claudeData } = useClaudeUsage(projectPath);
 
-  const todayReqs = qwenData?.entries ? todayEntries(qwenData.entries).length : 0;
-  const qwenPct = Math.min(100, (todayReqs / DAILY_LIMIT) * 100);
+  const entries = qwenData?.entries ?? [];
+  const totalCost = entries.reduce((sum, e) => sum + (e.costUsd ?? 0), 0);
+  const qwenPct = Math.min(100, (totalCost / QWEN_BUDGET) * 100);
+  const qwenService = detectService(entries);
+
   const sessionMsgs = brainData?.state?.messageCount ?? 0;
   const web = claudeData?.webUsage;
   const sessionPct = web?.fiveHour.utilization ?? 0;
@@ -84,7 +97,7 @@ export function UsageBars({ collapsed }: { collapsed: boolean }) {
     return (
       <div
         className="border-t border-gray-800/60 px-3 py-2 shrink-0"
-        title={`Session: ${sessionPct}% | Weekly: ${weeklyPct}% | Extra: ${extraPct}% | Qwen: ${todayReqs}/${DAILY_LIMIT}`}
+        title={`Session: ${sessionPct}% | Weekly: ${weeklyPct}% | Extra: ${extraPct}% | Qwen: $${totalCost.toFixed(2)}/$${QWEN_BUDGET}`}
       >
         <div className="h-1.5 rounded-full bg-gray-800 overflow-hidden">
           <div
@@ -101,16 +114,21 @@ export function UsageBars({ collapsed }: { collapsed: boolean }) {
       {/* Claude.ai session limit */}
       {web && (
         <>
-          <MiniBar label="Session" pct={sessionPct} detail={`${sessionPct}%`} />
-          <MiniBar label="Weekly" pct={weeklyPct} detail={`${weeklyPct}%`} />
+          <MiniBar label="Session" pct={sessionPct} detail={`${sessionPct}%`} service="claude.ai" />
+          <MiniBar label="Weekly" pct={weeklyPct} detail={`${weeklyPct}%`} service="claude.ai" />
           {web.extraUsage && web.extraUsage.isEnabled && (
-            <MiniBar label="Extra" pct={extraPct} detail={`${extraSpent} (${extraPct}%)`} />
+            <MiniBar label="Extra" pct={extraPct} detail={`${extraSpent} (${extraPct}%)`} service="claude.ai" />
           )}
         </>
       )}
 
-      {/* Qwen daily requests */}
-      <MiniBar label="Qwen" pct={qwenPct} detail={`${todayReqs}/${DAILY_LIMIT}`} />
+      {/* Qwen cost bar */}
+      <MiniBar
+        label="Qwen"
+        pct={qwenPct}
+        detail={`$${totalCost.toFixed(2)} / $${QWEN_BUDGET}`}
+        service={qwenService}
+      />
 
       {/* Session messages */}
       <MiniBar

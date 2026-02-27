@@ -1,10 +1,14 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-// Pricing per 1M tokens (USD) -- Chutes.ai rates
+// Pricing per 1M tokens (USD)
 const MODEL_PRICING: Record<string, { input: number; output: number }> = {
+  // OpenRouter -- Qwen 3.5
+  'qwen/qwen3.5-plus-02-15': { input: 0.40, output: 2.40 },
+  // Chutes.ai (legacy, kept for historical entries)
   'Qwen/Qwen3.5-397B-A17B-TEE': { input: 0.30, output: 1.20 },
   'Qwen/Qwen3-235B-A22B-Instruct-2507-TEE': { input: 0.08, output: 0.55 },
+  'Qwen/Qwen3-235B-A22B-Instruct-2507': { input: 0.08, output: 0.55 },
   'Qwen/Qwen3-Coder-Next-TEE': { input: 0.12, output: 0.75 },
   'Qwen/Qwen3-235B-A22B-Thinking-2507': { input: 0.11, output: 0.60 },
   'Qwen/Qwen3-32B': { input: 0.08, output: 0.24 },
