@@ -140,8 +140,9 @@ export function App() {
 
   if (bootstrapping) {
     return (
-      <div className="h-screen flex items-center justify-center bg-[#0a0a0f]">
-        <span className="text-sm text-gray-500">Loading...</span>
+      <div className="h-screen flex items-center justify-center bg-[#0a0a0f] flex-col gap-3">
+        <div className="w-6 h-6 border-2 border-gray-700 border-t-indigo-500 rounded-full animate-spin" />
+        <span className="text-[13px] text-gray-500">Hello World</span>
       </div>
     );
   }

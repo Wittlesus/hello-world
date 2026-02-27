@@ -14,16 +14,23 @@ try {
   // fallback: render main app
 }
 
+// Remove HTML splash once React takes over
+function removeSplash() {
+  document.getElementById('hw-splash')?.remove();
+}
+
 if (isBuddy) {
   createRoot(root).render(
     <StrictMode>
       <BuddyOverlay />
     </StrictMode>,
   );
+  removeSplash();
 } else {
   createRoot(root).render(
     <StrictMode>
       <App />
     </StrictMode>,
   );
+  removeSplash();
 }
