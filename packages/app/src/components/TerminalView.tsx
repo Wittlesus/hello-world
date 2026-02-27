@@ -635,7 +635,8 @@ export function TerminalView() {
       theme: {
         background: '#0d0d14',
         foreground: '#e2e8f0',
-        cursor: '#818cf8',
+        cursor: '#0d0d14',
+        cursorAccent: '#0d0d14',
         selectionBackground: '#3730a3',
         black: '#1e1e2e',
         red: '#f38ba8',
@@ -657,7 +658,9 @@ export function TerminalView() {
       fontFamily: '"Cascadia Code", "Fira Code", "Consolas", monospace',
       fontSize: 11,
       lineHeight: 1.3,
-      cursorBlink: true,
+      cursorBlink: false,
+      cursorStyle: 'bar',
+      cursorInactiveStyle: 'none',
       allowProposedApi: true,
     });
 

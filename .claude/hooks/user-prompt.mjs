@@ -32,14 +32,14 @@ function atomicWrite(filePath, data) {
 }
 
 const workflow  = safeRead('workflow.json');
-const appState  = safeRead('state.json');
+const tasksData = safeRead('tasks.json');
 const caps      = safeRead('capabilities.json');
 const direction = safeRead('direction.json');
 
 const phase   = workflow?.phase ?? 'idle';
 const taskId  = workflow?.currentTaskId ?? null;
 
-const allTasks    = appState?.tasks ?? [];
+const allTasks    = Array.isArray(tasksData?.tasks) ? tasksData.tasks : (Array.isArray(tasksData) ? tasksData : []);
 const inProgress  = allTasks.filter(t => t.status === 'in_progress').length;
 const pendingCount = allTasks.filter(t => t.status === 'todo').length;
 

@@ -29,6 +29,7 @@ const KEY_MAP: Record<string, View> = {
   '3': 'decisions',
   '4': 'questions',
   '5': 'memory',
+  '6': 'history',
   '7': 'cost',
   '8': 'settings',
   t: 'terminal',

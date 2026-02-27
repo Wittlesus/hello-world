@@ -1,6 +1,7 @@
 export function LoadingState({ label }: { label?: string }) {
   return (
-    <div className="flex-1 flex items-center justify-center">
+    <div className="flex-1 flex items-center justify-center gap-3">
+      <span className="inline-block w-4 h-4 border-2 border-gray-600 border-t-gray-300 rounded-full animate-spin" />
       <span className="text-sm text-gray-500">{label ?? 'Loading...'}</span>
     </div>
   );

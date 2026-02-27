@@ -221,7 +221,8 @@ function layer2Minimal(layer1Error) {
 try {
   const config      = safeRead('config.json');
   const workflow    = safeRead('workflow.json');
-  const state       = safeRead('state.json');
+  const tasksData   = safeRead('tasks.json');
+  const questionsData = safeRead('questions.json');
   const lastContext = safeRead('last-context.json');
   const directionRaw = safeRead('direction.json');
   const directions  = Array.isArray(directionRaw)
@@ -236,12 +237,12 @@ try {
   const phase         = workflow?.phase ?? 'idle';
   const currentTaskId = workflow?.currentTaskId ?? null;
 
-  const allTasks  = Array.isArray(state?.tasks) ? state.tasks : [];
+  const allTasks  = Array.isArray(tasksData?.tasks) ? tasksData.tasks : (Array.isArray(tasksData) ? tasksData : []);
   const active    = allTasks.filter(t => t.status === 'in_progress');
   const pending   = allTasks.filter(t => t.status === 'todo').slice(0, 5);
   const doneCount = allTasks.filter(t => t.status === 'done').length;
 
-  const openQs      = (Array.isArray(state?.questions) ? state.questions : []).filter(q => q.status === 'open');
+  const openQs      = (Array.isArray(questionsData?.questions) ? questionsData.questions : []).filter(q => q.status === 'open');
   const dirNotes    = Array.isArray(directions.notes) ? directions.notes : [];
   const unreadNotes = dirNotes.filter(n => !n.read);
   const vision      = directions.vision ?? '';

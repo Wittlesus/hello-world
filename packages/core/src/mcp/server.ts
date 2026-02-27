@@ -650,7 +650,7 @@ server.registerTool('hw_start_task', {
   const task = project.state.updateTask(args.taskId, { status: 'in_progress' });
   const wf = workflow.getState();
   if (wf.phase === 'idle') {
-    workflow.advance('scope', args.taskId);
+    workflow.assignTask(args.taskId);
   }
   activity.append('task_started', `Started: ${task.title}`, `Task ${task.id} → in_progress`);
   const lines = [

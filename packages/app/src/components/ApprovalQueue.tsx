@@ -230,13 +230,9 @@ export function ApprovalQueue({ standalone = false }: { standalone?: boolean }) 
     );
   }
 
-  // Bottom-bar overlay (always present in App layout)
+  // Bottom-bar overlay -- hide completely when no pending approvals
   if (pending.length === 0) {
-    return (
-      <div className="h-8 flex items-center px-4 bg-[#111118] border-t border-gray-800">
-        <span className="text-xs text-gray-600">No pending approvals.</span>
-      </div>
-    );
+    return null;
   }
 
   return (
