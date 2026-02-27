@@ -117,27 +117,6 @@
       "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
-      "id": "rule_mm4u1k5p_qnx8",
-      "rule": "For any significant design decision, run this two-phase pattern: broad landscape research first, then targeted reverse-engineering of the best implementations found.",
-      "tags": [
-        "method",
-        "workflow"
-      ],
-      "sourceMemoryIds": [
-        "mem_61e3dd4c",
-        "mem_525e32e3",
-        "mem_2c411e02",
-        "mem_a560f054",
-        "mem_ab99537b"
-      ],
-      "confidence": 0.95,
-      "observationCount": 4,
-      "type": "win-pattern",
-      "promotedToClaudeMd": false,
-      "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
-    },
-    {
       "id": "rule_mm4z69gt_0kl4",
       "rule": "When splitting a data file, update ALL consumers -- not just the writer. Check Rust commands, frontend hooks, useTauriData COMMAND_FILE_MAP, and any direct file reads. The writer working is not enough -- every reader must be migrated.",
       "tags": [
@@ -159,6 +138,27 @@
       "lastReinforced": "2026-02-27T15:32:50.655Z"
     },
     {
+      "id": "rule_mm4u1k5p_qnx8",
+      "rule": "For any significant design decision, run this two-phase pattern: broad landscape research first, then targeted reverse-engineering of the best implementations found.",
+      "tags": [
+        "method",
+        "workflow"
+      ],
+      "sourceMemoryIds": [
+        "mem_61e3dd4c",
+        "mem_525e32e3",
+        "mem_2c411e02",
+        "mem_a560f054",
+        "mem_ab99537b"
+      ],
+      "confidence": 0.95,
+      "observationCount": 5,
+      "type": "win-pattern",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-27T11:52:27.469Z",
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
+    },
+    {
       "id": "rule_mm4u1k5p_j99g",
       "rule": "Write research agent prompts with specific questions, not open-ended exploration. After results come back, check: did I compare apples to apples? Did the agents understand the actual use case?",
       "tags": [
@@ -171,11 +171,11 @@
         "mem_2df73149"
       ],
       "confidence": 0.95,
-      "observationCount": 4,
+      "observationCount": 5,
       "type": "pain-pattern",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
     },
     {
       "id": "rule_mm4u1k5p_ti63",
@@ -190,11 +190,11 @@
         "mem_e43c46da"
       ],
       "confidence": 0.95,
-      "observationCount": 4,
+      "observationCount": 5,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
     },
     {
       "id": "rule_mm4u1k5p_224z",
@@ -208,12 +208,12 @@
         "mem_ee3c8f17",
         "mem_2c411e02"
       ],
-      "confidence": 0.9,
-      "observationCount": 4,
+      "confidence": 0.95,
+      "observationCount": 5,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
     },
     {
       "id": "rule_mm4u1k5p_gugq",
@@ -226,48 +226,12 @@
         "mem_2df73149",
         "mem_61e3dd4c"
       ],
-      "confidence": 0.9,
-      "observationCount": 4,
+      "confidence": 0.95,
+      "observationCount": 5,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
-    },
-    {
-      "id": "rule_mm4u1k5p_swes",
-      "rule": "Never edit server.ts without the deliberation tools hook active. If the hook fires, STOP and restore the missing tools before doing anything else.",
-      "tags": [
-        "deliberation",
-        "server.ts"
-      ],
-      "sourceMemoryIds": [
-        "mem_3a15f5e9",
-        "mem_c6dfd67b"
-      ],
-      "confidence": 0.9,
-      "observationCount": 4,
-      "type": "contradiction-resolution",
-      "promotedToClaudeMd": false,
-      "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
-    },
-    {
-      "id": "rule_mm4u1k5p_mif2",
-      "rule": "For binding decisions: hw_plan_deliberation -> approve -> hw_start_deliberation -> voice agents via hw_post_agent_message -> hw_check_deliberation_coverage -> hw_conclude_deliberation -> hw_extract_deliberation_recommendations. Then parallel agent worktrees for implementation.",
-      "tags": [
-        "strategy",
-        "validation"
-      ],
-      "sourceMemoryIds": [
-        "mem_8253e189",
-        "mem_b6d065ee"
-      ],
-      "confidence": 0.9,
-      "observationCount": 4,
-      "type": "contradiction-resolution",
-      "promotedToClaudeMd": false,
-      "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
     },
     {
       "id": "rule_mm51wz8f_x8xp",
@@ -280,13 +244,49 @@
         "mem_958d28d9",
         "mem_a3d0d41a"
       ],
-      "confidence": 0.6000000000000001,
-      "observationCount": 1,
+      "confidence": 0.7000000000000001,
+      "observationCount": 2,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T15:32:50.655Z",
-      "lastReinforced": "2026-02-27T15:32:50.655Z"
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
+    },
+    {
+      "id": "rule_mm4u1k5p_swes",
+      "rule": "Never edit server.ts without the deliberation tools hook active. If the hook fires, STOP and restore the missing tools before doing anything else.",
+      "tags": [
+        "deliberation",
+        "server.ts"
+      ],
+      "sourceMemoryIds": [
+        "mem_3a15f5e9",
+        "mem_c6dfd67b"
+      ],
+      "confidence": 0.95,
+      "observationCount": 5,
+      "type": "contradiction-resolution",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-27T11:52:27.469Z",
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
+    },
+    {
+      "id": "rule_mm4u1k5p_mif2",
+      "rule": "For binding decisions: hw_plan_deliberation -> approve -> hw_start_deliberation -> voice agents via hw_post_agent_message -> hw_check_deliberation_coverage -> hw_conclude_deliberation -> hw_extract_deliberation_recommendations. Then parallel agent worktrees for implementation.",
+      "tags": [
+        "strategy",
+        "validation"
+      ],
+      "sourceMemoryIds": [
+        "mem_8253e189",
+        "mem_b6d065ee"
+      ],
+      "confidence": 0.95,
+      "observationCount": 5,
+      "type": "contradiction-resolution",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-27T11:52:27.469Z",
+      "lastReinforced": "2026-02-27T17:33:45.569Z"
     }
   ],
-  "lastUpdated": "2026-02-27T15:32:50.655Z"
+  "lastUpdated": "2026-02-27T17:33:45.569Z"
 }

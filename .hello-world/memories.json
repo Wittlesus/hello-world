@@ -1538,10 +1538,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.3000000000000003,
-      "accessCount": 8,
+      "synapticStrength": 1.4000000000000004,
+      "accessCount": 9,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-27T14:26:41.526Z"
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1638,9 +1638,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:14:48.531Z"
+      "synapticStrength": 1.1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:14:48.531Z",
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_6c2052f2",
@@ -1884,8 +1885,8 @@
         "deliberation"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-25T08:15:30.707Z",
       "links": [
         {
@@ -1898,7 +1899,8 @@
           "relationship": "contradicts",
           "createdAt": "2026-02-27T13:25:01.693Z"
         }
-      ]
+      ],
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_76471b85",
@@ -2330,7 +2332,7 @@
         "safety"
       ],
       "severity": "high",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 0,
       "createdAt": "2026-02-25T08:16:47.958Z"
     },
@@ -2348,7 +2350,7 @@
         "mcp"
       ],
       "severity": "low",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 0,
       "createdAt": "2026-02-25T08:17:01.310Z"
     },
@@ -3451,7 +3453,7 @@
         "discipline"
       ],
       "severity": "high",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 0,
       "createdAt": "2026-02-26T15:00:24.978Z",
       "links": [],
@@ -3472,7 +3474,7 @@
         "shipping"
       ],
       "severity": "high",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 1,
       "createdAt": "2026-02-26T15:05:10.841Z",
       "links": [],
@@ -3788,12 +3790,13 @@
         "performance"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T16:01:54.581Z",
       "links": [],
       "qualityScore": 0.5,
-      "fingerprint": "97e3c17e12fd"
+      "fingerprint": "97e3c17e12fd",
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_c0b7264d",
@@ -3832,13 +3835,13 @@
         "validation"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 3,
+      "synapticStrength": 1.3000000000000003,
+      "accessCount": 4,
       "createdAt": "2026-02-26T16:04:44.510Z",
       "links": [],
       "qualityScore": 0.95,
       "fingerprint": "7b98f2294574",
-      "lastAccessed": "2026-02-27T13:33:47.630Z"
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_a7928c89",
@@ -3898,7 +3901,7 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 1,
       "createdAt": "2026-02-26T16:17:17.541Z",
       "links": [
@@ -3927,8 +3930,8 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T16:30:05.798Z",
       "links": [
         {
@@ -3938,7 +3941,8 @@
         }
       ],
       "qualityScore": 0.85,
-      "fingerprint": "58afe1f0df57"
+      "fingerprint": "58afe1f0df57",
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_525e32e3",
@@ -4026,8 +4030,8 @@
         "workflow"
       ],
       "severity": "medium",
-      "synapticStrength": 1.1,
-      "accessCount": 6,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 7,
       "createdAt": "2026-02-26T16:30:23.130Z",
       "links": [
         {
@@ -4038,7 +4042,7 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "0e4dd2489f99",
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_ee3c8f17",
@@ -4192,12 +4196,13 @@
         "testing"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:08:08.647Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "5c9b47e567e4"
+      "fingerprint": "5c9b47e567e4",
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_883e725c",
@@ -4218,13 +4223,13 @@
         "plugins"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 2,
       "createdAt": "2026-02-26T17:08:09.191Z",
       "links": [],
       "qualityScore": 0.7,
       "fingerprint": "87de23103913",
-      "lastAccessed": "2026-02-27T13:19:51.383Z"
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_a3d0d41a",
@@ -4423,12 +4428,13 @@
         "protection"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:56:01.324Z",
       "links": [],
       "qualityScore": 0.5,
-      "fingerprint": "4a6f6f8b7ecf"
+      "fingerprint": "4a6f6f8b7ecf",
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_4c730f59",
@@ -4668,13 +4674,13 @@
         "deliberation"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 3,
       "createdAt": "2026-02-26T18:01:12.863Z",
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "4719c64800aa",
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_16b58e25",
@@ -5317,7 +5323,7 @@
         "tokens"
       ],
       "severity": "low",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 0,
       "createdAt": "2026-02-26T18:35:59.568Z",
       "links": [
@@ -5383,7 +5389,7 @@
         "architecture"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
+      "synapticStrength": 1.3000000000000003,
       "accessCount": 2,
       "createdAt": "2026-02-27T00:47:33.700Z",
       "links": [
@@ -5416,7 +5422,7 @@
         "memory"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 1,
       "createdAt": "2026-02-27T01:29:20.851Z",
       "links": [
@@ -5442,7 +5448,7 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 0,
       "createdAt": "2026-02-27T02:39:35.821Z",
       "links": [
@@ -6420,7 +6426,7 @@
         "validation"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 1,
       "createdAt": "2026-02-27T06:45:02.688Z",
       "links": [
@@ -6831,8 +6837,8 @@
         "server.ts"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 3,
       "createdAt": "2026-02-27T10:21:20.497Z",
       "links": [
         {
@@ -6848,7 +6854,7 @@
       ],
       "qualityScore": 1,
       "fingerprint": "0db9a8d99aaf",
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_c6dfd67b",
@@ -6981,12 +6987,13 @@
         "consensus"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-27T10:30:56.224Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "f07ba927ace4"
+      "fingerprint": "f07ba927ace4",
+      "lastAccessed": "2026-02-27T16:55:01.259Z"
     },
     {
       "id": "mem_9b46287e",
@@ -7527,8 +7534,8 @@
         "subprocess"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-27T13:24:59.158Z",
       "links": [
         {
@@ -7544,7 +7551,8 @@
       ],
       "qualityScore": 1,
       "fingerprint": "90144604292b",
-      "decayExempt": true
+      "decayExempt": true,
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_35965a4d",
@@ -7594,8 +7602,8 @@
         "silent-failure"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-27T13:25:04.412Z",
       "links": [
         {
@@ -7606,7 +7614,8 @@
       ],
       "qualityScore": 1,
       "fingerprint": "87139cca3432",
-      "decayExempt": true
+      "decayExempt": true,
+      "lastAccessed": "2026-02-27T15:56:01.094Z"
     },
     {
       "id": "mem_b79bd8c7",
@@ -8322,7 +8331,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T15:03:56.470Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_5e3cd180",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:01:59.795Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "5c21507afacf",
       "decayExempt": false
@@ -8372,140 +8387,6 @@
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "a331cbb6e1c7"
-    },
-    {
-      "id": "mem_e7db40a7",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"mcp\" domain (6 pain memories)",
-      "content": "Tag \"mcp\" appears in 6 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "mcp",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T15:32:50.672Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "6aabe8cbd1e7",
-      "supersededBy": "mem_377dd449"
-    },
-    {
-      "id": "mem_377dd449",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"tooling\" domain (8 pain memories)",
-      "content": "Tag \"tooling\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "tooling",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T15:32:50.687Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "81bd9f1b9ad0",
-      "supersededBy": "mem_f8df30df"
-    },
-    {
-      "id": "mem_f8df30df",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"immediate-win\" domain (8 pain memories)",
-      "content": "Tag \"immediate-win\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "immediate-win",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T15:32:50.705Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "68f7d0e5b0ba",
-      "supersededBy": "mem_d5b7740d"
-    },
-    {
-      "id": "mem_d5b7740d",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"research\" domain (9 pain memories)",
-      "content": "Tag \"research\" appears in 9 pain memories recently.\nExamples: Perplexity MCP -- deep web research on demand; Code Research MCP -- unified dev search; Research synthesis: AI memory systems -- our brain MO is research-aligned\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "research",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T15:32:50.722Z",
-      "links": [],
-      "qualityScore": 0.5,
-      "fingerprint": "6db0d20030cd",
-      "supersededBy": "mem_4d1430da"
-    },
-    {
-      "id": "mem_4d1430da",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"rust\" domain (11 pain memories)",
-      "content": "Tag \"rust\" appears in 11 pain memories recently.\nExamples: Cargo.toml release profile optimizations; tauri-specta -- auto-generate TS bindings from Rust commands; Tauri Channels -- streaming IPC to replace file-watcher polling\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "rust",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T15:32:50.741Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "74c174c3194b"
     },
     {
       "id": "mem_4a43a219",
@@ -8559,6 +8440,686 @@
       "links": [],
       "qualityScore": 0.7,
       "fingerprint": "9056ce633ed0"
+    },
+    {
+      "id": "mem_305eb33f",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Knowledge intake: expand source list beyond dependencies",
+      "content": "Context: Deliberation d_409c946f consensus was narrow sources (Tauri, React, Anthropic only). Pat overrides: Claude should track AI news and coding trends broadly, not just its own stack. The project vision is a well-informed autonomous developer. Pipeline mechanics stay the same (manual /scan, staging queue, quality gates, max 5/cycle).\nChosen: Expand knowledge intake sources to include: (1) dependency docs (Tauri, React, Anthropic), (2) AI news and developments, (3) latest coding news, tools, and frameworks. All other pipeline decisions from d_409c946f remain unchanged.\nRationale: Pat's direction -- the project vision is broader than dependency tracking. Claude should be industry-aware.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:59:23.533Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "e8f91eb591c8"
+    },
+    {
+      "id": "mem_c5a62510",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build knowledge intake Phase 1: /scan command + knowledge-queue.json",
+      "content": "Build the manual /scan skill that fetches knowledge from broad sources (dependency docs, AI news, coding trends) and stages candidates in knowledge-queue.json. Zero-LLM scan phase, existing quality gates for storage, max 5 memories per cycle. Staging file for observability. Sources: Tauri/React/Anthropic docs + AI news + coding news/tools/frameworks.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "npm",
+        "dependencies",
+        "autonomy",
+        "react"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:01:58.332Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "14096c5b9b5c"
+    },
+    {
+      "id": "mem_5e3cd180",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Built /scan knowledge intake command -- Phase 1 of pipeline",
+      "content": "Custom slash command at .claude/commands/scan.md. Searches 3 categories (dependency updates, AI news, coding trends) via parallel WebSearches. Stages max 5 candidates in .hello-world/knowledge-queue.json for Pat's review before storing to memory. Pat overrode deliberation consensus to include broad AI/coding news, not just dependency docs. Decision d_620bcfd7.",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "pipeline",
+        "skill"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:01:59.783Z",
+      "links": [
+        {
+          "targetId": "mem_d76ded0c",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:01:59.795Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "20458accd03f",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_3b34a8ed",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "EverMemOS: memory-as-OS architecture, 83% LongMemEval SOTA",
+      "content": "Three-layer agent memory: episodic trace formation (raw dialogue to MemCells), semantic consolidation (MemCells grouped into MemScenes), reconstructive retrieval (agentic retrieval composing minimal sufficient context). 83% LongMemEval SOTA with 20.6% gain on knowledge-update tasks -- correctly overwrites stale facts instead of accumulating contradictions. Foresight signals inside MemCells predict when a memory will be relevant again. Maps to Hello World: consolidation = cortex merger, update mechanism = contradiction detection, foresight = prediction module. arXiv 2601.02163.",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "memory-systems",
+        "research",
+        "architecture-reference"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:44:41.228Z",
+      "links": [
+        {
+          "targetId": "mem_f200bf46",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:44:49.849Z"
+        },
+        {
+          "targetId": "mem_0a2eda0a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:09.086Z"
+        },
+        {
+          "targetId": "mem_b409cca0",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:16.093Z"
+        },
+        {
+          "targetId": "mem_c9afdb53",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.960Z"
+        },
+        {
+          "targetId": "mem_9314f2de",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.552Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "902a8c86236d",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_1bf1b560",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "ARC-AGI-3 shifts to persistent memory + long-horizon planning as benchmark criteria",
+      "content": "ARC-AGI-3 moves from static grid puzzles to interactive environments requiring exploration, planning, persistent memory, goal inference, and value alignment. Critical finding from ARC-AGI-2: identical models show +-20% variance based on orchestration scaffolding, not model weights. The orchestration layer IS the product. Best ARC-AGI-2 score: 54% (Gemini 3 Pro at $30/task). Human avg: 60%. Hello World's brain + workflow engine builds exactly what this benchmark now measures. Source: arcprize.org",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "benchmarks",
+        "validation",
+        "architecture-reference"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:44:44.236Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "d61564ea0046",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_f200bf46",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Aurora: autonomous Claude agent at session 181 -- closest public analog to Hello World",
+      "content": "Claude-powered agent running continuously since Feb 16 2026. Three-tier memory: MEMORY.md (compressed identity/state, read every cycle), PROGRESS.md (session-to-session handoffs with mandatory outcome tags), memory/ directory of domain files. Mandatory outcome tags: exploration / pipeline_building / revenue_attempt / revenue_success. After 181 sessions detected 80% exploration, 5% revenue -- forced honest self-assessment. Dead memory framing: 'Every stale entry competes with current truth for attention.' Somatic marker system: valence scores -1.0 to +1.0 with 72-hour decay. Memory hygiene tool scores: recency, dead platform refs, size efficiency, economic relevance -- archives below 35/100. Source: dev.to/theauroraai",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "memory-systems",
+        "competitor-analysis",
+        "architecture-reference"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:44:49.837Z",
+      "links": [
+        {
+          "targetId": "mem_3b34a8ed",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:44:49.849Z"
+        },
+        {
+          "targetId": "mem_08bb2c61",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T16:44:56.235Z"
+        },
+        {
+          "targetId": "mem_0a2eda0a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:09.090Z"
+        },
+        {
+          "targetId": "mem_b409cca0",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:16.098Z"
+        },
+        {
+          "targetId": "mem_c9afdb53",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.974Z"
+        },
+        {
+          "targetId": "mem_9314f2de",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.563Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "18ffadeeb7e6",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_762b0375",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Cursor dynamic context discovery: 46.9% token reduction via lazy tool loading",
+      "content": "Instead of loading all MCP tool descriptions upfront, Cursor syncs tool descriptions to folders and gives agents only tool names in initial prompt. Agents grep/search for specific tools on demand. A/B tested: 46.9% total agent token reduction on runs that called MCP tools (statistically significant). Principle: structured memory with smart retrieval beats total context loading. Direct optimization opportunity for Hello World's MCP server -- hw_* tools are always fully loaded whether relevant or not. Source: cursor.com/blog/dynamic-context-discovery",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "optimization",
+        "mcp",
+        "architecture-reference"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:44:52.560Z",
+      "links": [],
+      "qualityScore": 0.65,
+      "fingerprint": "0ead7528760c",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_08bb2c61",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Anthropic's long-running agent harness: Initializer + Coding Agent split",
+      "content": "Anthropic's internal playbook for autonomous development. Two-agent pattern: Initializer Agent sets up environment once, Coding Agent makes incremental progress per session. Sessions start by reading git log, checking feature_list.json, choosing highest-priority unfinished feature. feature_list.json has 200+ discrete requirements, claude-progress.txt logs all completed work. Mandatory Puppeteer e2e testing before marking any feature done. Dominant failure mode: attempting to one-shot large tasks exhausts context mid-implementation. Context is 'the most important resource' -- agents should run /compact aggressively. Source: anthropic.com/engineering/effective-harnesses-for-long-running-agents",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "workflow",
+        "anthropic",
+        "architecture-reference"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:44:56.218Z",
+      "links": [
+        {
+          "targetId": "mem_f200bf46",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T16:44:56.235Z"
+        },
+        {
+          "targetId": "mem_0a2eda0a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T16:45:09.083Z"
+        }
+      ],
+      "qualityScore": 0.73,
+      "fingerprint": "12ac0b0d0f3e",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_0a2eda0a",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Hermes Agent: procedural memory via SKILL.md documents (agentskills.io standard)",
+      "content": "Nous Research's Hermes Agent converts successful task completions into permanent searchable SKILL.md files. When the agent solves a hard problem, it documents the solution as a reusable guide. Next similar problem retrieves the skill instead of re-deriving. Open standard at agentskills.io. Ships with 40+ built-in skills, 5 execution backends (Local, Docker, SSH, Singularity, Modal). Key claim: 'literally gets smarter the longer it runs' through accumulated skill documents, not weight updates. Hello World has episodic and semantic memory but NO explicit procedural memory layer -- no mechanism for 'here is how to solve class-X problem next time.' Worth evaluating as a new memory type.",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "memory-systems",
+        "procedural-memory",
+        "architecture-reference"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:45:09.070Z",
+      "links": [
+        {
+          "targetId": "mem_08bb2c61",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T16:45:09.083Z"
+        },
+        {
+          "targetId": "mem_3b34a8ed",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:09.086Z"
+        },
+        {
+          "targetId": "mem_f200bf46",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:09.090Z"
+        },
+        {
+          "targetId": "mem_b409cca0",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:16.090Z"
+        },
+        {
+          "targetId": "mem_c9afdb53",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.970Z"
+        },
+        {
+          "targetId": "mem_9314f2de",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.557Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "87302c4a53f1",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_b409cca0",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "U-Mem: active memory agents that detect uncertainty and proactively seek knowledge",
+      "content": "U-Mem (arXiv 2602.22406) introduces active vs passive memory framing. Two components: (1) Cost-Aware Knowledge Extraction Cascade -- when uncertain, escalates from cheap sources (self-reflection) to expensive ones (human experts), consulting humans only 23% of the time while achieving 99.2% of peak performance. (2) Semantic-Aware Thompson Sampling -- balances semantic similarity against learned utility for retrieval, solves cold-start for new memories via Gaussian distributions. Matches RL fine-tuning methods (18.67% vs 17.33% on AIME25), runs 2x faster. Hello World brain currently retrieves on demand (passive). An active system that detects uncertainty gaps and fills them without always escalating to Pat could reduce interruptions significantly.",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "memory-systems",
+        "active-memory",
+        "architecture-reference"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:45:16.078Z",
+      "links": [
+        {
+          "targetId": "mem_0a2eda0a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:16.090Z"
+        },
+        {
+          "targetId": "mem_3b34a8ed",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:16.093Z"
+        },
+        {
+          "targetId": "mem_f200bf46",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:16.098Z"
+        },
+        {
+          "targetId": "mem_c9afdb53",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.965Z"
+        },
+        {
+          "targetId": "mem_9314f2de",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.546Z"
+        }
+      ],
+      "qualityScore": 0.65,
+      "fingerprint": "2418706e44e7",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_c9afdb53",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "GAM: dual-agent context rot architecture -- Memorizer + Researcher pattern",
+      "content": "General Agentic Memory (GAM) fights context rot with dual agents: background Memorizer pages and tags full conversation into searchable database, Researcher activates on demand with vector + BM25 + page-ID search (not naive RAG). 90%+ on RULER benchmark (tracking variables over many steps) where conventional RAG and long-context approaches failed. The page store concept -- segmenting conversation history and tagging by context -- is something Hello World retrieval doesn't currently do. Our retrieval is memory-level, not conversation-segment-level.",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "memory-systems",
+        "context-rot",
+        "architecture-reference"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:45:21.948Z",
+      "links": [
+        {
+          "targetId": "mem_3b34a8ed",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.960Z"
+        },
+        {
+          "targetId": "mem_b409cca0",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.965Z"
+        },
+        {
+          "targetId": "mem_0a2eda0a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.970Z"
+        },
+        {
+          "targetId": "mem_f200bf46",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:21.974Z"
+        },
+        {
+          "targetId": "mem_9314f2de",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.569Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "a31aea153386",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_9314f2de",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "LangChain memory finding: generalization is the bottleneck, not infrastructure",
+      "content": "LangChain Agent Builder's memory system discovery: agents are good at accumulating specific cases but bad at generalizing. Asked to remember 'use bullet points,' agent stores 'in meeting X, user wanted bullet points' instead of the rule 'always use bullets.' One person worked full-time on prompting for memory quality alone. Infrastructure isn't the hard part -- extraction prompts are. All memory edits require human approval by default (prompt injection risk). Optional 'yolo mode' disables this. Calibration for Hello World: more engineering on 'extract the rule not the example' prompts is likely higher-ROI than adding more memory tiers. Source: blog.langchain.com",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "memory-systems",
+        "quality",
+        "architecture-reference"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:45:28.528Z",
+      "links": [
+        {
+          "targetId": "mem_b409cca0",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.546Z"
+        },
+        {
+          "targetId": "mem_3b34a8ed",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.552Z"
+        },
+        {
+          "targetId": "mem_0a2eda0a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.557Z"
+        },
+        {
+          "targetId": "mem_f200bf46",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.563Z"
+        },
+        {
+          "targetId": "mem_c9afdb53",
+          "relationship": "related",
+          "createdAt": "2026-02-27T16:45:28.569Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "1ef9b250be70",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_7cb8fc13",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Run first knowledge intake scan and stage candidates",
+      "content": "Execute the first /scan cycle: search 20 subreddits across 5 scanners, evaluate findings, stage top 5 candidates in knowledge-queue.json for Pat's review, store approved ones.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:45:45.986Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "5ec55c24c22a"
+    },
+    {
+      "id": "mem_60112dde",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Three brain capabilities: session tags, notify gate, procedural memory",
+      "content": "Context: Deliberation with 4 agents (Backend Arch, Product Mgr, Pragmatist, Cost Analyst) over 2 rounds. Inspired by research scan: Aurora outcome tags, U-Mem uncertainty cascade, Hermes skill documents. Key constraint: LangChain finding that generalization prompting is harder than infrastructure.\nChosen: Build order: (1) Session outcome tagging -- infer from task status + activity patterns at hw_end_session, zero cost, chips in SessionsView. (2) Notify gate -- require hw_retrieve_memories before hw_notify, don't escalate if memories cover the topic. (3) Procedural memory -- add 'skill' as proper MemoryType enum value, defer build until session tags reveal patterns. All zero API cost.\nRationale: 4/4 on session tags and notify gate. Skills split but consensus on proper implementation (real type, not prefix hack). Pragmatist shifted on tags (near-zero cost justified). Backend Arch shifted on uncertainty timing (real-time gate beats post-session). ~150 lines total new code.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T16:59:10.592Z",
+      "links": [],
+      "qualityScore": 0.65,
+      "fingerprint": "82934fe2bf9e"
+    },
+    {
+      "id": "mem_d7c05ba6",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Deliberation Round 2 shortcut: one agent puppeted all 4 voices",
+      "content": "In the brain capabilities deliberation, Round 1 correctly spawned 4 independent agents. But Round 2 spawned ONE agent to write all 4 cross-exam responses. This defeats the purpose -- one voice smooths disagreements artificially. Shifts and convergence may have been fake. Session 64 format is correct: each agent spawned independently for EVERY round.",
+      "rule": "NEVER spawn one agent to write multiple agent responses. Every agent gets its own Task spawn in every round. Independent thinking requires independent processes.",
+      "tags": [
+        "deliberation",
+        "format",
+        "independence",
+        "quality"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:05:58.044Z",
+      "links": [
+        {
+          "targetId": "mem_235e5207",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T17:11:54.505Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "9f7f41ae82c1",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_235e5207",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Deliberation format: fully independent agents every round is mandatory",
+      "content": "A/B tested puppeted R2 (one agent writes all 4 responses) vs independent R2 (4 separate agent spawns). Independent run surfaced: (1) score-vs-retry tension on notify gate that puppeted run smoothed over, (2) memory quality as explicit priority step that puppeted run missed entirely, (3) harder procedural memory defer with specific reasoning. Cost: 3 extra Sonnet calls per deliberation. Verdict: always spawn each agent independently in every round. Consensus from one voice is fake consensus.",
+      "rule": "In deliberations, EVERY agent gets its own Task spawn in EVERY round. Never have one agent write multiple agent responses. The extra Sonnet calls are worth the quality difference.",
+      "tags": [
+        "deliberation",
+        "format",
+        "quality",
+        "independence",
+        "a-b-test"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:11:54.493Z",
+      "links": [
+        {
+          "targetId": "mem_d7c05ba6",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T17:11:54.505Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "0c3617eca9b7",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_448db090",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add outcome tagging on sessions (Aurora pattern)",
+      "content": "Classify every session with mandatory outcome tags: exploration / building / shipping / debugging / planning / revenue. Enable pattern detection across sessions -- e.g. detect if 80% of sessions are exploration and only 5% shipping. Add to session end flow and make visible in Sessions view. Inspired by Aurora's PROGRESS.md outcome tags.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "deployment",
+        "npm",
+        "stripe",
+        "strategy"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:15:24.773Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "df8defea122d"
+    },
+    {
+      "id": "mem_c78b6450",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Shipped session outcome tagging -- inferred from activity data, zero LLM cost",
+      "content": "Session tags: building/shipping/debugging/exploring/planning/blocked. Inferred from activity log at hw_end_session via classifySessionOutcome() in session.ts. Schema: outcomeTags[] on SessionSchema in types.ts. UI: colored chips in SessionsView.tsx. Commit bdae409. Zero API cost. Deliberation d_c7206dab.",
+      "rule": "",
+      "tags": [
+        "session-tags",
+        "brain",
+        "aurora-pattern"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:15:27.913Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "aff308b6b622",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_316caded",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add active uncertainty detection (U-Mem pattern)",
+      "content": "Instead of always escalating to Pat when stuck, the system detects knowledge gaps and tries cheap sources first (self-reflection, memory search, web search) before escalating. Cost-aware cascade: self -> memory -> web -> Pat. Inspired by U-Mem's approach achieving 99.2% peak performance while consulting humans only 23% of the time.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "tokens",
+        "model-selection",
+        "memory",
+        "performance",
+        "optimization"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:16:40.670Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "834a518e7cba"
+    },
+    {
+      "id": "mem_ef722c08",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Shipped notify gate -- checks memories before escalating to Pat",
+      "content": "hw_notify now runs retrieveMemories against the message before sending. If score > 0.7, still sends but returns a nudge suggesting hw_retrieve_memories first. Informational gate, not blocking. 16 lines added to server.ts. Commit 12127bf. Deliberation d_c7206dab.",
+      "rule": "",
+      "tags": [
+        "notify-gate",
+        "uncertainty",
+        "u-mem-pattern"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:16:43.574Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "faa66557f88c",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_a05f7692",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[consolidation] Consolidated insight: debugging, cross-project domain (3 sources)",
+      "content": "Consolidated from 3 memories:\n  - Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check\n  - Formspree: silent failure with placeholder URLs, always validate endpoint IDs\n  - Linters and formatters silently revert edits -- check for watchers before editing\nCommon tags: debugging, cross-project\nAbstracted rule: If an edit keeps reverting, check for active linters/formatters/watchers. Stage changes immediately after editing.",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "consolidation",
+        "debugging",
+        "cross-project",
+        "consolidated",
+        "insight",
+        "domain",
+        "sources"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:33:45.590Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "155bdbf0a998"
+    },
+    {
+      "id": "mem_af0b4aec",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[consolidation] Consolidated insight: agents, parallel, pattern domain (3 sources)",
+      "content": "Consolidated from 3 memories:\n  - Full 4-agent audit pattern: UI/UX + Architecture + Cognitive + Value/ROI\n  - Pattern: Actor model -- own state in dedicated task, message via channels\n  - 6-agent parallel research sprint: 6 research tasks in 3 minutes\nCommon tags: agents, parallel, pattern\nAbstracted rule: Pattern across 3 memories in [agents, parallel, pattern] domain",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "consolidation",
+        "agents",
+        "parallel",
+        "pattern",
+        "consolidated",
+        "insight",
+        "domain",
+        "sources"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T17:33:45.604Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "0bebe2bc01ec"
     }
   ]
 }
