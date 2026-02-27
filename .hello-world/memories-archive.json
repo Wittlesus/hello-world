@@ -1,0 +1,118 @@
+{
+  "archived": [
+    {
+      "memory": {
+        "id": "mem_1bf508b9",
+        "projectId": "Claude AI Interface",
+        "type": "pain",
+        "title": "GitHub push blocked by Discord bot tokens in commit history",
+        "content": "GitHub secret scanning blocked pushes due to Discord bot tokens committed in old history (discord-listener.ts and server.ts). Two options: (1) visit the unblock URL GitHub provides to allow the push, or (2) scrub history with git filter-repo + force-push. The unblock URL is faster but the tokens remain in history. For production, scrub the history.",
+        "rule": "Never commit API tokens or bot tokens to source files. Use environment variables. If already committed, scrub with git filter-repo.",
+        "tags": [
+          "git",
+          "security",
+          "discord",
+          "tokens",
+          "github"
+        ],
+        "severity": "high",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T08:15:18.710Z",
+        "supersededBy": "mem_c9afde79",
+        "links": [
+          {
+            "targetId": "mem_c9afde79",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T07:38:47.682Z"
+          }
+        ]
+      },
+      "reason": "Superseded by mem_c9afde79",
+      "archivedAt": "2026-02-27T11:52:27.448Z",
+      "scoreAtArchive": 0.4867102039713766
+    },
+    {
+      "memory": {
+        "id": "mem_bff85b0b",
+        "projectId": "Claude AI Interface",
+        "type": "pain",
+        "title": "Used hw_quick_insights to bypass full deliberation guardrails on a real decision",
+        "content": "Ran quick insights on \"system explorer layout\" which was clearly a design decision. All agents converged in 2 rounds with no tension. Then listed the missing guardrails as \"unsolved problems\" when they were already built. Root cause: context compaction lost working knowledge of deliberation system. Fix applied: hw_quick_insights now blocks decision-like topics with pattern matching and redirects to hw_plan_deliberation.",
+        "rule": "If agents will deliberate something that changes code, architecture, layout, or strategy, ALWAYS use hw_plan_deliberation with sub-questions. hw_quick_insights is ONLY for vague exploration with no action planned. The tool now enforces this in code.",
+        "tags": [
+          "deliberation",
+          "guardrails",
+          "regression"
+        ],
+        "severity": "high",
+        "synapticStrength": 1.1,
+        "accessCount": 3,
+        "createdAt": "2026-02-25T10:42:01.133Z",
+        "lastAccessed": "2026-02-27T11:13:52.519Z",
+        "supersededBy": "mem_3a15f5e9",
+        "links": [
+          {
+            "targetId": "mem_3a15f5e9",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T10:21:20.516Z"
+          }
+        ]
+      },
+      "reason": "Superseded by mem_3a15f5e9",
+      "archivedAt": "2026-02-27T11:52:27.448Z",
+      "scoreAtArchive": 1
+    },
+    {
+      "memory": {
+        "id": "mem_e022b342",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Method: 6-agent parallel research sprint",
+        "content": "Spawn 6 agents simultaneously, each researching a different angle of the same question. Agents cover: direct competitors, adjacent competitors, academic state of the art, practitioner experience, simple approaches that work, and failure modes/anti-patterns. Results come back in ~3-4 minutes. Synthesis happens in the main thread. Used multiple times: S53 memory systems research, earlier competitive intel runs. Use Sonnet 4.6 1M for research agents to save cost.",
+        "rule": "When researching a domain, always cover at least these 6 angles: competitors, academia, practitioners, simple baselines, and anti-patterns. Use Sonnet for research agents.",
+        "tags": [
+          "method",
+          "research",
+          "parallel-agents",
+          "workflow"
+        ],
+        "severity": "medium",
+        "synapticStrength": 1.1,
+        "accessCount": 5,
+        "createdAt": "2026-02-26T16:30:06.967Z",
+        "links": [
+          {
+            "targetId": "mem_61e3dd4c",
+            "relationship": "related",
+            "createdAt": "2026-02-26T16:30:07.007Z"
+          },
+          {
+            "targetId": "mem_525e32e3",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-26T16:30:12.159Z"
+          },
+          {
+            "targetId": "mem_2c411e02",
+            "relationship": "related",
+            "createdAt": "2026-02-26T16:30:16.662Z"
+          },
+          {
+            "targetId": "mem_2df73149",
+            "relationship": "related",
+            "createdAt": "2026-02-26T16:33:14.893Z"
+          }
+        ],
+        "qualityScore": 0.85,
+        "fingerprint": "ee6ee50f245a",
+        "supersededBy": "mem_525e32e3",
+        "lastAccessed": "2026-02-27T10:53:54.957Z"
+      },
+      "reason": "Superseded by mem_525e32e3",
+      "archivedAt": "2026-02-27T11:52:27.448Z",
+      "scoreAtArchive": 0.816604218068706
+    }
+  ],
+  "totalArchived": 3,
+  "lastPruned": "2026-02-27T11:52:27.448Z"
+}

@@ -1533,10 +1533,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 6,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 7,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-27T07:31:55.275Z"
+      "lastAccessed": "2026-02-27T10:53:54.957Z"
     },
     {
       "id": "mem_823838dc",
@@ -1574,10 +1574,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 5,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 6,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-26T13:22:22.731Z"
+      "lastAccessed": "2026-02-27T10:53:54.957Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1886,33 +1886,6 @@
       "createdAt": "2026-02-25T08:15:17.937Z"
     },
     {
-      "id": "mem_1bf508b9",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "GitHub push blocked by Discord bot tokens in commit history",
-      "content": "GitHub secret scanning blocked pushes due to Discord bot tokens committed in old history (discord-listener.ts and server.ts). Two options: (1) visit the unblock URL GitHub provides to allow the push, or (2) scrub history with git filter-repo + force-push. The unblock URL is faster but the tokens remain in history. For production, scrub the history.",
-      "rule": "Never commit API tokens or bot tokens to source files. Use environment variables. If already committed, scrub with git filter-repo.",
-      "tags": [
-        "git",
-        "security",
-        "discord",
-        "tokens",
-        "github"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:18.710Z",
-      "supersededBy": "mem_c9afde79",
-      "links": [
-        {
-          "targetId": "mem_c9afde79",
-          "relationship": "contradicts",
-          "createdAt": "2026-02-27T07:38:47.682Z"
-        }
-      ]
-    },
-    {
       "id": "mem_bcce86c6",
       "projectId": "Claude AI Interface",
       "type": "fact",
@@ -1946,10 +1919,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 3,
       "createdAt": "2026-02-25T08:15:24.783Z",
-      "lastAccessed": "2026-02-27T07:31:55.275Z"
+      "lastAccessed": "2026-02-27T10:53:54.957Z"
     },
     {
       "id": "mem_d26abc7a",
@@ -2419,10 +2392,10 @@
         "audit"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 2,
+      "synapticStrength": 1.1,
+      "accessCount": 3,
       "createdAt": "2026-02-25T08:16:55.529Z",
-      "lastAccessed": "2026-02-26T15:23:48.368Z"
+      "lastAccessed": "2026-02-27T10:34:56.496Z"
     },
     {
       "id": "mem_db5022fa",
@@ -2659,32 +2632,6 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-25T10:20:01.919Z"
-    },
-    {
-      "id": "mem_bff85b0b",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Used hw_quick_insights to bypass full deliberation guardrails on a real decision",
-      "content": "Ran quick insights on \"system explorer layout\" which was clearly a design decision. All agents converged in 2 rounds with no tension. Then listed the missing guardrails as \"unsolved problems\" when they were already built. Root cause: context compaction lost working knowledge of deliberation system. Fix applied: hw_quick_insights now blocks decision-like topics with pattern matching and redirects to hw_plan_deliberation.",
-      "rule": "If agents will deliberate something that changes code, architecture, layout, or strategy, ALWAYS use hw_plan_deliberation with sub-questions. hw_quick_insights is ONLY for vague exploration with no action planned. The tool now enforces this in code.",
-      "tags": [
-        "deliberation",
-        "guardrails",
-        "regression"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
-      "createdAt": "2026-02-25T10:42:01.133Z",
-      "lastAccessed": "2026-02-27T10:13:27.296Z",
-      "supersededBy": "mem_3a15f5e9",
-      "links": [
-        {
-          "targetId": "mem_3a15f5e9",
-          "relationship": "contradicts",
-          "createdAt": "2026-02-27T10:21:20.516Z"
-        }
-      ]
     },
     {
       "id": "mem_4ec22657",
@@ -3447,10 +3394,10 @@
         "scoring"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.1,
+      "accessCount": 3,
       "createdAt": "2026-02-26T09:46:37.875Z",
-      "lastAccessed": "2026-02-26T15:23:48.368Z"
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_e847972f",
@@ -3484,8 +3431,8 @@
         "prediction"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T10:29:25.572Z",
       "links": [
         {
@@ -3493,7 +3440,8 @@
           "relationship": "related",
           "createdAt": "2026-02-26T17:55:53.332Z"
         }
-      ]
+      ],
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_2c399f91",
@@ -3764,7 +3712,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T15:05:41.129Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_8253e189",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.334Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "a4f2ce55d744"
     },
@@ -3827,7 +3781,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T15:15:12.017Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_8253e189",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.338Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "2ab5a3cfb9e8"
     },
@@ -4034,12 +3994,13 @@
         "validation"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:04:44.510Z",
       "links": [],
       "qualityScore": 0.95,
-      "fingerprint": "7b98f2294574"
+      "fingerprint": "7b98f2294574",
+      "lastAccessed": "2026-02-27T10:53:54.499Z"
     },
     {
       "id": "mem_a7928c89",
@@ -4141,50 +4102,6 @@
       "fingerprint": "58afe1f0df57"
     },
     {
-      "id": "mem_e022b342",
-      "projectId": "Claude AI Interface",
-      "type": "win",
-      "title": "Method: 6-agent parallel research sprint",
-      "content": "Spawn 6 agents simultaneously, each researching a different angle of the same question. Agents cover: direct competitors, adjacent competitors, academic state of the art, practitioner experience, simple approaches that work, and failure modes/anti-patterns. Results come back in ~3-4 minutes. Synthesis happens in the main thread. Used multiple times: S53 memory systems research, earlier competitive intel runs. Use Sonnet 4.6 1M for research agents to save cost.",
-      "rule": "When researching a domain, always cover at least these 6 angles: competitors, academia, practitioners, simple baselines, and anti-patterns. Use Sonnet for research agents.",
-      "tags": [
-        "method",
-        "research",
-        "parallel-agents",
-        "workflow"
-      ],
-      "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 2,
-      "createdAt": "2026-02-26T16:30:06.967Z",
-      "links": [
-        {
-          "targetId": "mem_61e3dd4c",
-          "relationship": "related",
-          "createdAt": "2026-02-26T16:30:07.007Z"
-        },
-        {
-          "targetId": "mem_525e32e3",
-          "relationship": "contradicts",
-          "createdAt": "2026-02-26T16:30:12.159Z"
-        },
-        {
-          "targetId": "mem_2c411e02",
-          "relationship": "related",
-          "createdAt": "2026-02-26T16:30:16.662Z"
-        },
-        {
-          "targetId": "mem_2df73149",
-          "relationship": "related",
-          "createdAt": "2026-02-26T16:33:14.893Z"
-        }
-      ],
-      "qualityScore": 0.85,
-      "fingerprint": "ee6ee50f245a",
-      "supersededBy": "mem_525e32e3",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
-    },
-    {
       "id": "mem_525e32e3",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -4232,8 +4149,8 @@
         "workflow"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 2,
+      "synapticStrength": 1.1,
+      "accessCount": 6,
       "createdAt": "2026-02-26T16:30:16.651Z",
       "links": [
         {
@@ -4254,7 +4171,7 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "8d0557cd8dae",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
+      "lastAccessed": "2026-02-27T10:53:54.957Z"
     },
     {
       "id": "mem_ab99537b",
@@ -4270,8 +4187,8 @@
         "workflow"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 2,
+      "synapticStrength": 1.1,
+      "accessCount": 6,
       "createdAt": "2026-02-26T16:30:23.130Z",
       "links": [
         {
@@ -4282,7 +4199,7 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "0e4dd2489f99",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_ee3c8f17",
@@ -4353,8 +4270,8 @@
         "prompt-engineering"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:33:14.883Z",
       "links": [
         {
@@ -4365,7 +4282,7 @@
       ],
       "qualityScore": 0.88,
       "fingerprint": "1f43cf69431b",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
+      "lastAccessed": "2026-02-27T10:53:54.957Z"
     },
     {
       "id": "mem_f87fb389",
@@ -4645,13 +4562,13 @@
         "state-corruption"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.1,
+      "accessCount": 3,
       "createdAt": "2026-02-26T17:52:58.109Z",
       "links": [],
       "qualityScore": 1,
       "fingerprint": "994a76a3e872",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_497c4a8f",
@@ -4667,12 +4584,13 @@
         "architecture"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T17:53:01.317Z",
       "links": [],
       "qualityScore": 0.9,
-      "fingerprint": "ad2ea0d14db4"
+      "fingerprint": "ad2ea0d14db4",
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_63f0bb64",
@@ -4752,8 +4670,8 @@
         "high-priority"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:55:53.321Z",
       "links": [
         {
@@ -4763,7 +4681,8 @@
         }
       ],
       "qualityScore": 0.7,
-      "fingerprint": "3ead77b2b251"
+      "fingerprint": "3ead77b2b251",
+      "lastAccessed": "2026-02-27T10:34:56.496Z"
     },
     {
       "id": "mem_baaadbab",
@@ -4779,12 +4698,13 @@
         "retrieval"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:55:56.167Z",
       "links": [],
       "qualityScore": 0.7,
-      "fingerprint": "e4a7db13deb3"
+      "fingerprint": "e4a7db13deb3",
+      "lastAccessed": "2026-02-27T10:34:56.496Z"
     },
     {
       "id": "mem_85ea09b1",
@@ -5086,12 +5006,13 @@
         "deliberation"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T18:01:12.863Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "4719c64800aa"
+      "fingerprint": "4719c64800aa",
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_16b58e25",
@@ -5590,12 +5511,13 @@
         "founding-evidence"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T18:11:15.878Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "081b6fd283b5"
+      "fingerprint": "081b6fd283b5",
+      "lastAccessed": "2026-02-27T10:34:56.496Z"
     },
     {
       "id": "mem_49e0ee10",
@@ -5756,7 +5678,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T18:35:59.568Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_8253e189",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.342Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "d2739ad2588c"
     },
@@ -5782,7 +5710,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T23:59:25.438Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_b6d065ee",
+          "relationship": "related",
+          "createdAt": "2026-02-27T10:49:37.502Z"
+        }
+      ],
       "qualityScore": 0.5,
       "fingerprint": "bd94663a0e35"
     },
@@ -5802,8 +5736,8 @@
         "architecture"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-27T00:47:33.700Z",
       "links": [
         {
@@ -5813,7 +5747,8 @@
         }
       ],
       "qualityScore": 0.7,
-      "fingerprint": "5b667e037a37"
+      "fingerprint": "5b667e037a37",
+      "lastAccessed": "2026-02-27T10:53:54.499Z"
     },
     {
       "id": "mem_87476412",
@@ -5837,7 +5772,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T01:29:20.851Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_8253e189",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.346Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "291b04b1fb29"
     },
@@ -5882,13 +5823,13 @@
         "provider"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-27T02:26:59.889Z",
       "links": [],
       "qualityScore": 0.95,
       "fingerprint": "42bcb6ce55c7",
-      "lastAccessed": "2026-02-27T07:30:35.352Z"
+      "lastAccessed": "2026-02-27T10:53:54.499Z"
     },
     {
       "id": "mem_18fc5b2a",
@@ -6102,8 +6043,8 @@
         "context-management"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 2,
+      "synapticStrength": 1.1,
+      "accessCount": 3,
       "createdAt": "2026-02-27T03:14:53.308Z",
       "links": [
         {
@@ -6114,7 +6055,7 @@
       ],
       "qualityScore": 0.5,
       "fingerprint": "48a809ce1b1b",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
+      "lastAccessed": "2026-02-27T10:53:54.499Z"
     },
     {
       "id": "mem_034f6fc6",
@@ -6221,8 +6162,8 @@
         "runner.ts"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 2,
+      "synapticStrength": 1.1,
+      "accessCount": 4,
       "createdAt": "2026-02-27T03:36:28.841Z",
       "links": [
         {
@@ -6238,7 +6179,7 @@
       ],
       "qualityScore": 0.6,
       "fingerprint": "aefc0a8c4fa0",
-      "lastAccessed": "2026-02-27T10:13:27.296Z"
+      "lastAccessed": "2026-02-27T10:53:54.957Z"
     },
     {
       "id": "mem_ef0d74ab",
@@ -6309,7 +6250,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T03:39:26.416Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_8253e189",
+          "relationship": "related",
+          "createdAt": "2026-02-27T11:14:30.354Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "0165f860d71e"
     },
@@ -6877,7 +6824,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T06:45:02.688Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_8253e189",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.350Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "6d89e79829a2"
     },
@@ -7316,8 +7269,8 @@
         "server.ts"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 2,
       "createdAt": "2026-02-27T10:21:20.497Z",
       "links": [
         {
@@ -7332,7 +7285,8 @@
         }
       ],
       "qualityScore": 1,
-      "fingerprint": "0db9a8d99aaf"
+      "fingerprint": "0db9a8d99aaf",
+      "lastAccessed": "2026-02-27T11:13:52.519Z"
     },
     {
       "id": "mem_c6dfd67b",
@@ -7511,6 +7465,293 @@
       "links": [],
       "qualityScore": 0.65,
       "fingerprint": "81f8fde84228"
+    },
+    {
+      "id": "mem_adf9bc85",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Deliberation outcome: brain audit 5/6 findings approved in 3 batches",
+      "content": "4-agent deliberation (backendarch, contrarian, pragmatist, firstprinciples) on 6 brain audit findings. 5 approved, 1 deferred. Key design shifts from agents: (1) Contrarian capped F5 tag-boost at 0.3 total to prevent swamping decay scores. (2) First Principles shifted F3 from threshold-raising to per-session observation dedup. (3) Pragmatist scoped F1 to pain+high only, limiting immortal pool. Batch 1: F4+F2+F3a (9 LOC). Batch 2: F1 decay_exempt (15 LOC). Batch 3: F5+F3b (25 LOC). F6 archive retrieval deferred.",
+      "rule": "Brain audit implementation: 3 batches by blast radius. Quick wins first, types change second, retrieval path last with test pass.",
+      "tags": [
+        "architecture",
+        "design",
+        "windows",
+        "testing"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:40:10.038Z",
+      "links": [],
+      "qualityScore": 0.8,
+      "fingerprint": "5180229fbf4e"
+    },
+    {
+      "id": "mem_a304372a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain audit Batch 1: F4 verbosity + F2 reflection filter + F3a cortex threshold",
+      "content": "Three quick wins in one commit (~9 LOC). F4: In reflection.ts computeQualityScore(), replace detailLength>200 bonus with rule.length>0 check for the 0.2 weight. F2: In generateMetaObservations(), filter out type=reflection memories from input. F3a: Change cortex-learner.ts minObservations default from 2 to 3.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "github",
+        "git"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:49:34.487Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "b626fc1d6297"
+    },
+    {
+      "id": "mem_0e1f48ed",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain audit Batch 2: F1 decay_exempt for pain+high-severity",
+      "content": "Add decayExempt?: boolean to Memory type in types.ts. In scoreMemory() (scoring.ts), skip decay when decayExempt=true (return 1.0 base). In pruner.ts, skip archive for exempt memories. Auto-set decayExempt=true when type=pain AND severity=high. ~15 LOC across 3 files.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:49:34.911Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "fb1b263e5409"
+    },
+    {
+      "id": "mem_20b6283c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain audit Batch 3: F5 tag-boosting + F3b session dedup",
+      "content": "F5: Add optional queryTags param to rankMemories() in scoring.ts. Count tag overlap, add overlap*0.1 capped at 0.3 total. Thread cortex-resolved tags through retrieval caller (~17 LOC). F3b: In cortex-learner.ts, deduplicate observations per session -- max 1 observation per word per session (~8 LOC). Needs test pass since it touches retrieval hot path.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "twitter",
+        "writing",
+        "testing",
+        "windows"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:49:35.460Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "5801d862f134"
+    },
+    {
+      "id": "mem_b6d065ee",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Full deliberation pipeline verified: plan -> approve -> run -> coverage -> conclude -> extract -> build",
+      "content": "Ran complete deliberation with 4 agents (backendarch, contrarian, pragmatist, firstprinciples) on 7 sub-questions. Coverage check worked (caught Q7 pending). Quality tags: 4 tension, 2 shifted, 1 consensus. Extracted 4 recommendations as approvals. Then 3 parallel agent teams in worktrees built all 3 batches simultaneously. All changes merged, committed d5aa498. Total: ~49 LOC across 7 files.",
+      "rule": "For binding decisions: hw_plan_deliberation -> approve -> hw_start_deliberation -> voice agents via hw_post_agent_message -> hw_check_deliberation_coverage -> hw_conclude_deliberation -> hw_extract_deliberation_recommendations. Then parallel agent worktrees for implementation.",
+      "tags": [
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "autonomy"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:49:37.488Z",
+      "links": [
+        {
+          "targetId": "mem_d4c8f6cb",
+          "relationship": "related",
+          "createdAt": "2026-02-27T10:49:37.502Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "852aaebb737d"
+    },
+    {
+      "id": "mem_11b626c7",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "research_conclusion: sign** | Fast, broad coverage. Weak on synthesis. The synthe",
+      "content": "sign** | Fast, broad coverage. Weak on synthesis. The synthesis step is the missing piece. | Comprehensive but no debate. Does not pretend to be more than it is, u",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "research_conclusion"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:13:52.491Z",
+      "links": [],
+      "qualityScore": 0.45,
+      "fingerprint": "441846f1070e"
+    },
+    {
+      "id": "mem_640ff3f2",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "correction_confirmed: You're right. I ran today's deliberation by voicing all 4 ag",
+      "content": "You're right. I ran today's deliberation by voicing all 4 agents myself via hw_post_agent_message -- one brain w",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "correction_confirmed"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:13:52.505Z",
+      "links": [],
+      "qualityScore": 0.45,
+      "fingerprint": "0e93906ebecf"
+    },
+    {
+      "id": "mem_8253e189",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Bypassed agent-runner and manually voiced all deliberation agents -- \"one brain wearing hats\"",
+      "content": "agent-runner.ts already spawns independent Claude/Qwen subprocesses for deliberation. But in the brain audit deliberation, I set phase to synthesis immediately (stopping the auto-runner) then manually voiced all 4 agents via hw_post_agent_message. This made the \"tension\" manufactured by one brain, not genuine independent reasoning. The runner at packages/core/src/chatroom/agent-runner.ts handles: callClaude() via subprocess, callQwen() via HTTP, sequential turn-taking, consensus checking, and synthesis. It should do the agent voicing, not the mediator.",
+      "rule": "NEVER use hw_post_agent_message to voice deliberation agents yourself. Let runDeliberation() in agent-runner.ts spawn independent subprocesses. Use hw_post_to_chatroom ONLY for mediator interventions (framing, summarizing, redirecting). The agents must be independent processes, not you wearing hats.",
+      "tags": [
+        "model-selection",
+        "strategy",
+        "validation"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:14:30.321Z",
+      "links": [
+        {
+          "targetId": "mem_bffb93f1",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.334Z"
+        },
+        {
+          "targetId": "mem_a4c66b94",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.338Z"
+        },
+        {
+          "targetId": "mem_2e22c552",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.342Z"
+        },
+        {
+          "targetId": "mem_87476412",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.346Z"
+        },
+        {
+          "targetId": "mem_4c6f4aaa",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:14:30.350Z"
+        },
+        {
+          "targetId": "mem_4cf5e64e",
+          "relationship": "related",
+          "createdAt": "2026-02-27T11:14:30.354Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "209333d58a91"
+    },
+    {
+      "id": "mem_72b3680c",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: th the SessionStart hook firing on each spawn. We fixed the ",
+      "content": "th the SessionStart hook firing on each spawn. We fixed the hook issue (HW_AGENT_MODE=1 guard) but never bumped the model to Sonnet or increased the timeout pa",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:15:17.308Z",
+      "links": [],
+      "qualityScore": 0.7000000000000001,
+      "fingerprint": "1e07744be51b"
+    },
+    {
+      "id": "mem_243cc114",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Upgrade deliberation agent-runner: Sonnet model + increased timeout",
+      "content": "Change CLAUDE_MODEL from haiku to sonnet in agent-runner.ts. Increase timeout from 45s to 90s. Test with a real deliberation where agents are genuinely independent subprocesses.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "prompting",
+        "testing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:15:54.917Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "05955e5f7168"
+    },
+    {
+      "id": "mem_898c79b3",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Make deliberation agent provider switchable per-session",
+      "content": "Currently all 21 agents hardcode provider: 'claude'. Make provider switchable so any agent can run as Claude or Qwen. Default stays Claude but user/mediator can override per deliberation session.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:19:13.778Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "050591d97ec2"
+    },
+    {
+      "id": "mem_3013e9f5",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Create /clean-quit skill for reliable session-end automation",
+      "content": "Create a /clean-quit slash command that explicitly runs ALL end-of-session automation: handoff, end session, timeline update, cost tracking, plasticity, signal flush, git commit. Replaces unreliable hook-based automation with a manual trigger.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "twitter",
+        "social",
+        "tokens",
+        "strategy",
+        "git",
+        "version-control",
+        "github"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:45:59.504Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "89f4ed07f47a"
     }
   ]
 }
