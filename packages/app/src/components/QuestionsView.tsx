@@ -12,7 +12,7 @@ interface Question {
   status: 'open' | 'answered' | 'deferred';
   answer?: string;
   createdAt: string;
-  answeredAt?: string;
+  answeredAt?: string | number;
   linkedTaskId?: string;
   linkedDecisionId?: string;
 }
@@ -27,17 +27,18 @@ const STATUS_STYLE: Record<string, string> = {
   deferred: 'bg-gray-500/20 text-gray-400',
 };
 
-function formatDate(iso: string): string {
-  const d = new Date(iso);
+function formatDate(value: string | number): string {
+  const d = new Date(value);
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 interface AnswerPanelProps {
   q: Question;
   onClose: () => void;
+  onAnswered: () => void;
 }
 
-function AnswerPanel({ q, onClose }: AnswerPanelProps) {
+function AnswerPanel({ q, onClose, onAnswered }: AnswerPanelProps) {
   const projectPath = useProjectPath();
   const [answer, setAnswer] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -51,11 +52,19 @@ function AnswerPanel({ q, onClose }: AnswerPanelProps) {
     try {
       await invoke('answer_question', { projectPath, id: q.id, answer: answer.trim() });
       setSuccess(true);
+      onAnswered();
       setTimeout(() => onClose(), 1200);
     } catch (err) {
       setError(String(err));
     } finally {
       setSubmitting(false);
+    }
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      handleSubmit();
     }
   }
 
@@ -73,9 +82,11 @@ function AnswerPanel({ q, onClose }: AnswerPanelProps) {
             <textarea
               className="w-full bg-[#0a0a0f] border border-gray-700 rounded p-2 text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-gray-500 resize-none"
               rows={3}
-              placeholder="Type your answer..."
+              placeholder="Type your answer... (Ctrl+Enter to submit)"
               value={answer}
               onChange={(e) => setAnswer(e.target.value)}
+              onKeyDown={handleKeyDown}
+              autoFocus
             />
           </div>
 
@@ -102,6 +113,7 @@ function AnswerPanel({ q, onClose }: AnswerPanelProps) {
             >
               Cancel
             </button>
+            <span className="text-[10px] text-gray-600 ml-auto">Ctrl+Enter to submit</span>
           </div>
         </>
       )}
@@ -109,7 +121,7 @@ function AnswerPanel({ q, onClose }: AnswerPanelProps) {
   );
 }
 
-function QuestionCard({ q }: { q: Question }) {
+function QuestionCard({ q, onAnswered }: { q: Question; onAnswered: () => void }) {
   const [expanded, setExpanded] = useState(false);
   const [answerOpen, setAnswerOpen] = useState(false);
   const hasContent = q.context || q.answer;
@@ -202,7 +214,9 @@ function QuestionCard({ q }: { q: Question }) {
         )}
       </div>
 
-      {isOpen && answerOpen && <AnswerPanel q={q} onClose={() => setAnswerOpen(false)} />}
+      {isOpen && answerOpen && (
+        <AnswerPanel q={q} onClose={() => setAnswerOpen(false)} onAnswered={onAnswered} />
+      )}
     </div>
   );
 }
@@ -235,7 +249,7 @@ export function QuestionsView() {
               </h3>
               <div className="space-y-2">
                 {[...open].reverse().map((q) => (
-                  <QuestionCard key={q.id} q={q} />
+                  <QuestionCard key={q.id} q={q} onAnswered={refetch} />
                 ))}
               </div>
             </section>
@@ -247,7 +261,7 @@ export function QuestionsView() {
               </h3>
               <div className="space-y-2">
                 {[...answered].reverse().map((q) => (
-                  <QuestionCard key={q.id} q={q} />
+                  <QuestionCard key={q.id} q={q} onAnswered={refetch} />
                 ))}
               </div>
             </section>
@@ -259,7 +273,7 @@ export function QuestionsView() {
               </h3>
               <div className="space-y-2">
                 {[...deferred].reverse().map((q) => (
-                  <QuestionCard key={q.id} q={q} />
+                  <QuestionCard key={q.id} q={q} onAnswered={refetch} />
                 ))}
               </div>
             </section>

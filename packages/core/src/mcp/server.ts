@@ -102,6 +102,56 @@ function flushCortexGaps(): void {
   pendingCortexGaps = [];
   lastCortexFlush = Date.now();
 }
+
+// ── Auto-capture: promote high-confidence signals to memories ──
+
+const SIGNAL_QUEUE_PATH = join(projectRoot, '.hello-world', 'signal-queue.json');
+
+const SIGNAL_TYPE_TO_MEMORY: Record<string, MemoryType> = {
+  bug_fix: 'pain',
+  research_conclusion: 'fact',
+  correction_confirmed: 'pain',
+  user_instruction: 'fact',
+  method: 'win',
+};
+
+function processSignalQueue(): void {
+  try {
+    if (!existsSync(SIGNAL_QUEUE_PATH)) return;
+    const raw = JSON.parse(readFileSync(SIGNAL_QUEUE_PATH, 'utf-8'));
+    const signals: Array<{ type: string; confidence: number; excerpt: string; detectedAt?: string }> = raw.signals ?? [];
+    if (signals.length === 0) return;
+
+    const kept: typeof signals = [];
+    let stored = 0;
+
+    for (const sig of signals) {
+      const memType = SIGNAL_TYPE_TO_MEMORY[sig.type];
+      if (sig.confidence >= 0.7 && memType) {
+        safeBrainOp('signal_auto_capture', () => {
+          memoryStore.storeMemory({
+            type: memType,
+            title: `${sig.type}: ${sig.excerpt.slice(0, 60)}`,
+            content: sig.excerpt,
+            tags: ['auto-captured', sig.type],
+          });
+        }, undefined);
+        stored++;
+      } else {
+        kept.push(sig);
+      }
+    }
+
+    if (stored > 0) {
+      raw.signals = kept;
+      writeFileSync(SIGNAL_QUEUE_PATH, JSON.stringify(raw, null, 2), 'utf-8');
+      activity.append('signal_auto_capture', `Auto-stored ${stored} high-confidence signal(s) as memories`);
+    }
+  } catch (err) {
+    console.error('[signal-auto-capture]', err instanceof Error ? err.message : err);
+  }
+}
+
 const HANDOFF_FILE = join(projectRoot, '.hello-world', 'restart-handoff.json');
 
 const RUNNER_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', 'watchers', 'runner.mjs');
@@ -321,6 +371,9 @@ server.registerTool('hw_retrieve_memories', {
   description: 'Query the brain for relevant memories. Returns pain (mistakes), wins (patterns), attention warnings.',
   inputSchema: z.object({ prompt: z.string() }),
 }, async (args: { prompt: string }) => {
+  // Auto-capture: promote high-confidence signals before retrieval
+  processSignalQueue();
+
   const memories = memoryStore.getAllMemories();
   const brainState = memoryStore.getBrainState();
 

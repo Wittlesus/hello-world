@@ -127,9 +127,9 @@ async function callClaudeBoardroom(
 }
 
 function buildBoardroomPrompt(agent: BoardroomAgent, boardroom: Boardroom, round: number, maxRounds: number): string {
-  // Get deliberation-style system prompt if it exists, otherwise use role
+  // Prefer boardroomPrompt (collaboration-focused) over systemPrompt (deliberation-focused)
   const delibDef = AGENT_DEFINITIONS[agent.id];
-  const roleDesc = delibDef?.systemPrompt ?? `You are ${agent.name}. Role: ${agent.role}`;
+  const roleDesc = delibDef?.boardroomPrompt ?? delibDef?.systemPrompt ?? `You are ${agent.name}. Role: ${agent.role}`;
 
   // Phase guidance based on round number
   const phase = round < 1
@@ -138,17 +138,41 @@ function buildBoardroomPrompt(agent: BoardroomAgent, boardroom: Boardroom, round
       ? 'Converge. Synthesize what the team has discussed into a concrete recommendation.'
       : 'Build on what has been said. Challenge or extend, don\'t repeat.';
 
-  // Agent's own last message (prevents repetition)
-  const ownLast = [...boardroom.chat].reverse().find(m => m.agentId === agent.id);
-  const ownLastLine = ownLast ? `\nYour last message: "${ownLast.text}"` : '';
+  // Anti-groupthink: phase-dependent context injection
+  // Round 0: Independent thinking -- no chat history, only topic + whiteboard
+  // Round 1-2: Selective -- own messages + others' positions (not full transcript)
+  // Round 3+: Full convergence -- recent chat for synthesis
+  const ownMessages = boardroom.chat
+    .filter(m => m.agentId === agent.id)
+    .map(m => m.text);
+  const ownLastLine = ownMessages.length > 0 ? `\nYour last message: "${ownMessages[ownMessages.length - 1]}"` : '';
 
-  const recentChat = boardroom.chat
-    .slice(-20)
-    .map((m) => {
-      const a = boardroom.agents.find((x) => x.id === m.agentId);
-      return `[${a?.name ?? m.agentId}] ${m.text}`;
-    })
-    .join('\n');
+  let recentChat: string;
+  if (round === 0) {
+    // Independent initialization: no shared history, form your own position
+    recentChat = '(Round 1 -- form your own position independently before seeing others.)';
+  } else if (round <= 2) {
+    // Selective: show own messages + compressed view of others
+    const ownFormatted = ownMessages.map(t => `[You] ${t}`).join('\n');
+    const otherMessages = boardroom.chat
+      .filter(m => m.agentId !== agent.id)
+      .slice(-6) // Only recent from others
+      .map((m) => {
+        const a = boardroom.agents.find((x) => x.id === m.agentId);
+        return `[${a?.name ?? m.agentId}] ${m.text}`;
+      })
+      .join('\n');
+    recentChat = ownFormatted + (otherMessages ? '\n\nOthers (recent):\n' + otherMessages : '');
+  } else {
+    // Convergence: full recent chat for synthesis
+    recentChat = boardroom.chat
+      .slice(-20)
+      .map((m) => {
+        const a = boardroom.agents.find((x) => x.id === m.agentId);
+        return `[${a?.name ?? m.agentId}] ${m.text}`;
+      })
+      .join('\n');
+  }
 
   const whiteboardSummary = boardroom.whiteboard.length > 0
     ? '\n\nWhiteboard:\n' + boardroom.whiteboard
