@@ -896,16 +896,132 @@ export const FlameAvatar: React.FC<BuddyAvatarProps> = ({
 };
 
 // ---------------------------------------------------------------------------
+// 7. Lizard -- a cute gecko with blinking eyes, swaying tail, tongue flick
+// ---------------------------------------------------------------------------
+
+const LizardAvatar: React.FC<BuddyAvatarProps> = ({ state, size = 48, color, activeColor }) => {
+  const s = size;
+  const idle = color ?? '#60a5fa';
+  const active = activeColor ?? '#4ade80';
+  const fill = colorForState(state, idle, active);
+  const anim = animForState(state);
+  const cx = s / 2;
+  const cy = s / 2;
+
+  // Tail sway speed based on state
+  const tailDur = state === 'working' ? '0.4s' : state === 'thinking' ? '0.8s' : '2s';
+
+  return (
+    <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`} style={{ animation: anim, display: 'block' }}>
+      {/* Tail -- curving line that sways */}
+      <path
+        d={`M${cx - s * 0.15} ${cy + s * 0.15} Q${cx - s * 0.35} ${cy + s * 0.25} ${cx - s * 0.4} ${cy + s * 0.1}`}
+        fill="none"
+        stroke={fill}
+        strokeWidth={s * 0.04}
+        strokeLinecap="round"
+        opacity={0.7}
+      >
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          values={`0 ${cx - s * 0.15} ${cy + s * 0.15};-15 ${cx - s * 0.15} ${cy + s * 0.15};15 ${cx - s * 0.15} ${cy + s * 0.15};0 ${cx - s * 0.15} ${cy + s * 0.15}`}
+          dur={tailDur}
+          repeatCount="indefinite"
+        />
+      </path>
+
+      {/* Body -- rounded oval */}
+      <ellipse cx={cx} cy={cy + s * 0.05} rx={s * 0.22} ry={s * 0.18} fill={fill} opacity={0.9} />
+
+      {/* Head -- slightly larger circle on top */}
+      <circle cx={cx} cy={cy - s * 0.12} r={s * 0.16} fill={fill} />
+
+      {/* Snout bump */}
+      <ellipse cx={cx} cy={cy - s * 0.22} rx={s * 0.1} ry={s * 0.06} fill={fill} />
+
+      {/* Eyes -- large and friendly with vertical slit pupils */}
+      <circle cx={cx - s * 0.08} cy={cy - s * 0.15} r={s * 0.055} fill="#1a1a24" />
+      <circle cx={cx + s * 0.08} cy={cy - s * 0.15} r={s * 0.055} fill="#1a1a24" />
+      {/* Pupils -- vertical slits */}
+      <ellipse cx={cx - s * 0.08} cy={cy - s * 0.15} rx={s * 0.015} ry={s * 0.04} fill={fill}>
+        <animateTransform attributeName="transform" type="scale" values="1 1;1 0.1;1 1" dur="3.5s" repeatCount="indefinite" begin="2s" />
+      </ellipse>
+      <ellipse cx={cx + s * 0.08} cy={cy - s * 0.15} rx={s * 0.015} ry={s * 0.04} fill={fill}>
+        <animateTransform attributeName="transform" type="scale" values="1 1;1 0.1;1 1" dur="3.5s" repeatCount="indefinite" begin="2s" />
+      </ellipse>
+      {/* Eye glints */}
+      <circle cx={cx - s * 0.065} cy={cy - s * 0.165} r={s * 0.012} fill="#ffffff" opacity={0.6} />
+      <circle cx={cx + s * 0.095} cy={cy - s * 0.165} r={s * 0.012} fill="#ffffff" opacity={0.6} />
+
+      {/* Nostrils */}
+      <circle cx={cx - s * 0.03} cy={cy - s * 0.24} r={s * 0.008} fill="#1a1a24" opacity={0.4} />
+      <circle cx={cx + s * 0.03} cy={cy - s * 0.24} r={s * 0.008} fill="#1a1a24" opacity={0.4} />
+
+      {/* Smile line */}
+      <path
+        d={`M${cx - s * 0.05} ${cy - s * 0.08} Q${cx} ${cy - s * 0.04} ${cx + s * 0.05} ${cy - s * 0.08}`}
+        fill="none"
+        stroke="#1a1a24"
+        strokeWidth={s * 0.012}
+        strokeLinecap="round"
+        opacity={0.3}
+      />
+
+      {/* Front legs */}
+      <line x1={cx - s * 0.15} y1={cy + s * 0.05} x2={cx - s * 0.28} y2={cy + s * 0.18}
+        stroke={fill} strokeWidth={s * 0.035} strokeLinecap="round" opacity={0.8} />
+      <line x1={cx + s * 0.15} y1={cy + s * 0.05} x2={cx + s * 0.28} y2={cy + s * 0.18}
+        stroke={fill} strokeWidth={s * 0.035} strokeLinecap="round" opacity={0.8} />
+
+      {/* Back legs */}
+      <line x1={cx - s * 0.12} y1={cy + s * 0.18} x2={cx - s * 0.25} y2={cy + s * 0.3}
+        stroke={fill} strokeWidth={s * 0.035} strokeLinecap="round" opacity={0.8} />
+      <line x1={cx + s * 0.12} y1={cy + s * 0.18} x2={cx + s * 0.25} y2={cy + s * 0.3}
+        stroke={fill} strokeWidth={s * 0.035} strokeLinecap="round" opacity={0.8} />
+
+      {/* Tiny toes */}
+      {[[-0.28, 0.18], [0.28, 0.18], [-0.25, 0.3], [0.25, 0.3]].map(([ox, oy], i) => (
+        <g key={i}>
+          <circle cx={cx + s * ox - s * 0.015} cy={cy + s * oy} r={s * 0.008} fill={fill} opacity={0.7} />
+          <circle cx={cx + s * ox + s * 0.015} cy={cy + s * oy} r={s * 0.008} fill={fill} opacity={0.7} />
+          <circle cx={cx + s * ox} cy={cy + s * oy + s * 0.012} r={s * 0.008} fill={fill} opacity={0.7} />
+        </g>
+      ))}
+
+      {/* Tongue flick -- appears when thinking/working */}
+      {(state === 'thinking' || state === 'working') && (
+        <line
+          x1={cx} y1={cy - s * 0.06}
+          x2={cx} y2={cy - s * 0.02}
+          stroke="#f87171" strokeWidth={s * 0.015} strokeLinecap="round"
+        >
+          <animate attributeName="y2" values={`${cy - s * 0.02};${cy + s * 0.06};${cy - s * 0.02}`}
+            dur="0.6s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;0" dur="0.6s" repeatCount="indefinite" />
+        </line>
+      )}
+
+      {/* Dorsal spots/scales */}
+      <circle cx={cx - s * 0.05} cy={cy - s * 0.02} r={s * 0.018} fill={fill} opacity={0.4} />
+      <circle cx={cx + s * 0.06} cy={cy + s * 0.02} r={s * 0.015} fill={fill} opacity={0.4} />
+      <circle cx={cx - s * 0.02} cy={cy + s * 0.1} r={s * 0.012} fill={fill} opacity={0.4} />
+    </svg>
+  );
+};
+
+// ---------------------------------------------------------------------------
 // Avatar registry
 // ---------------------------------------------------------------------------
 
 export const BUDDY_AVATARS: AvatarEntry[] = [
-  { id: 'default', name: 'Bot',   component: DefaultAvatar },
-  { id: 'pixel',   name: 'Pixel', component: PixelAvatar },
-  { id: 'cat',     name: 'Cat',   component: CatAvatar },
-  { id: 'ghost',   name: 'Ghost', component: GhostAvatar },
-  { id: 'cube',    name: 'Cube',  component: CubeAvatar },
-  { id: 'flame',   name: 'Flame', component: FlameAvatar },
+  { id: 'default', name: 'Bot',    component: DefaultAvatar },
+  { id: 'pixel',   name: 'Pixel',  component: PixelAvatar },
+  { id: 'cat',     name: 'Cat',    component: CatAvatar },
+  { id: 'ghost',   name: 'Ghost',  component: GhostAvatar },
+  { id: 'cube',    name: 'Cube',   component: CubeAvatar },
+  { id: 'flame',   name: 'Flame',  component: FlameAvatar },
+  { id: 'lizard',  name: 'Lizard', component: LizardAvatar },
 ];
 
 export function getAvatarById(id: AvatarId): AvatarEntry {
