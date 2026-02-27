@@ -32,6 +32,11 @@ export interface MemoryScoreExtras {
 export function scoreMemory(m: Memory & MemoryScoreExtras, now = Date.now()): number {
   const ageDays = (now - new Date(m.createdAt).getTime()) / 86_400_000;
 
+  if (m.decayExempt) {
+    const sevMult = SEVERITY_MULT[m.severity ?? 'medium'];
+    return Math.max(0, Math.min(1, sevMult));
+  }
+
   // 1. Exponential time decay (type-specific rate)
   const decay = Math.exp(-DECAY_RATE[m.type] * ageDays);
 
@@ -70,10 +75,18 @@ export function classifyHealth(m: Memory & MemoryScoreExtras, score: number): Me
 export function rankMemories(
   matches: Array<Memory & MemoryScoreExtras>,
   minScore = 0.15,
+  queryTags?: string[],
 ): Array<Memory & MemoryScoreExtras & { relevanceScore: number }> {
   const now = Date.now();
   return matches
-    .map((m) => ({ ...m, relevanceScore: scoreMemory(m, now) }))
+    .map((m) => {
+      let relevanceScore = scoreMemory(m, now);
+      if (queryTags && queryTags.length > 0) {
+        const overlap = m.tags.filter(t => queryTags.includes(t)).length;
+        relevanceScore += Math.min(0.3, overlap * 0.1);
+      }
+      return { ...m, relevanceScore };
+    })
     .filter((m) => m.relevanceScore >= minScore && !m.supersededBy)
     .sort((a, b) => b.relevanceScore - a.relevanceScore);
 }

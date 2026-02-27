@@ -45,6 +45,7 @@ import { pruneMemories } from '../brain/pruner.js';
 import type { MemoryArchiveStore } from '../brain/pruner.js';
 import { extractRuleCandidates, learnRules, createEmptyRulesStore } from '../brain/rules.js';
 import type { LearnedRulesStore } from '../brain/rules.js';
+import { rankMemories } from '../brain/scoring.js';
 import { DEFAULT_CORTEX } from '../types.js';
 import { findLinks } from '../brain/linker.js';
 // findContradictions is handled inline via quality-gate + linker (not needed here)
@@ -419,6 +420,7 @@ server.registerTool('hw_retrieve_memories', {
     return mergeCortex(DEFAULT_CORTEX, learned.entries);
   }, DEFAULT_CORTEX);
   const result = retrieveMemories(args.prompt, memories, brainState, { cortex: mergedCortex.result });
+  const tagRanked = rankMemories(memories, 0.15, result.matchedTags);
 
   // Zone B: Brain state update (degradable)
   if (brainState) {
@@ -443,7 +445,7 @@ server.registerTool('hw_retrieve_memories', {
   // Zone D: Activity logging (degradable)
   const count = result.painMemories.length + result.winMemories.length;
   safeBrainOp('retrieve:activity', () => {
-    activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}"`, result.injectionText || 'No matches.');
+    activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}" (${tagRanked.length} tag-ranked)`, result.injectionText || 'No matches.');
   }, undefined);
 
   return text(result.injectionText || 'No relevant memories found.');
@@ -462,6 +464,7 @@ server.registerTool('hw_store_memory', {
   }),
 }, async (args: { type: string; title: string; content?: string; rule?: string; tags?: string[]; severity?: string }) => {
   // Zone A: Core store (primary -- quality gate runs inside)
+  const decayExempt = args.type === 'pain' && args.severity === 'high';
   const result = memoryStore.storeMemory({
     type: args.type as MemoryType,
     title: args.title,
@@ -469,6 +472,7 @@ server.registerTool('hw_store_memory', {
     rule: args.rule,
     tags: args.tags,
     severity: args.severity as MemorySeverity | undefined,
+    decayExempt,
   });
   const mem = result.memory;
   if (result.gateResult.action === 'reject') {

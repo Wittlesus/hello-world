@@ -94,6 +94,11 @@ export function pruneMemories(
   let lowQualityCount = 0;
 
   for (const mem of memories) {
+    if (mem.decayExempt) {
+      kept.push(mem);
+      continue;
+    }
+
     const extras: MemoryScoreExtras = {
       supersededBy: mem.supersededBy,
     };

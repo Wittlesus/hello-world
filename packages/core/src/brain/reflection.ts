@@ -111,12 +111,14 @@ function computeQualityScore(content: ReflectionContent): number {
   const linkCount = content.linkedMemoryIds.length;
   score += Math.min(0.25, linkCount * 0.05);
 
-  // Content substance: longer detail = more thorough (0-0.2)
-  const detailLength = content.detail.length;
-  if (detailLength > 200) score += 0.2;
-  else if (detailLength > 100) score += 0.15;
-  else if (detailLength > 50) score += 0.1;
-  else score += 0.05;
+  // Actionability: has a concrete rule (0-0.2)
+  if (content.kind === 'surprise') {
+    score += (content as SurpriseContent).lesson.length > 0 ? 0.2 : 0.05;
+  } else if (content.kind === 'consolidation') {
+    score += (content as ConsolidationContent).abstractedRule.length > 0 ? 0.2 : 0.05;
+  } else {
+    score += content.summary.length > 20 ? 0.15 : 0.05;
+  }
 
   // Summary quality: not too short, not too long (0-0.2)
   const summaryLength = content.summary.length;
@@ -441,6 +443,7 @@ export function generateMetaObservations(
   config: ReflectionConfig = DEFAULT_REFLECTION_CONFIG,
 ): MetaObservationContent[] {
   if (recentMemories.length < config.minMemoriesForMeta) return [];
+  const nonReflections = recentMemories.filter(m => m.type !== 'reflection');
 
   const observations: MetaObservationContent[] = [];
 
@@ -450,7 +453,7 @@ export function generateMetaObservations(
   const painByTag = new Map<string, Memory[]>();
   const winByTag = new Map<string, Memory[]>();
 
-  for (const mem of recentMemories) {
+  for (const mem of nonReflections) {
     if (mem.type === 'pain' || mem.type === 'fact') {
       for (const tag of mem.tags) {
         painTagCounts.set(tag, (painTagCounts.get(tag) ?? 0) + 1);

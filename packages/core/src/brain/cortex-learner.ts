@@ -18,6 +18,7 @@ export interface CortexGapObservation {
   matchedMemoryIds: string[];
   matchedTags: string[];
   timestamp: string;
+  sessionId?: string;
 }
 
 export interface LearnedCortexEntry {
@@ -52,6 +53,7 @@ export function analyzeGaps(
   gaps: string[],
   prompt: string,
   memories: Memory[],
+  sessionId?: string,
 ): CortexGapObservation[] {
   if (gaps.length === 0) return [];
 
@@ -91,6 +93,7 @@ export function analyzeGaps(
         matchedMemoryIds: matched.map(m => m.id),
         matchedTags: significantTags,
         timestamp: now,
+        sessionId,
       });
     }
   }
@@ -105,13 +108,20 @@ export function analyzeGaps(
 export function learnFromObservations(
   observations: CortexGapObservation[],
   existing: LearnedCortexEntry[],
-  minObservations = 2,
+  minObservations = 3,
 ): LearnResult {
+  const dedupKey = new Set<string>();
+  const deduped = observations.filter(obs => {
+    const key = obs.sessionId ? `${obs.word}:${obs.sessionId}` : obs.word;
+    if (dedupKey.has(key)) return false;
+    dedupKey.add(key);
+    return true;
+  });
   const entryMap = new Map(existing.map(e => [e.word, { ...e }]));
   const newEntries: LearnedCortexEntry[] = [];
   const updatedEntries: LearnedCortexEntry[] = [];
 
-  for (const obs of observations) {
+  for (const obs of deduped) {
     const entry = entryMap.get(obs.word);
 
     if (entry) {

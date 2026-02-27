@@ -53,6 +53,7 @@ export class MemoryStore {
     surfacedMemoryIds?: string[];
     outcome?: 'success' | 'partial' | 'failure';
     skipGate?: boolean;
+    decayExempt?: boolean;
   }): StoreMemoryResult {
     let tags = opts.tags ?? [];
     if (tags.length < 2) {
@@ -114,6 +115,7 @@ export class MemoryStore {
       relatedTaskId: opts.relatedTaskId,
       surfacedMemoryIds: opts.surfacedMemoryIds,
       outcome: opts.outcome,
+      decayExempt: opts.decayExempt,
       createdAt: now(),
     });
 

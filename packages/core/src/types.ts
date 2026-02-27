@@ -130,6 +130,7 @@ export const MemorySchema = z.object({
   surfacedMemoryIds: z.array(z.string()).optional(),
   outcome: z.enum(['success', 'partial', 'failure']).optional(),
   predictionError: z.number().optional(),
+  decayExempt: z.boolean().optional(),
 });
 
 export type Memory = z.infer<typeof MemorySchema>;
