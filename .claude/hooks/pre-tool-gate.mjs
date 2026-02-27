@@ -77,7 +77,7 @@ if (isRustSource && !inWorktree) {
   process.exit(2);
 }
 
-// ── Warnings (non-blocking) ───────────────────────────────────────
+// ── HARD BLOCKS ──────────────────────────────────────────────────
 
 const workflow = safeRead('workflow.json');
 const tasks = safeRead('tasks.json');
@@ -86,14 +86,7 @@ const phase = workflow?.phase ?? 'idle';
 const allTasks = Array.isArray(tasks) ? tasks : (tasks?.tasks ?? []);
 const inProgress = allTasks.filter((t) => t.status === 'in_progress');
 
-const warnings = [];
-
-if (phase === 'idle') {
-  warnings.push(
-    `[HW WARNING] Workflow phase is IDLE. Did you call hw_advance_phase("scope") first?`,
-  );
-}
-
+// Block 1: No active task
 if (inProgress.length === 0) {
   process.stdout.write(
     [
@@ -107,7 +100,71 @@ if (inProgress.length === 0) {
   process.exit(2);
 }
 
-// Warn if editing other restartable files without a handoff
+// Block 2: Uncaptured signals with HIGH confidence (user instructions, confirmed corrections)
+const signalQueue = safeRead('signal-queue.json');
+const queuedSignals = signalQueue?.signals ?? [];
+const highPrioritySignals = queuedSignals.filter(s =>
+  s.confidence >= 0.8 || s.type === 'user_instruction' || s.type === 'correction_confirmed'
+);
+
+if (highPrioritySignals.length > 0) {
+  const items = highPrioritySignals.slice(0, 5).map(s =>
+    `  - [${s.type}] "${(s.excerpt || '').slice(0, 80)}"`
+  ).join('\n');
+  process.stdout.write(
+    [
+      `[HW BLOCK] ${highPrioritySignals.length} uncaptured signal(s) need action before writing code.`,
+      ``,
+      items,
+      ``,
+      `Fix: hw_store_memory() for each significant signal, or dismiss noise.`,
+      `Then the signal queue clears and you can proceed.`,
+      ``,
+    ].join('\n'),
+  );
+  process.exit(2);
+}
+
+// Block 3: Hippocampal checkpoint overdue (12+ messages, 3+ traces, no recent memory stored)
+const brainStateRaw = safeRead('brain-state.json');
+const brainState = brainStateRaw?.state ?? brainStateRaw ?? {};
+const msgCount = brainState.messageCount ?? 0;
+const activeTraces = brainState.activeTraces?.length ?? 0;
+const lastCheckpoint = brainState.lastCheckpointAt ?? brainState.sessionStart ?? '';
+const checkpointAge = lastCheckpoint ? (Date.now() - new Date(lastCheckpoint).getTime()) / 60000 : 999;
+
+// Checkpoint is overdue if: 12+ messages, 3+ active traces, and 20+ min since last checkpoint
+if (msgCount >= 12 && activeTraces >= 3 && checkpointAge >= 20) {
+  process.stdout.write(
+    [
+      `[HW BLOCK] Memory consolidation overdue (${msgCount} msgs, ${activeTraces} traces, ${Math.round(checkpointAge)}min since checkpoint).`,
+      ``,
+      `Fix: hw_store_memory() for lessons learned this session.`,
+      `This clears the checkpoint and unblocks code edits.`,
+      ``,
+    ].join('\n'),
+  );
+  process.exit(2);
+}
+
+// Block 4: Workflow phase is idle (should be in scope/plan/build)
+if (phase === 'idle') {
+  process.stdout.write(
+    [
+      `[HW BLOCK] Workflow phase is IDLE. Cannot write code outside a workflow.`,
+      ``,
+      `Fix: hw_advance_phase("scope") or hw_advance_phase("build") to enter a workflow.`,
+      ``,
+    ].join('\n'),
+  );
+  process.exit(2);
+}
+
+// ── Warnings (non-blocking) ───────────────────────────────────────
+
+const warnings = [];
+
+// Warn if editing restartable files without a handoff
 const RESTARTABLE = ['server.ts', 'main.tsx'];
 const isRestartable = RESTARTABLE.some((name) => filePath.endsWith(name));
 
@@ -118,6 +175,14 @@ if (isRestartable) {
       `[HW WARNING] Editing ${filePath.split('/').pop()} may trigger an app restart. Did you call hw_write_handoff() first?`,
     );
   }
+}
+
+// Warn if medium-confidence signals exist (not blocking, but nudge)
+const medSignals = queuedSignals.filter(s => s.confidence >= 0.5 && s.confidence < 0.8);
+if (medSignals.length > 0) {
+  warnings.push(
+    `[HW WARNING] ${medSignals.length} uncaptured signal(s) pending. Consider hw_store_memory() soon.`,
+  );
 }
 
 if (warnings.length > 0) {

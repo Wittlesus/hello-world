@@ -182,8 +182,23 @@ try {
     if (nudge) {
       process.stdout.write('\n' + nudge + '\n');
     }
-    // Flush after injecting (signals have been surfaced to Claude)
-    flushQueue();
+    // Only flush LOW confidence signals automatically.
+    // HIGH signals stay in queue until hw_store_memory clears them (enforced by pre-tool-gate).
+    const lowOnly = queued.filter(s => s.confidence < 0.5);
+    const keepSignals = queued.filter(s => s.confidence >= 0.5);
+    if (keepSignals.length > 0) {
+      // Rewrite queue with only the signals that need action
+      const queuePath = join(HW, 'signal-queue.json');
+      try {
+        const q = JSON.parse(readFileSync(queuePath, 'utf8'));
+        q.signals = keepSignals;
+        const tmp = queuePath + '.tmp';
+        writeFileSync(tmp, JSON.stringify(q, null, 2), 'utf8');
+        renameSync(tmp, queuePath);
+      } catch { /* non-fatal */ }
+    } else {
+      flushQueue();
+    }
   }
 } catch (err) {
   // Signal queue is non-fatal, but log for debugging

@@ -21,7 +21,7 @@ import 'dotenv/config';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
-import { readFileSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, unlinkSync, existsSync, renameSync } from 'node:fs';
 import { execSync, spawn } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -542,6 +542,22 @@ server.registerTool('hw_store_memory', {
       }
     }, undefined);
   }
+
+  // Zone G: Clear signal queue (storing a memory fulfills the obligation)
+  safeBrainOp('store:clear_signals', () => {
+    const signalQueuePath = join(project.hwDir, 'signal-queue.json');
+    try {
+      const raw = readFileSync(signalQueuePath, 'utf8');
+      const q = JSON.parse(raw);
+      if (q.signals && q.signals.length > 0) {
+        q.signals = [];
+        q.lastFlushed = new Date().toISOString();
+        const tmp = signalQueuePath + '.tmp';
+        writeFileSync(tmp, JSON.stringify(q, null, 2), 'utf8');
+        renameSync(tmp, signalQueuePath);
+      }
+    } catch { /* non-fatal */ }
+  }, undefined);
 
   return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}${linkWarnings}`);
 });
