@@ -4,3 +4,5 @@ export { createBoardroom, readBoardroom, listBoardrooms, postChat, writeWhiteboa
 export { runBoardroom, stopBoardroom } from './runner.js';
 export { recordUsage, getUsageSummary, computeCost, resetSessionUsage } from './usage.js';
 export type { UsageEntry, UsageSummary } from './usage.js';
+export { runPanel, formatPanelResult } from './panel.js';
+export type { PanelAgent, PanelResult } from './panel.js';

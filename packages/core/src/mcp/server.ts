@@ -1302,7 +1302,8 @@ import {
   createBoardroom, readBoardroom, listBoardrooms,
   postChat, writeWhiteboard, closeBoardroom,
   runBoardroom, stopBoardroom,
-  type BoardroomAgent,
+  runPanel, formatPanelResult,
+  type BoardroomAgent, type PanelAgent,
 } from '../boardroom/index.js';
 import { getUsageSummary } from '../boardroom/usage.js';
 
@@ -1423,6 +1424,36 @@ server.registerTool('hw_close_boardroom', {
 }, async (args: { boardroomId: string }) => {
   closeBoardroom(projectRoot, args.boardroomId);
   return text(`Boardroom ${args.boardroomId} closed`);
+});
+
+server.registerTool('hw_qwen_panel', {
+  title: 'Qwen Panel',
+  description: 'Run parallel Qwen agents on a topic with file injection. No char limit, no rounds. Each agent gets the full topic + injected files and produces an independent analysis. Results saved to .hello-world/panels/.',
+  inputSchema: z.object({
+    topic: z.string().describe('What the panel should analyze'),
+    agents: z.array(z.object({
+      id: z.string(),
+      name: z.string(),
+      role: z.string().describe('System prompt for this agent perspective'),
+    })).describe('Panel agents (3-7 recommended)'),
+    filePaths: z.array(z.string()).optional().describe('Absolute paths to files to inject into agent prompts'),
+    facts: z.array(z.string()).optional().describe('Known facts to inject'),
+    questions: z.array(z.string()).optional().describe('Required questions each agent must answer'),
+    maxTokens: z.number().optional().describe('Max output tokens per agent (default 4000)'),
+  }),
+}, async (args: { topic: string; agents: PanelAgent[]; filePaths?: string[]; facts?: string[]; questions?: string[]; maxTokens?: number }) => {
+  activity.append('panel_started', `Panel: ${args.topic}`, `${args.agents.length} agents, ${args.filePaths?.length ?? 0} files`);
+
+  const result = await runPanel(projectRoot, args.topic, args.agents, {
+    filePaths: args.filePaths,
+    facts: args.facts,
+    questions: args.questions,
+    maxTokens: args.maxTokens,
+  });
+
+  activity.append('panel_completed', `Panel ${result.id}: ${args.topic}`, `${result.totalTokens} tokens, ${(result.durationMs / 1000).toFixed(1)}s`);
+
+  return text(formatPanelResult(result));
 });
 
 // ── Claude Usage ─────────────────────────────────────────────────
@@ -1550,6 +1581,7 @@ const TOOL_CATALOG = [
   { name: 'hw_read_boardroom', category: 'boardroom' },
   { name: 'hw_list_boardrooms', category: 'boardroom' },
   { name: 'hw_close_boardroom', category: 'boardroom' },
+  { name: 'hw_qwen_panel', category: 'boardroom' },
   { name: 'hw_usage', category: 'cost' },
 ];
 
