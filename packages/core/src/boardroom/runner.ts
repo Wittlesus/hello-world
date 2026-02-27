@@ -4,10 +4,10 @@ import { CHAT_CHAR_LIMIT } from './types.js';
 import { postChat, writeWhiteboard, readBoardroom } from './store.js';
 import { recordUsage } from './usage.js';
 
-// Qwen API config (shared with chatroom agent-runner)
-const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'Qwen/Qwen3-235B-A22B-Instruct-2507-TEE';
-const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://llm.chutes.ai/v1';
-const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? '';
+// Qwen API config -- OpenRouter (Qwen 3.5)
+const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'qwen/qwen3.5-plus-02-15';
+const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://openrouter.ai/api/v1';
+const QWEN_API_KEY = process.env['OPENROUTER_API_KEY'] ?? process.env['QWEN_API_KEY'] ?? '';
 
 const BETWEEN_AGENT_MS = 800;
 const MAX_ROUNDS = 8;
@@ -50,7 +50,6 @@ async function callQwenBoardroom(
       ],
       max_tokens: thinking ? 2000 : 400,
       temperature: 0.7,
-      chat_template_kwargs: { enable_thinking: thinking },
     }),
     signal,
   });

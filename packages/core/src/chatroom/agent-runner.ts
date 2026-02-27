@@ -5,9 +5,9 @@ import type { ChatMessage } from './types.js';
 import { recordUsage } from '../boardroom/usage.js';
 
 const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
-const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'Qwen/Qwen3-235B-A22B-Instruct-2507-TEE';
-const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://llm.chutes.ai/v1';
-const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? '';
+const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'qwen/qwen3.5-plus-02-15';
+const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://openrouter.ai/api/v1';
+const QWEN_API_KEY = process.env['OPENROUTER_API_KEY'] ?? process.env['QWEN_API_KEY'] ?? '';
 const MAX_ROUNDS = 5;
 const BETWEEN_AGENT_MS = 1400;
 const INTRO_DELAY_MS = 2800;
@@ -206,8 +206,6 @@ function callQwen(
           ],
           max_tokens: thinking ? 2000 : 300,
           temperature: 0.7,
-          // Thinking mode: on for deep reasoning, off for fast chat
-          chat_template_kwargs: { enable_thinking: thinking },
         }),
         signal,
       });
