@@ -155,6 +155,51 @@ fn set_app_project_path(project_path: String) -> Result<(), String> {
         .map_err(|e| format!("Write error: {}", e))
 }
 
+/// Detect project from CWD or --project CLI arg at startup.
+/// If a valid Hello World project is found, update ~/.hello-world-app.json.
+fn detect_and_set_project() {
+    // Check for --project CLI arg first
+    let args: Vec<String> = std::env::args().collect();
+    let mut project_path: Option<String> = None;
+
+    let mut i = 0;
+    while i < args.len() {
+        if args[i] == "--project" && i + 1 < args.len() {
+            project_path = Some(args[i + 1].clone());
+            break;
+        }
+        i += 1;
+    }
+
+    // Fall back to CWD
+    if project_path.is_none() {
+        if let Ok(cwd) = std::env::current_dir() {
+            let hw_dir = cwd.join(".hello-world");
+            if hw_dir.exists() && hw_dir.is_dir() {
+                project_path = Some(cwd.to_string_lossy().to_string());
+            }
+        }
+    }
+
+    // Update config if a valid project was found
+    if let Some(path) = project_path {
+        let hw_dir = PathBuf::from(&path).join(".hello-world");
+        if hw_dir.exists() && hw_dir.is_dir() {
+            let config = serde_json::json!({ "projectPath": path });
+            if let Ok(contents) = serde_json::to_string_pretty(&config) {
+                let _ = fs::write(app_config_path(), contents);
+            }
+        }
+    }
+}
+
+#[tauri::command]
+fn get_launch_dir() -> Option<String> {
+    std::env::current_dir()
+        .ok()
+        .map(|p| p.to_string_lossy().to_string())
+}
+
 // ── Project data commands ────────────────────────────────────────
 
 fn hw_path(project_path: &str, file_name: &str) -> PathBuf {
@@ -1209,12 +1254,16 @@ fn start_watching(app: tauri::AppHandle, project_path: String) -> Result<(), Str
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Detect project from CWD or --project arg before anything else
+    detect_and_set_project();
+
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
             get_app_project_path,
             set_app_project_path,
+            get_launch_dir,
             get_config,
             save_config,
             get_state,
