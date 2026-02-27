@@ -53,11 +53,11 @@
         "mem_ab99537b"
       ],
       "confidence": 0.95,
-      "observationCount": 2,
+      "observationCount": 3,
       "type": "win-pattern",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_j99g",
@@ -71,12 +71,12 @@
         "mem_cdd7245d",
         "mem_2df73149"
       ],
-      "confidence": 0.85,
-      "observationCount": 2,
+      "confidence": 0.95,
+      "observationCount": 3,
       "type": "pain-pattern",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_ti63",
@@ -90,12 +90,12 @@
         "mem_ab99537b",
         "mem_e43c46da"
       ],
-      "confidence": 0.8,
-      "observationCount": 2,
+      "confidence": 0.9,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_0pp4",
@@ -108,12 +108,12 @@
         "mem_7cd96e23",
         "mem_a3d0d41a"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_224z",
@@ -127,12 +127,12 @@
         "mem_ee3c8f17",
         "mem_2c411e02"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_gugq",
@@ -145,12 +145,12 @@
         "mem_2df73149",
         "mem_61e3dd4c"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_0cog",
@@ -163,12 +163,12 @@
         "mem_63f0bb64",
         "mem_92859492"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_swes",
@@ -181,12 +181,12 @@
         "mem_3a15f5e9",
         "mem_c6dfd67b"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     },
     {
       "id": "rule_mm4u1k5p_mif2",
@@ -199,13 +199,76 @@
         "mem_8253e189",
         "mem_b6d065ee"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T12:54:36.865Z"
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
+    },
+    {
+      "id": "rule_mm4z69gt_s6f7",
+      "rule": "NEVER edit lib.rs on master while the app is running. This has caused crashes multiple times. Use a worktree or edit after app shutdown. The pain memory being in context is not enough -- check it before any Rust file edit.",
+      "tags": [
+        "rust",
+        "dev-mode",
+        "crash",
+        "worktree",
+        "tauri"
+      ],
+      "sourceMemoryIds": [
+        "mem_b79bd8c7",
+        "mem_b097fc1e",
+        "mem_e984845a"
+      ],
+      "confidence": 0.75,
+      "observationCount": 1,
+      "type": "pain-pattern",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-27T14:16:04.973Z",
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
+    },
+    {
+      "id": "rule_mm4z69gt_nfww",
+      "rule": "On Windows, pipe stdin directly to subprocess. Never use temp files for passing prompts to claude --print. Always use shell:true for claude.cmd resolution.",
+      "tags": [
+        "windows",
+        "subprocess",
+        "agent-runner"
+      ],
+      "sourceMemoryIds": [
+        "mem_35965a4d",
+        "mem_12ad1325",
+        "mem_dcb8b57a"
+      ],
+      "confidence": 0.75,
+      "observationCount": 1,
+      "type": "pain-pattern",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-27T14:16:04.973Z",
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
+    },
+    {
+      "id": "rule_mm4z69gt_0kl4",
+      "rule": "When splitting a data file, update ALL consumers -- not just the writer. Check Rust commands, frontend hooks, useTauriData COMMAND_FILE_MAP, and any direct file reads. The writer working is not enough -- every reader must be migrated.",
+      "tags": [
+        "rust",
+        "migration",
+        "storage",
+        "white-screen"
+      ],
+      "sourceMemoryIds": [
+        "mem_acf32420",
+        "mem_9a5f3276",
+        "mem_6eca46a9"
+      ],
+      "confidence": 0.75,
+      "observationCount": 1,
+      "type": "pain-pattern",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-27T14:16:04.973Z",
+      "lastReinforced": "2026-02-27T14:16:04.973Z"
     }
   ],
-  "lastUpdated": "2026-02-27T12:54:36.866Z"
+  "lastUpdated": "2026-02-27T14:16:04.974Z"
 }

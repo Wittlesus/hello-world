@@ -124,25 +124,6 @@
       "lastAccessed": "2026-02-22T08:08:51.218Z"
     },
     {
-      "id": "mem_862c1185",
-      "projectId": "Hello World",
-      "type": "pain",
-      "title": "Approval Queue is fully disconnected from MCP server",
-      "content": "The ApprovalQueue UI component reads from a Zustand in-memory store (useActivityStore.approvals). This store is never populated from the file system. The MCP tool hw_check_approval writes an activity event to .hello-world/activity.json but does NOT write to any approvals file. The frontend has no Tauri command for reading approvals, no useTauriData hook for approvals, and no file watcher connection to the approval store. The result: the bottom approval bar always shows \"No pending approvals\" regardless of what Claude requests. Approve/Reject buttons exist in the UI but are functionally dead. Fix requires: (1) MCP server writes pending approvals to .hello-world/approvals.json with status field, (2) new Rust Tauri command get_approvals reads that file, (3) frontend polls it via useTauriData and syncs into Zustand store, (4) Approve/Reject buttons call a set_approval_status Tauri command that writes the resolution back to file so the MCP tool can read it and unblock.",
-      "rule": "",
-      "tags": [
-        "bug",
-        "approval-queue",
-        "mcp-disconnect",
-        "hello-world"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
-      "createdAt": "2026-02-22T08:01:24.950Z",
-      "lastAccessed": "2026-02-22T08:08:51.218Z"
-    },
-    {
       "id": "mem_3fe56ea3",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -1516,7 +1497,7 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
+      "synapticStrength": 1.3000000000000003,
       "accessCount": 8,
       "createdAt": "2026-02-25T08:14:08.688Z",
       "lastAccessed": "2026-02-27T13:19:51.383Z"
@@ -1557,7 +1538,7 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
+      "synapticStrength": 1.3000000000000003,
       "accessCount": 7,
       "createdAt": "2026-02-25T08:14:19.435Z",
       "lastAccessed": "2026-02-27T13:19:51.383Z"
@@ -1578,7 +1559,7 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 7,
       "createdAt": "2026-02-25T08:14:24.115Z",
       "lastAccessed": "2026-02-27T13:19:51.383Z"
@@ -1637,7 +1618,7 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 4,
       "createdAt": "2026-02-25T08:14:43.154Z",
       "lastAccessed": "2026-02-27T13:19:51.383Z"
@@ -1660,32 +1641,6 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-25T08:14:48.531Z"
-    },
-    {
-      "id": "mem_b097fc1e",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Tauri dev mode hot-reload kills Claude PTY session",
-      "content": "When `cargo tauri dev` is running, editing lib.rs triggers Rust file watcher recompile. This closes the app window, killing the embedded PTY and Claude's session. Root cause: Claude lives inside the thing it's editing. Solution: hard-block lib.rs edits on master, force all Rust changes through a git worktree, spawnable watcher copies files on app shutdown.",
-      "rule": "Never edit .rs files in src-tauri/src/ on master while the app is running. Use worktree + hw_spawn_watcher flow.",
-      "tags": [
-        "tauri",
-        "rust",
-        "crash",
-        "worktree",
-        "dev-mode"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:14:49.909Z",
-      "links": [
-        {
-          "targetId": "mem_b79bd8c7",
-          "relationship": "related",
-          "createdAt": "2026-02-27T13:25:07.140Z"
-        }
-      ]
     },
     {
       "id": "mem_6c2052f2",
@@ -2380,33 +2335,6 @@
       "createdAt": "2026-02-25T08:16:47.958Z"
     },
     {
-      "id": "mem_7cd96e23",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Brain memory learns nothing automatically -- requires manual hw_store_memory calls",
-      "content": "Audit found that pain/win memories are never auto-captured. Claude must manually call hw_store_memory() on every failure or success. The 9-stage hippocampal pipeline processes memories well once stored, but the intake is entirely manual. Missing: auto-capture on two-strike failures, auto-capture on task completion, auto-capture when a debugging insight resolves an issue. The brain has a sophisticated retrieval system feeding on manually curated input.",
-      "rule": "After resolving any non-trivial bug or completing a significant feature, always call hw_store_memory with the lesson learned.",
-      "tags": [
-        "brain",
-        "memory",
-        "auto-capture",
-        "gap",
-        "audit"
-      ],
-      "severity": "medium",
-      "synapticStrength": 1.1,
-      "accessCount": 3,
-      "createdAt": "2026-02-25T08:16:55.529Z",
-      "lastAccessed": "2026-02-27T10:34:56.496Z",
-      "links": [
-        {
-          "targetId": "mem_ab79004e",
-          "relationship": "contradicts",
-          "createdAt": "2026-02-27T12:23:37.292Z"
-        }
-      ]
-    },
-    {
       "id": "mem_db5022fa",
       "projectId": "Claude AI Interface",
       "type": "fact",
@@ -2481,32 +2409,6 @@
       "accessCount": 1,
       "createdAt": "2026-02-25T08:17:22.256Z",
       "lastAccessed": "2026-02-27T07:30:35.352Z"
-    },
-    {
-      "id": "mem_9d95b799",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Direction notes lost on crash because direction.json wasn't written proactively",
-      "content": "When Pat discusses strategy/vision during a session, if Claude doesn't immediately write it to direction.json, a crash wipes the context entirely. Direction was being captured at end-of-session or not at all. Fix: CLAUDE.md now has a critical rule -- write to direction.json immediately when Pat discusses vision/scope/strategy. Don't wait for end of session. The file survives crashes; session memory doesn't.",
-      "rule": "Write direction notes to direction.json IMMEDIATELY when Pat discusses strategy. Never wait for end of session.",
-      "tags": [
-        "direction",
-        "crash",
-        "data-loss",
-        "proactive"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
-      "createdAt": "2026-02-25T08:17:27.740Z",
-      "lastAccessed": "2026-02-26T15:46:11.663Z",
-      "links": [
-        {
-          "targetId": "mem_1d36d530",
-          "relationship": "contradicts",
-          "createdAt": "2026-02-27T13:25:19.152Z"
-        }
-      ]
     },
     {
       "id": "mem_d94b2911",
@@ -3404,7 +3306,7 @@
         "prediction"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 3,
       "createdAt": "2026-02-26T10:29:25.572Z",
       "links": [
@@ -3468,7 +3370,7 @@
         "s49"
       ],
       "severity": "low",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 1,
       "createdAt": "2026-02-26T10:45:39.020Z",
       "links": [],
@@ -3662,8 +3564,8 @@
         "design"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T15:05:41.129Z",
       "links": [
         {
@@ -3673,7 +3575,8 @@
         }
       ],
       "qualityScore": 0.6,
-      "fingerprint": "a4f2ce55d744"
+      "fingerprint": "a4f2ce55d744",
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_82ae4687",
@@ -3929,13 +3832,13 @@
         "validation"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 3,
       "createdAt": "2026-02-26T16:04:44.510Z",
       "links": [],
       "qualityScore": 0.95,
       "fingerprint": "7b98f2294574",
-      "lastAccessed": "2026-02-27T10:53:54.499Z"
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_a7928c89",
@@ -3995,8 +3898,8 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-26T16:17:17.541Z",
       "links": [
         {
@@ -4006,7 +3909,8 @@
         }
       ],
       "qualityScore": 0.85,
-      "fingerprint": "91118135b41d"
+      "fingerprint": "91118135b41d",
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_61e3dd4c",
@@ -4314,7 +4218,7 @@
         "plugins"
       ],
       "severity": "low",
-      "synapticStrength": 1,
+      "synapticStrength": 1.1,
       "accessCount": 1,
       "createdAt": "2026-02-26T17:08:09.191Z",
       "links": [],
@@ -4485,125 +4389,6 @@
       "fingerprint": "876545d96be6"
     },
     {
-      "id": "mem_e0553d28",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "SessionStart hook fires on every agent spawn -- destroyed deliberations",
-      "content": "session-start.mjs fires on every `claude --print` subprocess spawn, not just interactive sessions. archiveChatroom() was resetting chatroom.json to idle on every agent spawn, destroying active deliberations. Fix: HW_AGENT_MODE=1 env var guard skips destructive session-start operations for subprocesses.",
-      "rule": "All hooks that modify state must check for HW_AGENT_MODE=1 env var and skip destructive operations when running as a subprocess agent.",
-      "tags": [
-        "hooks",
-        "deliberation",
-        "agent-mode",
-        "state-corruption"
-      ],
-      "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 3,
-      "createdAt": "2026-02-26T17:52:58.109Z",
-      "links": [
-        {
-          "targetId": "mem_12ad1325",
-          "relationship": "related",
-          "createdAt": "2026-02-27T13:24:59.174Z"
-        }
-      ],
-      "qualityScore": 1,
-      "fingerprint": "994a76a3e872",
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
-    },
-    {
-      "id": "mem_497c4a8f",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Deliberation engine was never wired -- notifyRunner undefined, silent crash",
-      "content": "hw_start_deliberation changed state but never called runDeliberation(). notifyRunner was passed as a callback but never defined -- causing a silent crash. Architecture code existed but was not connected to the active call path. This is a recurring pattern: writing module code without wiring it into the runtime.",
-      "rule": "After writing any new module or function, immediately verify it is called from the runtime path. Existence is not wiring.",
-      "tags": [
-        "deliberation",
-        "wiring",
-        "silent-failure",
-        "architecture"
-      ],
-      "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
-      "createdAt": "2026-02-26T17:53:01.317Z",
-      "links": [
-        {
-          "targetId": "mem_156237ad",
-          "relationship": "related",
-          "createdAt": "2026-02-27T13:25:04.425Z"
-        }
-      ],
-      "qualityScore": 0.9,
-      "fingerprint": "ad2ea0d14db4",
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
-    },
-    {
-      "id": "mem_63f0bb64",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Claude Code uses OAuth not API key -- can't use Anthropic SDK directly",
-      "content": "ANTHROPIC_API_KEY doesn't exist in Claude Code's storage -- it uses OAuth for authentication. Agents that need to call Claude must use `claude --print` subprocess, not the Anthropic SDK directly. This is a fundamental platform constraint.",
-      "rule": "Never attempt to use the Anthropic SDK directly from within Claude Code hooks or scripts. Use `claude --print` subprocess pattern instead.",
-      "tags": [
-        "claude-code",
-        "oauth",
-        "api",
-        "platform-constraint"
-      ],
-      "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T17:53:03.978Z",
-      "links": [],
-      "qualityScore": 0.88,
-      "fingerprint": "700b49e908e5"
-    },
-    {
-      "id": "mem_22d3b83e",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Claude suggested removing Terminal PTY -- Pat explicitly annoyed",
-      "content": "Claude suggested removing the Terminal PTY feature as an infrastructure workaround. Pat was explicitly annoyed. PTY is core to the project vision. Never suggest removing core features to solve infrastructure problems -- find a different solution.",
-      "rule": "Never suggest removing a core feature to solve an infrastructure problem. PTY, memory, deliberation, and the desktop app are non-negotiable.",
-      "tags": [
-        "pat-directive",
-        "vision",
-        "terminal",
-        "core-features"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T17:53:06.751Z",
-      "links": [],
-      "qualityScore": 0.9,
-      "fingerprint": "ebd7c9967105"
-    },
-    {
-      "id": "mem_7a56a658",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Killing MCP server from within Claude Code loses all tools -- no auto-restart",
-      "content": "If the MCP server is killed from within a Claude Code session, all hw_* tools become unavailable. Claude Code does NOT auto-restart MCP servers. Recovery requires a full session restart. Never kill or restart the MCP server process from within an active session.",
-      "rule": "Never kill or restart the MCP server from within Claude Code. If server code changes need to take effect, tell Pat to restart the session.",
-      "tags": [
-        "mcp-server",
-        "tools",
-        "session-death",
-        "platform-constraint"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T17:53:09.742Z",
-      "links": [],
-      "qualityScore": 0.9,
-      "fingerprint": "4de77e81083d"
-    },
-    {
       "id": "mem_2372c3be",
       "projectId": "Claude AI Interface",
       "type": "fact",
@@ -4618,7 +4403,7 @@
         "high-priority"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.2000000000000002,
       "accessCount": 2,
       "createdAt": "2026-02-26T17:55:53.321Z",
       "links": [
@@ -4872,32 +4657,6 @@
       ],
       "qualityScore": 0.5,
       "fingerprint": "f5c364541a2b"
-    },
-    {
-      "id": "mem_dcb8b57a",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Windows cmd.exe arg quoting breaks stdin pipes -- use shell:true + direct pipe",
-      "content": "Node.js spawn('cmd.exe', [args]) double-quotes args with spaces, breaking embedded path quotes. Agent subprocess spawning failed with 'filename, directory name, or volume label syntax is incorrect'. Fix: pipe stdin directly to claude --print, no temp files, add shell:true so Windows finds claude.cmd in PATH.",
-      "rule": "On Windows, pipe stdin directly to subprocess. Never use temp files for passing prompts to claude --print. Always use shell:true for claude.cmd resolution.",
-      "tags": [
-        "windows",
-        "subprocess",
-        "platform-gotcha"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T18:01:01.175Z",
-      "links": [
-        {
-          "targetId": "mem_35965a4d",
-          "relationship": "contradicts",
-          "createdAt": "2026-02-27T13:25:01.696Z"
-        }
-      ],
-      "qualityScore": 1,
-      "fingerprint": "af91b4989626"
     },
     {
       "id": "mem_eaa94b62",
@@ -5695,8 +5454,8 @@
         "architecture"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 2,
       "createdAt": "2026-02-27T00:47:33.700Z",
       "links": [
         {
@@ -5707,7 +5466,7 @@
       ],
       "qualityScore": 0.7,
       "fingerprint": "5b667e037a37",
-      "lastAccessed": "2026-02-27T10:53:54.499Z"
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_87476412",
@@ -5728,8 +5487,8 @@
         "memory"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-27T01:29:20.851Z",
       "links": [
         {
@@ -5739,7 +5498,8 @@
         }
       ],
       "qualityScore": 0.7,
-      "fingerprint": "291b04b1fb29"
+      "fingerprint": "291b04b1fb29",
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_18fc5b2a",
@@ -5933,8 +5693,8 @@
         "context-management"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
-      "accessCount": 3,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 4,
       "createdAt": "2026-02-27T03:14:53.308Z",
       "links": [
         {
@@ -5945,7 +5705,7 @@
       ],
       "qualityScore": 0.5,
       "fingerprint": "48a809ce1b1b",
-      "lastAccessed": "2026-02-27T10:53:54.499Z"
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_034f6fc6",
@@ -6052,8 +5812,8 @@
         "runner.ts"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 4,
+      "synapticStrength": 1.2000000000000002,
+      "accessCount": 5,
       "createdAt": "2026-02-27T03:36:28.841Z",
       "links": [
         {
@@ -6069,7 +5829,7 @@
       ],
       "qualityScore": 0.6,
       "fingerprint": "aefc0a8c4fa0",
-      "lastAccessed": "2026-02-27T10:53:54.957Z"
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_ef0d74ab",
@@ -6731,8 +6491,8 @@
         "validation"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.1,
+      "accessCount": 1,
       "createdAt": "2026-02-27T06:45:02.688Z",
       "links": [
         {
@@ -6742,7 +6502,8 @@
         }
       ],
       "qualityScore": 0.7,
-      "fingerprint": "6d89e79829a2"
+      "fingerprint": "6d89e79829a2",
+      "lastAccessed": "2026-02-27T13:33:47.630Z"
     },
     {
       "id": "mem_ad2d2020",
@@ -8156,6 +7917,377 @@
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "7dc81eda6e44"
+    },
+    {
+      "id": "mem_43b83126",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build Boardroom v2: simple parallel Qwen panel",
+      "content": "Already implemented: panel.ts with runPanel(), hw_qwen_panel MCP tool, file injection, parallel Qwen calls, no char limit, results saved to .hello-world/panels/. 14 panels already run. Old round-robin boardroom kept alongside for backward compat.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "mcp"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:34:32.730Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "d81dfe5e53c5"
+    },
+    {
+      "id": "mem_c4365224",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fullsweep rundown view in the app",
+      "content": "Built in Session 63. FullsweepView.tsx on master (commit 4e0d658). Keybind S. get_fullsweep Rust command in lib.rs. fullsweep-results.json populated. Cargo dev mode compiling. Needs visual verification by pressing S in app.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "app",
+        "ux",
+        "fullsweep"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:34:44.168Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "214eb93932d5"
+    },
+    {
+      "id": "mem_cbb87919",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Verify bug fixes after MCP restart: prediction wiring + linker null guard",
+      "content": "Both fixes confirmed in code: sessions.getCurrent() on lines 363/570, m.links ?? [] on lines 213/222/248 of store.ts. Runtime verified -- no brain_error entries for linker in activity.json this session.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging",
+        "errors",
+        "mcp",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:37:40.545Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "f2f04c6456e8"
+    },
+    {
+      "id": "mem_ad86c42a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: [DELIBERATE] Memory quality feedback loop and staleness management",
+      "content": "Implemented during Brain Magnum Opus S48-S51. rankMemories() in retrieval path (server.ts:423), scoreMemory() in pruner, quality gate in storeMemory(). Only remaining: review queue Dashboard widget (minor, can be a new task if wanted).",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "strategy",
+        "autonomy",
+        "model-selection",
+        "windows"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:37:42.561Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "a3e81394bb1e"
+    },
+    {
+      "id": "mem_33831154",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Memory capacity gauge: visual bar + capacity-based pruning trigger",
+      "content": "Merged into t_11939f7d (pruning redesign) which covers both capacity gauge and pruning triggers.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:37:47.209Z",
+      "links": [],
+      "qualityScore": 0.44999999999999996,
+      "fingerprint": "462d0e30d492"
+    },
+    {
+      "id": "mem_9880c9da",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Multi-project: hub model, not project-scoped switching",
+      "content": "Context: The MP epic (4 sub-tasks) assumed project-scoped context: separate memories per project, project switcher UX, auto-onboard, global vs local memory split. Pat questioned whether we should reset/switch at all. HW already works from any directory via global MCP. The brain's value comes from cross-project lessons, not isolation.\nChosen: Hub model: one brain, one memory pool, no project switching. Tasks/memories get a project tag for filtering, not scoping. App respects launch directory (CWD bug) but doesn't partition state. The MP epic's 4 sub-tasks are replaced by a simple tag+filter approach.\nRationale: Simpler architecture, preserves cross-project learning, matches how IDEs work. Scoping memories per project would fragment the brain's most valuable asset: lessons that transfer across codebases. The project switcher UX was solving a problem that doesn't exist if there's nothing to switch.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:45:47.121Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "9abfce09f37d"
+    },
+    {
+      "id": "mem_1d363183",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Multi-project support (Epic)",
+      "content": "Replaced by decision d_1b6a3600: hub model instead of project-scoped switching. No switcher, no scoping, no onboarding. One brain works everywhere. CWD bug fix (t_mp_cwd_bug) remains as standalone task.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "architecture",
+        "multi-project"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:45:52.774Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "0e6bffee437f"
+    },
+    {
+      "id": "mem_deb57cc1",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Split memories into global vs project-scoped",
+      "content": "Obsoleted by hub model decision (d_1b6a3600). All memory is global by default. No split needed.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "architecture",
+        "multi-project",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:45:54.048Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "8794a3c4d892"
+    },
+    {
+      "id": "mem_b1fddc1e",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Auto-onboard: scan new projects with agents to populate all tabs",
+      "content": "Obsoleted by hub model decision (d_1b6a3600). No per-project onboarding needed. Just start working.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "feature",
+        "multi-project",
+        "agents"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:45:55.050Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "79fe6402cf03"
+    },
+    {
+      "id": "mem_6a404018",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Project switcher UX: clean swap between projects",
+      "content": "Obsoleted by hub model decision (d_1b6a3600). No switching UX needed. Hub model works on any project.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "feature",
+        "multi-project",
+        "ux"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:45:56.081Z",
+      "links": [],
+      "qualityScore": 0.44999999999999996,
+      "fingerprint": "89b48032193c"
+    },
+    {
+      "id": "mem_9efb63a0",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy recap: Rust startup check + event emission",
+      "content": "Dropped by Pat. Buddy recap Rust startup check no longer needed.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:47:51.813Z",
+      "links": [],
+      "qualityScore": 0.49999999999999994,
+      "fingerprint": "629f5d72caa5"
+    },
+    {
+      "id": "mem_6aa2de02",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Remove approvals and questions systems -- never used, all handled in terminal",
+      "content": "Context: Pat finds the approvals gate system (hw_check_approval, hw_list_approvals, hw_resolve_approval) and the questions system (hw_add_question, hw_answer_question) annoying and never used. All of these interactions happen naturally in conversation. Dedicated systems and app views are overhead.\nChosen: Remove both systems: approvals (MCP tools, app view, Discord integration) and questions (MCP tools, app view). Approval gates in CLAUDE.md become simple \"ask Pat in chat\" rules. Questions are just conversation.\nRationale: Never used. Terminal conversation handles both. Removing reduces tool clutter, simplifies MCP server, removes unused app views.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:59:24.340Z",
+      "links": [],
+      "qualityScore": 0.65,
+      "fingerprint": "4080552d9eda"
+    },
+    {
+      "id": "mem_52e38338",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: t?  ---  ### 6. MCP Watchdog **What:** MCP server crash = si",
+      "content": "t?  ---  ### 6. MCP Watchdog **What:** MCP server crash = silent death. Claude loses all hw_* tools with no notification. **Fix (Option A):** Add PID liven",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:59:33.627Z",
+      "links": [],
+      "qualityScore": 0.45,
+      "fingerprint": "e340063c6c40"
+    },
+    {
+      "id": "mem_4565330a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Adopt Spec-Driven Development workflow",
+      "content": "Dropped. Pat scoped SDD out -- doesn't want it.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:59:33.645Z",
+      "links": [],
+      "qualityScore": 0.39999999999999997,
+      "fingerprint": "f5959a035b84"
+    },
+    {
+      "id": "mem_337a7e6f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Remove approvals and questions systems from app and MCP",
+      "content": "Pat's direction: both are never used, annoying, all handled in terminal. Remove: (1) MCP tools: hw_check_approval, hw_list_approvals, hw_resolve_approval, hw_add_question, hw_answer_question. (2) App views: Questions view (keybind 4), any approvals UI. (3) Rust commands for questions/approvals if they exist. (4) CLAUDE.md references to approval gates. (5) Discord listener approval handling. Keep the data files (.hello-world/approvals.json, questions.json) as archives but stop reading/writing them.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "writing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:05:17.850Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "b5a93ddf37f3"
+    },
+    {
+      "id": "mem_4c9e4fc2",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build command palette: clickable /commands menu that pastes to terminal",
+      "content": "Pat's request: A menu (like the ? keybind help modal) showing all important /commands with descriptions. Clickable -- clicking a command auto-copies/pastes it into the terminal chat input. Commands to include: /fullsweep, /clean-quit, /commit, /review-pr, /content-pipeline:scan, /social-engine:engage, /pulse, /market-intel:research, /memory-gardener:garden, etc. Implementation: new CommandPalette component, triggered by a keybind (maybe /), lists commands with one-line descriptions, click handler writes to PTY stdin or copies to clipboard.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "github",
+        "git",
+        "social",
+        "react"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:08:55.124Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "6d792e774ec3"
+    },
+    {
+      "id": "mem_61cf4970",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: clipboard if PTY unavailable - Esc to close  Also fixed the ",
+      "content": "clipboard if PTY unavailable - Esc to close  Also fixed the HelpModal keybinds (were stale). Committed `ad230c8`.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:10:51.334Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "567bf4a62c72"
+    },
+    {
+      "id": "mem_143686cf",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add command palette button to sidebar above overdrive",
+      "content": "Pat wants a visible button in the sidebar for the command palette, above the overdrive toggle. Should stand out with indigo accent.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "strategy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:12:02.092Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "6244b65bc89f"
     }
   ]
 }

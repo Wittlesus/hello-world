@@ -1,6 +1,6 @@
 {
   "state": {
-    "sessionStart": "2026-02-27T12:19:08.512Z",
+    "sessionStart": "2026-02-27T14:19:26.389Z",
     "messageCount": 0,
     "contextPhase": "early",
     "synapticActivity": {
@@ -13,8 +13,8 @@
         "lastHit": "2026-02-27T07:45:06.184Z"
       },
       "architecture": {
-        "count": 49,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 51,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "windows": {
         "count": 267,
@@ -25,16 +25,16 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "crash": {
-        "count": 64,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 65,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "tauri": {
         "count": 27,
         "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "bug": {
-        "count": 14,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 15,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "approval-queue": {
         "count": 2,
@@ -49,8 +49,8 @@
         "lastHit": "2026-02-27T10:02:30.689Z"
       },
       "verification": {
-        "count": 53,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 56,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "test": {
         "count": 1,
@@ -77,12 +77,12 @@
         "lastHit": "2026-02-27T07:13:36.798Z"
       },
       "debugging": {
-        "count": 36,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 39,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "rust": {
-        "count": 42,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 43,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "performance": {
         "count": 30,
@@ -125,16 +125,16 @@
         "lastHit": "2026-02-27T04:50:32.186Z"
       },
       "tasks": {
-        "count": 29,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 30,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "brain": {
-        "count": 28,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 29,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "memory": {
-        "count": 789,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 791,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "nextjs": {
         "count": 17,
@@ -157,12 +157,12 @@
         "lastHit": "2026-02-24T12:00:00.000Z"
       },
       "model-selection": {
-        "count": 2321,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 2323,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "strategy": {
-        "count": 2464,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 2467,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "npm": {
         "count": 652,
@@ -173,8 +173,8 @@
         "lastHit": "2026-02-26T12:00:00.000Z"
       },
       "validation": {
-        "count": 758,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 761,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "hooks": {
         "count": 611,
@@ -225,8 +225,8 @@
         "lastHit": "2026-02-21T12:00:00.000Z"
       },
       "audit": {
-        "count": 19,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 20,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "agent": {
         "count": 5,
@@ -261,8 +261,8 @@
         "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "cortex": {
-        "count": 21,
-        "lastHit": "2026-02-27T12:01:09.013Z"
+        "count": 22,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "gap": {
         "count": 4,
@@ -297,16 +297,16 @@
         "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "workflow": {
-        "count": 66,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 69,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "handoff": {
-        "count": 20,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 21,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "worktree": {
-        "count": 26,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 27,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "competitor": {
         "count": 19,
@@ -329,8 +329,8 @@
         "lastHit": "2026-02-27T10:00:52.184Z"
       },
       "buddy": {
-        "count": 26,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 27,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "ux": {
         "count": 17,
@@ -345,8 +345,8 @@
         "lastHit": "2026-02-27T07:37:26.518Z"
       },
       "multi-agent": {
-        "count": 17,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 18,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "orchestration": {
         "count": 7,
@@ -365,24 +365,24 @@
         "lastHit": "2026-02-27T07:37:26.518Z"
       },
       "cost": {
-        "count": 31,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 33,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "quality": {
-        "count": 63,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 66,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "done-means-done": {
         "count": 10,
         "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "communication": {
-        "count": 30,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 31,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "deliberation": {
-        "count": 41,
-        "lastHit": "2026-02-27T12:01:09.013Z"
+        "count": 44,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "guardrails": {
         "count": 9,
@@ -445,20 +445,20 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "jsonstore": {
-        "count": 36,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 38,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "caching": {
         "count": 4,
         "lastHit": "2026-02-27T07:13:36.798Z"
       },
       "migration": {
-        "count": 36,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 38,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "mcp-server": {
-        "count": 40,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 42,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "parallelism": {
         "count": 4,
@@ -505,8 +505,8 @@
         "lastHit": "2026-02-27T07:32:52.599Z"
       },
       "proactive": {
-        "count": 36,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 37,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "lazy-loading": {
         "count": 2,
@@ -537,52 +537,52 @@
         "lastHit": "2026-02-27T10:00:52.184Z"
       },
       "discipline": {
-        "count": 29,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 30,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "preference": {
         "count": 3,
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "method": {
-        "count": 47,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 50,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "groupthink": {
-        "count": 15,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 16,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "research": {
-        "count": 52,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 54,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "prompt-engineering": {
         "count": 7,
         "lastHit": "2026-02-27T07:47:20.786Z"
       },
       "auto-capture": {
-        "count": 44,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 47,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "signal-detector": {
-        "count": 39,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 41,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "behavior": {
         "count": 30,
         "lastHit": "2026-02-27T12:12:48.622Z"
       },
       "decision-making": {
-        "count": 34,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 37,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "parallel-agents": {
         "count": 40,
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "memory-systems": {
-        "count": 15,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 16,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "windsurf": {
         "count": 13,
@@ -629,48 +629,48 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "competitor-analysis": {
-        "count": 28,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 29,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "feedback-loop": {
-        "count": 28,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 29,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "differentiator": {
-        "count": 31,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 32,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "magnum-opus": {
-        "count": 20,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 21,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "s49": {
-        "count": 20,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 21,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "quality-gate": {
-        "count": 20,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 21,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "linker": {
-        "count": 23,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 24,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "reflection": {
-        "count": 21,
-        "lastHit": "2026-02-27T12:01:09.013Z"
+        "count": 22,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "prediction": {
-        "count": 27,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 28,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "api": {
         "count": 15,
         "lastHit": "2026-02-27T10:53:54.497Z"
       },
       "missing-patterns": {
-        "count": 38,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 40,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "linter": {
         "count": 5,
@@ -737,12 +737,12 @@
         "lastHit": "2026-02-27T10:00:52.184Z"
       },
       "wiring": {
-        "count": 6,
-        "lastHit": "2026-02-27T12:01:09.013Z"
+        "count": 7,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "silent-failure": {
-        "count": 9,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 10,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "tools": {
         "count": 8,
@@ -757,8 +757,8 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "unwired": {
-        "count": 9,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 10,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "high-priority": {
         "count": 4,
@@ -773,12 +773,12 @@
         "lastHit": "2026-02-27T10:00:52.184Z"
       },
       "visual-design": {
-        "count": 21,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 22,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "pat-directive": {
-        "count": 40,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 41,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "canonical": {
         "count": 6,
@@ -797,12 +797,12 @@
         "lastHit": "2026-02-27T07:41:47.778Z"
       },
       "overdrive": {
-        "count": 21,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 22,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "inner-monologue": {
-        "count": 21,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 22,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "chrome-extension": {
         "count": 5,
@@ -813,8 +813,8 @@
         "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "trust": {
-        "count": 15,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 16,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "tax-credit-calculators": {
         "count": 2,
@@ -829,8 +829,8 @@
         "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "pricing": {
-        "count": 8,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 9,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "claude-code": {
         "count": 7,
@@ -865,28 +865,28 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "task-management": {
-        "count": 30,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 31,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "solutions-not-apologies": {
-        "count": 20,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 21,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "brain-wiring": {
-        "count": 11,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 12,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "server.ts": {
         "count": 7,
         "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "qwen": {
-        "count": 32,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 35,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "boardroom": {
-        "count": 31,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 34,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "components": {
         "count": 2,
@@ -897,8 +897,8 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "integration": {
-        "count": 11,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "count": 12,
+        "lastHit": "2026-02-27T13:33:47.628Z"
       },
       "terminal": {
         "count": 4,
@@ -977,8 +977,8 @@
         "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "architecture-gap": {
-        "count": 12,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 13,
+        "lastHit": "2026-02-27T13:17:07.831Z"
       },
       "minimal": {
         "count": 1,
@@ -1037,8 +1037,8 @@
         "lastHit": "2026-02-27T07:45:06.184Z"
       },
       "store.ts": {
-        "count": 7,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 8,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "provider": {
         "count": 1,
@@ -1093,8 +1093,8 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "pruning": {
-        "count": 10,
-        "lastHit": "2026-02-27T10:13:07.523Z"
+        "count": 11,
+        "lastHit": "2026-02-27T13:19:51.381Z"
       },
       "pain-memory": {
         "count": 1,
@@ -1245,129 +1245,173 @@
         "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "auto-captured": {
+        "count": 4,
+        "lastHit": "2026-02-27T13:33:47.628Z"
+      },
+      "end-to-end": {
         "count": 1,
-        "lastHit": "2026-02-27T12:12:48.622Z"
+        "lastHit": "2026-02-27T13:33:47.628Z"
       }
     },
     "memoryTraces": {
       "mem_bff85b0b": {
         "count": 2,
         "lastAccessed": "2026-02-27T11:13:52.518Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_e0553d28": {
         "count": 2,
         "lastAccessed": "2026-02-27T11:13:52.518Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_497c4a8f": {
         "count": 2,
         "lastAccessed": "2026-02-27T11:13:52.518Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_281fbc2c": {
         "count": 3,
         "lastAccessed": "2026-02-27T11:55:58.203Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_3a15f5e9": {
         "count": 3,
         "lastAccessed": "2026-02-27T12:01:09.014Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_ab99537b": {
         "count": 4,
         "lastAccessed": "2026-02-27T11:13:52.518Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_e022b342": {
         "count": 3,
         "lastAccessed": "2026-02-27T10:53:54.954Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_2c411e02": {
         "count": 5,
         "lastAccessed": "2026-02-27T11:55:58.203Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_7cd96e23": {
         "count": 2,
         "lastAccessed": "2026-02-27T12:12:48.623Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_6f091748": {
         "count": 2,
         "lastAccessed": "2026-02-27T11:55:58.203Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_09c288bc": {
-        "count": 3,
-        "lastAccessed": "2026-02-27T12:12:48.623Z",
-        "synapticStrength": 1.08
+        "count": 4,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.14
       },
       "mem_2372c3be": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T10:34:56.494Z",
-        "synapticStrength": 1.08
+        "count": 2,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.14
       },
       "mem_baaadbab": {
         "count": 1,
         "lastAccessed": "2026-02-27T10:34:56.494Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_6b07e1cf": {
-        "count": 2,
-        "lastAccessed": "2026-02-27T11:13:52.518Z",
-        "synapticStrength": 1.08
+        "count": 3,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.14
       },
       "mem_9deb47ac": {
         "count": 2,
         "lastAccessed": "2026-02-27T11:13:52.518Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_70238c60": {
-        "count": 2,
-        "lastAccessed": "2026-02-27T10:53:54.954Z",
-        "synapticStrength": 1.08
+        "count": 3,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.14
       },
       "mem_7a3e2cbc": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T10:53:54.497Z",
-        "synapticStrength": 1.08
+        "count": 2,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.14
       },
       "mem_b3154ffe": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T10:53:54.497Z",
-        "synapticStrength": 1.08
+        "count": 3,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.14
       },
       "mem_30f032dc": {
         "count": 1,
         "lastAccessed": "2026-02-27T10:53:54.497Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_2df73149": {
         "count": 1,
         "lastAccessed": "2026-02-27T10:53:54.954Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_d58cdf2b": {
         "count": 2,
         "lastAccessed": "2026-02-27T11:55:58.203Z",
-        "synapticStrength": 1.08
+        "synapticStrength": 1.05
       },
       "mem_706d3714": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T10:53:54.954Z",
-        "synapticStrength": 1.08
+        "count": 2,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.14
       },
       "mem_1a0150bc": {
+        "count": 2,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.14
+      },
+      "mem_6599d4b1": {
         "count": 1,
-        "lastAccessed": "2026-02-27T10:53:54.954Z",
-        "synapticStrength": 1.08
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.09
+      },
+      "mem_4cc74921": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.09
+      },
+      "mem_883e725c": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.09
+      },
+      "mem_a7669e03": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:19:51.381Z",
+        "synapticStrength": 1.09
+      },
+      "mem_4d10cfed": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.09
+      },
+      "mem_bffb93f1": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.09
+      },
+      "mem_87476412": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.09
+      },
+      "mem_4c6f4aaa": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T13:33:47.628Z",
+        "synapticStrength": 1.09
       }
     },
     "firingFrequency": {},
     "activeTraces": [],
-    "significantEventsSinceCheckpoint": 180
+    "significantEventsSinceCheckpoint": 211
   }
 }

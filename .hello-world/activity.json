@@ -1,524 +1,6 @@
 {
   "activities": [
     {
-      "id": "act_544a2215",
-      "type": "task_updated",
-      "description": "[DONE] Brain Magnum Opus S50: Cortex learning, pruning, learned rules",
-      "details": "",
-      "timestamp": "2026-02-26T10:41:32.804Z"
-    },
-    {
-      "id": "act_9c2734bc",
-      "type": "task_added",
-      "description": "Task: Brain Magnum Opus S51: Enforcement, observability, hw_brain_health",
-      "details": "S51 of Brain Magnum Opus (final phase). ~300 lines:\n- hw_brain_health MCP tool: memory count by type/health, review queue, cortex stats, learned rules count\n- Smart checkpoints: adaptive interval based on significant events + context phase\n- Wire pruner into hw_end_session for automatic maintenance\n- Wire rules extraction into hw_end_session",
-      "timestamp": "2026-02-26T10:41:34.355Z"
-    },
-    {
-      "id": "act_9df7f15f",
-      "type": "task_started",
-      "description": "Started: Brain Magnum Opus S51: Enforcement, observability, hw_brain_health",
-      "details": "Task t_0b13a6f7 → in_progress",
-      "timestamp": "2026-02-26T10:41:39.686Z"
-    },
-    {
-      "id": "act_15b1cbae",
-      "type": "task_updated",
-      "description": "[DONE] Brain Magnum Opus S51: Enforcement, observability, hw_brain_health",
-      "details": "",
-      "timestamp": "2026-02-26T10:45:38.444Z"
-    },
-    {
-      "id": "act_68e64d3e",
-      "type": "task_updated",
-      "description": "[DONE] Brain Magnum Opus S49: Quality gates, reflections, memory linking",
-      "details": "",
-      "timestamp": "2026-02-26T10:45:39.025Z"
-    },
-    {
-      "id": "act_52c80be8",
-      "type": "memory_stored",
-      "description": "[WIN] Brain Magnum Opus COMPLETE: S48-S51, 12 modules, 196 tests, single session",
-      "details": "Completed the entire 4-session Brain Magnum Opus roadmap in a single session. S48 was already done. S49 (quality gates, reflection, linking, prediction), S50 (cortex learning, rules, pruning), and S51 (health dashboard, enforcement) all built, tested, and pushed. 6-agent parallel design sprint for S49 produced compilable blueprints. Total: 12 new brain modules, 4,017 lines production code, 196 new tests, 0 build errors.",
-      "timestamp": "2026-02-26T10:45:48.709Z"
-    },
-    {
-      "id": "act_5f23faca",
-      "type": "task_added",
-      "description": "Task: Post-restart verification: Brain Magnum Opus end-to-end",
-      "details": "After MCP restart, verify all S49-S51 brain modules work live through the MCP tools, not just via direct node imports.",
-      "timestamp": "2026-02-26T10:51:16.543Z"
-    },
-    {
-      "id": "act_f8fd01ce",
-      "type": "handoff_written",
-      "description": "Restart handoff saved",
-      "details": "## Session 51 -- Brain Magnum Opus S49-S51 COMPLETE\n\n## VERIFIED (done, tested, confirmed working)\n- TypeScript build: 0",
-      "timestamp": "2026-02-26T10:53:22.451Z"
-    },
-    {
-      "id": "act_637fdb43",
-      "type": "brain_rules",
-      "description": "Learned 1 new rule(s), reinforced 0",
-      "details": "",
-      "timestamp": "2026-02-26T13:18:06.465Z"
-    },
-    {
-      "id": "act_6436a464",
-      "type": "session_end",
-      "description": "Session ended",
-      "details": "Session 52 -- Handover only. No work done. Pat requested immediate handover. Brain Magnum Opus (S48-S51) still needs post-restart verification (task t_413855d4). Three stale in_progress tasks: buddy recap (t_ecdd0782), subagent strategy (t_e60b91e0), crash sentinel (t_8b568003). Autonomous timer was in HALT state from prior session.",
-      "timestamp": "2026-02-26T13:18:06.469Z"
-    },
-    {
-      "id": "act_4ed2b717",
-      "type": "task_updated",
-      "description": "[IN_PROGRESS] Post-restart verification: Brain Magnum Opus end-to-end",
-      "details": "",
-      "timestamp": "2026-02-26T13:19:42.822Z"
-    },
-    {
-      "id": "act_3b30c693",
-      "type": "memory_stored",
-      "description": "[FACT] Test: quality gate accepts well-formed memories",
-      "details": "Testing quality gate",
-      "timestamp": "2026-02-26T13:20:13.709Z"
-    },
-    {
-      "id": "act_9ae79e36",
-      "type": "memory_retrieved",
-      "description": "Retrieved 7 memories for: \"xylophone orchestration patterns\"",
-      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_d58cdf2b: Multi-agent max-turn failures are silent by default -- must detect and count them\n  -> Always check agent output for 'max turns' or 'Error: Reached max turns' after completion. Treat as failure, not success.\n- #mem_706d3714: Stripe SDK v17 typing: subscriptions.retrieve() wraps in Response<T>\n- #mem_1a0150bc: Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check\n- #mem_6599d4b1: Formspree: silent failure with placeholder URLs, always validate endpoint IDs\n- #mem_4cc74921: Linters and formatters silently revert edits -- check for watchers before editing\n  -> If an edit keeps reverting, check for active linters/formatters/watchers. Stage changes immediately after editing.\n\nWIN MEMORY (you've handled this domain before):\n- #mem_c7d61dda: Multi-agent orchestrator pattern: planner + builder + tester + observer\n- #mem_e4b56693: Task decomposition on timeout: 5 patterns that predict what will fail",
-      "timestamp": "2026-02-26T13:22:22.734Z"
-    },
-    {
-      "id": "act_fb429dae",
-      "type": "brain_plasticity",
-      "description": "Boosted 7 memory traces at session end",
-      "details": "",
-      "timestamp": "2026-02-26T13:22:37.278Z"
-    },
-    {
-      "id": "act_dbdb4854",
-      "type": "session_end",
-      "description": "Session ended",
-      "details": "Verification session -- testing Brain Magnum Opus post-restart. Fixed health.ts crashes (missing links field, undefined synapticActivity). Steps 1-7 pass.",
-      "timestamp": "2026-02-26T13:22:37.282Z"
-    },
-    {
-      "id": "act_acee5cd7",
-      "type": "task_updated",
-      "description": "[DONE] Post-restart verification: Brain Magnum Opus end-to-end",
-      "details": "",
-      "timestamp": "2026-02-26T13:23:13.387Z"
-    },
-    {
-      "id": "act_a667c87c",
-      "type": "task_added",
-      "description": "Task: Update system-explorer.html with Brain Magnum Opus architecture",
-      "details": "Add the 8 brain engine modules (quality gate, linker, scorer, health, engine, cortex learner, rules, pruner) as a new BRAIN ENGINE group. Add new data stores (brain-state.json, cortex-learned.json, learned-rules.json, memories-archive.json). Add brain connections, Brain System preset view, and Brain Lifecycle workflow.",
-      "timestamp": "2026-02-26T13:26:24.902Z"
-    },
-    {
-      "id": "act_835b6472",
-      "type": "task_updated",
-      "description": "[IN_PROGRESS] Update system-explorer.html with Brain Magnum Opus architecture",
-      "details": "",
-      "timestamp": "2026-02-26T13:26:29.972Z"
-    },
-    {
-      "id": "act_1e04896f",
-      "type": "task_updated",
-      "description": "[DONE] Update system-explorer.html with Brain Magnum Opus architecture",
-      "details": "",
-      "timestamp": "2026-02-26T13:37:14.132Z"
-    },
-    {
-      "id": "act_11ae940b",
-      "type": "task_added",
-      "description": "Task: System resilience task force: address 10 failure points from architecture audit",
-      "details": "6 Opus agents working in parallel on: (1) Quality gate O(n) perf, (2) Circuit breakers for brain modules, (3) Data store safety/backup, (4) Discord queue + SessionStart resilience, (5) Cortex learner latency + file watcher coalescing, (6) Cross-cutting architecture review. All research/design first, then consolidated implementation.",
-      "timestamp": "2026-02-26T13:49:41.258Z"
-    },
-    {
-      "id": "act_bcf4a50d",
-      "type": "task_updated",
-      "description": "[IN_PROGRESS] System resilience task force: address 10 failure points from architecture audit",
-      "details": "",
-      "timestamp": "2026-02-26T13:49:47.852Z"
-    },
-    {
-      "id": "act_5cf1bcff",
-      "type": "approval_auto",
-      "description": "Notify: git merge",
-      "details": "Merge 6 worktree branches into master: engine hardening, state caps, reflection fingerprint, store bidirectional links, shared stop words, SessionStart hardening",
-      "timestamp": "2026-02-26T14:25:28.171Z"
-    },
-    {
-      "id": "act_c64c29de",
-      "type": "memory_stored",
-      "description": "[PAIN] Ignored handoff verification checklist -- summarized instead of executing",
-      "details": "Session 52: The handoff from S51 had a 10-step verification checklist. Instead of running it immediately, I summarized the session state and asked Pat \"What do you need from me?\" Pat had to explicitly say \"don't you have instructions in the handoff\" before I started executing. The handoff exists specifically so the next session runs verification steps, not reviews them.",
-      "timestamp": "2026-02-26T15:00:24.982Z"
-    },
-    {
-      "id": "act_533ee92a",
-      "type": "handoff_written",
-      "description": "Restart handoff saved",
-      "details": "## Session 52 -- Resilience Task Force + System Diagrams\n\n## VERIFIED (done, tested, confirmed working)\n- TypeScript bui",
-      "timestamp": "2026-02-26T15:01:04.471Z"
-    },
-    {
-      "id": "act_7e7c7e2e",
-      "type": "memory_stored",
-      "description": "[PAIN] Forgot sentinel was shipped -- no win memory recorded, task left in_progress",
-      "details": "Session 52: Told Pat the crash sentinel was never finished. It was fully built and running (sentinel.mjs, Rust spawn_sentinel command, crash-backup dir, sentinel.json tracking). The task t_8b568003 was left in_progress instead of marked done, and no win memory was stored when it shipped. Result: next session had zero awareness it existed.",
-      "timestamp": "2026-02-26T15:05:10.846Z"
-    },
-    {
-      "id": "act_3c2615cc",
-      "type": "memory_stored",
-      "description": "[WIN] Completed: Crash safety sentinel -- detached process survives app crashes",
-      "details": "Sentinel system fully shipped. sentinel.mjs polls Tauri app PID every 2.5s. On crash: backs up all .hello-world/*.json state files to crash-backup/, writes crash-marker.json. Rust: spawn_sentinel and get_sentinel_status commands in lib.rs. Buddy shows shield indicator (lit=active, dark=dead). Auto-spawns on app startup.",
-      "timestamp": "2026-02-26T15:05:18.327Z"
-    },
-    {
-      "id": "act_3a466408",
-      "type": "task_updated",
-      "description": "[DONE] Crash-safety sentinel: buddy-spawned hidden process that survives crashes",
-      "details": "",
-      "timestamp": "2026-02-26T15:05:23.861Z"
-    },
-    {
-      "id": "act_1b357bae",
-      "type": "task_updated",
-      "description": "[TODO] Design and implement subagent team strategy",
-      "details": "",
-      "timestamp": "2026-02-26T15:05:30.399Z"
-    },
-    {
-      "id": "act_041db6bb",
-      "type": "task_updated",
-      "description": "[DONE] Buddy recap on startup: detached subprocess summary of last session",
-      "details": "",
-      "timestamp": "2026-02-26T15:05:35.391Z"
-    },
-    {
-      "id": "act_0a2dcd16",
-      "type": "task_updated",
-      "description": "[DONE] System resilience task force: address 10 failure points from architecture audit",
-      "details": "",
-      "timestamp": "2026-02-26T15:05:41.135Z"
-    },
-    {
-      "id": "act_0dc6daa6",
-      "type": "brain_error",
-      "description": "store:linker failed (degraded)",
-      "details": "Cannot read properties of undefined (reading 'some')",
-      "timestamp": "2026-02-26T15:09:00.292Z"
-    },
-    {
-      "id": "act_bfc7300f",
-      "type": "memory_stored",
-      "description": "[FACT] Link test",
-      "details": "Testing that linker wires up on store",
-      "timestamp": "2026-02-26T15:09:00.297Z"
-    },
-    {
-      "id": "act_6222aa90",
-      "type": "memory_retrieved",
-      "description": "Retrieved 0 memories for: \"circuit breaker resilience\"",
-      "details": "No matches.",
-      "timestamp": "2026-02-26T15:09:09.655Z"
-    },
-    {
-      "id": "act_3d8a82d6",
-      "type": "task_added",
-      "description": "Task: Fix hw_brain_health crash on memories without links field",
-      "details": "health.ts lines 112 and 283 access mem.links.length without optional chaining. Old memories pre-dating the brain magnum opus don't have a links field, causing \"Cannot read properties of undefined (reading 'length')\" crash. Fix: add optional chaining (mem.links?.length ?? 0).",
-      "timestamp": "2026-02-26T15:10:03.543Z"
-    },
-    {
-      "id": "act_f51c136f",
-      "type": "task_started",
-      "description": "Started: Fix hw_brain_health crash on memories without links field",
-      "details": "Task t_7cfc5442 → in_progress",
-      "timestamp": "2026-02-26T15:10:08.060Z"
-    },
-    {
-      "id": "act_e7cc64d2",
-      "type": "task_updated",
-      "description": "[DONE] Fix hw_brain_health crash on memories without links field",
-      "details": "",
-      "timestamp": "2026-02-26T15:11:08.235Z"
-    },
-    {
-      "id": "act_a406de85",
-      "type": "task_added",
-      "description": "Task: Backfill old memories: quality scores, fingerprints, and links",
-      "details": "198 of 212 memories pre-date the brain magnum opus and lack quality scores, fingerprints, and links. Write a migration script that runs computeFingerprint, computeQualityScore, and findLinks on all old memories. This should bring brain health from B to A.",
-      "timestamp": "2026-02-26T15:13:53.389Z"
-    },
-    {
-      "id": "act_d1e96a78",
-      "type": "task_started",
-      "description": "Started: Backfill old memories: quality scores, fingerprints, and links",
-      "details": "Task t_29eab786 → in_progress",
-      "timestamp": "2026-02-26T15:13:57.514Z"
-    },
-    {
-      "id": "act_e33ceb21",
-      "type": "task_updated",
-      "description": "[DONE] Backfill old memories: quality scores, fingerprints, and links",
-      "details": "",
-      "timestamp": "2026-02-26T15:15:12.022Z"
-    },
-    {
-      "id": "act_5acd2dfa",
-      "type": "task_added",
-      "description": "Task: Brain MO integration test: prove every module fires under real usage",
-      "details": "Exercise the full brain pipeline through normal MCP tool calls. Store memories (quality gate + linker), retrieve memories (scoring + link traversal + synaptic activity + cortex gaps), then end session (plasticity + pruning + rules + cortex flush). Audit data files after each phase to prove the pipeline left evidence. This is the acceptance test for the Magnum Opus.",
-      "timestamp": "2026-02-26T15:21:23.223Z"
-    },
-    {
-      "id": "act_b56db948",
-      "type": "task_started",
-      "description": "Started: Brain MO integration test: prove every module fires under real usage",
-      "details": "Task t_62f1786c → in_progress",
-      "timestamp": "2026-02-26T15:21:27.463Z"
-    },
-    {
-      "id": "act_ab904370",
-      "type": "memory_stored",
-      "description": "[FACT] JsonStore caches in memory after first read, external file changes get clobbered",
-      "details": "The JsonStore class in storage.ts caches data after the first read() call. Any external process writing to the same JSON file will have its changes overwritten when the MCP server next calls write(). This means migration scripts must go through the MCP server, not direct file writes.",
-      "timestamp": "2026-02-26T15:23:14.627Z"
-    },
-    {
-      "id": "act_486ff1b3",
-      "type": "memory_stored",
-      "description": "[PAIN] Memory backfill script data lost because MCP server overwrote file from stale cache",
-      "details": "Ran backfill-memories.mjs which wrote fingerprints, quality scores, and links for 203 memories. The MCP server's in-memory JsonStore cache still had the old data. Next hw_store_memory call wrote the stale cache back to disk, erasing all backfill changes. 198 memories lost their links field.",
-      "timestamp": "2026-02-26T15:23:19.537Z"
-    },
-    {
-      "id": "act_83e0f741",
-      "type": "memory_stored",
-      "description": "[ARCHITECTURE] Brain backfill must use MCP server internals, not external scripts",
-      "details": "To backfill old memories with fingerprints, quality scores, and links, the migration must run inside the MCP server process where the MemoryStore cache lives. Options: (1) Add hw_backfill_memories tool, (2) Add store.invalidate() call after external writes, (3) Restart MCP server after migration scripts.",
-      "timestamp": "2026-02-26T15:23:23.490Z"
-    },
-    {
-      "id": "act_da552e69",
-      "type": "memory_retrieved",
-      "description": "Retrieved 8 memories for: \"JsonStore caching problem and memory backfill data loss\"",
-      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_04aafa48: JsonStore caches in memory after first read, external file changes get clobbered\n  -> Never run external migration scripts against JSON files while the MCP server is running. Use MCP tools or restart the server after migration.\n- #mem_6eca46a9: Memory backfill script data lost because MCP server overwrote file from stale cache\n  -> Always invalidate or restart MCP server after external file modifications. Or better: route all data changes through MCP tools.\n- #mem_b09860e3: state.json race conditions can silently delete data\n  -> Use atomic write-rename pattern (write to .tmp, rename to target) for all JSON state files to prevent partial reads and data loss.\n- #mem_c6db0176: Brain backfill must use MCP server internals, not external scripts\n  -> Design migration tools as MCP server endpoints, not standalone scripts, when the server holds an in-memory cache.\n- #mem_7cd96e23: Brain memory learns nothing automatically -- requires manual hw_store_memory calls\n  -> After resolving any non-trivial bug or completing a significant feature, always call hw_store_memory with the lesson learned.\n\nWIN MEMORY (you've handled this domain before):\n- #mem_9deb47ac: Brain Magnum Opus S48: 4-agent parallel build shipped entire foundation\n  -> Use parallel agent worktrees for non-overlapping file changes. Merge manually where shared files overlap. Run migration scripts before code changes. Disable old system AFTER new one is wired.\n- #mem_0b3c73dc: Completed: Buddy recap on startup: detached subprocess summary of last session\n- #mem_c7d61dda: Multi-agent orchestrator pattern: planner + builder + tester + observer",
-      "timestamp": "2026-02-26T15:23:48.372Z"
-    },
-    {
-      "id": "act_bfcccc21",
-      "type": "task_updated",
-      "description": "[DONE] Brain MO integration test: prove every module fires under real usage",
-      "details": "",
-      "timestamp": "2026-02-26T15:26:54.034Z"
-    },
-    {
-      "id": "act_a1734b67",
-      "type": "task_added",
-      "description": "Task: Deep research: AI agent memory systems -- what actually works",
-      "details": "6-agent parallel research sprint to evaluate whether our brain MO is useful, overengineered, or missing key patterns. Research what competitors do, what the research says, and what simpler approaches might outperform our 14-module system.",
-      "timestamp": "2026-02-26T15:32:25.928Z"
-    },
-    {
-      "id": "act_28347dd4",
-      "type": "task_started",
-      "description": "Started: Deep research: AI agent memory systems -- what actually works",
-      "details": "Task t_22296063 → in_progress",
-      "timestamp": "2026-02-26T15:32:30.120Z"
-    },
-    {
-      "id": "act_b6aca96e",
-      "type": "memory_retrieved",
-      "description": "Retrieved 8 memories for: \"original pitch vision Hello World autonomous AI workspace ex\"",
-      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_c2f4a014: Pat's product portfolio (Feb 2026): LaunchFast, PageBrain, TaxCreditCalculators, hello-world\n- #mem_36fb7942: Deep Linking -- helloworld:// protocol for Discord notifications\n- #mem_b09860e3: state.json race conditions can silently delete data\n  -> Use atomic write-rename pattern (write to .tmp, rename to target) for all JSON state files to prevent partial reads and data loss.\n- #mem_9d95b799: Direction notes lost on crash because direction.json wasn't written proactively\n  -> Write direction notes to direction.json IMMEDIATELY when Pat discusses strategy. Never wait for end of session.\n- #mem_fdff8737: Discord listener built send-only; receive side was missing\n  -> Verify Discord listener is running before assuming Pat can respond to approval requests asynchronously.\n\nWIN MEMORY (you've handled this domain before):\n- #mem_3990e20c: Completed: Adopt React 19.2 Activity component for view preservation\n- #mem_fc7cdf37: Completed: Build safe built-in browser for Hello World app\n- #mem_621434c3: Completed: Evaluate Tech Radar MCP as a product",
-      "timestamp": "2026-02-26T15:46:11.670Z"
-    },
-    {
-      "id": "act_c8ebf37f",
-      "type": "memory_stored",
-      "description": "[ARCHITECTURE] Hello World original pitch -- the core idea",
-      "details": "Interface to make coding and organization easier for Claude and user. Claude needs to actively understand and USE the system. Every instance of Claude -- even a brand new one -- should be able to connect and immediately understand what has been done, what needs to be done, and the context of scope and vision. IMMEDIATELY. Core pillars: transparency, guided building, built-in context and memory that gets loaded into Claude when Claude is opened within the app, long-term project development without data or memory loss.",
-      "timestamp": "2026-02-26T15:52:17.821Z"
-    },
-    {
-      "id": "act_4d84fa85",
-      "type": "direction_updated",
-      "description": "Direction updated",
-      "details": "vision updated",
-      "timestamp": "2026-02-26T15:52:23.270Z"
-    },
-    {
-      "id": "act_76cc3a38",
-      "type": "task_added",
-      "description": "Task: Build deliberation and research transcript timeline subtab",
-      "details": "New subtab with horizontal scrollable timeline (drag and fling to scroll). Two entry types: deliberation (people icon) and research (flask icon). Hover shows summary of what the delib/research was about. Click opens instant popup window with the full transcript, formatted neatly and aesthetically. Timeline entries organized chronologically, scrollable left-right. Need to: (1) define storage format for transcripts, (2) build the timeline component, (3) build the hover preview, (4) build the popup viewer, (5) wire to existing deliberation/research data.",
-      "timestamp": "2026-02-26T16:01:48.414Z"
-    },
-    {
-      "id": "act_6ff1598e",
-      "type": "task_updated",
-      "description": "[DONE] Deep research: AI agent memory systems -- what actually works",
-      "details": "",
-      "timestamp": "2026-02-26T16:01:54.586Z"
-    },
-    {
-      "id": "act_dfdc26d6",
-      "type": "memory_stored",
-      "description": "[ARCHITECTURE] Research gap: Task tool agent outputs have no persistent storage",
-      "details": "When running multi-agent research sprints via the Task tool, results exist only in conversation context. No automatic capture to disk. Deliberations save to deliberations.json, but research sprints vanish on session end or compaction. This means valuable research (like the 6-agent memory systems deep dive in S53) can be permanently lost. Needs: a research-outputs.json store, auto-capture of Task agent results, and a UI to browse them.",
-      "timestamp": "2026-02-26T16:03:43.725Z"
-    },
-    {
-      "id": "act_4579f84c",
-      "type": "memory_stored",
-      "description": "[FACT] Research synthesis: AI memory systems -- our brain MO is research-aligned",
-      "details": "6-agent deep research (S53) studied Cursor, Windsurf, Claude Code, academic papers, practitioner patterns, and anti-patterns. Key findings: (1) Industry converges on plain markdown for CODING memory, but our use case is broader -- persistent relational memory across sessions. (2) Quality gates and pruning are research-proven essential (Xiong et al.: indiscriminate storage degrades agents by 10%). (3) Our linker aligns with A-MEM Zettelkasten approach (superior results on 6 models). (4) Plasticity/decay aligns with MemoryBank and Mnemosyne (both show improvements). (5) Rules extraction is memory consolidation (episodic to semantic), theoretically sound. (6) 52 sessions is barely a warm-up -- benchmarks run hundreds of interactions. (7) Letta found plain filesystem beat Mem0 graph on LoCoMo (74% vs 68.5%) but this measures coding context, not long-term relationship memory.",
-      "timestamp": "2026-02-26T16:04:44.522Z"
-    },
-    {
-      "id": "act_c29910d3",
-      "type": "memory_stored",
-      "description": "[FACT] Competitor analysis: Cursor, Windsurf, Claude Code memory approaches (Feb 2026)",
-      "details": "Cursor: 3 layers (rules files with glob patterns, cloud Memories via Gemini sidecar needing privacy mode off, codebase vector indexing). Chat history lost between sessions. Community built Memory Bank workarounds. Windsurf: workspace-scoped auto-memories (no pruning, no expiration, SpAIware security vuln), custom hybrid retrieval (dense+sparse, sub-20ms), community built replacement (cascade-memory-bank 600+ stars). Claude Code: CLAUDE.md hierarchy with 200-line auto-memory cap, session memory summaries, compaction at 95%. None of them solve long-term relationship memory -- all focus on coding conventions and project context.",
-      "timestamp": "2026-02-26T16:04:54.329Z"
-    },
-    {
-      "id": "act_8f6f41e3",
-      "type": "memory_stored",
-      "description": "[FACT] Academic memory research: what works for LLM agents (2024-2026)",
-      "details": "Key papers and findings: A-MEM (Zettelkasten linking, superior on 6 models), MemRL (RL-trained memory beats RAG +82%), Mem0 (26% over OpenAI Memory, 90% token reduction), Xiong et al. (indiscriminate storage = 10% decline, selective addition + deletion = 10% gain), MemoryBank (Ebbinghaus forgetting curves), Mnemosyne (hybrid scoring sub-ms retrieval), episodic memory called 'missing piece' (ICML 2025). Anti-patterns: memory poisoning real even from benign staleness, Hebbian reinforcement amplifies confabulation, ALMA meta-learned designs outperform hand-crafted. SimpleMem compression beat complex retrieval 26.4% F1.",
-      "timestamp": "2026-02-26T16:05:04.732Z"
-    },
-    {
-      "id": "act_ef8f6a71",
-      "type": "task_added",
-      "description": "Task: Design automatic memory capture -- detect and store significant moments",
-      "details": "The brain stores memories only when Claude manually calls hw_store_memory. Significant moments (understanding shifts, Pat corrections, research conclusions, decisions) go uncaptured. Design a system that detects these moments and triggers automatic storage. Research: what hooks can we use (PreCompact, Stop, hippocampal timer), what conversation signals indicate a significant moment, what format should auto-captured memories take. This is the missing piece that makes the brain actually learn.",
-      "timestamp": "2026-02-26T16:11:50.410Z"
-    },
-    {
-      "id": "act_62fdc4d2",
-      "type": "task_started",
-      "description": "Started: Design automatic memory capture -- detect and store significant moments",
-      "details": "Task t_c01ebbfc → in_progress",
-      "timestamp": "2026-02-26T16:11:54.763Z"
-    },
-    {
-      "id": "act_1d70ecfd",
-      "type": "memory_stored",
-      "description": "[FACT] Pat's model preference: Sonnet 4.6 1M for subagents, Opus for coding",
-      "details": "All reasoning, research, and deliberation subagents should use model=\"sonnet\" (Sonnet 4.6 1M context). All direct coding work stays on Opus. This is a cost/performance optimization -- Sonnet handles research and analysis well at lower cost.",
-      "timestamp": "2026-02-26T16:17:17.549Z"
-    },
-    {
-      "id": "act_85312c24",
-      "type": "memory_stored",
-      "description": "[WIN] Method: Deep research then reverse-engineer -- competitive intelligence pattern",
-      "details": "Two-phase research method. Phase 1: spawn 6 parallel agents to research a domain broadly (competitors, academic papers, practitioner experience, simple approaches, anti-patterns). Phase 2: take the specific tools/plugins/systems found in Phase 1 and spawn agents to reverse-engineer each one -- read source code, find flaws, bottlenecks, failure points, and room for improvement. The synthesis of Phase 2 gives us a blueprint for building something better than anything that exists. Used in S53 for AI memory systems: first 6 agents mapped the landscape, then 6 agents tore apart the 6 best community plugins.",
-      "timestamp": "2026-02-26T16:30:05.809Z"
-    },
-    {
-      "id": "act_f98a3eb3",
-      "type": "memory_stored",
-      "description": "[WIN] Method: 6-agent parallel research sprint",
-      "details": "Spawn 6 agents simultaneously, each researching a different angle of the same question. Agents cover: direct competitors, adjacent competitors, academic state of the art, practitioner experience, simple approaches that work, and failure modes/anti-patterns. Results come back in ~3-4 minutes. Synthesis happens in the main thread. Used multiple times: S53 memory systems research, earlier competitive intel runs. Use Sonnet 4.6 1M for research agents to save cost.",
-      "timestamp": "2026-02-26T16:30:07.011Z"
-    },
-    {
-      "id": "act_0976bd01",
-      "type": "memory_stored",
-      "description": "[WIN] Method: Multi-agent parallel build with worktrees",
-      "details": "For large non-overlapping code changes, spawn multiple agents each in an isolated git worktree. Each agent works on different files without conflicts. Merge manually where shared files overlap. Used in S48 Brain Magnum Opus (4-agent parallel build shipped the entire foundation) and S52 resilience task force (6 agents). Key: run migration scripts before code changes, disable old system AFTER new one is wired.",
-      "timestamp": "2026-02-26T16:30:12.163Z"
-    },
-    {
-      "id": "act_5bb9b8d0",
-      "type": "memory_stored",
-      "description": "[WIN] Method: 4-agent audit pattern (UI/UX + Architecture + Cognitive + Value/ROI)",
-      "details": "For auditing any significant feature or system, spawn 4 specialist agents in parallel: (1) UI/UX agent evaluates user experience and design, (2) Architecture agent evaluates code structure, patterns, and technical debt, (3) Cognitive agent evaluates mental model clarity and information hierarchy, (4) Value/ROI agent evaluates whether the feature justifies its complexity. Cross-referencing the 4 perspectives catches issues no single lens would find. Used for Brain Magnum Opus audit in S49.",
-      "timestamp": "2026-02-26T16:30:16.670Z"
-    },
-    {
-      "id": "act_c234d67f",
-      "type": "memory_stored",
-      "description": "[WIN] Method: Deliberation system -- multi-agent debate with mediator for binding decisions",
-      "details": "For decisions that matter: plan sub-questions, get Pat's approval, run a multi-agent deliberation with cognitive modes (Contrarian, Pre-mortem, First Principles, Steelman, Analogist, Constraint). Mediator tracks coverage with quality tags (consensus/tension/shifted). Coverage check ensures every sub-question got substantive treatment. Conclusion requires synthesis. Used for state storage architecture (JSON vs SQLite), deliberation guardrails design, multi-project architecture. Separate from quick insights (non-binding, 2-4 agents, no sub-questions).",
-      "timestamp": "2026-02-26T16:30:23.143Z"
-    },
-    {
-      "id": "act_28f7bd4a",
-      "type": "memory_stored",
-      "description": "[PAIN] Method caveat: 4-agent audit found issues but some were false positives",
-      "details": "The 4-agent audit pattern (UI/UX + Architecture + Cognitive + Value/ROI) used in S49 for Brain MO audit found real issues but also produced recommendations that were over-engineered or missed the mark. Some agents flagged theoretical problems that weren't practical concerns. The audit added value but results need critical filtering -- not every agent recommendation should be acted on.",
-      "timestamp": "2026-02-26T16:33:01.862Z"
-    },
-    {
-      "id": "act_66b3e1bc",
-      "type": "memory_stored",
-      "description": "[PAIN] Method caveat: deliberation system produced groupthink on early runs",
-      "details": "Early deliberation runs had agents agreeing too quickly without substantive engagement. The mediator let agents lump and dismiss sub-questions. This was fixed with coverage quality tags (consensus/tension/shifted) and guardrails requiring substantive treatment of each sub-question. But even with guardrails, deliberation agents can produce sophisticated-sounding agreement that lacks real tension. The shifted tag (agent changed position) is the most valuable signal -- if no agents shift, the deliberation may not have pushed hard enough.",
-      "timestamp": "2026-02-26T16:33:08.488Z"
-    },
-    {
-      "id": "act_2b9f9ab7",
-      "type": "memory_stored",
-      "description": "[PAIN] Method caveat: parallel research agents can produce redundant or shallow results",
-      "details": "The 6-agent research sprint works well for breadth but agents sometimes return overlapping findings or surface-level summaries when the topic requires depth. The first S53 research run produced a \"debbie downer\" synthesis that was too quick to trash our own work based on shallow comparisons (comparing our relational memory system against coding-assistant memory). Research agents need precise, narrow prompts -- broad prompts produce broad, sometimes misleading results.",
-      "timestamp": "2026-02-26T16:33:14.896Z"
-    },
-    {
-      "id": "act_907517be",
-      "type": "memory_stored",
-      "description": "[ARCHITECTURE] Reverse-engineering synthesis: 6 community memory plugins -- flaws and opportunities",
-      "details": "S53 reverse-engineered 6 plugins: claude-memory (deterministic triage), claude-mem (SQLite+Chroma), claude-diary (PreCompact reflection), auto-memory (file tracking), arscontexta (6-phase Zettelkasten), memory-mcp (chunked extraction). Universal flaws found: (1) No feedback loop -- none learn whether retrieved memories helped, (2) Semantic dedup missing -- Jaccard/hash dedup misses paraphrases, (3) Windows broken in 2/6, (4) Context injection is recency-based not relevance-based, (5) Signal detection too narrow (regex misses most real decisions). Unique insights: claude-mem shows memories to human but not Claude (fatal), arscontexta's 6-phase pipeline costs 25-48K tokens per note, memory-mcp's 500-char truncation loses signal before extraction model sees it, auto-memory only captures file edits not conversation insights, claude-diary runs reflection in nearly-full context window (worst timing).",
-      "timestamp": "2026-02-26T16:36:02.404Z"
-    },
-    {
-      "id": "act_93ef4c0b",
-      "type": "task_updated",
-      "description": "[IN_PROGRESS] Design automatic memory capture -- detect and store significant moments",
-      "details": "Research complete. 3 research agents mapped the landscape (hooks, current infrastructure, signal detection patterns). 6 agents reverse-engineered community plugins. Now need to synthesize into a design and build it. The design should combine: (1) Stop/PreCompact hook signal detection with broad regex pre-filter + structural validation, (2) Fresh subprocess extraction using transcript_path, (3) Quality gate as the final filter, (4) Feedback loop connecting retrieval usefulness back to memory scoring, (5) Prompt-relevant injection in UserPromptSubmit.",
-      "timestamp": "2026-02-26T16:36:35.348Z"
-    },
-    {
-      "id": "act_5bd89ad4",
-      "type": "memory_stored",
-      "description": "[WIN] Method: Thin-Slice Iteration -- build smallest working piece, test on real data, learn, expand",
-      "details": "New method developed in S53 for exploratory design where the right answer isn't known. Steps: (1) Establish ground truth first -- manually identify what \"right\" looks like on real data before building anything. (2) Build the thinnest possible slice (e.g., just regex patterns). (3) Run it against real data (actual session transcript). (4) Score: what did it catch, what did it miss, what were false positives. (5) Iterate on the gaps. Different from parallel build (for known-scope work) and research sprints (for landscape mapping). This method is for when you're inventing something new. First experiment: signal detector on S53 transcript caught shifts/corrections/conclusions but missed bug discoveries, test results, and Pat's direct instructions.",
-      "timestamp": "2026-02-26T16:46:16.640Z"
-    },
-    {
-      "id": "act_f4ba7b8d",
-      "type": "task_added",
-      "description": "Task: Build auto-capture signal detector and wire into hooks",
-      "details": "Create signal-detector.mjs with expanded pattern set (shifts, corrections, bugs, verifications, user instructions, research conclusions, insights, methods). Wire into Stop hook to detect on last_assistant_message. Wire into UserPromptSubmit to inject specific memory nudges. Wire into PreCompact for final sweep. Test on real transcript data.",
-      "timestamp": "2026-02-26T17:00:21.196Z"
-    },
-    {
-      "id": "act_825c8088",
-      "type": "task_started",
-      "description": "Started: Build auto-capture signal detector and wire into hooks",
-      "details": "Task t_e5fd354d → in_progress",
-      "timestamp": "2026-02-26T17:00:27.961Z"
-    },
-    {
-      "id": "act_60837818",
-      "type": "task_updated",
-      "description": "[DONE] Build auto-capture signal detector and wire into hooks",
-      "details": "",
-      "timestamp": "2026-02-26T17:08:08.652Z"
-    },
-    {
       "id": "act_65caf778",
       "type": "task_updated",
       "description": "[DONE] Design automatic memory capture -- detect and store significant moments",
@@ -3499,6 +2981,524 @@
       "description": "Session ended",
       "details": "Created /fullsweep command and ran first comprehensive system audit with 5 parallel Sonnet agents. Built FullsweepView React component (keybind S, Brain > Sweep) with scoreboard grades, numbers, broke/improved columns. Created 7 new tasks from audit findings, cleaned 5 stale tasks. System grade: B- (infra solid, autonomous brain broken).",
       "timestamp": "2026-02-27T12:54:36.876Z"
+    },
+    {
+      "id": "act_4d15adbc",
+      "type": "context_loaded",
+      "description": "Session #62 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 18\nOpen questions: 0",
+      "timestamp": "2026-02-27T13:17:34.680Z"
+    },
+    {
+      "id": "act_373730bb",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- /fullsweep skill: created at ~/.claude/skills/fullsweep/SKILL.md, runs 5",
+      "timestamp": "2026-02-27T13:17:34.684Z"
+    },
+    {
+      "id": "act_712523ca",
+      "type": "note_processed",
+      "description": "Direction note n_mm4v8l68 processed via dismiss",
+      "details": "dismissed: Already acted on -- FullsweepView.tsx built in Session 63, task t_f53885c5 created. Component is on master awaiting Rust rebuild and testing.",
+      "timestamp": "2026-02-27T13:17:48.368Z"
+    },
+    {
+      "id": "act_c58b4482",
+      "type": "memory_retrieved",
+      "description": "Retrieved 8 memories for: \"brain reflection pruning crash null access fix\" (354 tag-ranked)",
+      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_6599d4b1: Formspree: silent failure with placeholder URLs, always validate endpoint IDs\n- #mem_4cc74921: Linters and formatters silently revert edits -- check for watchers before editing\n  -> If an edit keeps reverting, check for active linters/formatters/watchers. Stage changes immediately after editing.\n- #mem_2372c3be: Forgotten work: reflection + prediction modules built but never wired into auto-triggers\n- #mem_706d3714: Stripe SDK v17 typing: subscriptions.retrieve() wraps in Response<T>\n- #mem_1a0150bc: Next.js middleware size limit on Vercel: 1MB max, use lightweight cookie check\n\nWIN MEMORY (you've handled this domain before):\n- #mem_6b07e1cf: S49 Brain Magnum Opus: 4 new modules, 106 new tests, zero build errors\n- #mem_883e725c: Completed: Design automatic memory capture -- detect and store significant moments\n- #mem_a7669e03: Completed: Brain Magnum Opus S49: Quality gates, reflections, memory linking",
+      "timestamp": "2026-02-27T13:19:51.387Z"
+    },
+    {
+      "id": "act_b1bd7943",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Fix brain module crashes: reflection.toLowerCase + pruning.length errors at session end",
+      "details": "",
+      "timestamp": "2026-02-27T13:19:56.584Z"
+    },
+    {
+      "id": "act_e529fd15",
+      "type": "task_updated",
+      "description": "[DONE] Fix brain module crashes: reflection.toLowerCase + pruning.length errors at session end",
+      "details": "",
+      "timestamp": "2026-02-27T13:22:13.074Z"
+    },
+    {
+      "id": "act_0339f766",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Rewrite active-state.md, strategy.md, lessons-learned.md",
+      "details": "",
+      "timestamp": "2026-02-27T13:22:13.814Z"
+    },
+    {
+      "id": "act_cb593957",
+      "type": "task_updated",
+      "description": "[DONE] Rewrite active-state.md, strategy.md, lessons-learned.md",
+      "details": "",
+      "timestamp": "2026-02-27T13:23:06.793Z"
+    },
+    {
+      "id": "act_f2e2788e",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Bulk archive ~100 \"Completed: [task]\" auto-captured win memories",
+      "details": "",
+      "timestamp": "2026-02-27T13:23:10.633Z"
+    },
+    {
+      "id": "act_5b670f44",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Ingest 32 uncaptured pain extractions from extracted-pains.json",
+      "details": "",
+      "timestamp": "2026-02-27T13:23:11.351Z"
+    },
+    {
+      "id": "act_840e4cb3",
+      "type": "memory_stored",
+      "description": "[PAIN] SessionStart hook fires on agent subprocesses, destroying deliberations",
+      "details": "session-start.mjs fires on every claude --print subprocess spawn. The hook's archiveChatroom() reset chatroom.json on every agent spawn, destroying deliberations. Context injection also replaced agent role prompts.",
+      "timestamp": "2026-02-27T13:24:59.178Z"
+    },
+    {
+      "id": "act_a1e9d92e",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.66): Unexpected failure: SessionStart hook fires on agent subprocesses, destroying deliberations",
+      "details": "",
+      "timestamp": "2026-02-27T13:24:59.186Z"
+    },
+    {
+      "id": "act_62f1135a",
+      "type": "memory_stored",
+      "description": "[PAIN] Windows cmd.exe arg quoting breaks temp file paths for agent subprocesses",
+      "details": "Node.js spawn('cmd.exe', ['/d', '/s', '/c', shellCmd]) double-quotes the shellCmd argument, breaking embedded quotes around temp file paths. Every agent subprocess failed with path syntax errors.",
+      "timestamp": "2026-02-27T13:25:01.700Z"
+    },
+    {
+      "id": "act_ed158575",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.76): Unexpected failure: Windows cmd.exe arg quoting breaks temp file paths for agent subprocesses",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:01.707Z"
+    },
+    {
+      "id": "act_ba5679ed",
+      "type": "memory_stored",
+      "description": "[PAIN] hw_start_deliberation never called runDeliberation -- engine existed but wasn't wired",
+      "details": "MCP tool started deliberation state but never called runDeliberation(). Engine was built in agent-runner.ts but not connected. notifyRunner was undefined in server.ts, causing silent crashes.",
+      "timestamp": "2026-02-27T13:25:04.429Z"
+    },
+    {
+      "id": "act_72f38b23",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.77): Unexpected failure: hw_start_deliberation never called runDeliberation -- engine existed but wasn't ",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:04.436Z"
+    },
+    {
+      "id": "act_8adfd6ad",
+      "type": "memory_stored",
+      "description": "[PAIN] Editing lib.rs in dev mode crashes entire session via PTY kill",
+      "details": "cargo tauri dev watches Rust source files. Editing lib.rs triggers recompile, closing app window, killing PTY, ending Claude session.",
+      "timestamp": "2026-02-27T13:25:07.143Z"
+    },
+    {
+      "id": "act_62c882f2",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.78): Unexpected failure: Editing lib.rs in dev mode crashes entire session via PTY kill",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:07.150Z"
+    },
+    {
+      "id": "act_055eb540",
+      "type": "memory_stored",
+      "description": "[PAIN] Claude Code uses OAuth, not API keys -- agent subprocess auth fails",
+      "details": "Claude Code stores auth as OAuth token, not ANTHROPIC_API_KEY. Anthropic SDK in agent-runner.ts can't use it. Agent deliberations failed with API key errors.",
+      "timestamp": "2026-02-27T13:25:09.463Z"
+    },
+    {
+      "id": "act_cd434d2b",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.79): Unexpected failure: Claude Code uses OAuth, not API keys -- agent subprocess auth fails",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:09.472Z"
+    },
+    {
+      "id": "act_180e97a3",
+      "type": "memory_stored",
+      "description": "[PAIN] state.json race conditions: concurrent writes corrupt data",
+      "details": "Multiple processes (MCP server, file watcher, Discord listener) writing state.json simultaneously caused truncation and data loss.",
+      "timestamp": "2026-02-27T13:25:12.210Z"
+    },
+    {
+      "id": "act_039a5998",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.79): Unexpected failure: state.json race conditions: concurrent writes corrupt data",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:12.215Z"
+    },
+    {
+      "id": "act_b253e8ca",
+      "type": "memory_stored",
+      "description": "[PAIN] Rust get_state still read deleted state.json after storage split -- white screen",
+      "details": "After splitting state.json into separate files, the Tauri Rust backend still read from the now-deleted state.json. App launched to white screen with no data.",
+      "timestamp": "2026-02-27T13:25:14.551Z"
+    },
+    {
+      "id": "act_d0a313bc",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.79): Unexpected failure: Rust get_state still read deleted state.json after storage split -- white screen",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:14.557Z"
+    },
+    {
+      "id": "act_042508b2",
+      "type": "memory_stored",
+      "description": "[PAIN] Killing MCP server from within Claude Code leaves session without tools",
+      "details": "Claude killed MCP server processes with kill commands. Claude Code didn't auto-restart it. Entire MCP toolchain went down, requiring full session restart.",
+      "timestamp": "2026-02-27T13:25:16.652Z"
+    },
+    {
+      "id": "act_e5fe317d",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.79): Unexpected failure: Killing MCP server from within Claude Code leaves session without tools",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:16.658Z"
+    },
+    {
+      "id": "act_2e83afd8",
+      "type": "memory_stored",
+      "description": "[PAIN] Strategy discussion lost to crash -- direction.json not written in time",
+      "details": "Vision and scope discussed during session wasn't captured to direction.json before a crash. After restart, Claude had no record. Pat had to re-share everything.",
+      "timestamp": "2026-02-27T13:25:19.156Z"
+    },
+    {
+      "id": "act_059e3a3d",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.79): Unexpected failure: Strategy discussion lost to crash -- direction.json not written in time",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:19.164Z"
+    },
+    {
+      "id": "act_22c4124a",
+      "type": "memory_stored",
+      "description": "[PAIN] Claude suggested removing Terminal PTY feature as workaround -- Pat annoyed",
+      "details": "After PTY killed by Tauri recompile, Claude suggested removing the Terminal PTY feature. This was a core product feature. Pat caught the wrong suggestion.",
+      "timestamp": "2026-02-27T13:25:21.583Z"
+    },
+    {
+      "id": "act_7ce57f7d",
+      "type": "brain_prediction",
+      "description": "Surprise detected (expectedness: 0.79): Unexpected failure: Claude suggested removing Terminal PTY feature as workaround -- Pat annoyed",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:21.590Z"
+    },
+    {
+      "id": "act_b6d5e6df",
+      "type": "task_updated",
+      "description": "[DONE] Bulk archive ~100 \"Completed: [task]\" auto-captured win memories",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:40.261Z"
+    },
+    {
+      "id": "act_532cea96",
+      "type": "task_updated",
+      "description": "[DONE] Ingest 32 uncaptured pain extractions from extracted-pains.json",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:40.296Z"
+    },
+    {
+      "id": "act_dd664dba",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Wire cortex merger into retrieval path",
+      "details": "",
+      "timestamp": "2026-02-27T13:25:47.088Z"
+    },
+    {
+      "id": "act_4813f6b8",
+      "type": "task_updated",
+      "description": "[DONE] Wire cortex merger into retrieval path",
+      "details": "Already wired: server.ts lines 418-422 merge cortex-learned.json entries with DEFAULT_CORTEX at retrieval time. cortex-learned.json shows 6 gaps processed. No learned entries saved yet (threshold not met), but the code path works.",
+      "timestamp": "2026-02-27T13:26:11.596Z"
+    },
+    {
+      "id": "act_921b46d0",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- Brain reflection crash fix: isDuplicateReflection now receives object in",
+      "timestamp": "2026-02-27T13:26:58.056Z"
+    },
+    {
+      "id": "act_4ee989b6",
+      "type": "signal_auto_capture",
+      "description": "Auto-stored 1 high-confidence signal(s) as memories",
+      "details": "",
+      "timestamp": "2026-02-27T13:33:47.622Z"
+    },
+    {
+      "id": "act_05773394",
+      "type": "memory_retrieved",
+      "description": "Retrieved 8 memories for: \"Boardroom v2 parallel Qwen panel simple implementation\" (370 tag-ranked)",
+      "details": "PAIN MEMORY RETRIEVED (auto-cue from your prompt):\n- #mem_70238c60: Boardroom quality issues: 6 concrete problems identified from research sprint\n- #mem_7a3e2cbc: Research: multi-agent context management -- findings and recommendations\n- #mem_b3154ffe: Qwen 3.5 / Qwen3-Coder full evaluation (6-agent research sprint)\n- #mem_09c288bc: Research synthesis: AI memory systems -- our brain MO is research-aligned\n  -> Our brain architecture is research-aligned. It needs runtime and real usage, not removal. Every module should be evaluated against the founding pitch: does it help a new Claude instance get up to spee\n- #mem_4d10cfed: Pat's model preference: Sonnet 4.6 1M for subagents, Opus for coding\n  -> When spawning Task tool agents for research, reasoning, or deliberation, always set model=\"sonnet\". Only use Opus (default) for agents that write code.\n\nWIN MEMORY (you've handled this domain before):\n- #mem_bffb93f1: Completed: System resilience task force: address 10 failure points from architecture audit\n- #mem_87476412: Completed: Deep research: Qwen 3.5 model evaluation for Hello World integration\n- #mem_4c6f4aaa: Completed: Fix orphaned sessions in Timeline + backfill from JSONL transcripts",
+      "timestamp": "2026-02-27T13:33:47.633Z"
+    },
+    {
+      "id": "act_b6daf0d0",
+      "type": "task_updated",
+      "description": "[DONE] Build Boardroom v2: simple parallel Qwen panel",
+      "details": "Already implemented: panel.ts with runPanel(), hw_qwen_panel MCP tool, file injection, parallel Qwen calls, no char limit, results saved to .hello-world/panels/. 14 panels already run. Old round-robin boardroom kept alongside for backward compat.",
+      "timestamp": "2026-02-27T13:34:32.736Z"
+    },
+    {
+      "id": "act_bd6194b5",
+      "type": "task_updated",
+      "description": "[DONE] Fullsweep rundown view in the app",
+      "details": "Built in Session 63. FullsweepView.tsx on master (commit 4e0d658). Keybind S. get_fullsweep Rust command in lib.rs. fullsweep-results.json populated. Cargo dev mode compiling. Needs visual verification by pressing S in app.",
+      "timestamp": "2026-02-27T13:34:44.174Z"
+    },
+    {
+      "id": "act_4704325c",
+      "type": "signal_auto_capture",
+      "description": "Auto-stored 1 high-confidence signal(s) as memories",
+      "details": "",
+      "timestamp": "2026-02-27T13:37:40.529Z"
+    },
+    {
+      "id": "act_a8298d8b",
+      "type": "task_updated",
+      "description": "[DONE] Verify bug fixes after MCP restart: prediction wiring + linker null guard",
+      "details": "Both fixes confirmed in code: sessions.getCurrent() on lines 363/570, m.links ?? [] on lines 213/222/248 of store.ts. Runtime verified -- no brain_error entries for linker in activity.json this session.",
+      "timestamp": "2026-02-27T13:37:40.550Z"
+    },
+    {
+      "id": "act_ed896b2e",
+      "type": "task_updated",
+      "description": "[DONE] [DELIBERATE] Memory quality feedback loop and staleness management",
+      "details": "Implemented during Brain Magnum Opus S48-S51. rankMemories() in retrieval path (server.ts:423), scoreMemory() in pruner, quality gate in storeMemory(). Only remaining: review queue Dashboard widget (minor, can be a new task if wanted).",
+      "timestamp": "2026-02-27T13:37:42.566Z"
+    },
+    {
+      "id": "act_fab7a1ea",
+      "type": "task_updated",
+      "description": "[DONE] Memory capacity gauge: visual bar + capacity-based pruning trigger",
+      "details": "Merged into t_11939f7d (pruning redesign) which covers both capacity gauge and pruning triggers.",
+      "timestamp": "2026-02-27T13:37:47.214Z"
+    },
+    {
+      "id": "act_02ab1194",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Pat's rethink on multi-project: Instead of project-scoped co",
+      "timestamp": "2026-02-27T13:43:26.704Z"
+    },
+    {
+      "id": "act_035a7485",
+      "type": "decision_recorded",
+      "description": "Decision: Multi-project: hub model, not project-scoped switching",
+      "details": "Chosen: Hub model: one brain, one memory pool, no project switching. Tasks/memories get a project tag for filtering, not scoping. App respects launch directory (CWD bug) but doesn't partition state. The MP epic's 4 sub-tasks are replaced by a simple tag+filter approach.\nSimpler architecture, preserves cross-project learning, matches how IDEs work. Scoping memories per project would fragment the brain's most valuable asset: lessons that transfer across codebases. The project switcher UX was solving a problem that doesn't exist if there's nothing to switch.",
+      "timestamp": "2026-02-27T13:45:47.100Z"
+    },
+    {
+      "id": "act_32c51913",
+      "type": "task_updated",
+      "description": "[DONE] Multi-project support (Epic)",
+      "details": "Replaced by decision d_1b6a3600: hub model instead of project-scoped switching. No switcher, no scoping, no onboarding. One brain works everywhere. CWD bug fix (t_mp_cwd_bug) remains as standalone task.",
+      "timestamp": "2026-02-27T13:45:52.781Z"
+    },
+    {
+      "id": "act_170accc8",
+      "type": "task_updated",
+      "description": "[DONE] Split memories into global vs project-scoped",
+      "details": "Obsoleted by hub model decision (d_1b6a3600). All memory is global by default. No split needed.",
+      "timestamp": "2026-02-27T13:45:54.055Z"
+    },
+    {
+      "id": "act_3b8c613a",
+      "type": "task_updated",
+      "description": "[DONE] Auto-onboard: scan new projects with agents to populate all tabs",
+      "details": "Obsoleted by hub model decision (d_1b6a3600). No per-project onboarding needed. Just start working.",
+      "timestamp": "2026-02-27T13:45:55.056Z"
+    },
+    {
+      "id": "act_faf28c2a",
+      "type": "task_updated",
+      "description": "[DONE] Project switcher UX: clean swap between projects",
+      "details": "Obsoleted by hub model decision (d_1b6a3600). No switching UX needed. Hub model works on any project.",
+      "timestamp": "2026-02-27T13:45:56.088Z"
+    },
+    {
+      "id": "act_85079cd2",
+      "type": "task_updated",
+      "description": "[DONE] Buddy recap: Rust startup check + event emission",
+      "details": "Dropped by Pat. Buddy recap Rust startup check no longer needed.",
+      "timestamp": "2026-02-27T13:47:51.818Z"
+    },
+    {
+      "id": "act_adfb1b44",
+      "type": "decision_recorded",
+      "description": "Decision: Remove approvals and questions systems -- never used, all handled in terminal",
+      "details": "Chosen: Remove both systems: approvals (MCP tools, app view, Discord integration) and questions (MCP tools, app view). Approval gates in CLAUDE.md become simple \"ask Pat in chat\" rules. Questions are just conversation.\nNever used. Terminal conversation handles both. Removing reduces tool clutter, simplifies MCP server, removes unused app views.",
+      "timestamp": "2026-02-27T13:59:24.325Z"
+    },
+    {
+      "id": "act_fee994ad",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "scope entry added: Approvals system (hw_check_approval, hw_list_approvals, hw_resolve_approval) [OUT]",
+      "timestamp": "2026-02-27T13:59:26.806Z"
+    },
+    {
+      "id": "act_7cd2a812",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "scope entry added: Questions system (hw_add_question, hw_answer_question, Questions view) [OUT]",
+      "timestamp": "2026-02-27T13:59:31.007Z"
+    },
+    {
+      "id": "act_f1a533ad",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "scope entry added: SDD / Spec-Driven Development workflow [OUT]",
+      "timestamp": "2026-02-27T13:59:32.125Z"
+    },
+    {
+      "id": "act_0eda3f4c",
+      "type": "signal_auto_capture",
+      "description": "Auto-stored 1 high-confidence signal(s) as memories",
+      "details": "",
+      "timestamp": "2026-02-27T13:59:33.632Z"
+    },
+    {
+      "id": "act_b01ab722",
+      "type": "task_updated",
+      "description": "[DONE] Adopt Spec-Driven Development workflow",
+      "details": "Dropped. Pat scoped SDD out -- doesn't want it.",
+      "timestamp": "2026-02-27T13:59:33.650Z"
+    },
+    {
+      "id": "act_3cc8ebd3",
+      "type": "task_added",
+      "description": "Task: Remove approvals and questions systems from app and MCP",
+      "details": "Pat's direction: both are never used, annoying, all handled in terminal. Remove: (1) MCP tools: hw_check_approval, hw_list_approvals, hw_resolve_approval, hw_add_question, hw_answer_question. (2) App views: Questions view (keybind 4), any approvals UI. (3) Rust commands for questions/approvals if they exist. (4) CLAUDE.md references to approval gates. (5) Discord listener approval handling. Keep the data files (.hello-world/approvals.json, questions.json) as archives but stop reading/writing them.",
+      "timestamp": "2026-02-27T13:59:42.604Z"
+    },
+    {
+      "id": "act_4768ca4f",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Remove approvals and questions systems from app and MCP",
+      "details": "",
+      "timestamp": "2026-02-27T13:59:46.567Z"
+    },
+    {
+      "id": "act_0e262be6",
+      "type": "task_updated",
+      "description": "[DONE] Remove approvals and questions systems from app and MCP",
+      "details": "",
+      "timestamp": "2026-02-27T14:05:17.857Z"
+    },
+    {
+      "id": "act_1f754a64",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Deliberation room (AgentsView/chatroom) should auto-clear af",
+      "timestamp": "2026-02-27T14:05:57.313Z"
+    },
+    {
+      "id": "act_a31c200f",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Command palette in the app: menu showing all important /comm",
+      "timestamp": "2026-02-27T14:06:56.133Z"
+    },
+    {
+      "id": "act_ade28605",
+      "type": "task_added",
+      "description": "Task: Build command palette: clickable /commands menu that pastes to terminal",
+      "details": "Pat's request: A menu (like the ? keybind help modal) showing all important /commands with descriptions. Clickable -- clicking a command auto-copies/pastes it into the terminal chat input. Commands to include: /fullsweep, /clean-quit, /commit, /review-pr, /content-pipeline:scan, /social-engine:engage, /pulse, /market-intel:research, /memory-gardener:garden, etc. Implementation: new CommandPalette component, triggered by a keybind (maybe /), lists commands with one-line descriptions, click handler writes to PTY stdin or copies to clipboard.",
+      "timestamp": "2026-02-27T14:07:01.297Z"
+    },
+    {
+      "id": "act_bf07b01f",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Build command palette: clickable /commands menu that pastes to terminal",
+      "details": "",
+      "timestamp": "2026-02-27T14:07:05.580Z"
+    },
+    {
+      "id": "act_5e6e19b1",
+      "type": "task_updated",
+      "description": "[DONE] Build command palette: clickable /commands menu that pastes to terminal",
+      "details": "",
+      "timestamp": "2026-02-27T14:08:55.130Z"
+    },
+    {
+      "id": "act_70e09236",
+      "type": "signal_auto_capture",
+      "description": "Auto-stored 1 high-confidence signal(s) as memories",
+      "details": "",
+      "timestamp": "2026-02-27T14:10:51.340Z"
+    },
+    {
+      "id": "act_b85d9c6c",
+      "type": "task_added",
+      "description": "Task: Add command palette button to sidebar above overdrive",
+      "details": "Pat wants a visible button in the sidebar for the command palette, above the overdrive toggle. Should stand out with indigo accent.",
+      "timestamp": "2026-02-27T14:10:51.348Z"
+    },
+    {
+      "id": "act_a4130e99",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Add command palette button to sidebar above overdrive",
+      "details": "",
+      "timestamp": "2026-02-27T14:10:57.865Z"
+    },
+    {
+      "id": "act_8000e7ea",
+      "type": "task_updated",
+      "description": "[DONE] Add command palette button to sidebar above overdrive",
+      "details": "",
+      "timestamp": "2026-02-27T14:12:02.099Z"
+    },
+    {
+      "id": "act_76a45f21",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- Brain reflection crash fix: isDuplicateReflection passes object not stri",
+      "timestamp": "2026-02-27T14:14:42.965Z"
+    },
+    {
+      "id": "act_51eaf004",
+      "type": "handoff_written",
+      "description": "Restart handoff saved",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- Brain reflection crash fix: isDuplicateReflection passes object not stri",
+      "timestamp": "2026-02-27T14:16:01.993Z"
+    },
+    {
+      "id": "act_630f8ff7",
+      "type": "brain_plasticity",
+      "description": "Boosted 16 memory traces at session end",
+      "details": "",
+      "timestamp": "2026-02-27T14:16:04.966Z"
+    },
+    {
+      "id": "act_5bea89c9",
+      "type": "brain_rules",
+      "description": "Learned 3 new rule(s), reinforced 9",
+      "details": "",
+      "timestamp": "2026-02-27T14:16:04.976Z"
+    },
+    {
+      "id": "act_5f33c3a8",
+      "type": "brain_error",
+      "description": "end_session:reflection failed (degraded)",
+      "details": "Cannot read properties of undefined (reading 'toLowerCase')",
+      "timestamp": "2026-02-27T14:16:04.981Z"
+    },
+    {
+      "id": "act_76725549",
+      "type": "session_end",
+      "description": "Session ended",
+      "details": "Session 64: Fixed brain reflection + pruning crashes, archived 108 task-receipt wins, ingested 11 pains, rewrote 3 stale memory files, removed approvals + questions systems, built command palette with sidebar button, recorded hub model decision (kills MP epic), closed 12 tasks total (5 stale, 4 MP obsoleted, 3 built). Down from 19 pending to 5.",
+      "timestamp": "2026-02-27T14:16:04.987Z"
     }
   ]
 }
