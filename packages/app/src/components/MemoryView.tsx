@@ -4,10 +4,16 @@ import { useTauriData } from '../hooks/useTauriData.js';
 import { EmptyState, ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
 
+interface MemoryLink {
+  targetId: string;
+  relationship: string;
+  createdAt: string;
+}
+
 interface Memory {
   id: string;
   projectId: string;
-  type: 'pain' | 'win' | 'fact' | 'decision' | 'architecture';
+  type: 'pain' | 'win' | 'fact' | 'decision' | 'architecture' | 'reflection';
   title: string;
   content: string;
   rule: string;
@@ -17,6 +23,10 @@ interface Memory {
   accessCount: number;
   lastAccessed?: string;
   createdAt: string;
+  qualityScore?: number;
+  fingerprint?: string;
+  links?: MemoryLink[];
+  supersededBy?: string;
 }
 
 interface BrainState {
@@ -43,6 +53,7 @@ const TYPE_STYLE: Record<string, string> = {
   fact: 'bg-blue-500/20 text-blue-300',
   decision: 'bg-orange-500/20 text-orange-300',
   architecture: 'bg-violet-500/20 text-violet-300',
+  reflection: 'bg-indigo-500/20 text-indigo-300',
 };
 
 const SEVERITY_STYLE: Record<string, string> = {
@@ -100,6 +111,23 @@ function MemoryCard({ memory }: { memory: Memory }) {
           </span>
         </div>
         <div className="flex items-center gap-2 shrink-0">
+          {memory.qualityScore != null && (
+            <span
+              className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                memory.qualityScore >= 0.8 ? 'bg-green-500/15 text-green-400'
+                : memory.qualityScore >= 0.5 ? 'bg-yellow-500/15 text-yellow-400'
+                : 'bg-red-500/15 text-red-400'
+              }`}
+              title={`Quality: ${memory.qualityScore.toFixed(2)}`}
+            >
+              Q{memory.qualityScore.toFixed(1)}
+            </span>
+          )}
+          {(memory.links?.length ?? 0) > 0 && (
+            <span className="text-[10px] text-cyan-500" title={`${memory.links!.length} link(s)`}>
+              {memory.links!.length}L
+            </span>
+          )}
           <span className="text-[10px] text-gray-600" title="Access count">
             {memory.accessCount}x
           </span>
@@ -145,6 +173,30 @@ function MemoryCard({ memory }: { memory: Memory }) {
               <p className="text-xs text-yellow-300/80 mt-0.5">{memory.rule}</p>
             </div>
           )}
+          {(memory.links?.length ?? 0) > 0 && (
+            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded px-3 py-2">
+              <span className="text-[10px] uppercase tracking-wider text-cyan-500/80 font-semibold">
+                Links ({memory.links!.length})
+              </span>
+              <div className="flex flex-wrap gap-1.5 mt-1">
+                {memory.links!.map((link, i) => (
+                  <span key={i} className="text-[10px] text-cyan-400/80 bg-cyan-500/10 px-1.5 py-0.5 rounded">
+                    {link.relationship} {link.targetId.slice(0, 12)}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {memory.supersededBy && (
+            <div className="text-[10px] text-gray-500 italic">
+              Superseded by {memory.supersededBy}
+            </div>
+          )}
+          <div className="flex gap-3 text-[10px] text-gray-600">
+            <span>ID: {memory.id}</span>
+            <span>Created: {new Date(memory.createdAt).toLocaleDateString()}</span>
+            {memory.fingerprint && <span>FP: {memory.fingerprint.slice(0, 8)}</span>}
+          </div>
         </div>
       )}
     </button>
@@ -173,7 +225,7 @@ export function MemoryView() {
   const memories = memoriesData?.memories ?? [];
   const brain = brainData?.state;
   const filtered = filter === 'all' ? memories : memories.filter((m) => m.type === filter);
-  const types: MemoryType[] = ['all', 'pain', 'win', 'fact', 'decision', 'architecture'];
+  const types: MemoryType[] = ['all', 'pain', 'win', 'fact', 'decision', 'architecture', 'reflection'];
 
   return (
     <ViewShell title="Memory" description={`${memories.length} memories stored in the brain`}>
