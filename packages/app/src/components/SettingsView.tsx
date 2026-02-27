@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { THEMES, useThemeStore } from '../stores/theme.js';
+import { AvatarPicker, getSavedAvatarId, saveAvatarId } from './buddy-avatars.js';
 import { ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
 
@@ -166,6 +167,17 @@ export function SettingsView() {
           <p className="text-[10px] text-gray-600 mt-2">
             Changes buddy color and UI accent. Right-click buddy to mute/unmute.
           </p>
+
+          <div className="mt-6">
+            <div className={labelClass}>Buddy Avatar</div>
+            <AvatarPicker
+              selected={getSavedAvatarId()}
+              onSelect={(id) => saveAvatarId(id)}
+            />
+            <p className="text-[10px] text-gray-600 mt-2">
+              Pick a buddy character. Takes effect on next app restart.
+            </p>
+          </div>
         </section>
 
         <section>

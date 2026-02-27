@@ -3,6 +3,7 @@ import { emit, listen } from '@tauri-apps/api/event';
 import { currentMonitor, getCurrentWindow, LogicalPosition } from '@tauri-apps/api/window';
 import { useEffect, useRef, useState } from 'react';
 import { getTheme } from '../stores/theme.js';
+import { getAvatarById, getSavedAvatarId, type BuddyState } from './buddy-avatars.js';
 
 type ActivityState = 'waiting' | 'responding' | 'shocked' | 'happy';
 type VisualState = ActivityState | 'error';
@@ -208,6 +209,16 @@ export function BuddyOverlay() {
 
   const theme = getTheme(themeId);
   const visual: VisualState = hasError ? 'error' : activity;
+
+  // Avatar system: map visual state to BuddyState
+  const avatarId = getSavedAvatarId();
+  const avatarEntry = getAvatarById(avatarId);
+  const AvatarComp = avatarEntry.component;
+  const buddyState: BuddyState =
+    visual === 'error' ? 'error'
+    : visual === 'responding' ? 'working'
+    : visual === 'shocked' ? 'thinking'
+    : 'idle';
 
   // Body color follows state
   const bodyColor =
@@ -506,21 +517,17 @@ export function BuddyOverlay() {
           </div>
         )}
 
-        {/* Block-art avatar — animated container */}
-        <div style={{ animation: bodyAnim, position: 'relative', zIndex: 1 }}>
-          <div
-            style={{
-              fontFamily: '"Courier New", Courier, monospace',
-              fontSize: '15px',
-              lineHeight: '0.95',
-              color: overdrive ? '#fbbf24' : bodyColor,
-              transition: 'color 0.25s ease, filter 0.3s ease',
-              whiteSpace: 'pre',
-              textAlign: 'left',
-              filter: overdrive ? 'none' : 'none',
-              animation: overdrive ? 'overdrive-glow 2s ease-in-out infinite' : 'none',
-            }}
-          >{`▐▛███▜▌\n▝▜█████▛▘\n  ▘▘ ▝▝  `}</div>
+        {/* Avatar — uses selected avatar from buddy-avatars gallery */}
+        <div style={{
+          position: 'relative', zIndex: 1,
+          animation: overdrive ? 'overdrive-glow 2s ease-in-out infinite' : 'none',
+        }}>
+          <AvatarComp
+            state={buddyState}
+            size={48}
+            color={overdrive ? '#fbbf24' : theme.buddyIdle}
+            activeColor={overdrive ? '#fb923c' : theme.buddyActive}
+          />
         </div>
 
         {/* Overdrive label */}
