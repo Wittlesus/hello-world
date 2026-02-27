@@ -3,9 +3,62 @@ import { initBrainState } from '../brain/state.js';
 import type { MemoryStore } from '../brain/store.js';
 import type { StateManager } from '../state.js';
 import { JsonStore } from '../storage.js';
-import type { Decision, Question, Session, Task } from '../types.js';
+import type { Decision, Question, Session, SessionOutcomeTag, Task } from '../types.js';
 import { SessionSchema } from '../types.js';
 import { generateId, now } from '../utils.js';
+
+/** Infer outcome tags from session data + activity log. Pure computation, zero LLM. */
+export function classifySessionOutcome(
+  session: Session,
+  activityTypes: string[],
+): SessionOutcomeTag[] {
+  const tags: SessionOutcomeTag[] = [];
+  const tasksDone = session.tasksCompleted.length;
+  const decisions = session.decisionsMade.length;
+  const hasNotify = activityTypes.includes('notification');
+  const hasStrikeHalt = activityTypes.includes('strike_halt');
+  const hasCommit = activityTypes.some(t => t === 'session_end');
+  const editCount = activityTypes.filter(t => t === 'task_updated' || t === 'task_added').length;
+  const retrieveCount = activityTypes.filter(t => t === 'memory_retrieved').length;
+  const strikeCount = activityTypes.filter(t => t === 'strike_recorded').length;
+
+  // Blocked: notified Pat or hit two-strike halt
+  if (hasStrikeHalt || (hasNotify && tasksDone === 0)) {
+    tags.push('blocked');
+  }
+
+  // Debugging: strikes recorded or high failure signals
+  if (strikeCount >= 1) {
+    tags.push('debugging');
+  }
+
+  // Shipping: tasks completed and session ended cleanly
+  if (tasksDone >= 1 && hasCommit) {
+    tags.push('shipping');
+  }
+
+  // Building: tasks being worked on (edits happening)
+  if (editCount >= 3 && tasksDone >= 1) {
+    tags.push('building');
+  }
+
+  // Planning: decisions made or deliberation activity
+  if (decisions >= 1 || activityTypes.includes('boardroom_created') || activityTypes.includes('panel_started')) {
+    tags.push('planning');
+  }
+
+  // Exploring: high retrieval, low task completion
+  if (retrieveCount >= 3 && tasksDone === 0) {
+    tags.push('exploring');
+  }
+
+  // Default: if nothing matched, infer from activity volume
+  if (tags.length === 0) {
+    tags.push(editCount > 0 ? 'building' : 'exploring');
+  }
+
+  return tags;
+}
 
 export interface ContextSnapshot {
   projectName: string;
@@ -47,14 +100,16 @@ export class SessionManager {
     return session;
   }
 
-  end(summary: string, costUsd = 0, tokensUsed = 0): Session | null {
+  end(summary: string, costUsd = 0, tokensUsed = 0, activityTypes: string[] = []): Session | null {
     if (!this.current) return null;
+    const outcomeTags = classifySessionOutcome(this.current, activityTypes);
     const ended: Session = {
       ...this.current,
       endedAt: now(),
       summary,
       costUsd,
       tokensUsed,
+      outcomeTags,
     };
     this.current = null;
     this.store.update((data) => ({

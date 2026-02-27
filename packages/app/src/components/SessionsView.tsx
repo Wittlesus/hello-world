@@ -4,6 +4,8 @@ import { useTauriData } from '../hooks/useTauriData.js';
 import { EmptyState, ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
 
+type SessionOutcomeTag = 'building' | 'shipping' | 'debugging' | 'exploring' | 'planning' | 'blocked';
+
 interface Session {
   id: string;
   startedAt: string;
@@ -13,7 +15,17 @@ interface Session {
   costUsd: number;
   tokensUsed: number;
   summary: string;
+  outcomeTags?: SessionOutcomeTag[];
 }
+
+const TAG_STYLES: Record<SessionOutcomeTag, { bg: string; text: string }> = {
+  building: { bg: 'bg-blue-500/20', text: 'text-blue-300' },
+  shipping: { bg: 'bg-green-500/20', text: 'text-green-300' },
+  debugging: { bg: 'bg-red-500/20', text: 'text-red-300' },
+  exploring: { bg: 'bg-yellow-500/20', text: 'text-yellow-300' },
+  planning: { bg: 'bg-purple-500/20', text: 'text-purple-300' },
+  blocked: { bg: 'bg-orange-500/20', text: 'text-orange-300' },
+};
 
 interface ActivityEvent {
   id: string;
@@ -141,6 +153,14 @@ function SessionCard({
               Active
             </span>
           )}
+          {session.outcomeTags && session.outcomeTags.length > 0 && session.outcomeTags.map(tag => {
+            const style = TAG_STYLES[tag];
+            return (
+              <span key={tag} className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${style.bg} ${style.text} shrink-0`}>
+                {tag}
+              </span>
+            );
+          })}
           <div className="flex items-center gap-2 text-xs text-gray-400 flex-wrap">
             <span>{formatDateTime(session.startedAt)}</span>
             <span className="text-gray-700">·</span>

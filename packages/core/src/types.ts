@@ -162,6 +162,16 @@ export type BrainState = z.infer<typeof BrainStateSchema>;
 
 // ── Sessions ────────────────────────────────────────────────────
 
+export const SessionOutcomeTag = z.enum([
+  'building',
+  'shipping',
+  'debugging',
+  'exploring',
+  'planning',
+  'blocked',
+]);
+export type SessionOutcomeTag = z.infer<typeof SessionOutcomeTag>;
+
 export const SessionSchema = z.object({
   id: z.string(),
   startedAt: z.string().datetime(),
@@ -171,6 +181,7 @@ export const SessionSchema = z.object({
   costUsd: z.number().default(0),
   tokensUsed: z.number().default(0),
   summary: z.string().default(''),
+  outcomeTags: z.array(SessionOutcomeTag).default([]),
 });
 
 export type Session = z.infer<typeof SessionSchema>;

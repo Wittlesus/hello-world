@@ -964,7 +964,8 @@ server.registerTool('hw_end_session', {
 
   // Zone G: Session end (critical -- NOT degradable)
   activity.append('session_end', 'Session ended', args.summary);
-  const session = sessions.end(args.summary);
+  const activityTypes = activity.getAll().map(a => a.type);
+  const session = sessions.end(args.summary, 0, 0, activityTypes);
   if (!session) return text('No active session.');
 
   let response = `Session ${session.id} ended. ${session.startedAt} -> ${session.endedAt}`;
