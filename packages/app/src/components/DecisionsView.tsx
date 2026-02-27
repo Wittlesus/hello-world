@@ -35,7 +35,6 @@ function DecisionCard({ decision }: { decision: Decision }) {
   const by = DECIDED_BY_CONFIG[decision.decidedBy] ?? {
     style: 'bg-gray-500/20 text-gray-300',
     label: decision.decidedBy,
-    label: decision.decidedBy,
   };
 
   return (
