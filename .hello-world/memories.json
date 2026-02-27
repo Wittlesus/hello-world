@@ -1498,9 +1498,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.3000000000000003,
-      "accessCount": 8,
+      "accessCount": 9,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-27T13:19:51.383Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_823838dc",
@@ -1539,9 +1539,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.3000000000000003,
-      "accessCount": 7,
+      "accessCount": 8,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-27T13:19:51.383Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1560,9 +1560,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.2000000000000002,
-      "accessCount": 7,
+      "accessCount": 8,
       "createdAt": "2026-02-25T08:14:24.115Z",
-      "lastAccessed": "2026-02-27T13:19:51.383Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_254f24ba",
@@ -1619,9 +1619,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.2000000000000002,
-      "accessCount": 4,
+      "accessCount": 5,
       "createdAt": "2026-02-25T08:14:43.154Z",
-      "lastAccessed": "2026-02-27T13:19:51.383Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_286ad94e",
@@ -1750,9 +1750,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1.1,
-      "accessCount": 5,
+      "accessCount": 6,
       "createdAt": "2026-02-25T08:15:06.038Z",
-      "lastAccessed": "2026-02-26T15:23:48.368Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_9fdb8bf1",
@@ -1865,9 +1865,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.2000000000000002,
-      "accessCount": 3,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:15:24.783Z",
-      "lastAccessed": "2026-02-27T10:53:54.957Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_d26abc7a",
@@ -2125,9 +2125,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1.1,
-      "accessCount": 4,
+      "accessCount": 5,
       "createdAt": "2026-02-25T08:16:04.553Z",
-      "lastAccessed": "2026-02-26T13:22:22.731Z"
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_59e03bc4",
@@ -4389,57 +4389,6 @@
       "fingerprint": "876545d96be6"
     },
     {
-      "id": "mem_2372c3be",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Forgotten work: reflection + prediction modules built but never wired into auto-triggers",
-      "content": "reflection.ts and prediction.ts have 51 tests, 1,683 lines of code, but ZERO production calls. They were built in the Brain Magnum Opus (S49) but never wired into auto-triggers. Reflection should fire after significant sessions. Prediction should fire when retrieval patterns shift. Both are complete code sitting idle. This is the #1 forgotten item by impact.",
-      "rule": "",
-      "tags": [
-        "brain",
-        "reflection",
-        "prediction",
-        "unwired",
-        "high-priority"
-      ],
-      "severity": "high",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 2,
-      "createdAt": "2026-02-26T17:55:53.321Z",
-      "links": [
-        {
-          "targetId": "mem_6b07e1cf",
-          "relationship": "related",
-          "createdAt": "2026-02-26T17:55:53.332Z"
-        }
-      ],
-      "qualityScore": 0.7,
-      "fingerprint": "3ead77b2b251",
-      "lastAccessed": "2026-02-27T13:19:51.383Z"
-    },
-    {
-      "id": "mem_baaadbab",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Forgotten work: cortex-learned.json populated but never merged into retrieval",
-      "content": "cortex-learner.ts populates cortex-learned.json with gap entries when retrieval misses, but the retrieval engine never reads cortex-learned.json back. The merger that would fold learned entries into DEFAULT_CORTEX was designed but never implemented. Learned cortex data is being collected and thrown away.",
-      "rule": "",
-      "tags": [
-        "brain",
-        "cortex",
-        "unwired",
-        "retrieval"
-      ],
-      "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
-      "createdAt": "2026-02-26T17:55:56.167Z",
-      "links": [],
-      "qualityScore": 0.7,
-      "fingerprint": "e4a7db13deb3",
-      "lastAccessed": "2026-02-27T10:34:56.496Z"
-    },
-    {
       "id": "mem_85ea09b1",
       "projectId": "Claude AI Interface",
       "type": "fact",
@@ -5252,26 +5201,6 @@
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "a7672d9fd144"
-    },
-    {
-      "id": "mem_bd42dc89",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Historical cost: $116.08 total, 293M tokens across first 24 sessions",
-      "content": "From session 43 audit: total project cost through first 24 sessions was $116.08, consuming 293M tokens. 24 memories were backfilled from activity logs during that session. This is the baseline cost figure for the project's first week.",
-      "rule": "",
-      "tags": [
-        "cost",
-        "metrics",
-        "historical"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T18:11:21.193Z",
-      "links": [],
-      "qualityScore": 0.5,
-      "fingerprint": "3f86dd527ba7"
     },
     {
       "id": "mem_343c9c71",
@@ -7468,11 +7397,12 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-27T12:23:23.868Z",
       "links": [],
       "qualityScore": 0.5,
-      "fingerprint": "528c4f73020d"
+      "fingerprint": "528c4f73020d",
+      "lastAccessed": "2026-02-27T14:26:41.526Z"
     },
     {
       "id": "mem_29f9816d",
@@ -7752,35 +7682,6 @@
       "links": [],
       "qualityScore": 1,
       "fingerprint": "d94d829b571f",
-      "decayExempt": true
-    },
-    {
-      "id": "mem_acf32420",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Rust get_state still read deleted state.json after storage split -- white screen",
-      "content": "After splitting state.json into separate files, the Tauri Rust backend still read from the now-deleted state.json. App launched to white screen with no data.",
-      "rule": "When migrating storage layout, update ALL readers: TypeScript MCP server, Rust Tauri commands, and hooks. Rust get_state must merge split files into expected shape.",
-      "tags": [
-        "rust",
-        "migration",
-        "storage",
-        "white-screen",
-        "readers"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T13:25:14.538Z",
-      "links": [
-        {
-          "targetId": "mem_9a5f3276",
-          "relationship": "related",
-          "createdAt": "2026-02-27T13:25:14.547Z"
-        }
-      ],
-      "qualityScore": 1,
-      "fingerprint": "241ce70c177b",
       "decayExempt": true
     },
     {
@@ -8168,25 +8069,6 @@
       "fingerprint": "4080552d9eda"
     },
     {
-      "id": "mem_52e38338",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: t?  ---  ### 6. MCP Watchdog **What:** MCP server crash = si",
-      "content": "t?  ---  ### 6. MCP Watchdog **What:** MCP server crash = silent death. Claude loses all hw_* tools with no notification. **Fix (Option A):** Add PID liven",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T13:59:33.627Z",
-      "links": [],
-      "qualityScore": 0.45,
-      "fingerprint": "e340063c6c40"
-    },
-    {
       "id": "mem_4565330a",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -8251,25 +8133,6 @@
       "fingerprint": "6d792e774ec3"
     },
     {
-      "id": "mem_61cf4970",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: clipboard if PTY unavailable - Esc to close  Also fixed the ",
-      "content": "clipboard if PTY unavailable - Esc to close  Also fixed the HelpModal keybinds (were stale). Committed `ad230c8`.",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T14:10:51.334Z",
-      "links": [],
-      "qualityScore": 0.55,
-      "fingerprint": "567bf4a62c72"
-    },
-    {
       "id": "mem_143686cf",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -8288,6 +8151,414 @@
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "6244b65bc89f"
+    },
+    {
+      "id": "mem_ba92c413",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Bug: App ignores launch directory, always uses stale projectPath from ~/.hello-world-app.json",
+      "content": "Root cause found, full Rust patch prepared. Fix: add detect_and_set_project() function that captures CWD at startup, checks for .hello-world/ dir, auto-updates ~/.hello-world-app.json. Also adds --project CLI arg and get_launch_dir() command. Patch requires worktree (Rust change). No frontend changes needed -- existing get_app_project_path flow picks up the updated config transparently.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug",
+        "p1",
+        "multi-project",
+        "startup"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:30:27.704Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "82166cdc472c"
+    },
+    {
+      "id": "mem_082eea48",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Auto-clear old deliberation sessions from AgentsView",
+      "content": "Deliberation room (AgentsView/chatroom) should auto-clear after a certain time. Old deliberation sessions shouldn't persist forever in the UI. Implement TTL or manual clear button.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "strategy",
+        "validation",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:35:02.661Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "f668a438b649"
+    },
+    {
+      "id": "mem_add25024",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix duplicate key TS error in DecisionsView.tsx",
+      "content": "Pre-existing TypeScript error: duplicate 'label' key in object literal at line 37-38 of DecisionsView.tsx. Quick one-line fix.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging",
+        "errors"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:35:47.380Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "8530a2e953ed"
+    },
+    {
+      "id": "mem_e7a80fa2",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Proactive task creation -- Claude should auto-create tasks from work",
+      "content": "Claude has stopped proactively creating tasks. The pre-tool-gate hook blocks edits without an active task, but Claude should also be creating tasks from Pat's direction notes, from bugs discovered during sessions, and from follow-up work identified during builds. Add a UserPromptSubmit hook check: if Pat's message contains actionable items (bugs, features, requests), create tasks before doing anything else.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "strategy",
+        "validation",
+        "hooks"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:45:22.226Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "6eb4649dffb0"
+    },
+    {
+      "id": "mem_f9453a30",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Pruning redesign: capacity-based triggers, visual bar, agent cleanup on /clean-quit",
+      "content": "Pat's direction (Feb 27): (1) No time-based or session-end pruning. Pruning triggers when memory count hits a capacity threshold. (2) Show memory usage as a visual bar in the app, same style as cost/usage bars. (3) On /clean-quit, spawn an agent that combs through memories for: truly unnecessary entries, mistakes, duplicates -- not arbitrary score cutoffs. (4) Memories get breathing room to prove their worth. Items 2-3 partially exist (clean-quit already has agent review). Need: capacity threshold trigger, visual bar, remove any remaining time-based pruning.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "styling",
+        "frontend",
+        "tokens",
+        "strategy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:49:56.321Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "dd2990872b89"
+    },
+    {
+      "id": "mem_824c538d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: MCP server health check / watchdog",
+      "content": "The sentinel monitors the app PID but not the MCP server PID. Silent MCP crashes leave Claude without any hw_* tools with no notification. Build a watchdog that monitors the MCP server PID and either restarts it or pings Pat via Discord. Critical resilience gap.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "model-selection",
+        "build",
+        "compilation",
+        "strategy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T14:51:21.895Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "0dc6a6953636"
+    },
+    {
+      "id": "mem_783a5d06",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Knowledge intake: two-phase pipeline with manual-first trial",
+      "content": "Context: Research pipeline was 100% manual. Deliberated with 5 agents (Product Mgr, Backend Arch, Cost Analyst, DevOps, Pragmatist) over 2 structured rounds. Key tension: session-start vs weekly scheduler vs on-demand. Pragmatist's \"automate what works\" principle shifted 4/5 agents toward manual trial first.\nChosen: Phase 1: manual /scan writing to knowledge-queue.json staging file, zero-LLM scan, existing quality gates, max 5 memories/cycle. Phase 2: weekly Task Scheduler after 3-week trial IF 3+ useful memories stored and retrieved. Kill switch if no value proven.\nRationale: Every agent agreed on zero-LLM scanning and tight source list. The room shifted from automation-first to prove-value-first after Pragmatist challenged whether manual intake even works well enough to automate. Cost Analyst's math showed session-start triggers would cost more than weekly batches. DevOps's staging file pattern provides observability and rollback.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:03:53.344Z",
+      "links": [],
+      "qualityScore": 0.65,
+      "fingerprint": "b86a3ea8d1a8"
+    },
+    {
+      "id": "mem_d76ded0c",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Knowledge intake deliberation outcome: manual-first, two-phase pipeline",
+      "content": "5-agent deliberation concluded. Phase 1: manual /scan to knowledge-queue.json, zero-LLM HTTP+regex scan, deps-only sources (package.json, Tauri, Anthropic), existing quality gates, max 5 memories/cycle, block above 250. Phase 2: weekly Task Scheduler after 3-week trial IF 3+ useful memories proven. Kill feature if no value. Cost: under $0.05/manual, under $1/month automated. Key principle: automate what works, not what we hope works.",
+      "rule": "",
+      "tags": [
+        "knowledge-intake",
+        "deliberation",
+        "architecture",
+        "pipeline"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:03:56.470Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "5c21507afacf",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_d8f8b814",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: [DELIBERATE] Knowledge intake scheduling and automation",
+      "content": "Research pipeline is currently manual -- someone has to trigger it. Needs deliberation on: (1) What cadence makes sense (weekly? on-demand?), (2) What sources to auto-scan (GitHub trending, HN, specific subreddits), (3) How to avoid memory bloat from automated intake, (4) Whether this should be a cron job, a hook, or triggered by the app.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "validation",
+        "strategy",
+        "github",
+        "git",
+        "social",
+        "memory",
+        "performance",
+        "ai-tells"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:04:01.311Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "cf77315f6024"
+    },
+    {
+      "id": "mem_bbf04680",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Raise memory cap to 1000 and chatroom char limit to 2000",
+      "content": "Memory cap: 300 -> 1000 (Pat confirmed 5MB ceiling, current usage 370KB). Chatroom message limit: 670 -> 2000 chars (deliberation cross-exams were getting compressed to ~40% of their content). Update pruner.ts MEMORY_CAPACITY and server.ts message length checks + descriptions.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "config",
+        "quick-fix"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:11:52.230Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "a331cbb6e1c7"
+    },
+    {
+      "id": "mem_e7db40a7",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"mcp\" domain (6 pain memories)",
+      "content": "Tag \"mcp\" appears in 6 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "mcp",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.672Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "6aabe8cbd1e7",
+      "supersededBy": "mem_377dd449"
+    },
+    {
+      "id": "mem_377dd449",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"tooling\" domain (8 pain memories)",
+      "content": "Tag \"tooling\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "tooling",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.687Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "81bd9f1b9ad0",
+      "supersededBy": "mem_f8df30df"
+    },
+    {
+      "id": "mem_f8df30df",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"immediate-win\" domain (8 pain memories)",
+      "content": "Tag \"immediate-win\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "immediate-win",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.705Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "68f7d0e5b0ba",
+      "supersededBy": "mem_d5b7740d"
+    },
+    {
+      "id": "mem_d5b7740d",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"research\" domain (9 pain memories)",
+      "content": "Tag \"research\" appears in 9 pain memories recently.\nExamples: Perplexity MCP -- deep web research on demand; Code Research MCP -- unified dev search; Research synthesis: AI memory systems -- our brain MO is research-aligned\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "research",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.722Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "6db0d20030cd",
+      "supersededBy": "mem_4d1430da"
+    },
+    {
+      "id": "mem_4d1430da",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"rust\" domain (11 pain memories)",
+      "content": "Tag \"rust\" appears in 11 pain memories recently.\nExamples: Cargo.toml release profile optimizations; tauri-specta -- auto-generate TS bindings from Rust commands; Tauri Channels -- streaming IPC to replace file-watcher polling\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "rust",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.741Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "74c174c3194b"
+    },
+    {
+      "id": "mem_4a43a219",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[consolidation] Consolidated insight: auto-captured, strategy, validation domain (5 sources)",
+      "content": "Consolidated from 5 memories:\n  - Completed: Build auto-capture signal detector and wire into hooks\n  - Completed: Design automatic memory capture -- detect and store significant moments\n  - Completed: Build deliberation and research transcript timeline subtab\n  - Completed: Deep research: Qwen 3.5 model evaluation for Hello World integration\n  - Completed: Auto-populate Timeline and Context tabs from brain data\nCommon tags: auto-captured, strategy, validation, memory\nAbstracted rule: Pattern across 5 memories in [auto-captured, strategy, validation] domain",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "consolidation",
+        "auto-captured",
+        "strategy",
+        "validation",
+        "memory",
+        "consolidated",
+        "insight",
+        "domain",
+        "sources"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.766Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "4a0ae8919500"
+    },
+    {
+      "id": "mem_5896971d",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[consolidation] Consolidated insight: brain, reflection, prediction domain (3 sources)",
+      "content": "Consolidated from 3 memories:\n  - S49 Brain Magnum Opus: 4 new modules, 106 new tests, zero build errors\n  - Forgotten work: reflection + prediction modules built but never wired into auto-triggers\n  - Forgotten work: cortex-learned.json populated but never merged into retrieval\nCommon tags: brain, reflection, prediction, unwired\nAbstracted rule: Pattern across 3 memories in [brain, reflection, prediction] domain",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "consolidation",
+        "brain",
+        "prediction",
+        "unwired",
+        "consolidated",
+        "insight",
+        "domain",
+        "sources"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T15:32:50.781Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "9056ce633ed0"
     }
   ]
 }
