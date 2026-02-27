@@ -1248,19 +1248,33 @@ pub fn run() {
         .on_window_event(|window, event| {
             if window.label() == "main" {
                 if let tauri::WindowEvent::CloseRequested { .. } = event {
-                    // Stamp endedAt on the latest session so sentinel knows this was a clean exit
+                    // Run session-end hook to generate summary from activity log
                     if let Some(project_path) = get_app_project_path() {
-                        let sessions_path = PathBuf::from(&project_path)
-                            .join(".hello-world")
-                            .join("sessions.json");
-                        if let Ok(contents) = fs::read_to_string(&sessions_path) {
-                            if let Ok(mut data) = serde_json::from_str::<Value>(&contents) {
-                                if let Some(sessions) = data.get_mut("sessions").and_then(|s| s.as_array_mut()) {
-                                    if let Some(latest) = sessions.last_mut() {
-                                        if latest.get("endedAt").and_then(|v| v.as_str()).is_none() {
-                                            latest["endedAt"] = Value::String(utc_now_iso());
-                                            if let Ok(out) = serde_json::to_string_pretty(&data) {
-                                                let _ = fs::write(&sessions_path, out);
+                        let hook_path = PathBuf::from(&project_path)
+                            .join(".claude")
+                            .join("hooks")
+                            .join("session-end.mjs");
+                        if hook_path.exists() {
+                            let _ = std::process::Command::new("node")
+                                .arg(&hook_path)
+                                .current_dir(&project_path)
+                                .stdout(std::process::Stdio::null())
+                                .stderr(std::process::Stdio::null())
+                                .status(); // blocks until done (< 1 sec)
+                        } else {
+                            // Fallback: just stamp endedAt if hook doesn't exist
+                            let sessions_path = PathBuf::from(&project_path)
+                                .join(".hello-world")
+                                .join("sessions.json");
+                            if let Ok(contents) = fs::read_to_string(&sessions_path) {
+                                if let Ok(mut data) = serde_json::from_str::<Value>(&contents) {
+                                    if let Some(sessions) = data.get_mut("sessions").and_then(|s| s.as_array_mut()) {
+                                        if let Some(latest) = sessions.last_mut() {
+                                            if latest.get("endedAt").and_then(|v| v.as_str()).is_none() {
+                                                latest["endedAt"] = Value::String(utc_now_iso());
+                                                if let Ok(out) = serde_json::to_string_pretty(&data) {
+                                                    let _ = fs::write(&sessions_path, out);
+                                                }
                                             }
                                         }
                                     }
