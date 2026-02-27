@@ -20,6 +20,7 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_mode: ['mode.json'],
   get_deliberations: [],
   get_extracted_research: ['extracted-research.json'],
+  get_usage: ['qwen-usage.json'],
 };
 
 // ── Shared polling heartbeat ──────────────────────────────────────

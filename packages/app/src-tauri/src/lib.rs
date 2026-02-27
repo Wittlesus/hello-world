@@ -272,6 +272,11 @@ fn get_direction(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn get_usage(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "qwen-usage.json")
+}
+
+#[tauri::command]
 fn mark_direction_note_read(project_path: &str, note_id: String) -> Result<(), String> {
     let mut data = read_json_file(project_path, "direction.json")?;
     let notes = data["notes"]
@@ -1216,6 +1221,7 @@ pub fn run() {
             get_deliberations,
             get_workflow,
             get_direction,
+            get_usage,
             mark_direction_note_read,
             get_mode,
             set_mode,

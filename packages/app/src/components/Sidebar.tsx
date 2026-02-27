@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { useAppStore, type View } from '../stores/app.js';
+import { UsageBars } from './UsageBars.js';
 
 // Anthropic A-mark — matches Lucide stroke style at small sizes
 function AnthropicIcon({ size = 16 }: { size?: number }) {
@@ -241,6 +242,9 @@ export function Sidebar({ onShowHelp }: SidebarProps) {
           </div>
         )}
       </button>
+
+      {/* Usage bars */}
+      <UsageBars collapsed={sidebarCollapsed} />
 
       {/* Help + collapse */}
       {onShowHelp && (

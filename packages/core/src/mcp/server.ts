@@ -36,8 +36,10 @@ import { retrieveMemories } from '../brain/engine.js';
 import { recordSynapticActivity, recordMemoryTraces, applySynapticPlasticity } from '../brain/state.js';
 import { WatcherStore, type WatcherType } from '../watchers/store.js';
 import type { MemoryType, MemorySeverity } from '../types.js';
-import { analyzeGaps, learnFromObservations, createEmptyCortexStore } from '../brain/cortex-learner.js';
+import { analyzeGaps, learnFromObservations, createEmptyCortexStore, mergeCortex } from '../brain/cortex-learner.js';
 import type { CortexLearnedStore } from '../brain/cortex-learner.js';
+import { processPredictionEvent, createExpectationModel, createEventSignature, decayExpectationModel } from '../brain/prediction.js';
+import type { ExpectationModel } from '../brain/prediction-types.js';
 import { generateHealthReport, formatHealthReport } from '../brain/health.js';
 import { pruneMemories } from '../brain/pruner.js';
 import type { MemoryArchiveStore } from '../brain/pruner.js';
@@ -45,7 +47,7 @@ import { extractRuleCandidates, learnRules, createEmptyRulesStore } from '../bra
 import type { LearnedRulesStore } from '../brain/rules.js';
 import { DEFAULT_CORTEX } from '../types.js';
 import { findLinks } from '../brain/linker.js';
-import { findContradictions } from '../brain/scoring.js';
+// findContradictions is handled inline via quality-gate + linker (not needed here)
 import {
   shouldReflect, generateMetaObservations, createReflection,
   filterRecentMemories, clusterByTagOverlap, generateConsolidation,
@@ -115,6 +117,7 @@ let watchers: WatcherStore;
 let cortexStore: JsonStore<CortexLearnedStore>;
 let rulesStore: JsonStore<LearnedRulesStore>;
 let archiveStore: JsonStore<MemoryArchiveStore>;
+let expectationStore: JsonStore<ExpectationModel>;
 
 try {
   project = Project.open(projectRoot);
@@ -128,6 +131,7 @@ try {
   cortexStore = new JsonStore<CortexLearnedStore>(projectRoot, 'cortex-learned.json', createEmptyCortexStore());
   rulesStore = new JsonStore<LearnedRulesStore>(projectRoot, 'learned-rules.json', createEmptyRulesStore());
   archiveStore = new JsonStore<MemoryArchiveStore>(projectRoot, 'memories-archive.json', { archived: [], totalArchived: 0, lastPruned: new Date().toISOString() });
+  expectationStore = new JsonStore<ExpectationModel>(projectRoot, 'expectation-model.json', createExpectationModel());
 } catch {
   console.error(`No Hello World project at ${projectRoot}. Run 'hello-world init' first.`);
   process.exit(1);
@@ -174,7 +178,7 @@ function toolFiles(tool: string): string[] {
     hw_add_task:          ['state.json'],
     hw_update_task:       ['state.json'],
     hw_list_tasks:        [],
-    hw_store_memory:      ['memories.json', 'brain-state.json'],
+    hw_store_memory:      ['memories.json', 'brain-state.json', 'expectation-model.json'],
     hw_retrieve_memories: ['brain-state.json', 'memories.json'],
     hw_advance_phase:     ['workflow.json'],
     hw_get_workflow_state:[],
@@ -321,7 +325,12 @@ server.registerTool('hw_retrieve_memories', {
   const brainState = memoryStore.getBrainState();
 
   // Zone A: Core retrieval (primary -- circuit breaker wraps link traversal inside engine)
-  const result = retrieveMemories(args.prompt, memories, brainState);
+  // Merge learned cortex entries with default cortex for richer matching
+  const mergedCortex = safeBrainOp('retrieve:cortex_merge', () => {
+    const learned = cortexStore.read();
+    return mergeCortex(DEFAULT_CORTEX, learned.entries);
+  }, DEFAULT_CORTEX);
+  const result = retrieveMemories(args.prompt, memories, brainState, { cortex: mergedCortex.result });
 
   // Zone B: Brain state update (degradable)
   if (brainState) {
@@ -401,6 +410,70 @@ server.registerTool('hw_store_memory', {
       memoryStore.saveBrainState(bs);
     }
   }, undefined);
+
+  // Zone E: Reflection trigger (degradable -- check if brain should reflect)
+  safeBrainOp('store:reflection', () => {
+    const bs = memoryStore.getBrainState();
+    if (!bs) return;
+    const check = shouldReflect(bs);
+    if (!check.reflect) return;
+
+    const allMems = memoryStore.getAllMemories();
+    const recent = filterRecentMemories(allMems, 48); // last 48 hours
+    const observations = generateMetaObservations(recent);
+
+    for (const obs of observations) {
+      if (isDuplicateReflection(obs.summary, allMems)) continue;
+      const reflectionMem = createReflection(obs, obs.linkedMemoryIds);
+      memoryStore.storeMemory({
+        type: 'reflection',
+        title: reflectionMem.title,
+        content: reflectionMem.content,
+        tags: reflectionMem.tags,
+        severity: reflectionMem.severity,
+      });
+    }
+
+    // Reset counter after reflecting
+    bs.significantEventsSinceCheckpoint = 0;
+    memoryStore.saveBrainState(bs);
+    if (observations.length > 0) {
+      activity.append('brain_reflection', `Generated ${observations.length} meta-observation(s): ${check.reason}`);
+    }
+  }, undefined);
+
+  // Zone F: Prediction event (degradable -- update expectation model)
+  if (mem.type === 'pain' || mem.type === 'win') {
+    safeBrainOp('store:prediction', () => {
+      const model = expectationStore.read();
+      const bs = memoryStore.getBrainState();
+      const recentMems = memoryStore.getAllMemories()
+        .filter(m => m.createdAt > new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString())
+        .map(m => ({ createdAt: m.createdAt }));
+
+      const event = {
+        category: mem.type === 'pain' ? 'error' as const : 'system' as const,
+        description: mem.title,
+        details: mem.content,
+        tags: mem.tags,
+        valence: mem.type === 'pain' ? 'negative' as const : 'positive' as const,
+        severity: mem.severity,
+      };
+
+      const predResult = processPredictionEvent(event, model, recentMems, {
+        sessionId: sessions.current()?.id,
+        activeTaskId: undefined,
+        sessionMessageCount: bs?.messageCount ?? 0,
+      });
+
+      expectationStore.write(predResult.updatedModel);
+
+      if (predResult.captureResult.capture && predResult.captureResult.memory) {
+        const sm = predResult.captureResult.memory;
+        activity.append('brain_prediction', `Surprise detected (expectedness: ${predResult.captureResult.expectedness.toFixed(2)}): ${sm.title}`);
+      }
+    }, undefined);
+  }
 
   return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}`);
 });
@@ -767,7 +840,60 @@ server.registerTool('hw_end_session', {
     flushCortexGaps();
   }, undefined).degraded && degradations.push('cortex');
 
-  // Zone E: Session end (critical -- NOT degradable)
+  // Zone E: Sleep consolidation -- cluster related memories and generate reflections (degradable)
+  safeBrainOp('end_session:reflection', () => {
+    const allMems = memoryStore.getAllMemories();
+    const recent = filterRecentMemories(allMems, 72); // last 3 days
+    if (recent.length < 5) return;
+
+    // Meta-observations on recent patterns
+    const observations = generateMetaObservations(recent);
+    let storedCount = 0;
+    for (const obs of observations) {
+      if (isDuplicateReflection(obs.summary, allMems)) continue;
+      const reflectionMem = createReflection(obs, obs.linkedMemoryIds);
+      memoryStore.storeMemory({
+        type: 'reflection',
+        title: reflectionMem.title,
+        content: reflectionMem.content,
+        tags: reflectionMem.tags,
+        severity: reflectionMem.severity,
+      });
+      storedCount++;
+    }
+
+    // Consolidation -- cluster similar memories, create abstractions
+    const clusters = clusterByTagOverlap(recent, 2, 3);
+    for (const cluster of clusters.slice(0, 3)) {
+      const consolidated = generateConsolidation(cluster);
+      if (!consolidated) continue;
+      if (isDuplicateReflection(consolidated.summary, allMems)) continue;
+      const cMem = createReflection(consolidated, consolidated.sourceMemoryIds);
+      memoryStore.storeMemory({
+        type: 'reflection',
+        title: cMem.title,
+        content: cMem.content,
+        tags: cMem.tags,
+        severity: cMem.severity,
+      });
+      storedCount++;
+    }
+
+    if (storedCount > 0) {
+      activity.append('brain_reflection', `Session-end reflection: ${storedCount} reflection(s) generated`);
+    }
+  }, undefined).degraded && degradations.push('reflection');
+
+  // Zone F: Decay expectation model (degradable)
+  safeBrainOp('end_session:prediction_decay', () => {
+    const model = expectationStore.read();
+    if (model.totalEvents > 0) {
+      const decayed = decayExpectationModel(model);
+      expectationStore.write(decayed);
+    }
+  }, undefined).degraded && degradations.push('prediction');
+
+  // Zone G: Session end (critical -- NOT degradable)
   activity.append('session_end', 'Session ended', args.summary);
   const session = sessions.end(args.summary);
   if (!session) return text('No active session.');
