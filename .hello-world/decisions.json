@@ -297,6 +297,35 @@
       "rationale": "The tools were working before and their deletion was accidental. The safeguard hook prevents future accidental deletions during refactors. Belt-and-suspenders: the hook checks all 13 tool name strings exist in the file after every edit.",
       "decidedAt": "2026-02-27T10:31:10.968Z",
       "decidedBy": "both"
+    },
+    {
+      "id": "d_1b6a3600",
+      "title": "Multi-project: hub model, not project-scoped switching",
+      "context": "The MP epic (4 sub-tasks) assumed project-scoped context: separate memories per project, project switcher UX, auto-onboard, global vs local memory split. Pat questioned whether we should reset/switch at all. HW already works from any directory via global MCP. The brain's value comes from cross-project lessons, not isolation.",
+      "chosen": "Hub model: one brain, one memory pool, no project switching. Tasks/memories get a project tag for filtering, not scoping. App respects launch directory (CWD bug) but doesn't partition state. The MP epic's 4 sub-tasks are replaced by a simple tag+filter approach.",
+      "alternatives": [
+        {
+          "option": "Project-scoped switching (original MP epic)",
+          "tradeoff": "Isolates context per project but fragments brain knowledge, complex UX, 4 sub-tasks of work"
+        },
+        {
+          "option": "Hybrid: global brain + project-scoped tasks",
+          "tradeoff": "Middle ground but still needs switcher UX and adds complexity for marginal benefit"
+        }
+      ],
+      "rationale": "Simpler architecture, preserves cross-project learning, matches how IDEs work. Scoping memories per project would fragment the brain's most valuable asset: lessons that transfer across codebases. The project switcher UX was solving a problem that doesn't exist if there's nothing to switch.",
+      "decidedAt": "2026-02-27T13:45:47.095Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_8d6d0809",
+      "title": "Remove approvals and questions systems -- never used, all handled in terminal",
+      "context": "Pat finds the approvals gate system (hw_check_approval, hw_list_approvals, hw_resolve_approval) and the questions system (hw_add_question, hw_answer_question) annoying and never used. All of these interactions happen naturally in conversation. Dedicated systems and app views are overhead.",
+      "chosen": "Remove both systems: approvals (MCP tools, app view, Discord integration) and questions (MCP tools, app view). Approval gates in CLAUDE.md become simple \"ask Pat in chat\" rules. Questions are just conversation.",
+      "alternatives": [],
+      "rationale": "Never used. Terminal conversation handles both. Removing reduces tool clutter, simplifies MCP server, removes unused app views.",
+      "decidedAt": "2026-02-27T13:59:24.321Z",
+      "decidedBy": "pat"
     }
   ]
 }

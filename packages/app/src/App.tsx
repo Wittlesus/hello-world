@@ -2,7 +2,6 @@ import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { Activity, useCallback, useEffect, useRef, useState } from 'react';
 import { AgentsView } from './components/AgentsView.js';
-import { ApprovalQueue } from './components/ApprovalQueue.js';
 import { ClaudeBuddy } from './components/ClaudeBuddy.js';
 import { CostView } from './components/CostView.js';
 import { Dashboard } from './components/Dashboard.js';
@@ -15,7 +14,6 @@ import { HistoryView } from './components/HistoryView.js';
 import { MemoryView } from './components/MemoryView.js';
 import { ProjectContextView } from './components/ProjectContextView.js';
 import { ProjectSetup } from './components/ProjectSetup.js';
-import { QuestionsView } from './components/QuestionsView.js';
 import { SettingsView } from './components/SettingsView.js';
 import { Sidebar } from './components/Sidebar.js';
 import { SkillsView } from './components/SkillsView.js';
@@ -28,13 +26,11 @@ const KEY_MAP: Record<string, View> = {
   '1': 'dashboard',
   '2': 'tasks',
   '3': 'decisions',
-  '4': 'questions',
-  '5': 'memory',
-  '6': 'history',
-  '7': 'cost',
-  '8': 'settings',
+  '4': 'memory',
+  '5': 'history',
+  '6': 'cost',
+  '7': 'settings',
   t: 'terminal',
-  a: 'approvals',
   g: 'agents',
   h: 'history',
   k: 'skills',
@@ -52,7 +48,6 @@ function MainContent() {
       <Activity mode={view === 'dashboard' ? 'visible' : 'hidden'}><Dashboard /></Activity>
       <Activity mode={view === 'tasks' ? 'visible' : 'hidden'}><TaskBoard /></Activity>
       <Activity mode={view === 'decisions' ? 'visible' : 'hidden'}><DecisionsView /></Activity>
-      <Activity mode={view === 'questions' ? 'visible' : 'hidden'}><QuestionsView /></Activity>
       <Activity mode={view === 'memory' ? 'visible' : 'hidden'}><MemoryView /></Activity>
       <Activity mode={view === 'history' ? 'visible' : 'hidden'}><HistoryView /></Activity>
       <Activity mode={view === 'agents' ? 'visible' : 'hidden'}>
@@ -65,11 +60,6 @@ function MainContent() {
       <Activity mode={view === 'context' ? 'visible' : 'hidden'}><ProjectContextView /></Activity>
       <Activity mode={view === 'files' ? 'visible' : 'hidden'}><FilesView /></Activity>
       <Activity mode={view === 'sweep' ? 'visible' : 'hidden'}><FullsweepView /></Activity>
-      <Activity mode={view === 'approvals' ? 'visible' : 'hidden'}>
-        <div className="flex-1 flex flex-col min-h-0 overflow-y-auto p-4">
-          <ApprovalQueue standalone />
-        </div>
-      </Activity>
       <Activity mode={view === 'terminal' ? 'visible' : 'hidden'}>
         <TerminalView />
       </Activity>
@@ -164,7 +154,6 @@ export function App() {
             <MainContent />
           </main>
         </div>
-        <ApprovalQueue />
         <ClaudeBuddy />
         <HelpModal open={showHelp} onClose={() => setShowHelp(false)} />
       </div>

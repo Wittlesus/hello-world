@@ -266,8 +266,8 @@
     {
       "id": "t_mp_epic",
       "title": "Multi-project support (Epic)",
-      "description": "Full multi-project support. Architecture audit complete (Session 45). 10 of 12 systems already project-aware. TWO BLOCKERS: (1) MCP server needs hw_set_context(projectPath) tool -- currently single project at startup via HW_PROJECT_ROOT. (2) Discord listener monitors only one project. MEMORY needs global tier (projectId: null). Frontend needs project switcher UI. Recommended approach: Option B (context-based routing in MCP). Child tasks: t_mp_global_mem, t_mp_auto_onboard, t_mp_switcher.",
-      "status": "todo",
+      "description": "Replaced by decision d_1b6a3600: hub model instead of project-scoped switching. No switcher, no scoping, no onboarding. One brain works everywhere. CWD bug fix (t_mp_cwd_bug) remains as standalone task.",
+      "status": "done",
       "size": "Epic",
       "tags": [
         "architecture",
@@ -275,7 +275,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-24T17:00:00.000Z",
-      "updatedAt": "2026-02-26T04:03:12.167Z"
+      "updatedAt": "2026-02-27T13:45:52.758Z"
     },
     {
       "id": "t_mp_mcp_fix",
@@ -294,8 +294,8 @@
     {
       "id": "t_mp_global_mem",
       "title": "Split memories into global vs project-scoped",
-      "description": "Some memories (pains, wins, base lessons) should persist across ALL HW project instances -- they are base knowledge. Project-specific state (tasks, decisions, questions, activity) swaps per project. Need: (1) global storage location (~/.hello-world-global/ or similar), (2) memory type/tag to distinguish global vs project, (3) MemoryStore changes to merge both sources, (4) UI to show which memories are global.",
-      "status": "todo",
+      "description": "Obsoleted by hub model decision (d_1b6a3600). All memory is global by default. No split needed.",
+      "status": "done",
       "tags": [
         "architecture",
         "multi-project",
@@ -305,13 +305,13 @@
         "t_mp_epic"
       ],
       "createdAt": "2026-02-24T17:00:00.000Z",
-      "updatedAt": "2026-02-24T17:00:00.000Z"
+      "updatedAt": "2026-02-27T13:45:54.033Z"
     },
     {
       "id": "t_mp_auto_onboard",
       "title": "Auto-onboard: scan new projects with agents to populate all tabs",
-      "description": "When HW points at a project for the first time, spawn specialized agents to scan it and populate: tasks (from TODOs, issues, package.json scripts), decisions (from architecture patterns, config choices), questions (from ambiguity, TODOs marked with ?), memory (from README, docs). This is the killer demo -- user opens HW on any project and every tab already has content. Optional deliberation for deeper scoping.",
-      "status": "todo",
+      "description": "Obsoleted by hub model decision (d_1b6a3600). No per-project onboarding needed. Just start working.",
+      "status": "done",
       "tags": [
         "feature",
         "multi-project",
@@ -321,13 +321,13 @@
         "t_mp_epic"
       ],
       "createdAt": "2026-02-24T17:00:00.000Z",
-      "updatedAt": "2026-02-24T17:00:00.000Z"
+      "updatedAt": "2026-02-27T13:45:55.036Z"
     },
     {
       "id": "t_mp_switcher",
       "title": "Project switcher UX: clean swap between projects",
-      "description": "UI to switch projects that: (1) loads/unloads all project-scoped data, (2) points Claude terminal at the right directory, (3) handles three cases: known project (load saved state), new project (run auto-onboard), blank (empty). Includes project registry in ~/.hello-world-app.json listing all known projects with last-opened timestamps. Terminal restarts pointing at new project dir.",
-      "status": "todo",
+      "description": "Obsoleted by hub model decision (d_1b6a3600). No switching UX needed. Hub model works on any project.",
+      "status": "done",
       "tags": [
         "feature",
         "multi-project",
@@ -337,7 +337,7 @@
         "t_mp_epic"
       ],
       "createdAt": "2026-02-24T17:00:00.000Z",
-      "updatedAt": "2026-02-24T17:00:00.000Z"
+      "updatedAt": "2026-02-27T13:45:56.066Z"
     },
     {
       "id": "t_mp_buddy_anim",
@@ -636,12 +636,12 @@
     {
       "id": "t_a699fbb8",
       "title": "Adopt Spec-Driven Development workflow",
-      "description": "Researched. Multiple tools available: cc-sdd, OpenSpec (25.8k stars), GitHub spec-kit. cc-sdd has one-command install. OpenSpec is most lightweight. Question raised: q_00005483. Awaiting Pat's input before adopting.",
-      "status": "todo",
+      "description": "Dropped. Pat scoped SDD out -- doesn't want it.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:56:56.643Z",
-      "updatedAt": "2026-02-26T03:49:28.477Z"
+      "updatedAt": "2026-02-27T13:59:33.635Z"
     },
     {
       "id": "t_aa0ac87a",
@@ -736,12 +736,12 @@
     {
       "id": "t_e215a18e",
       "title": "[DELIBERATE] Memory quality feedback loop and staleness management",
-      "description": "Research complete. Scoring module written at packages/core/src/brain/scoring.ts. Compiles clean. Implements: scoreMemory(), classifyHealth(), rankMemories(), getReviewQueue(), findContradictions(). Uses exponential decay by type + access boost + failure penalty. Remaining: integrate into hw_retrieve_memories, add failureCorrelations/supersededBy fields to Memory schema, add review queue to Dashboard UI. No longer needs full deliberation -- research provided clear direction.",
-      "status": "todo",
+      "description": "Implemented during Brain Magnum Opus S48-S51. rankMemories() in retrieval path (server.ts:423), scoreMemory() in pruner, quality gate in storeMemory(). Only remaining: review queue Dashboard widget (minor, can be a new task if wanted).",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:13.159Z",
-      "updatedAt": "2026-02-26T04:04:40.674Z"
+      "updatedAt": "2026-02-27T13:37:42.544Z"
     },
     {
       "id": "t_fee42a1a",
@@ -976,14 +976,14 @@
     {
       "id": "t_83fd9f54",
       "title": "Buddy recap: Rust startup check + event emission",
-      "description": "In lib.rs setup(), after window creation: check if .hello-world/pending-recap.json or .hello-world/recap-buffer.json exists. If so, read it and emit hw-buddy-recap event to the buddy window. Delete the file after reading (one-time display). Needs worktree for Rust changes.",
-      "status": "todo",
+      "description": "Dropped by Pat. Buddy recap Rust startup check no longer needed.",
+      "status": "done",
       "tags": [],
       "dependsOn": [
         "t_ecdd0782"
       ],
       "createdAt": "2026-02-26T03:55:20.152Z",
-      "updatedAt": "2026-02-26T03:55:20.152Z"
+      "updatedAt": "2026-02-27T13:47:51.798Z"
     },
     {
       "id": "t_6c9cc58a",
@@ -1380,12 +1380,12 @@
     {
       "id": "t_2d58c80b",
       "title": "Verify bug fixes after MCP restart: prediction wiring + linker null guard",
-      "description": "Two bugs fixed in session 58 that need MCP restart to verify: 1. server.ts:464 -- sessions.current() changed to sessions.getCurrent() (prediction Zone F). Test: hw_store_memory with pain type, check expectation-model.json gets created. 2. store.ts:211 -- m.links changed to (m.links ?? []) in addLink(). Test: store a memory, check activity.json for \"store:linker failed\" errors. Both fixes build clean but haven't been tested at runtime.",
-      "status": "todo",
+      "description": "Both fixes confirmed in code: sessions.getCurrent() on lines 363/570, m.links ?? [] on lines 213/222/248 of store.ts. Runtime verified -- no brain_error entries for linker in activity.json this session.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T03:36:40.807Z",
-      "updatedAt": "2026-02-27T03:36:40.807Z"
+      "updatedAt": "2026-02-27T13:37:40.532Z"
     },
     {
       "id": "t_711b2bdf",
@@ -1570,12 +1570,12 @@
     {
       "id": "t_7bc8c426",
       "title": "Build Boardroom v2: simple parallel Qwen panel",
-      "description": "Replace the complex round-robin boardroom with a simple parallel call function. callQwenPanel() takes topic + agents + files, calls Qwen API in parallel with no char limit, returns merged output. New MCP tool hw_qwen_panel. Based on 7-agent think tank decision (option 3: simple first, phases later).",
-      "status": "in_progress",
+      "description": "Already implemented: panel.ts with runPanel(), hw_qwen_panel MCP tool, file injection, parallel Qwen calls, no char limit, results saved to .hello-world/panels/. 14 panels already run. Old round-robin boardroom kept alongside for backward compat.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T09:05:50.096Z",
-      "updatedAt": "2026-02-27T09:05:54.219Z"
+      "updatedAt": "2026-02-27T13:34:32.715Z"
     },
     {
       "id": "t_32ed2e12",
@@ -1640,12 +1640,12 @@
     {
       "id": "t_c76aa252",
       "title": "Memory capacity gauge: visual bar + capacity-based pruning trigger",
-      "description": "Add a memory usage bar to the app (same style as cost/usage bars). Define a capacity threshold (e.g., 200 memories). When memory count approaches the threshold, show warning in the gauge. Pruning only triggers when capacity is reached, not on session end. The /clean-quit agent review handles quality cleanup; the capacity gauge handles quantity limits.",
-      "status": "todo",
+      "description": "Merged into t_11939f7d (pruning redesign) which covers both capacity gauge and pruning triggers.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T11:56:05.442Z",
-      "updatedAt": "2026-02-27T11:56:05.442Z"
+      "updatedAt": "2026-02-27T13:37:47.196Z"
     },
     {
       "id": "t_2ccf061d",
@@ -1734,8 +1734,8 @@
     {
       "id": "t_f53885c5",
       "title": "Fullsweep rundown view in the app",
-      "description": "Build a visual panel in the Tauri app that displays fullsweep results. The /fullsweep skill writes results to a JSON file (.hello-world/fullsweep-results.json). The app renders it as a dashboard: scoreboard with letter grades and change arrows (up/down/same), numbers row (critical issues, tasks created, cleaned up, etc.), what broke/improved sections, top 3 actions, and items needing Pat's call. Design for 10-second scanning. Pat said \"nice to look at, very intuitive\" -- this is a UX-first feature. Could be a subtab under Dashboard or its own keybind.",
-      "status": "in_progress",
+      "description": "Built in Session 63. FullsweepView.tsx on master (commit 4e0d658). Keybind S. get_fullsweep Rust command in lib.rs. fullsweep-results.json populated. Cargo dev mode compiling. Needs visual verification by pressing S in app.",
+      "status": "done",
       "tags": [
         "app",
         "ux",
@@ -1743,7 +1743,17 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:26:02.021Z",
-      "updatedAt": "2026-02-27T12:26:45.540Z"
+      "updatedAt": "2026-02-27T13:34:44.155Z"
+    },
+    {
+      "id": "t_f78557bb",
+      "title": "Remove approvals and questions systems from app and MCP",
+      "description": "Pat's direction: both are never used, annoying, all handled in terminal. Remove: (1) MCP tools: hw_check_approval, hw_list_approvals, hw_resolve_approval, hw_add_question, hw_answer_question. (2) App views: Questions view (keybind 4), any approvals UI. (3) Rust commands for questions/approvals if they exist. (4) CLAUDE.md references to approval gates. (5) Discord listener approval handling. Keep the data files (.hello-world/approvals.json, questions.json) as archives but stop reading/writing them.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T13:59:42.601Z",
+      "updatedAt": "2026-02-27T13:59:46.565Z"
     }
   ],
   "milestones": []

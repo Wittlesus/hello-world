@@ -54,6 +54,24 @@
       "decision": "out",
       "rationale": "Pat said 'save for later'. Not in current sprint scope. Revisit after Qwen integration and boardrooms are stable.",
       "capturedAt": "2026-02-27T02:43:56.670Z"
+    },
+    {
+      "area": "Approvals system (hw_check_approval, hw_list_approvals, hw_resolve_approval)",
+      "decision": "out",
+      "rationale": "Never used. Pat handles approvals in conversation. Dedicated system is overhead.",
+      "capturedAt": "2026-02-27T13:59:26.806Z"
+    },
+    {
+      "area": "Questions system (hw_add_question, hw_answer_question, Questions view)",
+      "decision": "out",
+      "rationale": "Never used. Questions are handled in conversation. Dedicated system is overhead.",
+      "capturedAt": "2026-02-27T13:59:31.006Z"
+    },
+    {
+      "area": "SDD / Spec-Driven Development workflow",
+      "decision": "out",
+      "rationale": "Pat doesn't know what it is, answered idk. Not worth adopting.",
+      "capturedAt": "2026-02-27T13:59:32.124Z"
     }
   ],
   "notes": [
@@ -276,6 +294,13 @@
       "read": true,
       "capturedAt": "2026-02-27T12:25:54.992Z",
       "actionTaken": "dismiss"
+    },
+    {
+      "id": "n_mm4y0agg",
+      "text": "Pat's rethink on multi-project: Instead of project-scoped context switching (the MP epic), HW should be a hub that works on any project like a regular IDE. One brain, one set of memories, tasks visible across projects. No \"reset\" or \"switch\" needed. This could obsolete the MP epic's 4 sub-tasks (scoped memories, auto-onboard, project switcher, global mem split).",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T13:43:26.704Z"
     }
   ]
 }

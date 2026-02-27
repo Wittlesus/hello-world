@@ -214,8 +214,6 @@ function generateSummary(tool: string, args: Record<string, unknown>): string {
     case 'hw_update_task':   return `Task ${args.id} → ${args.status}`;
     case 'hw_store_memory':  return `Stored ${args.type}: ${args.title}`;
     case 'hw_advance_phase': return `Phase → ${args.phase}`;
-    case 'hw_add_question':  return `Question: ${String(args.question).slice(0, 60)}`;
-    case 'hw_answer_question': return `Answered question ${args.id}`;
     case 'hw_notify':        return `Notified Pat`;
     case 'hw_record_decision': return `Decision: ${args.title}`;
     case 'hw_write_handoff': return `Handoff written`;
@@ -243,12 +241,7 @@ function toolFiles(tool: string): string[] {
     hw_advance_phase:     ['workflow.json'],
     hw_get_workflow_state:[],
     hw_record_decision:   ['decisions.json'],
-    hw_add_question:      ['questions.json'],
-    hw_answer_question:   ['questions.json'],
     hw_notify:            [],
-    hw_check_approval:    [],
-    hw_list_approvals:    [],
-    hw_resolve_approval:  ['approvals.json'],
     hw_write_handoff:     [],
     hw_record_failure:    ['workflow.json'],
     hw_get_context:       ['sessions.json', 'activity.json'],
@@ -776,53 +769,6 @@ server.registerTool('hw_notify', {
 
 // ── Approvals ───────────────────────────────────────────────────
 
-server.registerTool('hw_check_approval', {
-  title: 'Check Approval',
-  description: 'Check if an action needs human approval. Call before destructive ops (git push, delete, deploy).',
-  inputSchema: z.object({ action: z.string(), description: z.string() }),
-}, async (args: { action: string; description: string }) => {
-  const tier = approvals.classifyAction(args.action);
-  if (tier === 'auto') {
-    activity.append('approval_auto', `Auto-approved: ${args.action}`, args.description);
-    return text(`AUTO-APPROVED: "${args.action}" is safe to proceed.`);
-  }
-  if (tier === 'notify') {
-    activity.append('approval_auto', `Notify: ${args.action}`, args.description);
-    return text(`NOTIFY: "${args.action}" — proceeding. Pat will see this. ${args.description}`);
-  }
-  const req = approvals.requestApproval(args.action, args.description);
-  activity.append('approval_requested', `BLOCKED: ${args.action} — waiting for Pat`, args.description);
-  await sendDiscordDM(`🔴 **Approval needed** (${req.id})\n**Action:** ${args.action}\n**Reason:** ${args.description}\n\nReply \`approve ${req.id}\` or \`reject ${req.id}\``);
-  return text(`BLOCKED: "${args.action}" requires Pat's approval. Request: ${req.id}. STOP and ask Pat. ${args.description}`);
-});
-
-server.registerTool('hw_list_approvals', {
-  title: 'List Approval Requests',
-  description: 'List pending approval requests that need Pat\'s decision.',
-  inputSchema: z.object({}),
-}, async () => {
-  const pending = approvals.getPending();
-  if (pending.length === 0) return text('No pending approvals.');
-  const lines = pending.map(r =>
-    `[${r.id}] ${r.action} (${r.tier})\n  ${r.description}${r.context ? `\n  Context: ${r.context}` : ''}`
-  );
-  return text(`${pending.length} pending:\n\n${lines.join('\n\n')}`);
-});
-
-server.registerTool('hw_resolve_approval', {
-  title: 'Resolve Approval',
-  description: 'Approve or reject a pending approval request.',
-  inputSchema: z.object({
-    requestId: z.string(),
-    decision: z.enum(['approved', 'rejected']),
-    notes: z.string().optional(),
-  }),
-}, async (args: { requestId: string; decision: 'approved' | 'rejected'; notes?: string }) => {
-  const resolved = approvals.resolveApproval(args.requestId, args.decision, args.notes);
-  activity.append('approval_resolved', `${args.decision.toUpperCase()}: ${resolved.action}`, args.notes ?? '');
-  return text(`${args.decision.toUpperCase()}: "${resolved.action}" (${resolved.id})`);
-});
-
 // ── Strikes ─────────────────────────────────────────────────────
 
 server.registerTool('hw_record_failure', {
@@ -1049,72 +995,6 @@ server.registerTool('hw_brain_health', {
     cortexData.totalGapsProcessed,
   );
   return text(formatHealthReport(report));
-});
-
-// ── Questions ───────────────────────────────────────────────────
-
-server.registerTool('hw_add_question', {
-  title: 'Add Question',
-  description: 'Record a known unknown.',
-  inputSchema: z.object({ question: z.string(), context: z.string().optional() }),
-}, async (args: { question: string; context?: string }) => {
-  const q = project.state.addQuestion(args.question, args.context);
-  activity.append('question_added', `Question: ${q.question.slice(0, 80)}`, args.context ?? '');
-  return text(`Question recorded: ${q.id} "${q.question}"`);
-});
-
-server.registerTool('hw_answer_question', {
-  title: 'Answer Question',
-  description: 'Answer a previously recorded question. Optionally route to a task (if the answer implies action) or a decision (if it reveals a tradeoff).',
-  inputSchema: z.object({
-    id: z.string(),
-    answer: z.string(),
-    route: z.discriminatedUnion('type', [
-      z.object({
-        type: z.literal('task'),
-        title: z.string(),
-        description: z.string().optional(),
-      }),
-      z.object({
-        type: z.literal('decision'),
-        title: z.string(),
-        context: z.string(),
-        chosen: z.string(),
-        rationale: z.string(),
-        decidedBy: z.enum(['pat', 'claude', 'both']).default('claude'),
-      }),
-    ]).optional(),
-  }),
-}, async (args: { id: string; answer: string; route?: { type: 'task'; title: string; description?: string } | { type: 'decision'; title: string; context: string; chosen: string; rationale: string; decidedBy: 'pat' | 'claude' | 'both' } }) => {
-  let linkedTaskId: string | undefined;
-  let linkedDecisionId: string | undefined;
-  const routeMsgs: string[] = [];
-
-  if (args.route?.type === 'task') {
-    const task = project.state.addTask(args.route.title, {
-      description: args.route.description ?? '',
-      status: 'todo',
-    });
-    linkedTaskId = task.id;
-    activity.append('task_added', `Task from Q&A: ${task.title}`, `Triggered by question ${args.id}`);
-    routeMsgs.push(`Task created: ${task.id} "${task.title}"`);
-  } else if (args.route?.type === 'decision') {
-    const decision = project.state.addDecision(args.route.title, {
-      context: args.route.context,
-      chosen: args.route.chosen,
-      rationale: args.route.rationale,
-      decidedBy: args.route.decidedBy ?? 'claude',
-    });
-    linkedDecisionId = decision.id;
-    activity.append('decision_added', `Decision from Q&A: ${decision.title}`, `Triggered by question ${args.id}`);
-    routeMsgs.push(`Decision logged: ${decision.id} "${decision.title}"`);
-  }
-
-  const q = project.state.answerQuestion(args.id, args.answer, { linkedTaskId, linkedDecisionId });
-  activity.append('question_answered', `Answered: ${q.question.slice(0, 60)}`, args.answer);
-
-  const lines = [`Question ${q.id} answered.`, ...routeMsgs];
-  return text(lines.join('\n'));
 });
 
 // ── Workflow ─────────────────────────────────────────────────────
@@ -1956,14 +1836,9 @@ const TOOL_CATALOG = [
   { name: 'hw_add_task', category: 'tasks' },
   { name: 'hw_update_task', category: 'tasks' },
   { name: 'hw_record_decision', category: 'decisions' },
-  { name: 'hw_add_question', category: 'questions' },
-  { name: 'hw_answer_question', category: 'questions' },
   { name: 'hw_update_direction', category: 'direction' },
   { name: 'hw_process_direction_note', category: 'direction' },
   { name: 'hw_notify', category: 'notifications' },
-  { name: 'hw_check_approval', category: 'approvals' },
-  { name: 'hw_list_approvals', category: 'approvals' },
-  { name: 'hw_resolve_approval', category: 'approvals' },
   { name: 'hw_record_failure', category: 'safety' },
   { name: 'hw_end_session', category: 'sessions' },
   { name: 'hw_brain_health', category: 'brain' },

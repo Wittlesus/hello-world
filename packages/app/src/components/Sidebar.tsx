@@ -50,7 +50,6 @@ const SECTIONS: SectionDef[] = [
       { view: 'terminal', label: 'Terminal', key: 'T' },
       { view: 'agents', label: 'Deliberation Room', key: 'D' },
       { view: 'dashboard', label: 'Dashboard', key: '1' },
-      { view: 'approvals', label: 'Approvals', key: 'A' },
       { view: 'files', label: 'Files', key: 'F' },
     ],
   },
@@ -62,7 +61,6 @@ const SECTIONS: SectionDef[] = [
     tabs: [
       { view: 'tasks', label: 'Board', key: '2' },
       { view: 'decisions', label: 'Decisions', key: '3' },
-      { view: 'questions', label: 'Questions', key: '4' },
     ],
   },
   {
@@ -71,9 +69,9 @@ const SECTIONS: SectionDef[] = [
     defaultView: 'memory',
     Icon: Brain,
     tabs: [
-      { view: 'memory', label: 'Memory', key: '5' },
+      { view: 'memory', label: 'Memory', key: '4' },
       { view: 'context', label: 'Context', key: 'P' },
-      { view: 'history', label: 'History', key: 'H' },
+      { view: 'history', label: 'History', key: '5' },
       { view: 'sweep', label: 'Sweep', key: 'S' },
     ],
   },
@@ -83,8 +81,8 @@ const SECTIONS: SectionDef[] = [
     defaultView: 'settings',
     Icon: Settings,
     tabs: [
-      { view: 'settings', label: 'Config', key: '8' },
-      { view: 'cost', label: 'Cost', key: '7' },
+      { view: 'settings', label: 'Config', key: '7' },
+      { view: 'cost', label: 'Cost', key: '6' },
       { view: 'skills', label: 'Skills', key: 'K' },
       { view: 'watchers', label: 'Watchers', key: 'W' },
     ],
@@ -92,8 +90,8 @@ const SECTIONS: SectionDef[] = [
 ];
 
 function getSection(view: View): Section {
-  if (['terminal', 'agents', 'dashboard', 'approvals', 'files'].includes(view)) return 'claude';
-  if (['tasks', 'decisions', 'questions'].includes(view)) return 'tasks';
+  if (['terminal', 'agents', 'dashboard', 'files'].includes(view)) return 'claude';
+  if (['tasks', 'decisions'].includes(view)) return 'tasks';
   if (['memory', 'context', 'history', 'sweep'].includes(view)) return 'brain';
   return 'settings';
 }

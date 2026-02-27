@@ -7,8 +7,8 @@ An autonomous AI workspace where Claude operates as the primary developer and Pa
 1. Session starts → SessionStart hook injects full context (no need to call hw_get_context())
 2. Claude picks up the active task or the next pending one
 3. Claude works, logs activity, advances the workflow phase
-4. Claude hits a blocker or needs approval → sends Discord DM to Pat, stops and waits
-5. Pat approves/rejects via Discord → Claude continues
+4. Claude hits a blocker → sends Discord DM to Pat, stops and waits
+5. Pat responds via Discord or terminal → Claude continues
 6. Task done → Claude marks complete, picks next task, repeats
 
 ## Stack
@@ -28,10 +28,9 @@ Storage: JSON files in `.hello-world/` (local-first, no cloud dependency)
 - `npm --workspace=packages/core run discord` — start Discord listener (keep running)
 
 ## Key File Paths
-- State (tasks, decisions, questions): `.hello-world/state.json`
+- State (tasks, decisions): `.hello-world/state.json`
 - Workflow phase: `.hello-world/workflow.json`
 - Activity log: `.hello-world/activity.json`
-- Approvals queue: `.hello-world/approvals.json`
 - Brain/memory: `.hello-world/memories.json`
 - Last-edited file (crash resume): `.hello-world/last-context.json`
 - Direction notes from Pat: `.hello-world/direction.json`
@@ -54,18 +53,14 @@ Storage: JSON files in `.hello-world/` (local-first, no cloud dependency)
 - `hw_get_workflow_state()` — check current phase, strikes, autonomous timer.
 - `hw_check_autonomous_timer()` — check if 15/20 min autonomous limit is approaching.
 
-### Decisions & Questions
+### Decisions
 - `hw_record_decision(title, context, chosen, rationale, decidedBy, alternatives?)` — log architectural decisions.
-- `hw_add_question(question, context?)` — log open questions.
-- `hw_answer_question(id, answer)` — close answered questions.
 
 ### Direction Notes
 - `hw_process_direction_note(noteId, action, data)` — route an unread note to an action. action: "task" | "decision" | "scope" | "dismiss". MUST call for every unread note before starting other work.
 
-### Approvals & Notifications
-- `hw_check_approval(action, description)` — MUST call before: git push, deploy, delete files, architecture changes. Returns auto/notify/block.
+### Notifications
 - `hw_notify(message)` — DM Pat when blocked, need direction, or something important happened.
-- `hw_list_approvals()` / `hw_resolve_approval(id, decision)` — manage pending approvals.
 
 ### Crash Safety
 - `hw_write_handoff(message)` — call BEFORE any edit that might trigger a restart. Saves context for next session.
@@ -108,7 +103,7 @@ When writing `hw_write_handoff()`, always use this structure so the next Claude 
 - State management: `packages/core/src/state.ts`
 - MCP server: `packages/core/src/mcp/server.ts`
 - Discord listener: `packages/core/src/discord-listener.ts`
-- Orchestration (workflow, approvals, Two-Strike): `packages/core/src/orchestration/`
+- Orchestration (workflow, Two-Strike): `packages/core/src/orchestration/`
 - Tauri backend: `packages/app/src-tauri/src/lib.rs`
 - React app: `packages/app/src/`
 
@@ -119,7 +114,6 @@ When writing `hw_write_handoff()`, always use this structure so the next Claude 
 | Terminal | t | Embedded PTY — run commands, Claude sessions |
 | Tasks | 2 | Full task board |
 | Decisions | 3 | Architecture decision log |
-| Questions | 4 | Open questions + answer flow |
 | Memory | 5 | Brain memories (pain/win/fact) |
 | Sessions | 6 | Session history |
 | Cost | 7 | API cost tracking |
@@ -131,7 +125,7 @@ When writing `hw_write_handoff()`, always use this structure so the next Claude 
 - Additional views: Watchers (w), Project Context (p), Timeline (l), Dashboard sessions panel
 - File watcher — live reactivity, MCP writes sync to UI instantly
 - MCP server with all hw_* tools including hw_process_direction_note, hw_spawn_watcher
-- Discord bot — sends DMs for approvals and notifications
+- Discord bot — sends DMs for notifications
 - Discord listener — receives approve/reject/note replies from Pat
 - SessionStart hook — injects context on every session
 - PostToolUse hook — captures last-edited file for crash resume
@@ -205,7 +199,7 @@ Never skip `hw_plan_deliberation` for decisions. If it's worth deliberating, ful
 - ESM throughout. `.js` extensions in all relative imports.
 - Brain engine functions must be pure — no side effects, storage is separate.
 - All significant actions logged to activity stream.
-- Approval gates are system constraints, not suggestions — always call hw_check_approval before destructive ops.
+- For destructive ops (git push, deploy, delete), ask Pat in the terminal first.
 - hw_write_handoff before any edit that could trigger a restart.
 - No half-implementations. Ship complete features or explicitly flag what's deferred and why.
 - **Task gate (enforced by hook):** Edit/Write is hard-blocked when no task is in_progress. Before writing any code: scan the user's message for implied tasks, hw_add_task for each, then hw_update_task to in_progress. No task = no edit.
