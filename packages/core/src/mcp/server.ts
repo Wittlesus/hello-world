@@ -325,6 +325,7 @@ server.registerTool('hw_get_context', {
   description: 'Get the full project context snapshot. Call this at the start of every session.',
   inputSchema: z.object({}),
 }, async () => {
+  processSignalQueue(); // Auto-store high-confidence signals on context load
   sessions.getCurrent() ?? sessions.start();
   const ctx = sessions.compileContext(project.config.name, project.state, memoryStore, project.config.dailyBudgetUsd);
   activity.append('context_loaded', `Session #${ctx.sessionNumber} started`, `Project: ${ctx.projectName}\nActive tasks: ${ctx.activeTasks.length}\nOpen questions: ${ctx.openQuestions.length}`);
@@ -585,6 +586,7 @@ server.registerTool('hw_add_task', {
     dependsOn: z.array(z.string()).optional(),
   }),
 }, async (args: { title: string; description?: string; tags?: string[]; dependsOn?: string[] }) => {
+  processSignalQueue(); // Auto-store high-confidence signals
   const task = project.state.addTask(args.title, { description: args.description, tags: args.tags, dependsOn: args.dependsOn });
   activity.append('task_added', `Task: ${task.title}`, args.description ?? '');
   return text(`Task created: ${task.id} "${task.title}"`);
@@ -599,6 +601,7 @@ server.registerTool('hw_update_task', {
     description: z.string().optional(),
   }),
 }, async (args: { id: string; status?: string; description?: string }) => {
+  processSignalQueue(); // Auto-store high-confidence signals
   const updates: Record<string, unknown> = {};
   if (args.status) updates.status = args.status;
   if (args.description) updates.description = args.description;
