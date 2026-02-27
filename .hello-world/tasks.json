@@ -1749,11 +1749,21 @@
       "id": "t_f78557bb",
       "title": "Remove approvals and questions systems from app and MCP",
       "description": "Pat's direction: both are never used, annoying, all handled in terminal. Remove: (1) MCP tools: hw_check_approval, hw_list_approvals, hw_resolve_approval, hw_add_question, hw_answer_question. (2) App views: Questions view (keybind 4), any approvals UI. (3) Rust commands for questions/approvals if they exist. (4) CLAUDE.md references to approval gates. (5) Discord listener approval handling. Keep the data files (.hello-world/approvals.json, questions.json) as archives but stop reading/writing them.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T13:59:42.601Z",
-      "updatedAt": "2026-02-27T13:59:46.565Z"
+      "updatedAt": "2026-02-27T14:05:17.832Z"
+    },
+    {
+      "id": "t_40a1fd66",
+      "title": "Build command palette: clickable /commands menu that pastes to terminal",
+      "description": "Pat's request: A menu (like the ? keybind help modal) showing all important /commands with descriptions. Clickable -- clicking a command auto-copies/pastes it into the terminal chat input. Commands to include: /fullsweep, /clean-quit, /commit, /review-pr, /content-pipeline:scan, /social-engine:engage, /pulse, /market-intel:research, /memory-gardener:garden, etc. Implementation: new CommandPalette component, triggered by a keybind (maybe /), lists commands with one-line descriptions, click handler writes to PTY stdin or copies to clipboard.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T14:07:01.292Z",
+      "updatedAt": "2026-02-27T14:07:05.577Z"
     }
   ],
   "milestones": []

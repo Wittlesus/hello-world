@@ -301,6 +301,20 @@
       "source": "session",
       "read": false,
       "capturedAt": "2026-02-27T13:43:26.704Z"
+    },
+    {
+      "id": "n_mm4yt8lc",
+      "text": "Deliberation room (AgentsView/chatroom) should auto-clear after a certain time. Old deliberation sessions shouldn't persist forever in the UI.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T14:05:57.312Z"
+    },
+    {
+      "id": "n_mm4yuhz8",
+      "text": "Command palette in the app: menu showing all important /commands with descriptions. Clickable -- clicking auto-copies the command to the terminal chat input. Like the keyboard shortcut menu (?) but for slash commands.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T14:06:56.132Z"
     }
   ]
 }

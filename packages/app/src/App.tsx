@@ -3,6 +3,7 @@ import { listen } from '@tauri-apps/api/event';
 import { Activity, useCallback, useEffect, useRef, useState } from 'react';
 import { AgentsView } from './components/AgentsView.js';
 import { ClaudeBuddy } from './components/ClaudeBuddy.js';
+import { CommandPalette } from './components/CommandPalette.js';
 import { CostView } from './components/CostView.js';
 import { Dashboard } from './components/Dashboard.js';
 import { DecisionsView } from './components/DecisionsView.js';
@@ -72,6 +73,7 @@ export function App() {
   const setView = useAppStore((s) => s.setView);
   const [bootstrapping, setBootstrapping] = useState(true);
   const [showHelp, setShowHelp] = useState(false);
+  const [showCommands, setShowCommands] = useState(false);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -79,6 +81,10 @@ export function App() {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.key === '?') {
         setShowHelp(true);
+        return;
+      }
+      if (e.key === '/') {
+        setShowCommands(true);
         return;
       }
       const view = KEY_MAP[e.key.toLowerCase()];
@@ -156,6 +162,7 @@ export function App() {
         </div>
         <ClaudeBuddy />
         <HelpModal open={showHelp} onClose={() => setShowHelp(false)} />
+        <CommandPalette open={showCommands} onClose={() => setShowCommands(false)} />
       </div>
     </ErrorBoundary>
   );
