@@ -42,12 +42,7 @@ function glowColor(pct: number): string {
   return 'text-sky-400 drop-shadow-[0_0_4px_rgba(56,189,248,0.6)]';
 }
 
-function detectService(entries: QwenEntry[]): string {
-  if (!entries.length) return 'OpenRouter';
-  const last = entries[entries.length - 1];
-  const model = last.model ?? '';
-  if (model.startsWith('qwen/')) return 'OpenRouter';
-  if (model.startsWith('Qwen/')) return 'Chutes.ai';
+function detectService(_entries: QwenEntry[]): string {
   return 'OpenRouter';
 }
 
@@ -114,10 +109,10 @@ export function UsageBars({ collapsed }: { collapsed: boolean }) {
       {/* Claude.ai session limit */}
       {web && (
         <>
-          <MiniBar label="Session" pct={sessionPct} detail={`${sessionPct}%`} service="claude.ai" />
-          <MiniBar label="Weekly" pct={weeklyPct} detail={`${weeklyPct}%`} service="claude.ai" />
+          <MiniBar label="Session" pct={sessionPct} detail={`${sessionPct}%`} service="Claude" />
+          <MiniBar label="Weekly" pct={weeklyPct} detail={`${weeklyPct}%`} service="Claude" />
           {web.extraUsage && web.extraUsage.isEnabled && (
-            <MiniBar label="Extra" pct={extraPct} detail={`${extraSpent} (${extraPct}%)`} service="claude.ai" />
+            <MiniBar label="Extra" pct={extraPct} detail={`${extraSpent} (${extraPct}%)`} service="Claude" />
           )}
         </>
       )}
