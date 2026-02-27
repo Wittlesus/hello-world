@@ -7,6 +7,7 @@ export interface AgentDefinition {
   color: string;
   category: AgentCategory;
   provider: AgentProvider;
+  thinking?: boolean; // Qwen thinking mode -- true for deep reasoning, false for fast chat
   systemPrompt: string;
 }
 

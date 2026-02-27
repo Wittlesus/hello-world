@@ -1091,6 +1091,7 @@ import {
   runBoardroom, stopBoardroom,
   type BoardroomAgent,
 } from '../boardroom/index.js';
+import { getUsageSummary } from '../boardroom/usage.js';
 
 server.registerTool('hw_create_boardroom', {
   title: 'Create Boardroom',
@@ -1179,6 +1180,29 @@ server.registerTool('hw_list_boardrooms', {
   return text(lines.join('\n'));
 });
 
+server.registerTool('hw_usage', {
+  title: 'Usage Summary',
+  description: 'Get Qwen and Claude token usage and cost summary.',
+  inputSchema: z.object({}),
+}, async () => {
+  const summary = getUsageSummary(projectRoot);
+  const lines = [
+    `=== Usage Summary ===`,
+    `Total: ${summary.totalTokens.toLocaleString()} tokens | $${summary.totalCostUsd.toFixed(4)}`,
+    `Claude: ${summary.claudeTokens.toLocaleString()} tokens | $${summary.claudeCostUsd.toFixed(4)}`,
+    `Qwen: ${summary.qwenTokens.toLocaleString()} tokens | $${summary.qwenCostUsd.toFixed(4)}`,
+    `This session: ${summary.sessionTokens.toLocaleString()} tokens | $${summary.sessionCostUsd.toFixed(4)}`,
+    `Entries: ${summary.entries}`,
+  ];
+  if (Object.keys(summary.byContext).length > 0) {
+    lines.push('', 'By context:');
+    for (const [ctx, data] of Object.entries(summary.byContext)) {
+      lines.push(`  ${ctx}: ${data.tokens.toLocaleString()} tokens | $${data.costUsd.toFixed(4)}`);
+    }
+  }
+  return text(lines.join('\n'));
+});
+
 server.registerTool('hw_close_boardroom', {
   title: 'Close Boardroom',
   description: 'Close a boardroom session.',
@@ -1224,6 +1248,7 @@ const TOOL_CATALOG = [
   { name: 'hw_read_boardroom', category: 'boardroom' },
   { name: 'hw_list_boardrooms', category: 'boardroom' },
   { name: 'hw_close_boardroom', category: 'boardroom' },
+  { name: 'hw_usage', category: 'cost' },
 ];
 
 try {

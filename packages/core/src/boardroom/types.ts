@@ -6,6 +6,7 @@ export interface BoardroomAgent {
   id: string;
   name: string;
   provider: 'claude' | 'qwen';
+  thinking?: boolean; // Qwen thinking mode -- true for deep work, false for fast chat
   role: string; // one-line role description
   color: string;
 }

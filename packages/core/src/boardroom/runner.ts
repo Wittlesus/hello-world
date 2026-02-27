@@ -2,11 +2,12 @@ import { AGENT_DEFINITIONS } from '../chatroom/agent-definitions.js';
 import type { Boardroom, BoardroomAgent } from './types.js';
 import { CHAT_CHAR_LIMIT } from './types.js';
 import { postChat, writeWhiteboard, readBoardroom } from './store.js';
+import { recordUsage } from './usage.js';
 
 // Qwen API config (shared with chatroom agent-runner)
-const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'qwen3-235b-a22b';
-const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
-const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? process.env['DASHSCOPE_API_KEY'] ?? '';
+const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'Qwen/Qwen3-235B-A22B-Instruct-2507-TEE';
+const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://llm.chutes.ai/v1';
+const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? '';
 
 const BETWEEN_AGENT_MS = 800;
 const MAX_ROUNDS = 8;
@@ -31,6 +32,7 @@ async function callQwenBoardroom(
   systemPrompt: string,
   userMessage: string,
   signal: AbortSignal,
+  thinking = false,
 ): Promise<string> {
   if (!QWEN_API_KEY) throw new Error('QWEN_API_KEY not set');
 
@@ -46,8 +48,9 @@ async function callQwenBoardroom(
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage },
       ],
-      max_tokens: 100, // Short responses for boardroom
+      max_tokens: thinking ? 2000 : 100,
       temperature: 0.7,
+      chat_template_kwargs: { enable_thinking: thinking },
     }),
     signal,
   });
@@ -59,7 +62,20 @@ async function callQwenBoardroom(
 
   const json = (await resp.json()) as {
     choices?: { message?: { content?: string } }[];
+    usage?: { prompt_tokens?: number; completion_tokens?: number };
   };
+
+  // Track usage
+  const usage = json.usage;
+  if (usage) {
+    try {
+      const projectRoot = process.env['HW_PROJECT_ROOT'] ?? '';
+      if (projectRoot) {
+        recordUsage(projectRoot, QWEN_MODEL, 'qwen', usage.prompt_tokens ?? 0, usage.completion_tokens ?? 0, 'boardroom');
+      }
+    } catch { /* non-fatal */ }
+  }
+
   return (json.choices?.[0]?.message?.content ?? '').trim();
 }
 
@@ -156,10 +172,10 @@ async function runAgentTurn(
   if (signal.aborted) return;
 
   const prompt = buildBoardroomPrompt(agent, boardroom);
-  const callModel = agent.provider === 'qwen' ? callQwenBoardroom : callClaudeBoardroom;
-
   try {
-    const raw = await callModel('', prompt, signal);
+    const raw = agent.provider === 'qwen'
+      ? await callQwenBoardroom('', prompt, signal, agent.thinking ?? false)
+      : await callClaudeBoardroom('', prompt, signal);
     if (signal.aborted) return;
 
     // Check if agent wants to post to whiteboard

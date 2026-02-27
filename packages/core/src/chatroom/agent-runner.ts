@@ -2,11 +2,12 @@ import { spawn } from 'child_process';
 import { AGENT_DEFINITIONS } from './agent-definitions.js';
 import type { ChatroomStore } from './chatroom-state.js';
 import type { ChatMessage } from './types.js';
+import { recordUsage } from '../boardroom/usage.js';
 
 const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
-const QWEN_MODEL = 'qwen3-235b-a22b';
-const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
-const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? process.env['DASHSCOPE_API_KEY'] ?? '';
+const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'Qwen/Qwen3-235B-A22B-Instruct-2507-TEE';
+const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://llm.chutes.ai/v1';
+const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? '';
 const MAX_ROUNDS = 5;
 const BETWEEN_AGENT_MS = 1400;
 const INTRO_DELAY_MS = 2800;
@@ -163,6 +164,7 @@ function callQwen(
   systemPrompt: string,
   userMessage: string,
   signal: AbortSignal,
+  thinking = false,
 ): Promise<string> {
   return new Promise(async (resolve, reject) => {
     if (signal.aborted) {
@@ -202,10 +204,10 @@ function callQwen(
             { role: 'system', content: systemPrompt },
             { role: 'user', content: `${constraintBlock}\n\n${userMessage}` },
           ],
-          max_tokens: 300,
+          max_tokens: thinking ? 2000 : 300,
           temperature: 0.7,
-          // Disable thinking mode for boardroom speed
-          extra_body: { enable_thinking: false },
+          // Thinking mode: on for deep reasoning, off for fast chat
+          chat_template_kwargs: { enable_thinking: thinking },
         }),
         signal,
       });
@@ -221,8 +223,21 @@ function callQwen(
 
       const json = (await resp.json()) as {
         choices?: { message?: { content?: string } }[];
+        usage?: { prompt_tokens?: number; completion_tokens?: number };
       };
       const content = json.choices?.[0]?.message?.content ?? '';
+
+      // Track usage
+      const usage = json.usage;
+      if (usage) {
+        try {
+          const projectRoot = process.env['HW_PROJECT_ROOT'] ?? '';
+          if (projectRoot) {
+            recordUsage(projectRoot, QWEN_MODEL, 'qwen', usage.prompt_tokens ?? 0, usage.completion_tokens ?? 0, 'deliberation');
+          }
+        } catch { /* non-fatal */ }
+      }
+
       resolve(content.trim());
     } catch (err: unknown) {
       clearTimeout(timeout);
@@ -268,8 +283,9 @@ async function runSingleAgent(
 
   try {
     const conversation = buildConversation(state.messages, state.session.topic);
-    const callModel = def.provider === 'qwen' ? callQwen : callClaude;
-    const raw = await callModel(def.systemPrompt, conversation, signal);
+    const raw = def.provider === 'qwen'
+      ? await callQwen(def.systemPrompt, conversation, signal, def.thinking ?? false)
+      : await callClaude(def.systemPrompt, conversation, signal);
     if (signal.aborted) return;
     store.appendMessage(agentId, stripMarkdown(raw), 'message');
     store.updateAgentStatus(agentId, 'idle', '');
