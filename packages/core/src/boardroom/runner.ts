@@ -48,7 +48,7 @@ async function callQwenBoardroom(
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userMessage },
       ],
-      max_tokens: thinking ? 2000 : 100,
+      max_tokens: thinking ? 2000 : 400,
       temperature: 0.7,
       chat_template_kwargs: { enable_thinking: thinking },
     }),
@@ -126,10 +126,21 @@ async function callClaudeBoardroom(
   });
 }
 
-function buildBoardroomPrompt(agent: BoardroomAgent, boardroom: Boardroom): string {
+function buildBoardroomPrompt(agent: BoardroomAgent, boardroom: Boardroom, round: number, maxRounds: number): string {
   // Get deliberation-style system prompt if it exists, otherwise use role
   const delibDef = AGENT_DEFINITIONS[agent.id];
   const roleDesc = delibDef?.systemPrompt ?? `You are ${agent.name}. Role: ${agent.role}`;
+
+  // Phase guidance based on round number
+  const phase = round < 1
+    ? 'Introduce your key perspective on this topic.'
+    : round >= maxRounds - 2
+      ? 'Converge. Synthesize what the team has discussed into a concrete recommendation.'
+      : 'Build on what has been said. Challenge or extend, don\'t repeat.';
+
+  // Agent's own last message (prevents repetition)
+  const ownLast = [...boardroom.chat].reverse().find(m => m.agentId === agent.id);
+  const ownLastLine = ownLast ? `\nYour last message: "${ownLast.text}"` : '';
 
   const recentChat = boardroom.chat
     .slice(-20)
@@ -142,7 +153,10 @@ function buildBoardroomPrompt(agent: BoardroomAgent, boardroom: Boardroom): stri
   const whiteboardSummary = boardroom.whiteboard.length > 0
     ? '\n\nWhiteboard:\n' + boardroom.whiteboard
         .slice(-10)
-        .map((w) => `[${w.section}] ${w.content.slice(0, 200)}`)
+        .map((w) => {
+          const a = boardroom.agents.find((x) => x.id === w.agentId);
+          return `[${w.section} by ${a?.name ?? w.agentId}] ${w.content.slice(0, 300)}`;
+        })
         .join('\n')
     : '';
 
@@ -153,9 +167,12 @@ BOARDROOM RULES (these override everything else):
 - MAX ${CHAT_CHAR_LIMIT} CHARACTERS. Your entire response must be under ${CHAT_CHAR_LIMIT} chars. This is a hard limit.
 - Be direct. No filler. No "I think" or "In my opinion". Just say the thing.
 - Build on what others said. Reference teammates by name.
-- If you have research to share, say "posting to whiteboard" and keep the chat short.
+- To share detailed findings, say "posting to whiteboard:" followed by your content on the next line(s).
+
+Round ${round + 1} of ${maxRounds}. ${phase}
 
 Topic: "${boardroom.topic}"
+${ownLastLine}
 
 Recent chat:
 ${recentChat || '(empty -- you are first to speak)'}${whiteboardSummary}
@@ -168,10 +185,12 @@ async function runAgentTurn(
   boardroom: Boardroom,
   agent: BoardroomAgent,
   signal: AbortSignal,
+  round: number,
+  maxRounds: number,
 ): Promise<void> {
   if (signal.aborted) return;
 
-  const prompt = buildBoardroomPrompt(agent, boardroom);
+  const prompt = buildBoardroomPrompt(agent, boardroom, round, maxRounds);
   try {
     const raw = agent.provider === 'qwen'
       ? await callQwenBoardroom('', prompt, signal, agent.thinking ?? false)
@@ -179,7 +198,7 @@ async function runAgentTurn(
     if (signal.aborted) return;
 
     // Check if agent wants to post to whiteboard
-    const wbMatch = raw.match(/posting to whiteboard[:\s]*(.+)/i);
+    const wbMatch = raw.match(/posting to whiteboard[:\s]*([\s\S]+)/i);
     if (wbMatch) {
       writeWhiteboard(projectPath, boardroom.id, agent.id, 'findings', wbMatch[1].trim());
       postChat(projectPath, boardroom.id, agent.id, raw.slice(0, CHAT_CHAR_LIMIT));
@@ -216,7 +235,7 @@ export async function runBoardroom(
         const current = readBoardroom(projectPath, boardroomId);
         if (!current || current.status !== 'active') break;
 
-        await runAgentTurn(projectPath, current, agent, ctrl.signal);
+        await runAgentTurn(projectPath, current, agent, ctrl.signal, round, maxRounds);
         notify?.([`boardrooms/${boardroomId}.json`]);
 
         try { await sleep(BETWEEN_AGENT_MS, ctrl.signal); } catch { break; }

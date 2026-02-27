@@ -208,18 +208,20 @@ export class MemoryStore {
       memories: data.memories.map(m => {
         if (m.id === memoryId) {
           // Forward link: source -> target
-          if (m.links.some(l => l.targetId === targetId && l.relationship === relationship)) return m;
+          const links = m.links ?? [];
+          if (links.some(l => l.targetId === targetId && l.relationship === relationship)) return m;
           return {
             ...m,
-            links: [...m.links, { targetId, relationship, createdAt: timestamp }],
+            links: [...links, { targetId, relationship, createdAt: timestamp }],
           };
         }
         if (m.id === targetId) {
           // Reverse link: target -> source
-          if (m.links.some(l => l.targetId === memoryId && l.relationship === reverse)) return m;
+          const links = m.links ?? [];
+          if (links.some(l => l.targetId === memoryId && l.relationship === reverse)) return m;
           return {
             ...m,
-            links: [...m.links, { targetId: memoryId, relationship: reverse, createdAt: timestamp }],
+            links: [...links, { targetId: memoryId, relationship: reverse, createdAt: timestamp }],
           };
         }
         return m;

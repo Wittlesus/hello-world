@@ -14,7 +14,7 @@ export interface BoardroomAgent {
 export interface BoardroomMessage {
   id: string;
   agentId: string;
-  text: string; // enforced 160-char limit
+  text: string; // enforced char limit (CHAT_CHAR_LIMIT)
   timestamp: string;
 }
 
@@ -36,7 +36,7 @@ export interface Boardroom {
   whiteboard: WhiteboardEntry[];
 }
 
-export const CHAT_CHAR_LIMIT = 160;
+export const CHAT_CHAR_LIMIT = 300;
 
 export const EMPTY_BOARDROOM: Boardroom = {
   id: '',

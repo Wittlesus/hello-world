@@ -461,7 +461,7 @@ server.registerTool('hw_store_memory', {
       };
 
       const predResult = processPredictionEvent(event, model, recentMems, {
-        sessionId: sessions.current()?.id,
+        sessionId: sessions.getCurrent()?.id,
         activeTaskId: undefined,
         sessionMessageCount: bs?.messageCount ?? 0,
       });
