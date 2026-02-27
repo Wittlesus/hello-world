@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-02-26T23:48:20.735Z",
-  "status": "running",
-  "pid": 25652,
+  "generatedAt": "2026-02-27T10:20:31.243Z",
+  "status": "stopped",
+  "pid": 23328,
   "tools": [
     {
       "name": "hw_get_context",
@@ -102,6 +102,42 @@
     {
       "name": "hw_kill_watcher",
       "category": "watchers"
+    },
+    {
+      "name": "hw_get_claude_usage",
+      "category": "usage"
+    },
+    {
+      "name": "hw_create_boardroom",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_run_boardroom",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_stop_boardroom",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_read_boardroom",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_list_boardrooms",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_close_boardroom",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_qwen_panel",
+      "category": "boardroom"
+    },
+    {
+      "name": "hw_usage",
+      "category": "cost"
     }
   ]
 }

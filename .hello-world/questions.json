@@ -37,32 +37,40 @@
       "status": "answered"
     },
     {
+      "answer": "yes but i think we want qwen no?",
+      "answeredAt": 1772167489525,
       "context": "Decision d_buddy_recap chose hybrid approach: rolling buffer (crash-safe) + AI summary on clean exit. But the AI summary requires an API call from a detached Node subprocess. Alternative: just extract last 5-8 activity entries and format as bullets. Simpler, no API cost, but less polished.",
       "createdAt": "2026-02-26T03:41:56.952Z",
       "id": "q_5d72ee6f",
       "question": "Should buddy recap use AI summarization (via Claude Haiku API call in detached subprocess) or simple bullet-point extraction from activity.json?",
-      "status": "open"
+      "status": "answered"
     },
     {
+      "answer": "idk",
+      "answeredAt": 1772167472084,
       "context": "Research found 6+ tools. Best fits: cc-sdd (Kiro-compatible, 13 languages, one npx command) or OpenSpec (25.8k stars, lightweight, fluid iteration). Both add slash commands to .claude/commands/. The workflow: research -> spec -> plan -> tasks -> implement. Would replace our current ad-hoc task creation with structured specs. Could complement our existing deliberation system. Trade-off: more upfront overhead per feature, but less rework and better crash recovery (specs survive context loss).",
       "createdAt": "2026-02-26T03:45:28.967Z",
       "id": "q_00005483",
       "question": "Should we adopt Spec-Driven Development workflow using cc-sdd or OpenSpec?",
-      "status": "open"
+      "status": "answered"
     },
     {
+      "answer": "both",
+      "answeredAt": 1772167465635,
       "context": "Hello World is currently Pat's personal AI workspace. Multi-project support is in scope. But is the goal to ship this to other Claude Code users? If so, the target market is AI-native developers who want an autonomous workspace with persistent memory, deliberation, and project management. Competitors: Cursor, Windsurf, Cline, Continue. Differentiator: the autonomous workflow engine (tasks, approvals, deliberation, memory) that no IDE has. Revenue model: open source core + paid cloud sync / team features? Needs Pat's input on ambition level.",
       "createdAt": "2026-02-26T03:52:59.787Z",
       "id": "q_b31e7631",
       "question": "Is Hello World a personal tool or a product? If product, what's the go-to-market?",
-      "status": "open"
+      "status": "answered"
     },
     {
+      "answer": "idk",
+      "answeredAt": 1772167455480,
       "context": "Three tasks tagged [DELIBERATE]: (1) Memory quality feedback loop (t_e215a18e), (2) Knowledge intake scheduling (t_fee42a1a), (3) State storage JSON vs SQLite (t_f2d9ad7d). State storage was already decided (d_a9d3b3d7: split files + atomic writes, defer SQLite). Memory quality and knowledge intake could be implemented with a lightweight design pass instead of full deliberation, since the system is already functional and iterating fast. Full deliberation adds overhead (plan + approval + agents + coverage + conclude). Trade-off: thoroughness vs. velocity.",
       "createdAt": "2026-02-26T03:53:05.276Z",
       "id": "q_b7cf8d58",
       "question": "Should the three DELIBERATE tasks (memory quality, knowledge intake, state storage) be run as full deliberations or converted to regular implementation tasks?",
-      "status": "open"
+      "status": "answered"
     },
     {
       "answer": "yes",

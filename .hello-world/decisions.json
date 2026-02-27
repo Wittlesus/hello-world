@@ -258,6 +258,45 @@
       "rationale": "All 3 teams converged on the same diagnosis (85% dead memories, zero plasticity, disconnected scoring) and agreed on core architecture. Key tensions resolved: prediction-error capture (neuro shifted eng), smart checkpoints (research shifted neuro), fingerprint location (eng shifted neuro). No embeddings, no LLM calls, no external DB required.",
       "decidedAt": "2026-02-26T09:30:16.920Z",
       "decidedBy": "both"
+    },
+    {
+      "id": "d_7f171d85",
+      "title": "Boardrooms: team collaboration spaces (distinct from deliberations)",
+      "context": "Pat wants agent team workspaces with whiteboard + chat. Chat enforces 160-char limit, timestamps, usernames. Deliberations are for binding decisions; boardrooms are for teams to work together like a dev team.",
+      "chosen": "Boardroom system with whiteboard file + chat file, 160-char message limit, forced usernames/timestamps",
+      "alternatives": [],
+      "rationale": "Already built in session 56 -- 6 MCP tools (create, run, stop, read, list, close). Needs end-to-end testing with Qwen agents.",
+      "decidedAt": "2026-02-27T02:43:54.629Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_36e31687",
+      "title": "Prime directive: USE YOUR OWN SYSTEMS",
+      "context": "Pat frustrated that Claude wastes time and usage by not consulting memory, app state, or project context before acting",
+      "chosen": "Burned into MEMORY.md prime directive section, stored as high-severity pain memory, added to direction.json",
+      "alternatives": [],
+      "rationale": "The entire point of Hello World is continuity. A Claude that ignores its memory is a blank slate.",
+      "decidedAt": "2026-02-27T07:31:26.505Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_29fa761d",
+      "title": "Restore all 14 deliberation MCP tools + add safeguard hook",
+      "context": "Session 48 Brain Magnum Opus refactor accidentally deleted all deliberation/chatroom tool registrations from server.ts. The UI, Rust backend, chatroom code, and 17 saved sessions all still worked -- only the MCP entry points were missing. Pat discovered this when trying to use the deliberation room.",
+      "chosen": "Restore all 14 tools from git history (commit be3aa69) into current server.ts. Add PostToolUse hook (verify-deliberation-tools.mjs) that blocks any Edit/Write to server.ts if any deliberation tool registration is missing.",
+      "alternatives": [
+        {
+          "option": "Only restore tools, no safeguard",
+          "tradeoff": "Could happen again in another large refactor"
+        },
+        {
+          "option": "Rewrite deliberation system from scratch",
+          "tradeoff": "Unnecessary -- the existing system works, just needed re-wiring"
+        }
+      ],
+      "rationale": "The tools were working before and their deletion was accidental. The safeguard hook prevents future accidental deletions during refactors. Belt-and-suspenders: the hook checks all 13 tool name strings exist in the file after every edit.",
+      "decidedAt": "2026-02-27T10:31:10.968Z",
+      "decidedBy": "both"
     }
   ]
 }

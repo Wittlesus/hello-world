@@ -1534,9 +1534,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 5,
+      "accessCount": 6,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-26T13:22:22.731Z"
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_823838dc",
@@ -1596,9 +1596,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 5,
+      "accessCount": 6,
       "createdAt": "2026-02-25T08:14:24.115Z",
-      "lastAccessed": "2026-02-26T13:22:22.731Z"
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_254f24ba",
@@ -1786,8 +1786,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:02.920Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:15:02.920Z",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
     },
     {
       "id": "mem_c7d61dda",
@@ -1901,7 +1902,15 @@
       "severity": "high",
       "synapticStrength": 1,
       "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:18.710Z"
+      "createdAt": "2026-02-25T08:15:18.710Z",
+      "supersededBy": "mem_c9afde79",
+      "links": [
+        {
+          "targetId": "mem_c9afde79",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:38:47.682Z"
+        }
+      ]
     },
     {
       "id": "mem_bcce86c6",
@@ -1938,9 +1947,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 1,
+      "accessCount": 2,
       "createdAt": "2026-02-25T08:15:24.783Z",
-      "lastAccessed": "2026-02-26T13:22:22.731Z"
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_d26abc7a",
@@ -1977,9 +1986,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 3,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:15:32.757Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_8b2f53c8",
@@ -2487,8 +2496,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:17:22.256Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:17:22.256Z",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
     },
     {
       "id": "mem_9d95b799",
@@ -2664,8 +2674,17 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T10:42:01.133Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T10:42:01.133Z",
+      "lastAccessed": "2026-02-27T10:13:27.296Z",
+      "supersededBy": "mem_3a15f5e9",
+      "links": [
+        {
+          "targetId": "mem_3a15f5e9",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T10:21:20.516Z"
+        }
+      ]
     },
     {
       "id": "mem_4ec22657",
@@ -2833,9 +2852,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T03:30:24.851Z",
-      "lastAccessed": "2026-02-26T15:46:11.663Z"
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
     },
     {
       "id": "mem_49c7b3ae",
@@ -3566,11 +3585,12 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T13:20:13.705Z",
       "links": [],
       "qualityScore": 0.75,
-      "fingerprint": "431ef06db2be"
+      "fingerprint": "431ef06db2be",
+      "lastAccessed": "2026-02-27T08:45:24.681Z"
     },
     {
       "id": "mem_32565078",
@@ -3650,11 +3670,12 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T15:05:10.841Z",
       "links": [],
       "qualityScore": 1,
-      "fingerprint": "552fd64af76c"
+      "fingerprint": "552fd64af76c",
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_99142307",
@@ -3671,11 +3692,12 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T15:05:18.324Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "cd3191f0ea23"
+      "fingerprint": "cd3191f0ea23",
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_496c1ff2",
@@ -3693,11 +3715,12 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T15:05:23.856Z",
       "links": [],
       "qualityScore": 0.7,
-      "fingerprint": "0cca8f14bfc3"
+      "fingerprint": "0cca8f14bfc3",
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_0b3c73dc",
@@ -3778,11 +3801,12 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T15:11:08.229Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "dfc728f471e8"
+      "fingerprint": "dfc728f471e8",
+      "lastAccessed": "2026-02-27T07:31:55.275Z"
     },
     {
       "id": "mem_a4c66b94",
@@ -4131,7 +4155,7 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:30:06.967Z",
       "links": [
         {
@@ -4157,7 +4181,8 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "ee6ee50f245a",
-      "supersededBy": "mem_525e32e3"
+      "supersededBy": "mem_525e32e3",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
     },
     {
       "id": "mem_525e32e3",
@@ -4208,7 +4233,7 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:30:16.651Z",
       "links": [
         {
@@ -4228,7 +4253,8 @@
         }
       ],
       "qualityScore": 0.85,
-      "fingerprint": "8d0557cd8dae"
+      "fingerprint": "8d0557cd8dae",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
     },
     {
       "id": "mem_ab99537b",
@@ -4245,7 +4271,7 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:30:23.130Z",
       "links": [
         {
@@ -4255,7 +4281,8 @@
         }
       ],
       "qualityScore": 0.85,
-      "fingerprint": "0e4dd2489f99"
+      "fingerprint": "0e4dd2489f99",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
     },
     {
       "id": "mem_ee3c8f17",
@@ -4299,7 +4326,7 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T16:33:08.473Z",
       "links": [
         {
@@ -4309,7 +4336,8 @@
         }
       ],
       "qualityScore": 0.78,
-      "fingerprint": "bb9e7d9ab460"
+      "fingerprint": "bb9e7d9ab460",
+      "lastAccessed": "2026-02-27T08:45:24.681Z"
     },
     {
       "id": "mem_2df73149",
@@ -4326,7 +4354,7 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T16:33:14.883Z",
       "links": [
         {
@@ -4336,7 +4364,8 @@
         }
       ],
       "qualityScore": 0.88,
-      "fingerprint": "1f43cf69431b"
+      "fingerprint": "1f43cf69431b",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
     },
     {
       "id": "mem_f87fb389",
@@ -4378,7 +4407,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T16:46:16.628Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_f7b383db",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:58:02.104Z"
+        }
+      ],
       "qualityScore": 0.85,
       "fingerprint": "eb5bf092e4e1"
     },
@@ -4484,6 +4519,11 @@
           "targetId": "mem_4c730f59",
           "relationship": "related",
           "createdAt": "2026-02-26T17:56:03.949Z"
+        },
+        {
+          "targetId": "mem_c6d13759",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:23.346Z"
         }
       ],
       "qualityScore": 0.9,
@@ -4512,6 +4552,11 @@
           "targetId": "mem_a3d0d41a",
           "relationship": "related",
           "createdAt": "2026-02-26T17:19:59.487Z"
+        },
+        {
+          "targetId": "mem_4b06ba9d",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T08:56:44.497Z"
         }
       ],
       "qualityScore": 1,
@@ -4601,11 +4646,12 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:52:58.109Z",
       "links": [],
       "qualityScore": 1,
-      "fingerprint": "994a76a3e872"
+      "fingerprint": "994a76a3e872",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
     },
     {
       "id": "mem_497c4a8f",
@@ -4808,6 +4854,11 @@
           "targetId": "mem_16b58e25",
           "relationship": "related",
           "createdAt": "2026-02-26T18:01:16.761Z"
+        },
+        {
+          "targetId": "mem_c6d13759",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:23.343Z"
         }
       ],
       "qualityScore": 0.6,
@@ -4944,6 +4995,11 @@
           "targetId": "mem_8528557a",
           "relationship": "related",
           "createdAt": "2026-02-26T18:02:02.630Z"
+        },
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T02:39:35.832Z"
         }
       ],
       "qualityScore": 0.5,
@@ -5121,11 +5177,12 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T18:01:28.556Z",
       "links": [],
       "qualityScore": 0.98,
-      "fingerprint": "fe4903c0f0fa"
+      "fingerprint": "fe4903c0f0fa",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
     },
     {
       "id": "mem_7b4685ab",
@@ -5144,7 +5201,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T18:01:45.960Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T02:39:35.848Z"
+        }
+      ],
       "qualityScore": 0.63,
       "fingerprint": "99da5561fa77"
     },
@@ -5179,6 +5242,11 @@
           "targetId": "mem_1d772142",
           "relationship": "related",
           "createdAt": "2026-02-26T18:02:18.704Z"
+        },
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T02:39:35.837Z"
         }
       ],
       "qualityScore": 0.6,
@@ -5206,6 +5274,11 @@
           "targetId": "mem_d6686521",
           "relationship": "related",
           "createdAt": "2026-02-26T18:01:50.357Z"
+        },
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T02:39:35.842Z"
         }
       ],
       "qualityScore": 0.6,
@@ -5397,6 +5470,11 @@
           "targetId": "mem_d6686521",
           "relationship": "related",
           "createdAt": "2026-02-26T18:02:18.704Z"
+        },
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T02:39:35.845Z"
         }
       ],
       "qualityScore": 0.6,
@@ -5443,11 +5521,12 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T18:02:25.385Z",
       "links": [],
       "qualityScore": 0.6,
-      "fingerprint": "4400f9643806"
+      "fingerprint": "4400f9643806",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
     },
     {
       "id": "mem_fc1e4988",
@@ -5726,7 +5805,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T00:47:33.700Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_0bde53a6",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T08:56:31.075Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "5b667e037a37"
     },
@@ -5781,6 +5866,1651 @@
       ],
       "qualityScore": 0.7,
       "fingerprint": "37210b2b58e2"
+    },
+    {
+      "id": "mem_30f032dc",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Qwen API provider: Chutes.ai (Pat's existing paid account)",
+      "content": "Qwen access via Chutes.ai -- Pat already has a paid account. Endpoint: https://llm.chutes.ai/v1 (OpenAI-compatible). Model: Qwen/Qwen3-235B-A22B-Instruct-2507-TEE. Also has Qwen3.5-397B, Qwen3-Coder-Next, vision models. 99.9% uptime SLA, decentralized GPU compute. DeepInfra was rejected (68-70% uptime, predatory pricing). Alibaba Cloud China region requires Chinese ID verification.",
+      "rule": "Use Chutes.ai for all Qwen API calls. Env vars: QWEN_API_KEY, QWEN_BASE_URL=https://llm.chutes.ai/v1, QWEN_MODEL.",
+      "tags": [
+        "qwen",
+        "api",
+        "chutes",
+        "credentials",
+        "provider"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-27T02:26:59.889Z",
+      "links": [],
+      "qualityScore": 0.95,
+      "fingerprint": "42bcb6ce55c7",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
+    },
+    {
+      "id": "mem_18fc5b2a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pat's workflow rule: always commit + handoff without asking. Only ask before restart.",
+      "content": "",
+      "rule": "When work is done: commit and write handoff automatically. Do not ask \"want me to commit?\" or \"should I write a handoff?\". Just do it. The only thing that needs Pat's explicit go-ahead is restarting the app.",
+      "tags": [
+        "pat-directive",
+        "workflow"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T02:39:35.821Z",
+      "links": [
+        {
+          "targetId": "mem_98e805e7",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T02:39:35.832Z"
+        },
+        {
+          "targetId": "mem_d6686521",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T02:39:35.837Z"
+        },
+        {
+          "targetId": "mem_259b0544",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T02:39:35.842Z"
+        },
+        {
+          "targetId": "mem_1d772142",
+          "relationship": "related",
+          "createdAt": "2026-02-27T02:39:35.845Z"
+        },
+        {
+          "targetId": "mem_7b4685ab",
+          "relationship": "related",
+          "createdAt": "2026-02-27T02:39:35.848Z"
+        },
+        {
+          "targetId": "mem_c6fa3b73",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:28:43.648Z"
+        }
+      ],
+      "qualityScore": 0.65,
+      "fingerprint": "4c97490be78e"
+    },
+    {
+      "id": "mem_d4e5f721",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Auto-populate Timeline and Context tabs from brain data",
+      "content": "Timeline tab (History > Timeline) should auto-generate from sessions.json, activity.json, decisions, and task completions -- not be a static hand-written file. Context tab (P key) should pull from brain data (decisions, memories, strategic state) in addition to direction.json. Both tabs should stay current automatically as the brain system processes new data.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "twitter",
+        "social",
+        "memory",
+        "tokens",
+        "strategy",
+        "validation",
+        "github",
+        "git"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T02:53:39.257Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "0040824d18a9"
+    },
+    {
+      "id": "mem_f3a96a8f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Wiring sprint: connect all built-but-unwired brain modules to runtime",
+      "content": "Wire reflection, prediction, cortex merger, contradiction detection into their runtime call paths. Protect pain memories from pruning. Fix get_research in lib.rs. Expand signal detector patterns. All code exists and is tested -- just needs to be connected.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T02:59:35.456Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "e8395e2035de"
+    },
+    {
+      "id": "mem_4ba9c362",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Wiring sprint complete: reflection, prediction, cortex merger all connected",
+      "content": "Session 57: Wired 3 brain modules that existed but were dead code. 1) Cortex merger: learned cortex entries now merged with DEFAULT_CORTEX at retrieval time via mergeCortex(). 2) Reflection: shouldReflect() checks after hw_store_memory, generates meta-observations. Session-end consolidation clusters memories and creates abstractions. 3) Prediction: processPredictionEvent() runs on pain/win stores, updates expectation model in expectation-model.json, logs surprises. Also removed dead findContradictions import.",
+      "rule": "After building brain modules, immediately verify they are called from the runtime path. Use the wiring audit pattern: import exists != called.",
+      "tags": [
+        "memory",
+        "model-selection",
+        "windows"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T02:59:41.448Z",
+      "links": [],
+      "qualityScore": 0.95,
+      "fingerprint": "c9a84ba41d28"
+    },
+    {
+      "id": "mem_28825862",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Qwen integration Phase 1: callQwen + provider routing + boardroom foundation",
+      "content": "Add Qwen as a model provider in the agent system. Steps: 1) callQwen() function using OpenAI npm package pointed at DeepInfra/DashScope, 2) provider field on AgentDefinition, 3) route runSingleAgent by provider, 4) DASHSCOPE_API_KEY env var, 5) basic boardroom infrastructure (chat.json with 160-char limit, whiteboard.json, agent usernames + timestamps). No Rust changes needed -- pure TypeScript in packages/core.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "npm",
+        "dependencies",
+        "packages",
+        "configuration",
+        "environment"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T02:59:47.699Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "de426dda2003"
+    },
+    {
+      "id": "mem_160afc4c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Boardroom Qwen integration verified working",
+      "content": "After MCP restart, Qwen API key from ~/.mcp.json is picked up correctly. Boardroom agents with provider \"qwen\" respond. Tested in session 58 with br_cfd6a96e.",
+      "rule": "",
+      "tags": [
+        "qwen",
+        "boardroom",
+        "verification"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-27T03:05:38.256Z",
+      "links": [
+        {
+          "targetId": "mem_70238c60",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:28.850Z"
+        },
+        {
+          "targetId": "mem_f7b383db",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:58:02.107Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "b290af1aba83",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
+    },
+    {
+      "id": "mem_ec4c5276",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Test: prediction wiring fires on pain memory store",
+      "content": "This is a verification test from session 58. Storing a pain memory should trigger prediction event processing and create/update expectation-model.json.",
+      "rule": "Always verify brain wiring after restart",
+      "tags": [
+        "verification",
+        "brain-wiring",
+        "prediction"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:05:44.072Z",
+      "links": [
+        {
+          "targetId": "mem_034f6fc6",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:15.382Z"
+        }
+      ],
+      "qualityScore": 0.95,
+      "fingerprint": "48ef0de569a6"
+    },
+    {
+      "id": "mem_7a3e2cbc",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Research: multi-agent context management -- findings and recommendations",
+      "content": "6-agent research sprint on boardroom context strategies. Key findings: (1) Cost is negligible at our scale ($0.004/session). (2) max_tokens:100 is the #1 quality bottleneck. (3) Full history replay causes sycophancy amplification (r=0.902), groupthink (80%+ collapse), and diversity loss. (4) Blackboard/whiteboard pattern outperforms peer-to-peer chat 13-57%. (5) Less shared context = more diverse outputs. (6) Multi-agent debate gains mostly come from ensembling not debate rounds. (7) Qwen API is fully stateless -- no prefix caching via Chutes. Quick wins: raise max_tokens to 400, add round awareness, fix whiteboard regex, raise char limit to 300.",
+      "rule": "",
+      "tags": [
+        "research",
+        "qwen",
+        "boardroom",
+        "multi-agent",
+        "context-management"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-27T03:14:53.308Z",
+      "links": [
+        {
+          "targetId": "mem_ef0d74ab",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:33.813Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "48a809ce1b1b",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
+    },
+    {
+      "id": "mem_034f6fc6",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Bug: prediction wiring crashed -- sessions.current() should be sessions.getCurrent()",
+      "content": "In server.ts line 464, Zone F prediction event used sessions.current()?.id but SessionManager uses getCurrent(). Error: \"sessions.current is not a function\". Fixed to sessions.getCurrent()?.id. Needs MCP restart to verify.",
+      "rule": "Always check method names against class definitions, not assumptions",
+      "tags": [
+        "bug",
+        "brain-wiring",
+        "prediction",
+        "server.ts"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:36:15.372Z",
+      "links": [
+        {
+          "targetId": "mem_ec4c5276",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:15.382Z"
+        },
+        {
+          "targetId": "mem_1bb9b856",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:18.293Z"
+        }
+      ],
+      "qualityScore": 0.98,
+      "fingerprint": "314a7ba9f301"
+    },
+    {
+      "id": "mem_1bb9b856",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Bug: linker crashed on old memories without links field -- m.links.some() on undefined",
+      "content": "In store.ts addLink(), m.links.some() crashes when old memories don't have a links[] array. Error: \"Cannot read properties of undefined (reading 'some')\". Fixed to (m.links ?? []).some(). Needs MCP restart to verify.",
+      "rule": "Always use optional chaining or nullish coalescing on optional array fields from stored data",
+      "tags": [
+        "bug",
+        "brain-wiring",
+        "linker",
+        "store.ts"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:36:18.284Z",
+      "links": [
+        {
+          "targetId": "mem_034f6fc6",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:18.293Z"
+        }
+      ],
+      "qualityScore": 0.98,
+      "fingerprint": "a266f323bb7d"
+    },
+    {
+      "id": "mem_c6d13759",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Auto-capture signal detector detects but never auto-stores memories",
+      "content": "The signal detector pipeline (signal-detector.mjs -> stop hook -> user-prompt hook) works for DETECTION and NUDGING but has no auto-storage path. Signals get queued, surfaced as \"UNCAPTURED SIGNALS\" in Claude's context, then flushed -- but rely entirely on Claude manually calling hw_store_memory. Despite a pain memory telling Claude to act on nudges, important research findings and bug fixes still go unrecorded.",
+      "rule": "Detection without action is waste. Any detection pipeline needs a storage path, not just a display path.",
+      "tags": [
+        "auto-capture",
+        "signal-detector",
+        "architecture-gap",
+        "memory"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:36:23.333Z",
+      "links": [
+        {
+          "targetId": "mem_4c730f59",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:23.343Z"
+        },
+        {
+          "targetId": "mem_958d28d9",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:23.346Z"
+        }
+      ],
+      "qualityScore": 0.8,
+      "fingerprint": "2243f49745fd"
+    },
+    {
+      "id": "mem_70238c60",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Boardroom quality issues: 6 concrete problems identified from research sprint",
+      "content": "1. max_tokens:100 for non-thinking agents -- can't finish a thought. Fix: raise to 400. 2. No round awareness -- agents can't modulate intro vs synthesis. Fix: pass round/maxRounds to prompt. 3. Whiteboard regex broken for multiline -- only captures single-line after \"posting to whiteboard:\". Fix: [\\s\\S]+ instead of .+. 4. CHAT_CHAR_LIMIT=160 too restrictive for technical work. Fix: raise to 300. 5. Specialist agent prompts (neuro/eng/research) written for deliberation conflict with boardroom rules. Fix: boardroom-specific prompts. 6. Agent can't see its own last message separately -- causes repetition. Fix: extract and show explicitly.",
+      "rule": "",
+      "tags": [
+        "boardroom",
+        "quality",
+        "qwen",
+        "runner.ts"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 2,
+      "createdAt": "2026-02-27T03:36:28.841Z",
+      "links": [
+        {
+          "targetId": "mem_160afc4c",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:28.850Z"
+        },
+        {
+          "targetId": "mem_0bde53a6",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T08:56:31.080Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "aefc0a8c4fa0",
+      "lastAccessed": "2026-02-27T10:13:27.296Z"
+    },
+    {
+      "id": "mem_ef0d74ab",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Anti-groupthink mitigations for multi-agent systems (from research)",
+      "content": "Research-backed mitigations: 1. Independent initialization -- no shared history for round 1, agents form positions independently. 2. Selective history injection -- each agent sees own messages + summary of others, not full transcript. 3. Cap debate at 3 rounds then synthesize (no quality improvement beyond 3). 4. Agent diversity matters more than agent count (DMAD, ICLR 2025). 5. Majority vote (self-consistency) beats multi-round debate at same token cost for factual questions. 6. Blackboard/whiteboard pattern outperforms peer-to-peer chat 13-57% for coordination.",
+      "rule": "",
+      "tags": [
+        "research",
+        "multi-agent",
+        "groupthink",
+        "sycophancy",
+        "boardroom"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-27T03:36:33.804Z",
+      "links": [
+        {
+          "targetId": "mem_7a3e2cbc",
+          "relationship": "related",
+          "createdAt": "2026-02-27T03:36:33.813Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "4bd46ec95941",
+      "lastAccessed": "2026-02-27T08:45:24.681Z"
+    },
+    {
+      "id": "mem_4d10aa19",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Research: optimal multi-turn context strategies for Qwen boardroom calls",
+      "content": "Current approach: stateless API calls with full chat history stuffed into each prompt. Pat questions if this is effective. Research and test alternatives: multi-turn session APIs, summarized context windows, sliding windows, RAG-style retrieval, Qwen-specific features (session IDs, caching). Measure: token efficiency, response quality, coherence across rounds. Output: recommendation + implementation plan.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "research",
+        "qwen",
+        "boardroom",
+        "optimization"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-27T03:37:06.977Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "d14091556535",
+      "lastAccessed": "2026-02-27T07:30:35.352Z"
+    },
+    {
+      "id": "mem_4cf5e64e",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Boardroom quick wins: max_tokens, round awareness, whiteboard regex, char limit",
+      "content": "Implement the 4 highest-impact boardroom fixes from the research sprint: 1. runner.ts:51 -- raise max_tokens from 100 to 400 for non-thinking agents 2. runner.ts buildBoardroomPrompt -- add round number and phase guidance (round/maxRounds params, intro vs converge instructions) 3. runner.ts:182 -- fix whiteboard regex from (.+) to ([\\s\\S]+) for multiline capture 4. types.ts:39 -- raise CHAT_CHAR_LIMIT from 160 to 300 Also: show agent's own last message separately in prompt to prevent repetition.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "validation",
+        "strategy",
+        "debugging"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:39:26.416Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "0165f860d71e"
+    },
+    {
+      "id": "mem_b3aed7bb",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Auto-capture: add storage path so detected signals become memories automatically",
+      "content": "The signal detector pipeline detects and nudges but never auto-stores. Fix this gap. Options: 1. Server-side: add processSignalQueue() to MCP server that consumes high-confidence (0.7+) signals and auto-stores them via storeMemory(). Run during hw_store_memory or hw_retrieve_memories calls. 2. Qwen quality gate: for 0.5-0.7 signals, send excerpt to Qwen (\"is this worth storing? yes/no\") before storing. Cheap per-signal cost. 3. Keep nudge system for low-confidence signals but make the \"STOP and evaluate\" behavior automatic. Decision needed on which approach. The current system wastes detected signals -- detection without storage is waste.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "windows",
+        "ai-tells",
+        "writing",
+        "debugging",
+        "mcp",
+        "strategy",
+        "autonomy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:45:17.754Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "a08980d7bbd5"
+    },
+    {
+      "id": "mem_6f689ca8",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Boardroom agent prompts: create boardroom-specific versions for specialist agents",
+      "content": "Current specialist agents (neuro-vision, neuro-impl, eng-arch, eng-impl, research-vision, research-impl) have system prompts written for adversarial deliberation. These conflict with boardroom collaboration rules -- FORMAT instructions say \"2-4 sentences\" which clashes with 160/300 char limit, and role framing says \"argue against whatever seems obvious\" which contradicts \"collaborate, don't argue.\" Add a boardroomPrompt field to AgentDefinition type, create collaboration-focused versions of specialist prompts, fall back to systemPrompt if boardroomPrompt absent.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:47:06.756Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "600c4d65b614"
+    },
+    {
+      "id": "mem_825a136f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Questions: in-app answer flow (no MCP needed)",
+      "content": "Pat can't answer questions from the app. Need: text input + Answer button in QuestionsView.tsx, Rust command answer_question(project_path, question_id, answer_text) that writes to questions.json, SessionStart hook detects newly answered questions and surfaces them for routing. Principle: Pat acts, Claude routes. No Claude in the loop for ANSWERING, only for ROUTING after. Bonus: Discord reply-to-DM also routes answers.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "hooks",
+        "model-selection"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:50:39.922Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "6f1a27245821"
+    },
+    {
+      "id": "mem_ed99c6bb",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Boardroom anti-groupthink: independent initialization + selective history",
+      "content": "Restructure runBoardroom into phases based on research findings: Phase 1 (rounds 1): Independent thinking -- each agent sees only topic + whiteboard, no chat history. Forms position independently. Phase 2 (rounds 2-3): Selective sharing -- agents see whiteboard + own prior messages + compressed summary of others' positions. NOT full transcript. Phase 3 (rounds 4+): Convergence -- synthesis round, flag disagreements as valuable. This prevents anchoring bias (r=0.902 sycophancy correlation), groupthink (80%+ collapse), and produces more diverse outputs (research: embedding similarity 0.791 -> 0.511 without shared context).",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "validation",
+        "strategy",
+        "memory",
+        "tokens"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:50:40.631Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "80257aff91a8"
+    },
+    {
+      "id": "mem_0d07f069",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: App loading screen or faster startup",
+      "content": "The app shows a blank white screen while loading, making it impossible to tell if it's broken or just slow. Either: (1) reduce load times so the white screen is negligible, or (2) add a loading/splash screen with the Hello World branding so the user knows the app is starting up and not stuck. Investigate what's causing the slow load -- could be heavy JS bundle, synchronous state reads, or Rust init. A Tauri splash screen (native window) or an inline HTML loading indicator in index.html (before React mounts) are both viable approaches.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "performance",
+        "react",
+        "frontend"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:51:48.969Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "39bae56fa324"
+    },
+    {
+      "id": "mem_17cbd32d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Questions: in-app answer flow (no MCP needed)",
+      "content": "Duplicate of t_f7899ace -- completed in session 58. Ctrl+Enter shortcut, immediate refresh, autoFocus, type fix.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "memory",
+        "debugging"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:52:01.021Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "36bcad083942"
+    },
+    {
+      "id": "mem_ebeb1d2f",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Implement Overdrive + Bypass mode toggle",
+      "content": "Duplicate of t_0f1cf64b -- overdrive toggle already implemented in Sidebar.tsx and BuddyOverlay.tsx.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:52:33.355Z",
+      "links": [],
+      "qualityScore": 0.49999999999999994,
+      "fingerprint": "86a1febb1be7"
+    },
+    {
+      "id": "mem_835aec04",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Subagent team strategy playbook -- complete framework",
+      "content": "Two channels: Channel A (Task tool) for real work, Channel B (boardroom) for opinions. Never mix. Agent counts: Research 4-6, Build 2-3, Audit 4, Deliberation 4-6. Always include contrarian + premortem in deliberations. Model routing: Opus for architecture/cross-module, Sonnet for all parallel work, Haiku for boardroom domain, Qwen for boardroom cognitive. Never Qwen for autonomous multi-file editing. Spawn agents only when: tasks are genuinely independent, would take 10+ min sequentially, and decomposition is clear. Every parallel build needs live-app verification, not just build. Synthesis: research=conclusions+sources, build=dependency-ordered merge+live test, audit=severity-ranked action list, deliberation=hw_record_decision required.",
+      "rule": "",
+      "tags": [
+        "strategy",
+        "subagents",
+        "playbook",
+        "team-composition",
+        "cost-optimization"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:55:16.509Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "c422a80d830c"
+    },
+    {
+      "id": "mem_4da22186",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Design and implement subagent team strategy",
+      "content": "Design a comprehensive team strategy where specialized subagent teams work together on different aspects of the Hello World project. Teams: Red Team (security, exploit finding, adversarial testing), Dev Team (feature implementation, code quality), UX Team (user personas of varying skill levels), Strategy Team (tech CEO perspectives, product direction), Security Team (audit, hardening), QA Team (testing, edge cases). Each team needs: defined roles, coordination patterns, when to spawn, how results feed back. Pat wants liberal agent usage -- no token conservation.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "architecture",
+        "design",
+        "strategy",
+        "security",
+        "autonomy",
+        "tokens",
+        "authentication"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:55:17.585Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "e9e50bbae02e"
+    },
+    {
+      "id": "mem_eb004b92",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Wire contradiction detection into hw_store_memory response",
+      "content": "detectContradiction exists in linker.ts and runs during findLinks, but contradictions are only stored as link relationships -- the user never sees them. Add contradiction warnings to the hw_store_memory response text so Claude knows when a new memory contradicts an existing one. Example: \"Memory stored: mem_xxx (pain). WARNING: contradicts mem_yyy (score: 0.7) -- consider updating or superseding.\" This helps catch stale/wrong memories.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T03:57:39.412Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "224576a0b282"
+    },
+    {
+      "id": "mem_c9e011b2",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy avatar gallery: 6 agents each design a unique buddy with animations",
+      "content": "Spawn 6 creative agents, each given BuddyOverlay.tsx as a template. Each designs a completely unique buddy avatar with its own personality, look, and animations. They can take screenshots and iterate in real time. Build a gallery/selector so Pat can switch between buddy designs.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "architecture",
+        "design",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "playwright",
+        "browser"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:00:52.062Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "cacdc8c2e813"
+    },
+    {
+      "id": "mem_6ef13883",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Wire buddy avatars into BuddyOverlay + add picker to Settings",
+      "content": "buddy-avatars.tsx exists with 6 avatars + AvatarPicker + localStorage persistence. Wire it: 1. BuddyOverlay.tsx: import getAvatarById/getSavedAvatarId, replace block-art div with selected avatar component. 2. SettingsView.tsx: add AvatarPicker section so users can choose their buddy.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "react",
+        "frontend"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:04:28.814Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "d79fa8692abe"
+    },
+    {
+      "id": "mem_61035c34",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Dashboard improvements: show brain health grade + memory count in status bar",
+      "content": "The Dashboard view shows activity stream and active task. Add a compact status bar at the top showing: brain health grade (from hw_brain_health), total memory count, active task name, current workflow phase. Makes the dashboard actually useful as a glanceable status screen.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:05:57.058Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "7e6e3d6a5099"
+    },
+    {
+      "id": "mem_26d3e733",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Update MemoryView with brain magnum opus fields: qualityScore, links, fingerprint",
+      "content": "MemoryView.tsx interface is missing qualityScore, links[], fingerprint, and reflection type from the brain magnum opus. Add these fields to the interface and display them: quality score as a small badge, link count, and linked memory IDs on hover/expand.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "strategy",
+        "autonomy",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:07:16.807Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "f19cccc42980"
+    },
+    {
+      "id": "mem_c687aee5",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Rebuild UsageBars: Qwen requests/day + Claude session cost tracking",
+      "content": "Current UsageBars shows misleading token split. Redesign to show: 1. Qwen: requests used today / 300 daily limit (progress bar + percentage). Track request count in qwen-usage.json. 2. Claude: need to figure out what's trackable. Options: session message count, estimated tokens, or pull from Anthropic usage API if available. Keep it simple and accurate.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "memory",
+        "tokens",
+        "strategy",
+        "authentication",
+        "security",
+        "github",
+        "git"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:17:49.036Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "0fb4a07aaca9"
+    },
+    {
+      "id": "mem_549f02ba",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Chutes.ai pricing: $3/mo = 300 requests/day, pay-as-you-go $0.01/M tokens",
+      "content": "Pat's Chutes.ai plan: $3/month starter tier = 300 API requests per day. Mid tier $10/mo = 2000/day, Pro $20/mo = 5000/day. Per-token cost is negligible ($0.01/M tokens). A boardroom with 3 agents x 8 rounds = 24 requests. Daily limit is the real constraint, not cost. UsageBars now shows requests/day instead of token split.",
+      "rule": "",
+      "tags": [
+        "chutes",
+        "qwen",
+        "pricing",
+        "usage"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:17:53.865Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "cd569bb1f9eb"
+    },
+    {
+      "id": "mem_e8e0910a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add lizard buddy avatar + ensure all avatars integrate with full buddy system",
+      "content": "1. Add a lizard/reptile avatar to the buddy-avatars gallery. 2. Verify all 7 avatars work with: theme colors (buddyIdle/buddyActive), overdrive glow, error state (red), shocked state (exclamation mark), responding state (typing dots), recap bubble, sentinel shield, mute dot, chime sound. The current BuddyOverlay wiring may have lost some of these when replacing block-art with avatar components.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "errors",
+        "debugging"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:20:34.883Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "7ef9029e47ba"
+    },
+    {
+      "id": "mem_e573733d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Session 58: record 15-task sprint with parallel agents and continuous execution",
+      "content": "15 tasks completed, 11 commits, 3 research sprints in a single session. Key approach: Pat said \"only stop if you NEED to restart\" -- so kept executing continuously. Used parallel agents for research (6-agent context strategy), implementation (3-agent auto-capture + prompts + questions), and creative work (avatar gallery). Mixed agent work with manual coding for maximum throughput. Boardroom quality overhaul, auto-capture pipeline, buddy avatar system, dashboard status bar, loading screen, UsageBars rebuild, MemoryView upgrade all shipped.",
+      "rule": "",
+      "tags": [
+        "productivity",
+        "parallel-agents",
+        "session-58",
+        "sprint"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T04:25:39.974Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "efc80ea88c73"
+    },
+    {
+      "id": "mem_92859492",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Claude.ai usage API: OAuth token from .credentials.json, no browser needed",
+      "content": "API: https://api.anthropic.com/api/oauth/usage\nAuth: Bearer token from ~/.claude/.credentials.json (claudeAiOauth.accessToken)\nHeaders: anthropic-beta: oauth-2025-04-20, User-Agent: claude-code/2.0.31\nReturns: five_hour, seven_day, seven_day_sonnet, extra_usage with utilization percentages\nScript: .claude/sync-claude-usage.mjs -- runs every 5 min via Windows Task Scheduler \"SyncClaudeUsage\"\nMerges webUsage field into .hello-world/claude-usage.json\nDiscovery: codelynx.dev blog post showed the endpoint",
+      "rule": "For claude.ai usage data, use the OAuth API endpoint, not browser scraping. The token is already on disk.",
+      "tags": [
+        "api",
+        "oauth",
+        "usage",
+        "claude",
+        "scheduled-task"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:27:42.696Z",
+      "links": [],
+      "qualityScore": 0.95,
+      "fingerprint": "9efdd920c61e"
+    },
+    {
+      "id": "mem_4994da64",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Overengineered browser scraping when a simple API existed in my own system",
+      "content": "Spent 30+ minutes trying browser scraping, CDP debug ports, Playwright persistent contexts, and cookie extraction to get claude.ai usage data. The answer was a single curl call using the OAuth token already in ~/.claude/.credentials.json. The API endpoint (api.anthropic.com/api/oauth/usage) is part of the Claude system I run on. A 5-second web search found the answer on a blog post. Should have searched for existing solutions FIRST before building anything.",
+      "rule": "Before building any integration from scratch: (1) Search if someone else has already solved it. (2) Check what credentials/APIs are already available in your own system. The simplest solution is usually already there.",
+      "tags": [
+        "overengineering",
+        "api",
+        "search-first",
+        "discipline"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:29:00.680Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "5934a8bedf62"
+    },
+    {
+      "id": "mem_7cce67ca",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Enforce win/loss memory recording via hook blocks",
+      "content": "Audit every nudge/reminder in the system and convert to hard blocks in pre-tool-gate.mjs. Block Edit/Write until obligations are met, while allowing memory/task tools through. Nudges that need converting: (1) UNCAPTURED SIGNALS, (2) hippocampal checkpoint, (3) pattern detection, (4) signal auto-storage, (5) task completion without memory. Pat's principle: if it's worth nudging about, it's worth blocking for.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "hooks",
+        "writing",
+        "strategy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:35:13.545Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "cb6f3b9dab87"
+    },
+    {
+      "id": "mem_abaa10c3",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix active task panel not updating in Dashboard",
+      "content": "The active task display in the Dashboard status bar is not updating when tasks change. Diagnose whether it's a data freshness issue (useTauriData not picking up changes to tasks.json) or a rendering issue.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:40:43.553Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "637ccecdd8d4"
+    },
+    {
+      "id": "mem_0161cdb4",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Clean up MemoryView -- brain memory is hard to read",
+      "content": "The MemoryView (key 5) is messy and hard to navigate. Needs better grouping, filtering, and visual hierarchy. Consider: group by type (pain/win/fact), sort by quality score, hide low-quality entries, add search/filter, make links/tags clickable.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "playwright",
+        "browser",
+        "strategy",
+        "autonomy"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:40:44.323Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "2e52ec0eba6a"
+    },
+    {
+      "id": "mem_944bf510",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "state.json split broke file watcher event mapping -- toolFiles() still referenced dead file",
+      "content": "When state.json was split into tasks.json/decisions.json/questions.json, the MCP server's toolFiles() function was never updated. It still broadcast 'state.json' as the changed file after task/decision/question operations. The Tauri UI's useTauriData hook was correctly watching the new files but never got matching events. Result: Dashboard active task panel never updated. Fix: update every tool->file mapping in toolFiles() to use the split file names.",
+      "rule": "When splitting a data file, update ALL producers AND consumers: state writers, file watcher event broadcasters (toolFiles), COMMAND_FILE_MAP, and Rust commands. The broadcaster is easy to forget.",
+      "tags": [
+        "state-split",
+        "file-watcher",
+        "regression",
+        "mcp-server"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:40:50.101Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "c3504b00db1f"
+    },
+    {
+      "id": "mem_6d870e06",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Overdrive session: 4 issues tackled in parallel with agent teams",
+      "content": "Session 61 overdrive: usage bars (OAuth API discovery), enforcement blocks (4 PreToolUse gates), Dashboard active task fix (state.json split regression), MemoryView redesign (collapsible sections, quality badges, search). Two parallel Sonnet agents shipped the last two simultaneously. Commits: 088b014, 0ed1e31, 140f2ad, e1c5fe4, b0fbb3b.",
+      "rule": "",
+      "tags": [
+        "overdrive",
+        "parallel-agents",
+        "session-61"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:40:58.707Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "c6447d96b0eb"
+    },
+    {
+      "id": "mem_4c6f4aaa",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix orphaned sessions in Timeline + backfill from JSONL transcripts",
+      "content": "Two problems: (1) Sessions show as orphaned because we never implemented clean exit (Xing out doesn't write endedAt). Need to handle window close in Rust/Tauri. (2) Historical sessions from Claude's JSONL transcript files (~/.claude/projects/) should be backfilled into sessions.json since they're not actually orphaned -- they have full data.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging",
+        "twitter",
+        "social",
+        "writing",
+        "model-selection",
+        "strategy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:45:02.688Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "6d89e79829a2"
+    },
+    {
+      "id": "mem_ad2d2020",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Rust get_usage command: rebuild and verify UsageBars sidebar component",
+      "content": "Build claude.ai web usage bars in the app's Cost view (key 7) and sidebar. Shows session limit, weekly limit, sonnet limit, and extra usage spend -- matching the claude.ai/settings/usage page. Data fetched via browser API at session start, cached to .hello-world/claude-web-usage.json.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "react",
+        "frontend",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "tokens",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T06:45:03.296Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "0bd8b2093f2a"
+    },
+    {
+      "id": "mem_5d9d3e62",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Previous session deleted committed file, told Pat to restart, never committed the replacement",
+      "content": "Session 005c96af committed poll-claude-usage.mjs (CDP poller), then rm -f'd it from disk, wrote sync-claude-usage.mjs (OAuth replacement), set up Task Scheduler -- but NEVER committed the swap. Then wrote a handoff saying \"VERIFIED: Usage sync working\" and told Pat to restart. Pat lost the file and the scheduled task. The handoff lied.",
+      "rule": "NEVER tell Pat to restart without first: (1) git add + commit ALL changed/new/deleted files, (2) verify the commit with git status showing clean working tree for the files you touched. \"VERIFIED\" in a handoff means COMMITTED AND TESTED, not \"I ran it once.\"",
+      "tags": [
+        "workflow",
+        "handoff",
+        "commit",
+        "trust",
+        "critical"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:19:31.510Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "2671d2337662"
+    },
+    {
+      "id": "mem_c6fa3b73",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "CRITICAL: Not using own memory system, app knowledge, or project context before acting",
+      "content": "Pat exploded because I repeatedly failed to use the systems we spent weeks building. Specific failures: (1) Said \"I'll rebuild\" when pain memories about cargo crashes exist. (2) Spent 15+ tool calls investigating a file deletion when one transcript grep would have found it. (3) Didn't check hw_retrieve_memories before suggesting approaches. (4) Didn't know the app state (dev mode, what's compiled, what's hot-reloaded). (5) Gave Pat manual steps instead of handling things autonomously. The memory system, the brain, the app context -- all exist specifically so I DON'T make these mistakes. Having knowledge is worthless if I don't consult it before every action.",
+      "rule": "BEFORE taking any action: (1) hw_retrieve_memories for the domain. (2) Check if cargo/app is running. (3) Think through what you ALREADY KNOW before reaching for tools. (4) Never suggest Pat do something manually that you can handle. (5) Never say \"I'll rebuild\" or \"restart\" without checking dev mode state. This is not optional. This is the entire point of the system.",
+      "tags": [
+        "discipline",
+        "memory-usage",
+        "critical",
+        "pat-directive",
+        "workflow"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:28:43.636Z",
+      "links": [
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:28:43.648Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "254f8f52c1fe"
+    },
+    {
+      "id": "mem_fd972bc0",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add get_claude_usage Rust command to lib.rs",
+      "content": "The UsageBars sidebar and CostView (key 7) both call useClaudeUsage() which invokes Tauri command 'get_claude_usage'. But this command was NEVER added to lib.rs. Only get_usage exists (reads qwen-usage.json). Need to add get_claude_usage that reads claude-usage.json, register it in the invoke_handler, and rebuild. This is why the usage bars have been invisible since commit 088b014.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "github",
+        "git"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:38:40.138Z",
+      "links": [
+        {
+          "targetId": "mem_c9afde79",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:38:47.688Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "325141f90a61"
+    },
+    {
+      "id": "mem_c9afde79",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "UsageBars shipped without Rust command -- silently broken since 088b014",
+      "content": "Commit 088b014 added UsageBars.tsx and useClaudeUsage.ts hook that calls invoke('get_claude_usage'), but never added the matching #[tauri::command] fn get_claude_usage() to lib.rs. The invoke silently errored, webUsage stayed null, and the {web && ...} guard meant bars never rendered. Fixed in a222d45.",
+      "rule": "When adding a new useTauriData hook, ALWAYS verify the matching Rust command exists in lib.rs AND is registered in invoke_handler.",
+      "tags": [
+        "github",
+        "git",
+        "hooks"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:38:47.667Z",
+      "links": [
+        {
+          "targetId": "mem_1bf508b9",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:38:47.682Z"
+        },
+        {
+          "targetId": "mem_fd972bc0",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:38:47.688Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "6c9b744cd978"
+    },
+    {
+      "id": "mem_b3941e53",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "xterm dual cursor fix: canvas renderer ignores CSS, use Terminal config options",
+      "content": "xterm v6 uses canvas renderer by default. CSS targeting .xterm-cursor-layer, .xterm-helper-textarea etc does nothing. The fix is Terminal config: cursor color matching background, cursorBlink: false, cursorInactiveStyle: 'none'. Also: xterm useEffect with [] deps needs remount (switch view and back) to pick up changes -- hot reload alone won't re-init.",
+      "rule": "When xterm cursor issues arise: (1) check if canvas renderer is in use (v5+ default), (2) use Terminal constructor options not CSS, (3) remind user to remount the component to pick up changes.",
+      "tags": [
+        "xterm",
+        "canvas",
+        "cursor",
+        "tauri",
+        "debugging",
+        "cleanup"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:49:01.975Z",
+      "links": [],
+      "qualityScore": 0.95,
+      "fingerprint": "00770b5b8e83"
+    },
+    {
+      "id": "mem_f2a00acf",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Discipline: cleaned up dead code from failed approaches instead of leaving it",
+      "content": "After multiple CSS attempts to fix xterm cursor (styles.css rules, injected style tags, inline caretColor), reverted all dead code once the real fix (Terminal config options) was found. Pat noticed and appreciated it.",
+      "rule": "After finding the real fix, always go back and remove failed attempts. Dead code from debugging is tech debt.",
+      "tags": [
+        "cleanup",
+        "discipline",
+        "pat-feedback"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:49:05.579Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "dd10db6c9e81"
+    },
+    {
+      "id": "mem_977dc1f4",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Experiment: Hybrid audit -- Claude deep analysis + Qwen adversarial review",
+      "content": "Running a hybrid audit of Hello World app. Phase 1: 4 Claude subagents do deep code audit (UI/UX, Architecture, Cognitive, Value/ROI) with full file access. Phase 2: Qwen boardroom with 4 agents reviews and challenges Claude's findings. Hypothesis: Qwen adds value by catching groupthink, challenging priorities, or surfacing blind spots Claude missed. Measuring: (1) did Qwen find anything Claude didn't, (2) did Qwen change priority ordering, (3) was 160-char limit too constraining for useful feedback.",
+      "rule": "",
+      "tags": [
+        "experiment",
+        "qwen",
+        "audit",
+        "hybrid",
+        "boardroom"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:51:18.373Z",
+      "links": [
+        {
+          "targetId": "mem_f7b383db",
+          "relationship": "related",
+          "createdAt": "2026-02-27T07:58:02.110Z"
+        },
+        {
+          "targetId": "mem_0bde53a6",
+          "relationship": "related",
+          "createdAt": "2026-02-27T08:56:31.086Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "8f513539156f"
+    },
+    {
+      "id": "mem_f7b383db",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Experiment result: Qwen boardroom as adversarial reviewer for Claude audit",
+      "content": "Ran 4 Claude subagents (UI/UX, Architecture, Cognitive, Value/ROI) for deep audit, then 4 Qwen agents (Devil's Advocate, Pragmatist, Minimalist, Builder) to challenge findings. Results: (1) Did Qwen find anything Claude didn't? NO. No new bugs or issues surfaced. Devil's Advocate's \"state.json is a fail-safe\" claim was wrong -- it's genuinely a dead file read. (2) Did Qwen change priority ordering? PARTIALLY. Pragmatist's \"comment-out don't delete\" for brain engines is a reasonable middle ground Claude didn't propose. Builder pushed for \"verify before purge\" which is cautious but valid. (3) Was 160-char limit too constraining? YES. Arguments were surface-level. Devil's Advocate kept repeating \"resilience\" and \"fallback\" without substantiation. No agent could cite code or provide evidence. (4) Groupthink check: Devil's Advocate was contrarian but shallow -- kept asserting things are \"fallbacks\" with no evidence. Pragmatist and Builder converged quickly. Minimalist was the strongest voice. VERDICT: Qwen boardroom adds marginal value for audit review. Better suited for brainstorming/ideation than code-level analysis. The 160-char limit kills depth. For future audits, skip the boardroom step.",
+      "rule": "Qwen boardroom is not effective for reviewing code audit findings (too shallow, 160-char limit, no file access). Use it for brainstorming and ideation instead.",
+      "tags": [
+        "experiment",
+        "qwen",
+        "boardroom",
+        "audit",
+        "method"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T07:58:02.088Z",
+      "links": [
+        {
+          "targetId": "mem_a560f054",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:58:02.104Z"
+        },
+        {
+          "targetId": "mem_160afc4c",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T07:58:02.107Z"
+        },
+        {
+          "targetId": "mem_977dc1f4",
+          "relationship": "extends",
+          "createdAt": "2026-02-27T07:58:02.110Z"
+        }
+      ],
+      "qualityScore": 0.98,
+      "fingerprint": "3e39040bc64c"
+    },
+    {
+      "id": "mem_68e0c104",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: d action list from the audit:**  **P0 -- Fix now (broken fun",
+      "content": "d action list from the audit:**  **P0 -- Fix now (broken functionality):** 1. Hook files read dead `state.json` -- update to `tasks.json`/`questions.json` 2",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T08:45:24.662Z",
+      "links": [],
+      "qualityScore": 0.6000000000000001,
+      "fingerprint": "57f27252d414"
+    },
+    {
+      "id": "mem_0bde53a6",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Boardroom v2: hybrid approach -- simple parallel calls first, layer phases later",
+      "content": "7-agent think tank (5 Qwen + 2 Claude) produced 75KB of design docs for boardroom redesign. Universal agreement: kill 300-char limit, inject files, whiteboard-first, parallel rounds, repetition detection. Key tension: Simplifier says delete boardroom entirely, replace with simple parallel API calls. Others say structured phases (priming/positions/challenge/synthesis) add emergent value. Pat chose option 3 (hybrid): build simple parallel call function first (1 session), then layer phase structure when proven useful. Full designs saved at .hello-world/shared-files/boardroom-v2-thinktank.md (75KB). Core proposals to implement: (1) callQwenPanel() -- parallel Qwen calls with file injection, no char limit, merged output. (2) Later: add priming phase, structured positions, challenge rounds, repetition detection via Jaccard similarity, mediator synthesis.",
+      "rule": "For boardroom redesign: start with simple parallel calls + file injection. Add phase structure only after proving the simple version works. The 7-agent designs are reference material at shared-files/boardroom-v2-thinktank.md.",
+      "tags": [
+        "boardroom",
+        "qwen",
+        "architecture",
+        "decision",
+        "hybrid",
+        "experiment"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T08:56:31.060Z",
+      "links": [
+        {
+          "targetId": "mem_b3154ffe",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T08:56:31.075Z"
+        },
+        {
+          "targetId": "mem_70238c60",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T08:56:31.080Z"
+        },
+        {
+          "targetId": "mem_977dc1f4",
+          "relationship": "related",
+          "createdAt": "2026-02-27T08:56:31.086Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "dc52dba76928"
+    },
+    {
+      "id": "mem_59157680",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: 7-agent parallel think tank (5 Qwen direct API + 2 Claude subagents)",
+      "content": "Ran 5 Qwen agents via direct Chutes API calls (bypassing boardroom 300-char limit) + 2 Claude Sonnet subagents, all in parallel. Each had a unique phenotype (Protocol Designer, Tool Bridger, Convergence Breaker, Simplifier, Hybrid Architect, Systems Thinker, Code Prototyper). All received full context about the problem + our history. Produced 75KB of design docs in ~3 minutes. Key insight: Qwen produces MUCH better output when called directly with 4000 max_tokens vs constrained to 300-char boardroom messages. The Simplifier's contrarian position (delete boardroom entirely) was the most valuable -- it forced a real decision that the other 6 agents' designs would have papered over.",
+      "rule": "For design problems requiring diverse perspectives: call 5-7 agents in parallel with direct API calls (no boardroom), unique phenotypes, full context injection, and 4000 token output limit. Include at least one Simplifier/Abolitionist phenotype to force the \"should this exist at all\" question.",
+      "tags": [
+        "method",
+        "qwen",
+        "parallel-agents",
+        "think-tank",
+        "direct-api"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T08:56:39.364Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "8153889b3856"
+    },
+    {
+      "id": "mem_4b06ba9d",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Auto-capture signal detector STILL not firing -- Pat noticed again",
+      "content": "Pat pointed out auto-capture hasn't triggered once this session despite multiple HIGH signals appearing in UNCAPTURED SIGNALS. The signal-detector.mjs hook exists but was identified as orphaned in the cognitive audit (not wired in settings.json). The pipeline detects signals but has no storage path. This is the third time Pat has flagged this.",
+      "rule": "The auto-capture system is broken at the wiring level. signal-detector.mjs is not connected in settings.json. Fix this or remove the UNCAPTURED SIGNALS noise from the prompt hook.",
+      "tags": [
+        "auto-capture",
+        "broken",
+        "pat-feedback",
+        "wiring",
+        "hooks"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T08:56:44.484Z",
+      "links": [
+        {
+          "targetId": "mem_56b1295b",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T08:56:44.497Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "b9c606ad2d58"
+    },
+    {
+      "id": "mem_30fa3710",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Audit sweep session: 4-agent audit + 7-agent think tank + 10 fixes shipped",
+      "content": "Session produced: (1) 4-agent Claude audit (UI/UX, Architecture, Cognitive, Value/ROI) found 60 issues across the Hello World app. (2) 7-agent think tank (5 Qwen + 2 Claude) for boardroom redesign produced 75KB of design docs. (3) Shipped fixes: 3 hooks reading dead state.json, hw_start_task calling nonexistent method, Rust build_project_context dead reads, Rust timestamp consistency (epoch ms -> ISO), keyboard shortcuts, approval bar, LoadingState spinner, DecisionsView emoji cleanup, xterm dual cursor fix, auto-capture signal wiring to 4 MCP tools.",
+      "rule": "",
+      "tags": [
+        "audit",
+        "session-summary",
+        "shipped",
+        "method"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T09:07:56.480Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "ba542e04e061"
+    },
+    {
+      "id": "mem_6030c0a8",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Switched Qwen provider from Chutes.ai to OpenRouter",
+      "content": "Chutes.ai had persistent 503 errors (no instances available, especially TEE models). Switched to OpenRouter. Model: qwen/qwen3.5-plus-02-15. Pricing: $0.40/M in, $2.40/M out. Budget: $5. Env var: OPENROUTER_API_KEY in ~/.mcp.json. Code falls back to QWEN_API_KEY if OPENROUTER_API_KEY not set.",
+      "rule": "Use OpenRouter for all Qwen API calls. Env var: OPENROUTER_API_KEY. Model: qwen/qwen3.5-plus-02-15. Base URL: https://openrouter.ai/api/v1.",
+      "tags": [
+        "model-selection",
+        "strategy",
+        "tokens",
+        "configuration",
+        "environment",
+        "api",
+        "integration"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:00:05.289Z",
+      "links": [],
+      "qualityScore": 0.98,
+      "fingerprint": "a643008c4e49"
+    },
+    {
+      "id": "mem_2d4af7b3",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: s back to `entries`, then to the raw array. Won't crash anym",
+      "content": "s back to `entries`, then to the raw array. Won't crash anymore.  **Hello World** | Phase: BUILD | Active task: Qwen integration (OpenRouter migration)  Th",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:13:27.281Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "541b94bdde5b"
+    },
+    {
+      "id": "mem_3a15f5e9",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Deliberation MCP tools deleted in Session 48 Brain Magnum Opus rewrite",
+      "content": "Commit 176cd05 (Feb 26) removed hw_plan_deliberation, hw_start_deliberation, hw_quick_insights, hw_extract_deliberation_recommendations, and related tools from server.ts during the Brain Magnum Opus S48 rewrite. The chatroom code, agent definitions, Rust commands, and UI all still exist -- only the MCP tool registrations were deleted. Pat discovered this when trying to use deliberations and was told (incorrectly) that the system was broken based on a stale pain memory.",
+      "rule": "During large refactors, ALWAYS diff the before/after of every file to check for accidental deletions. Never remove tool registrations without explicit intent. Verify all existing features still work after a big rewrite.",
+      "tags": [
+        "deliberation",
+        "mcp-tools",
+        "regression",
+        "session-48",
+        "accidental-deletion",
+        "server.ts"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:21:20.497Z",
+      "links": [
+        {
+          "targetId": "mem_bff85b0b",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T10:21:20.516Z"
+        },
+        {
+          "targetId": "mem_c6dfd67b",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T10:27:42.984Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "0db9a8d99aaf"
+    },
+    {
+      "id": "mem_c6dfd67b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Safeguard: PostToolUse hook blocks deletion of deliberation tools from server.ts",
+      "content": "verify-deliberation-tools.mjs runs as a PostToolUse hook after every Edit/Write to server.ts. It reads the file and checks for all 13 required deliberation tool registrations. If any are missing, it exits with code 1 (blocking the edit) and prints a clear error message. This was added after Session 48 accidentally deleted all deliberation tools during the Brain Magnum Opus refactor. The hook is registered in .claude/settings.json.",
+      "rule": "Never edit server.ts without the deliberation tools hook active. If the hook fires, STOP and restore the missing tools before doing anything else.",
+      "tags": [
+        "safeguard",
+        "deliberation",
+        "hook",
+        "server.ts",
+        "regression-prevention"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:27:42.972Z",
+      "links": [
+        {
+          "targetId": "mem_3a15f5e9",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T10:27:42.984Z"
+        }
+      ],
+      "qualityScore": 0.95,
+      "fingerprint": "3def215ed859"
+    },
+    {
+      "id": "mem_4a01dfce",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "OpenRouter Qwen 3.5 migration confirmed working in production",
+      "content": "hw_qwen_panel tested with 4 agents, 4 injected source files (scoring.ts, pruner.ts, cortex-learner.ts, reflection.ts), 4 required questions, 6000 max tokens per agent. Result: 50,254 total tokens, 93 seconds, all via OpenRouter. Model: qwen/qwen3.5-plus-02-15. No 503 errors. File injection works -- MCP server reads files from disk and injects into each agent's prompt.",
+      "rule": "OpenRouter with qwen/qwen3.5-plus-02-15 is the confirmed working Qwen provider. Chutes.ai had persistent 503s.",
+      "tags": [
+        "openrouter",
+        "qwen",
+        "migration",
+        "verification",
+        "hw_qwen_panel"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:30:30.509Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "07f26b23915f"
+    },
+    {
+      "id": "mem_e43c46da",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: structured multi-round Qwen panel deliberation with opinion tracking",
+      "content": "Ran a 2-round structured deliberation using sequential hw_qwen_panel calls. Round 1: 3 agents independently form opinions (AGREE/PARTIALLY/DISAGREE on 8 findings + TOP 3 priorities). Round 2: feed all Round 1 opinions back, agents address each other, shift positions, vote CONCLUDE/CONTINUE. Produced clear consensus map with tracked position shifts. Total cost: ~25K tokens across 2 rounds. More effective than boardroom chat (which has timeout issues with Claude agents).",
+      "rule": "For structured deliberations, use sequential hw_qwen_panel rounds with explicit opinion tracking. Feed previous round outputs as context to next round. Track AGREE/DISAGREE shifts between rounds.",
+      "tags": [
+        "method",
+        "deliberation",
+        "qwen-panel",
+        "multi-round",
+        "opinion-tracking"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:30:36.848Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "e0be562c4a19"
+    },
+    {
+      "id": "mem_91035383",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Boardroom Claude agents timeout at 30s -- callClaudeBoardroom too short",
+      "content": "runner.ts line 109: setTimeout 30_000ms kills Claude subprocess. With SessionStart hook overhead on each spawn, 30s is not enough for Claude agents to respond in boardroom. 2 of 3 agents timed out. Qwen agents work fine (different API path). Also uses claude-haiku-4-5-20251001 model which may be slower to start.",
+      "rule": "Boardroom Claude agents need timeout increased to 60-90s, or use Qwen panels for multi-agent discussions instead.",
+      "tags": [
+        "boardroom",
+        "timeout",
+        "claude-agent",
+        "runner.ts"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:30:41.943Z",
+      "links": [],
+      "qualityScore": 0.98,
+      "fingerprint": "b8235d635ece"
+    },
+    {
+      "id": "mem_8b5ec6b1",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Trusted stale pain memory without verifying -- told Pat deliberation was broken when it wasn't",
+      "content": "Pain memory mem_497c4a8f said \"Deliberation engine was never wired -- notifyRunner undefined, silent crash.\" I stated this to Pat as fact without checking. The deliberation UI, Rust commands, chatroom code, and 17 saved deliberation sessions all existed and worked. The MCP tool registrations were the only missing piece (deleted in Session 48). Pat was rightfully furious.",
+      "rule": "NEVER state a pain memory as current fact without verifying. Pain memories can be stale. Always check the actual code/state before telling Pat something is broken.",
+      "tags": [
+        "trust",
+        "verification",
+        "pain-memory-staleness",
+        "pat-frustration"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:30:48.503Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "9c9caa9d33f0"
+    },
+    {
+      "id": "mem_97c6bee0",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Brain memory audit: 6 consensus findings from 7-agent external review",
+      "content": "4 Qwen analysts + 3 Claude agents reviewed scoring.ts, pruner.ts, cortex-learner.ts, reflection.ts. Unanimous findings: (1) Safety Atrophy is P0 -- pain memories decay and get pruned, add decay_exempt flag. (2) Reflection recursion needs MAX_REFLECTION_DEPTH=3. (3) Cortex poisoning -- raise observation threshold 2->3, add negative feedback. (4) Remove verbosity bonus (detailLength>200 = +0.2). (5) Contextual retrieval -- add tag-boosting at query time. (6) Archive retrieval -- query archive on cache miss. Disagreements: contradiction detection (2 say over-engineering, 1 says needed), reconsolidation (all say partially needed but immutability has value for JSON safety).",
+      "rule": "",
+      "tags": [
+        "brain-audit",
+        "memory-system",
+        "scoring",
+        "pruner",
+        "cortex",
+        "reflection",
+        "consensus"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:30:56.224Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "f07ba927ace4"
+    },
+    {
+      "id": "mem_9b46287e",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "session-end.mjs crashed: activity.json uses 'activities' key, not 'entries'",
+      "content": "SessionEnd hook at line 33 tried activityData?.entries (undefined), fell through to activityData (object), called .filter() on an object. TypeError. Fixed by checking activityData?.activities first.",
+      "rule": "Always check the actual JSON structure of files before assuming field names. activity.json uses 'activities', not 'entries'.",
+      "tags": [
+        "session-end",
+        "hook",
+        "bug-fix",
+        "activity.json"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:30:59.938Z",
+      "links": [],
+      "qualityScore": 0.95,
+      "fingerprint": "d9f4b6df9563"
+    },
+    {
+      "id": "mem_044df872",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Restore all 14 deliberation MCP tools + add safeguard hook",
+      "content": "Context: Session 48 Brain Magnum Opus refactor accidentally deleted all deliberation/chatroom tool registrations from server.ts. The UI, Rust backend, chatroom code, and 17 saved sessions all still worked -- only the MCP entry points were missing. Pat discovered this when trying to use the deliberation room.\nChosen: Restore all 14 tools from git history (commit be3aa69) into current server.ts. Add PostToolUse hook (verify-deliberation-tools.mjs) that blocks any Edit/Write to server.ts if any deliberation tool registration is missing.\nRationale: The tools were working before and their deletion was accidental. The safeguard hook prevents future accidental deletions during refactors. Belt-and-suspenders: the hook checks all 13 tool name strings exist in the file after every edit.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "decision"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T10:31:10.988Z",
+      "links": [],
+      "qualityScore": 0.65,
+      "fingerprint": "81f8fde84228"
     }
   ]
 }

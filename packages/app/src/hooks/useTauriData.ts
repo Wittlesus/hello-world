@@ -21,6 +21,7 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_deliberations: [],
   get_extracted_research: ['extracted-research.json'],
   get_usage: ['qwen-usage.json'],
+  get_claude_usage: ['claude-usage.json'],
 };
 
 // ── Shared polling heartbeat ──────────────────────────────────────
@@ -68,7 +69,7 @@ function debouncedRefetch(command: string, fn: () => void) {
 
 // ──────────────────────────────────────────────────────────────────
 
-interface TauriDataState<T> {
+export interface TauriDataState<T> {
   data: T | null;
   loading: boolean;
   error: string | null;

@@ -97,6 +97,16 @@
             "timeout": 120
           }
         ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node C:/Users/Patri/CascadeProjects/hello-world/.claude/hooks/verify-deliberation-tools.mjs",
+            "timeout": 5
+          }
+        ]
       }
     ]
   }

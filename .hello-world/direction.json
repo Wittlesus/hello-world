@@ -48,6 +48,12 @@
       "capturedAt": "2026-02-23T02:00:00.000Z",
       "decision": "in",
       "rationale": "Every piece of information Claude would normally search for should be visible in the app. Vision, scope, timeline, decisions, active tasks â€” all one click away. Goal: Claude never needs to burn context loading things that the app already surfaces."
+    },
+    {
+      "area": "Reddit scouting (subreddit scanning for AI/dev intel)",
+      "decision": "out",
+      "rationale": "Pat said 'save for later'. Not in current sprint scope. Revisit after Qwen integration and boardrooms are stable.",
+      "capturedAt": "2026-02-27T02:43:56.670Z"
     }
   ],
   "notes": [
@@ -223,22 +229,36 @@
       "id": "n_mm45w0bx",
       "text": "Integrate Qwen (latest open-source model) as a secondary AI mind. Goal: lower usage costs and get diverse perspective. Pat believes this could 10x productivity by having another model available for tasks.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-27T00:36:17.709Z"
+      "read": true,
+      "capturedAt": "2026-02-27T00:36:17.709Z",
+      "actionTaken": "task",
+      "actionId": "t_c3052fd7"
     },
     {
       "id": "n_mm45w1e9",
       "text": "Boardrooms: team collaboration spaces for agents. Whiteboard file (shared research) + chat file (forced usernames, timestamps, 160 char limit per message). Chat enforces chatroom behavior -- short back-and-forth, not essays. Different from deliberations (those are for decisions). Boardrooms are for teams to actually work together like a dev team. Agents should have read/write access to both files and interact freely.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-27T00:36:19.089Z"
+      "read": true,
+      "capturedAt": "2026-02-27T00:36:19.089Z",
+      "actionTaken": "decision",
+      "actionId": "d_7f171d85"
     },
     {
       "id": "n_mm45w3qa",
       "text": "Future: Reddit scouting -- scan subreddits for AI/dev space intel similar to how we scan GitHub. Save for later.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-27T00:36:22.114Z"
+      "read": true,
+      "capturedAt": "2026-02-27T00:36:22.114Z",
+      "actionTaken": "scope"
+    },
+    {
+      "id": "n_mm4kmj0o",
+      "text": "Pat directive (CRITICAL): Every Claude instance MUST actively use the memory system, app features, and project context BEFORE acting. The brain system, pain memories, win memories, app state awareness -- all of it exists to prevent exactly the kind of session waste that just happened. This is the founding purpose of Hello World. A Claude that doesn't use its own tools is no better than a fresh instance with no memory at all.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-27T07:28:49.608Z",
+      "actionTaken": "decision",
+      "actionId": "d_36e31687"
     }
   ]
 }

@@ -30,7 +30,8 @@ const sessionStart = current.startedAt;
 
 // Read activity since session start
 const activityData = safeRead('activity.json');
-const entries = (activityData?.entries ?? activityData ?? []).filter(e => {
+const rawEntries = activityData?.activities ?? activityData?.entries ?? (Array.isArray(activityData) ? activityData : []);
+const entries = rawEntries.filter(e => {
   return e.timestamp && e.timestamp >= sessionStart;
 });
 

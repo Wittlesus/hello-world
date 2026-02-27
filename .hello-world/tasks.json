@@ -998,22 +998,22 @@
     {
       "id": "t_4ca8cab7",
       "title": "Implement Overdrive + Bypass mode toggle",
-      "description": "Add a toggleable \"Overdrive\" mode. When ON, UserPromptSubmit hook injects instructions encouraging: (1) liberal parallel agent usage, (2) thoroughness over token conservation, (3) deep research before implementation, (4) team-based execution with multiple agents per task. Toggle via: slash command in Claude Code, app UI button, or direct file edit. Storage: .hello-world/mode.json with { \"overdrive\": true/false }. Hook reads this and prepends mode instructions to the status line. Pat's words: \"intelligently designed agents and teams, thorough and precise, don't worry about token or usage.\"",
-      "status": "todo",
+      "description": "Duplicate of t_0f1cf64b -- overdrive toggle already implemented in Sidebar.tsx and BuddyOverlay.tsx.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T04:14:36.174Z",
-      "updatedAt": "2026-02-26T04:14:36.174Z"
+      "updatedAt": "2026-02-27T03:52:33.330Z"
     },
     {
       "id": "t_ab93a68e",
       "title": "Questions: in-app answer flow (no MCP needed)",
-      "description": "Pat can't answer questions from the app UI -- has to go through Claude/MCP which is backwards. Fix: (1) Add answer text input + Answer button to QuestionsView.tsx. (2) Add Rust command answer_question(project_path, question_id, answer_text) that writes to questions.json. (3) On next session start, SessionStart hook detects newly answered questions and surfaces them so Claude can route (to task, decision, scope, or dismiss). (4) BONUS: Discord listener should also handle question answers -- Pat replies to a question DM, listener writes the answer. The key insight: Pat ANSWERS, Claude ROUTES. No Claude needed for the answering step.",
-      "status": "todo",
+      "description": "Duplicate of t_f7899ace -- completed in session 58. Ctrl+Enter shortcut, immediate refresh, autoFocus, type fix.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T04:20:39.328Z",
-      "updatedAt": "2026-02-26T04:20:39.328Z"
+      "updatedAt": "2026-02-27T03:52:01.007Z"
     },
     {
       "id": "t_0f1cf64b",
@@ -1029,31 +1029,31 @@
       "id": "t_f7899ace",
       "title": "Questions: in-app answer flow (no MCP needed)",
       "description": "Pat can't answer questions from the app. Need: text input + Answer button in QuestionsView.tsx, Rust command answer_question(project_path, question_id, answer_text) that writes to questions.json, SessionStart hook detects newly answered questions and surfaces them for routing. Principle: Pat acts, Claude routes. No Claude in the loop for ANSWERING, only for ROUTING after. Bonus: Discord reply-to-DM also routes answers.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T04:26:48.043Z",
-      "updatedAt": "2026-02-26T04:26:48.043Z"
+      "updatedAt": "2026-02-27T03:50:39.909Z"
     },
     {
       "id": "t_87a8735d",
       "title": "App loading screen or faster startup",
       "description": "The app shows a blank white screen while loading, making it impossible to tell if it's broken or just slow. Either: (1) reduce load times so the white screen is negligible, or (2) add a loading/splash screen with the Hello World branding so the user knows the app is starting up and not stuck. Investigate what's causing the slow load -- could be heavy JS bundle, synchronous state reads, or Rust init. A Tauri splash screen (native window) or an inline HTML loading indicator in index.html (before React mounts) are both viable approaches.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T04:26:52.470Z",
-      "updatedAt": "2026-02-26T04:26:52.470Z"
+      "updatedAt": "2026-02-27T03:51:48.956Z"
     },
     {
       "id": "t_e60b91e0",
       "title": "Design and implement subagent team strategy",
       "description": "Design a comprehensive team strategy where specialized subagent teams work together on different aspects of the Hello World project. Teams: Red Team (security, exploit finding, adversarial testing), Dev Team (feature implementation, code quality), UX Team (user personas of varying skill levels), Strategy Team (tech CEO perspectives, product direction), Security Team (audit, hardening), QA Team (testing, edge cases). Each team needs: defined roles, coordination patterns, when to spawn, how results feed back. Pat wants liberal agent usage -- no token conservation.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T04:32:08.982Z",
-      "updatedAt": "2026-02-26T15:05:30.397Z"
+      "updatedAt": "2026-02-27T03:55:17.568Z"
     },
     {
       "id": "t_8b568003",
@@ -1089,11 +1089,11 @@
       "id": "t_30fef69f",
       "title": "Buddy avatar gallery: 6 agents each design a unique buddy with animations",
       "description": "Spawn 6 creative agents, each given BuddyOverlay.tsx as a template. Each designs a completely unique buddy avatar with its own personality, look, and animations. They can take screenshots and iterate in real time. Build a gallery/selector so Pat can switch between buddy designs.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T05:46:59.547Z",
-      "updatedAt": "2026-02-26T05:46:59.547Z"
+      "updatedAt": "2026-02-27T04:00:52.042Z"
     },
     {
       "id": "t_d5477c56",
@@ -1301,11 +1301,11 @@
       "id": "t_5d511b12",
       "title": "Wiring sprint: connect all built-but-unwired brain modules to runtime",
       "description": "Wire reflection, prediction, cortex merger, contradiction detection into their runtime call paths. Protect pain memories from pruning. Fix get_research in lib.rs. Expand signal detector patterns. All code exists and is tested -- just needs to be connected.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T18:13:44.100Z",
-      "updatedAt": "2026-02-26T18:13:49.174Z"
+      "updatedAt": "2026-02-27T02:59:35.445Z"
     },
     {
       "id": "t_952ef3af",
@@ -1326,11 +1326,11 @@
       "id": "t_9876f220",
       "title": "Auto-populate Timeline and Context tabs from brain data",
       "description": "Timeline tab (History > Timeline) should auto-generate from sessions.json, activity.json, decisions, and task completions -- not be a static hand-written file. Context tab (P key) should pull from brain data (decisions, memories, strategic state) in addition to direction.json. Both tabs should stay current automatically as the brain system processes new data.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T23:59:40.220Z",
-      "updatedAt": "2026-02-26T23:59:43.464Z"
+      "updatedAt": "2026-02-27T02:53:39.240Z"
     },
     {
       "id": "t_042f2b87",
@@ -1346,11 +1346,236 @@
       "id": "t_79a6a6d1",
       "title": "Qwen integration Phase 1: callQwen + provider routing + boardroom foundation",
       "description": "Add Qwen as a model provider in the agent system. Steps: 1) callQwen() function using OpenAI npm package pointed at DeepInfra/DashScope, 2) provider field on AgentDefinition, 3) route runSingleAgent by provider, 4) DASHSCOPE_API_KEY env var, 5) basic boardroom infrastructure (chat.json with 160-char limit, whiteboard.json, agent usernames + timestamps). No Rust changes needed -- pure TypeScript in packages/core.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T01:29:24.680Z",
-      "updatedAt": "2026-02-27T01:29:27.612Z"
+      "updatedAt": "2026-02-27T02:59:47.688Z"
+    },
+    {
+      "id": "t_c3052fd7",
+      "title": "Qwen integration: secondary AI mind for cost reduction and diverse perspective",
+      "description": "Integrate Qwen (latest open-source model via Chutes.ai) as a secondary AI. Already started in t_79a6a6d1 -- callQwen, provider routing, boardroom foundation. This note captures the strategic direction: use Qwen to lower Claude API costs and get a second opinion on tasks. Phase 1 already in progress.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T02:43:50.781Z",
+      "updatedAt": "2026-02-27T03:04:46.184Z"
+    },
+    {
+      "id": "t_62dcff48",
+      "title": "Research: optimal multi-turn context strategies for Qwen boardroom calls",
+      "description": "Current approach: stateless API calls with full chat history stuffed into each prompt. Pat questions if this is effective. Research and test alternatives: multi-turn session APIs, summarized context windows, sliding windows, RAG-style retrieval, Qwen-specific features (session IDs, caching). Measure: token efficiency, response quality, coherence across rounds. Output: recommendation + implementation plan.",
+      "status": "done",
+      "tags": [
+        "research",
+        "qwen",
+        "boardroom",
+        "optimization"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:10:08.046Z",
+      "updatedAt": "2026-02-27T03:37:06.964Z"
+    },
+    {
+      "id": "t_2d58c80b",
+      "title": "Verify bug fixes after MCP restart: prediction wiring + linker null guard",
+      "description": "Two bugs fixed in session 58 that need MCP restart to verify: 1. server.ts:464 -- sessions.current() changed to sessions.getCurrent() (prediction Zone F). Test: hw_store_memory with pain type, check expectation-model.json gets created. 2. store.ts:211 -- m.links changed to (m.links ?? []) in addLink(). Test: store a memory, check activity.json for \"store:linker failed\" errors. Both fixes build clean but haven't been tested at runtime.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:36:40.807Z",
+      "updatedAt": "2026-02-27T03:36:40.807Z"
+    },
+    {
+      "id": "t_711b2bdf",
+      "title": "Boardroom quick wins: max_tokens, round awareness, whiteboard regex, char limit",
+      "description": "Implement the 4 highest-impact boardroom fixes from the research sprint: 1. runner.ts:51 -- raise max_tokens from 100 to 400 for non-thinking agents 2. runner.ts buildBoardroomPrompt -- add round number and phase guidance (round/maxRounds params, intro vs converge instructions) 3. runner.ts:182 -- fix whiteboard regex from (.+) to ([\\s\\S]+) for multiline capture 4. types.ts:39 -- raise CHAT_CHAR_LIMIT from 160 to 300 Also: show agent's own last message separately in prompt to prevent repetition.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:36:44.478Z",
+      "updatedAt": "2026-02-27T03:39:26.404Z"
+    },
+    {
+      "id": "t_1f0f8690",
+      "title": "Boardroom anti-groupthink: independent initialization + selective history",
+      "description": "Restructure runBoardroom into phases based on research findings: Phase 1 (rounds 1): Independent thinking -- each agent sees only topic + whiteboard, no chat history. Forms position independently. Phase 2 (rounds 2-3): Selective sharing -- agents see whiteboard + own prior messages + compressed summary of others' positions. NOT full transcript. Phase 3 (rounds 4+): Convergence -- synthesis round, flag disagreements as valuable. This prevents anchoring bias (r=0.902 sycophancy correlation), groupthink (80%+ collapse), and produces more diverse outputs (research: embedding similarity 0.791 -> 0.511 without shared context).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:36:49.256Z",
+      "updatedAt": "2026-02-27T03:50:40.615Z"
+    },
+    {
+      "id": "t_4f6fac94",
+      "title": "Auto-capture: add storage path so detected signals become memories automatically",
+      "description": "The signal detector pipeline detects and nudges but never auto-stores. Fix this gap. Options: 1. Server-side: add processSignalQueue() to MCP server that consumes high-confidence (0.7+) signals and auto-stores them via storeMemory(). Run during hw_store_memory or hw_retrieve_memories calls. 2. Qwen quality gate: for 0.5-0.7 signals, send excerpt to Qwen (\"is this worth storing? yes/no\") before storing. Cheap per-signal cost. 3. Keep nudge system for low-confidence signals but make the \"STOP and evaluate\" behavior automatic. Decision needed on which approach. The current system wastes detected signals -- detection without storage is waste.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:36:54.405Z",
+      "updatedAt": "2026-02-27T03:50:38.735Z"
+    },
+    {
+      "id": "t_8bd47e21",
+      "title": "Boardroom agent prompts: create boardroom-specific versions for specialist agents",
+      "description": "Current specialist agents (neuro-vision, neuro-impl, eng-arch, eng-impl, research-vision, research-impl) have system prompts written for adversarial deliberation. These conflict with boardroom collaboration rules -- FORMAT instructions say \"2-4 sentences\" which clashes with 160/300 char limit, and role framing says \"argue against whatever seems obvious\" which contradicts \"collaborate, don't argue.\" Add a boardroomPrompt field to AgentDefinition type, create collaboration-focused versions of specialist prompts, fall back to systemPrompt if boardroomPrompt absent.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:36:58.504Z",
+      "updatedAt": "2026-02-27T03:50:39.272Z"
+    },
+    {
+      "id": "t_73d63607",
+      "title": "Rust get_usage command: rebuild and verify UsageBars sidebar component",
+      "description": "Build claude.ai web usage bars in the app's Cost view (key 7) and sidebar. Shows session limit, weekly limit, sonnet limit, and extra usage spend -- matching the claude.ai/settings/usage page. Data fetched via browser API at session start, cached to .hello-world/claude-web-usage.json.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:37:02.811Z",
+      "updatedAt": "2026-02-27T06:45:03.275Z"
+    },
+    {
+      "id": "t_bb4db88f",
+      "title": "Wire contradiction detection into hw_store_memory response",
+      "description": "detectContradiction exists in linker.ts and runs during findLinks, but contradictions are only stored as link relationships -- the user never sees them. Add contradiction warnings to the hw_store_memory response text so Claude knows when a new memory contradicts an existing one. Example: \"Memory stored: mem_xxx (pain). WARNING: contradicts mem_yyy (score: 0.7) -- consider updating or superseding.\" This helps catch stale/wrong memories.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T03:56:30.007Z",
+      "updatedAt": "2026-02-27T03:57:39.393Z"
+    },
+    {
+      "id": "t_778afdec",
+      "title": "Wire buddy avatars into BuddyOverlay + add picker to Settings",
+      "description": "buddy-avatars.tsx exists with 6 avatars + AvatarPicker + localStorage persistence. Wire it: 1. BuddyOverlay.tsx: import getAvatarById/getSavedAvatarId, replace block-art div with selected avatar component. 2. SettingsView.tsx: add AvatarPicker section so users can choose their buddy.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T04:02:18.202Z",
+      "updatedAt": "2026-02-27T04:04:28.798Z"
+    },
+    {
+      "id": "t_23de09ec",
+      "title": "Dashboard improvements: show brain health grade + memory count in status bar",
+      "description": "The Dashboard view shows activity stream and active task. Add a compact status bar at the top showing: brain health grade (from hw_brain_health), total memory count, active task name, current workflow phase. Makes the dashboard actually useful as a glanceable status screen.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T04:02:21.213Z",
+      "updatedAt": "2026-02-27T04:05:57.041Z"
+    },
+    {
+      "id": "t_5a61b8d8",
+      "title": "Update MemoryView with brain magnum opus fields: qualityScore, links, fingerprint",
+      "description": "MemoryView.tsx interface is missing qualityScore, links[], fingerprint, and reflection type from the brain magnum opus. Add these fields to the interface and display them: quality score as a small badge, link count, and linked memory IDs on hover/expand.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T04:06:04.737Z",
+      "updatedAt": "2026-02-27T04:07:16.789Z"
+    },
+    {
+      "id": "t_c14da168",
+      "title": "Rebuild UsageBars: Qwen requests/day + Claude session cost tracking",
+      "description": "Current UsageBars shows misleading token split. Redesign to show: 1. Qwen: requests used today / 300 daily limit (progress bar + percentage). Track request count in qwen-usage.json. 2. Claude: need to figure out what's trackable. Options: session message count, estimated tokens, or pull from Anthropic usage API if available. Keep it simple and accurate.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T04:16:23.210Z",
+      "updatedAt": "2026-02-27T04:17:49.018Z"
+    },
+    {
+      "id": "t_6b5fc3e3",
+      "title": "Add lizard buddy avatar + ensure all avatars integrate with full buddy system",
+      "description": "1. Add a lizard/reptile avatar to the buddy-avatars gallery. 2. Verify all 7 avatars work with: theme colors (buddyIdle/buddyActive), overdrive glow, error state (red), shocked state (exclamation mark), responding state (typing dots), recap bubble, sentinel shield, mute dot, chime sound. The current BuddyOverlay wiring may have lost some of these when replacing block-art with avatar components.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T04:18:52.502Z",
+      "updatedAt": "2026-02-27T04:20:34.863Z"
+    },
+    {
+      "id": "t_24323ce6",
+      "title": "Fix active task panel not updating in Dashboard",
+      "description": "The active task display in the Dashboard status bar is not updating when tasks change. Diagnose whether it's a data freshness issue (useTauriData not picking up changes to tasks.json) or a rendering issue.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T06:30:17.234Z",
+      "updatedAt": "2026-02-27T06:40:43.525Z"
+    },
+    {
+      "id": "t_f910cc06",
+      "title": "Clean up MemoryView -- brain memory is hard to read",
+      "description": "The MemoryView (key 5) is messy and hard to navigate. Needs better grouping, filtering, and visual hierarchy. Consider: group by type (pain/win/fact), sort by quality score, hide low-quality entries, add search/filter, make links/tags clickable.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T06:30:19.755Z",
+      "updatedAt": "2026-02-27T06:40:44.296Z"
+    },
+    {
+      "id": "t_0e96e867",
+      "title": "Fix orphaned sessions in Timeline + backfill from JSONL transcripts",
+      "description": "Two problems: (1) Sessions show as orphaned because we never implemented clean exit (Xing out doesn't write endedAt). Need to handle window close in Rust/Tauri. (2) Historical sessions from Claude's JSONL transcript files (~/.claude/projects/) should be backfilled into sessions.json since they're not actually orphaned -- they have full data.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T06:30:22.511Z",
+      "updatedAt": "2026-02-27T06:45:02.671Z"
+    },
+    {
+      "id": "t_3d3b017f",
+      "title": "Enforce win/loss memory recording via hook blocks",
+      "description": "Audit every nudge/reminder in the system and convert to hard blocks in pre-tool-gate.mjs. Block Edit/Write until obligations are met, while allowing memory/task tools through. Nudges that need converting: (1) UNCAPTURED SIGNALS, (2) hippocampal checkpoint, (3) pattern detection, (4) signal auto-storage, (5) task completion without memory. Pat's principle: if it's worth nudging about, it's worth blocking for.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T06:30:26.421Z",
+      "updatedAt": "2026-02-27T06:35:13.521Z"
+    },
+    {
+      "id": "t_47cdef57",
+      "title": "Proactive task creation -- Claude should auto-create tasks from work",
+      "description": "Claude has stopped proactively creating tasks. The pre-tool-gate hook blocks edits without an active task, but Claude should also be creating tasks from Pat's direction notes, from bugs discovered during sessions, and from follow-up work identified during builds. Add a UserPromptSubmit hook check: if Pat's message contains actionable items (bugs, features, requests), create tasks before doing anything else.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T06:30:29.546Z",
+      "updatedAt": "2026-02-27T06:30:29.546Z"
+    },
+    {
+      "id": "t_e0b77320",
+      "title": "Add get_claude_usage Rust command to lib.rs",
+      "description": "The UsageBars sidebar and CostView (key 7) both call useClaudeUsage() which invokes Tauri command 'get_claude_usage'. But this command was NEVER added to lib.rs. Only get_usage exists (reads qwen-usage.json). Need to add get_claude_usage that reads claude-usage.json, register it in the invoke_handler, and rebuild. This is why the usage bars have been invisible since commit 088b014.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T07:36:38.529Z",
+      "updatedAt": "2026-02-27T07:38:40.121Z"
+    },
+    {
+      "id": "t_d6566ea6",
+      "title": "Fix hooks reading dead state.json",
+      "description": "session-start.mjs, user-prompt.mjs, pre-compact.mjs all read state.json which was split into tasks.json/questions.json/decisions.json. Update all three hooks to read the split files.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T08:03:42.216Z",
+      "updatedAt": "2026-02-27T08:03:48.432Z"
+    },
+    {
+      "id": "t_7bc8c426",
+      "title": "Build Boardroom v2: simple parallel Qwen panel",
+      "description": "Replace the complex round-robin boardroom with a simple parallel call function. callQwenPanel() takes topic + agents + files, calls Qwen API in parallel with no char limit, returns merged output. New MCP tool hw_qwen_panel. Based on 7-agent think tank decision (option 3: simple first, phases later).",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T09:05:50.096Z",
+      "updatedAt": "2026-02-27T09:05:54.219Z"
     }
   ],
   "milestones": []
