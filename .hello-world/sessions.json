@@ -6,7 +6,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_e0e0358e",
       "startedAt": "2026-02-22T04:00:09.038Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -16,7 +16,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_1dcd5878",
       "startedAt": "2026-02-22T04:00:24.562Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -26,7 +26,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_bfa11377",
       "startedAt": "2026-02-22T04:10:49.306Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -36,7 +36,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_905321a1",
       "startedAt": "2026-02-22T04:34:31.442Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -46,7 +46,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_ce2d782e",
       "startedAt": "2026-02-22T04:47:57.476Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -56,7 +56,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_fc87e56c",
       "startedAt": "2026-02-22T04:48:29.522Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -66,7 +66,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_e2ba730a",
       "startedAt": "2026-02-22T06:38:24.117Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_82facb50",
         "t_eed2f6f2",
@@ -84,7 +84,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_799638bf",
       "startedAt": "2026-02-22T06:57:06.478Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -94,7 +94,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_fa909312",
       "startedAt": "2026-02-22T11:16:45.078Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -104,7 +104,7 @@
       "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_cc5b01c6",
       "startedAt": "2026-02-22T11:31:21.365Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_8422ad1c",
         "t_974f16de",
@@ -118,7 +118,7 @@
       "endedAt": "2026-02-22T11:54:48.049Z",
       "id": "s_0708253c",
       "startedAt": "2026-02-22T11:39:07.585Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -128,7 +128,7 @@
       "endedAt": "2026-02-22T12:19:16.152Z",
       "id": "s_89227c93",
       "startedAt": "2026-02-22T11:54:48.049Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_f5ed5ac2",
         "t_fd1f61e5"
@@ -141,7 +141,7 @@
       "endedAt": "2026-02-22T12:45:55.116Z",
       "id": "s_f7f88a6d",
       "startedAt": "2026-02-22T12:19:16.153Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -151,7 +151,7 @@
       "endedAt": "2026-02-22T12:50:48.450Z",
       "id": "s_b4cb31d0",
       "startedAt": "2026-02-22T12:45:55.116Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -161,7 +161,7 @@
       "endedAt": "2026-02-22T12:58:08.938Z",
       "id": "s_fc724202",
       "startedAt": "2026-02-22T12:50:48.451Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -171,7 +171,7 @@
       "endedAt": "2026-02-22T13:46:29.156Z",
       "id": "s_aa18083a",
       "startedAt": "2026-02-22T12:58:08.938Z",
-      "summary": "No — /reset restarts this Claude Code session. That's unrelated. To test the changes you just need to rebuild the Tauri app:  npm run tauri:dev  Then open the Terminal tab in the app. On...",
+      "summary": "Investigated terminal PTY context injection, fixed missing projectPath arg, added auto-sent init message on terminal open.",
       "tasksCompleted": [
         "t_7dff0c38"
       ],
@@ -183,7 +183,7 @@
       "endedAt": "2026-02-22T14:02:57.403Z",
       "id": "s_e04cf3ac",
       "startedAt": "2026-02-22T13:46:29.156Z",
-      "summary": "If Claude is still running, press Ctrl+C — the claude-loop.sh wrapper will restart automatically and pick up the resume context.",
+      "summary": "Created SessionStart hook and project memory file after Claude lost context; wired hw_get_context() to auto-inject on every session start.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -193,7 +193,7 @@
       "endedAt": "2026-02-24T08:47:22.502Z",
       "id": "s_05d4b7be",
       "startedAt": "2026-02-22T14:02:57.403Z",
-      "summary": "Good. I can add a get_capabilities command that reads the Claude settings from the home directory. Now I'll build everything — Rust command + React component + wiring.",
+      "summary": "Audited uncommitted work, removed orphaned ChatView, built Discord bot and hw_notify DM system with new Skills view.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -203,7 +203,7 @@
       "endedAt": "2026-02-24T09:11:08.898Z",
       "id": "s_7849a44c",
       "startedAt": "2026-02-24T08:47:22.502Z",
-      "summary": "Watcher is set for the Rust file. Now merging the worktree changes to master.",
+      "summary": "Merged deliberation v2 (7 new agents, hw_plan_deliberation, hw_list_agents), added themed sidebar badges showing new-item counts per tab.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -215,7 +215,7 @@
       "endedAt": "2026-02-24T10:29:28.700Z",
       "id": "s_bb5ba7e0",
       "startedAt": "2026-02-24T09:11:08.898Z",
-      "summary": "Session 20: Feature verification run completed (all 10 systems pass). Cleaned 30 stale worktrees + 39 branches. Ran deliberation on SaaS opportunities -- concluded with TaxCreditCalculators.com (solar lease vs buy calculator, content + lead gen model). Scaffolded new project at C:\\Users\\Patri\\CascadeProjects\\tax-credit-calculators with CLAUDE.md, prototype, and deliberation docs. Moved hello-world MCP server from global to project-scoped config to prevent cross-project bleedover. Switching to tax-credit-calculators project next.",
+      "summary": "Cleaned 30 stale worktrees and 39 branches, ran full feature verification (all 10 systems passed), ran SaaS deliberation resulting in TaxCreditCalculators.com.",
       "tasksCompleted": [
         "t_0a16d788",
         "t_365b1fcf"
@@ -228,7 +228,7 @@
       "endedAt": "2026-02-24T23:41:00.492Z",
       "id": "s_36696220",
       "startedAt": "2026-02-24T23:14:43.317Z",
-      "summary": "Handoff written, rule captured in direction.json. Restart the app whenever you're ready -- next session picks up with the verification checklist and the epic backlog.",
+      "summary": "Cleared all non-epic tasks, shipped deliberation UX polish (colored brackets, summary overlay), color-coded activity feed brackets by status type.",
       "tasksCompleted": [
         "t_6ee4aef8",
         "t_c7674e29",
@@ -245,7 +245,7 @@
       "endedAt": "2026-02-25T00:27:32.803Z",
       "id": "s_19ed1610",
       "startedAt": "2026-02-24T23:41:00.493Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_846ade5a",
         "t_mp_deliberate",
@@ -261,7 +261,7 @@
       "endedAt": "2026-02-25T01:11:53.682Z",
       "id": "s_1e357f56",
       "startedAt": "2026-02-25T00:27:32.803Z",
-      "summary": "Yes, handoff is written. Restart away.",
+      "summary": "Ran full deliberation on the guardrail system itself, then implemented all 6 improvements including quality coverage tags and hw_quick_insights tool.",
       "tasksCompleted": [
         "t_1e0dbcff",
         "t_2f7a8717",
@@ -279,7 +279,7 @@
       "endedAt": "2026-02-25T01:51:39.650Z",
       "id": "s_91729db5",
       "startedAt": "2026-02-25T01:11:53.682Z",
-      "summary": "Handoff is written. Go ahead and restart -- /reset or kill the session. Next Claude should come up with full context and no bootstrapping calls.",
+      "summary": "Rebuilt SessionStart hook as single source of truth -- Claude gets full context instantly on startup without calling hw_get_context().",
       "tasksCompleted": [
         "t_3d5a1878"
       ],
@@ -291,7 +291,7 @@
       "endedAt": "2026-02-25T02:51:11.100Z",
       "id": "s_cccd1859",
       "startedAt": "2026-02-25T01:51:39.650Z",
-      "summary": "Marking the \"add external MCPs\" task done -- we added GitMCP and Package Version Check (both free, no accounts). Augment and Perplexity skipped in favor of building our own. Let me keep the pipeli...",
+      "summary": "Committed session-start hook rewrite, ran 7-agent multi-research sweep covering AI tools, React 19.2, Tauri patterns; added GitMCP and Package Version MCPs.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -301,7 +301,7 @@
       "endedAt": "2026-02-25T09:47:00.524Z",
       "id": "s_390eb7dd",
       "startedAt": "2026-02-25T02:51:11.100Z",
-      "summary": "Committed: 55b8cdc. The remaining unstaged items are lib.rs (Rust changes pending via watcher), settings files, deliberation archives, and generated files. Ready to restart. When you close t...",
+      "summary": "Scaffolded Cortex as standalone MCP server for static code indexing. Ran 3 mining agents to retroactively extract undocumented learnings from 227 conversation logs into brain memories.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -311,7 +311,7 @@
       "endedAt": "2026-02-25T10:50:54.419Z",
       "id": "s_4fc86777",
       "startedAt": "2026-02-25T09:47:00.524Z",
-      "summary": "That code is still in TerminalView.tsx at line 250. If it stopped showing up, possible causes: 1. The PTY dies and respawns, resetting initializedRef 2. The 2-second delay is too short and the...",
+      "summary": "Verified B+ split-state storage (tasks/decisions/questions.json) landed cleanly. Added auto-tag inference to hw_add_task. Updated system-explorer.html for split architecture.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -321,7 +321,7 @@
       "endedAt": "2026-02-25T11:39:53.133Z",
       "id": "s_8924618b",
       "startedAt": "2026-02-25T10:50:54.419Z",
-      "summary": "Done. Here's the summary: Built in worktree feat/safe-browser: | Layer | Files | Status | |---|---|---| | Rust (browser.rs) | 10 Tauri commands, URL validation, init_script with auto-extrac...",
+      "summary": "Built safe embedded browser feature in worktree: browser.rs with 10 Tauri commands, loopback HTTP bridge, BrowserView React panel, 4 hw_browser_* MCP tools.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -331,7 +331,7 @@
       "endedAt": "2026-02-25T11:59:54.962Z",
       "id": "s_7f6c13b5",
       "startedAt": "2026-02-25T11:39:53.133Z",
-      "summary": "Changes are on main now. Two fixes: 1. lib.rs -- Added /browser/navigate and /browser/close HTTP routes to the loopback listener. MCP calls these and they invoke browser::browser_open() ...",
+      "summary": "Fixed pre-tool-gate reading deleted state.json, wired MCP-to-Rust browser bridge with /browser/navigate and /browser/close loopback routes.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -341,7 +341,7 @@
       "endedAt": "2026-02-25T12:23:36.171Z",
       "id": "s_5d9234d7",
       "startedAt": "2026-02-25T11:59:54.962Z",
-      "summary": "Watcher set. Now -- since the app is running and we need to test this fix, the app needs to be restarted with the new Rust code. The changes are: 1. browser.rs: postResult() now uses navig...",
+      "summary": "Diagnosed CORS preflight blocking browser content extraction, fixed init script to use sendBeacon with text/plain, added CORS headers.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -351,7 +351,7 @@
       "endedAt": "2026-02-25T14:16:40.553Z",
       "id": "s_bc9daacd",
       "startedAt": "2026-02-25T12:23:36.171Z",
-      "summary": "Remaining: - session-start.mjs:135 -- already has \"backward compat\" comment, reads old file as fallback. This is correct migration code. - lib.rs lines 161, 370, 636 -- these are the main tree ...",
+      "summary": "Audited and fixed all 7 files still referencing deleted state.json after B+ migration (Rust, hooks, MCP server).",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -361,7 +361,7 @@
       "endedAt": "2026-02-25T14:23:08.230Z",
       "id": "s_15d58e79",
       "startedAt": "2026-02-25T14:16:40.553Z",
-      "summary": "Here's where we stand: Fixed in worktree (branch fix-answer-question, commit 019b7be): 1. get_state() -- reads tasks.json + decisions.json + questions.json and merges them 2. answ...",
+      "summary": "Fixed missed bug in answer_question() reading questions.json as bare array instead of {questions:[]} wrapper format.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -371,7 +371,7 @@
       "endedAt": "2026-02-25T14:38:08.918Z",
       "id": "s_b78d3af5",
       "startedAt": "2026-02-25T14:23:08.230Z",
-      "summary": "Everything checks out: - Compiles: 0 errors, only warnings - mod browser: declared at line 1 - Loopback routing: 4 paths dispatching to browser.rs functions - invoke_handler: all 9...",
+      "summary": "Added mod browser to Rust, registered 9 Tauri commands, rewrote handler with path-based routing for browser loopback.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -381,7 +381,7 @@
       "endedAt": "2026-02-25T14:38:26.875Z",
       "id": "s_4abc0a2e",
       "startedAt": "2026-02-25T14:38:08.918Z",
-      "summary": "Here's where we stand: Verification results (5 checks): - Steps 1-3, 5: PASS (state, navigate, get_state, close all work) - Step 4: FAIL (content extraction -- empty extractedPreview) Root ...",
+      "summary": "Ran browser verification (4/5 passing), diagnosed broken triple-parse in store_browser_result, added /browser/extract route.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -391,7 +391,7 @@
       "endedAt": "2026-02-25T15:01:32.985Z",
       "id": "s_a3007273",
       "startedAt": "2026-02-25T14:38:26.876Z",
-      "summary": "Here's where we stand: Verification results (5 checks): - Steps 1-3, 5: PASS (state, navigate, get_state, close all work) - Step 4: FAIL (content extraction -- empty extractedPreview) Root ...",
+      "summary": "Browser verification continued -- diagnosed sendBeacon CORS issues, added active /browser/extract route bypass.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -401,7 +401,7 @@
       "endedAt": "2026-02-25T15:01:51.933Z",
       "id": "s_f655bc9e",
       "startedAt": "2026-02-25T15:01:32.985Z",
-      "summary": "Done. Here's the summary: What changed: - Cargo.toml: added features = [\"unstable\"] to tauri (enables multi-webview) - browser.rs: complete rewrite -- uses WebviewBuilder + Window...",
+      "summary": "Verified browser MCP tools work, rewrote browser feature to embed child webview inside main Tauri window using unstable multi-webview API.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -411,7 +411,7 @@
       "endedAt": "2026-02-25T15:58:14.262Z",
       "id": "s_b4f02001",
       "startedAt": "2026-02-25T15:01:51.933Z",
-      "summary": "Done. Here's the summary: What changed: - Cargo.toml: added features = [\"unstable\"] to tauri (enables multi-webview) - browser.rs: complete rewrite -- uses WebviewBuilder + Window...",
+      "summary": "Verified browser extraction working, attempted to embed browser as child webview using Tauri's unstable multi-webview API.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -421,7 +421,7 @@
       "endedAt": "2026-02-25T16:48:36.196Z",
       "id": "s_00320b10",
       "startedAt": "2026-02-25T15:58:14.262Z",
-      "summary": "It redirected and dropped the .html. Let me try the direct path.",
+      "summary": "Tried opening system-explorer.html in built-in browser, hit file:// URL block, spun up local HTTP server as workaround.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -431,7 +431,7 @@
       "endedAt": "2026-02-25T17:01:19.345Z",
       "id": "s_bc56cc43",
       "startedAt": "2026-02-25T16:48:36.196Z",
-      "summary": "Looks like you closed the app (or the extra instance died). That's fine. So the summary: browser window opens and navigates correctly (you saw it working), but content extraction back to MCP...",
+      "summary": "Confirmed browser compiles and opens, found content extraction only works on first page load -- subsequent navigations don't re-trigger.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -441,7 +441,7 @@
       "endedAt": "2026-02-25T17:34:06.291Z",
       "id": "s_967d8fd3",
       "startedAt": "2026-02-25T17:01:19.345Z",
-      "summary": "Now invalidate cache on writes so we never serve stale data after a write.",
+      "summary": "Diagnosed app freeze from 11+ redundant polling intervals and stale state.json reads, fixed Rust backend to read split task/decision/question files.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -451,7 +451,7 @@
       "endedAt": "2026-02-25T17:51:50.846Z",
       "id": "s_6994b38b",
       "startedAt": "2026-02-25T17:34:06.291Z",
-      "summary": "Handoff written. Next Claude instance will have full context on: - The white screen root cause (get_state reading deleted state.json) - The fix (merge 3 split files in Rust) - The ErrorBoundary saf...",
+      "summary": "Diagnosed white screen root cause (get_state reading deleted state.json after B+ migration), fixed in Rust, added ErrorBoundary.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -461,7 +461,7 @@
       "endedAt": "2026-02-25T17:58:48.321Z",
       "id": "s_93622989",
       "startedAt": "2026-02-25T17:51:50.846Z",
-      "summary": "Wiring looks solid: - 12 Rust commands registered in invoke_handler - Sidebar has browser view mapped to key B - App.tsx imports BrowserView and renders it for view browser - MCP server h...",
+      "summary": "Committed 38-file batch (ErrorBoundary, browser module, useTauriData optimizations) after fixing white screen.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -471,7 +471,7 @@
       "endedAt": "2026-02-25T18:05:42.713Z",
       "id": "s_21775048",
       "startedAt": "2026-02-25T17:58:48.321Z",
-      "summary": "Now let me make all the edits. Starting with the Rust side:",
+      "summary": "Removed built-in browser feature from Rust and React -- too many failure points.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -481,7 +481,7 @@
       "endedAt": "2026-02-26T03:32:39.611Z",
       "id": "s_b4eb8308",
       "startedAt": "2026-02-25T18:05:42.713Z",
-      "summary": "Clean. TS builds with 0 errors, zero browser references left in the frontend. Removed: - BrowserView.tsx (deleted) - Browser import, keymap, and render line from App.tsx - Browser subtab from ...",
+      "summary": "Cleaned up browser frontend references (BrowserView.tsx, App.tsx, Sidebar.tsx) after Pat decided to remove browser feature.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -491,7 +491,7 @@
       "endedAt": "2026-02-26T04:25:38.600Z",
       "id": "s_5210c6e4",
       "startedAt": "2026-02-26T03:32:39.611Z",
-      "summary": "Done. Handoff updated with the Questions UX issue front and center, the \"Pat acts, Claude routes\" principle, and the priority reordering to put t_ab93a68e first. Future me will see it immediately.",
+      "summary": "Productivity sprint: fixed 7 hardcoded hook paths, installed Biome 2.4.4, adopted React 19.2 Activity for all 15 views, built buddy recap and memory scoring -- 15 tasks completed.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -501,7 +501,7 @@
       "endedAt": "2026-02-26T05:30:24.776Z",
       "id": "s_06112d9b",
       "startedAt": "2026-02-26T04:25:38.600Z",
-      "summary": "Handoff written. Ready for restart. The next session will pick up exactly where we left off.",
+      "summary": "Built Overdrive mode with hook injection and visual indicators (buddy golden aura, amber sidebar). Built crash-safety sentinel: hidden process that backs up state files and writes crash-marker on exit.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -511,7 +511,7 @@
       "endedAt": "2026-02-26T08:04:50.506Z",
       "id": "s_d66d73f3",
       "startedAt": "2026-02-26T05:30:24.776Z",
-      "summary": "Right now, no. The clean shutdown fix is in the source code but hasn't been compiled yet. The running binary is still the old one from before this session. When you X out now, the sentinel will ...",
+      "summary": "Fixed clean-shutdown bug in lib.rs. Built real-time brain data-flow SVG diagram. Wired overdrive glow, fixed Questions tab, replaced terminal sessions panel with neural viz.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -521,7 +521,7 @@
       "endedAt": "2026-02-26T09:43:15.303Z",
       "id": "s_d2f23730",
       "startedAt": "2026-02-26T08:04:50.506Z",
-      "summary": "Handoff locked. Restart when ready -- next session picks up clean with only the TS engine firing.",
+      "summary": "Ran 3 think-tank agents revealing brain system was mostly dead code (85% memories never accessed). Ran 6-agent deliberation designing the Magnum Opus brain rewrite, then launched 4 parallel build teams.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -531,7 +531,7 @@
       "endedAt": "2026-02-26T09:43:25.373Z",
       "id": "s_72869ebe",
       "startedAt": "2026-02-26T09:43:15.303Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -541,7 +541,7 @@
       "endedAt": "2026-02-26T14:28:22.632Z",
       "id": "s_1512c5ac",
       "startedAt": "2026-02-26T09:43:25.373Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -551,7 +551,7 @@
       "endedAt": "2026-02-26T14:40:07.598Z",
       "id": "s_98221676",
       "startedAt": "2026-02-26T14:28:22.632Z",
-      "summary": "(no transcript found)",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -571,7 +571,7 @@
       "endedAt": "2026-02-26T18:16:04.866Z",
       "id": "s_cae449b6",
       "startedAt": "2026-02-26T17:29:09.215Z",
-      "summary": "Now I have everything. Time to wire. Let me make all the changes in parallel.",
+      "summary": "Recovered from Claude Code auto-update crash, deployed 6 parallel agents to extract forgotten ideas, pains, decisions from 272 session transcripts into memory.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -581,7 +581,7 @@
       "endedAt": "2026-02-26T23:47:33.347Z",
       "id": "s_ad3e9148",
       "startedAt": "2026-02-26T18:16:04.866Z",
-      "summary": "Here's where we are: Done this session: 1. Wired previous-session transcript recap into SessionStart hook (working, tested) 2. Fixed MEMORY.md worktree workflow -- now includes cargo.exe dev-m...",
+      "summary": "Recovered from session 53 crash (editing lib.rs in dev mode), updated MEMORY.md with correct rule, added previous-session transcript recap to SessionStart hook.",
       "tasksCompleted": [
         "t_952ef3af",
         "t_9829339b"
@@ -594,7 +594,7 @@
       "endedAt": "2026-02-27T02:42:39.872Z",
       "id": "s_1b3f50d2",
       "startedAt": "2026-02-26T23:48:45.545Z",
-      "summary": "Committed at 33d3226. Handoff written. Ready for restart when you are -- the Rust patch for sidebar usage bars will go in then.",
+      "summary": "Fixed 8 stale deliberation statuses, rebuilt Timeline and ProjectContext to auto-populate from sessions/activity/decisions. Launched 6-agent Qwen research sprint.",
       "tasksCompleted": [
         "t_3071ae5e",
         "t_042f2b87"
@@ -607,7 +607,7 @@
       "endedAt": "2026-02-27T03:00:57.610Z",
       "id": "s_35213d6e",
       "startedAt": "2026-02-27T02:43:38.518Z",
-      "summary": "Done. Here's what session 57 accomplished: Completed: - Wired 3 dead brain modules into runtime (reflection, prediction, cortex merger) - Added Rust get_usage command in lib.rs - Built Usag...",
+      "summary": "Wired 3 dead brain modules (reflection, prediction, cortex merger) into runtime, built UsageBars component, fixed Qwen API key in MCP config.",
       "tasksCompleted": [
         "t_9876f220",
         "t_5d511b12",
@@ -621,7 +621,7 @@
       "endedAt": "2026-02-27T04:26:27.148Z",
       "id": "s_550e25c7",
       "startedAt": "2026-02-27T03:03:51.534Z",
-      "summary": "Handoff written, win stored. Ready to restart.",
+      "summary": "Fixed prediction wiring bug and linker null guard. Ran 6-agent boardroom research sprint; implemented 5 boardroom quality fixes (max_tokens, round awareness, whiteboard regex, char limit, agent prompts).",
       "tasksCompleted": [
         "t_62dcff48",
         "t_711b2bdf",
@@ -651,7 +651,7 @@
       "endedAt": "2026-02-27T05:43:22.480Z",
       "id": "s_c9ad02d3",
       "startedAt": "2026-02-27T05:32:11.694Z",
-      "summary": "Zero errors. Here's what I changed: 1. lib.rs: Added get_claude_usage command (reads claude-usage.json via read_json_file) + added to invoke_handler 2. useTauriData.ts: Added get_...",
+      "summary": "Fixed Cost view showing nothing by adding get_claude_usage Rust command and rewiring useClaudeUsage hook to useTauriData.",
       "tasksCompleted": [],
       "tokensUsed": 0
     },
@@ -661,13 +661,14 @@
       "tasksCompleted": [
         "t_3d3b017f",
         "t_24323ce6",
-        "t_f910cc06"
+        "t_f910cc06",
+        "t_0e96e867",
+        "t_73d63607"
       ],
       "decisionsMade": [],
       "costUsd": 0,
       "tokensUsed": 0,
-      "summary": "51 of 59 sessions are orphaned. Only 1 has a real summary. Now let me write the backfill script.",
-      "endedAt": "2026-02-27T06:44:35.320Z"
+      "summary": "Built UsageBars with live claude.ai session/weekly/extra limit data via OAuth token. Set up Windows Task Scheduler poller -- no browser, no CDP, no setup."
     }
   ]
 }
