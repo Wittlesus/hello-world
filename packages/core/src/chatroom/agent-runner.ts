@@ -4,7 +4,7 @@ import type { ChatroomStore } from './chatroom-state.js';
 import type { ChatMessage } from './types.js';
 import { recordUsage } from '../boardroom/usage.js';
 
-const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
+const CLAUDE_MODEL = 'claude-sonnet-4-6';
 const QWEN_MODEL = process.env['QWEN_MODEL'] ?? 'qwen/qwen3.5-plus-02-15';
 const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://openrouter.ai/api/v1';
 const QWEN_API_KEY = process.env['OPENROUTER_API_KEY'] ?? process.env['QWEN_API_KEY'] ?? '';
@@ -132,8 +132,8 @@ function callClaude(
 
     const timeout = setTimeout(() => {
       child.kill();
-      reject(new Error('agent timed out after 45s'));
-    }, 45_000);
+      reject(new Error('agent timed out after 90s'));
+    }, 90_000);
 
     const onAbort = () => {
       clearTimeout(timeout);
