@@ -483,34 +483,6 @@ try {
     // Usage generation is non-fatal
   }
 
-  // ── Start usage poller (background, detached) ──────────────────────
-  try {
-    // Skip in agent mode
-    if (!process.env.HW_AGENT_MODE) {
-      const pidFile = join(HW, '.usage-poller-pid');
-      let alreadyRunning = false;
-      try {
-        const pid = parseInt(readFileSync(pidFile, 'utf8').trim(), 10);
-        if (pid > 0) { process.kill(pid, 0); alreadyRunning = true; } // throws if dead
-      } catch { /* not running */ }
-
-      if (!alreadyRunning) {
-        const { spawn } = await import('child_process');
-        const pollerPath = join(PROJECT, '.claude', 'poll-claude-usage.mjs');
-        if (existsSync(pollerPath)) {
-          const child = spawn('node', [pollerPath], {
-            detached: true,
-            stdio: 'ignore',
-            windowsHide: true,
-          });
-          child.unref();
-        }
-      }
-    }
-  } catch {
-    // Poller start is non-fatal
-  }
-
   console.log(lines.join('\n'));
 
 } catch (layer1Error) {
