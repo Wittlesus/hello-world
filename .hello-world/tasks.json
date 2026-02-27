@@ -576,8 +576,8 @@
     {
       "id": "t_6f95c250",
       "title": "Adopt tauri-specta for type-safe IPC",
-      "description": "Deferred per decision d_53e538a6. tauri-specta v2 still RC, all our Rust commands use serde_json::Value (zero type safety gain), useTauriData hook incompatible. Revisit after Rust type refactor.",
-      "status": "todo",
+      "description": "Explicitly deferred per decision d_53e538a6. tauri-specta blocked by RC + Value type requirements. Not needed until conditions change.",
+      "status": "done",
       "tags": [
         "rust",
         "typescript",
@@ -586,7 +586,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:43:11.603Z",
-      "updatedAt": "2026-02-26T03:56:23.139Z"
+      "updatedAt": "2026-02-27T12:23:23.857Z"
     },
     {
       "id": "t_0321c01b",
@@ -686,12 +686,12 @@
     {
       "id": "t_7d412f42",
       "title": "Add system explorer to Hello World app",
-      "description": "Original system-explorer.html was deleted during cleanup. Task needs full rebuild if still wanted. Deprioritized -- the ProjectContextView already shows system state.",
-      "status": "todo",
+      "description": "Dismissed. Original system-explorer.html was deleted during cleanup. ProjectContextView already shows system state, making this redundant.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:21:56.749Z",
-      "updatedAt": "2026-02-26T03:53:43.237Z"
+      "updatedAt": "2026-02-27T12:23:25.421Z"
     },
     {
       "id": "t_c7e913a3",
@@ -1355,12 +1355,12 @@
     {
       "id": "t_c3052fd7",
       "title": "Qwen integration: secondary AI mind for cost reduction and diverse perspective",
-      "description": "Integrate Qwen (latest open-source model via Chutes.ai) as a secondary AI. Already started in t_79a6a6d1 -- callQwen, provider routing, boardroom foundation. This note captures the strategic direction: use Qwen to lower Claude API costs and get a second opinion on tasks. Phase 1 already in progress.",
-      "status": "in_progress",
+      "description": "DONE. Strategic wrapper -- actual implementation completed under t_79a6a6d1 (Qwen integration) and subsequent boardroom tasks. Qwen calling, provider routing, and boardroom all shipped.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T02:43:50.781Z",
-      "updatedAt": "2026-02-27T03:04:46.184Z"
+      "updatedAt": "2026-02-27T12:23:21.857Z"
     },
     {
       "id": "t_62dcff48",
@@ -1560,12 +1560,12 @@
     {
       "id": "t_d6566ea6",
       "title": "Fix hooks reading dead state.json",
-      "description": "session-start.mjs, user-prompt.mjs, pre-compact.mjs all read state.json which was split into tasks.json/questions.json/decisions.json. Update all three hooks to read the split files.",
-      "status": "in_progress",
+      "description": "DONE. Shipped in Session 59 (confirmed in win memory act_9f9e0b06). Task status was abandoned mid-session restart and never closed.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T08:03:42.216Z",
-      "updatedAt": "2026-02-27T08:03:48.432Z"
+      "updatedAt": "2026-02-27T12:23:19.793Z"
     },
     {
       "id": "t_7bc8c426",
@@ -1576,6 +1576,174 @@
       "dependsOn": [],
       "createdAt": "2026-02-27T09:05:50.096Z",
       "updatedAt": "2026-02-27T09:05:54.219Z"
+    },
+    {
+      "id": "t_32ed2e12",
+      "title": "Brain audit Batch 1: F4 verbosity + F2 reflection filter + F3a cortex threshold",
+      "description": "Three quick wins in one commit (~9 LOC). F4: In reflection.ts computeQualityScore(), replace detailLength>200 bonus with rule.length>0 check for the 0.2 weight. F2: In generateMetaObservations(), filter out type=reflection memories from input. F3a: Change cortex-learner.ts minObservations default from 2 to 3.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T10:41:14.260Z",
+      "updatedAt": "2026-02-27T10:49:34.472Z"
+    },
+    {
+      "id": "t_b131d812",
+      "title": "Brain audit Batch 2: F1 decay_exempt for pain+high-severity",
+      "description": "Add decayExempt?: boolean to Memory type in types.ts. In scoreMemory() (scoring.ts), skip decay when decayExempt=true (return 1.0 base). In pruner.ts, skip archive for exempt memories. Auto-set decayExempt=true when type=pain AND severity=high. ~15 LOC across 3 files.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T10:41:15.789Z",
+      "updatedAt": "2026-02-27T10:49:34.898Z"
+    },
+    {
+      "id": "t_cf081586",
+      "title": "Brain audit Batch 3: F5 tag-boosting + F3b session dedup",
+      "description": "F5: Add optional queryTags param to rankMemories() in scoring.ts. Count tag overlap, add overlap*0.1 capped at 0.3 total. Thread cortex-resolved tags through retrieval caller (~17 LOC). F3b: In cortex-learner.ts, deduplicate observations per session -- max 1 observation per word per session (~8 LOC). Needs test pass since it touches retrieval hot path.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T10:41:16.471Z",
+      "updatedAt": "2026-02-27T10:49:35.446Z"
+    },
+    {
+      "id": "t_32934c25",
+      "title": "Upgrade deliberation agent-runner: Sonnet model + increased timeout",
+      "description": "Change CLAUDE_MODEL from haiku to sonnet in agent-runner.ts. Increase timeout from 45s to 90s. Test with a real deliberation where agents are genuinely independent subprocesses.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T11:15:17.318Z",
+      "updatedAt": "2026-02-27T11:15:54.904Z"
+    },
+    {
+      "id": "t_29a3788e",
+      "title": "Make deliberation agent provider switchable per-session",
+      "description": "Currently all 21 agents hardcode provider: 'claude'. Make provider switchable so any agent can run as Claude or Qwen. Default stays Claude but user/mediator can override per deliberation session.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T11:17:13.321Z",
+      "updatedAt": "2026-02-27T11:19:13.764Z"
+    },
+    {
+      "id": "t_e54fcc0b",
+      "title": "Create /clean-quit skill for reliable session-end automation",
+      "description": "Create a /clean-quit slash command that explicitly runs ALL end-of-session automation: handoff, end session, timeline update, cost tracking, plasticity, signal flush, git commit. Replaces unreliable hook-based automation with a manual trigger.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T11:45:19.313Z",
+      "updatedAt": "2026-02-27T11:45:59.491Z"
+    },
+    {
+      "id": "t_c76aa252",
+      "title": "Memory capacity gauge: visual bar + capacity-based pruning trigger",
+      "description": "Add a memory usage bar to the app (same style as cost/usage bars). Define a capacity threshold (e.g., 200 memories). When memory count approaches the threshold, show warning in the gauge. Pruning only triggers when capacity is reached, not on session end. The /clean-quit agent review handles quality cleanup; the capacity gauge handles quantity limits.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T11:56:05.442Z",
+      "updatedAt": "2026-02-27T11:56:05.442Z"
+    },
+    {
+      "id": "t_2ccf061d",
+      "title": "Create /fullsweep command -- comprehensive system audit",
+      "description": "DONE. /fullsweep skill created at ~/.claude/skills/fullsweep/SKILL.md. First run completed: 5 parallel agents audited tasks, memories, sessions, decisions, and flows. Report delivered, 7 new tasks created, stale tasks cleaned up.",
+      "status": "done",
+      "tags": [
+        "skill",
+        "audit",
+        "automation"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:13:10.437Z",
+      "updatedAt": "2026-02-27T12:26:02.811Z"
+    },
+    {
+      "id": "t_11939f7d",
+      "title": "Pruning redesign: capacity-based triggers, visual bar, agent cleanup on /clean-quit",
+      "description": "Pat's direction (Feb 27): (1) No time-based or session-end pruning. Pruning triggers when memory count hits a capacity threshold. (2) Show memory usage as a visual bar in the app, same style as cost/usage bars. (3) On /clean-quit, spawn an agent that combs through memories for: truly unnecessary entries, mistakes, duplicates -- not arbitrary score cutoffs. (4) Memories get breathing room to prove their worth. Items 2-3 partially exist (clean-quit already has agent review). Need: capacity threshold trigger, visual bar, remove any remaining time-based pruning.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:22:54.862Z",
+      "updatedAt": "2026-02-27T12:22:54.862Z"
+    },
+    {
+      "id": "t_7ea40a37",
+      "title": "Fix brain module crashes: reflection.toLowerCase + pruning.length errors at session end",
+      "description": "Activity log shows two brain_error entries every session end: (1) end_session:reflection failed -- Cannot read properties of undefined reading 'toLowerCase'. (2) end_session:pruning failed -- Cannot read properties of undefined reading 'length'. These are null-access bugs in the wiring from t_5d511b12. One-line fixes with high impact since they're the only automated brain ops that run without explicit invocation. Check packages/core/src/brain/reflection.ts and pruner.ts.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:22:58.547Z",
+      "updatedAt": "2026-02-27T12:22:58.547Z"
+    },
+    {
+      "id": "t_2ec78d4e",
+      "title": "Ingest 32 uncaptured pain extractions from extracted-pains.json",
+      "description": "extracted-pains.json has 32 pains with alreadyCaptured: false. 12 are high severity (PTY kill patterns, Windows NTFS quirks, MCP restart requirements, etc.). Run them through hw_store_memory. At minimum do the 12 high-severity ones.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:23:00.469Z",
+      "updatedAt": "2026-02-27T12:23:00.469Z"
+    },
+    {
+      "id": "t_7772f759",
+      "title": "Bulk archive ~100 \"Completed: [task]\" auto-captured win memories",
+      "description": "115 of 124 auto-captured memories are task-completion receipts with zero access count. They inflate memory count from ~140 real entries to 359. These have never been retrieved and add no value beyond what tasks.json already records. Write a script or agent to identify memories where: type=win, source contains auto-capture, title starts with \"Completed:\", accessCount=0. Archive them to memories-archive.json.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:23:03.620Z",
+      "updatedAt": "2026-02-27T12:23:03.620Z"
+    },
+    {
+      "id": "t_39255496",
+      "title": "Wire cortex merger into retrieval path",
+      "description": "cortex-learned.json is written by cortex-learner.ts when retrieval misses occur, but hw_retrieve_memories never reads it back. The merger that folds learned entries into DEFAULT_CORTEX at retrieval time was designed but never implemented. Either wire the merger or disable the learner to stop wasting compute. Check packages/core/src/brain/cortex-learner.ts and the retrieval path in server.ts.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:23:06.977Z",
+      "updatedAt": "2026-02-27T12:23:06.977Z"
+    },
+    {
+      "id": "t_60bd39eb",
+      "title": "MCP server health check / watchdog",
+      "description": "The sentinel monitors the app PID but not the MCP server PID. Silent MCP crashes leave Claude without any hw_* tools with no notification. Build a watchdog that monitors the MCP server PID and either restarts it or pings Pat via Discord. Critical resilience gap.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:23:09.333Z",
+      "updatedAt": "2026-02-27T12:23:09.333Z"
+    },
+    {
+      "id": "t_4a1e9821",
+      "title": "Rewrite active-state.md, strategy.md, lessons-learned.md",
+      "description": "All three auto-memory files are 17+ sessions stale. active-state.md shows S48 as current (actually S63). strategy.md lists completed work as pending. lessons-learned.md only covers Session 45. Every session start injects active-state.md, poisoning context. Rewrite all three to reflect current state: brain MO complete, Qwen integrated, deliberation system live, boardroom built, Sessions 46-62 lessons captured.",
+      "status": "todo",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:23:12.092Z",
+      "updatedAt": "2026-02-27T12:23:12.092Z"
+    },
+    {
+      "id": "t_f53885c5",
+      "title": "Fullsweep rundown view in the app",
+      "description": "Build a visual panel in the Tauri app that displays fullsweep results. The /fullsweep skill writes results to a JSON file (.hello-world/fullsweep-results.json). The app renders it as a dashboard: scoreboard with letter grades and change arrows (up/down/same), numbers row (critical issues, tasks created, cleaned up, etc.), what broke/improved sections, top 3 actions, and items needing Pat's call. Design for 10-second scanning. Pat said \"nice to look at, very intuitive\" -- this is a UX-first feature. Could be a subtab under Dashboard or its own keybind.",
+      "status": "in_progress",
+      "tags": [
+        "app",
+        "ux",
+        "fullsweep"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T12:26:02.021Z",
+      "updatedAt": "2026-02-27T12:26:45.540Z"
     }
   ],
   "milestones": []

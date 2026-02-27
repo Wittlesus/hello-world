@@ -1,0 +1,42 @@
+{
+  "date": "2026-02-27T12:30:00.000Z",
+  "session": 63,
+  "overall": "B-",
+  "scoreboard": [
+    { "area": "Infra", "grade": "A", "change": "new" },
+    { "area": "Memory", "grade": "C+", "change": "new" },
+    { "area": "Brain", "grade": "F", "change": "new" },
+    { "area": "Tasks", "grade": "C", "change": "new" },
+    { "area": "Data", "grade": "D", "change": "new" }
+  ],
+  "numbers": {
+    "criticalIssues": 6,
+    "tasksCreated": 7,
+    "tasksCleaned": 5,
+    "staleMemories": 115,
+    "directionProcessed": 1,
+    "patCallNeeded": 4
+  },
+  "broke": [
+    { "text": "Brain reflection crashes every session end (toLowerCase on undefined)", "severity": "critical" },
+    { "text": "Brain pruning crashes every session end (length on undefined)", "severity": "critical" },
+    { "text": "Cortex merger never wired -- learns then discards all data", "severity": "warning" },
+    { "text": "active-state.md 17 sessions stale, poisoning every session start", "severity": "warning" },
+    { "text": "Auto-capture producing 93% noise (115 task-receipt wins, zero retrievals)", "severity": "warning" },
+    { "text": "32 pain extractions sitting in extracted-pains.json, never stored", "severity": "warning" }
+  ],
+  "improved": [
+    { "text": "Baseline established. This is the first fullsweep." }
+  ],
+  "topActions": [
+    { "priority": 1, "text": "Fix brain reflection + pruning null-access crashes (one-line fixes, highest ROI)" },
+    { "priority": 2, "text": "Rewrite active-state.md -- every session start injects 17-session-old context" },
+    { "priority": 3, "text": "Bulk archive 115 auto-captured task-receipt wins (zero retrievals, pure noise)" }
+  ],
+  "patCall": [
+    "\"Personal tool vs product\" question still answered \"both\" with no specifics",
+    "Tab reorganization proposal from Session 23 -- still wanted?",
+    "Real-time brain flowchart viz + deliberation subtab -- specs given, no tasks. Create them?",
+    "7 duplicate tasks in task list -- delete or keep as historical record?"
+  ]
+}

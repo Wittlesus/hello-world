@@ -15,7 +15,8 @@ export type View =
   | 'settings'
   | 'cost'
   | 'skills'
-  | 'watchers';
+  | 'watchers'
+  | 'sweep';
 
 interface AppState {
   activeView: View;

@@ -22,6 +22,7 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_extracted_research: ['extracted-research.json'],
   get_usage: ['qwen-usage.json'],
   get_claude_usage: ['claude-usage.json'],
+  get_fullsweep: ['fullsweep-results.json'],
 };
 
 // ── Shared polling heartbeat ──────────────────────────────────────

@@ -9,6 +9,7 @@ import { Dashboard } from './components/Dashboard.js';
 import { DecisionsView } from './components/DecisionsView.js';
 import { ErrorBoundary } from './components/ErrorBoundary.js';
 import { FilesView } from './components/FilesView.js';
+import { FullsweepView } from './components/FullsweepView.js';
 import { HelpModal } from './components/HelpModal.js';
 import { HistoryView } from './components/HistoryView.js';
 import { MemoryView } from './components/MemoryView.js';
@@ -40,6 +41,7 @@ const KEY_MAP: Record<string, View> = {
   p: 'context',
   w: 'watchers',
   f: 'files',
+  s: 'sweep',
 };
 
 function MainContent() {
@@ -62,6 +64,7 @@ function MainContent() {
       <Activity mode={view === 'watchers' ? 'visible' : 'hidden'}><WatchersView /></Activity>
       <Activity mode={view === 'context' ? 'visible' : 'hidden'}><ProjectContextView /></Activity>
       <Activity mode={view === 'files' ? 'visible' : 'hidden'}><FilesView /></Activity>
+      <Activity mode={view === 'sweep' ? 'visible' : 'hidden'}><FullsweepView /></Activity>
       <Activity mode={view === 'approvals' ? 'visible' : 'hidden'}>
         <div className="flex-1 flex flex-col min-h-0 overflow-y-auto p-4">
           <ApprovalQueue standalone />

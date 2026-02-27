@@ -2378,7 +2378,14 @@
       "synapticStrength": 1.1,
       "accessCount": 3,
       "createdAt": "2026-02-25T08:16:55.529Z",
-      "lastAccessed": "2026-02-27T10:34:56.496Z"
+      "lastAccessed": "2026-02-27T10:34:56.496Z",
+      "links": [
+        {
+          "targetId": "mem_ab79004e",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T12:23:37.292Z"
+        }
+      ]
     },
     {
       "id": "mem_db5022fa",
@@ -2897,26 +2904,6 @@
       "createdAt": "2026-02-26T03:46:07.426Z"
     },
     {
-      "id": "mem_621434c3",
-      "projectId": "Claude AI Interface",
-      "type": "win",
-      "title": "Completed: Evaluate Tech Radar MCP as a product",
-      "content": "Already evaluated as t_72f4f388. Duplicate task closed.",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "product",
-        "mcp",
-        "evaluate",
-        "tech-radar"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 1,
-      "createdAt": "2026-02-26T03:49:24.098Z",
-      "lastAccessed": "2026-02-26T15:46:11.663Z"
-    },
-    {
       "id": "mem_77f8045c",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -2981,21 +2968,6 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T03:52:36.003Z"
-    },
-    {
-      "id": "mem_25ed653b",
-      "projectId": "Claude AI Interface",
-      "type": "win",
-      "title": "Completed: [DELIBERATE] State storage architecture: JSON files vs SQLite",
-      "content": "Already decided in d_a9d3b3d7: split files + atomic writes (B+), defer SQLite to multi-project epic. Implemented in t_a9d3b3d7. Deliberation not needed.",
-      "rule": "",
-      "tags": [
-        "auto-captured"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T03:53:44.725Z"
     },
     {
       "id": "mem_7657fa48",
@@ -6251,27 +6223,6 @@
       "fingerprint": "39bae56fa324"
     },
     {
-      "id": "mem_17cbd32d",
-      "projectId": "Claude AI Interface",
-      "type": "win",
-      "title": "Completed: Questions: in-app answer flow (no MCP needed)",
-      "content": "Duplicate of t_f7899ace -- completed in session 58. Ctrl+Enter shortcut, immediate refresh, autoFocus, type fix.",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "mcp",
-        "memory",
-        "debugging"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T03:52:01.021Z",
-      "links": [],
-      "qualityScore": 0.5,
-      "fingerprint": "36bcad083942"
-    },
-    {
       "id": "mem_ebeb1d2f",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -7644,6 +7595,137 @@
       ],
       "qualityScore": 0.9,
       "fingerprint": "466964d733cb"
+    },
+    {
+      "id": "mem_2d81cc22",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix hooks reading dead state.json",
+      "content": "DONE. Shipped in Session 59 (confirmed in win memory act_9f9e0b06). Task status was abandoned mid-session restart and never closed.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging",
+        "hooks",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T12:23:19.808Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "1090ff6dcf4c"
+    },
+    {
+      "id": "mem_a84f6b08",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Qwen integration: secondary AI mind for cost reduction and diverse perspective",
+      "content": "DONE. Strategic wrapper -- actual implementation completed under t_79a6a6d1 (Qwen integration) and subsequent boardroom tasks. Qwen calling, provider routing, and boardroom all shipped.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "tokens",
+        "strategy"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T12:23:21.868Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "c62ba7ea1055"
+    },
+    {
+      "id": "mem_78a3f8d9",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Adopt tauri-specta for type-safe IPC",
+      "content": "Explicitly deferred per decision d_53e538a6. tauri-specta blocked by RC + Value type requirements. Not needed until conditions change.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "rust",
+        "typescript",
+        "adopt",
+        "tech-radar"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T12:23:23.868Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "528c4f73020d"
+    },
+    {
+      "id": "mem_29f9816d",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add system explorer to Hello World app",
+      "content": "Dismissed. Original system-explorer.html was deleted during cleanup. ProjectContextView already shows system state, making this redundant.",
+      "rule": "",
+      "tags": [
+        "auto-captured"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T12:23:25.431Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "53735bebd722"
+    },
+    {
+      "id": "mem_0a9cb6ac",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Create /fullsweep command -- comprehensive system audit",
+      "content": "DONE. /fullsweep skill created at ~/.claude/skills/fullsweep/SKILL.md. First run completed: 5 parallel agents audited tasks, memories, sessions, decisions, and flows. Report delivered, 7 new tasks created, stale tasks cleaned up.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "skill",
+        "audit",
+        "automation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T12:23:27.936Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "b4942736a331"
+    },
+    {
+      "id": "mem_ab79004e",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Fullsweep audit results (Feb 27, Session 63)",
+      "content": "First /fullsweep run. 5 parallel Sonnet agents audited all .hello-world JSON files. Key findings: (1) Brain reflection + pruning crash every session end with null-access bugs. (2) 115 auto-captured \"Completed: X\" wins are pure noise (zero retrievals). (3) Cortex merger never wired -- learns then discards. (4) active-state.md 17 sessions stale, poisoning every session start. (5) 32 pain extractions never stored. (6) Deliberation system is the highest-value infrastructure. (7) Auto-capture, Two-Strike, autonomous timer, workflow phase tracking are all theater. System grade: deliberation/hooks/MCP = A, manual memory = C+, auto brain = F. 7 new tasks created from findings.",
+      "rule": "Run /fullsweep periodically to catch drift. The brain's autonomous modules need wiring fixes before they produce any value.",
+      "tags": [
+        "audit",
+        "fullsweep",
+        "brain",
+        "system-health"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T12:23:37.275Z",
+      "links": [
+        {
+          "targetId": "mem_7cd96e23",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T12:23:37.292Z"
+        }
+      ],
+      "qualityScore": 0.95,
+      "fingerprint": "e3e51940d81a",
+      "decayExempt": false
     }
   ]
 }

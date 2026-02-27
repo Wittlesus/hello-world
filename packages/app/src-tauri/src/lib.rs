@@ -227,6 +227,11 @@ fn get_activity(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn get_fullsweep(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "fullsweep-results.json")
+}
+
+#[tauri::command]
 fn get_approvals(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "approvals.json")
 }
@@ -1217,6 +1222,7 @@ pub fn run() {
             get_sessions,
             get_brain_state,
             get_activity,
+            get_fullsweep,
             get_approvals,
             get_research,
             get_extracted_research,
