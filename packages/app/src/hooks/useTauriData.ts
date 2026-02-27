@@ -18,6 +18,8 @@ const COMMAND_FILE_MAP: Record<string, string[]> = {
   get_watchers: ['watchers.json'],
   get_chatroom: ['chatroom.json'],
   get_mode: ['mode.json'],
+  get_deliberations: [],
+  get_extracted_research: ['extracted-research.json'],
 };
 
 // ── Shared polling heartbeat ──────────────────────────────────────

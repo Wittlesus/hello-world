@@ -1,68 +1,72 @@
 {
   "sessions": [
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_e0e0358e",
       "startedAt": "2026-02-22T04:00:09.038Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_1dcd5878",
       "startedAt": "2026-02-22T04:00:24.562Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_bfa11377",
       "startedAt": "2026-02-22T04:10:49.306Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_905321a1",
       "startedAt": "2026-02-22T04:34:31.442Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_ce2d782e",
       "startedAt": "2026-02-22T04:47:57.476Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_fc87e56c",
       "startedAt": "2026-02-22T04:48:29.522Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_e2ba730a",
       "startedAt": "2026-02-22T06:38:24.117Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_82facb50",
         "t_eed2f6f2",
@@ -70,161 +74,161 @@
         "t_92f07d66",
         "t_8708e380"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tokensUsed": 0
     },
     {
-      "id": "s_799638bf",
-      "startedAt": "2026-02-22T06:57:06.478Z",
-      "tasksCompleted": [],
+      "costUsd": 0,
       "decisionsMade": [
         "d_bc50e845"
       ],
-      "costUsd": 0,
-      "tokensUsed": 0,
+      "endedAt": "2026-02-22T11:39:07.585Z",
+      "id": "s_799638bf",
+      "startedAt": "2026-02-22T06:57:06.478Z",
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_fa909312",
       "startedAt": "2026-02-22T11:16:45.078Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:39:07.585Z",
       "id": "s_cc5b01c6",
       "startedAt": "2026-02-22T11:31:21.365Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_8422ad1c",
         "t_974f16de",
         "t_5efb6913"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:39:07.585Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T11:54:48.049Z",
       "id": "s_0708253c",
       "startedAt": "2026-02-22T11:39:07.585Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T11:54:48.049Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T12:19:16.152Z",
       "id": "s_89227c93",
       "startedAt": "2026-02-22T11:54:48.049Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_f5ed5ac2",
         "t_fd1f61e5"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T12:19:16.152Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T12:45:55.116Z",
       "id": "s_f7f88a6d",
       "startedAt": "2026-02-22T12:19:16.153Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T12:45:55.116Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T12:50:48.450Z",
       "id": "s_b4cb31d0",
       "startedAt": "2026-02-22T12:45:55.116Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T12:50:48.450Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T12:58:08.938Z",
       "id": "s_fc724202",
       "startedAt": "2026-02-22T12:50:48.451Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T12:58:08.938Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T13:46:29.156Z",
       "id": "s_aa18083a",
       "startedAt": "2026-02-22T12:58:08.938Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_7dff0c38"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T13:46:29.156Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-22T14:02:57.403Z",
       "id": "s_e04cf3ac",
       "startedAt": "2026-02-22T13:46:29.156Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-22T14:02:57.403Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-24T08:47:22.502Z",
       "id": "s_05d4b7be",
       "startedAt": "2026-02-22T14:02:57.403Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-24T08:47:22.502Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-24T09:11:08.898Z",
       "id": "s_7849a44c",
       "startedAt": "2026-02-24T08:47:22.502Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-24T09:11:08.898Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [
+        "d_c92d5e5a"
+      ],
+      "endedAt": "2026-02-24T10:29:28.700Z",
       "id": "s_bb5ba7e0",
       "startedAt": "2026-02-24T09:11:08.898Z",
+      "summary": "Session 20: Feature verification run completed (all 10 systems pass). Cleaned 30 stale worktrees + 39 branches. Ran deliberation on SaaS opportunities -- concluded with TaxCreditCalculators.com (solar lease vs buy calculator, content + lead gen model). Scaffolded new project at C:\\Users\\Patri\\CascadeProjects\\tax-credit-calculators with CLAUDE.md, prototype, and deliberation docs. Moved hello-world MCP server from global to project-scoped config to prevent cross-project bleedover. Switching to tax-credit-calculators project next.",
       "tasksCompleted": [
         "t_0a16d788",
         "t_365b1fcf"
       ],
-      "decisionsMade": [
-        "d_c92d5e5a"
-      ],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "Session 20: Feature verification run completed (all 10 systems pass). Cleaned 30 stale worktrees + 39 branches. Ran deliberation on SaaS opportunities -- concluded with TaxCreditCalculators.com (solar lease vs buy calculator, content + lead gen model). Scaffolded new project at C:\\Users\\Patri\\CascadeProjects\\tax-credit-calculators with CLAUDE.md, prototype, and deliberation docs. Moved hello-world MCP server from global to project-scoped config to prevent cross-project bleedover. Switching to tax-credit-calculators project next.",
-      "endedAt": "2026-02-24T10:29:28.700Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-24T23:41:00.492Z",
       "id": "s_36696220",
       "startedAt": "2026-02-24T23:14:43.317Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_6ee4aef8",
         "t_c7674e29",
@@ -233,29 +237,31 @@
         "t_de2ea65b",
         "t_175950da"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-24T23:41:00.492Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T00:27:32.803Z",
       "id": "s_19ed1610",
       "startedAt": "2026-02-24T23:41:00.493Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_846ade5a",
         "t_mp_deliberate",
         "t_e8660663"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-25T00:27:32.803Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [
+        "d_c0062113"
+      ],
+      "endedAt": "2026-02-25T01:11:53.682Z",
       "id": "s_1e357f56",
       "startedAt": "2026-02-25T00:27:32.803Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [
         "t_1e0dbcff",
         "t_2f7a8717",
@@ -265,280 +271,330 @@
         "t_c47e7d67",
         "t_0d832053"
       ],
-      "decisionsMade": [
-        "d_c0062113"
-      ],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-25T01:11:53.682Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T01:51:39.650Z",
       "id": "s_91729db5",
       "startedAt": "2026-02-25T01:11:53.682Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [
         "t_3d5a1878"
       ],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "summary": "(orphaned -- auto-closed)",
-      "endedAt": "2026-02-25T01:51:39.650Z"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T02:51:11.100Z",
       "id": "s_cccd1859",
       "startedAt": "2026-02-25T01:51:39.650Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T02:51:11.100Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T09:47:00.524Z",
       "id": "s_390eb7dd",
       "startedAt": "2026-02-25T02:51:11.100Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T09:47:00.524Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T10:50:54.419Z",
       "id": "s_4fc86777",
       "startedAt": "2026-02-25T09:47:00.524Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T10:50:54.419Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T11:39:53.133Z",
       "id": "s_8924618b",
       "startedAt": "2026-02-25T10:50:54.419Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T11:39:53.133Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T11:59:54.962Z",
       "id": "s_7f6c13b5",
       "startedAt": "2026-02-25T11:39:53.133Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T11:59:54.962Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T12:23:36.171Z",
       "id": "s_5d9234d7",
       "startedAt": "2026-02-25T11:59:54.962Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T12:23:36.171Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T14:16:40.553Z",
       "id": "s_bc9daacd",
       "startedAt": "2026-02-25T12:23:36.171Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T14:16:40.553Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T14:23:08.230Z",
       "id": "s_15d58e79",
       "startedAt": "2026-02-25T14:16:40.553Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T14:23:08.230Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T14:38:08.918Z",
       "id": "s_b78d3af5",
       "startedAt": "2026-02-25T14:23:08.230Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T14:38:08.918Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T14:38:26.875Z",
       "id": "s_4abc0a2e",
       "startedAt": "2026-02-25T14:38:08.918Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T14:38:26.875Z",
-      "summary": "(orphaned — auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T15:01:32.985Z",
       "id": "s_a3007273",
       "startedAt": "2026-02-25T14:38:26.876Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned -- auto-closed)",
-      "endedAt": "2026-02-25T15:01:32.985Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T15:01:51.933Z",
       "id": "s_f655bc9e",
       "startedAt": "2026-02-25T15:01:32.985Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T15:01:51.933Z",
-      "summary": "(orphaned — auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T15:58:14.262Z",
       "id": "s_b4f02001",
       "startedAt": "2026-02-25T15:01:51.933Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned -- auto-closed)",
-      "endedAt": "2026-02-25T15:58:14.262Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T16:48:36.196Z",
       "id": "s_00320b10",
       "startedAt": "2026-02-25T15:58:14.262Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T16:48:36.196Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T17:01:19.345Z",
       "id": "s_bc56cc43",
       "startedAt": "2026-02-25T16:48:36.196Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T17:01:19.345Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T17:34:06.291Z",
       "id": "s_967d8fd3",
       "startedAt": "2026-02-25T17:01:19.345Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T17:34:06.291Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T17:51:50.846Z",
       "id": "s_6994b38b",
       "startedAt": "2026-02-25T17:34:06.291Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T17:51:50.846Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T17:58:48.321Z",
       "id": "s_93622989",
       "startedAt": "2026-02-25T17:51:50.846Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T17:58:48.321Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-25T18:05:42.713Z",
       "id": "s_21775048",
       "startedAt": "2026-02-25T17:58:48.321Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-25T18:05:42.713Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T03:32:39.611Z",
       "id": "s_b4eb8308",
       "startedAt": "2026-02-25T18:05:42.713Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-26T03:32:39.611Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T04:25:38.600Z",
       "id": "s_5210c6e4",
       "startedAt": "2026-02-26T03:32:39.611Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-26T04:25:38.600Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T05:30:24.776Z",
       "id": "s_06112d9b",
       "startedAt": "2026-02-26T04:25:38.600Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-26T05:30:24.776Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T08:04:50.506Z",
       "id": "s_d66d73f3",
       "startedAt": "2026-02-26T05:30:24.776Z",
+      "summary": "(orphaned -- auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-26T08:04:50.506Z",
-      "summary": "(orphaned -- auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T09:43:15.303Z",
       "id": "s_d2f23730",
       "startedAt": "2026-02-26T08:04:50.506Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
-      "endedAt": "2026-02-26T09:43:15.303Z",
-      "summary": "(orphaned — auto-closed)"
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T09:43:25.373Z",
       "id": "s_72869ebe",
       "startedAt": "2026-02-26T09:43:15.303Z",
-      "tasksCompleted": [],
-      "decisionsMade": [],
-      "costUsd": 0,
-      "tokensUsed": 0,
       "summary": "(orphaned — auto-closed)",
-      "endedAt": "2026-02-26T09:43:25.373Z"
+      "tasksCompleted": [],
+      "tokensUsed": 0
     },
     {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T14:28:22.632Z",
       "id": "s_1512c5ac",
       "startedAt": "2026-02-26T09:43:25.373Z",
+      "summary": "(orphaned — auto-closed)",
       "tasksCompleted": [],
+      "tokensUsed": 0
+    },
+    {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T14:40:07.598Z",
+      "id": "s_98221676",
+      "startedAt": "2026-02-26T14:28:22.632Z",
+      "summary": "(orphaned — auto-closed)",
+      "tasksCompleted": [],
+      "tokensUsed": 0
+    },
+    {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T15:07:40.304Z",
+      "id": "s_8987ef1e",
+      "startedAt": "2026-02-26T14:40:07.598Z",
+      "summary": "",
+      "tasksCompleted": [],
+      "tokensUsed": 0
+    },
+    {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T18:16:04.866Z",
+      "id": "s_cae449b6",
+      "startedAt": "2026-02-26T17:29:09.215Z",
+      "summary": "(orphaned — auto-closed)",
+      "tasksCompleted": [],
+      "tokensUsed": 0
+    },
+    {
+      "costUsd": 0,
+      "decisionsMade": [],
+      "endedAt": "2026-02-26T23:47:33.347Z",
+      "id": "s_ad3e9148",
+      "startedAt": "2026-02-26T18:16:04.866Z",
+      "summary": "",
+      "tasksCompleted": [
+        "t_952ef3af",
+        "t_9829339b"
+      ],
+      "tokensUsed": 0
+    },
+    {
+      "id": "s_1b3f50d2",
+      "startedAt": "2026-02-26T23:48:45.545Z",
+      "tasksCompleted": [
+        "t_3071ae5e",
+        "t_042f2b87"
+      ],
       "decisionsMade": [],
       "costUsd": 0,
       "tokensUsed": 0,

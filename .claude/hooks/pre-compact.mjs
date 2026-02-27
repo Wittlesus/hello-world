@@ -300,3 +300,24 @@ try {
 
   process.stderr.write(`Plasticity: boosted ${boosted.length} memory traces.\n`);
 } catch { /* plasticity is non-fatal */ }
+
+// ── Signal queue final flush: surface any uncaptured signals before compaction ──
+
+try {
+  const { pathToFileURL: p2f } = await import('url');
+  const { peekQueue, flushQueue, formatSignalNudge } =
+    await import(p2f(join(PROJECT, '.claude/hooks/signal-detector.mjs')).href);
+
+  const queued = peekQueue();
+  if (queued.length > 0) {
+    const nudge = formatSignalNudge(queued);
+    if (nudge) {
+      process.stdout.write(
+        '\n[PRE-COMPACT SIGNAL FLUSH] These signals were detected but never stored:\n' +
+        nudge + '\n' +
+        'Context is about to compress. Store important items NOW or they may be lost.\n'
+      );
+    }
+    flushQueue();
+  }
+} catch { /* signal flush is non-fatal */ }

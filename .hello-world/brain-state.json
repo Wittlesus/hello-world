@@ -1,7 +1,7 @@
 {
   "state": {
-    "sessionStart": "2026-02-26T09:43:25.379Z",
-    "messageCount": 4,
+    "sessionStart": "2026-02-26T23:48:45.553Z",
+    "messageCount": 1,
     "contextPhase": "early",
     "synapticActivity": {
       "electron": {
@@ -9,140 +9,140 @@
         "lastHit": "2026-02-22T06:30:33.616Z"
       },
       "subprocess": {
-        "count": 1,
-        "lastHit": "2026-02-22T06:30:33.616Z"
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "architecture": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 13,
+        "lastHit": "2026-02-26T23:45:57.946Z"
       },
       "windows": {
-        "count": 249,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 252,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "bash": {
         "count": 1,
         "lastHit": "2026-02-22T06:30:33.616Z"
       },
       "crash": {
-        "count": 46,
-        "lastHit": "2026-02-26T07:56:08.553Z"
+        "count": 53,
+        "lastHit": "2026-02-26T23:42:34.686Z"
       },
       "tauri": {
-        "count": 2,
-        "lastHit": "2026-02-25T08:14:40.476Z"
+        "count": 7,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "bug": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "approval-queue": {
-        "count": 1,
-        "lastHit": "2026-02-22T08:08:51.218Z"
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "mcp-disconnect": {
-        "count": 1,
-        "lastHit": "2026-02-22T08:08:51.218Z"
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "hello-world": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "verification": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 10,
+        "lastHit": "2026-02-26T23:48:17.467Z"
       },
       "test": {
         "count": 1,
         "lastHit": "2026-02-24T09:17:27.601Z"
       },
       "mcp": {
-        "count": 95,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 99,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "tooling": {
-        "count": 1,
-        "lastHit": "2026-02-25T08:10:32.668Z"
+        "count": 7,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "documentation": {
         "count": 1,
         "lastHit": "2026-02-25T08:10:32.668Z"
       },
       "immediate-win": {
-        "count": 2,
-        "lastHit": "2026-02-25T08:14:40.476Z"
+        "count": 4,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "dependencies": {
-        "count": 1,
-        "lastHit": "2026-02-25T08:10:32.668Z"
+        "count": 2,
+        "lastHit": "2026-02-26T17:20:18.228Z"
       },
       "debugging": {
-        "count": 6,
-        "lastHit": "2026-02-26T09:59:19.445Z"
+        "count": 12,
+        "lastHit": "2026-02-26T23:42:34.686Z"
       },
       "rust": {
-        "count": 1,
-        "lastHit": "2026-02-25T08:14:40.476Z"
+        "count": 4,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "performance": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 7,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "typescript": {
-        "count": 5,
-        "lastHit": "2026-02-26T09:59:19.445Z"
+        "count": 9,
+        "lastHit": "2026-02-26T23:42:34.686Z"
       },
       "adopt": {
-        "count": 1,
-        "lastHit": "2026-02-25T08:14:40.476Z"
+        "count": 5,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "evaluate": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 7,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "stripe": {
-        "count": 158,
-        "lastHit": "2026-02-26T09:59:19.445Z"
+        "count": 162,
+        "lastHit": "2026-02-26T23:45:57.946Z"
       },
       "cross-project": {
-        "count": 7,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 24,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "vercel": {
-        "count": 4,
-        "lastHit": "2026-02-26T09:59:19.445Z"
+        "count": 10,
+        "lastHit": "2026-02-26T23:45:57.946Z"
       },
       "github": {
-        "count": 493,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 494,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "deployment": {
-        "count": 375,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 384,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "analytics": {
         "count": 1,
         "lastHit": "2026-02-25T08:16:20.708Z"
       },
       "tasks": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 10,
+        "lastHit": "2026-02-26T23:48:17.467Z"
       },
       "brain": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 6,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "memory": {
-        "count": 745,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 752,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "nextjs": {
-        "count": 4,
-        "lastHit": "2026-02-26T09:59:19.445Z"
+        "count": 10,
+        "lastHit": "2026-02-26T23:42:34.686Z"
       },
       "safety": {
-        "count": 1,
-        "lastHit": "2026-02-26T07:56:08.553Z"
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "social": {
         "count": 166,
@@ -157,12 +157,12 @@
         "lastHit": "2026-02-24T12:00:00.000Z"
       },
       "model-selection": {
-        "count": 2283,
-        "lastHit": "2026-02-26T12:00:00.000Z"
+        "count": 2286,
+        "lastHit": "2026-02-26T23:42:34.686Z"
       },
       "strategy": {
-        "count": 2434,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 2442,
+        "lastHit": "2026-02-26T23:43:35.031Z"
       },
       "npm": {
         "count": 646,
@@ -173,28 +173,28 @@
         "lastHit": "2026-02-26T12:00:00.000Z"
       },
       "validation": {
-        "count": 739,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 743,
+        "lastHit": "2026-02-26T23:38:37.519Z"
       },
       "hooks": {
-        "count": 592,
-        "lastHit": "2026-02-26T12:00:00.000Z"
+        "count": 594,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "tokens": {
-        "count": 669,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 670,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "autonomy": {
-        "count": 641,
-        "lastHit": "2026-02-26T12:00:00.000Z"
+        "count": 642,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "plugins": {
         "count": 21,
         "lastHit": "2026-02-24T12:00:00.000Z"
       },
       "browser": {
-        "count": 308,
-        "lastHit": "2026-02-26T12:00:00.000Z"
+        "count": 312,
+        "lastHit": "2026-02-26T23:43:35.031Z"
       },
       "twitter": {
         "count": 392,
@@ -205,8 +205,8 @@
         "lastHit": "2026-02-26T12:00:00.000Z"
       },
       "playwright": {
-        "count": 323,
-        "lastHit": "2026-02-26T12:00:00.000Z"
+        "count": 325,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "ai-tells": {
         "count": 361,
@@ -225,20 +225,20 @@
         "lastHit": "2026-02-21T12:00:00.000Z"
       },
       "audit": {
-        "count": 2,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 4,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "agent": {
         "count": 1,
         "lastHit": "2026-02-26T09:49:46.718Z"
       },
       "build": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 4,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "design": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 4,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "context": {
         "count": 1,
@@ -249,494 +249,697 @@
         "lastHit": "2026-02-26T09:49:46.718Z"
       },
       "storage": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 6,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "json": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 5,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "git": {
-        "count": 2,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 10,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "cortex": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 5,
+        "lastHit": "2026-02-26T23:41:08.473Z"
       },
       "gap": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
       },
       "claude": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 9,
+        "lastHit": "2026-02-26T23:42:34.686Z"
       },
       "trending": {
-        "count": 1,
-        "lastHit": "2026-02-26T09:49:46.718Z"
+        "count": 7,
+        "lastHit": "2026-02-26T23:37:30.564Z"
       },
       "security": {
-        "count": 2,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 7,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "discord": {
-        "count": 1,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 4,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "gotcha": {
-        "count": 1,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 8,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "github-pages": {
-        "count": 1,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "count": 7,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       },
       "session": {
+        "count": 8,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "workflow": {
+        "count": 12,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "handoff": {
+        "count": 5,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "worktree": {
+        "count": 8,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "competitor": {
+        "count": 4,
+        "lastHit": "2026-02-26T23:37:30.564Z"
+      },
+      "automation": {
+        "count": 5,
+        "lastHit": "2026-02-26T23:37:30.564Z"
+      },
+      "testing": {
+        "count": 6,
+        "lastHit": "2026-02-26T23:43:35.031Z"
+      },
+      "race-condition": {
+        "count": 4,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "data-loss": {
+        "count": 6,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "buddy": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "ux": {
+        "count": 5,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "react": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:43:35.031Z"
+      },
+      "branch-management": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:45:57.946Z"
+      },
+      "multi-agent": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "orchestration": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "claude-cli": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "precompact": {
         "count": 1,
-        "lastHit": "2026-02-26T10:00:00.723Z"
+        "lastHit": "2026-02-26T10:52:50.800Z"
+      },
+      "timeline": {
+        "count": 2,
+        "lastHit": "2026-02-26T17:25:27.406Z"
+      },
+      "cost": {
+        "count": 6,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "quality": {
+        "count": 7,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "done-means-done": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "communication": {
+        "count": 4,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "deliberation": {
+        "count": 6,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "guardrails": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "regression": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "semantic-indexing": {
+        "count": 6,
+        "lastHit": "2026-02-26T23:38:37.519Z"
+      },
+      "industry": {
+        "count": 2,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "trends": {
+        "count": 2,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "payment-links": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:45:57.946Z"
+      },
+      "dev-mode": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "chrome": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "config": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "passwords": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "code-indexing": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "static-analysis": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "state-split": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "white-screen": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "data-migration": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "jsonstore": {
+        "count": 7,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "caching": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "migration": {
+        "count": 7,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "mcp-server": {
+        "count": 7,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "parallelism": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "deep-linking": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "products": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:45:57.946Z"
+      },
+      "portfolio": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:45:57.946Z"
+      },
+      "pat-context": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:45:57.946Z"
+      },
+      "state": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "listener": {
+        "count": 1,
+        "lastHit": "2026-02-26T15:46:11.661Z"
+      },
+      "send-only": {
+        "count": 1,
+        "lastHit": "2026-02-26T15:46:11.661Z"
+      },
+      "async": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "approval": {
+        "count": 1,
+        "lastHit": "2026-02-26T15:46:11.661Z"
+      },
+      "direction": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "proactive": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "lazy-loading": {
+        "count": 1,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "formsubmit": {
+        "count": 1,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "forms": {
+        "count": 1,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "lead-gen": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "states": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "pat-design": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "session-start": {
+        "count": 1,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "discipline": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "preference": {
+        "count": 1,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "method": {
+        "count": 8,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "groupthink": {
+        "count": 1,
+        "lastHit": "2026-02-26T17:20:18.228Z"
+      },
+      "research": {
+        "count": 9,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "prompt-engineering": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "auto-capture": {
+        "count": 5,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "signal-detector": {
+        "count": 4,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "behavior": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "decision-making": {
+        "count": 4,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "parallel-agents": {
+        "count": 8,
+        "lastHit": "2026-02-26T23:48:17.467Z"
+      },
+      "memory-systems": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "windsurf": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:37:30.564Z"
+      },
+      "restart": {
+        "count": 3,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "vite": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "shutdown": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "pattern": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "prisma": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "orm": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "breaking-changes": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "typing": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:35:10.462Z"
+      },
+      "lib.rs": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "session-53": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "competitor-analysis": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "feedback-loop": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "differentiator": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "magnum-opus": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "s49": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "quality-gate": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "linker": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "reflection": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "prediction": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "api": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:38:37.519Z"
+      },
+      "missing-patterns": {
+        "count": 3,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "linter": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "prettier": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "eslint": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "file-editing": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "sudo": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "localstorage": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "zustand": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "theme": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "mount": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "pat-mandate": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "academic": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "papers": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "benchmarks": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "false-positives": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "auto-update": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "resilience": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "wiring": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "silent-failure": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:42:34.686Z"
+      },
+      "tools": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "session-death": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "platform-constraint": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "unwired": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "high-priority": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "retrieval": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "haiku": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "visual-design": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "pat-directive": {
+        "count": 2,
+        "lastHit": "2026-02-27T01:37:25.973Z"
+      },
+      "canonical": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "vision": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "context-sufficiency": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "universal-flaws": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "overdrive": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "inner-monologue": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:39:54.749Z"
+      },
+      "chrome-extension": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "distribution": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "trust": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "tax-credit-calculators": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "market-research": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "solar": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "pricing": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "claude-code": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:43:35.031Z"
+      },
+      "transcripts": {
+        "count": 2,
+        "lastHit": "2026-02-26T23:43:35.031Z"
+      },
+      "recovery": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "data-source": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "platform-gotcha": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "identity": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "relationship": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:41:08.473Z"
+      },
+      "sentinel": {
+        "count": 1,
+        "lastHit": "2026-02-26T23:43:35.031Z"
+      },
+      "solutions-not-apologies": {
+        "count": 1,
+        "lastHit": "2026-02-27T01:37:25.973Z"
       }
     },
     "memoryTraces": {
-      "mem_0ecaee65": {
+      "mem_1bf508b9": {
         "count": 1,
-        "lastAccessed": "2026-02-22T06:30:33.616Z",
-        "synapticStrength": 1
-      },
-      "mem_e89f9764": {
-        "count": 1,
-        "lastAccessed": "2026-02-22T06:30:33.616Z",
-        "synapticStrength": 1
-      },
-      "mem_46480fbc": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T09:49:46.719Z",
-        "synapticStrength": 1
-      },
-      "mem_6efd1e33": {
-        "count": 2,
-        "lastAccessed": "2026-02-22T08:08:51.218Z",
-        "synapticStrength": 1
-      },
-      "mem_862c1185": {
-        "count": 1,
-        "lastAccessed": "2026-02-22T08:08:51.218Z",
-        "synapticStrength": 1
-      },
-      "mem_cd42f521": {
-        "count": 1,
-        "lastAccessed": "2026-02-24T09:17:27.601Z",
-        "synapticStrength": 1
-      },
-      "mem_0fcd3606": {
-        "count": 2,
-        "lastAccessed": "2026-02-25T08:10:25.123Z",
-        "synapticStrength": 1
-      },
-      "mem_b0e6759c": {
-        "count": 1,
-        "lastAccessed": "2026-02-25T08:10:32.668Z",
-        "synapticStrength": 1
-      },
-      "mem_4255a1af": {
-        "count": 1,
-        "lastAccessed": "2026-02-25T08:10:32.668Z",
-        "synapticStrength": 1
-      },
-      "mem_34d8b98f": {
-        "count": 2,
-        "lastAccessed": "2026-02-25T08:14:40.476Z",
-        "synapticStrength": 1
-      },
-      "mem_45431539": {
-        "count": 2,
-        "lastAccessed": "2026-02-25T08:14:40.476Z",
-        "synapticStrength": 1
-      },
-      "mem_c9dcdd3d": {
-        "count": 2,
-        "lastAccessed": "2026-02-25T08:14:40.476Z",
-        "synapticStrength": 1
-      },
-      "mem_d64e94b2": {
-        "count": 1,
-        "lastAccessed": "2026-02-25T08:14:40.476Z",
-        "synapticStrength": 1
-      },
-      "mem_706d3714": {
-        "count": 5,
-        "lastAccessed": "2026-02-26T09:59:19.445Z",
-        "synapticStrength": 1
-      },
-      "mem_1a0150bc": {
-        "count": 6,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
-        "synapticStrength": 1
-      },
-      "mem_6599d4b1": {
-        "count": 5,
-        "lastAccessed": "2026-02-26T09:59:19.445Z",
-        "synapticStrength": 1
-      },
-      "mem_823838dc": {
-        "count": 1,
-        "lastAccessed": "2026-02-25T08:14:40.476Z",
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
         "synapticStrength": 1
       },
       "mem_76471b85": {
-        "count": 5,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
+        "count": 1,
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
+        "synapticStrength": 1
+      },
+      "mem_1a0150bc": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
         "synapticStrength": 1
       },
       "mem_a16663aa": {
-        "count": 3,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
-        "synapticStrength": 1
-      },
-      "mem_c7d61dda": {
-        "count": 6,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
-        "synapticStrength": 1
-      },
-      "mem_e4b56693": {
-        "count": 5,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
-        "synapticStrength": 1
-      },
-      "mem_8d1255da": {
         "count": 1,
-        "lastAccessed": "2026-02-25T10:14:42.842Z",
-        "synapticStrength": 1
-      },
-      "mem_7cd96e23": {
-        "count": 3,
-        "lastAccessed": "2026-02-26T09:49:46.719Z",
-        "synapticStrength": 1
-      },
-      "mem_0f01563d": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T09:47:51.342Z",
-        "synapticStrength": 1
-      },
-      "mem_85ac11f7": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T09:47:51.342Z",
-        "synapticStrength": 1
-      },
-      "mem_0a1a97db": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T09:47:51.342Z",
-        "synapticStrength": 1
-      },
-      "mem_bf94a580": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T09:47:51.342Z",
-        "synapticStrength": 1
-      },
-      "mem_4cc74921": {
-        "count": 3,
-        "lastAccessed": "2026-02-26T09:59:19.445Z",
-        "synapticStrength": 1
-      },
-      "mem_14283f7d": {
-        "count": 4,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
-        "synapticStrength": 1
-      },
-      "py_1": {
-        "count": 37,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_3": {
-        "count": 1,
-        "lastAccessed": "2026-02-22T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_4": {
-        "count": 78,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_5": {
-        "count": 68,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_7": {
-        "count": 3,
-        "lastAccessed": "2026-02-24T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_9": {
-        "count": 2338,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_10": {
-        "count": 4,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_11": {
-        "count": 3,
-        "lastAccessed": "2026-02-20T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_12": {
-        "count": 23,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_13": {
-        "count": 67,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_16": {
-        "count": 13,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_19": {
-        "count": 10,
-        "lastAccessed": "2026-02-24T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_20": {
-        "count": 7,
-        "lastAccessed": "2026-02-23T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_22": {
-        "count": 1885,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_23": {
-        "count": 4,
-        "lastAccessed": "2026-02-24T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_28": {
-        "count": 12,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_29": {
-        "count": 18,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_30": {
-        "count": 7,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_31": {
-        "count": 49,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_32": {
-        "count": 42,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_33": {
-        "count": 4,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_35": {
-        "count": 15,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_37": {
-        "count": 22,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_38": {
-        "count": 44,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_39": {
-        "count": 17,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_40": {
-        "count": 10,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_41": {
-        "count": 775,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_42": {
-        "count": 176,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_44": {
-        "count": 501,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_45": {
-        "count": 78,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_46": {
-        "count": 3,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_48": {
-        "count": 5,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_49": {
-        "count": 2,
-        "lastAccessed": "2026-02-20T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_50": {
-        "count": 2,
-        "lastAccessed": "2026-02-20T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_51": {
-        "count": 3,
-        "lastAccessed": "2026-02-20T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_gh-path": {
-        "count": 19,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_gh-context": {
-        "count": 13,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_large-pages": {
-        "count": 22,
-        "lastAccessed": "2026-02-26T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_agent-output": {
-        "count": 4,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1.04
-      },
-      "py_stale-refs": {
-        "count": 12,
-        "lastAccessed": "2026-02-25T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "py_stripe-no-update": {
-        "count": 3,
-        "lastAccessed": "2026-02-24T12:00:00.000Z",
-        "synapticStrength": 1
-      },
-      "mem_95cdccad": {
-        "count": 1,
-        "lastAccessed": "2026-02-26T09:47:51.342Z",
-        "synapticStrength": 1
-      },
-      "mem_1bf508b9": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
         "synapticStrength": 1
       },
       "mem_286ad94e": {
-        "count": 2,
-        "lastAccessed": "2026-02-26T10:00:00.724Z",
+        "count": 1,
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
         "synapticStrength": 1
       },
-      "mem_2536c985": {
+      "mem_525e32e3": {
         "count": 1,
-        "lastAccessed": "2026-02-26T09:49:46.719Z",
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
         "synapticStrength": 1
       },
-      "mem_9deb47ac": {
+      "mem_2e22c552": {
         "count": 1,
-        "lastAccessed": "2026-02-26T09:49:46.719Z",
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
+        "synapticStrength": 1
+      },
+      "mem_14283f7d": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T01:37:25.974Z",
         "synapticStrength": 1
       }
     },
     "firingFrequency": {
-      "audit": 2,
-      "memory": 2,
-      "agent": 1,
-      "brain": 1,
-      "build": 1,
-      "strategy": 1,
-      "validation": 1,
-      "hello-world": 1,
-      "performance": 1,
-      "debugging": 2,
-      "architecture": 1,
-      "design": 1,
-      "windows": 1,
-      "tokens": 2,
-      "context": 1,
-      "compression": 1,
-      "mcp": 1,
-      "storage": 1,
-      "verification": 1,
-      "json": 1,
-      "github": 2,
-      "git": 2,
-      "bug": 1,
-      "cortex": 1,
-      "gap": 1,
-      "claude": 1,
-      "tasks": 1,
-      "trending": 1,
-      "evaluate": 1,
-      "nextjs": 2,
-      "security": 2,
-      "cross-project": 3,
-      "stripe": 1,
-      "typescript": 1,
-      "vercel": 1,
-      "deployment": 2,
+      "github": 1,
+      "git": 1,
+      "restart": 1,
+      "security": 1,
       "discord": 1,
+      "tokens": 1,
+      "deployment": 1,
       "gotcha": 1,
+      "cross-project": 1,
       "github-pages": 1,
-      "session": 1
+      "handoff": 1,
+      "session": 1,
+      "communication": 1,
+      "workflow": 1,
+      "worktree": 1,
+      "pat-directive": 1,
+      "solutions-not-apologies": 1
     },
     "activeTraces": [
-      "mem_7cd96e23",
-      "mem_bf94a580",
-      "mem_0a1a97db",
-      "mem_85ac11f7",
-      "mem_0f01563d",
-      "mem_95cdccad",
       "mem_1bf508b9",
+      "mem_76471b85",
+      "mem_1a0150bc",
       "mem_a16663aa",
       "mem_286ad94e",
-      "mem_2536c985",
-      "mem_46480fbc",
-      "mem_9deb47ac",
-      "mem_c7d61dda",
-      "mem_76471b85",
-      "mem_706d3714",
-      "mem_1a0150bc",
-      "mem_6599d4b1",
-      "mem_4cc74921",
-      "mem_e4b56693",
+      "mem_525e32e3",
+      "mem_2e22c552",
       "mem_14283f7d"
-    ]
+    ],
+    "significantEventsSinceCheckpoint": 96
   }
 }

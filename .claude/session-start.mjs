@@ -11,17 +11,105 @@
  *   Layer 3: Emergency hardcoded string
  */
 
-import { readFileSync, writeFileSync, renameSync, existsSync, mkdirSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync, renameSync, existsSync, mkdirSync, readdirSync, statSync } from 'fs';
+import { join, basename } from 'path';
 import { pathToFileURL } from 'url';
 
 const PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world';
 const HW = join(PROJECT, '.hello-world');
 const MEMORY_DIR = 'C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/memory';
+const TRANSCRIPTS_DIR = 'C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world';
 
 function safeRead(file) {
   try { return JSON.parse(readFileSync(join(HW, file), 'utf8')); }
   catch { return null; }
+}
+
+/**
+ * Extract a condensed recap from the previous session's JSONL transcript.
+ * Finds the most recent .jsonl file (by mtime), skipping the current session.
+ * Returns a string recap or null if unavailable.
+ */
+function extractPreviousSessionRecap(currentSessionId) {
+  try {
+    const files = readdirSync(TRANSCRIPTS_DIR)
+      .filter(f => f.endsWith('.jsonl'))
+      .map(f => {
+        const full = join(TRANSCRIPTS_DIR, f);
+        return { name: f, path: full, mtime: statSync(full).mtimeMs };
+      })
+      .sort((a, b) => b.mtime - a.mtime); // newest first
+
+    // Find previous session (skip current, and skip very recent files
+    // that might be this session just starting up -- check if file is < 10s old and < 5KB)
+    const now = Date.now();
+    const prev = files.find(f => {
+      const id = basename(f.name, '.jsonl');
+      if (id === currentSessionId) return false;
+      // Skip files that are likely the current session being initialized
+      const ageMs = now - f.mtime;
+      const size = statSync(f.path).size;
+      if (ageMs < 10000 && size < 5000) return false;
+      return true;
+    });
+    if (!prev) return null;
+
+    const raw = readFileSync(prev.path, 'utf8');
+    const jsonLines = raw.trim().split('\n');
+
+    const conversation = [];
+    let userNum = 0;
+
+    for (const line of jsonLines) {
+      try {
+        const obj = JSON.parse(line);
+
+        // User messages
+        if (obj.type === 'user' && obj.message?.content) {
+          const content = typeof obj.message.content === 'string'
+            ? obj.message.content
+            : null;
+          // Skip tool_result messages (they're system responses, not Pat talking)
+          if (!content) continue;
+          // Skip messages that are just hook injections
+          if (content.startsWith('<system-reminder>')) continue;
+          userNum++;
+          const short = content.replace(/\n/g, ' ').substring(0, 200);
+          conversation.push(`[PAT ${userNum}] ${short}`);
+        }
+
+        // Assistant text responses (not tool calls)
+        if (obj.type === 'assistant' && obj.message?.content) {
+          const texts = obj.message.content
+            .filter(c => c.type === 'text')
+            .map(c => c.text)
+            .join(' ');
+          if (texts.length > 20) {
+            const short = texts.replace(/\n/g, ' ').substring(0, 200);
+            conversation.push(`[CLAUDE] ${short}`);
+          }
+        }
+      } catch {
+        // Skip unparseable lines
+      }
+    }
+
+    if (conversation.length === 0) return null;
+
+    const sessionId = basename(prev.name, '.jsonl');
+    const sessionDate = new Date(prev.mtime).toISOString().split('T')[0];
+    const header = `Previous session (${sessionId.substring(0, 8)}..., ${sessionDate}):`;
+
+    // Cap at 40 exchanges to keep it useful but bounded
+    const capped = conversation.slice(0, 40);
+    const truncated = conversation.length > 40
+      ? `\n  ... (${conversation.length - 40} more exchanges)`
+      : '';
+
+    return `${header}\n${capped.join('\n')}${truncated}`;
+  } catch {
+    return null;
+  }
 }
 
 function writeDiagnostic(error, layer) {
@@ -216,6 +304,20 @@ try {
     lines.push('');
     lines.push(handoff.message);
     lines.push('');
+  }
+
+  // Previous session transcript recap
+  try {
+    // Get current session ID from environment or sessions list
+    const currentSessionId = process.env.CLAUDE_SESSION_ID ?? '';
+    const recap = extractPreviousSessionRecap(currentSessionId);
+    if (recap) {
+      lines.push('## LAST SESSION TRANSCRIPT');
+      lines.push(recap);
+      lines.push('');
+    }
+  } catch {
+    // Non-fatal -- skip recap
   }
 
   // Active task

@@ -109,7 +109,7 @@ export function generateHealthReport(
 
     totalAgeDays += (now - new Date(mem.createdAt).getTime()) / 86_400_000;
 
-    if (mem.links.length > 0) withLinks++;
+    if ((mem.links?.length ?? 0) > 0) withLinks++;
     if (mem.fingerprint) withFingerprint++;
   }
 
@@ -169,7 +169,7 @@ export function generateHealthReport(
       contextPhase: brainState?.contextPhase ?? 'early',
       activeTraces: brainState?.activeTraces?.length ?? 0,
       significantEvents: brainState?.significantEventsSinceCheckpoint ?? 0,
-      synapticActivityTags: brainState ? Object.keys(brainState.synapticActivity).length : 0,
+      synapticActivityTags: brainState?.synapticActivity ? Object.keys(brainState.synapticActivity).length : 0,
     },
     grade,
     issues,
@@ -280,7 +280,7 @@ function computeGrade(
   }
 
   // Link coverage
-  const linkCoverage = total > 0 ? memories.filter(m => m.links.length > 0).length / total : 0;
+  const linkCoverage = total > 0 ? memories.filter(m => (m.links?.length ?? 0) > 0).length / total : 0;
   if (linkCoverage < 0.1 && total > 20) {
     score -= 5;
     recommendations.push('Memory linking will improve as the linker discovers relationships');

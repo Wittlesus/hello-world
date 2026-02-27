@@ -1,0 +1,1368 @@
+{
+  "extractedAt": "2026-02-26T00:00:00.000Z",
+  "sessions": [
+    {
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "2026-02-26",
+      "topic": "Session 53: Brain health fixes + Auto-capture signal detection system + Community plugin reverse-engineering + Research timeline subtab (lost to auto-update)",
+      "subagentCount": 20,
+      "findings": [
+        {
+          "agent": "agent-a387ce8c6a6f9351e",
+          "role": "Brain module wiring audit",
+          "summary": "Audited which brain engine modules fire automatically vs require manual intervention. Found reflection and prediction modules exist but are NOT wired into server.ts.",
+          "keyPoints": [
+            "hw_store_memory auto-fires: quality gate (fingerprint->dedup->quality score->conflict), linker on accept",
+            "hw_retrieve_memories auto-fires: cortex gap learning (deferred 5min batch)",
+            "hw_end_session auto-fires: pruning + rule extraction",
+            "reflection.ts and prediction.ts exist but have NO auto-trigger -- must be called manually",
+            "findLinks and applyLinks are exported but never called in production (only traverseLinksForRetrieval used in engine.ts)"
+          ]
+        },
+        {
+          "agent": "agent-a40bbed8553707374",
+          "role": "Hook infrastructure report",
+          "summary": "Complete audit of all configured Claude Code hooks. Found 7 hooks: SessionStart, UserPromptSubmit (new with signal queue), Stop (new signal detection), PreCompact, PostToolUse, plus 2 others.",
+          "keyPoints": [
+            "SessionStart: 3-layer resilience, injects full context, calls initBrainState() for decay+reset",
+            "UserPromptSubmit: reads signal queue, injects uncaptured signal nudges, displays status line",
+            "Stop hook: runs signal-detector.mjs on every Claude response, queues detected signals",
+            "PreCompact: final signal sweep before context compression",
+            "PostToolUse: captures last-edited file for crash resume via last-context.json"
+          ]
+        },
+        {
+          "agent": "agent-a01aac6e748b29fac",
+          "role": "Reverse-engineer claude-code-auto-memory plugin (severity1)",
+          "summary": "Reverse-engineered severity1's plugin. Uses PostToolUse to track dirty files, spawns isolated memory-updater agent on Stop.",
+          "keyPoints": [
+            "FATAL FLAW: File edits are not thoughts -- entire system misses decisions made in conversation with no file change",
+            "PostToolUse tracks dirty files to flat text file, zero token cost",
+            "Memory update runs isolated LLM agent on Stop event",
+            "No coverage: 2-hour debugging session discovering race condition but no file edit = zero memory",
+            "gitmode variant waits for git commit then runs git diff-tree for context"
+          ]
+        },
+        {
+          "agent": "agent-a0726ff40b5a576fc",
+          "role": "Reverse-engineer claude-mem plugin (thedotmack)",
+          "summary": "Reverse-engineered thedotmack's claude-mem (SQLite + Chroma + 5 hooks). FATAL: memories shown to human but never injected into Claude.",
+          "keyPoints": [
+            "FATAL FLAW: Memories written to stderr (visible to user in terminal) but Claude never receives them -- completely decorative",
+            "Has semantic search built but never wires it to automatic injection -- dumps last 50 by date",
+            "Confirmed production bug: 121 zombie Claude subprocesses eating 44GB RAM (Agent SDK doesn't guarantee subprocess cleanup)",
+            "Bun HTTP server on port 37777, 5 lifecycle hooks",
+            "Current prompt available but unused for relevance filtering"
+          ]
+        },
+        {
+          "agent": "agent-a075a839149c60cd6",
+          "role": "Research: AI agent memory failure modes and anti-patterns",
+          "summary": "Researched failure modes, anti-patterns, and war stories from AI agent memory systems in production.",
+          "keyPoints": [
+            "Core trap: rebuilding unsolved problems with fewer resources -- vector store paradigm treats memory as snippet retrieval not structured knowledge",
+            "Memory poisoning: stored memories degrade performance when stale, contradictory, or overly general",
+            "Over-engineering trap: more components = more failure points, not more value",
+            "Automated memory creates hallucination risks when agent has low confidence",
+            "Gotchas (most valuable memories) get evicted first under line-budget pressure due to low access counts"
+          ]
+        },
+        {
+          "agent": "agent-a21186b5fd6a51dfd",
+          "role": "Research: Simple memory approaches that actually work",
+          "summary": "Researched what actually works for AI coding assistant memory. Conclusion: plain text files win, complex architectures marginal-to-zero benefit.",
+          "keyPoints": [
+            "BOTTOM LINE: Plain text files (CLAUDE.md, AGENTS.md, .cursorrules) are highest-ROI memory system",
+            "Letta filesystem agent scored 74.0% on LoCoMo benchmark -- beat Mem0 graph-based (68.5%)",
+            "Industry convergence: Manus ($2B Meta acq), OpenClaw (145K stars), Claude Code all use plain .md files",
+            "Our 14-module system producing 1 learned rule after 52 sessions is the expected outcome -- not an anomaly",
+            "REFRAME: The question is not 'is plasticity useful for coding' -- it's 'does each module help a new Claude instance understand faster'"
+          ]
+        },
+        {
+          "agent": "agent-a29c5df46effc1606",
+          "role": "Research: How Cursor IDE handles persistent memory",
+          "summary": "Researched Cursor's rules system, auto-memory features, and context management as of February 2026.",
+          "keyPoints": [
+            "Cursor 4-tier rules: User Rules (global), Project Rules (.cursor/rules/*.mdc), Agent-Requested, Auto-Generated",
+            "February 2026 Subagents: independent parallel agents, 8000-line migration took 9min vs 17min serial",
+            "Plugin Marketplace v2.5: bundles MCP + skills + subagents + rules + hooks as single installable unit",
+            "Cloud Agents: prepend & to push to background agent persisting beyond session (cursor.com/agents)",
+            "User complaint: Lazy Delete problem -- agent replaces large code chunks with comments during refactoring"
+          ]
+        },
+        {
+          "agent": "agent-a4bb4f1832426bc39",
+          "role": "Research: Claude Code persistent memory and context management",
+          "summary": "Researched how Claude Code handles persistent memory: CLAUDE.md files, auto-memory feature, context management.",
+          "keyPoints": [
+            "CLAUDE.md loaded into system prompt every session -- most specific wins (project > user > global)",
+            "Memory hierarchy: managed policy (OS), enterprise policy, user prefs (~/.claude/CLAUDE.md), project (./CLAUDE.md)",
+            "Auto-memory: Claude Code suggests updating CLAUDE.md when it detects patterns worth saving",
+            "Memory directory: ~/.claude/projects/<encoded-path>/memory/ with topic-split files, 200-line soft cap",
+            "PreCompact hook triggers memory consolidation"
+          ]
+        },
+        {
+          "agent": "agent-aac7bc8bd0ebe6b73",
+          "role": "Reverse-engineer memory-mcp plugin (yuvalsuede)",
+          "summary": "Reverse-engineered yuvalsuede's memory-mcp (chunked extraction, confidence decay, LLM consolidation). Found silent memory-loss bug.",
+          "keyPoints": [
+            "FATAL FLAW: When Haiku says 'this supersedes an existing memory' but Jaccard < 0.5, the new memory is silently never saved",
+            "500-char message truncation happens BEFORE extraction model -- detailed decision at char 600 disappears entirely",
+            "Fixed 6000-char chunks with 500-char overlap, no sentence/turn boundary awareness",
+            "6 memory types: architecture, gotcha, pattern, principle, solution, context",
+            "Gotchas (most valuable) get evicted first under line-budget pressure -- low access counts"
+          ]
+        },
+        {
+          "agent": "agent-ab96bc0aa46a7670a",
+          "role": "Reverse-engineer claude-diary plugin (rlancemartin)",
+          "summary": "Reverse-engineered rlancemartin's claude-diary (PreCompact triggers self-reflection). Found worst-timing architectural flaw.",
+          "keyPoints": [
+            "FATAL FLAW: Reflection runs inside nearly-full context window that triggered compaction -- worst possible moment for complex generation",
+            "CLAUDE.md grows unboundedly -- no pruning, no TTL, no dedup. Early rules contradict later ones",
+            "Pattern detection threshold (2 occurrences) too low, unweighted -- no distinction between explicit corrections and inferred prefs",
+            "Best pattern to steal: typed preference tracking (explicit vs inferred with confidence scores)",
+            "PreCompact hook stdout is injected back into Claude context -- powerful mechanism"
+          ]
+        },
+        {
+          "agent": "agent-ae14f7eae3334fd0c",
+          "role": "Reverse-engineer arscontexta plugin (agenticnotetaking)",
+          "summary": "Reverse-engineered agenticnotetaking's arscontexta (3-space Zettelkasten: self/, notes/, ops/ + 6R pipeline).",
+          "keyPoints": [
+            "6R pipeline: Record, Reduce, Reflect, Reweave, Verify, Rethink",
+            "Strength: 3-space architecture prevents conflation of personal, project, and operational knowledge",
+            "Weakness: conversational setup phase is single point of failure -- misconfigure = all outputs miscategorized",
+            "Vault grows without pruning -- no mechanism for removing outdated notes",
+            "6R pipeline can create circular processing with no termination condition"
+          ]
+        },
+        {
+          "agent": "agent-ae6a97606507207f3",
+          "role": "Reverse-engineer claude-memory plugin (idnotbe -- most sophisticated)",
+          "summary": "Reverse-engineered idnotbe's most sophisticated community plugin (4-phase LLM pipeline). Found Windows-breaking flaw.",
+          "keyPoints": [
+            "4-phase pipeline: Triage (Stop) -> Draft (LLM subagents) -> Verify (LLM judge) -> Save",
+            "FATAL FLAW: Completely broken on Windows -- /tmp/ fallback and fcntl file locking both fail, no fallback, no diagnostic",
+            "Triage regex misses most real decisions: only 'decided|chose|selected|went with|picked' -- misses 'let's go with', 'we'll use'",
+            "No feedback loop -- system never learns whether retrieved memories were useful",
+            "Best architecture: LLM-as-judge re-ranking of BM25 retrieval results improves relevance"
+          ]
+        },
+        {
+          "agent": "agent-af478bafd8b58c7b7",
+          "role": "Research: Windsurf memory and context system",
+          "summary": "Researched Windsurf's Cascade memory system including auto-generated memories, Arena mode, and Plan mode.",
+          "keyPoints": [
+            "Cascade memory: Memories (auto-generated snippets) + Rules (user-defined persistent instructions)",
+            "Auto-generated memories shipped January 2025, generated by Gemini sidecar scorer",
+            "Arena Mode: run two Cascade agents side-by-side, hidden identities, vote on better performer",
+            "Plan Mode as first-class workflow step validates our scope/plan/build/verify/ship pipeline",
+            "Security vulnerability: auto-memory can be poisoned via malicious code comments"
+          ]
+        },
+        {
+          "agent": "agent-aa4e2bd4ad0de9665",
+          "role": "Research: Claude Code hook events and auto-memory mechanisms",
+          "summary": "Researched all 16 Claude Code hook events, their data payloads, and what's possible for auto-memory capture.",
+          "keyPoints": [
+            "16 hook events total; transcript_path available on EVERY event",
+            "Stop hook receives: last_assistant_message (complete text), transcript_path, session_id",
+            "PreCompact hook stdout is injected back into Claude -- allows last-second memory injection before compression",
+            "Hook timeout limits: 10s for blocking hooks (SessionStart, UserPromptSubmit), unlimited for non-blocking",
+            "PostToolUse receives tool name, input, output -- enables file-change tracking"
+          ]
+        },
+        {
+          "agent": "agent-aa546e7595f7b318a",
+          "role": "Research: Academic state-of-art for persistent memory in LLM agents",
+          "summary": "Researched MemGPT/Letta, A-MEM, Mem0, MemoryBank, RAG limitations and biologically-inspired approaches.",
+          "keyPoints": [
+            "MemGPT (Oct 2023): two-tier OS-style memory -- in-context (core) + out-of-context (archival), agent self-manages paging",
+            "Letta V1 (2025): composable agent architecture with persistent agents and dedicated memory blocks",
+            "A-MEM (Feb 2025): Zettelkasten-style with dynamic re-linking -- superior results on 6 foundation models vs SOTA baselines",
+            "Mem0 (memory graph): nodes for entities + relationship edges. Beat GPT-4 on personal assistant tasks by 26%",
+            "RAG limitation: retrieves semantically similar chunks, not causally relevant ones. Fails for temporal and multi-hop reasoning",
+            "MemoryBank: Ebbinghaus forgetting curve with time decay + access boost -- same as our scoring.ts but actually wired"
+          ]
+        },
+        {
+          "agent": "agent-afaad21ea7f6bf06c",
+          "role": "Research: Detecting significant moments for auto-memory capture",
+          "summary": "Researched practical patterns for detecting moments worth capturing: understanding shifts, user corrections, discoveries, decisions.",
+          "keyPoints": [
+            "ChatGPT approach: explicit bio tool call + background profile builder with intent classifiers -- does NOT scan for signals",
+            "Understanding shifts detectable via: 'actually', 'I was wrong about', 'I missed', 'you're right', 'now I understand'",
+            "User corrections: pushback phrase + acknowledgment pair within 2 messages",
+            "Research conclusions: synthesis language after tool calls ('all agents agree', 'the evidence shows')",
+            "Decisions: choice language + rejected alternatives ('we'll use X not Y', 'decided against')",
+            "Bug discoveries require contextual detection -- regex alone misses them",
+            "Hippocampal checkpoint (every 6-12 messages) is just text suggestion -- needs to trigger actual evaluation"
+          ]
+        },
+        {
+          "agent": "agent-a5a66cffd139bcb2f",
+          "role": "Research: Research Timeline subtab architecture",
+          "summary": "Explored codebase to understand how to add Research Timeline subtab to Decisions panel.",
+          "keyPoints": [
+            "Subtab pattern found in HistoryView.tsx -- useState tab switching, conditional rendering",
+            "DecisionsView needs tabification: Decisions | Research subtabs",
+            "Storage: create .hello-world/research-outputs.json",
+            "Timeline: horizontal scrollable, drag-to-fling, flask icon (research) / people icon (deliberations)",
+            "Popup on click: instant panel with full transcript formatted neatly",
+            "Rust: add get_research command reading research-outputs.json"
+          ]
+        },
+        {
+          "agent": "agent-aa5a37916c226781c",
+          "role": "Code introspection: quality-gate.ts exported signatures",
+          "summary": "Read quality-gate.ts and extracted all exported function signatures and types.",
+          "keyPoints": [
+            "computeFingerprint(memory: Pick<Memory, 'title' | 'content'>): string -- 12-char hex djb2 hash",
+            "assessQuality(memory): number -- 0-1 based on specificity (0.35) + actionability (0.35) + completeness (0.30)",
+            "runQualityGate(memory, existingMemories): QualityGateResult -- accept/reject/merge decision",
+            "detectDuplicate(memory, existing): boolean"
+          ]
+        },
+        {
+          "agent": "agent-ae28955cc1bd64ea3",
+          "role": "Code introspection: linker.ts exported signatures",
+          "summary": "Read linker.ts and extracted all exported function signatures and MemoryLink type.",
+          "keyPoints": [
+            "computeSimilarity(memA, memB): number",
+            "detectContradiction(memA, memB): number",
+            "detectSupersession(newMem, oldMem): number",
+            "findLinks(newMemory, existingMemories): CandidateLink[]",
+            "applyLinks(memory, links, timestamp?): Memory",
+            "buildLinkGraph(memories): LinkGraph",
+            "traverseLinks(memoryId, graph, depth?): string[]",
+            "MemoryLink = { targetId: string, relationship: string, createdAt: string }"
+          ]
+        },
+        {
+          "agent": "agent-af059dd76d07029ad",
+          "role": "Code introspection: Memory interface in types.ts",
+          "summary": "Read types.ts and extracted all Memory interface fields.",
+          "keyPoints": [
+            "Core: id, projectId, type (pain|win|fact|decision|architecture|reflection), title, content, rule, tags, severity",
+            "Brain: links (array of {targetId, relationship, createdAt}), supersededBy, qualityScore, fingerprint",
+            "Tracking: relatedTaskId, synapticStrength, accessCount, lastAccessed, createdAt, updatedAt",
+            "DEFAULT_CORTEX exported from types -- 40-entry hardcoded vocabulary mapping"
+          ]
+        }
+      ],
+      "synthesis": "Session 53 was the big research sprint on AI memory systems and auto-capture. Key conclusions: (1) The project pitch is about Claude having continuous memory WITH Pat specifically, not about being a generic coding assistant tool -- this reframes everything. (2) All 6 community plugins share 5 universal flaws: no feedback loop, recency over relevance, signal detection too narrow, no Windows support, no dedup. (3) Our brain system has modules they don't (quality gate, linker, plasticity) but shares their biggest gap: 100% manual memory storage with no auto-trigger. (4) Signal detection pipeline built and tested -- 8 signal types, Stop hook queues detections, UserPromptSubmit injects nudges. (5) Research timeline subtab started building to store research outputs in research-outputs.json with horizontal timeline UI in DecisionsView. Session was lost to auto-update before commit."
+    },
+    {
+      "sessionId": "9bffb8ab-d85a-4502-bbf3-a07d34d8d9d9",
+      "date": "2026-02-26",
+      "topic": "Session 48: Brain Magnum Opus Foundation -- Three think tanks + parallel build agents + comprehensive bug audit. Committed as 176cd05.",
+      "subagentCount": 20,
+      "findings": [
+        {
+          "agent": "agent-a60437e60bae27949",
+          "role": "Think Tank Team 1: Neuroscience",
+          "summary": "Analyzed brain system from biological neuroscience perspective. Found massive gap between biological naming and actual function.",
+          "keyPoints": [
+            "85% of memories (165/193) have zero accesses -- dead weight",
+            "Every memory has synapticStrength = 1.0 -- plasticity system has NEVER modified a memory",
+            "scoring.ts is never called from engine.ts -- entire decay/access/failure scoring module is disconnected from retrieval",
+            "71 memories tagged 'auto-captured' from routine task completions -- noise",
+            "Cortex map has only 40 entries -- cannot map project vocabulary (biome, worktree, deliberation)",
+            "TOP FIX #1: Cortical Map Plasticity -- cortex must learn project-specific vocabulary",
+            "TOP FIX #2: Automated Pruning + Session-End Consolidation -- active pool should be 50-80 memories",
+            "TOP FIX #3: Integrate scoring.ts into retrieval pipeline (20 lines of code)"
+          ]
+        },
+        {
+          "agent": "agent-a596609e6b1012b15",
+          "role": "Think Tank Team 2: Production Engineering",
+          "summary": "Analyzed brain system from production database engineering perspective. Numbers are sobering.",
+          "keyPoints": [
+            "Memories never accessed: 165/193 (85%)",
+            "Empty rule field: 171/193 (89%) -- rule is what gets injected, 89% inject nothing useful",
+            "Synaptic strength: 100% at 1.0 -- plasticity completely non-functional",
+            "Auto-captured: 71/193 (37%) -- generic titles diluting retrieval quality",
+            "scoring.ts integration: 0% -- written but never called from retrieval engine",
+            "TOP FIX #1: Activate Synaptic Plasticity -- wire applySynapticPlasticity() into hw_end_session (~2 hours)",
+            "TOP FIX #2: Quality Gate + Dedup at write time -- cap auto-captured quality at 0.40",
+            "TOP FIX #3: Materialized Tag Index -- stop O(n*t) rebuild on every retrieval"
+          ]
+        },
+        {
+          "agent": "agent-a6fbed18e6230639b",
+          "role": "Think Tank Team 3: AI/ML Research",
+          "summary": "Researched 7 state-of-the-art AI memory systems and mapped their techniques to our existing system.",
+          "keyPoints": [
+            "CORE FINDING: System has excellent retrieval infrastructure but lacks feedback loops -- brain pushes memories but never learns if they helped",
+            "Reflexion (TOP FIX): After task completion, structured reflection connects memories to outcomes -- strength boosts for helpful memories",
+            "A-MEM/Zettelkasten links (TOP FIX): Explicit links (resolves/supersedes/extends/contradicts/related) -- retrieval follows links so Claude gets problems AND solutions together",
+            "LangMem procedural memory: derive rules automatically from reflection patterns -- eliminates manual rule extraction",
+            "Voyager curriculum: track 'known mastered' vs 'known unknown' -- prevents re-exploring solved problems",
+            "A-Mem showed superior results on 6 foundation models vs SOTA baselines"
+          ]
+        },
+        {
+          "agent": "agent-a7acaacf9569a8eab",
+          "role": "Subagent team strategy research",
+          "summary": "Searched all memory files for existing subagent team strategy research.",
+          "keyPoints": [
+            "Agent Teams decision: DEFERRED (d_36c94eea) -- unstable, Windows-incompatible",
+            "Current pattern: spawn specialized subagents via Task tool on demand",
+            "No formalized team structure, coordination patterns, or result flow exists",
+            "t_e60b91e0 (subagent team strategy design) has research done but never synthesized"
+          ]
+        },
+        {
+          "agent": "agent-a84f6473fa2816517",
+          "role": "MCP server memory retrieval analysis",
+          "summary": "Analyzed hw_retrieve_memories and hw_store_memory handlers.",
+          "keyPoints": [
+            "hw_retrieve_memories: 9-stage hippocampal pipeline -- tokenize, attention filter, pattern recognition, associative chaining, amygdala weighting, synaptic strength, context awareness, dopamine injection, telemetry",
+            "hw_store_memory: calls memoryStore.storeMemory() which runs quality gate pipeline",
+            "Auto-cue NOT implemented -- brain state messageCount tracks but no periodic injection trigger",
+            "Stage 8 (dopamine) forces min 1 pain + 1 win in results regardless of scores"
+          ]
+        },
+        {
+          "agent": "agent-adcf7092275fa672e",
+          "role": "Brain engine changes audit",
+          "summary": "Reviewed engine.ts changes: scoring integration, link traversal, pain-win pairing, telemetry.",
+          "keyPoints": [
+            "CRITICAL BUG: Double-application of scoreMemory() -- pre-filter AND post-multiply, exponentially penalizing memories",
+            "CRITICAL BUG: Forced pain-win pairing ignores maxWins cap",
+            "CRITICAL BUG: Link traversal uses ?? 1 inflating zero-weight sources (should be ?? 0 with continue guard)",
+            "Stage 7 uses memMap instead of viableMap causing stale data",
+            "All bugs fixed in subsequent parallel build"
+          ]
+        },
+        {
+          "agent": "agent-a9469e238a00a6223",
+          "role": "MCP server and memory store audit",
+          "summary": "Reviewed Brain Magnum Opus changes. Found critical data format mismatch between hooks and server.",
+          "keyPoints": [
+            "CRITICAL BUG (confidence 100%): Hook writes bare BrainState, server reads wrapped {state: BrainState} -- silent data loss on every MCP call after hook fires",
+            "CRITICAL BUG: HTTP request to sync port has no timeout -- hangs forever on stale port",
+            "sessions.json write non-atomic -- power failure mid-write corrupts session history",
+            "Fix: all 3 hooks now write {state: BrainState} wrapper"
+          ]
+        },
+        {
+          "agent": "agent-a01cb054d6701f0b5",
+          "role": "Hook files review for Brain Magnum Opus",
+          "summary": "Reviewed 3 modified hook files for correctness and edge cases.",
+          "keyPoints": [
+            "CRITICAL: user-prompt.mjs hangs forever when sync.json has no port (confidence 95%)",
+            "Windows path resolution via pathToFileURL works correctly for dynamic imports",
+            "3-layer resilience in session-start.mjs: try/catch, fallback data, graceful degradation",
+            "process.exit(0) in HTTP callback fires before async await import() -- ordering bug identified and fixed"
+          ]
+        },
+        {
+          "agent": "agent-aed4a47ee2cd8b4d8",
+          "role": "Agent A: Migration script (migrate-brain.mjs)",
+          "summary": "Created scripts/migrate-brain.mjs to import 68 lessons from lessons-learned.md and merge Python + TS brain states.",
+          "keyPoints": [
+            "Imports 68 lessons from lessons-learned.md as type: 'pain' memories with rule extraction",
+            "mergeBrainStates: Python(27) + TS(35) -> Merged(55) synaptic activity, Python(41) + TS(29) -> Merged(70) memory traces",
+            "Handles both numbered and unnumbered headings, extracts tags from Tag Index section",
+            "Migration result: 274 memories after merge (197 existing + 68 imported + 9 wins)"
+          ]
+        },
+        {
+          "agent": "agent-af6240601da64cda5",
+          "role": "Agent B: Wire brain engine into hook system",
+          "summary": "Modified 3 hook files to wire compiled brain engine into UserPromptSubmit hook.",
+          "keyPoints": [
+            "Added DIST_BRAIN constant pointing to compiled brain engine dist/",
+            "Added atomicWrite() helper (write to .tmp then rename)",
+            "UserPromptSubmit: reads memories.json, runs retrieveMemories(), formats results, appends to status line",
+            "All dist/ dependencies verified present"
+          ]
+        },
+        {
+          "agent": "agent-a24bfdd473784f24c",
+          "role": "Agent D: Auto-tagging and plasticity wiring",
+          "summary": "Updated memory store with inferTags() auto-tagging and wired plasticity into MCP server.",
+          "keyPoints": [
+            "inferTags() uses DEFAULT_CORTEX vocabulary mapping to auto-infer tags when fewer than 2 provided",
+            "Auto-inferred tags merged with provided tags, capped at 8",
+            "Wired applySynapticPlasticity() into hw_end_session handler",
+            "Zero TypeScript errors"
+          ]
+        },
+        {
+          "agent": "agent-a2fc1fa9f8485879f",
+          "role": "Agent C: Schema updates and cortex merge",
+          "summary": "Added 7 new optional fields to Memory schema for Brain Magnum Opus.",
+          "keyPoints": [
+            "Added 'reflection' to MemoryType enum",
+            "Added: links, supersededBy, qualityScore, fingerprint, relatedTaskId, sessionId, predictionId",
+            "All fields have .default([]) or .optional() for backward compatibility",
+            "Zero TypeScript errors"
+          ]
+        },
+        {
+          "agent": "agent-afcb5f0d0e4897369",
+          "role": "Integration plan: unifying Python and TypeScript brain systems",
+          "summary": "Designed complete plan for unifying Python auto-pilot and TypeScript brain systems.",
+          "keyPoints": [
+            "Hook (.mjs) importing compiled dist/ (.js) approach is sound -- zod is a transitive dependency that resolves fine",
+            "Dependency chain: engine.js -> types.js -> ../types.js -> zod",
+            "Migration handles: ID conflicts, duplicate detection, tag normalization, date parsing",
+            "JsonStore caches in memory after first read -- external writes silently overwritten, migration must go through MCP"
+          ]
+        },
+        {
+          "agent": "agent-a39366b4dcf2d344d",
+          "role": "Brain tests and brain-dashboard reference research",
+          "summary": "Found all brain test files and analyzed brain-dashboard Python reference implementation.",
+          "keyPoints": [
+            "4 test files: brain.test.ts, state.test.ts, cross-session.test.ts, dogfood.test.ts",
+            "brain-dashboard/server.py: 1275-line Python HTTP server serving Neural Monitor dashboard",
+            "Dashboard: D3 force graph for memory network, Chart.js activity timeline, CSS heatmap for synaptic strength",
+            "Real-time: polls /api/state every 2s, WebSocket for live activity events",
+            "Color coding: pain=red, win=green, fact=blue, decision=purple, architecture=orange"
+          ]
+        },
+        {
+          "agent": "agent-a0c5fc90510237007",
+          "role": "Brain flowchart in TerminalView analysis",
+          "summary": "Analyzed the dual-panel brain flowchart and state synchronization.",
+          "keyPoints": [
+            "Dual-panel: Brain Pipeline (left) + Plasticity/State (right)",
+            "9-stage pipeline: Input -> Tokenize -> Attention Filter -> Pattern Recognition -> Associative Chaining -> Amygdala -> Synaptic -> Context -> Dopamine -> Output",
+            "Real-time: file watcher pushes changes to Tauri via loopback HTTP",
+            "Active nodes highlighted based on recent activity events"
+          ]
+        },
+        {
+          "agent": "agent-a4d3457b280162049",
+          "role": "Research: Auto-capture wiring points in MCP server",
+          "summary": "Mapped all MCP handlers that create significant events and identified best wiring points for auto-memory capture.",
+          "keyPoints": [
+            "hw_update_task with status='done': prime moment for reflexion-style reflection",
+            "hw_record_failure: two-strike events should auto-generate pain memories",
+            "hw_advance_phase to 'verify' or 'ship': phase transitions are significant moments",
+            "hw_answer_question: knowledge that answered a question is worth storing",
+            "hw_end_session: already runs pruning/rules, good hook for session-level reflection"
+          ]
+        },
+        {
+          "agent": "agent-ac02ae551d9246cad",
+          "role": "Brain engine full stage analysis",
+          "summary": "Read and analyzed engine.ts -- all stage names, input/output types, how stages chain, dependencies.",
+          "keyPoints": [
+            "retrieveMemories(prompt, memories, state, config): RetrievalResult",
+            "Stage 5 (amygdala): pain memories get 1.5x weight, recent pains get 2x",
+            "Stage 8 (dopamine): forces minimum 1 pain + 1 win in results",
+            "telemetry: tracks cortexGaps (words matching memories via fuzzy but no cortex entry)"
+          ]
+        },
+        {
+          "agent": "agent-a9a82a9540404f7de",
+          "role": "Research: Brain engine import into UserPromptSubmit hook",
+          "summary": "Researched how to import compiled brain engine into .mjs hook files safely on Windows.",
+          "keyPoints": [
+            "outDir: dist/ (packages/core/dist/), format: ESM (module: ESNext)",
+            "Dynamic import: await import(pathToFileURL(path.join(DIST_PATH, 'brain/engine.js')).href)",
+            "Windows-safe: pathToFileURL converts backslashes, handles spaces in paths",
+            "All dependencies verified in dist/"
+          ]
+        },
+        {
+          "agent": "agent-a07878334c8c2f785",
+          "role": "Brain modules analysis (scoring, state, store)",
+          "summary": "Analyzed scoring.ts, state.ts, and store.ts for Brain Magnum Opus integration.",
+          "keyPoints": [
+            "scoreMemory(): multi-factor -- exponential time decay (type-specific rates) + access frequency + access recency + failure penalty + severity boost",
+            "Decay rates: fact=0.04, pain=0.025, win=0.015, decision=0.01",
+            "applySynapticPlasticity(): updates synapticStrength on access -- BUT never called from MCP server before S48",
+            "storeMemory() calls getAllMemories() for quality gate -- O(n) per store",
+            "JsonStore caches in memory after first read -- external writes silently overwritten"
+          ]
+        },
+        {
+          "agent": "agent-ac26fcaebc7eafde2",
+          "role": "Migration script review and data verification",
+          "summary": "Reviewed migrate-brain.mjs and verified correctness of migrated data.",
+          "keyPoints": [
+            "mergeBrainStates bug confirmed: writes to 'state' wrapper but server reads bare BrainState",
+            "Tag extraction parser handles both numbered and unnumbered headings",
+            "Windows paths and CRLF (\\r\\n) handled correctly",
+            "Migration: Python(41) + TS(29) -> Merged(70) memory traces with 0 overlaps (different ID formats)"
+          ]
+        }
+      ],
+      "synthesis": "Session 48 (Brain Magnum Opus S48) established the foundation. Think tanks diagnosed core problems (85% dead memories, plasticity never fires, scoring disconnected). 4 build agents shipped ~800 lines of foundation code. 4 audit agents caught 9 critical bugs including the fatal hook/server brain state wrapper mismatch. All bugs fixed, committed as 176cd05. Key insight: the brain system has excellent retrieval infrastructure but zero feedback loops. S49-S51 would add quality gates, reflections, linker, cortex learning, pruning, rules, health monitoring."
+    },
+    {
+      "sessionId": "f2a987e1-39c5-423d-90dd-c364f6e12e33",
+      "date": "2026-02-26",
+      "topic": "Session 52: Resilience task force -- MCP server circuit breakers + 6 parallel fix agents + health.ts bug fixes. Committed as 7e97e7e.",
+      "subagentCount": 12,
+      "findings": [
+        {
+          "agent": "agent-add79e7a7dde7c75a",
+          "role": "Agent 1: Performance Optimization",
+          "summary": "Analyzed O(n) fingerprint scan and proposed fingerprint cache and materialized tag index.",
+          "keyPoints": [
+            "storeMemory() calls getAllMemories() for quality gate -- O(n) per store, O(n^2) total as memories grow",
+            "At 200 memories: 200 JSON reads + 200 fingerprint comparisons per store operation",
+            "Fix: in-memory fingerprint cache (Map<string, string>) keyed on memoryId, rebuilt on startup",
+            "Fix: deferred tag index -- build once on startup, invalidate on writes",
+            "JsonStore.update() exists but unused -- direct CRUD bypasses cache"
+          ]
+        },
+        {
+          "agent": "agent-a35a6dff41979f235",
+          "role": "Agent 2: Resilience and Circuit Breakers",
+          "summary": "Audited error handling in all 3 critical MCP tool handlers. Found zero try/catch in hw_store_memory.",
+          "keyPoints": [
+            "hw_store_memory handler: ZERO try/catch -- any brain module exception kills handler with no response",
+            "hw_retrieve_memories handler: partial try/catch, some brain stages unprotected",
+            "hw_end_session handler: no protection on pruning or rule extraction",
+            "safeBrainOp circuit breaker designed: wraps each degradable zone, returns partial results on failure",
+            "13 degradable zones total identified and protected"
+          ]
+        },
+        {
+          "agent": "agent-a791243bd88f1b8f7",
+          "role": "Agent 3: Data Store Safety",
+          "summary": "Analyzed concurrent write risks in memories.json and designed write serialization.",
+          "keyPoints": [
+            "memories.json written by 4 brain modules + MCP server directly -- concurrent write race possible",
+            "JsonStore.write() already uses temp+rename atomic pattern -- good foundation",
+            "Concurrent race: two modules read, modify, write simultaneously -- last write wins, first changes lost",
+            "cortex-learned.json and memories-archive.json not yet created (first write creates them)",
+            "learned-rules.json already has .backup from JsonStore.write() auto-backup"
+          ]
+        },
+        {
+          "agent": "agent-aaef9f484cdc3ecc9",
+          "role": "Agent 4: Communication Hardening",
+          "summary": "Analyzed Discord bot + listener for persistent message queue design.",
+          "keyPoints": [
+            "No persistent queue between Discord bot and listener -- reply timing determines if resolution works",
+            "Discord listener WebSocket can drop -- no reconnection logic",
+            "Fix designed: signal-queue.json as durable inbox for Discord messages, processed on reconnect",
+            "ApprovalRequest type needs 'discordMessageId' for reliable resolution tracking"
+          ]
+        },
+        {
+          "agent": "agent-ae8bb3d67fbd58f2e",
+          "role": "Agent 5: Latency Reduction",
+          "summary": "Analyzed cortex learner inline execution on every hw_retrieve_memories call.",
+          "keyPoints": [
+            "Cortex learner runs gap analysis inline on every retrieval -- adds 50-200ms per call",
+            "Fix implemented: deferred to 5-minute batch timer instead of inline",
+            "retrieval.telemetry.cortexGaps: array of prompt tokens matching memories via fuzzy but no cortex entry",
+            "getAllMemories() I/O: full JSON read on every retrieval -- needs TTL cache"
+          ]
+        },
+        {
+          "agent": "agent-afb945058cb7d78e9",
+          "role": "Agent 6: Cross-Cutting Architecture Review",
+          "summary": "Reviewed entire brain engine for systemic issues beyond the 5 specific fixes.",
+          "keyPoints": [
+            "CRITICAL: Dangling links after pruning -- deleteMemory() removes memory but doesn't clean up links pointing to it",
+            "findLinks and applyLinks: exported but never called in production (only in tests)",
+            "Brain state mutation: direct object mutation instead of immutable update",
+            "Rule extraction uses pre-pruning snapshot -- may extract rules from memories about to be pruned"
+          ]
+        },
+        {
+          "agent": "agent-a643f1eb855a29f04",
+          "role": "Implement: engine.ts performance optimizations",
+          "summary": "Implemented 3 changes: cache Date.now(), remove double scoreMemory, fix viableM/memMap bug.",
+          "keyPoints": [
+            "Added const nowMs = Date.now() before filter loop to prevent N Date.now() calls",
+            "Removed scoreMemory post-multiply (was double-penalizing memories exponentially)",
+            "Fixed stage 7 to use viableM instead of memMap",
+            "Zero TypeScript errors"
+          ]
+        },
+        {
+          "agent": "agent-a7ae91d4d9fbc4d82",
+          "role": "Implement: reflection.ts fingerprint unification",
+          "summary": "Unified fingerprint function in reflection.ts with quality-gate.ts computeFingerprint.",
+          "keyPoints": [
+            "reflection.ts had own fingerprint() using single djb2 + base36 -- incompatible with quality-gate's 12-char hex",
+            "Removed local function, imported computeFingerprint from quality-gate.js",
+            "All 21 reflection tests pass"
+          ]
+        },
+        {
+          "agent": "agent-a8634e6d61fb2afae",
+          "role": "Implement: unified stop-words.ts",
+          "summary": "Created shared stop-words.ts consolidating 3 separate stop word lists from quality-gate, linker, engine.",
+          "keyPoints": [
+            "3 separate lists with different contents existed in quality-gate.ts, linker.ts, engine.ts",
+            "Created packages/core/src/brain/stop-words.ts with union of all 3 (130 unique words, alphabetical)",
+            "All 3 files updated to import STOP_WORDS from shared module",
+            "237 passed, 1 failed (pre-existing dogfood)"
+          ]
+        },
+        {
+          "agent": "agent-aa58b68540a1b8368",
+          "role": "Implement: brain state map capping",
+          "summary": "Implemented size caps for synapticActivity (100) and memoryTraces (200) maps in state.ts.",
+          "keyPoints": [
+            "synapticActivity capped at 100, evicts lowest-value entries",
+            "memoryTraces capped at 200, evicts least-recently-used",
+            "Pruning applied inside initBrainState() after carryover from previous session",
+            "237 passed, 1 failed (pre-existing)"
+          ]
+        },
+        {
+          "agent": "agent-aa87f38bd204ef770",
+          "role": "Implement: session-start.mjs 3-layer resilience",
+          "summary": "Restructured SessionStart hook with try/catch, array guards, and atomic writes.",
+          "keyPoints": [
+            "Layer 1: Array.isArray() guards on all array operations before .filter()/.map()",
+            "Layer 2: Full try/catch wrapping main body, fallback to minimal output on error",
+            "Layer 3: Atomic write for context file (write to .tmp then rename)",
+            "Guards: state.tasks, state.questions, directions.notes, pendingChanges.pending all protected"
+          ]
+        },
+        {
+          "agent": "agent-ac0b96e5810883d4f",
+          "role": "Implement: bidirectional addLink in store.ts",
+          "summary": "Made addLink bidirectional and added reverse relationship enum values to types.",
+          "keyPoints": [
+            "addLink(): now adds link to source AND adds reverse link to target",
+            "Added 'superseded_by' and 'similar' to relationship enum in types.ts",
+            "Reverse mapping: supersedes -> superseded_by, related -> related, contradicts -> contradicts",
+            "Zero TypeScript errors"
+          ]
+        }
+      ],
+      "synthesis": "Session 52 was the resilience task force. 6 parallel agents audited performance, resilience, data safety, communication, latency, and architecture. Key fixes shipped: safeBrainOp circuit breaker on all 3 critical handlers (13 degradable zones), linker wired into storage, dangling link cleanup after pruning, deferred cortex learning (5min batch), bidirectional links, unified stop words, brain state caps. Plus health.ts fixes (3 missing optional chaining guards on mem.links.length). Committed as 7e97e7e."
+    },
+    {
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "2026-02-26",
+      "topic": "Session 47: Overdrive mode verification + Terminal brain flowchart redesign (dual real-time panels) + QuestionsView inline answers",
+      "subagentCount": 13,
+      "findings": [
+        {
+          "agent": "agent-a066f5534e8cb623b",
+          "role": "Implement: Replace Recent Sessions with brain activity visualization",
+          "summary": "Removed Recent Sessions section from SidePanel, replaced with brain activity feed showing recent MCP tool calls.",
+          "keyPoints": [
+            "Removed Session interface and SessionsData interface",
+            "Replaced with activity feed showing recent MCP tool calls with timestamps",
+            "Zero TypeScript errors"
+          ]
+        },
+        {
+          "agent": "agent-a1f1fec8ce13d633a",
+          "role": "Implement: Dual-panel real-time flowchart in TerminalView",
+          "summary": "Replaced single SVG data flow with dual real-time flowchart showing Brain Pipeline (left) + Plasticity/State (right).",
+          "keyPoints": [
+            "Two parallel pipelines: Brain (left) and Plasticity/State (right)",
+            "Active nodes highlighted based on recent activity event types",
+            "Zero TypeScript errors"
+          ]
+        },
+        {
+          "agent": "agent-a2b7d29ad12df7e48",
+          "role": "Research: Previous brain visualizations across all projects",
+          "summary": "Found brain-dashboard/ Python server as primary prior brain visualization.",
+          "keyPoints": [
+            "FOUND: C:/Users/Patri/CascadeProjects/brain-dashboard/ -- 44,537 byte Python HTTP server",
+            "Serving real-time Neural Monitor dashboard with D3.js force graph",
+            "No other brain visualizations found in other projects",
+            "brain-dashboard never integrated into main app"
+          ]
+        },
+        {
+          "agent": "agent-a8764dc0d3c149051",
+          "role": "Research: brain-dashboard complete visual design spec",
+          "summary": "Read brain-dashboard/server.py completely and extracted full HTML/CSS/JS design specification.",
+          "keyPoints": [
+            "1275-line Python HTTP server",
+            "Layout: single vertical column, max-width 1440px, dark theme (#0a0a0a bg, #1a1a2e sections)",
+            "Components: D3 force graph (memory network), Chart.js (activity timeline), CSS heatmap (synaptic strength)",
+            "Real-time: polls /api/state every 2s, WebSocket for live events",
+            "Color: pain=red, win=green, fact=blue, decision=purple, architecture=orange"
+          ]
+        },
+        {
+          "agent": "agent-a3e95b0f5aa2d9369",
+          "role": "Implement: QuestionsView AnswerPanel rewrite with invoke()",
+          "summary": "Rewrote AnswerPanel to actually call invoke('answer_question') instead of copying MCP strings to clipboard.",
+          "keyPoints": [
+            "Old: built MCP command string, copied to clipboard -- useless",
+            "New: inline text input + submit button, calls invoke('answer_question', {...}) directly",
+            "Added import of invoke from @tauri-apps/api/core",
+            "Requires answer_question to be registered in Rust invoke_handler (done by Agent a8704e52)"
+          ]
+        },
+        {
+          "agent": "agent-a8704e52d57c6ca92",
+          "role": "Implement: Fix answer_question Rust command file path",
+          "summary": "Fixed answer_question Rust command which was reading from wrong file (state.json vs questions.json).",
+          "keyPoints": [
+            "Bug: command read from 'state.json' but questions were split to 'questions.json'",
+            "Fix: changed read_json_file path to 'questions.json'",
+            "Changes applied to packages/app/src-tauri/src/lib.rs"
+          ]
+        },
+        {
+          "agent": "agent-a8aba1b8b94811d71",
+          "role": "Research: 9-stage hippocampal pipeline detailed analysis",
+          "summary": "Documented all 9 stages with input/output types and dependencies.",
+          "keyPoints": [
+            "Stage 1 (Tokenize): prompt -> string[] stopword-filtered tokens",
+            "Stage 2 (Attention filter): cortex vocabulary scoring, hot-tag detection",
+            "Stage 3 (Pattern recognition): multi-word pattern matching",
+            "Stage 4 (Associative chaining): link traversal for connected memories",
+            "Stage 5 (Amygdala): pain 1.5x weight, recent pain 2x",
+            "Stage 6 (Synaptic): synapticStrength multiplier from brain state",
+            "Stage 7 (Context awareness): session-specific boosting",
+            "Stage 8 (Dopamine injection): forces min 1 pain + 1 win",
+            "Stage 9 (Telemetry): cortexGaps tracking"
+          ]
+        },
+        {
+          "agent": "agent-aa61608b9543874fc",
+          "role": "Research: Complete brain system data flow map",
+          "summary": "Mapped every data source, write path, and read path in the Hello World brain system.",
+          "keyPoints": [
+            "MCP tools writing state: hw_store_memory, hw_update_task, hw_advance_phase, hw_add_task, hw_record_decision, hw_end_session, hw_spawn_watcher",
+            "Files: memories.json, tasks.json, workflow.json, activity.json, brain-state.json, cortex-learned.json, learned-rules.json",
+            "Loopback HTTP: file watcher monitors .hello-world/, pushes diffs to Tauri on port from sync.json",
+            "Tauri reads via Rust commands: get_state, get_memories, get_brain_state, get_activity"
+          ]
+        },
+        {
+          "agent": "agent-ab1c0669bb8d3cfce",
+          "role": "Implement: Replace BrainVisualization with real-time DataFlowDiagram",
+          "summary": "Replaced fake 500ms animation BrainVisualization with pure SVG DataFlowDiagram showing actual activity.",
+          "keyPoints": [
+            "Old: random node pulsing every 500ms, completely unrelated to actual memory access",
+            "New: pure SVG, nodes light up based on actual recent activity events within last 30s",
+            "Nodes: Hook, Memory Store, Quality Gate, Linker, Retrieval Engine, MCP Server, App",
+            "Zero TypeScript errors"
+          ]
+        },
+        {
+          "agent": "agent-aec637a31300fb96c",
+          "role": "Research: Best approach for real-time flowchart in 192px sidebar",
+          "summary": "Researched rendering options for real-time data flow diagram in 192px wide sidebar panel.",
+          "keyPoints": [
+            "Sidebar width: w-48 = 192px when expanded",
+            "Recommendation: pure SVG -- no dependency, full control, works in Tauri webview",
+            "Rejected: ReactFlow (too heavy), D3 (complex for React 19 concurrent mode), Mermaid (static)",
+            "SVG approach: position nodes as percentages of viewBox, animate strokes on active connections"
+          ]
+        },
+        {
+          "agent": "agent-afd18229a8a8e7300",
+          "role": "Research: Why BrainVisualization was unintuitive",
+          "summary": "Analyzed BrainVisualization component to identify why Pat found it unintuitive.",
+          "keyPoints": [
+            "Data: shows real Memory[] from memories.json -- data is real but visualization is fake",
+            "Every 500ms: random nodes pulse, completely unrelated to actual memory access",
+            "Connections shown: hardcoded CONNECTIONS array -- no relationship to actual link graph",
+            "Problem: shows real data through fake animation -- misleading about system behavior",
+            "hw-pty-line events emitted from Rust but not consumed by any React component"
+          ]
+        }
+      ],
+      "synthesis": "Session 47 verified overdrive mode works correctly (mode.json toggled by Pat, hook reads it in same message). Redesigned TerminalView with dual real-time flowcharts (Brain Pipeline + Plasticity/State). Fixed QuestionsView to have real inline answer UI (not clipboard copy). Fixed answer_question Rust command to read questions.json. Found brain-dashboard visual design spec for reference. Key design insight: data visualizations must show real system behavior, not decorative animations."
+    },
+    {
+      "sessionId": "97d5596f-6a21-4129-a555-c8d37f3a1ddc",
+      "date": "2026-02-26",
+      "topic": "Session 49: Brain Magnum Opus S49 -- Quality gates + reflections + memory linking + prediction + test suite. Committed as a65429b.",
+      "subagentCount": 9,
+      "findings": [
+        {
+          "agent": "agent-a04e120bc6ca42a15",
+          "role": "Implement: quality-gate.ts (567 lines)",
+          "summary": "Created complete quality-gate.ts with 6 pure functions: fingerprint, quality scoring, dedup, conflict detection, accept/reject/merge.",
+          "keyPoints": [
+            "computeFingerprint(): 12-char hex djb2 hash of normalized keywords",
+            "assessQuality(): 0-1 score -- specificity (0.35) + actionability (0.35) + completeness (0.30)",
+            "Reject threshold: 0.15 -- garbage blocked at write time",
+            "Near-duplicate detection: fingerprint match + Jaccard > 0.7 on tags",
+            "567 lines, all pure functions, no external dependencies"
+          ]
+        },
+        {
+          "agent": "agent-a7f66c0e591986a3c",
+          "role": "Implement: reflection.ts (metacognitive layer)",
+          "summary": "Created reflection.ts -- template-based metacognitive reflection for task completion and understanding shifts.",
+          "keyPoints": [
+            "6 exported functions: generateReflection, detectUnderstandingShift, extractInsights, buildReflectionContext, scoreReflectionQuality, createReflectionMemory",
+            "Reflection types: task_completion, understanding_shift, correction, research_synthesis",
+            "Template-based: no LLM calls, pure pattern matching + template filling",
+            "Output: Memory object with type='reflection', relatedTaskId"
+          ]
+        },
+        {
+          "agent": "agent-adc0e35127f81b4c7",
+          "role": "Implement: linker.ts (602 lines, graph-based memory linking)",
+          "summary": "Created linker.ts with similarity, contradiction, and supersession detection. Graph traversal for associative chaining.",
+          "keyPoints": [
+            "602 lines, compiles clean",
+            "computeSimilarity(): tag overlap + keyword overlap, no embeddings",
+            "detectContradiction(): opposing signal words in same topic context",
+            "buildLinkGraph(): adjacency list for O(1) traversal",
+            "traverseLinks() used by engine.ts stage 4 (associative chaining)"
+          ]
+        },
+        {
+          "agent": "agent-a83825e683830f1a9",
+          "role": "Implement: prediction.ts (prediction error auto-capture)",
+          "summary": "Created prediction.ts -- only stores surprises, not expected outcomes.",
+          "keyPoints": [
+            "705 lines, compiles clean",
+            "makePrediction(): generates expectation before action based on memory patterns",
+            "recordOutcome(): compares outcome to prediction, computes prediction error",
+            "captureIfSurprise(): only stores memory if prediction error > 0.4 threshold",
+            "Integrates with reflection.ts for surprise-triggered reflections"
+          ]
+        },
+        {
+          "agent": "agent-aa61bf565bb0ab0f0",
+          "role": "Integration mapper for S49",
+          "summary": "Produced precise integration map for all S49 module connections.",
+          "keyPoints": [
+            "server.ts hw_store_memory: quality gate + linker calls needed",
+            "server.ts hw_retrieve_memories: link traversal stage",
+            "server.ts hw_end_session: reflection auto-trigger + prediction error sweep",
+            "store.ts storeMemory(): quality gate as prerequisite check",
+            "Module dependency order: quality-gate -> linker -> reflection -> prediction -> server"
+          ]
+        },
+        {
+          "agent": "agent-a497c0849513ec1b4",
+          "role": "Test suite architecture for S49",
+          "summary": "Created 106 new brain tests for quality gate, linker, reflection, and prediction modules.",
+          "keyPoints": [
+            "106 new brain tests, 146/147 passing (1 pre-existing dogfood failure)",
+            "quality-gate.test.ts: fingerprint collisions, quality scoring edge cases, dedup logic",
+            "linker.test.ts: similarity computation, contradiction detection, graph traversal",
+            "reflection.test.ts: understanding shift detection, task completion format",
+            "prediction.test.ts: prediction error thresholds, surprise capture"
+          ]
+        },
+        {
+          "agent": "agent-a47134b5cfa6b5669",
+          "role": "Implement: rules.test.ts (25 tests)",
+          "summary": "Created complete vitest test file for rules.ts rule extraction.",
+          "keyPoints": [
+            "25 tests, all passing",
+            "extractRuleCandidates: finds pain patterns from grouped memories",
+            "consolidateRules: merges similar rules, deduplicates",
+            "scoreRule: confidence scoring based on occurrence frequency and tag coverage"
+          ]
+        },
+        {
+          "agent": "agent-a94dd1f737b79e8dd",
+          "role": "Implement: cortex-learner.test.ts (34 tests)",
+          "summary": "Created complete test file for cortex-learner.ts vocabulary learning.",
+          "keyPoints": [
+            "34 tests, all passing",
+            "analyzeGaps: returns observations for gap words matching memories",
+            "Extracts tags appearing in at least 2 memories for that gap word",
+            "learnFromGaps: updates cortex vocabulary with new mappings"
+          ]
+        },
+        {
+          "agent": "agent-a966c4a27af9688dd",
+          "role": "Implement: pruner.test.ts (20 tests)",
+          "summary": "Created complete test file for pruner.ts memory archival logic.",
+          "keyPoints": [
+            "20 tests, all passing",
+            "Archives superseded memories (supersededBy field set)",
+            "Archives stale: 120+ days old, no lastAccessed, low synapticStrength, accessCount < 2",
+            "Preserves recently accessed memories regardless of age",
+            "Preserves high-severity pain memories"
+          ]
+        }
+      ],
+      "synthesis": "Session 49 (Brain Magnum Opus S49) shipped quality-gate.ts, reflection.ts, linker.ts, prediction.ts plus comprehensive test suites. Total: 237 passing tests (1 pre-existing failure). All compile clean. Committed as a65429b."
+    },
+    {
+      "sessionId": "c0ce4838-2b59-4d30-85a7-3cfb5f95e19d",
+      "date": "2026-02-25",
+      "topic": "Session 45: Full-throttle multi-agent sprint (56% usage + refresh) -- Biome migration, React Activity, multi-project audit, memory quality research, CWD bug, tauri-specta, Agent Teams. Committed as 25b7447.",
+      "subagentCount": 14,
+      "findings": [
+        {
+          "agent": "agent-a001a824b8e87a4f9",
+          "role": "Research: Spec-Driven Development for AI-assisted coding",
+          "summary": "Researched SDD workflow where specifications are primary artifact and code is generated output.",
+          "keyPoints": [
+            "SDD: spec files in .claude/specs/ reference CLAUDE.md for constraints",
+            "Workflow: Natural language spec -> Structured spec -> Implementation -> Verification",
+            "Benefit: specs survive model updates, code regenerable without re-prompting",
+            "Risk: spec drift -- specs become stale faster than code in fast-moving projects"
+          ]
+        },
+        {
+          "agent": "agent-a087d21eb189770f6",
+          "role": "Research: Rust patch for CWD bug fix",
+          "summary": "Analyzed CWD bug and produced exact Rust code changes for fix.",
+          "keyPoints": [
+            "Bug: app reads projectPath from ~/.hello-world-app.json, ignoring launch directory",
+            "No std::env::current_dir() call anywhere in lib.rs",
+            "Fix: static DETECTED_CWD: OnceLock<String>, set from current_dir() in app startup",
+            "Fix: get_launch_dir Tauri command exposes it",
+            "Fix: app.ts calls get_launch_dir on init, prefers launch dir over stored projectPath if different"
+          ]
+        },
+        {
+          "agent": "agent-a198a2760a6b62a03",
+          "role": "Research: Buddy animations bug on non-Hello-World projects",
+          "summary": "Found root cause of buddy animations not working on non-HW projects.",
+          "keyPoints": [
+            "Bug: activity.json path hardcoded to HW_PROJECT_ROOT -- empty on non-HW projects",
+            "Second bug: buddy 'thinking' animation only fires on MCP tool events which don't occur in non-HW sessions",
+            "Fix: make activity path dynamic from ~/.hello-world-app.json"
+          ]
+        },
+        {
+          "agent": "agent-a80bafed76331975b",
+          "role": "Research: tauri-specta for type-safe IPC",
+          "summary": "Assessed tauri-specta for Tauri v2. Blocked by Value type incompatibility.",
+          "keyPoints": [
+            "tauri-specta: Rust crate generating TypeScript bindings from command signatures",
+            "Tauri v2 compatibility: tauri-specta 2.x supports it but alpha/RC status",
+            "BLOCKER: serde_json::Value not specta-compatible -- our lib.rs uses Value extensively for generic JSON reads",
+            "Would require typed return types throughout -- major refactor",
+            "Decision: DEFER (d_53e538a6) -- RC status + Value types = too risky"
+          ]
+        },
+        {
+          "agent": "agent-a8b9ee139bc1c31a4",
+          "role": "Research: React 19.2 Activity component",
+          "summary": "Researched Activity component (formerly Offscreen) for preserving view state without unmounting.",
+          "keyPoints": [
+            "Activity: hides/restores UI without unmounting -- preserves scroll, form state, animation state",
+            "Available in React 19.2 stable (October 2025)",
+            "Usage: <Activity mode={activeView === 'x' ? 'visible' : 'hidden'}>",
+            "Hidden views don't render to DOM but state preserved in React tree",
+            "Adopted: wrapped all 15 views in Session 45"
+          ]
+        },
+        {
+          "agent": "agent-ab58aa63bd49a76c7",
+          "role": "Research: Biome migration from ESLint + Prettier",
+          "summary": "Researched Biome migration. Found hello-world has no existing ESLint/Prettier -- greenfield.",
+          "keyPoints": [
+            "hello-world has NO existing ESLint or Prettier -- no migration needed",
+            "Biome 2.4.4: stable, TypeScript + JSX, Tailwind class sorting, formatter + linter in one",
+            "15-25x faster than ESLint on large codebases",
+            "Adopted in Session 45 with biome.json at root"
+          ]
+        },
+        {
+          "agent": "agent-ac401bd41a8b674f2",
+          "role": "Research: Memory staleness management patterns",
+          "summary": "Researched concrete implementable patterns for memory staleness detection and management.",
+          "keyPoints": [
+            "Time-based: age (Date.now() - createdAt), access recency (Date.now() - lastAccessed)",
+            "Access frequency: accessCount < 2 after 30 days = stale candidate",
+            "Contradiction-based: newer memory with overlapping tags + opposing signal words = supersedes older",
+            "Reference counting: memories cited by other memories (links) have higher retention value",
+            "Our implementation: scoring.ts exponential decay with type-specific rates (fact=0.04, pain=0.025, win=0.015, decision=0.01)"
+          ]
+        },
+        {
+          "agent": "agent-ad093735c88433014",
+          "role": "Research: Buddy recap on startup implementation",
+          "summary": "Researched how to implement detached subprocess buddy recap on app open.",
+          "keyPoints": [
+            "sessions.json: id, startedAt, endedAt, tasks (IDs), summary, costUsd, tokensIn, tokensOut",
+            "Detached subprocess: spawn node process with --detach, reads sessions.json, generates summary",
+            "Display: chat bubble in BuddyOverlay with fade-in, auto-dismiss after 15s",
+            "75% complete as of S45: Rust startup_check command exists, detached spawn implemented, React component done -- only Rust startup check remaining"
+          ]
+        },
+        {
+          "agent": "agent-aee0fc6dbb1dc6e4b",
+          "role": "Research: Claude Code Agent Teams feature",
+          "summary": "Researched Agent Teams experimental feature released with Claude Opus 4.6 in February 2026.",
+          "keyPoints": [
+            "Agent Teams: experimental, orchestrates multiple Claude Code instances as coordinated team",
+            "Released with Claude Opus 4.6 (early February 2026)",
+            "Architecture: parent orchestrator spawns specialists, each with own context window and tools",
+            "Windows compatibility issues documented",
+            "Decision: DEFER (d_8b644ccd) -- experimental + Windows incompatibility"
+          ]
+        },
+        {
+          "agent": "agent-af683ceaacf295f82",
+          "role": "Research: Multi-project support architecture audit",
+          "summary": "Audited codebase for multi-project support. Found 10 of 12 systems already project-aware.",
+          "keyPoints": [
+            "10 of 12 systems already project-aware via projectId field",
+            "TWO BLOCKERS: MCP server (needs hw_set_context tool), Discord listener (hardcoded)",
+            "Memory: needs global tier (projectId: null for cross-project memories)",
+            "Hook paths fixed: now dynamic via ~/.hello-world-app.json",
+            "state.json, tasks.json, decisions.json etc already scoped by projectId"
+          ]
+        },
+        {
+          "agent": "agent-af953422f4e9e2cb7",
+          "role": "Research: CWD bug root cause analysis",
+          "summary": "Found root cause of CWD bug -- no launch directory detection in lib.rs.",
+          "keyPoints": [
+            "~/.hello-world-app.json written on EVERY app close -- overwrites with current session's projectPath",
+            "lib.rs setup() reads this file on startup -- no mechanism to detect launch directory",
+            "No std::env::current_dir() call anywhere in lib.rs",
+            "Bug: open app from tax-credit-calculators/ -> still loads hello-world project",
+            "Fix requires: OnceLock for launch dir, get_launch_dir command, app.ts to call on init"
+          ]
+        },
+        {
+          "agent": "agent-a9ab31ba6f5548b04",
+          "role": "Research: Rust + Tauri v2 cutting-edge patterns",
+          "summary": "Researched latest Rust and Tauri v2 ecosystem innovations.",
+          "keyPoints": [
+            "tauri-specta: type-safe IPC (DEFER due to Value type issue)",
+            "tauri-plugin-store: persistent key-value store, simpler for small config",
+            "WebView2 (Windows): automatic updates since 2024, no separate install",
+            "Tauri Updater v2: signed delta updates, background download",
+            "Rust 2024 edition: async closures stable, improved let chains"
+          ]
+        }
+      ],
+      "synthesis": "Session 45 was a full-throttle multi-agent sprint with 56% usage + refresh imminent. Key outcomes: Biome 2.4.4 adopted (greenfield, no migration), React Activity wrapped all 15 views, tauri-specta DEFERRED, Agent Teams DEFERRED, CWD bug architecture designed, multi-project audit found 2 blockers. The 'Pat acts, Claude routes' principle captured: app should never require Claude as middleman for Pat's inputs (Questions, Approvals). Committed as 25b7447 (99 files, +6621/-4017)."
+    },
+    {
+      "sessionId": "763b92c0-706a-4585-964b-78f5a03ce1de",
+      "date": "2026-02-24",
+      "topic": "Session 25: Competitive landscape research + MCP server ecosystem + Trending GitHub repos + TypeScript/React ecosystem",
+      "subagentCount": 9,
+      "findings": [
+        {
+          "agent": "agent-a031e30af86cfacad",
+          "role": "Research: AI coding tools competitive landscape Feb 2026",
+          "summary": "Researched Cursor, Windsurf, GitHub Copilot features as of February 2026.",
+          "keyPoints": [
+            "Cursor (Feb 2026): Subagents (parallel, 8000-line migration 9min vs 17min), Plugin Marketplace v2.5 (MCP+skills bundled), Cloud Agents (&-prefix)",
+            "Windsurf: Arena Mode (A/B test agents), Plan Mode (pre-code step), auto-memories (Gemini sidecar)",
+            "GitHub Copilot: Agent Skills (.github/skills/ experimental), Workspace Chat (multi-file context)",
+            "Pattern: industry converging on scope/plan/build/verify pipeline -- validates Hello World workflow engine",
+            "Steal-worthy: Cursor async subagent spawning, Windsurf Arena for model evaluation"
+          ]
+        },
+        {
+          "agent": "agent-a665cc3c5dc3824ff",
+          "role": "Research: AI coding assistant techniques and patterns Feb 2026",
+          "summary": "Researched latest agent scaffolding, context optimization, and multi-agent coordination techniques.",
+          "keyPoints": [
+            "Delegate-Review-Own model dominant: AI handles first-pass, humans own review and quality bar",
+            "Context optimization: structured retrieval over full-context stuffing, sliding window for long sessions",
+            "Multi-agent coordination: message-passing via shared state files (not shared context) is emerging pattern",
+            "Agentic loop best practice: explicit state machine with defined phases",
+            "Tool calling efficiency: batch tool calls, avoid redundant reads, cache expensive lookups"
+          ]
+        },
+        {
+          "agent": "agent-a2ad85b6f3ef0fc14",
+          "role": "Research: Augment Context Engine MCP installation",
+          "summary": "Found exact installation and config for Augment Context Engine MCP server.",
+          "keyPoints": [
+            "Official: install @augmentcode/auggie CLI globally, run auggie --mcp as server",
+            "API key required: AUGMENT_API_KEY",
+            "Config: {command: 'auggie', args: ['--mcp'], env: {AUGMENT_API_KEY: '...'}}"
+          ]
+        },
+        {
+          "agent": "agent-a89a82704b83d8d70",
+          "role": "Research: MCP server configurations (Perplexity, package-version-check)",
+          "summary": "Found exact installation configs for Perplexity and package-version-check MCP servers.",
+          "keyPoints": [
+            "Perplexity MCP: npm @perplexity-ai/mcp-server, env: PERPLEXITY_API_KEY",
+            "package-version-check-mcp: Python-based (uvx), uv/uvx not installed on this machine",
+            "context7 (already configured): mcp__plugin_context7_context7 tools available"
+          ]
+        },
+        {
+          "agent": "agent-aa59cc61feda308e6",
+          "role": "Research: MCP servers for staying current on coding techniques",
+          "summary": "Researched MCP servers that help AI assistants stay current with best practices.",
+          "keyPoints": [
+            "Context7 (already installed): fetches live library docs, maps package names to doc URLs",
+            "Perplexity MCP: real-time web search with citations",
+            "GitHub MCP: search repos, issues, PRs -- useful for open source patterns",
+            "Recommendation: Context7 + Perplexity cover 90% of 'staying current' use cases"
+          ]
+        },
+        {
+          "agent": "agent-a9ab31ba6f5548b04",
+          "role": "Research: Rust + Tauri v2 ecosystem innovations",
+          "summary": "Researched Tauri v2 ecosystem, plugin ecosystem, and WebView2 improvements.",
+          "keyPoints": [
+            "tauri-plugin-store: key-value store for small config",
+            "WebView2 auto-update on Windows (no user install required since 2024)",
+            "Tauri Updater v2: signed delta updates, background download",
+            "tauri-specta: type-safe IPC (relevant but blocked by Value types)"
+          ]
+        },
+        {
+          "agent": "agent-ab112085f7f2f2317",
+          "role": "Research: TypeScript, React 19, JS ecosystem Feb 2026",
+          "summary": "Researched latest React 19.2, TypeScript 5.8, and modern JS ecosystem innovations.",
+          "keyPoints": [
+            "React 19.2 (Oct 2025): Activity (hide-but-preserve), use() hook for async, improved Suspense",
+            "TypeScript 5.8: const type parameters, inferred type predicates, noUncheckedSideEffectImports",
+            "Vite 6: Environment API, native CSS modules, improved HMR",
+            "Pattern: islands architecture gaining traction for desktop apps"
+          ]
+        },
+        {
+          "agent": "agent-a1f2e39a2e2854e3f",
+          "role": "Research: Creative and unconventional open source projects",
+          "summary": "Found creative GitHub projects with novel implementations.",
+          "keyPoints": [
+            "redbean (Cosmopolitan): single-file web server running on 6 OSes unmodified",
+            "Bun: Zig + C++ reimplementation of Node.js, 2-4x speed via direct syscall mapping",
+            "Ink (React for CLI): renders React components to terminal using Yoga layout engine",
+            "Effect-TS: TypeScript functional effects system inspired by ZIO/Haskell",
+            "Gleam: Erlang/BEAM language with ML-style types, compiles to JS and Erlang"
+          ]
+        },
+        {
+          "agent": "agent-a3bf2f486e782e344",
+          "role": "Research: Trending GitHub repositories Jan-Feb 2026",
+          "summary": "Found trending and novel GitHub repositories from the period.",
+          "keyPoints": [
+            "Claude Code (Anthropic): 145K+ stars",
+            "DeepSeek-V3: open-source frontier model with efficient MoE architecture",
+            "Mastra: TypeScript framework for AI agents with built-in memory and workflows",
+            "BrowserBase: headless browser infrastructure for AI agents",
+            "Cursor Composer: parallel subagents with independent contexts"
+          ]
+        }
+      ],
+      "synthesis": "Session 25 was an exploratory research session. Key takeaways: Cursor and Windsurf are converging on the same workflow patterns Hello World has. The MCP ecosystem for staying current (Context7, Perplexity) is mature. React 19.2 Activity component and TypeScript 5.8 are production-ready. Competitive moat: Hello World is the only tool with explicit approval gates and two-strike safety -- no competitor has this."
+    },
+    {
+      "sessionId": "8a68f51c-0a5c-4167-a1f0-c8e690fc4ee8",
+      "date": "2026-02-23",
+      "topic": "Session 39: 4-agent unbiased app audit (UI/UX + Claude workflow + competitive + features) + 5 UI fix agents",
+      "subagentCount": 10,
+      "findings": [
+        {
+          "agent": "agent-a11ef0481f33039c2",
+          "role": "Audit: Claude workflow usefulness",
+          "summary": "Unbiased audit of how useful Hello World is as Claude's working environment.",
+          "keyPoints": [
+            "WORKS: Context injection at session start, activity stream real-time synced, brain memory with 9-stage pipeline",
+            "WORKS: Two-Strike system persists across restarts, approval gates enforced, task gate blocks edits",
+            "GAP: hw_retrieve_memories is manual -- Claude must decide to call it, easily forgotten",
+            "GAP: No feedback loop -- Claude never learns which memories were actually useful",
+            "GAP: Brain state (messageCount, significantEvents) doesn't persist correctly across sessions",
+            "GAP: Questions answered via clipboard copy -- Claude can't learn from answers in real-time"
+          ]
+        },
+        {
+          "agent": "agent-a15e4b1f9e3455a83",
+          "role": "Audit: UI/UX (brutal)",
+          "summary": "Brutally honest UI/UX assessment identifying critical usability problems.",
+          "keyPoints": [
+            "CRITICAL: Sidebar icons are 2-letter codes (HW, TK, Q?, AG, CX) -- cryptic, not icons",
+            "CRITICAL: No empty state messages -- blank screens with no guidance",
+            "CRITICAL: Dashboard UP NEXT panel shows tasks in unknown priority order",
+            "ISSUE: Keyboard shortcuts (1-9, t, w, p, l) not discoverable -- no help modal",
+            "ISSUE: ApprovalQueue horizontal scroll -- hard to see action buttons",
+            "GOOD: Dashboard 3-column layout reads left-to-right cleanly in ~2 seconds"
+          ]
+        },
+        {
+          "agent": "agent-a30d747aee44ecba9",
+          "role": "Audit: Competitive research + overall assessment",
+          "summary": "Researched competitive landscape then assessed Hello World against it.",
+          "keyPoints": [
+            "Cursor 2.0: 8 parallel subagents, Plugin Marketplace, Linear integration, cloud agents",
+            "Windsurf: Arena Mode, Plan Mode, auto-memories, message navigation",
+            "Hello World advantage: tighter human-AI feedback loop (Discord approvals), richer brain system, workflow enforcement",
+            "Hello World gap: no code editor (intentional -- companion app, not IDE)",
+            "Unique: Hello World is the only tool with explicit approval gates and two-strike safety"
+          ]
+        },
+        {
+          "agent": "agent-ab6e8a1f323446a58",
+          "role": "Audit: Features and functionality",
+          "summary": "Comprehensive audit of which features work end-to-end, which are incomplete, which are missing.",
+          "keyPoints": [
+            "FULLY IMPLEMENTED: Dashboard (live-reactive), Tasks (board), Decisions, Memory, Sessions, Activity, Approvals, Terminal (PTY)",
+            "PARTIALLY IMPLEMENTED: Questions (read-only answer), SkillsView (Rust exists, UI not wired)",
+            "NOT IMPLEMENTED: Research Timeline (no storage schema or UI)",
+            "BROKEN: answer_question reads state.json instead of questions.json",
+            "MISSING: Cost view shows aggregate only, no per-task breakdown"
+          ]
+        },
+        {
+          "agent": "agent-a76596ab7b6674591",
+          "role": "Implement: ApprovalQueue vertical layout + tier badges",
+          "summary": "Fixed ApprovalQueue with vertical stack, tier badges, and visible action buttons.",
+          "keyPoints": [
+            "Changed from horizontal scroll to vertical stack with max-h-48 overflow-y-auto",
+            "Added tier badges: auto (green), notify (yellow), block (red)",
+            "Inline confirm/reject buttons now visible without horizontal scroll"
+          ]
+        },
+        {
+          "agent": "agent-a7e141cf0d3b7abae",
+          "role": "Implement: ClaudeBuddy 3-state simplification",
+          "summary": "Simplified ClaudeBuddy from raw PTY output lines to 3 clean states.",
+          "keyPoints": [
+            "Removed: PTY line state, awaiting state",
+            "3 states: Responding, Coding, Waiting",
+            "Transitions based on activity stream event types",
+            "Committed as 8ca9b88"
+          ]
+        },
+        {
+          "agent": "agent-a8326cbe520e0552c",
+          "role": "Implement: Empty state messages (10 views)",
+          "summary": "Replaced generic 'No X yet' messages with action-oriented copy across 10 views.",
+          "keyPoints": [
+            "10 files changed: TaskBoard, MemoryView, DecisionsView, QuestionsView, ActivityView, SessionsView, ApprovalsView, CostView, WatchersView, TimelineView",
+            "Each empty state tells Claude or Pat what to do next",
+            "Example: TaskBoard: 'Tell Claude what to build. Tasks appear here when Claude picks up work.'"
+          ]
+        },
+        {
+          "agent": "agent-aaedb7c6a2bcfa8b9",
+          "role": "Implement: Discord credentials to .env",
+          "summary": "Moved hardcoded Discord bot token and Pat user ID from source files to .env.",
+          "keyPoints": [
+            "Found DISCORD_BOT_TOKEN and PAT_USER_ID hardcoded in server.ts and discord-listener.ts",
+            "Added dotenv, import 'dotenv/config', created .env.example, added .env to .gitignore"
+          ]
+        },
+        {
+          "agent": "agent-aaf7ac764ba950e19",
+          "role": "Implement: QuestionsView inline answer (interim)",
+          "summary": "Added inline answer UI using MCP command generator (invoke not yet available due to registration bug).",
+          "keyPoints": [
+            "answer_question command exists in lib.rs but NOT registered in invoke_handler",
+            "Chose MCP command generator approach as interim (later replaced in S47 with real invoke)"
+          ]
+        },
+        {
+          "agent": "agent-ab9c0a284264d098c",
+          "role": "Implement: Real icons in sidebar + keyboard shortcut modal",
+          "summary": "Replaced cryptic 2-letter codes with lucide-react icons, added tooltips and keyboard help modal.",
+          "keyPoints": [
+            "Installed lucide-react",
+            "Mapped all nav items to appropriate lucide icons",
+            "Added tooltip on hover showing view name",
+            "Added keyboard shortcut help modal (? key)"
+          ]
+        }
+      ],
+      "synthesis": "Session 39 was a comprehensive audit + fix session. The 4 audits consistently found: manual memory retrieval forgotten, 85% of memories unused, sidebar icons cryptic, QuestionsView read-only, answer_question reads wrong file. 5 parallel fix agents shipped: ApprovalQueue layout, ClaudeBuddy 3-state, empty states across 10 views, Discord credentials to .env, real sidebar icons with help modal."
+    },
+    {
+      "sessionId": "e627e3f8-2ffb-448a-9e6c-fdd3fa26e775",
+      "date": "2026-02-23",
+      "topic": "Session 43: App audit (UI/UX + architecture + memory + value/ROI) + memory/cost/timeline backfill + multi-agent chatroom research",
+      "subagentCount": 8,
+      "findings": [
+        {
+          "agent": "agent-a0380cbbf50a1051b",
+          "role": "Audit: UI/UX (brutal)",
+          "summary": "Brutally honest UI/UX audit identifying critical issues in Memory, Timeline, and Tasks views.",
+          "keyPoints": [
+            "GOOD: Dashboard 3-column layout, direction notes elevation, ClaudeBuddy organic feel",
+            "CRITICAL: Memory view -- 218 memories flat list with tiny search -- unusable without filtering",
+            "CRITICAL: Timeline -- 40 sessions vertical scroll with no spatial navigation",
+            "CRITICAL: Tasks board shows all tasks regardless of project (no projectId filter in UI)",
+            "ISSUE: Approval cards truncate descriptions -- Pat can't read what he's approving",
+            "ISSUE: Session cost in USD 4 decimal places ($0.0023) -- show in cents instead"
+          ]
+        },
+        {
+          "agent": "agent-a739a6cf3dec3e3ac",
+          "role": "Audit: Architecture and code quality (brutal)",
+          "summary": "Brutally honest architecture and code quality audit.",
+          "keyPoints": [
+            "GOOD: MCP server architecture clean, Zod schemas, loopback notify",
+            "CRITICAL: No input validation beyond Zod type checking -- no bounds, no sanitization",
+            "CRITICAL: JsonStore reads entire file on every operation -- no streaming, hits limits at ~50MB",
+            "POSITIVE: Two-Strike system is genuinely novel -- no competitor has this",
+            "ISSUE: Discord bot token hardcoded (since fixed), brain engine no circuit breakers (since fixed)"
+          ]
+        },
+        {
+          "agent": "agent-acf89271e4a3ec7e6",
+          "role": "Audit: Memory and continuity system (brutal)",
+          "summary": "Brutally honest audit of the core value proposition -- persistent memory and continuity.",
+          "keyPoints": [
+            "GOOD: SessionStart hook works, handoff system is thorough",
+            "CRITICAL: Brain retrieval is manual -- Claude calls hw_retrieve_memories explicitly, easily forgotten",
+            "CRITICAL: 85% of memories have zero accesses -- poor retrieval quality",
+            "CRITICAL: No automatic session-end memory capture -- context lost unless manually stored",
+            "POSITIVE: Pain memories from prior sessions are correctly injected and genuinely help"
+          ]
+        },
+        {
+          "agent": "agent-ac174cd082c4336e6",
+          "role": "Audit: Value and ROI (Pat + Claude perspectives)",
+          "summary": "Honest ROI assessment from both perspectives.",
+          "keyPoints": [
+            "AS PAT: Terminal auto-context (S16) changed the game. Discord approvals eliminate interruptions. NEGATIVE: too much ceremony for simple tasks",
+            "AS CLAUDE: Brain memories actually help -- activity log shows correct pain memories retrieved. NEGATIVE: session start context-gathering was slow (now fixed)",
+            "ROI positive: Pat gets leverage via async approval delegation. Claude gets continuity without re-briefing",
+            "ROI negative: overhead of tool calls (hw_check_approval, hw_write_handoff) adds ceremony"
+          ]
+        },
+        {
+          "agent": "agent-a83d9b5860aa7adbe",
+          "role": "Memory backfill: extracted 24 memories from session logs",
+          "summary": "Read 15 largest JSONL session logs and stored 24 pain/win/fact memories via hw_store_memory.",
+          "keyPoints": [
+            "24 memories extracted and stored",
+            "Critical pain: editing main files while Tauri running causes crashes (high severity), Rust changes need worktree",
+            "Key wins: parallel research sprint pattern, Biome auto-fix, React Activity adoption",
+            "Key facts: Tauri v2 hot reload works for TypeScript but not Rust"
+          ]
+        },
+        {
+          "agent": "agent-a95f79fcbe4e6b273",
+          "role": "Cost backfill: scanned JSONL for token usage",
+          "summary": "Backfilled token usage and cost data into sessions.json from JSONL conversation logs.",
+          "keyPoints": [
+            "29 JSONL files scanned, 28 matched to sessions",
+            "Total backfilled: 293,022,822 tokens, $116.08 USD",
+            "sessions.json structure: {sessions: [...]} not bare array"
+          ]
+        },
+        {
+          "agent": "agent-a4e9a1221d04c409e",
+          "role": "Session history backfill for timeline.md",
+          "summary": "Inserted sessions 22-42 into timeline.md from sessions.json data.",
+          "keyPoints": [
+            "21 target sessions resolved task IDs to titles via state.json",
+            "Inserted between existing Session 21 entry and Architectural Decisions section"
+          ]
+        },
+        {
+          "agent": "agent-aff530a4ff71758b6",
+          "role": "Research: Multi-agent chatroom panel design",
+          "summary": "Explored TerminalView codebase to design multi-agent chatroom panel.",
+          "keyPoints": [
+            "TerminalView: flex-1 terminal + optional side panel w-48",
+            "Chatroom pattern: named agent bubbles, messages chronologically interleaved",
+            "Data source: activity.json tracks tool calls with sessionId -- can infer agent identity",
+            "Implementation: AgentChatPanel as third TerminalView panel, toggle with keyboard shortcut"
+          ]
+        }
+      ],
+      "synthesis": "Session 43 was a comprehensive audit and infrastructure backfill. Audit findings aligned with S39: manual retrieval is the biggest gap, 85% dead memories, UI improvements needed. Infrastructure completed: 24 memories backfilled from historical sessions, $116.08 / 293M tokens backfilled into sessions.json, sessions 22-42 added to timeline.md. Multi-agent chatroom panel researched but not built."
+    }
+  ]
+}

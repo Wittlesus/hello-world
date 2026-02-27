@@ -45,6 +45,12 @@ import { extractRuleCandidates, learnRules, createEmptyRulesStore } from '../bra
 import type { LearnedRulesStore } from '../brain/rules.js';
 import { DEFAULT_CORTEX } from '../types.js';
 import { findLinks } from '../brain/linker.js';
+import { findContradictions } from '../brain/scoring.js';
+import {
+  shouldReflect, generateMetaObservations, createReflection,
+  filterRecentMemories, clusterByTagOverlap, generateConsolidation,
+  isDuplicateReflection,
+} from '../brain/reflection.js';
 import { JsonStore } from '../storage.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
@@ -1077,6 +1083,111 @@ server.registerTool('hw_kill_watcher', {
   return text(`${args.watcherId}: ${result}`);
 });
 
+// ── Boardrooms ──────────────────────────────────────────────────
+
+import {
+  createBoardroom, readBoardroom, listBoardrooms,
+  postChat, writeWhiteboard, closeBoardroom,
+  runBoardroom, stopBoardroom,
+  type BoardroomAgent,
+} from '../boardroom/index.js';
+
+server.registerTool('hw_create_boardroom', {
+  title: 'Create Boardroom',
+  description: 'Create a collaborative boardroom for agent teams. Agents chat (160-char limit) and share a whiteboard.',
+  inputSchema: z.object({
+    topic: z.string().describe('What the team is working on'),
+    agents: z.array(z.object({
+      id: z.string(),
+      name: z.string(),
+      provider: z.enum(['claude', 'qwen']).default('qwen'),
+      role: z.string().describe('One-line role description'),
+      color: z.string().default('#888888'),
+    })).describe('Team members'),
+  }),
+}, async (args: { topic: string; agents: BoardroomAgent[] }) => {
+  const boardroom = createBoardroom(projectRoot, args.topic, args.agents);
+  activity.append('boardroom_created', `Boardroom: ${args.topic}`, boardroom.id);
+  return text(`Boardroom ${boardroom.id} created: "${args.topic}" with ${args.agents.length} agents`);
+});
+
+server.registerTool('hw_run_boardroom', {
+  title: 'Run Boardroom',
+  description: 'Start agent collaboration in a boardroom. Agents take turns chatting.',
+  inputSchema: z.object({
+    boardroomId: z.string(),
+    rounds: z.number().optional().describe('Number of rounds (default 8)'),
+  }),
+}, async (args: { boardroomId: string; rounds?: number }) => {
+  const boardroom = readBoardroom(projectRoot, args.boardroomId);
+  if (!boardroom) return text(`Boardroom ${args.boardroomId} not found`);
+
+  // Run in background -- don't block the MCP call.
+  // File watcher in Tauri detects JSON changes automatically.
+  const noopNotify = () => {};
+  runBoardroom(projectRoot, args.boardroomId, noopNotify, args.rounds).catch(() => {});
+  return text(`Boardroom ${args.boardroomId} running with ${boardroom.agents.length} agents for ${args.rounds ?? 8} rounds`);
+});
+
+server.registerTool('hw_stop_boardroom', {
+  title: 'Stop Boardroom',
+  description: 'Stop a running boardroom session.',
+  inputSchema: z.object({}),
+}, async () => {
+  stopBoardroom();
+  return text('Boardroom stopped');
+});
+
+server.registerTool('hw_read_boardroom', {
+  title: 'Read Boardroom',
+  description: 'Read a boardroom\'s chat and whiteboard.',
+  inputSchema: z.object({ boardroomId: z.string() }),
+}, async (args: { boardroomId: string }) => {
+  const boardroom = readBoardroom(projectRoot, args.boardroomId);
+  if (!boardroom) return text(`Boardroom ${args.boardroomId} not found`);
+
+  const chatLines = boardroom.chat.map((m) => {
+    const agent = boardroom.agents.find((a) => a.id === m.agentId);
+    return `[${agent?.name ?? m.agentId}] ${m.text}`;
+  });
+
+  const wbLines = boardroom.whiteboard.map((w) => {
+    const agent = boardroom.agents.find((a) => a.id === w.agentId);
+    return `[${w.section}] (${agent?.name ?? w.agentId}) ${w.content}`;
+  });
+
+  return text([
+    `Boardroom: ${boardroom.topic} (${boardroom.status})`,
+    `Agents: ${boardroom.agents.map((a) => `${a.name} (${a.provider})`).join(', ')}`,
+    `\n--- Chat (${boardroom.chat.length} messages) ---`,
+    ...chatLines,
+    `\n--- Whiteboard (${boardroom.whiteboard.length} entries) ---`,
+    ...wbLines,
+  ].join('\n'));
+});
+
+server.registerTool('hw_list_boardrooms', {
+  title: 'List Boardrooms',
+  description: 'List all boardrooms.',
+  inputSchema: z.object({}),
+}, async () => {
+  const rooms = listBoardrooms(projectRoot);
+  if (rooms.length === 0) return text('No boardrooms yet.');
+  const lines = rooms.map((r) =>
+    `${r.id} | ${r.status} | ${r.agents.length} agents | ${r.chat.length} msgs | ${r.topic}`
+  );
+  return text(lines.join('\n'));
+});
+
+server.registerTool('hw_close_boardroom', {
+  title: 'Close Boardroom',
+  description: 'Close a boardroom session.',
+  inputSchema: z.object({ boardroomId: z.string() }),
+}, async (args: { boardroomId: string }) => {
+  closeBoardroom(projectRoot, args.boardroomId);
+  return text(`Boardroom ${args.boardroomId} closed`);
+});
+
 // ── Start ───────────────────────────────────────────────────────
 
 // Write capabilities manifest so hooks + app can check MCP status
@@ -1107,6 +1218,12 @@ const TOOL_CATALOG = [
   { name: 'hw_spawn_watcher', category: 'watchers' },
   { name: 'hw_list_watchers', category: 'watchers' },
   { name: 'hw_kill_watcher', category: 'watchers' },
+  { name: 'hw_create_boardroom', category: 'boardroom' },
+  { name: 'hw_run_boardroom', category: 'boardroom' },
+  { name: 'hw_stop_boardroom', category: 'boardroom' },
+  { name: 'hw_read_boardroom', category: 'boardroom' },
+  { name: 'hw_list_boardrooms', category: 'boardroom' },
+  { name: 'hw_close_boardroom', category: 'boardroom' },
 ];
 
 try {

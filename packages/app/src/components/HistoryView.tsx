@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { SessionsView } from './SessionsView.js';
 import { TimelineView } from './TimelineView.js';
+import { TranscriptsView } from './TranscriptsView.js';
 
-type Tab = 'sessions' | 'timeline';
+type Tab = 'sessions' | 'timeline' | 'transcripts';
 
 export function HistoryView() {
   const [tab, setTab] = useState<Tab>('sessions');
@@ -11,7 +12,7 @@ export function HistoryView() {
     <div className="flex-1 flex flex-col min-h-0">
       {/* Tab toggle */}
       <div className="flex items-center gap-1 px-4 py-2 border-b border-gray-800/70 bg-[#0d0d14] shrink-0">
-        {(['sessions', 'timeline'] as Tab[]).map((t) => (
+        {(['sessions', 'timeline', 'transcripts'] as Tab[]).map((t) => (
           <button
             key={t}
             type="button"
@@ -27,7 +28,9 @@ export function HistoryView() {
 
       {/* Content */}
       <div className="flex-1 flex flex-col min-h-0">
-        {tab === 'sessions' ? <SessionsView /> : <TimelineView />}
+        {tab === 'sessions' && <SessionsView />}
+        {tab === 'timeline' && <TimelineView />}
+        {tab === 'transcripts' && <TranscriptsView />}
       </div>
     </div>
   );

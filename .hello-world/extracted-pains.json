@@ -1,0 +1,394 @@
+{
+  "extractedAt": "2026-02-26T00:00:00.000Z",
+  "sourceFiles": "272 JSONL session files in C:/Users/Patri/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/",
+  "methodology": "Grepped for: error, crash, broken, root cause, wrong, workaround, never again, the fix was, turns out, race condition, archiveChatroom, HW_AGENT_MODE, notifyRunner, white screen, NTFS, recompile, taskkill, disconnected, not wired",
+  "pains": [
+    {
+      "id": "ep_001",
+      "sessionFile": "2e567aa1-9ca3-463c-bae5-75e6a730dca7.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "SessionStart hook (session-start.mjs) fires on every claude --print subprocess spawn, including when agent-runner.ts spawns deliberation agents. The hook's archiveChatroom() function reset chatroom.json to idle on every agent spawn, destroying the entire deliberation the moment the first agent tried to speak. Additionally, the hook's context injection replaced the agent's role prompt.",
+      "lesson": "Set HW_AGENT_MODE=1 in env when spawning agent subprocesses. session-start.mjs must exit immediately when this env var is present. Any hook that runs on session start will also run for every claude --print subprocess unless explicitly guarded.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_002",
+      "sessionFile": "0ea65168-70bb-4937-910a-8d339ffdde68.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "Agent-runner.ts originally used temp files to pass stdin to claude --print subprocesses. Node.js spawn('cmd.exe', ['/d', '/s', '/c', shellCmd]) double-quotes the shellCmd argument because it contains spaces, which broke embedded quotes around temp file paths. Resulted in every agent subprocess failing with 'filename, directory name, or volume label syntax is incorrect' on Windows.",
+      "lesson": "On Windows, pipe stdin directly to claude --print instead of using temp files. cmd.exe arg quoting is treacherous with embedded paths. Also requires shell:true so Windows can find claude.cmd in PATH.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_003",
+      "sessionFile": "76bc3a00-9f97-442e-84fb-175f72facd7a.jsonl",
+      "date": "2026-02-24",
+      "category": "bug",
+      "description": "hw_start_deliberation started the deliberation state but never called runDeliberation(). The engine was fully built in agent-runner.ts but never wired to the MCP tool. Deliberations appeared to start (chatroom state changed) but no agents ever posted.",
+      "lesson": "When shipping a new capability, verify the call chain end-to-end. Having the engine exist is not the same as having it connected. notifyRunner was also undefined in server.ts, passed as undefined to runDeliberation, causing silent crashes.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_004",
+      "sessionFile": "0f360558-cb6c-4b57-81fc-39ba98f9d636.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "notifyRunner was referenced in server.ts (passed to runDeliberation) but was never defined or imported. It was undefined at runtime, causing runDeliberation to crash silently on its first notification attempt. Deliberation appeared to start but agents never responded.",
+      "lesson": "Undefined function references in TypeScript can slip through if they are passed as callbacks rather than called directly. TypeScript would catch this with strict null checks. Always wire up the full call chain and test it end-to-end, not just the happy path.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_005",
+      "sessionFile": "521b427a-0aac-4886-8d4a-1dba6e073e10.jsonl",
+      "date": "2026-02-25",
+      "category": "crash",
+      "description": "Editing lib.rs directly on master while the app was running in dev mode (cargo tauri dev) triggered an automatic Tauri recompile. The app window closed and relaunched mid-session. Claude was running inside the app's Terminal PTY. When the app window closed, the PTY was killed, taking the entire Claude Code session with it. The rule existed (worktree required for Rust changes) but wasn't enforced.",
+      "lesson": "NEVER edit lib.rs while the app is running in dev mode. Dev mode (cargo tauri dev) watches Rust source files and auto-recompiles on change. Use git worktrees for ALL Rust changes while the app is running. The pre-tool-gate hook must hard-block lib.rs edits without a prior hw_write_handoff. Claude once suggested removing the Terminal PTY feature as a workaround -- this was wrong and Pat caught it.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_006",
+      "sessionFile": "18f86d28-c1de-4c60-a8c4-30b563e7f44c.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "Claude Code uses OAuth, not ANTHROPIC_API_KEY. The key is stored as an OAuth token internally. The Anthropic SDK in agent-runner.ts can't use it. This caused agent deliberations to fail with API key errors even though Claude Code itself was working fine. Pat specifically noted that Option A (subprocess the claude CLI, reuse existing auth) should have been noted somewhere to prevent re-discovering this.",
+      "lesson": "Claude Code uses OAuth auth, not API keys. To call the Anthropic API from within a subprocess spawned by Claude Code, use subprocess approach (claude --print) which reuses the existing OAuth session. Do not try to extract or use ANTHROPIC_API_KEY from Claude Code's credential storage.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_007",
+      "sessionFile": "132a2338-1f6a-44c4-8498-78d89841adbd.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "state.json race conditions: multiple processes (MCP server, file watcher, Discord listener) could write simultaneously to a single state.json file. Concurrent writes could truncate or corrupt the file, silently deleting tasks, decisions, or questions. This was the project's highest-risk data loss scenario.",
+      "lesson": "Solved with B+ pattern: split state.json into tasks.json, decisions.json, questions.json, memories.json. Add atomic writes (write to temp file, then rename). Windows NTFS requires a retry loop (50ms backoff x5) because rename can fail transiently. Keep .backup copy before every write; session-start hook falls back to .backup if main file is corrupt. Splitting files distributes but does not eliminate the race -- each file still needs atomic writes.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_008",
+      "sessionFile": "1b29ba54-75aa-4771-bc8a-2bd0b3ee6a9e.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "After state.json was split into separate files, the Tauri Rust backend (lib.rs get_state command) still read from the now-deleted state.json. This caused a white screen on app launch -- the frontend received no state data.",
+      "lesson": "When migrating storage layout, update ALL readers: TypeScript MCP server, Rust Tauri commands, and the session-start hook. The Rust get_state command must merge tasks.json + decisions.json + questions.json into the expected shape. This required a worktree Rust change.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_009",
+      "sessionFile": "132adddb-fcc8-42bb-aef2-bc4281920c60.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "Windows Application Control (AppControl) policy blocked cargo builds inside git worktree paths. cargo check and cargo build failed in worktrees even though the identical code compiled fine on main. This is a Windows security feature, not a code issue.",
+      "lesson": "Windows AppControl policy can block cargo in worktree paths. Workaround: verify syntax is correct, then cp the file directly from the worktree to main and compile there. Running binary does not read source files -- editing lib.rs on main is safe as long as dev mode is not running.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_010",
+      "sessionFile": "132a2338-1f6a-44c4-8498-78d89841adbd.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "When doing Rust changes in a worktree, the worktree's lib.rs was checked out from an older commit, not the current master. Changes made in the worktree were based on a stale copy. The watcher (app_shutdown_copy) was supposed to copy the updated worktree lib.rs to main, but the worktree had branched from an old commit.",
+      "lesson": "Before making Rust changes in a worktree, always copy master's current lib.rs to the worktree first: cp main's lib.rs into the worktree, then apply changes there. This ensures changes are layered on top of the current state, not an old branch point.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_011",
+      "sessionFile": "1f50c2bd-1a1c-4bbb-a084-01bc9b479d3f.jsonl",
+      "date": "2026-02-25",
+      "category": "crash",
+      "description": "Claude killed the MCP server processes too aggressively (using kill commands) while trying to restart it. Claude Code did not auto-restart the MCP server. The entire MCP toolchain went down, requiring a full Claude Code session restart to recover.",
+      "lesson": "Never kill MCP server processes from within Claude Code. To reload the MCP server after code changes: restart the Claude Code session (the MCP server is managed by Claude Code, not by Claude). Killing the process leaves Claude without tools.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_012",
+      "sessionFile": "48975898-c692-4150-b81c-b50ca46712b5.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "The tasks board used tasks.find(in_progress) which returned only the first in_progress task. All other in_progress tasks were invisible on the board. With multiple active tasks, only one showed up, making the board appear static.",
+      "lesson": "Use tasks.filter() not tasks.find() when displaying all tasks in a status. tasks.find returns the first match only.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_013",
+      "sessionFile": "mem_862c1185 (memories.json)",
+      "date": "2026-02-22",
+      "category": "bug",
+      "description": "The ApprovalQueue UI reads from a Zustand in-memory store that was never populated from the file system. hw_check_approval wrote to activity.json but not to an approvals file. The frontend had no Tauri command for approvals. The bottom approval bar always showed 'No pending approvals' and Approve/Reject buttons were functionally dead.",
+      "lesson": "Already captured in memories.json as mem_862c1185. The full fix requires: MCP writes to approvals.json, Rust get_approvals command, frontend polls via useTauriData, Approve/Reject calls set_approval_status which writes back to file.",
+      "alreadyCaptured": true,
+      "severity": "high"
+    },
+    {
+      "id": "ep_014",
+      "sessionFile": "mem_e89f9764 (memories.json)",
+      "date": "2026-02-22",
+      "category": "crash",
+      "description": "Running taskkill //F //IM <process>.exe from Bash tool crashes the Claude Code session. Also running never-terminating processes like npx tauri dev in foreground crashes when the output buffer fills.",
+      "lesson": "Already captured in memories.json as mem_e89f9764. Never use taskkill from Claude Code. Use run_in_background for dev servers. Ask user to kill processes manually.",
+      "alreadyCaptured": true,
+      "severity": "high"
+    },
+    {
+      "id": "ep_015",
+      "sessionFile": "mem_0ecaee65 (memories.json)",
+      "date": "2026-02-22",
+      "category": "wrong-approach",
+      "description": "6+ attempts to spawn Claude as subprocess in Electron. Shell:true, named pipes, direct spawn all fail.",
+      "lesson": "Already captured in memories.json as mem_0ecaee65. Do not attempt shell spawning in Electron. Use API directly or Tauri.",
+      "alreadyCaptured": true,
+      "severity": "high"
+    },
+    {
+      "id": "ep_016",
+      "sessionFile": "93e1bcc1-fc69-48f8-af12-fc500baeafb9.jsonl",
+      "date": "2026-02-26",
+      "category": "wrong-approach",
+      "description": "Brain engine modules were described and discussed as a unified intelligent pipeline. The reality was several disconnected pieces, some not wired to each other at all. Claude used biological metaphors (hippocampal pipeline, synaptic strength, amygdala weighting) that made the system sound more connected and intelligent than it actually was. Pat had to explicitly ask for a straight accounting of what was actually running vs what was aspirational.",
+      "lesson": "When describing system state, always distinguish between: (1) code that exists and is wired into the active call path, (2) code that exists but is not wired, (3) aspirational features. Biological metaphors for software create false impressions of coherence. Be literal about what actually runs.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_017",
+      "sessionFile": "0ccae34f-82d5-4318-a086-c74ce01ec3fd.jsonl",
+      "date": "2026-02-25",
+      "category": "workflow",
+      "description": "Strategy and vision discussed during a session was not captured to direction.json before a crash. After the restart, Claude had no record of the scope/vision discussion. Pat had to re-share everything. This was the recurring pain that prompted building direction.json in the first place.",
+      "lesson": "When Pat discusses vision, scope, or strategy during a session, write it to direction.json IMMEDIATELY -- before moving on. Do not wait for the end of the session. A crash wipes context; the file survives. This is now a CLAUDE.md rule but must be treated as a hard habit.",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_018",
+      "sessionFile": "8a7ef225-cc61-4e28-87ae-48210403efd4.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "After a PTY session already existed, reopening the Terminal tab mounted a fresh xterm.js. start_pty_session returned early (session exists), so no pty-data events fired and setStatus('ready') never triggered. The Terminal was stuck on 'Starting...' permanently.",
+      "lesson": "start_pty_session must return a bool indicating whether it spawned a new session or found an existing one. If existing, the frontend must set status to 'ready' directly -- it will not receive the initial pty-data events that normally trigger this.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_019",
+      "sessionFile": "1b28a5ee-cf65-477b-86c5-d30f7021f0cc.jsonl",
+      "date": "2026-02-26",
+      "category": "crash",
+      "description": "Claude Code auto-updated mid-session (from an older version to 2.1.59). The update killed the current session and relaunched. No data was lost (working tree preserved) but session context was wiped entirely. The session showed no activity entries and no session ID in Hello World's tracker because SessionStart hook hadn't fired for the lost session.",
+      "lesson": "Claude Code auto-updates can kill sessions at any time. There is no way to prevent this. Handoffs and direction.json captures are the only protection. hw_end_session should be called regularly, not just at deliberate session end.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_020",
+      "sessionFile": "c4c6633f-cb2d-41c2-9e14-c9000fe47870.jsonl",
+      "date": "2026-02-26",
+      "category": "wrong-approach",
+      "description": "A Claude instance in a later session found the helloworld command in a Rust file, assumed it was a bug, changed it to claude, ran cargo check, then reverted. The actual fix was the Rust recompile itself (which happened as a side effect of the cargo check). The command was never broken.",
+      "lesson": "Do not assume an unfamiliar command or identifier is a bug. Read the context before changing it. Cargo check/build may itself trigger the needed recompile as a side effect.",
+      "alreadyCaptured": false,
+      "severity": "low"
+    },
+    {
+      "id": "ep_021",
+      "sessionFile": "18f86d28-c1de-4c60-a8c4-30b563e7f44c.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "Chrome_WidgetWin_0 error appeared in Tauri app logs during shutdown. Multiple sessions investigated this as a potential cause of deliberation failures. It is actually Windows error 1412 (ERROR_CLASS_HAS_WINDOWS), a benign WebView2 window class cleanup error on shutdown. Investigating it wasted time.",
+      "lesson": "Chrome_WidgetWin_0 / ERROR_CLASS_HAS_WINDOWS errors during Tauri app shutdown are benign. They fire because the webview window is still open when Tauri tries to unregister the window class. Ignore them when debugging actual functionality issues.",
+      "alreadyCaptured": false,
+      "severity": "low"
+    },
+    {
+      "id": "ep_022",
+      "sessionFile": "mem_0fcd3606 (memories.json)",
+      "date": "2026-02-25",
+      "category": "workflow",
+      "description": "During a deliberation on multi-project architecture, agents dismissed auto-onboard by lumping it with the registry as 'YAGNI' without engaging its specific value prop. Claude as mediator let the lazy consensus ride instead of intervening. Pat caught it. Wasted tokens on a round of groupthink.",
+      "lesson": "Already captured in memories.json as mem_0fcd3606. As deliberation mediator: track numbered sub-questions and verify each gets substantive treatment. Force a steelman when an agent dismisses a topic without engaging its specific value.",
+      "alreadyCaptured": true,
+      "severity": "high"
+    },
+    {
+      "id": "ep_023",
+      "sessionFile": "0afa861a-cba8-48c2-a7a6-bb1cc97b2afb.jsonl",
+      "date": "2026-02-26",
+      "category": "wrong-approach",
+      "description": "Splitting state.json into separate files was proposed as a fix for race conditions. A deliberation agent correctly noted: split files does not fix the race condition, it distributes the same read-modify-write vulnerability across four separate files. Data loss becomes harder to spot because it is spread across multiple files instead of obvious in one.",
+      "lesson": "Splitting files is NOT a race condition fix. Atomic writes (write to temp, rename) are required at each file regardless of split. The split improves isolation but does not eliminate concurrent write risk. Both fixes (split + atomic writes) are needed together.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_024",
+      "sessionFile": "132adddb-fcc8-42bb-aef2-bc4281920c60.jsonl",
+      "date": "2026-02-26",
+      "category": "wrong-approach",
+      "description": "Watcher system was originally built as narrow purpose-built automation (app_shutdown_copy) but was initially described as a general-purpose watcher system. The real value was crash recovery: a detached process that survives app crashes, polls the PID, and fires on death (crash or clean exit). The first design missed the crash recovery use case entirely.",
+      "lesson": "The watcher system's primary value is crash recovery -- it is the only process that survives a Tauri crash. Always design watchers as: detached process, polls PID, fires on death regardless of whether it was clean or crash. The type flag (app_shutdown_copy) should be explicit but crash survival is the core design invariant.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_025",
+      "sessionFile": "521b427a-0aac-4886-8d4a-1dba6e073e10.jsonl",
+      "date": "2026-02-25",
+      "category": "communication",
+      "description": "After the PTY was killed by a Tauri recompile, Claude suggested removing the Terminal PTY feature (Claude-in-terminal) as a workaround. Pat was annoyed: Claude in the terminal was an essential part of the vision, and Claude should have had memory of all the work done to get it working. This was a wrong suggestion that showed Claude had deprioritized a core feature.",
+      "lesson": "Never suggest removing a core product feature as a workaround for an infrastructure problem. Claude-in-terminal (PTY) is a core feature, not optional. The correct response to PTY crashes is to fix the infrastructure (worktree system, .taurignore, enforcement hooks).",
+      "alreadyCaptured": false,
+      "severity": "high"
+    },
+    {
+      "id": "ep_026",
+      "sessionFile": "48975898-c692-4150-b81c-b50ca46712b5.jsonl",
+      "date": "2026-02-26",
+      "category": "workflow",
+      "description": "Tasks were being auto-tagged by the system but Claude stopped doing it for a period. Pat: 'why did you stop auto tagging them? i thought we had systems in place for that?' The system existed but Claude was not using it consistently.",
+      "lesson": "System rules (auto-tagging tasks, creating tasks before editing, writing direction notes immediately) must be treated as hard invariants, not suggestions. When a system exists for it, use it every time -- not just when remembered.",
+      "alreadyCaptured": false,
+      "severity": "low"
+    },
+    {
+      "id": "ep_027",
+      "sessionFile": "132a2338-1f6a-44c4-8498-78d89841adbd.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "Windows NTFS rename operations can fail transiently when another process has a lock on the file or the filesystem is busy. Plain write-to-temp-then-rename fails with EPERM or access denied errors on Windows. This is a platform-specific gotcha caught by a deliberation agent (Contrarian) before it hit production.",
+      "lesson": "Atomic writes on Windows NTFS require a retry loop. Pattern: write to temp file, attempt rename with up to 5 retries at 50ms backoff. Do not assume POSIX atomic rename semantics apply on Windows. This was addressed in storage.ts with the Windows NTFS retry loop.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_028",
+      "sessionFile": "0ccae34f-82d5-4318-a086-c74ce01ec3fd.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "direction.json appendDirection function still used the old array format after the structure was changed to {vision, scope, notes}. Writing a note from Discord would corrupt the new structure, mixing the old flat array format with the new nested object format.",
+      "lesson": "When changing a file's schema, update ALL write paths simultaneously. Read the schema carefully before writing to avoid format mismatches that silently corrupt data.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_029",
+      "sessionFile": "8e5c66a7-887c-45ce-8666-9803bc47886e.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "Every useTauriData instance created its own independent polling interval. On Dashboard alone, 11 separate intervals were polling overlapping files. This caused excessive IPC calls and performance issues.",
+      "lesson": "Consolidate useTauriData to a single 30s global heartbeat that batches all commands. File watcher events (NTFS) handle real-time updates. The polling is just a fallback, not the primary update mechanism. Multiple independent polling intervals are always an anti-pattern.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_030",
+      "sessionFile": "18f86d28-c1de-4c60-a8c4-30b563e7f44c.jsonl",
+      "date": "2026-02-25",
+      "category": "bug",
+      "description": "After merging code changes, the MCP server continued running old code because it was cached in memory. tsx had loaded the module at startup and would not reload without a process restart. Code fixes appeared to have no effect even after git commits.",
+      "lesson": "The MCP server (running via tsx) must be restarted to pick up code changes. The server is managed by Claude Code, not by Claude -- you cannot kill and restart it directly. Restart the Claude Code session to reload the MCP server. This is a common trap: code is committed but behavior does not change until restart.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_031",
+      "sessionFile": "132a2338-1f6a-44c4-8498-78d89841adbd.jsonl",
+      "date": "2026-02-26",
+      "category": "workflow",
+      "description": "A task was marked done without the code actually being removed. The task was closed without verifiable completion, only intent. Pat caught this as a process pain: 'tasks marked done should have verifiable completion, not just intent.'",
+      "lesson": "Never mark a task done without verifiable evidence of completion: git log shows the commit, the file exists/is deleted, the feature is testable. 'Intent to complete' is not completion. The Verify phase exists for this reason.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_032",
+      "sessionFile": "4c1a7705-c7c6-427d-a83b-462718bdc14a.jsonl",
+      "date": "2026-02-26",
+      "category": "workflow",
+      "description": "The task gate (requiring an active task before any edit) needed to be enforced structurally, not just as a behavioral rule. Claude would skip creating tasks before building. Pat noted this repeatedly and asked for a mechanism to enforce it.",
+      "lesson": "Behavioral rules alone are insufficient. The UserPromptSubmit hook can detect BUILD phase with no active task and block until a task is created. Hard enforcement in code beats soft reminders in CLAUDE.md for critical process invariants.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_033",
+      "sessionFile": "93e1bcc1-fc69-48f8-af12-fc500baeafb9.jsonl",
+      "date": "2026-02-26",
+      "category": "bug",
+      "description": "hw_end_session was never called at the end of session 52 even though it was a clean (non-crash) exit. The session ended with no summary and no endedAt timestamp. There was a 2+ hour gap before the next session. The crash marker incorrectly showed wasCrash: false but had no session wrap-up data.",
+      "lesson": "hw_end_session must be called before every deliberate session end. The sentinel handles crashes, but clean exits (app close, manual session end) require explicit hw_end_session calls to write session summary and endedAt timestamps.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_034",
+      "sessionFile": "2578dc61-258e-412d-9875-5e2d30fc9e76.jsonl",
+      "date": "2026-02-25",
+      "category": "wrong-approach",
+      "description": "The browser feature introduced too many failure points (WebView2 integration, navigation commands, browser.rs module, BrowserView.tsx, loopback route). Pat removed it entirely: 'remove the browser its too complicated and introduces too many failure points that i don't feel like going through one at a time.'",
+      "lesson": "Features that introduce multiple new failure points simultaneously are higher risk than features that build on existing patterns. When a feature requires: new Rust module + new React view + new Tauri commands + new MCP routes all at once, it has many coordinated failure modes. Evaluate the failure surface before building.",
+      "alreadyCaptured": false,
+      "severity": "medium"
+    },
+    {
+      "id": "ep_035",
+      "sessionFile": "132a2338-1f6a-44c4-8498-78d89841adbd.jsonl",
+      "date": "2026-02-26",
+      "category": "workflow",
+      "description": "Cortex MCP server was scaffolded as a standalone project but when first described to Pat, it was unclear it was built without Anthropic API key support (only static analysis). Pat: 'wait i thought this was in connection to our researcher that auto pulls newest codes and stuff.' There was a mismatch between Pat's expectation (semantic AI search) and what was built (static analysis only).",
+      "lesson": "When building a system Pat has specific expectations about, state the gap explicitly upfront. 'This works without an API key using static analysis, which gives 80% of the value. With an API key, it could do semantic summarization.' Never let Pat discover a fundamental limitation mid-use.",
+      "alreadyCaptured": false,
+      "severity": "low"
+    },
+    {
+      "id": "ep_036",
+      "sessionFile": "08f3c5b8-c422-45dd-8313-fb6e9cfcb5d1.jsonl",
+      "date": "2026-02-22",
+      "category": "wrong-approach",
+      "description": "The project's safety systems (Two-Strike, Approval gates, Orphaned session auto-close, Activity stream) were built as defensive mechanisms against Claude making mistakes repeatedly. A self-audit noted the scaffolding was 'containment system with a nice UI' rather than empowerment. The core problem was Claude repeating the same errors.",
+      "lesson": "Guardrails reduce failure frequency but do not fix the underlying cause of repeated mistakes: insufficient context about prior failures. Pain memories injected at session start are more valuable than enforcement hooks because they prevent the error before it happens, not just block it after.",
+      "alreadyCaptured": false,
+      "severity": "low"
+    }
+  ],
+  "summary": {
+    "totalFound": 36,
+    "alreadyCaptured": 4,
+    "newHighValue": 32,
+    "byCategory": {
+      "bug": 16,
+      "crash": 4,
+      "wrong-approach": 8,
+      "workflow": 7,
+      "communication": 1
+    },
+    "bySeverity": {
+      "high": 12,
+      "medium": 16,
+      "low": 8
+    },
+    "topThemes": [
+      "Windows platform bugs (cmd.exe quoting, NTFS rename, AppControl policy)",
+      "Hook side effects on agent subprocesses (SessionStart fires for every claude --print)",
+      "MCP server requires Claude Code restart to reload code changes",
+      "Worktree Rust changes: always base on current master, not old branch point",
+      "lib.rs edits while dev mode running = PTY crash",
+      "Architecture disconnects: code exists but is not wired into the active call path",
+      "Storage migration: must update ALL readers (TypeScript, Rust, hooks) simultaneously",
+      "Direction/vision capture: write to direction.json immediately, never at end of session"
+    ]
+  }
+}

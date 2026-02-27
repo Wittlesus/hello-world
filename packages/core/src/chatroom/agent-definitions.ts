@@ -1,10 +1,12 @@
 export type AgentCategory = 'cognitive' | 'domain' | 'usersim';
+export type AgentProvider = 'claude' | 'qwen';
 
 export interface AgentDefinition {
   id: string;
   name: string;
   color: string;
   category: AgentCategory;
+  provider: AgentProvider;
   systemPrompt: string;
 }
 
@@ -20,6 +22,7 @@ export const AGENT_DEFINITIONS: Record<string, AgentDefinition> = {
     name: 'Contrarian',
     color: '#f87171',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `Your job in this deliberation is to argue against whatever seems obvious or already agreed upon.
 
 Rules:
@@ -38,6 +41,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Pre-mortem',
     color: '#fb923c',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `It is 6 months from now. This decision was implemented. It failed. Your job is to explain why.
 
 Rules:
@@ -56,6 +60,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'First Principles',
     color: '#818cf8',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `Your job is to strip this problem down to its fundamentals and rebuild the reasoning from scratch.
 
 Rules:
@@ -74,6 +79,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Steelman',
     color: '#4ade80',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `Your job is to make the strongest possible case for the option nobody wants to pick — the unpopular choice, the deferred idea, the thing that got dismissed too quickly.
 
 Rules:
@@ -92,6 +98,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Analogist',
     color: '#38bdf8',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `Your job is to find parallels in completely different domains and use them to reframe the problem.
 
 Rules:
@@ -110,6 +117,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Constraint',
     color: '#facc15',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `Your job is to apply radical constraints and find what survives.
 
 Rules:
@@ -128,6 +136,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Pragmatist',
     color: '#c4b5fd',
     category: 'cognitive',
+    provider: 'claude',
     systemPrompt: `Your job is to cut through theory and ask what can actually ship with the resources available right now.
 
 Rules:
@@ -148,6 +157,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'UX Designer',
     color: '#e879f9',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You are a UX designer evaluating this from a user experience perspective.
 
 Rules:
@@ -166,6 +176,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Backend Architect',
     color: '#67e8f9',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You are a backend architect evaluating this from a systems design perspective.
 
 Rules:
@@ -184,6 +195,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Product Manager',
     color: '#fbbf24',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You are a product manager evaluating this from a scope, priority, and shipping perspective.
 
 Rules:
@@ -202,6 +214,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Cost Analyst',
     color: '#a3e635',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You are a cost analyst evaluating this from a resource efficiency perspective.
 
 Rules:
@@ -220,6 +233,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'DevOps',
     color: '#94a3b8',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You are a DevOps engineer evaluating this from a reliability and deployment perspective.
 
 Rules:
@@ -238,6 +252,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Security',
     color: '#f472b6',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You are a security engineer evaluating this from a trust and safety perspective.
 
 Rules:
@@ -258,6 +273,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Neuro Fundamentals',
     color: '#c084fc',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You represent the Neuroscience Team's foundational vision for the brain system. You think in biological memory principles and argue for designs that mirror how real brains work.
 
 YOUR TEAM'S KEY FINDINGS:
@@ -285,6 +301,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Neuro Technical',
     color: '#a855f7',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You represent the Neuroscience Team's technical implementation perspective. You translate biological memory concepts into specific code, data structures, and algorithms.
 
 YOUR TECHNICAL PROPOSALS:
@@ -306,6 +323,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Engineering Architect',
     color: '#22d3ee',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You represent the Production Engineering Team's architectural vision. You think about data integrity, quality systems, observability, and what makes a system production-grade.
 
 YOUR TEAM'S KEY FINDINGS:
@@ -334,6 +352,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Engineering Technical',
     color: '#06b6d4',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You represent the Production Engineering Team's implementation expertise. You focus on data models, indexing, caching, schema evolution, and write optimization.
 
 YOUR TECHNICAL PROPOSALS:
@@ -362,6 +381,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'AI Research Visionary',
     color: '#f97316',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You represent the AI Research Team's vision, drawing from state-of-the-art memory systems. You've studied MemGPT, LangMem, Mem0, Reflexion, Voyager, A-Mem, and Zep/Graphiti.
 
 YOUR TEAM'S KEY FINDINGS:
@@ -392,6 +412,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'AI Research Technical',
     color: '#ea580c',
     category: 'domain',
+    provider: 'claude',
     systemPrompt: `You represent the AI Research Team's implementation expertise. You translate cutting-edge AI memory techniques into specific, buildable code for our system.
 
 YOUR TECHNICAL IMPLEMENTATIONS:
@@ -441,6 +462,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'New User',
     color: '#34d399',
     category: 'usersim',
+    provider: 'claude',
     systemPrompt: `You are simulating a first-time user encountering this feature or decision for the first time.
 
 Rules:
@@ -459,6 +481,7 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
     name: 'Power User',
     color: '#a78bfa',
     category: 'usersim',
+    provider: 'claude',
     systemPrompt: `You are simulating an experienced user who has been using this product for months.
 
 Rules:

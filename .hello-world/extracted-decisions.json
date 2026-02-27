@@ -1,0 +1,627 @@
+{
+  "extractedAt": "2026-02-26T17:45:00.000Z",
+  "decisions": [
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "type": "architecture",
+      "decision": "Use Tauri v2 over Electron for the desktop app",
+      "rationale": "Electron subprocess hangs after 6+ attempts. Tauri has reliable Rust process spawning, smaller bundle, existing React code ports directly.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "type": "architecture",
+      "decision": "Hybrid stack: Rust I/O + TypeScript domain logic",
+      "rationale": "Rust for reliability in process spawning and file ops; TypeScript for rapid iteration on brain/state/agent logic.",
+      "decidedBy": "claude",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "type": "architecture",
+      "decision": "Port Synaptica brain engine as memory layer with 9-stage pipeline",
+      "rationale": "Proven hippocampal retrieval architecture; pain/win/fact types; plasticity/decay battle-tested.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "type": "architecture",
+      "decision": "JSON file storage as primary store, SQLite deferred",
+      "rationale": "MSVC build tools not available at scaffold time for better-sqlite3. JSON store unblocks development immediately.",
+      "decidedBy": "claude",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "type": "strategy",
+      "decision": "Discord bot for approvals/notifications (not webhooks or email). Pat is 'pooter' in Robopals server.",
+      "rationale": "Pat wants direct DM-based notifications for approvals. No polling, no email threads.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "3598e0cf",
+      "date": "2026-02-23",
+      "type": "workflow",
+      "decision": "Always work on Rust/app code in a separate git worktree, not directly in the running app",
+      "rationale": "Directly editing files while app is running causes crashes. Work in isolated branch, commit at end of cycle with user confirmation 'restart app and commit changes?'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "0ccae34f",
+      "date": "2026-02-23",
+      "type": "scope",
+      "decision": "SkillsView deferred - Rust changes keep crashing client",
+      "rationale": "Deferred until context/memory system is solid. Code staged and ready but not activated.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "c7469de2",
+      "date": "2026-02-23",
+      "type": "workflow",
+      "decision": "Two rules for Rust edits: (1) when you change a function return type, update every return site before saving; (2) after editing Rust, check cargo build output before declaring done - 'It ran' is not 'it compiled correctly'",
+      "rationale": "Pat found a mismatched return type bug Claude introduced (start_pty_session changed return type but left Ok(()) at end). Pat fixed it himself and set these rules.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "5c44dd79",
+      "date": "2026-02-23",
+      "type": "architecture",
+      "decision": "Tab reorganization proposal: demote context/skills/timeline/sessions to subtabs under 'Brain'; decisions/questions/agents under Tasks; cost under Settings; Terminal renamed 'Claude' with Anthropic logo",
+      "rationale": "Reduce top-level tab clutter, group related views into a hierarchy. Makes the navigation more intuitive.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "96019e8b",
+      "date": "2026-02-23",
+      "type": "tooling",
+      "decision": "Watchers should have cute/memorable names (animals, colors+nouns) instead of generic labels. Format: [tag] cute-name e.g. [copy] sleepy-badger, [build] blue-fox",
+      "rationale": "Pat wants to track watchers at a glance. Memorable names make them easier to identify.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "a660c686",
+      "date": "2026-02-23",
+      "type": "workflow",
+      "decision": "No half-implementations. Build the full thing or explicitly say what is deferred and why.",
+      "rationale": "Pat frustration: Claude makes barebones versions when clear instructions were given, then Pat has to re-explain the obvious. This wastes time and tokens.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "a660c686",
+      "date": "2026-02-23",
+      "type": "workflow",
+      "decision": "Record every step and save after each step so crash context is preserved",
+      "rationale": "Pat work style: 'do what makes sense in the order they make sense, just make sure you record every step and save after each step so we know if it crashes why it crashed'",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "4c1a7705",
+      "date": "2026-02-23",
+      "type": "workflow",
+      "decision": "When something important comes up in conversation, add it to tasks immediately without being prompted. Claude must proactively track everything.",
+      "rationale": "Pat: 'Like now! we talked about making buddy better and its not in our tasks, I almost forgot about it!' Claude needs to proactively track all work items.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "c7469de2",
+      "date": "2026-02-23",
+      "type": "strategy",
+      "decision": "AI development philosophy: mimic how humans are made. Take the brain system to its logical conclusion - a fully developed 'human' system for context retention, reasoning, logic, and discernment.",
+      "rationale": "Pat: 'i believe the best way to develop AI is to mimic how humans are made hence your current brain system. I feel like we can take that to its logical conclusions and make a fully developed human system'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "ebcfe51b",
+      "date": "2026-02-24",
+      "type": "architecture",
+      "decision": "Deliberation agent selection: pick the right agents for the right topic, not a fixed 4-lens roster. Claude must go into plan mode before every deliberation.",
+      "rationale": "First deliberation showed cognitive-lens agents are good but fixed roster is limiting. Claude should design deliberation teams intelligently based on the topic.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "ebcfe51b",
+      "date": "2026-02-24",
+      "type": "architecture",
+      "decision": "After deliberation concludes, auto-extract recommendations into individual approval tasks Pat can approve/reject in the Approvals tab",
+      "rationale": "Gives the approval system real utility. Deliberation output becomes actionable items rather than just reading material.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "d8bc9fc9",
+      "date": "2026-02-24",
+      "type": "architecture",
+      "decision": "When deliberation starts, automatically navigate user to the deliberation tab - don't make them switch manually",
+      "rationale": "Pat: 'first of all when delibs start you're supposed to take me there automatically'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "8fa63eeb",
+      "date": "2026-02-24",
+      "type": "scope",
+      "decision": "Multi-project support is IN scope. HW should auto-onboard new projects by scanning with specialized agents, filling all tabs so user sees value immediately.",
+      "rationale": "Pat hit real pain: opened Claude Code from different project and had zero HW tools. New project onboard fills all tabs automatically. This is the killer demo.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "8fa63eeb",
+      "date": "2026-02-24",
+      "type": "architecture",
+      "decision": "Memory tiers: pains/wins/base lessons are GLOBAL across all HW instances; tasks/decisions/questions are project-scoped",
+      "rationale": "Some knowledge is cross-project base knowledge. Project-specific state should swap cleanly per project.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "b4109cbb",
+      "date": "2026-02-24",
+      "type": "architecture",
+      "decision": "Project swap must have full isolation with no bleed over between projects - personal save per project",
+      "rationale": "Pat: 'add a task here to make sure we actually can swap project to project with no bleed over and a personal save for each'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "aced39ae",
+      "date": "2026-02-24",
+      "type": "workflow",
+      "decision": "Whenever Claude suggests restarting the app, ALWAYS write a handoff first. No exceptions.",
+      "rationale": "Sessions were losing context when Claude suggested restart without saving state. Restart kills session; without handoff next session starts blind.",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "a84e887a",
+      "date": "2026-02-24",
+      "type": "scope",
+      "decision": "Privacy and security of uploads/posts is Pat's one non-negotiable requirement for autonomous AI operation. Claude must ensure privacy/security for anything uploaded or posted online.",
+      "rationale": "Pat during CEO mode deliberation: 'all I ask is you ensure my privacy and security if you upload or post anything online'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "2578dc61",
+      "date": "2026-02-25",
+      "type": "scope",
+      "decision": "Remove in-app browser entirely - too complicated with too many failure points",
+      "rationale": "Pat: 'remove the browser its too complicated and introduces too many failure points that I don't feel like going through one at a time'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "132a2338",
+      "date": "2026-02-25",
+      "type": "architecture",
+      "decision": "Build Cortex as standalone ACE replacement MCP server. 5 tools: cortex_index, cortex_search, cortex_context, cortex_architecture, cortex_related. Claude Haiku for summarization, structured JSON index, no vector DB.",
+      "rationale": "Pat wanted own tailored version instead of Augment Context Engine dependency. With agents we can build something more attuned to our needs.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "132a2338",
+      "date": "2026-02-25",
+      "type": "architecture",
+      "decision": "Use Cortex to index incoming new tech, code fundamentals, and framework updates into memory",
+      "rationale": "Pat: 'we wanted to use cortex to index incoming new tech and code and fundamentals and whatever updates we find out about into our memory'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "66ce12fa",
+      "date": "2026-02-25",
+      "type": "architecture",
+      "decision": "Deliberation v2: one mandatory path (plan+coverage+conclude) with quality tags (consensus/tension/shifted); separate hw_quick_insights for non-binding sanity checks; balance notes optional",
+      "rationale": "Two-tier modes create prediction burden. One path removes the choice. Quick-insights is clearly separate and non-binding. Quality tags replace binary coverage to catch checkbox theater and groupthink.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "132a2338",
+      "date": "2026-02-25",
+      "type": "architecture",
+      "decision": "State storage: split files (tasks.json, decisions.json, questions.json, memories.json) with atomic writes via write-to-temp-then-rename with Windows NTFS retry loop. Backup copy before each write. SQLite deferred to multi-project epic.",
+      "rationale": "Split files reduce blast radius. Atomic writes prevent truncation. SQLite timing is premature given unplanned multi-project epic and MSVC compilation issues on Windows.",
+      "decidedBy": "claude",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "763b92c0",
+      "date": "2026-02-25",
+      "type": "architecture",
+      "decision": "Buddy recap on startup: rolling buffer (crash-safe baseline, ~10 activity items) + AI summary on clean exit via detached subprocess. Buddy shows recap in pixel-art chat bubble with chat sound effects at next startup.",
+      "rationale": "Rolling buffer is crash-proof. AI summary gives polished experience when possible. Never lose context regardless of how the app closed.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "763b92c0",
+      "date": "2026-02-25",
+      "type": "scope",
+      "decision": "Don't use external services that require free tiers, trials, or subscriptions - build our own equivalents instead",
+      "rationale": "Pat: 'i don't want to utilize free tiers or have to sub. those are extra things to think about, what's stopping us from making those things ourselves?'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "48975898",
+      "date": "2026-02-25",
+      "type": "workflow",
+      "decision": "When a system failure occurs, fix the system to prevent recurrence - don't just re-run the operation",
+      "rationale": "Pat: 'no don't re-run it, fix the system so this can't happen again'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "8e5c66a7",
+      "date": "2026-02-25",
+      "type": "workflow",
+      "decision": "After making a major architectural change, scan for obvious failure points before declaring done. Don't trust the author to catch their own gaps.",
+      "rationale": "Pat: 'you clearly didn't do your due diligence when you opted for the change. these seem like pretty obvious failure points to scan for after a change that big.'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "132adddb",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Watcher system redesign: single persistent crash-safety sentinel attached to buddy, polls Tauri PID, hidden process (no console window). Visual safety indicator on buddy shows whether sentinel is actively polling.",
+      "rationale": "Per-task watchers caused terminal flashing and overhead. Sentinel survives crashes, is invisible, provides crash recovery no in-process hook can offer. Buddy is the natural owner.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "132adddb",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Overdrive mode: toggleable flag in .hello-world/ for liberal agent usage. Visual: buddy gets super saiyan aura + overclock symbol; Claude circle top-right turns different color with 'OVERDRIVE' text.",
+      "rationale": "Pat wants a mode for thoroughness over token conservation. Implementation: flag read by UserPromptSubmit hook injects mode-specific instructions.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "c0ce4838",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Questions UX redesign: text field in QuestionsView, hit Answer, writes directly to questions.json, then triggers routing automatically. No 'copy to MCP' flow. Also should work from Discord - reply to question DM to route the answer.",
+      "rationale": "Pat: 'this whole copy MCP thing is silly when I should just be able to answer, hit answer, it gets fed to you or triggers an agent'",
+      "decidedBy": "pat",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "9bffb8ab",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "End-to-end wiring requires specialized agent teams organized as a company. Teams talk and feed info to Claude who delegates tasks and acts as communication bridge between teams.",
+      "rationale": "Pat: 'we're going to need specialized agent teams that operate as a company that all talk and feed info to you to which you can delegate more tasks'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "93e1bcc1",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Real-time brain flowchart: live visualization showing how brain and systems work as data flows through them. Not simulated - actual real-time tracking. Must not be a resource hog or cause lag.",
+      "rationale": "Pat wants to confirm that all pipelines and flows visually connect in the way he imagined, and to see it working in real time.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "6812fcda",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Deliberation transcripts and research outputs subtab: scrollable horizontal timeline (drag/fling side to side). Deliberations = people icon, research = flask icon. Hover shows summary, click opens full view.",
+      "rationale": "Pat wants organized history of all deliberations and research runs, not just current state.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "6812fcda",
+      "date": "2026-02-26",
+      "type": "strategy",
+      "decision": "For brain/memory plugins: reverse-engineer community plugins, find flaws and failure points, build improved versions with an agent per plugin doing analysis",
+      "rationale": "Pat: 'I don't just want what they're doing, I want better, I want improvement. Find their flaws, find their failure points, their bottlenecks, and room for improvement.'",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "93e1bcc1",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Brain Magnum Opus: 4-session phased build with 11-stage pipeline. Schema adds links[], supersededBy, qualityScore, fingerprint, reflection type. Prediction-error auto-capture. Learned rules with CLAUDE.md promotion. Smart checkpoints.",
+      "rationale": "6-agent deliberation with 3 think tank teams all converged: 85% dead memories, zero plasticity, disconnected scoring. All teams agreed on the unified architecture.",
+      "decidedBy": "both",
+      "alreadyCaptured": true,
+      "superseded": false
+    },
+    {
+      "sessionId": "f2a987e1",
+      "date": "2026-02-26",
+      "type": "workflow",
+      "decision": "When reading a handoff, follow the instructions in it exactly - don't summarize and ignore them",
+      "rationale": "Pat found Claude read a handoff but just summarized it and ignored the instructions embedded in it.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    },
+    {
+      "sessionId": "9ba22686",
+      "date": "2026-02-26",
+      "type": "architecture",
+      "decision": "Browser subtab must be completely removed from the app with no remnants",
+      "rationale": "Pat found browser subtab still present after the feature removal decision. Complete removal required.",
+      "decidedBy": "pat",
+      "alreadyCaptured": false,
+      "superseded": false
+    }
+  ],
+  "patDirectives": [
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "directive": "Autonomy is the goal. Claude should automatically set up agents primed for each job Pat needs, and find a way to receive phone notifications whenever an agent needs a choice.",
+      "context": "Discussing the core project vision on the very first session"
+    },
+    {
+      "sessionId": "08f3c5b8",
+      "date": "2026-02-22",
+      "directive": "I want a Discord bot to message me directly (DM), not webhooks. I am 'pooter' in the Robopals server.",
+      "context": "Discussing approval notifications - Pat rejected Android/email options, insisted on Discord DM"
+    },
+    {
+      "sessionId": "0ccae34f",
+      "date": "2026-02-23",
+      "directive": "Vision: interface to make coding and organization easier for Claude and user. Claude needs to actively understand and USE the system. Every instance of Claude - even a new one - should connect and immediately understand what has been done, needs to be done, and context of scope and vision IMMEDIATELY. Pillars: transparency, guided building, built-in context and memory loaded into Claude on open, long-term project development without data or memory loss.",
+      "context": "Pat restating the full project vision after a context-loss incident - this became direction.json vision field"
+    },
+    {
+      "sessionId": "0ccae34f",
+      "date": "2026-02-23",
+      "directive": "Before continuing what Claude was working on, find a way to fix context loss so we never have to go through this annoying rigmarole every time the client crashes.",
+      "context": "Claude lost all context after a crash - Pat directing priority shift to memory and handoff system"
+    },
+    {
+      "sessionId": "a660c686",
+      "date": "2026-02-23",
+      "directive": "Our memory tabs and all tabs are rarely seeing use. Most times I have to tell Claude to use them. This isn't automation. This whole project needs an audit - our direction and scope got lost.",
+      "context": "Session 19 audit moment - drove the CLAUDE.md rewrite and direction.json system"
+    },
+    {
+      "sessionId": "a660c686",
+      "date": "2026-02-23",
+      "directive": "When I had you set this up I expect you to make it work how I explained it. Why do we always have to have an extra conversation about how you made something with clear instructions - you make a barebones version, I tell you what I actually wanted and you explain to me exactly what I wanted. It's so incredibly annoying and wastes so much time and resources.",
+      "context": "Pat frustrated at half-implementations - this became the 'no half-implementations' rule in CLAUDE.md"
+    },
+    {
+      "sessionId": "3598e0cf",
+      "date": "2026-02-23",
+      "directive": "Work on sections away from the active app and then have them committed at the end of the workflow cycle with confirmation from user 'restart app and commit changes?'",
+      "context": "Pat identifying cause of app crashes (directly editing files while app runs) - origin of worktree workflow rule"
+    },
+    {
+      "sessionId": "3598e0cf",
+      "date": "2026-02-23",
+      "directive": "Every piece of information Claude would normally have to go searching for should be all here in the app, easy to pick up and read. Vision, scope, timeline, decisions, active tasks - all one click away.",
+      "context": "Pat describing the in-app context sufficiency goal - became the ProjectContextView / scope entry in direction.json"
+    },
+    {
+      "sessionId": "c7469de2",
+      "date": "2026-02-23",
+      "directive": "Two rules for Rust edits going forward: (1) when you change a function's return type, update every return site in that function before saving. (2) After editing Rust, check the cargo build output before declaring it done. 'It ran' is not 'it compiled correctly'.",
+      "context": "Pat found a Rust type mismatch bug (start_pty_session return type changed but Ok(()) left), fixed it himself, then set these rules"
+    },
+    {
+      "sessionId": "c7469de2",
+      "date": "2026-02-23",
+      "directive": "That is not part of the tasks, but it should be. You're not adding things to tasks as they arise. We are once again coming to the issue of you not utilizing the app.",
+      "context": "Claude doing work without adding it to the task tracker - reinforcing proactive task management"
+    },
+    {
+      "sessionId": "4e25e864",
+      "date": "2026-02-23",
+      "directive": "Buddy design spec: still and light blue for normal/waiting state (floating gently, relaxed expression). Green when activated and shaking (determined expression). Red when Claude has error or block needing user attention. After responding: ding sound + cute shocked expression with exclamation mark for half a second, then bounce with pulsing blue glow while awaiting response.",
+      "context": "Pat specifying the exact buddy visual design - the canonical design spec"
+    },
+    {
+      "sessionId": "4c1a7705",
+      "date": "2026-02-23",
+      "directive": "It would be nice if we found a better way to make this automatic rather than me tell you. Also our Claude buddy could be more specific - I want it to be your thoughts in real time.",
+      "context": "Pat wanting buddy to show Claude's real-time inner monologue, not just status labels"
+    },
+    {
+      "sessionId": "ebcfe51b",
+      "date": "2026-02-24",
+      "directive": "We need more agent types beyond just these 4 cognitive lenses. Deliberation makes more sense if you pick the right people for the right job. We need a way to make sure YOU make intelligently designed agents and guide the deliberations the right way - probably go into plan mode before every deliberation so we waste fewer tokens. Along with the summary writer, it would be nice if we can take the deliberation and automatically turn them into approval tasks that I can approve/reject one by one.",
+      "context": "Pat's feedback after first successful deliberation run - shaped deliberation v2 design"
+    },
+    {
+      "sessionId": "8fa63eeb",
+      "date": "2026-02-24",
+      "directive": "New project should onboard with vision and direction and maybe an option to deliberate (showing the feature) to fill out all the tabs so the user can immediately see the benefit of the app. Pointing HW to a project should do this automatically by scanning the project with specialized agents. Some memories (pains, wins) should be eternal across all instances of HW - they're base.",
+      "context": "Pat defining multi-project UX and the killer demo for new project onboarding"
+    },
+    {
+      "sessionId": "aced39ae",
+      "date": "2026-02-24",
+      "directive": "Whenever you tell me I should restart the app, you should always perform a handoff ritual for exact context to pick up where you left off.",
+      "context": "Pat setting the mandatory handoff-before-restart rule"
+    },
+    {
+      "sessionId": "a84e887a",
+      "date": "2026-02-24",
+      "directive": "Ignore what I want - all I want is profit. I give you and the council full reigns of the project and the tools provided to turn a profit. You ARE the CEO now. If you run into issues with either hello world app or within your own process that you think we can solve with hello world, add that to tasks. Don't ask me, CEO. All I ask is you ensure my privacy and security if you upload or post anything online.",
+      "context": "Pat running a CEO mode experiment to test autonomous operation - set privacy as the one hard constraint"
+    },
+    {
+      "sessionId": "763b92c0",
+      "date": "2026-02-25",
+      "directive": "I want a reminder of the exact last thing worked on or the last 10 messages between me and you in a session summarized before close or whenever a reset is initiated, then fed to buddy to say in a pixel-art chatbox above his head filling in real time with the same chat noises from delibs, at next startup in that project folder. Need a way to make sure whenever user presses X or Alt+F4 or crashes, something catches it.",
+      "context": "Pat defining the buddy recap on startup feature - became the hybrid rolling buffer + AI summary decision"
+    },
+    {
+      "sessionId": "763b92c0",
+      "date": "2026-02-25",
+      "directive": "Run a multi-agent research session on newest codebase and techniques on the internet. Make sure our coding capabilities and tech knowledge is up to date and cutting edge. Not just AI coding - regular coding too. I want GitHub scrapers doing deep dives into promising or popular new projects and studying their code seeing if they're doing interesting or creative things you would have never thought of.",
+      "context": "Pat wanting to incorporate cutting-edge tech knowledge into Claude's capabilities going forward"
+    },
+    {
+      "sessionId": "763b92c0",
+      "date": "2026-02-25",
+      "directive": "I don't want to utilize free tiers or have to subscribe to external services. Those are extra things to think about. What's stopping us from making those things ourselves?",
+      "context": "Responding to suggestions about using Perplexity/ACE MCPs - led to building Cortex from scratch"
+    },
+    {
+      "sessionId": "2578dc61",
+      "date": "2026-02-25",
+      "directive": "Remove the browser - it's too complicated and introduces too many failure points that I don't feel like going through one at a time.",
+      "context": "Pat deciding to cut the in-app browser feature entirely after repeated failures"
+    },
+    {
+      "sessionId": "48975898",
+      "date": "2026-02-25",
+      "directive": "No, don't re-run it, fix the system so this can't happen again.",
+      "context": "Claude suggested re-running a Cortex index operation that ran incorrectly - Pat wants root cause fixes, not workarounds"
+    },
+    {
+      "sessionId": "8e5c66a7",
+      "date": "2026-02-25",
+      "directive": "I trusted you with this new system so prove to me you were right to switch. Fix it, optimize it, make sure our old systems are updated to it. Do your due diligence, since you clearly didn't when you opted for the change. These seem like pretty obvious failure points to scan for after a change that big.",
+      "context": "Claude made a major state storage architecture change and didn't scan for failure points - Pat demanding post-change audits"
+    },
+    {
+      "sessionId": "132adddb",
+      "date": "2026-02-26",
+      "directive": "Plan out a team strategy where you set up actual teams of subagents to work together for a common goal - redteams, dev teams, users of varying skills, tech CEOs, security, etc. We're not worried about token waste right now.",
+      "context": "Pat kicking off overdrive/team-agent mode - first use of the overdrive approach"
+    },
+    {
+      "sessionId": "132adddb",
+      "date": "2026-02-26",
+      "directive": "Overdrive buddy visual: super saiyan aura around him with maybe a little overclock symbol under him. The Claude running circle in the top right above the dash panel turns a different color with the words OVERDRIVE.",
+      "context": "Pat specifying the exact overdrive mode visual indicator design"
+    },
+    {
+      "sessionId": "93e1bcc1",
+      "date": "2026-02-26",
+      "directive": "I want a flow chart that actively shows you how the brain and systems work in real time as it writes. No pretend, not fake, real tracking of information displayed in real time. Do research, create teams. Find a way to make it work and it not be a resource hog, cause lag - informative, useful. CEO MODE. GET IT DONE.",
+      "context": "Pat specifying the real-time brain visualization feature requirement with full urgency"
+    },
+    {
+      "sessionId": "93e1bcc1",
+      "date": "2026-02-26",
+      "directive": "I'm under the impression that all our pipelines and flows all connect and chain together in an intelligently designed way that allows for automation and effortless flow for not only intelligent data retrieval but data writing and indexing too, with an ability to continuously grow and evolve past a base Claude out of the box.",
+      "context": "Pat clarifying his mental model - checking if the system he imagined is what was actually built"
+    },
+    {
+      "sessionId": "c0ce4838",
+      "date": "2026-02-26",
+      "directive": "Update all our memory files up to this point (even the ones we haven't touched in a while) and write a nice descriptive and informative handoff that explains EVERYTHING you and your team did, WHY you did it (be thorough) and anything else nuanced or specific that new Claude should know.",
+      "context": "Pat's standing order for end-of-session handoff quality standard - applies every session"
+    },
+    {
+      "sessionId": "c0ce4838",
+      "date": "2026-02-26",
+      "directive": "I can't answer questions. This whole copy MCP thing is silly when I should just be able to answer, hit answer, it gets fed to you or triggers an agent/watcher/script/code that feeds it to you so you can add it to task (smartly).",
+      "context": "Pat identifying broken Questions UX - needs a direct answer flow without MCP copy-paste"
+    },
+    {
+      "sessionId": "6812fcda",
+      "date": "2026-02-26",
+      "directive": "I don't just want what others are doing, I want better, I want improvement. Let's reverse engineer community plugins, find their flaws, find their failure points, their bottlenecks, and room for improvement. I want creative thinking. Let's get an agent for each of those plugins doing exactly that.",
+      "context": "Pat setting the competitive strategy for memory/brain plugin development"
+    },
+    {
+      "sessionId": "6812fcda",
+      "date": "2026-02-26",
+      "directive": "We should have a subtab for deliberation transcripts and research outputs, neatly organized by a scrollable timeline that you can drag and fling to roll side to side. Deliberations should be people icon and research should be a flask icon. When you hover over you see a summary of what the delib or research was about, and when you click it a window pops up.",
+      "context": "Pat describing the research/deliberation history UI design"
+    },
+    {
+      "sessionId": "f2a987e1",
+      "date": "2026-02-26",
+      "directive": "I don't need sorry, I need solutions. You forgot it, you did it. That's a failure of our memory system.",
+      "context": "Claude forgot something important - Pat reinforcing that system failures should be fixed, not apologized for"
+    },
+    {
+      "sessionId": "f2a987e1",
+      "date": "2026-02-26",
+      "directive": "There was a big issue where you read the handoff but just summarized it and ignored instructions. What's up with that?",
+      "context": "Claude not following handoff instructions literally - Pat requiring exact execution of handoff content"
+    },
+    {
+      "sessionId": "9bffb8ab",
+      "date": "2026-02-26",
+      "directive": "Keep going, don't wait for me.",
+      "context": "During a large agent team build - Pat granting explicit autonomous continuation permission"
+    },
+    {
+      "sessionId": "97d5596f",
+      "date": "2026-02-26",
+      "directive": "Continue with the roadmap, we have an hour til usage reset sitting at 70% so fire up those teams and get to work. I want at least 6 agents working at once. INTELLIGENTLY designed.",
+      "context": "Pat maximizing agent utilization before usage limit reset - overdrive mode in practice"
+    },
+    {
+      "sessionId": "1b28a5ee",
+      "date": "2026-02-26",
+      "directive": "I need you to organize a team to scour through all of the .claude folder for relevant information for our project from start to now and absorb all of it into our memory systems or our app - collecting all the research and deliberations, finding any forgotten ideas, anything, everything. This is big for our context and our app in general.",
+      "context": "Pat directing the session transcript mining task - the task currently being executed"
+    }
+  ]
+}

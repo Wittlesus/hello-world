@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-02-26T05:30:29.864Z",
+  "generatedAt": "2026-02-26T23:48:20.735Z",
   "status": "running",
-  "pid": 20376,
+  "pid": 25652,
   "tools": [
     {
       "name": "hw_get_context",
@@ -76,6 +76,10 @@
       "category": "sessions"
     },
     {
+      "name": "hw_brain_health",
+      "category": "brain"
+    },
+    {
       "name": "hw_get_workflow_state",
       "category": "workflow"
     },
@@ -98,74 +102,6 @@
     {
       "name": "hw_kill_watcher",
       "category": "watchers"
-    },
-    {
-      "name": "hw_list_agents",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_plan_deliberation",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_extract_deliberation_recommendations",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_start_deliberation",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_pause_deliberation",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_resume_deliberation",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_check_deliberation_coverage",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_conclude_deliberation",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_quick_insights",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_post_to_chatroom",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_post_agent_message",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_set_deliberation_phase",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_react",
-      "category": "chatroom"
-    },
-    {
-      "name": "hw_browser_navigate",
-      "category": "browser"
-    },
-    {
-      "name": "hw_browser_read_page",
-      "category": "browser"
-    },
-    {
-      "name": "hw_browser_get_state",
-      "category": "browser"
-    },
-    {
-      "name": "hw_browser_close",
-      "category": "browser"
     }
   ]
 }

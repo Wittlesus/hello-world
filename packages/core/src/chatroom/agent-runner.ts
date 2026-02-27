@@ -3,7 +3,10 @@ import { AGENT_DEFINITIONS } from './agent-definitions.js';
 import type { ChatroomStore } from './chatroom-state.js';
 import type { ChatMessage } from './types.js';
 
-const MODEL = 'claude-haiku-4-5-20251001';
+const CLAUDE_MODEL = 'claude-haiku-4-5-20251001';
+const QWEN_MODEL = 'qwen3-235b-a22b';
+const QWEN_BASE_URL = process.env['QWEN_BASE_URL'] ?? 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1';
+const QWEN_API_KEY = process.env['QWEN_API_KEY'] ?? process.env['DASHSCOPE_API_KEY'] ?? '';
 const MAX_ROUNDS = 5;
 const BETWEEN_AGENT_MS = 1400;
 const INTRO_DELAY_MS = 2800;
@@ -104,7 +107,7 @@ function callClaude(
       [
         '--print',
         '--model',
-        MODEL,
+        CLAUDE_MODEL,
         '--output-format',
         'text',
         '--max-turns',
@@ -154,6 +157,82 @@ function callClaude(
   });
 }
 
+// Call Qwen via OpenAI-compatible API. No subprocess -- direct HTTP.
+// Constraints injected into user message (not system prompt) per research findings.
+function callQwen(
+  systemPrompt: string,
+  userMessage: string,
+  signal: AbortSignal,
+): Promise<string> {
+  return new Promise(async (resolve, reject) => {
+    if (signal.aborted) {
+      reject(new Error('aborted'));
+      return;
+    }
+    if (!QWEN_API_KEY) {
+      reject(new Error('QWEN_API_KEY or DASHSCOPE_API_KEY not set'));
+      return;
+    }
+
+    const onAbort = () => reject(new Error('aborted'));
+    signal.addEventListener('abort', onAbort, { once: true });
+
+    const timeout = setTimeout(() => {
+      signal.removeEventListener('abort', onAbort);
+      reject(new Error('qwen timed out after 30s'));
+    }, 30_000);
+
+    try {
+      // Per research: Qwen ignores system prompts under pressure.
+      // Inject constraints into the user message directly.
+      const constraintBlock = [
+        'RULES: 2-4 sentences max. Plain text only. No markdown, no bold, no headers, no bullets.',
+        'No lists. No code blocks. Just natural sentences. Stay in your assigned role.',
+      ].join(' ');
+
+      const resp = await fetch(`${QWEN_BASE_URL}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${QWEN_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: QWEN_MODEL,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: `${constraintBlock}\n\n${userMessage}` },
+          ],
+          max_tokens: 300,
+          temperature: 0.7,
+          // Disable thinking mode for boardroom speed
+          extra_body: { enable_thinking: false },
+        }),
+        signal,
+      });
+
+      clearTimeout(timeout);
+      signal.removeEventListener('abort', onAbort);
+
+      if (!resp.ok) {
+        const body = await resp.text().catch(() => '');
+        reject(new Error(`Qwen API ${resp.status}: ${body.slice(0, 200)}`));
+        return;
+      }
+
+      const json = (await resp.json()) as {
+        choices?: { message?: { content?: string } }[];
+      };
+      const content = json.choices?.[0]?.message?.content ?? '';
+      resolve(content.trim());
+    } catch (err: unknown) {
+      clearTimeout(timeout);
+      signal.removeEventListener('abort', onAbort);
+      if (signal.aborted) return;
+      reject(err);
+    }
+  });
+}
+
 function buildConversation(history: ChatMessage[], topic: string): string {
   const conversation = history
     .filter((m) => m.type !== 'thinking')
@@ -188,11 +267,9 @@ async function runSingleAgent(
   if (state.session.status !== 'active') return;
 
   try {
-    const raw = await callClaude(
-      def.systemPrompt,
-      buildConversation(state.messages, state.session.topic),
-      signal,
-    );
+    const conversation = buildConversation(state.messages, state.session.topic);
+    const callModel = def.provider === 'qwen' ? callQwen : callClaude;
+    const raw = await callModel(def.systemPrompt, conversation, signal);
     if (signal.aborted) return;
     store.appendMessage(agentId, stripMarkdown(raw), 'message');
     store.updateAgentStatus(agentId, 'idle', '');
@@ -200,7 +277,9 @@ async function runSingleAgent(
   } catch (err: unknown) {
     if (signal.aborted) return;
     const msg = err instanceof Error ? err.message : String(err);
-    store.appendMessage(agentId, `[Error: ${msg}]`, 'message');
+    // If Qwen fails, log it but don't crash the room
+    const prefix = def.provider === 'qwen' ? '[Qwen error: ' : '[Error: ';
+    store.appendMessage(agentId, `${prefix}${msg}]`, 'message');
     store.updateAgentStatus(agentId, 'idle', '');
     notify(['chatroom.json']);
   }

@@ -1,0 +1,23 @@
+{
+  "rules": [
+    {
+      "id": "rule_mm3hnurj_hurf",
+      "rule": "When building process guardrails, always audit them against themselves. The most valuable failures are the ones your own system misses.",
+      "tags": [
+        "deliberation",
+        "guardrails"
+      ],
+      "sourceMemoryIds": [
+        "mem_bff85b0b",
+        "mem_15c2986c"
+      ],
+      "confidence": 0.7000000000000001,
+      "observationCount": 2,
+      "type": "contradiction-resolution",
+      "promotedToClaudeMd": false,
+      "createdAt": "2026-02-26T13:18:06.463Z",
+      "lastReinforced": "2026-02-26T13:22:37.281Z"
+    }
+  ],
+  "lastUpdated": "2026-02-26T13:22:37.281Z"
+}

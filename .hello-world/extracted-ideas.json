@@ -1,0 +1,480 @@
+{
+  "extractedAt": "2026-02-26T00:00:00.000Z",
+  "methodology": "Mined 8 large session transcripts (a84e887a, c0ce4838, 132a2338, 9bffb8ab, 97d5596f, 93e1bcc1, f2a987e1, 6812fcda) covering Feb 24-26 2026. Searched assistant text blocks, assistant thinking blocks, and user messages for proposals mentioned once and not revisited, deferred items, and unexplored ideas.",
+  "ideas": [
+    {
+      "id": "idea_001",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Cortex as a knowledge management layer: capture external research findings and write them into memory files so every future session has that knowledge baked in -- not just local code indexing but also indexing what we learned from research sweeps",
+      "context": "Pat asked: 'ah yes we wanted to use cortex to index incoming new tech and code and fundamentals and whatever updates we find out about into our memory.' Claude built the local indexer half but the 'capture research findings into brain memory' flow was only partially wired -- the mining agents stored memories but Cortex itself doesn't automatically ingest new external discoveries.",
+      "status": "partially-implemented",
+      "source": "pat",
+      "relatedTasks": ["t_caa32ae8", "t_556a8b1c"],
+      "notes": "The Cortex indexer (local code) is built. The research-to-memory pipeline (mining agents) was run once manually. But there is no automatic trigger: when we do a research sweep, Cortex does not automatically capture findings into brain memories."
+    },
+    {
+      "id": "idea_002",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Deep web research MCP -- a custom MCP server that scrapes GitHub trending, HN, subreddits, and dev blogs to auto-discover new code, techniques, and trending repos. Like what we did manually with the 7 research agents, but automated.",
+      "context": "Both Pat and Claude discussed building this as a companion to Cortex. Claude noted: 'What you want is closer to the Tech Radar MCP + Deep Web Research MCP combined: scrape GitHub trending, HN, subreddits, dev blogs, surface it.' The task t_0316d991 was created but marked done -- however the actual deep web research MCP was never built; instead they installed existing free MCPs (GitMCP, Code Research MCP, WebSearch).",
+      "status": "forgotten",
+      "source": "pat",
+      "relatedTasks": ["t_0316d991"],
+      "notes": "Task is marked done but the custom deep web research MCP was not built. The work done was installing third-party free MCPs as a substitute. The original vision of auto-scraping trending sources was dropped."
+    },
+    {
+      "id": "idea_003",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "System explorer interactive map -- add the system-explorer.html as a dedicated view inside the Hello World desktop app, not just a standalone browser file",
+      "context": "Pat asked: 'can we keep track of all our pipelines/workflows/systems preferably with an interactive model?' and 'we should add that in the app somewhere.' The interactive HTML explorer was built and opened in browser, but a task was created (t_7d412f42) to add it to the app -- which remains TODO.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_7d412f42"],
+      "notes": "system-explorer.html exists as a standalone file. Task t_7d412f42 'Add system explorer to Hello World app' is still TODO. Pat specifically asked for it in the app."
+    },
+    {
+      "id": "idea_004",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Memory quality feedback loop -- a mechanism that tracks whether retrieved memories were actually useful, adjusts triage thresholds over time, and surfaces which memories are being ignored vs. accessed",
+      "context": "Identified as one of the top failure points after the system analysis. Claude created task t_e215a18e '[DELIBERATE] Memory quality feedback loop and staleness management' but it has never been deliberated on. The brain MO was built without this feedback loop -- synaptic activity is tracked but never used to influence retrieval ranking.",
+      "status": "deferred",
+      "source": "claude",
+      "relatedTasks": ["t_e215a18e"],
+      "notes": "Task t_e215a18e is TODO and marked for deliberation. The 6-agent research sprint in S52c confirmed all 6 community plugins lack this too -- making it a genuine first-mover opportunity. Synaptic activity data exists in brain state but is not fed back into retrieval ranking."
+    },
+    {
+      "id": "idea_005",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Knowledge intake scheduling and automation -- a cadence and source list for periodic research sweeps, with bloat prevention to stop the memory store from growing unboundedly with low-quality external findings",
+      "context": "Claude created task t_fee42a1a '[DELIBERATE] Knowledge intake scheduling and automation' after identifying it as a key architectural question. It was never deliberated on. Questions include: how often, which sources, how to prevent old stale facts from polluting retrieval.",
+      "status": "deferred",
+      "source": "claude",
+      "relatedTasks": ["t_fee42a1a"],
+      "notes": "Task t_fee42a1a is TODO and marked for deliberation. The memory backfill and auto-capture work happened in later sessions but the scheduling/cadence question was never addressed."
+    },
+    {
+      "id": "idea_006",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "SQLite migration -- move from JSON files to SQLite for atomic multi-table writes, better query performance, and true concurrent access safety",
+      "context": "This was explicitly deferred in the JSON-vs-SQLite deliberation because multi-project support was unplanned and better-sqlite3 has MSVC issues on Windows. The decision was 'defer until multi-project epic is planned.'",
+      "status": "deferred",
+      "source": "claude",
+      "relatedTasks": ["t_f2d9ad7d"],
+      "notes": "Deliberately deferred by the B+ deliberation. Still relevant when multi-project epic is scoped. The split-file + atomic writes is a good interim solution but SQLite remains the long-term answer."
+    },
+    {
+      "id": "idea_007",
+      "sessionId": "c0ce4838-2b59-4d30-85a7-3cfb5f95e19d",
+      "date": "Feb 25",
+      "idea": "In-app answer flow for Questions -- Pat should be able to answer questions directly in the QuestionsView with a text field, hit Answer, and have it automatically routed (to task/decision/scope) without Claude in the loop for the answering part",
+      "context": "Pat: 'i can't answer questions, this whole copy mcp thing is silly when i should just be able to answer, hit answer, it gets fed to you or triggers an agent to be made or watcher or script or code that feeds it you so you can add it to task (smartly).' Two tasks created (t_ab93a68e and t_f7899ace) -- both TODO.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_ab93a68e", "t_f7899ace"],
+      "notes": "The Rust command answer_question exists and was fixed to read questions.json (in S52a). The UI was also fixed in S52a to call invoke('answer_question') directly. But smart routing (auto-create task/decision from answer) was not implemented."
+    },
+    {
+      "id": "idea_008",
+      "sessionId": "c0ce4838-2b59-4d30-85a7-3cfb5f95e19d",
+      "date": "Feb 25",
+      "idea": "Discord answer routing -- reply to a question DM on Discord and the answer gets automatically routed to the right action (task creation, decision, scope update) without needing to open the app",
+      "context": "Part of the broader 'Pat acts, Claude routes' principle that emerged from the Questions UX discussion. The Discord listener exists but does not handle question answer replies or route them to actions.",
+      "status": "forgotten",
+      "source": "pat",
+      "relatedTasks": ["t_f7899ace"],
+      "notes": "Discord listener handles approve/reject for approvals. It does not handle question answer replies. This was mentioned as part of the Questions UX fix but never scoped as its own work item."
+    },
+    {
+      "id": "idea_009",
+      "sessionId": "9bffb8ab-d85a-4502-bbf3-a07d34d8d9d9",
+      "date": "Feb 26",
+      "idea": "Formalized subagent team strategy -- a structured coordination pattern for how specialized agents share information, how results flow back to the main Claude instance, and how to avoid redundant work across concurrent agents",
+      "context": "Task t_e60b91e0 was in_progress for multiple sessions. Research was done but synthesis was never written into an actionable strategy. The deliberation designed around 6 custom team agents happened (Brain MO), but the generalized team coordination pattern was never formalized.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_e60b91e0"],
+      "notes": "Task t_e60b91e0 is still TODO. The Brain MO deliberation used a working approach (6 custom agents with deep context, worktrees, then merge), but that pattern was never written up as a reusable playbook for future team sprints."
+    },
+    {
+      "id": "idea_010",
+      "sessionId": "9bffb8ab-d85a-4502-bbf3-a07d34d8d9d9",
+      "date": "Feb 26",
+      "idea": "Brain enforcement gates -- PreToolUse hook physically blocks Edit/Write calls when a hippocampal checkpoint is overdue or an attention gate hasn't been cleared, so the brain signal is a hard interrupt not a suggestion",
+      "context": "Claude designed a 3-layer enforcement system: (1) signal prefixes like [ATTENTION GATE], (2) PreToolUse hook blocks tool calls until condition resolves, (3) instructions in system prompt. The signal detector and Stop hook were built but the PreToolUse blocking gate was not implemented.",
+      "status": "partially-implemented",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The signal-detector.mjs, stop-thought.mjs queue, and user-prompt.mjs injection were built in S52c. The PreToolUse physical block for overdue checkpoints was described in the S48/49 plan but not implemented. The system nudges but does not block."
+    },
+    {
+      "id": "idea_011",
+      "sessionId": "9bffb8ab-d85a-4502-bbf3-a07d34d8d9d9",
+      "date": "Feb 26",
+      "idea": "Memory deduplication at auto-capture time -- auto-capture of task completions (every task done = win memory) is creating noise; need a filter that only stores genuinely novel wins, not repetitive 'Completed: X' entries",
+      "context": "Claude noted: 'Memory deduplication -- auto-capture creates Completed: X win for every task. 50 tasks = 50 low-quality memories flooding the store. Not addressed.' The quality gate does fingerprint dedup, but the auto-capture in server.ts still fires for all task completions.",
+      "status": "partially-implemented",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The quality gate rejects low-scoring memories (threshold 0.15). But the auto-captured 'task completed' win memories are repetitive and likely score above threshold due to content. A semantic dedup pass or 'only store if novel' filter was identified but not built."
+    },
+    {
+      "id": "idea_012",
+      "sessionId": "9bffb8ab-d85a-4502-bbf3-a07d34d8d9d9",
+      "date": "Feb 26",
+      "idea": "Contradiction detection wired into memory storage -- findContradictions() exists in scoring.ts but is never called; new memories can silently contradict old ones without any flag",
+      "context": "Claude identified: 'Contradiction detection -- findContradictions() exists in scoring.ts but isn't wired. New memory can contradict an old one silently. MEDIUM severity. Not addressed.'",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The linker module was built with contradiction link types. But findContradictions() in scoring.ts was never wired into the storage path. When a new memory contradicts an old one, the linker may tag it as 'contradicts' but there is no alert or resolution prompt."
+    },
+    {
+      "id": "idea_013",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "Resizable terminal side panel -- add a drag handle so the panel width can be adjusted instead of using fixed pixel widths (w-64, w-80, w-96)",
+      "context": "During the terminal layout discussion, Claude offered: 'Or make it resizable with a drag handle.' Pat chose a specific width instead, but a resizable panel would be more flexible. This was a throwaway suggestion not tracked.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "Simple UX improvement mentioned once. No task created. The terminal panel is currently fixed width."
+    },
+    {
+      "id": "idea_014",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "Terminal bottom panel -- show Direction, Deliberation, Sentinel, and Hooks as additional nodes in the data flow diagram, not just the current Claude/MCP/tasks/memory set",
+      "context": "Claude: 'Add more nodes (Direction, Deliberation, Sentinel, Hooks).' This was mentioned as a possible expansion when discussing making the panel wider, but was not implemented -- the diagram still only shows the core pipeline.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": ["t_184712e1"],
+      "notes": "The data flow diagram shows the basic MCP -> stores flow. Direction notes, the deliberation chatroom, the sentinel process, and the hooks pipeline are all active systems not represented in the visualization."
+    },
+    {
+      "id": "idea_015",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "Small event log below the brain/system diagram -- show the last 3-4 tool calls with timestamps so you can see what just happened at a glance without the full flowchart",
+      "context": "Claude: 'Show a small event log below the diagram (last 3-4 tool calls with timestamps).' Mentioned during the terminal panel redesign discussion but not implemented. The current bottom panel only shows the animated flowchart.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The hw-tool-summary Tauri event already carries {tool, summary} payloads. A rolling 4-line event log would be trivial to add to the bottom panel."
+    },
+    {
+      "id": "idea_016",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "hw-pty-line event is being emitted by Rust but consumed by nobody -- this is a real-time stream of clean terminal output lines that could drive visualizations or be used for analysis",
+      "context": "During the data flow research, Claude noted: 'hw-pty-line -- clean terminal output lines, already emitted from Rust, consumed by NOBODY.' This is a raw data stream that has been wired up but has no consumer.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The Rust backend emits hw-pty-line events. No React component subscribes to them. Could be used for: terminal activity in the bottom panel, feeding pattern detection, or logging."
+    },
+    {
+      "id": "idea_017",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "Buddy avatar gallery -- 6 agents each independently design a unique buddy avatar with their own art style and animation set, presented as selectable skins",
+      "context": "Pat: 'more buddy avatars made by like 6 agents all given the prompt to design a buddy avatar based on whatever they like complete with its own animation.' Task t_30fef69f was created and is TODO.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_30fef69f"],
+      "notes": "Task exists but is in Tier 4 (nice to have). No work started. The current buddy has one design. This is pure creative/fun work."
+    },
+    {
+      "id": "idea_018",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "App loading screen or faster startup -- currently there is a flash of unstyled content or delay when the app first opens; either a loading screen or optimized startup would improve first impression",
+      "context": "Task t_87a8735d 'App loading screen or faster startup' is Tier 2 in the task priority ranking. No work done.",
+      "status": "deferred",
+      "source": "claude",
+      "relatedTasks": ["t_87a8735d"],
+      "notes": "Tier 2 priority. No implementation yet."
+    },
+    {
+      "id": "idea_019",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "hw_backfill_memories MCP tool -- an explicit tool to run the full pipeline (quality gate + fingerprint + linker) over old memories that predate the brain MO, solving the in-memory cache invalidation problem",
+      "context": "After the backfill script ran but data was clobbered by the in-memory cache, Claude noted: 'needs either an hw_backfill_memories MCP tool or a server restart after external migrations.' The backfill script exists but running it externally always gets overwritten by the live server.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": ["t_29eab786"],
+      "notes": "The backfill script at scripts/backfill-memories.mjs exists but cannot be run while the MCP server is live without the server overwriting the results. An MCP tool that runs the backfill through the live server would solve this permanently."
+    },
+    {
+      "id": "idea_020",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Brain system: reflection auto-trigger -- predictions.ts and reflection.ts were built as part of the brain MO but are not auto-wired; reflections need to be triggered based on prediction errors or session analysis, not just manually",
+      "context": "Claude noted in S52c: 'NOT YET WIRED: reflection auto-trigger, prediction-error auto-trigger.' Both modules exist and have tests but are never called automatically. They are dead code in production until wired.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "reflection.ts and prediction.ts are built and tested (21 + 30 tests). They are never called by any hook or server handler. The S48 plan mentioned wiring prediction-error as an auto-capture trigger but it was not implemented in the S49 build."
+    },
+    {
+      "id": "idea_021",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Cortex merger in retrieval -- during hw_retrieve_memories, merge learned cortex entries (from cortex-learned.json) with the default hardcoded cortex to improve keyword-to-tag mapping over time",
+      "context": "Claude listed this as NOT YET WIRED in the S51 session summary. The cortex learner accumulates learned entries in cortex-learned.json but the retrieval engine uses only DEFAULT_CORTEX. The merger was designed but not implemented.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "cortex-learner.ts exists and writes to cortex-learned.json. The retrieval engine in engine.ts uses DEFAULT_CORTEX but does not merge with learned entries. This is a complete module that is not connected to the pipeline it was built for."
+    },
+    {
+      "id": "idea_022",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Signal detector: add bug/fix discovery, verification outcome, and user direct instruction patterns to catch the most high-value memory moments that the current regex misses",
+      "context": "The thin-slice experiment showed the detector misses: (1) bug discoveries ('crashes', 'found a bug', 'this breaks', 'fixed by'), (2) test results ('PASS', 'FAIL', 'works', 'confirmed', 'proven'), (3) user direct instructions ('from now on', 'save this', 'remember', 'always do', 'never do'). Claude explicitly listed these as 'next iteration' improvements.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": ["t_e5fd354d"],
+      "notes": "The signal-detector.mjs was built in S52c. Claude explicitly said 'next iteration would add those patterns.' The 3 missing categories were identified with high confidence. No follow-up task was created."
+    },
+    {
+      "id": "idea_023",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Two-pass signal detection -- use regex as a cheap pre-filter but then run a Claude call (Haiku) on flagged messages to determine if they are actually worth capturing, catching contextual signals that regex structurally cannot detect",
+      "context": "Claude: 'The bigger insight from this experiment: regex catches the easy signals (corrections, shifts) but misses the high-value contextual ones (bug discoveries that require understanding what was being tried).' A two-pass system was described as the right architecture but not built.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The community plugin research confirmed this insight too: memory-mcp uses Haiku for triage and their results are much better than regex-only approaches. Our current system is regex only."
+    },
+    {
+      "id": "idea_024",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Typed preference categories for memory storage -- instead of free-form text, memories that represent user preferences should be stored in typed categories (style preferences, workflow preferences, technical preferences, communication preferences) with TTL and version tracking",
+      "context": "Reverse-engineering claude-diary revealed: 'Best idea to steal: typed preference categories instead of free-form storage.' The community plugin uses simple text entries; typed categories enable better retrieval, conflict detection, and staleness management.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "This was identified as the single best idea from the 6-plugin reverse-engineering sprint. Our Memory type supports arbitrary tags but has no concept of 'preference' as a structured category. No task created."
+    },
+    {
+      "id": "idea_025",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "PreCompact hook analysis -- when context is about to compress, spawn a subprocess that reads the full conversation, identifies unstored insights, and stores them before the compression happens (rather than just running the signal detector which only sees the last message)",
+      "context": "Claude described this as an option: 'I could have the PreCompact hook spawn a subprocess that reads the full conversation, identifies unstored insights, and stores them.' The current pre-compact.mjs runs the signal detector on the last message only, missing everything earlier in the session.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The PreCompact hook currently does: timeline.md update, cost tracking, signal detection on last assistant message. A full-conversation analysis before compression is much more valuable -- this is exactly when the most unstored insights exist."
+    },
+    {
+      "id": "idea_026",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Research transcript timeline subtab -- a scrollable horizontal timeline in the Decisions view showing all deliberations and ad-hoc research sprints, with cards that can be clicked to see the full output",
+      "context": "Pat: 'we should have a subtab for deliberation transcripts and research outputs, neatly organized by a scrollable timeline that you can drag and fling to roll side to side.' Task t_3071ae5e was created and is in_progress. research-outputs.json storage was designed, a ResearchTimelineView component was planned, and DecisionsView tabification was scoped in S52c.",
+      "status": "partially-implemented",
+      "source": "pat",
+      "relatedTasks": ["t_3071ae5e"],
+      "notes": "Task is in_progress. The architecture was designed in S52c (storage format, component structure, Rust get_research command). Code was partially written but the session ended before completion."
+    },
+    {
+      "id": "idea_027",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Periodic checkpoint hook -- fire a hook every N messages that asks what has been learned that has not been stored yet, as a lightweight scheduled nudge without the cost of full conversation analysis",
+      "context": "Claude described this as one option for automatic memory capture: 'periodic checkpoints where a hook fires every N messages asking what I've learned that hasn't been stored yet.' The hippocampal checkpoint already exists but fires based on message count and only outputs a text suggestion. A structured periodic prompt would be more actionable.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The hippocampal checkpoint in user-prompt.mjs fires every 6-12 messages and outputs '[HIPPOCAMPAL CHECKPOINT] Memory consolidation due.' This is the existing implementation but it is just text. A structured version that asks specific questions (what changed your understanding? what broke? what was surprising?) would be more effective."
+    },
+    {
+      "id": "idea_028",
+      "sessionId": "f2a987e1-39c5-423d-90dd-c364f6e12e33",
+      "date": "Feb 26",
+      "idea": "Fingerprint index in memory store for O(1) duplicate detection -- currently on every storeMemory() call, getAllMemories() scans the entire JSON file to check fingerprints, which grows linearly with memory count",
+      "context": "Claude identified this as a medium severity performance issue during the S52b audit: 'getAllMemories() is called on every storeMemory() to feed the quality gate. For 274+ memories, this reads and filters the entire JSON file on every store. Acceptable for now -- flag for S50 optimization.' S50 was completed but this was not fixed.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "Server.ts S52b changes added a deferred cortex learning batch (5 min) but the fingerprint index O(1) lookup was listed in the server.ts TODO list and then not implemented. Memory count is now 214+ and growing."
+    },
+    {
+      "id": "idea_029",
+      "sessionId": "f2a987e1-39c5-423d-90dd-c364f6e12e33",
+      "date": "Feb 26",
+      "idea": "MCP server health check and auto-restart -- the MCP server is a single point of failure with no redundancy; if it dies, the entire system is dead with no mechanism to restart it",
+      "context": "Claude: 'HW MCP Server -- every single operation flows through it. If the MCP process dies, the entire system is dead. No redundancy, no health check restarts it.' This was one of the 10 failure points identified in the architecture audit but was not in the list of 6 isolated fixes applied.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The sentinel monitors the app PID but not the MCP server PID. When the MCP server crashes, Claude loses all hw_* tools silently. A watchdog that restarts the MCP server or notifies Pat via an alternative channel would be valuable."
+    },
+    {
+      "id": "idea_030",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Multi-project memory global tier -- split memories.json into global (projectId: null) vs project-scoped memories; pains and wins that apply across all projects should be global so every project benefits from them",
+      "context": "From direction.json note n_mm0proj2: 'Some memories (pains, wins, base lessons) should be GLOBAL -- they persist across all HW project instances. They're base knowledge. Project-specific state (tasks, decisions, questions, terminal context) swaps cleanly per project.' The architecture audit confirmed this is a blocker for multi-project support.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_mp_global_mem", "t_mp_epic"],
+      "notes": "Task t_mp_global_mem is TODO and blocked by the multi-project epic. The memory schema does not have a projectId field. All memories are treated as belonging to the current project."
+    },
+    {
+      "id": "idea_031",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Auto-onboard new projects -- when Hello World opens pointing at a project for the first time, automatically scan it with specialized agents to populate tasks (from TODOs/issues), decisions (from architecture docs), and questions (from ambiguity), so every tab already has content on first launch",
+      "context": "From direction.json note n_mm0proj1: 'New project onboarding: automatically scan with specialized agents and populate all tabs. This is the killer demo -- user sees value immediately.' Task t_mp_auto_onboard is TODO.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_mp_auto_onboard", "t_mp_epic"],
+      "notes": "Task exists but blocked by multi-project epic. This is described as the 'killer demo' for Hello World's value proposition."
+    },
+    {
+      "id": "idea_032",
+      "sessionId": "9bffb8ab-d85a-4502-bbf3-a07d34d8d9d9",
+      "date": "Feb 26",
+      "idea": "Spec-Driven Development workflow adoption -- writing specs before code, having agents critique specs before building, and using specs as the verification contract",
+      "context": "Task t_a699fbb8 'Adopt Spec-Driven Development workflow' is TODO. It was identified from the tech radar research as a high-value technique. No work done.",
+      "status": "deferred",
+      "source": "claude",
+      "relatedTasks": ["t_a699fbb8"],
+      "notes": "This was added as a task after the tech radar research. It never got picked up. Would change how Claude approaches new features (spec first, then agents build to spec)."
+    },
+    {
+      "id": "idea_033",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Deliberation on Dashboard panel -- run a meta-deliberation specifically about what goes on the Dashboard that is actually useful for both Pat and Claude, updated in real time",
+      "context": "From direction.json note n_mm09z2ur: '(6) Run a deliberation about the whole Dashboard panel -- what's actually useful for both user and Claude that works and updates in real time.' This was captured as a direction note and marked as routed to task t_c901d782, but that task was about 'Deliberation UX polish' not the Dashboard content deliberation.",
+      "status": "forgotten",
+      "source": "pat",
+      "relatedTasks": [],
+      "notes": "The Dashboard panel content deliberation was never actually run. The direction note was routed to the UX polish task as a convenience but the underlying idea (deliberate on what belongs on Dashboard) was not addressed."
+    },
+    {
+      "id": "idea_034",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "Buddy recap Rust startup check -- verify on app launch whether a recap exists for the current session and emit a hw-buddy-recap event; the last remaining sub-task for the buddy recap feature",
+      "context": "Task t_83fd9f54 'Buddy recap: Rust startup check + event emission' is TODO. This is the final piece of the buddy recap epic. The rolling buffer writer, detached subprocess, and speech bubble UI are all done. Only the Rust startup emission is missing.",
+      "status": "deferred",
+      "source": "pat",
+      "relatedTasks": ["t_83fd9f54"],
+      "notes": "3 of 4 buddy recap sub-tasks are done. Only t_83fd9f54 (Rust startup check) remains. This requires a Rust change and a worktree."
+    },
+    {
+      "id": "idea_035",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Session transcript mining and historical data extraction -- mine all 227+ conversation logs to extract undocumented discoveries, debug insights, Pat preferences, and technical facts that were never stored as memories",
+      "context": "Task t_9829339b 'Extract and absorb all historical session data into memory + app' is in_progress. The mining agents were run once in S47 (42 + 26 memories), but those sessions covered only a subset of the logs. The full 227-session archive has not been systematically mined.",
+      "status": "partially-implemented",
+      "source": "pat",
+      "relatedTasks": ["t_9829339b"],
+      "notes": "Three mining agents were run in S47. A backfill script exists. But 227 sessions total with 64MB+ of logs -- only the top 5 largest were mined. The majority of the archive is untouched. Scripts exist at scripts/analyze-transcript.mjs and scripts/backfill-memories.mjs."
+    },
+    {
+      "id": "idea_036",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Gotcha memory protection against pruning -- gotcha-type memories (the most valuable -- 'this specific thing breaks in this specific way') should never be evicted by the pruner even under memory pressure, because they have low access counts but high value",
+      "context": "Reverse-engineering memory-mcp revealed: 'Gotchas (the most valuable memories) get evicted first under line-budget pressure because they have low access counts.' Our pruner uses similar heuristics. Pain memories are the equivalent of gotchas in our system.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The pruner in pruner.ts currently evicts based on quality score, access frequency, and age. It does not have a 'pain memories are protected' rule. A pain memory with 0 accesses could be pruned. This is exactly the wrong behavior."
+    },
+    {
+      "id": "idea_037",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "Questions answerable via Discord -- design a Discord reply flow where Pat can answer an open question by replying to the notification DM, and the answer automatically routes to the right action without opening the app",
+      "context": "Part of the 'Pat acts, Claude routes' principle. Currently approvals can be approved via Discord but questions cannot be answered via Discord. The Discord listener would need to handle question-answer reply events.",
+      "status": "forgotten",
+      "source": "pat",
+      "relatedTasks": ["t_f7899ace"],
+      "notes": "Mentioned alongside the in-app Questions fix but never separately scoped. The Discord listener exists and handles approve/reject. Extending it to question answers would close the loop on the 'no middleman for inputs' principle."
+    },
+    {
+      "id": "idea_038",
+      "sessionId": "132a2338-1f6a-44c4-8498-78d89841adbd",
+      "date": "Feb 25",
+      "idea": "Code Research MCP -- search StackOverflow, MDN, npm, and PyPI in a single query; identified as the missing research tool in our setup",
+      "context": "Claude identified this as 'the only thing left to install' from the tech stack audit: 'free, open source, 30 seconds to add.' It was installed in S47. Checking if it is still configured and working.",
+      "status": "unknown",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "Was installed in S47 from https://github.com/nahmanmate/code-research-mcp-server. Should be in ~/.mcp.json. Worth verifying it is still present and working."
+    },
+    {
+      "id": "idea_039",
+      "sessionId": "93e1bcc1-fc69-48f8-af12-fc500baeafb9",
+      "date": "Feb 26",
+      "idea": "SkillsView tab -- the UI tab exists (key: SK) but is not wired to any data; the Rust command exists but was staged and never activated due to Rust crashes in an earlier session",
+      "context": "From direction.json scope entry 'SkillsView (deferred)': 'Rust changes keep crashing the client. Deferred until context/memory system is solid. Code is staged and ready, just not activated.' The Brain MO is now complete -- the deferral reason no longer applies.",
+      "status": "deferred",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "The scope entry says 'deferred' with the rationale now resolved. SkillsView shows Claude's capabilities -- plugins, MCP servers, accounts. The code is staged. This could be re-evaluated now that the brain work is complete."
+    },
+    {
+      "id": "idea_040",
+      "sessionId": "6812fcda-f05b-43da-a37d-82b2e3c88d5a",
+      "date": "Feb 26",
+      "idea": "MCP server single-point-of-failure mitigation -- the MCP server handles ALL hw_* operations with no fallback; if it goes down everything stops. Options: health check watchdog, local fallback mode, or at minimum a Discord notification when the server dies",
+      "context": "Claude: 'HW MCP Server -- every single operation flows through it. Brain store, brain retrieve, task management, approvals, workflows, deliberation. If the MCP process dies, the entire system is dead. No redundancy, no health check restarts it.' This was identified in the architecture audit but not in the 6 fixes that were applied.",
+      "status": "forgotten",
+      "source": "claude",
+      "relatedTasks": [],
+      "notes": "Different from idea_029 (which focuses on auto-restart). This is the broader design concern. Even with auto-restart, the question of what Claude does when the MCP is down (degrade gracefully vs fail hard) was not addressed."
+    }
+  ],
+  "summary": {
+    "totalIdeas": 40,
+    "byStatus": {
+      "forgotten": 18,
+      "deferred": 14,
+      "partially-implemented": 6,
+      "unknown": 1,
+      "implemented": 0
+    },
+    "bySource": {
+      "claude": 24,
+      "pat": 14,
+      "deliberation": 2
+    },
+    "highPriority": [
+      "idea_004 -- Memory quality feedback loop (deliberation queued, first-mover opportunity)",
+      "idea_020 -- Reflection/prediction auto-trigger (built, dead code, never called)",
+      "idea_021 -- Cortex merger in retrieval (built, not connected)",
+      "idea_010 -- Brain enforcement gates (nudge exists, hard block never built)",
+      "idea_022 -- Signal detector missing 3 critical patterns",
+      "idea_036 -- Pain memories not protected from pruning",
+      "idea_026 -- Research timeline subtab (in_progress, almost done)"
+    ],
+    "sessionsAnalyzed": [
+      {"id": "a84e887a", "label": "S45", "date": "Feb 24"},
+      {"id": "c0ce4838", "label": "S46", "date": "Feb 25"},
+      {"id": "132a2338", "label": "S47", "date": "Feb 25"},
+      {"id": "9bffb8ab", "label": "S48/49", "date": "Feb 26"},
+      {"id": "97d5596f", "label": "S51", "date": "Feb 26"},
+      {"id": "93e1bcc1", "label": "S52a", "date": "Feb 26"},
+      {"id": "f2a987e1", "label": "S52b", "date": "Feb 26"},
+      {"id": "6812fcda", "label": "S52c", "date": "Feb 26"}
+    ]
+  }
+}

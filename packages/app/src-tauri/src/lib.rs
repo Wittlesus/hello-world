@@ -232,6 +232,36 @@ fn get_approvals(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn get_research(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "research-outputs.json")
+}
+
+#[tauri::command]
+fn get_extracted_research(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "extracted-research.json")
+}
+
+#[tauri::command]
+fn get_deliberations(project_path: &str) -> Result<Value, String> {
+    let hw_dir = std::path::Path::new(project_path).join(".hello-world").join("deliberations");
+    if !hw_dir.exists() {
+        return Ok(Value::Array(vec![]));
+    }
+    let mut results = Vec::new();
+    let entries = std::fs::read_dir(&hw_dir).map_err(|e| e.to_string())?;
+    for entry in entries {
+        let entry = entry.map_err(|e| e.to_string())?;
+        let path = entry.path();
+        if path.extension().and_then(|e| e.to_str()) == Some("json") {
+            let content = std::fs::read_to_string(&path).map_err(|e| e.to_string())?;
+            let parsed: Value = serde_json::from_str(&content).map_err(|e| e.to_string())?;
+            results.push(parsed);
+        }
+    }
+    Ok(Value::Array(results))
+}
+
+#[tauri::command]
 fn get_workflow(project_path: &str) -> Result<Value, String> {
     read_json_file(project_path, "workflow.json")
 }
@@ -1181,6 +1211,9 @@ pub fn run() {
             get_brain_state,
             get_activity,
             get_approvals,
+            get_research,
+            get_extracted_research,
+            get_deliberations,
             get_workflow,
             get_direction,
             mark_direction_note_read,

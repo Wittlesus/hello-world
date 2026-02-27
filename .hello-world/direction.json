@@ -1,5 +1,5 @@
 {
-  "vision": "The deliberation room is the external prototype for what the brain system should do natively. When facing a significant decision, the brain engine runs it through multiple cognitive modes in parallel (Contrarian, Pre-mortem, First Principles, Steelman, Analogist, Constraint), surfaces the tensions, then synthesizes. Right now Pat triggers deliberations manually. The long-term target: the system detects decision points automatically and runs internal deliberation before surfacing a recommendation. The human cognitive architecture epic and the deliberation room are the same feature â€” one internal, one external.",
+  "vision": "An autonomous AI workspace that mimics how humans are made -- taking the brain system to its full logical conclusion. Memory, learning, reflection, prediction, and decision-making working together like a biological system. Claude operates as primary developer with persistent identity across unlimited sessions. Pat steers strategy. Privacy is non-negotiable. No external service dependencies.",
   "scope": [
     {
       "area": "Context loading",
@@ -209,6 +209,36 @@
       "capturedAt": "2026-02-26T04:20:34.965Z",
       "actionTaken": "task",
       "actionId": "t_f7899ace"
+    },
+    {
+      "id": "n_mm44j5nt",
+      "text": "Context tab and History > Timeline tab should be auto-populated by the brain system. Timeline should auto-build from session activity, decisions, and task completions -- not be a static manually-written file. Context should pull from brain data, not just direction.json. These tabs should get filled automatically like everything else in Magnum Opus.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-26T23:58:18.473Z",
+      "actionTaken": "task",
+      "actionId": "t_9876f220"
+    },
+    {
+      "id": "n_mm45w0bx",
+      "text": "Integrate Qwen (latest open-source model) as a secondary AI mind. Goal: lower usage costs and get diverse perspective. Pat believes this could 10x productivity by having another model available for tasks.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T00:36:17.709Z"
+    },
+    {
+      "id": "n_mm45w1e9",
+      "text": "Boardrooms: team collaboration spaces for agents. Whiteboard file (shared research) + chat file (forced usernames, timestamps, 160 char limit per message). Chat enforces chatroom behavior -- short back-and-forth, not essays. Different from deliberations (those are for decisions). Boardrooms are for teams to actually work together like a dev team. Agents should have read/write access to both files and interact freely.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T00:36:19.089Z"
+    },
+    {
+      "id": "n_mm45w3qa",
+      "text": "Future: Reddit scouting -- scan subreddits for AI/dev space intel similar to how we scan GitHub. Save for later.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T00:36:22.114Z"
     }
   ]
 }

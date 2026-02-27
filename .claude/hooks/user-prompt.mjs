@@ -71,10 +71,10 @@ process.stdout.write(parts.join(' ') + '\n');
 // ── Brain retrieval ─────────────────────────────────────────────
 
 let brainSignalFiles = [];
+let prompt = '';
 
 try {
   // Read user prompt from stdin (synchronous, works on Windows)
-  let prompt = '';
   try {
     const raw = readFileSync(0, 'utf8');
     const parsed = JSON.parse(raw);
@@ -150,6 +150,44 @@ try {
   }
 } catch {
   // Brain retrieval is non-fatal. Status line was already output.
+}
+
+// ── Signal Queue: inject uncaptured signal nudges ─────────────────
+try {
+  const { peekQueue, flushQueue, formatSignalNudge, detectUserSignals, enqueueSignals } =
+    await import(pathToFileURL(join(PROJECT, '.claude/hooks/signal-detector.mjs')).href);
+
+  // Save current user prompt for structural validation in Stop hook
+  if (prompt && prompt.length > 10) {
+    const queuePath = join(HW, 'signal-queue.json');
+    try {
+      const q = JSON.parse(readFileSync(queuePath, 'utf8'));
+      q.lastUserMessage = prompt.slice(0, 500);
+      const tmp = queuePath + '.tmp';
+      writeFileSync(tmp, JSON.stringify(q, null, 2), 'utf8');
+      renameSync(tmp, queuePath);
+    } catch { /* non-fatal */ }
+
+    // Detect signals in user message (pushback, instructions)
+    const userSignals = detectUserSignals(prompt);
+    if (userSignals.length > 0) {
+      enqueueSignals(userSignals);
+    }
+  }
+
+  // Read queued signals and format nudge
+  const queued = peekQueue();
+  if (queued.length > 0) {
+    const nudge = formatSignalNudge(queued);
+    if (nudge) {
+      process.stdout.write('\n' + nudge + '\n');
+    }
+    // Flush after injecting (signals have been surfaced to Claude)
+    flushQueue();
+  }
+} catch (err) {
+  // Signal queue is non-fatal, but log for debugging
+  process.stderr.write(`[signal-queue] Error: ${err.message}\n`);
 }
 
 // ── Signal Buddy: Claude is about to respond ────────────────────

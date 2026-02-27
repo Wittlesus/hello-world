@@ -95,7 +95,7 @@
     "roundNumber": 1,
     "startedAt": "2026-02-24T04:48:41.729Z",
     "startedBy": "claude",
-    "status": "active",
+    "status": "concluded",
     "topic": "User test plan for the chatroom deliberation panel — what should we verify, what could break, and is the feature ready for real use?",
     "waitingForInput": false
   }

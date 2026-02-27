@@ -2,7 +2,7 @@
   "session": {
     "id": "chat_e3826d55",
     "topic": "Test: should this deliberation feature be considered working?",
-    "status": "active",
+    "status": "concluded",
     "startedAt": "2026-02-24T05:18:38.422Z",
     "startedBy": "claude",
     "waitingForInput": false,

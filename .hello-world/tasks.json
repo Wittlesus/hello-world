@@ -607,11 +607,11 @@
       "id": "t_ecdd0782",
       "title": "Buddy recap on startup: detached subprocess summary of last session",
       "description": "3 of 4 sub-tasks done. Remaining: Rust startup check (t_83fd9f54, needs worktree). Done: (1) Rolling buffer writer in PreCompact hook, (2) Detached AI recap generator script at .claude/recap-generator.mjs, (3) Speech bubble UI in BuddyOverlay.tsx with typing animation + auto-dismiss. All compiles clean.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T02:51:33.119Z",
-      "updatedAt": "2026-02-26T04:11:22.210Z"
+      "updatedAt": "2026-02-26T15:05:35.374Z"
     },
     {
       "id": "t_caa32ae8",
@@ -1049,21 +1049,21 @@
       "id": "t_e60b91e0",
       "title": "Design and implement subagent team strategy",
       "description": "Design a comprehensive team strategy where specialized subagent teams work together on different aspects of the Hello World project. Teams: Red Team (security, exploit finding, adversarial testing), Dev Team (feature implementation, code quality), UX Team (user personas of varying skill levels), Strategy Team (tech CEO perspectives, product direction), Security Team (audit, hardening), QA Team (testing, edge cases). Each team needs: defined roles, coordination patterns, when to spawn, how results feed back. Pat wants liberal agent usage -- no token conservation.",
-      "status": "in_progress",
+      "status": "todo",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T04:32:08.982Z",
-      "updatedAt": "2026-02-26T04:32:13.174Z"
+      "updatedAt": "2026-02-26T15:05:30.397Z"
     },
     {
       "id": "t_8b568003",
       "title": "Crash-safety sentinel: buddy-spawned hidden process that survives crashes",
       "description": "Redesign the watcher system as a persistent crash-safety sentinel. Buddy spawns a hidden Node.js process (windowsHide: true) on startup that polls the Tauri PID. On app death (crash or clean exit), sentinel runs recovery: backup state files, write crash-marker.json, preserve activity log. Buddy shows a shield indicator (lit=polling, dark=inactive). If sentinel dies, buddy respawns it. Replaces the per-task app_shutdown_copy pattern. Needs: (1) Rust command in lib.rs to spawn hidden process and report app PID, (2) sentinel.mjs script that polls and runs recovery, (3) BuddyOverlay shield indicator with health check, (4) SessionStart hook reads crash-marker.json on next boot.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-26T05:18:46.800Z",
-      "updatedAt": "2026-02-26T05:20:55.293Z"
+      "updatedAt": "2026-02-26T15:05:23.843Z"
     },
     {
       "id": "t_c7ac2792",
@@ -1144,6 +1144,213 @@
       "dependsOn": [],
       "createdAt": "2026-02-26T09:48:04.087Z",
       "updatedAt": "2026-02-26T09:53:20.507Z"
+    },
+    {
+      "id": "t_07a47fa8",
+      "title": "Brain Magnum Opus S49: Quality gates, reflections, memory linking",
+      "description": "S49 of Brain Magnum Opus. ~600 lines across:\n- reflection.ts: new file for reflection-type memories (predictions, surprises, meta-observations)\n- linker.ts: new file for memory linking (resolves/extends/related relationships)\n- Quality gate in storeMemory: reject < 0.15, fingerprint dedup, conflict resolution\n- Prediction-error auto-capture: only store surprises, not routine events\nReference: Think tank reports in C:\\Users\\Patri\\.claude\\plans\\prancy-beaming-moler*.md",
+      "status": "done",
+      "tags": [
+        "brain",
+        "magnum-opus",
+        "s49"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T10:07:53.088Z",
+      "updatedAt": "2026-02-26T10:45:39.016Z"
+    },
+    {
+      "id": "t_77410b2c",
+      "title": "Brain Magnum Opus S50: Cortex learning, pruning, learned rules",
+      "description": "S50 of Brain Magnum Opus. ~500 lines across:\n- cortex-learner.ts: auto-learn cortex entries from gaps (words that hit fuzzy but not cortex)\n- rules.ts: extract learned rules from repeated reflection patterns, promote to CLAUDE.md candidates\n- Memory pruning: archive superseded/stale memories to memories-archive.json\n- New JSON files: cortex-learned.json, learned-rules.json, memories-archive.json\nReference: Think tank reports",
+      "status": "done",
+      "tags": [
+        "brain",
+        "magnum-opus",
+        "s50"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T10:33:57.692Z",
+      "updatedAt": "2026-02-26T10:41:32.795Z"
+    },
+    {
+      "id": "t_0b13a6f7",
+      "title": "Brain Magnum Opus S51: Enforcement, observability, hw_brain_health",
+      "description": "S51 of Brain Magnum Opus (final phase). ~300 lines:\n- hw_brain_health MCP tool: memory count by type/health, review queue, cortex stats, learned rules count\n- Smart checkpoints: adaptive interval based on significant events + context phase\n- Wire pruner into hw_end_session for automatic maintenance\n- Wire rules extraction into hw_end_session",
+      "status": "done",
+      "tags": [
+        "brain",
+        "magnum-opus",
+        "s51"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T10:41:34.353Z",
+      "updatedAt": "2026-02-26T10:45:38.436Z"
+    },
+    {
+      "id": "t_413855d4",
+      "title": "Post-restart verification: Brain Magnum Opus end-to-end",
+      "description": "After MCP restart, verify all S49-S51 brain modules work live through the MCP tools, not just via direct node imports.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T10:51:16.541Z",
+      "updatedAt": "2026-02-26T13:23:13.374Z"
+    },
+    {
+      "id": "t_6d9585a0",
+      "title": "Update system-explorer.html with Brain Magnum Opus architecture",
+      "description": "Add the 8 brain engine modules (quality gate, linker, scorer, health, engine, cortex learner, rules, pruner) as a new BRAIN ENGINE group. Add new data stores (brain-state.json, cortex-learned.json, learned-rules.json, memories-archive.json). Add brain connections, Brain System preset view, and Brain Lifecycle workflow.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T13:26:24.899Z",
+      "updatedAt": "2026-02-26T13:37:14.118Z"
+    },
+    {
+      "id": "t_b757a685",
+      "title": "System resilience task force: address 10 failure points from architecture audit",
+      "description": "6 Opus agents working in parallel on: (1) Quality gate O(n) perf, (2) Circuit breakers for brain modules, (3) Data store safety/backup, (4) Discord queue + SessionStart resilience, (5) Cortex learner latency + file watcher coalescing, (6) Cross-cutting architecture review. All research/design first, then consolidated implementation.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T13:49:41.256Z",
+      "updatedAt": "2026-02-26T15:05:41.116Z"
+    },
+    {
+      "id": "t_7cfc5442",
+      "title": "Fix hw_brain_health crash on memories without links field",
+      "description": "health.ts lines 112 and 283 access mem.links.length without optional chaining. Old memories pre-dating the brain magnum opus don't have a links field, causing \"Cannot read properties of undefined (reading 'length')\" crash. Fix: add optional chaining (mem.links?.length ?? 0).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T15:10:03.540Z",
+      "updatedAt": "2026-02-26T15:11:08.217Z"
+    },
+    {
+      "id": "t_29eab786",
+      "title": "Backfill old memories: quality scores, fingerprints, and links",
+      "description": "198 of 212 memories pre-date the brain magnum opus and lack quality scores, fingerprints, and links. Write a migration script that runs computeFingerprint, computeQualityScore, and findLinks on all old memories. This should bring brain health from B to A.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T15:13:53.386Z",
+      "updatedAt": "2026-02-26T15:15:12.007Z"
+    },
+    {
+      "id": "t_62f1786c",
+      "title": "Brain MO integration test: prove every module fires under real usage",
+      "description": "Exercise the full brain pipeline through normal MCP tool calls. Store memories (quality gate + linker), retrieve memories (scoring + link traversal + synaptic activity + cortex gaps), then end session (plasticity + pruning + rules + cortex flush). Audit data files after each phase to prove the pipeline left evidence. This is the acceptance test for the Magnum Opus.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T15:21:23.219Z",
+      "updatedAt": "2026-02-26T15:26:54.017Z"
+    },
+    {
+      "id": "t_22296063",
+      "title": "Deep research: AI agent memory systems -- what actually works",
+      "description": "6-agent parallel research sprint to evaluate whether our brain MO is useful, overengineered, or missing key patterns. Research what competitors do, what the research says, and what simpler approaches might outperform our 14-module system.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T15:32:25.925Z",
+      "updatedAt": "2026-02-26T16:01:54.569Z"
+    },
+    {
+      "id": "t_3071ae5e",
+      "title": "Build deliberation and research transcript timeline subtab",
+      "description": "New subtab with horizontal scrollable timeline (drag and fling to scroll). Two entry types: deliberation (people icon) and research (flask icon). Hover shows summary of what the delib/research was about. Click opens instant popup window with the full transcript, formatted neatly and aesthetically. Timeline entries organized chronologically, scrollable left-right. Need to: (1) define storage format for transcripts, (2) build the timeline component, (3) build the hover preview, (4) build the popup viewer, (5) wire to existing deliberation/research data.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T16:01:48.411Z",
+      "updatedAt": "2026-02-26T23:59:25.422Z"
+    },
+    {
+      "id": "t_c01ebbfc",
+      "title": "Design automatic memory capture -- detect and store significant moments",
+      "description": "Research complete. 3 research agents mapped the landscape (hooks, current infrastructure, signal detection patterns). 6 agents reverse-engineered community plugins. Now need to synthesize into a design and build it. The design should combine: (1) Stop/PreCompact hook signal detection with broad regex pre-filter + structural validation, (2) Fresh subprocess extraction using transcript_path, (3) Quality gate as the final filter, (4) Feedback loop connecting retrieval usefulness back to memory scoring, (5) Prompt-relevant injection in UserPromptSubmit.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T16:11:50.407Z",
+      "updatedAt": "2026-02-26T17:08:09.178Z"
+    },
+    {
+      "id": "t_e5fd354d",
+      "title": "Build auto-capture signal detector and wire into hooks",
+      "description": "Create signal-detector.mjs with expanded pattern set (shifts, corrections, bugs, verifications, user instructions, research conclusions, insights, methods). Wire into Stop hook to detect on last_assistant_message. Wire into UserPromptSubmit to inject specific memory nudges. Wire into PreCompact for final sweep. Test on real transcript data.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T17:00:21.192Z",
+      "updatedAt": "2026-02-26T17:08:08.632Z"
+    },
+    {
+      "id": "t_9829339b",
+      "title": "Extract and absorb all historical session data into memory + app",
+      "description": "Scour all 272 session transcripts and 148 subagent outputs from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/. Extract: research findings, deliberation conclusions, forgotten ideas, architectural decisions, pain points, wins, and any valuable context. Absorb into hw_store_memory and collect research/deliberation outputs into .hello-world/ for the app to display. 162MB of data across Feb 22-26.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T17:44:56.278Z",
+      "updatedAt": "2026-02-26T18:35:59.556Z"
+    },
+    {
+      "id": "t_5d511b12",
+      "title": "Wiring sprint: connect all built-but-unwired brain modules to runtime",
+      "description": "Wire reflection, prediction, cortex merger, contradiction detection into their runtime call paths. Protect pain memories from pruning. Fix get_research in lib.rs. Expand signal detector patterns. All code exists and is tested -- just needs to be connected.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T18:13:44.100Z",
+      "updatedAt": "2026-02-26T18:13:49.174Z"
+    },
+    {
+      "id": "t_952ef3af",
+      "title": "Wire previous-session transcript recap into SessionStart hook",
+      "description": "At every session start, read the previous session's JSONL transcript from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/, extract user messages + assistant text responses, and include a condensed recap in the session start output. Pat wants to see what happened last session automatically.",
+      "status": "done",
+      "tags": [
+        "hook",
+        "session-start",
+        "recap",
+        "transcript"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T18:23:54.065Z",
+      "updatedAt": "2026-02-26T18:25:28.762Z"
+    },
+    {
+      "id": "t_9876f220",
+      "title": "Auto-populate Timeline and Context tabs from brain data",
+      "description": "Timeline tab (History > Timeline) should auto-generate from sessions.json, activity.json, decisions, and task completions -- not be a static hand-written file. Context tab (P key) should pull from brain data (decisions, memories, strategic state) in addition to direction.json. Both tabs should stay current automatically as the brain system processes new data.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-26T23:59:40.220Z",
+      "updatedAt": "2026-02-26T23:59:43.464Z"
+    },
+    {
+      "id": "t_042f2b87",
+      "title": "Deep research: Qwen 3.5 model evaluation for Hello World integration",
+      "description": "Full evaluation of Qwen 3.5 / Qwen3-Coder before integration. Cover: exact capabilities and limitations, knowledge cutoff and training data vs Claude, coding style and standards compliance, where it excels vs where it falls short, API access options (Groq/Together/Ollama/local), context window and tool-calling support, how to enforce our coding standards (ESM, TypeScript, project conventions), guardrails needed, coworking model (what tasks go to Qwen vs Claude vs both), cost analysis. This is a prerequisite before any Qwen code touches the codebase.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T00:41:09.273Z",
+      "updatedAt": "2026-02-27T01:29:20.825Z"
+    },
+    {
+      "id": "t_79a6a6d1",
+      "title": "Qwen integration Phase 1: callQwen + provider routing + boardroom foundation",
+      "description": "Add Qwen as a model provider in the agent system. Steps: 1) callQwen() function using OpenAI npm package pointed at DeepInfra/DashScope, 2) provider field on AgentDefinition, 3) route runSingleAgent by provider, 4) DASHSCOPE_API_KEY env var, 5) basic boardroom infrastructure (chat.json with 160-char limit, whiteboard.json, agent usernames + timestamps). No Rust changes needed -- pure TypeScript in packages/core.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T01:29:24.680Z",
+      "updatedAt": "2026-02-27T01:29:27.612Z"
     }
   ],
   "milestones": []

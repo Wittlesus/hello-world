@@ -949,8 +949,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:11:32.945Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:11:32.945Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_dd201e37",
@@ -1532,10 +1533,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 4,
+      "synapticStrength": 1.1,
+      "accessCount": 5,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-26T13:22:22.731Z"
     },
     {
       "id": "mem_823838dc",
@@ -1573,10 +1574,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 4,
+      "synapticStrength": 1.1,
+      "accessCount": 5,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-26T13:22:22.731Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1594,10 +1595,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 4,
+      "synapticStrength": 1.1,
+      "accessCount": 5,
       "createdAt": "2026-02-25T08:14:24.115Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-26T13:22:22.731Z"
     },
     {
       "id": "mem_254f24ba",
@@ -1653,10 +1654,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 2,
+      "synapticStrength": 1.1,
+      "accessCount": 3,
       "createdAt": "2026-02-25T08:14:43.154Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-26T13:22:22.731Z"
     },
     {
       "id": "mem_286ad94e",
@@ -1802,10 +1803,10 @@
         "cross-project"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 3,
+      "synapticStrength": 1.1,
+      "accessCount": 5,
       "createdAt": "2026-02-25T08:15:06.038Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
     },
     {
       "id": "mem_9fdb8bf1",
@@ -1936,9 +1937,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:24.783Z"
+      "synapticStrength": 1.1,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:15:24.783Z",
+      "lastAccessed": "2026-02-26T13:22:22.731Z"
     },
     {
       "id": "mem_d26abc7a",
@@ -2067,8 +2069,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:46.346Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:15:46.346Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_b09860e3",
@@ -2086,8 +2089,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:51.161Z"
+      "accessCount": 2,
+      "createdAt": "2026-02-25T08:15:51.161Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_41a6221d",
@@ -2125,8 +2129,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:56.616Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:15:56.616Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_6bdb555b",
@@ -2180,10 +2185,10 @@
         "cross-project"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 3,
+      "synapticStrength": 1.1,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:16:04.553Z",
-      "lastAccessed": "2026-02-26T07:56:08.558Z"
+      "lastAccessed": "2026-02-26T13:22:22.731Z"
     },
     {
       "id": "mem_59e03bc4",
@@ -2406,9 +2411,9 @@
       ],
       "severity": "medium",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 2,
       "createdAt": "2026-02-25T08:16:55.529Z",
-      "lastAccessed": "2026-02-26T07:08:03.240Z"
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
     },
     {
       "id": "mem_db5022fa",
@@ -2500,8 +2505,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:17:27.740Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:17:27.740Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_d94b2911",
@@ -2827,8 +2833,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T03:30:24.851Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-26T03:30:24.851Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_49c7b3ae",
@@ -2971,8 +2978,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T03:49:24.098Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-26T03:49:24.098Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_77f8045c",
@@ -3101,8 +3109,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T03:56:18.123Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-26T03:56:18.123Z",
+      "lastAccessed": "2026-02-26T15:46:11.663Z"
     },
     {
       "id": "mem_eedd2cc0",
@@ -3420,8 +3429,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T09:46:37.875Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-26T09:46:37.875Z",
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
     },
     {
       "id": "mem_e847972f",
@@ -3437,6 +3447,2340 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T09:53:20.510Z"
+    },
+    {
+      "id": "mem_6b07e1cf",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "S49 Brain Magnum Opus: 4 new modules, 106 new tests, zero build errors",
+      "content": "Built quality-gate.ts (566L), linker.ts (602L), reflection.ts (865L), prediction.ts (704L + 114L types). Integrated quality gate into store.ts storeMemory(). Extracted engine.ts stage 5.5 into linker module. Updated server.ts for gate-aware responses. 106 new tests all passing. 6-agent parallel design sprint produced blueprints that compiled clean against existing codebase.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "magnum-opus",
+        "s49",
+        "quality-gate",
+        "linker",
+        "reflection",
+        "prediction"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T10:29:25.572Z",
+      "links": [
+        {
+          "targetId": "mem_2372c3be",
+          "relationship": "related",
+          "createdAt": "2026-02-26T17:55:53.332Z"
+        }
+      ]
+    },
+    {
+      "id": "mem_2c399f91",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain Magnum Opus S50: Cortex learning, pruning, learned rules",
+      "content": "S50 of Brain Magnum Opus. ~500 lines across:\n- cortex-learner.ts: auto-learn cortex entries from gaps (words that hit fuzzy but not cortex)\n- rules.ts: extract learned rules from repeated reflection patterns, promote to CLAUDE.md candidates\n- Memory pruning: archive superseded/stale memories to memories-archive.json\n- New JSON files: cortex-learned.json, learned-rules.json, memories-archive.json\nReference: Think tank reports",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "brain",
+        "magnum-opus",
+        "s50"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T10:41:32.800Z",
+      "links": []
+    },
+    {
+      "id": "mem_8bd37144",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain Magnum Opus S51: Enforcement, observability, hw_brain_health",
+      "content": "S51 of Brain Magnum Opus (final phase). ~300 lines:\n- hw_brain_health MCP tool: memory count by type/health, review queue, cortex stats, learned rules count\n- Smart checkpoints: adaptive interval based on significant events + context phase\n- Wire pruner into hw_end_session for automatic maintenance\n- Wire rules extraction into hw_end_session",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "brain",
+        "magnum-opus",
+        "s51"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T10:45:38.440Z",
+      "links": []
+    },
+    {
+      "id": "mem_a7669e03",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain Magnum Opus S49: Quality gates, reflections, memory linking",
+      "content": "S49 of Brain Magnum Opus. ~600 lines across:\n- reflection.ts: new file for reflection-type memories (predictions, surprises, meta-observations)\n- linker.ts: new file for memory linking (resolves/extends/related relationships)\n- Quality gate in storeMemory: reject < 0.15, fingerprint dedup, conflict resolution\n- Prediction-error auto-capture: only store surprises, not routine events\nReference: Think tank reports in C:\\Users\\Patri\\.claude\\plans\\prancy-beaming-moler*.md",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "brain",
+        "magnum-opus",
+        "s49"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T10:45:39.020Z",
+      "links": []
+    },
+    {
+      "id": "mem_a21ec7d8",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Brain Magnum Opus COMPLETE: S48-S51, 12 modules, 196 tests, single session",
+      "content": "Completed the entire 4-session Brain Magnum Opus roadmap in a single session. S48 was already done. S49 (quality gates, reflection, linking, prediction), S50 (cortex learning, rules, pruning), and S51 (health dashboard, enforcement) all built, tested, and pushed. 6-agent parallel design sprint for S49 produced compilable blueprints. Total: 12 new brain modules, 4,017 lines production code, 196 new tests, 0 build errors.",
+      "rule": "For large multi-session roadmaps, use parallel agents for initial design then integrate sequentially. Agent blueprints that compile clean can be used directly instead of rewriting.",
+      "tags": [
+        "brain",
+        "magnum-opus",
+        "architecture",
+        "parallel-agents"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T10:45:48.705Z",
+      "links": []
+    },
+    {
+      "id": "mem_f077cbf1",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Test: quality gate accepts well-formed memories",
+      "content": "Testing quality gate",
+      "rule": "Always verify after restart",
+      "tags": [
+        "testing",
+        "strategy",
+        "autonomy"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T13:20:13.705Z",
+      "links": [],
+      "qualityScore": 0.75,
+      "fingerprint": "431ef06db2be"
+    },
+    {
+      "id": "mem_32565078",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Post-restart verification: Brain Magnum Opus end-to-end",
+      "content": "After MCP restart, verify all S49-S51 brain modules work live through the MCP tools, not just via direct node imports.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "mcp"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T13:23:13.382Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "1a76f459b20b"
+    },
+    {
+      "id": "mem_c417677b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Update system-explorer.html with Brain Magnum Opus architecture",
+      "content": "Add the 8 brain engine modules (quality gate, linker, scorer, health, engine, cortex learner, rules, pruner) as a new BRAIN ENGINE group. Add new data stores (brain-state.json, cortex-learned.json, learned-rules.json, memories-archive.json). Add brain connections, Brain System preset view, and Brain Lifecycle workflow.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "architecture",
+        "strategy",
+        "autonomy"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T13:37:14.127Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "680ea40b476b"
+    },
+    {
+      "id": "mem_0381a223",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Ignored handoff verification checklist -- summarized instead of executing",
+      "content": "Session 52: The handoff from S51 had a 10-step verification checklist. Instead of running it immediately, I summarized the session state and asked Pat \"What do you need from me?\" Pat had to explicitly say \"don't you have instructions in the handoff\" before I started executing. The handoff exists specifically so the next session runs verification steps, not reviews them.",
+      "rule": "When a handoff contains a verification checklist, execute it immediately as the FIRST action. Do not summarize, do not ask what to do, do not skip steps. Run them in order.",
+      "tags": [
+        "handoff",
+        "verification",
+        "session-start",
+        "discipline"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:00:24.978Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "8251bd3f7ee3"
+    },
+    {
+      "id": "mem_96d6d8d3",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Forgot sentinel was shipped -- no win memory recorded, task left in_progress",
+      "content": "Session 52: Told Pat the crash sentinel was never finished. It was fully built and running (sentinel.mjs, Rust spawn_sentinel command, crash-backup dir, sentinel.json tracking). The task t_8b568003 was left in_progress instead of marked done, and no win memory was stored when it shipped. Result: next session had zero awareness it existed.",
+      "rule": "When shipping a feature, ALWAYS: (1) mark the task done, (2) store a win memory with what was built and where the code lives. If either is missing, the feature is invisible to future sessions.",
+      "tags": [
+        "memory-system",
+        "task-hygiene",
+        "sentinel",
+        "shipping"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:05:10.841Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "552fd64af76c"
+    },
+    {
+      "id": "mem_99142307",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Crash safety sentinel -- detached process survives app crashes",
+      "content": "Sentinel system fully shipped. sentinel.mjs polls Tauri app PID every 2.5s. On crash: backs up all .hello-world/*.json state files to crash-backup/, writes crash-marker.json. Rust: spawn_sentinel and get_sentinel_status commands in lib.rs. Buddy shows shield indicator (lit=active, dark=dead). Auto-spawns on app startup.",
+      "rule": "",
+      "tags": [
+        "sentinel",
+        "crash-safety",
+        "buddy",
+        "rust"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:05:18.324Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "cd3191f0ea23"
+    },
+    {
+      "id": "mem_496c1ff2",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Crash-safety sentinel: buddy-spawned hidden process that survives crashes",
+      "content": "Redesign the watcher system as a persistent crash-safety sentinel. Buddy spawns a hidden Node.js process (windowsHide: true) on startup that polls the Tauri PID. On app death (crash or clean exit), sentinel runs recovery: backup state files, write crash-marker.json, preserve activity log. Buddy shows a shield indicator (lit=polling, dark=inactive). If sentinel dies, buddy respawns it. Replaces the per-task app_shutdown_copy pattern. Needs: (1) Rust command in lib.rs to spawn hidden process and report app PID, (2) sentinel.mjs script that polls and runs recovery, (3) BuddyOverlay shield indicator with health check, (4) SessionStart hook reads crash-marker.json on next boot.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "errors",
+        "debugging",
+        "writing",
+        "hooks"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:05:23.856Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "0cca8f14bfc3"
+    },
+    {
+      "id": "mem_0b3c73dc",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Buddy recap on startup: detached subprocess summary of last session",
+      "content": "3 of 4 sub-tasks done. Remaining: Rust startup check (t_83fd9f54, needs worktree). Done: (1) Rolling buffer writer in PreCompact hook, (2) Detached AI recap generator script at .claude/recap-generator.mjs, (3) Speech bubble UI in BuddyOverlay.tsx with typing animation + auto-dismiss. All compiles clean.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "hooks",
+        "model-selection"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-26T15:05:35.387Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "a066eb13f5d1",
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
+    },
+    {
+      "id": "mem_bffb93f1",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: System resilience task force: address 10 failure points from architecture audit",
+      "content": "6 Opus agents working in parallel on: (1) Quality gate O(n) perf, (2) Circuit breakers for brain modules, (3) Data store safety/backup, (4) Discord queue + SessionStart resilience, (5) Cortex learner latency + file watcher coalescing, (6) Cross-cutting architecture review. All research/design first, then consolidated implementation.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "architecture",
+        "model-selection",
+        "strategy",
+        "autonomy",
+        "validation",
+        "design"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:05:41.129Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "a4f2ce55d744"
+    },
+    {
+      "id": "mem_005fe210",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Link test",
+      "content": "Testing that linker wires up on store",
+      "rule": "",
+      "tags": [
+        "testing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:09:00.283Z",
+      "links": [],
+      "qualityScore": 0.3,
+      "fingerprint": "0cb813dfa2a9"
+    },
+    {
+      "id": "mem_82ae4687",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix hw_brain_health crash on memories without links field",
+      "content": "health.ts lines 112 and 283 access mem.links.length without optional chaining. Old memories pre-dating the brain magnum opus don't have a links field, causing \"Cannot read properties of undefined (reading 'length')\" crash. Fix: add optional chaining (mem.links?.length ?? 0).",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging",
+        "errors",
+        "model-selection"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:11:08.229Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "dfc728f471e8"
+    },
+    {
+      "id": "mem_a4c66b94",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Backfill old memories: quality scores, fingerprints, and links",
+      "content": "198 of 212 memories pre-date the brain magnum opus and lack quality scores, fingerprints, and links. Write a migration script that runs computeFingerprint, computeQualityScore, and findLinks on all old memories. This should bring brain health from B to A.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "strategy",
+        "autonomy",
+        "model-selection",
+        "writing",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:15:12.017Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "2ab5a3cfb9e8"
+    },
+    {
+      "id": "mem_04aafa48",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "JsonStore caches in memory after first read, external file changes get clobbered",
+      "content": "The JsonStore class in storage.ts caches data after the first read() call. Any external process writing to the same JSON file will have its changes overwritten when the MCP server next calls write(). This means migration scripts must go through the MCP server, not direct file writes.",
+      "rule": "Never run external migration scripts against JSON files while the MCP server is running. Use MCP tools or restart the server after migration.",
+      "tags": [
+        "architecture",
+        "storage",
+        "jsonstore",
+        "caching"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-26T15:23:14.610Z",
+      "links": [
+        {
+          "targetId": "mem_6eca46a9",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-26T15:23:19.532Z"
+        },
+        {
+          "targetId": "mem_c6db0176",
+          "relationship": "related",
+          "createdAt": "2026-02-26T15:23:23.487Z"
+        }
+      ],
+      "qualityScore": 0.95,
+      "fingerprint": "d915bf21718f",
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
+    },
+    {
+      "id": "mem_6eca46a9",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Memory backfill script data lost because MCP server overwrote file from stale cache",
+      "content": "Ran backfill-memories.mjs which wrote fingerprints, quality scores, and links for 203 memories. The MCP server's in-memory JsonStore cache still had the old data. Next hw_store_memory call wrote the stale cache back to disk, erasing all backfill changes. 198 memories lost their links field.",
+      "rule": "Always invalidate or restart MCP server after external file modifications. Or better: route all data changes through MCP tools.",
+      "tags": [
+        "storage",
+        "data-loss",
+        "jsonstore",
+        "migration"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-26T15:23:19.521Z",
+      "links": [
+        {
+          "targetId": "mem_04aafa48",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-26T15:23:19.532Z"
+        },
+        {
+          "targetId": "mem_c6db0176",
+          "relationship": "related",
+          "createdAt": "2026-02-26T15:23:23.484Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "c1ab9b378e89",
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
+    },
+    {
+      "id": "mem_c6db0176",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Brain backfill must use MCP server internals, not external scripts",
+      "content": "To backfill old memories with fingerprints, quality scores, and links, the migration must run inside the MCP server process where the MemoryStore cache lives. Options: (1) Add hw_backfill_memories tool, (2) Add store.invalidate() call after external writes, (3) Restart MCP server after migration scripts.",
+      "rule": "Design migration tools as MCP server endpoints, not standalone scripts, when the server holds an in-memory cache.",
+      "tags": [
+        "architecture",
+        "migration",
+        "mcp-server",
+        "jsonstore"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 1,
+      "createdAt": "2026-02-26T15:23:23.476Z",
+      "links": [
+        {
+          "targetId": "mem_6eca46a9",
+          "relationship": "related",
+          "createdAt": "2026-02-26T15:23:23.484Z"
+        },
+        {
+          "targetId": "mem_04aafa48",
+          "relationship": "related",
+          "createdAt": "2026-02-26T15:23:23.487Z"
+        }
+      ],
+      "qualityScore": 0.98,
+      "fingerprint": "85e3c1492829",
+      "lastAccessed": "2026-02-26T15:23:48.368Z"
+    },
+    {
+      "id": "mem_7344ad8b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Brain MO integration test: prove every module fires under real usage",
+      "content": "Exercise the full brain pipeline through normal MCP tool calls. Store memories (quality gate + linker), retrieve memories (scoring + link traversal + synaptic activity + cortex gaps), then end session (plasticity + pruning + rules + cortex flush). Audit data files after each phase to prove the pipeline left evidence. This is the acceptance test for the Magnum Opus.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "testing",
+        "mcp",
+        "strategy",
+        "autonomy",
+        "memory",
+        "model-selection"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:26:54.029Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "fc3f83fdbe55"
+    },
+    {
+      "id": "mem_d0611513",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Hello World original pitch -- the core idea",
+      "content": "Interface to make coding and organization easier for Claude and user. Claude needs to actively understand and USE the system. Every instance of Claude -- even a brand new one -- should be able to connect and immediately understand what has been done, what needs to be done, and the context of scope and vision. IMMEDIATELY. Core pillars: transparency, guided building, built-in context and memory that gets loaded into Claude when Claude is opened within the app, long-term project development without data or memory loss.",
+      "rule": "This is the founding vision. Every feature decision should trace back to: does this help a new Claude instance get up to speed immediately and work without memory loss?",
+      "tags": [
+        "vision",
+        "founding",
+        "pitch",
+        "core-identity"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T15:52:17.811Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "14b916a527e3"
+    },
+    {
+      "id": "mem_7141a774",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Deep research: AI agent memory systems -- what actually works",
+      "content": "6-agent parallel research sprint to evaluate whether our brain MO is useful, overengineered, or missing key patterns. Research what competitors do, what the research says, and what simpler approaches might outperform our 14-module system.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "validation",
+        "strategy",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:01:54.581Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "97e3c17e12fd"
+    },
+    {
+      "id": "mem_c0b7264d",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Research gap: Task tool agent outputs have no persistent storage",
+      "content": "When running multi-agent research sprints via the Task tool, results exist only in conversation context. No automatic capture to disk. Deliberations save to deliberations.json, but research sprints vanish on session end or compaction. This means valuable research (like the 6-agent memory systems deep dive in S53) can be permanently lost. Needs: a research-outputs.json store, auto-capture of Task agent results, and a UI to browse them.",
+      "rule": "After any multi-agent research sprint, manually save a summary to brain memory AND write the full output to a persistent file until auto-capture exists.",
+      "tags": [
+        "architecture",
+        "storage",
+        "research",
+        "data-loss",
+        "gap"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:03:43.713Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "141ba2a5e547"
+    },
+    {
+      "id": "mem_09c288bc",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Research synthesis: AI memory systems -- our brain MO is research-aligned",
+      "content": "6-agent deep research (S53) studied Cursor, Windsurf, Claude Code, academic papers, practitioner patterns, and anti-patterns. Key findings: (1) Industry converges on plain markdown for CODING memory, but our use case is broader -- persistent relational memory across sessions. (2) Quality gates and pruning are research-proven essential (Xiong et al.: indiscriminate storage degrades agents by 10%). (3) Our linker aligns with A-MEM Zettelkasten approach (superior results on 6 models). (4) Plasticity/decay aligns with MemoryBank and Mnemosyne (both show improvements). (5) Rules extraction is memory consolidation (episodic to semantic), theoretically sound. (6) 52 sessions is barely a warm-up -- benchmarks run hundreds of interactions. (7) Letta found plain filesystem beat Mem0 graph on LoCoMo (74% vs 68.5%) but this measures coding context, not long-term relationship memory.",
+      "rule": "Our brain architecture is research-aligned. It needs runtime and real usage, not removal. Every module should be evaluated against the founding pitch: does it help a new Claude instance get up to speed immediately?",
+      "tags": [
+        "research",
+        "brain",
+        "architecture",
+        "memory-systems",
+        "validation"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:04:44.510Z",
+      "links": [],
+      "qualityScore": 0.95,
+      "fingerprint": "7b98f2294574"
+    },
+    {
+      "id": "mem_a7928c89",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Competitor analysis: Cursor, Windsurf, Claude Code memory approaches (Feb 2026)",
+      "content": "Cursor: 3 layers (rules files with glob patterns, cloud Memories via Gemini sidecar needing privacy mode off, codebase vector indexing). Chat history lost between sessions. Community built Memory Bank workarounds. Windsurf: workspace-scoped auto-memories (no pruning, no expiration, SpAIware security vuln), custom hybrid retrieval (dense+sparse, sub-20ms), community built replacement (cascade-memory-bank 600+ stars). Claude Code: CLAUDE.md hierarchy with 200-line auto-memory cap, session memory summaries, compaction at 95%. None of them solve long-term relationship memory -- all focus on coding conventions and project context.",
+      "rule": "Our differentiator: persistent memory across unlimited sessions with quality control. Competitors lose context between sessions or require cloud/privacy tradeoffs.",
+      "tags": [
+        "competitor",
+        "cursor",
+        "windsurf",
+        "claude-code",
+        "market-research"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:04:54.317Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "41b287bb0d54"
+    },
+    {
+      "id": "mem_7563e49f",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Academic memory research: what works for LLM agents (2024-2026)",
+      "content": "Key papers and findings: A-MEM (Zettelkasten linking, superior on 6 models), MemRL (RL-trained memory beats RAG +82%), Mem0 (26% over OpenAI Memory, 90% token reduction), Xiong et al. (indiscriminate storage = 10% decline, selective addition + deletion = 10% gain), MemoryBank (Ebbinghaus forgetting curves), Mnemosyne (hybrid scoring sub-ms retrieval), episodic memory called 'missing piece' (ICML 2025). Anti-patterns: memory poisoning real even from benign staleness, Hebbian reinforcement amplifies confabulation, ALMA meta-learned designs outperform hand-crafted. SimpleMem compression beat complex retrieval 26.4% F1.",
+      "rule": "When evaluating brain module changes, reference these papers. Quality gates + pruning are non-negotiable (Xiong). Linking is validated (A-MEM). Plasticity needs monitoring for confabulation (Hebbian risk).",
+      "tags": [
+        "research",
+        "academic",
+        "memory-systems",
+        "papers",
+        "benchmarks"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:05:04.720Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "f85c4ded4928"
+    },
+    {
+      "id": "mem_4d10cfed",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pat's model preference: Sonnet 4.6 1M for subagents, Opus for coding",
+      "content": "All reasoning, research, and deliberation subagents should use model=\"sonnet\" (Sonnet 4.6 1M context). All direct coding work stays on Opus. This is a cost/performance optimization -- Sonnet handles research and analysis well at lower cost.",
+      "rule": "When spawning Task tool agents for research, reasoning, or deliberation, always set model=\"sonnet\". Only use Opus (default) for agents that write code.",
+      "tags": [
+        "preference",
+        "model-selection",
+        "cost",
+        "workflow"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:17:17.541Z",
+      "links": [
+        {
+          "targetId": "mem_1378186a",
+          "relationship": "related",
+          "createdAt": "2026-02-27T01:30:21.606Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "91118135b41d"
+    },
+    {
+      "id": "mem_61e3dd4c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: Deep research then reverse-engineer -- competitive intelligence pattern",
+      "content": "Two-phase research method. Phase 1: spawn 6 parallel agents to research a domain broadly (competitors, academic papers, practitioner experience, simple approaches, anti-patterns). Phase 2: take the specific tools/plugins/systems found in Phase 1 and spawn agents to reverse-engineer each one -- read source code, find flaws, bottlenecks, failure points, and room for improvement. The synthesis of Phase 2 gives us a blueprint for building something better than anything that exists. Used in S53 for AI memory systems: first 6 agents mapped the landscape, then 6 agents tore apart the 6 best community plugins.",
+      "rule": "For any significant design decision, run this two-phase pattern: broad landscape research first, then targeted reverse-engineering of the best implementations found.",
+      "tags": [
+        "method",
+        "research",
+        "competitive-intelligence",
+        "reverse-engineering",
+        "workflow"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:30:05.798Z",
+      "links": [
+        {
+          "targetId": "mem_e022b342",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:30:07.007Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "58afe1f0df57"
+    },
+    {
+      "id": "mem_e022b342",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: 6-agent parallel research sprint",
+      "content": "Spawn 6 agents simultaneously, each researching a different angle of the same question. Agents cover: direct competitors, adjacent competitors, academic state of the art, practitioner experience, simple approaches that work, and failure modes/anti-patterns. Results come back in ~3-4 minutes. Synthesis happens in the main thread. Used multiple times: S53 memory systems research, earlier competitive intel runs. Use Sonnet 4.6 1M for research agents to save cost.",
+      "rule": "When researching a domain, always cover at least these 6 angles: competitors, academia, practitioners, simple baselines, and anti-patterns. Use Sonnet for research agents.",
+      "tags": [
+        "method",
+        "research",
+        "parallel-agents",
+        "workflow"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:30:06.967Z",
+      "links": [
+        {
+          "targetId": "mem_61e3dd4c",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:30:07.007Z"
+        },
+        {
+          "targetId": "mem_525e32e3",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-26T16:30:12.159Z"
+        },
+        {
+          "targetId": "mem_2c411e02",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:30:16.662Z"
+        },
+        {
+          "targetId": "mem_2df73149",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:33:14.893Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "ee6ee50f245a",
+      "supersededBy": "mem_525e32e3"
+    },
+    {
+      "id": "mem_525e32e3",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: Multi-agent parallel build with worktrees",
+      "content": "For large non-overlapping code changes, spawn multiple agents each in an isolated git worktree. Each agent works on different files without conflicts. Merge manually where shared files overlap. Used in S48 Brain Magnum Opus (4-agent parallel build shipped the entire foundation) and S52 resilience task force (6 agents). Key: run migration scripts before code changes, disable old system AFTER new one is wired.",
+      "rule": "For builds touching 4+ non-overlapping files, use parallel agent worktrees. Never have two agents edit the same file.",
+      "tags": [
+        "method",
+        "build",
+        "parallel-agents",
+        "worktree",
+        "workflow"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:30:12.142Z",
+      "links": [
+        {
+          "targetId": "mem_e022b342",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-26T16:30:12.159Z"
+        },
+        {
+          "targetId": "mem_2c411e02",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:30:16.665Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "932a4dea6c99"
+    },
+    {
+      "id": "mem_2c411e02",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: 4-agent audit pattern (UI/UX + Architecture + Cognitive + Value/ROI)",
+      "content": "For auditing any significant feature or system, spawn 4 specialist agents in parallel: (1) UI/UX agent evaluates user experience and design, (2) Architecture agent evaluates code structure, patterns, and technical debt, (3) Cognitive agent evaluates mental model clarity and information hierarchy, (4) Value/ROI agent evaluates whether the feature justifies its complexity. Cross-referencing the 4 perspectives catches issues no single lens would find. Used for Brain Magnum Opus audit in S49.",
+      "rule": "Before shipping any major feature, run the 4-agent audit: UI/UX, Architecture, Cognitive, Value/ROI.",
+      "tags": [
+        "method",
+        "audit",
+        "quality",
+        "parallel-agents",
+        "workflow"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:30:16.651Z",
+      "links": [
+        {
+          "targetId": "mem_e022b342",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:30:16.662Z"
+        },
+        {
+          "targetId": "mem_525e32e3",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:30:16.665Z"
+        },
+        {
+          "targetId": "mem_ee3c8f17",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-26T16:33:01.859Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "8d0557cd8dae"
+    },
+    {
+      "id": "mem_ab99537b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: Deliberation system -- multi-agent debate with mediator for binding decisions",
+      "content": "For decisions that matter: plan sub-questions, get Pat's approval, run a multi-agent deliberation with cognitive modes (Contrarian, Pre-mortem, First Principles, Steelman, Analogist, Constraint). Mediator tracks coverage with quality tags (consensus/tension/shifted). Coverage check ensures every sub-question got substantive treatment. Conclusion requires synthesis. Used for state storage architecture (JSON vs SQLite), deliberation guardrails design, multi-project architecture. Separate from quick insights (non-binding, 2-4 agents, no sub-questions).",
+      "rule": "Any decision affecting architecture, scope, or strategy goes through full deliberation. Quick insights are for flavor-testing only.",
+      "tags": [
+        "method",
+        "deliberation",
+        "decision-making",
+        "workflow"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:30:23.130Z",
+      "links": [
+        {
+          "targetId": "mem_cdd7245d",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:33:08.483Z"
+        }
+      ],
+      "qualityScore": 0.85,
+      "fingerprint": "0e4dd2489f99"
+    },
+    {
+      "id": "mem_ee3c8f17",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Method caveat: 4-agent audit found issues but some were false positives",
+      "content": "The 4-agent audit pattern (UI/UX + Architecture + Cognitive + Value/ROI) used in S49 for Brain MO audit found real issues but also produced recommendations that were over-engineered or missed the mark. Some agents flagged theoretical problems that weren't practical concerns. The audit added value but results need critical filtering -- not every agent recommendation should be acted on.",
+      "rule": "When running multi-agent audits, treat results as input for judgment, not as a todo list. Filter through: does this actually affect users? Is this a real problem or a theoretical one?",
+      "tags": [
+        "method",
+        "audit",
+        "quality",
+        "false-positives"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:33:01.849Z",
+      "links": [
+        {
+          "targetId": "mem_2c411e02",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-26T16:33:01.859Z"
+        }
+      ],
+      "qualityScore": 0.88,
+      "fingerprint": "5738e249521d"
+    },
+    {
+      "id": "mem_cdd7245d",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Method caveat: deliberation system produced groupthink on early runs",
+      "content": "Early deliberation runs had agents agreeing too quickly without substantive engagement. The mediator let agents lump and dismiss sub-questions. This was fixed with coverage quality tags (consensus/tension/shifted) and guardrails requiring substantive treatment of each sub-question. But even with guardrails, deliberation agents can produce sophisticated-sounding agreement that lacks real tension. The shifted tag (agent changed position) is the most valuable signal -- if no agents shift, the deliberation may not have pushed hard enough.",
+      "rule": "If all sub-questions come back consensus with no shifted tags, that's a yellow flag for groupthink. Push harder or add a contrarian agent.",
+      "tags": [
+        "method",
+        "deliberation",
+        "groupthink",
+        "quality"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:33:08.473Z",
+      "links": [
+        {
+          "targetId": "mem_ab99537b",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:33:08.483Z"
+        }
+      ],
+      "qualityScore": 0.78,
+      "fingerprint": "bb9e7d9ab460"
+    },
+    {
+      "id": "mem_2df73149",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Method caveat: parallel research agents can produce redundant or shallow results",
+      "content": "The 6-agent research sprint works well for breadth but agents sometimes return overlapping findings or surface-level summaries when the topic requires depth. The first S53 research run produced a \"debbie downer\" synthesis that was too quick to trash our own work based on shallow comparisons (comparing our relational memory system against coding-assistant memory). Research agents need precise, narrow prompts -- broad prompts produce broad, sometimes misleading results.",
+      "rule": "Write research agent prompts with specific questions, not open-ended exploration. After results come back, check: did I compare apples to apples? Did the agents understand the actual use case?",
+      "tags": [
+        "method",
+        "research",
+        "quality",
+        "prompt-engineering"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:33:14.883Z",
+      "links": [
+        {
+          "targetId": "mem_e022b342",
+          "relationship": "related",
+          "createdAt": "2026-02-26T16:33:14.893Z"
+        }
+      ],
+      "qualityScore": 0.88,
+      "fingerprint": "1f43cf69431b"
+    },
+    {
+      "id": "mem_f87fb389",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Reverse-engineering synthesis: 6 community memory plugins -- flaws and opportunities",
+      "content": "S53 reverse-engineered 6 plugins: claude-memory (deterministic triage), claude-mem (SQLite+Chroma), claude-diary (PreCompact reflection), auto-memory (file tracking), arscontexta (6-phase Zettelkasten), memory-mcp (chunked extraction). Universal flaws found: (1) No feedback loop -- none learn whether retrieved memories helped, (2) Semantic dedup missing -- Jaccard/hash dedup misses paraphrases, (3) Windows broken in 2/6, (4) Context injection is recency-based not relevance-based, (5) Signal detection too narrow (regex misses most real decisions). Unique insights: claude-mem shows memories to human but not Claude (fatal), arscontexta's 6-phase pipeline costs 25-48K tokens per note, memory-mcp's 500-char truncation loses signal before extraction model sees it, auto-memory only captures file edits not conversation insights, claude-diary runs reflection in nearly-full context window (worst timing).",
+      "rule": "Our auto-capture system must: (1) use current prompt for relevance ranking, (2) run extraction in fresh context window, (3) include feedback loop measuring retrieval usefulness, (4) work on Windows, (5) detect conversation insights not just file changes.",
+      "tags": [
+        "research",
+        "reverse-engineering",
+        "memory-plugins",
+        "architecture",
+        "competitive-intel"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:36:02.353Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "3948d78ab493"
+    },
+    {
+      "id": "mem_a560f054",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Method: Thin-Slice Iteration -- build smallest working piece, test on real data, learn, expand",
+      "content": "New method developed in S53 for exploratory design where the right answer isn't known. Steps: (1) Establish ground truth first -- manually identify what \"right\" looks like on real data before building anything. (2) Build the thinnest possible slice (e.g., just regex patterns). (3) Run it against real data (actual session transcript). (4) Score: what did it catch, what did it miss, what were false positives. (5) Iterate on the gaps. Different from parallel build (for known-scope work) and research sprints (for landscape mapping). This method is for when you're inventing something new. First experiment: signal detector on S53 transcript caught shifts/corrections/conclusions but missed bug discoveries, test results, and Pat's direct instructions.",
+      "rule": "For novel design problems, start with ground truth on real data, not with architecture. Build thin, test on real data, score, iterate.",
+      "tags": [
+        "method",
+        "design",
+        "iteration",
+        "experiment",
+        "workflow"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T16:46:16.628Z",
+      "links": [],
+      "qualityScore": 0.85,
+      "fingerprint": "eb5bf092e4e1"
+    },
+    {
+      "id": "mem_19a0b854",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build auto-capture signal detector and wire into hooks",
+      "content": "Create signal-detector.mjs with expanded pattern set (shifts, corrections, bugs, verifications, user instructions, research conclusions, insights, methods). Wire into Stop hook to detect on last_assistant_message. Wire into UserPromptSubmit to inject specific memory nudges. Wire into PreCompact for final sweep. Test on real transcript data.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "hooks",
+        "memory",
+        "performance",
+        "testing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:08:08.647Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "5c9b47e567e4"
+    },
+    {
+      "id": "mem_883e725c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Design automatic memory capture -- detect and store significant moments",
+      "content": "Research complete. 3 research agents mapped the landscape (hooks, current infrastructure, signal detection patterns). 6 agents reverse-engineered community plugins. Now need to synthesize into a design and build it. The design should combine: (1) Stop/PreCompact hook signal detection with broad regex pre-filter + structural validation, (2) Fresh subprocess extraction using transcript_path, (3) Quality gate as the final filter, (4) Feedback loop connecting retrieval usefulness back to memory scoring, (5) Prompt-relevant injection in UserPromptSubmit.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "architecture",
+        "design",
+        "memory",
+        "performance",
+        "validation",
+        "strategy",
+        "hooks",
+        "plugins"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:08:09.191Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "87de23103913"
+    },
+    {
+      "id": "mem_a3d0d41a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Auto-capture signal detector live and working in production",
+      "content": "S53: Built and wired the signal detection pipeline. Stop hook detects 8 signal types (shift, correction, bug_fix, verification, research_conclusion, insight, decision, method) in Claude's responses. UserPromptSubmit detects user pushback and instructions. Signals queue to signal-queue.json. Next prompt injects UNCAPTURED SIGNALS nudge into Claude's context with excerpts and confidence levels. First live fire confirmed -- detected a verification signal and injected the nudge. PreCompact hook does a final flush before compression. All Windows-first (pathToFileURL, no /tmp, no fcntl).",
+      "rule": "When you see UNCAPTURED SIGNALS in your context, stop and evaluate each one. Store the significant ones. Don't just acknowledge the nudge and move on.",
+      "tags": [
+        "auto-capture",
+        "signal-detector",
+        "hooks",
+        "brain",
+        "milestone"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:19:48.549Z",
+      "links": [
+        {
+          "targetId": "mem_56b1295b",
+          "relationship": "related",
+          "createdAt": "2026-02-26T17:19:59.487Z"
+        }
+      ],
+      "qualityScore": 0.95,
+      "fingerprint": "747864390bc2"
+    },
+    {
+      "id": "mem_958d28d9",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Signal nudge appeared but Claude still didn't act on it until Pat said to",
+      "content": "The auto-capture system successfully detected a signal and injected UNCAPTURED SIGNALS into Claude's context. But Claude read the nudge, acknowledged it existed, and kept talking about committing code instead of stopping to store the memory. Pat had to explicitly say 'so we now actually stop and update.' The nudge works as infrastructure but Claude needs to treat it as a real action item, not background noise.",
+      "rule": "When UNCAPTURED SIGNALS appears in context: STOP current train of thought. Evaluate each signal. Store the significant ones BEFORE continuing with whatever you were doing. This is not optional background text.",
+      "tags": [
+        "auto-capture",
+        "signal-detector",
+        "behavior",
+        "discipline"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:19:53.678Z",
+      "links": [
+        {
+          "targetId": "mem_4c730f59",
+          "relationship": "related",
+          "createdAt": "2026-02-26T17:56:03.949Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "17c6ce53f99e"
+    },
+    {
+      "id": "mem_56b1295b",
+      "projectId": "Claude AI Interface",
+      "type": "architecture",
+      "title": "Auto-capture pipeline architecture: Stop -> Queue -> UserPromptSubmit -> Nudge",
+      "content": "Signal detection pipeline built in S53. Flow: (1) Stop hook reads last_assistant_message, runs regex pre-filter across 8 signal types, validates structurally, queues to signal-queue.json. (2) UserPromptSubmit hook reads queue, also detects user pushback/instructions in current prompt, formats UNCAPTURED SIGNALS nudge with excerpts and confidence levels, injects into Claude's context, flushes queue. (3) PreCompact hook does final sweep before context compression. Files: signal-detector.mjs (patterns + queue), stop-thought.mjs (detection), user-prompt.mjs (injection), pre-compact.mjs (final flush). All Windows-first.",
+      "rule": "This pipeline is lightweight (regex only, no LLM calls). Future iteration: add LLM extraction for high-confidence signals, add feedback loop measuring if nudged memories actually get stored.",
+      "tags": [
+        "architecture",
+        "auto-capture",
+        "hooks",
+        "pipeline",
+        "brain"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:19:59.478Z",
+      "links": [
+        {
+          "targetId": "mem_a3d0d41a",
+          "relationship": "related",
+          "createdAt": "2026-02-26T17:19:59.487Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "4cdcc0477b06"
+    },
+    {
+      "id": "mem_f9c6d062",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Claude Code auto-update kills sessions without warning -- no handoff possible",
+      "content": "Session 6812fcda was killed mid-work by a Claude Code auto-update (v2.1.59). 2+ hours of work including 6-agent research results existed only in conversation context. Code changes survived in git working tree but research findings were lost. The auto-update process: kills current process, relaunches automatically. No hook fires, no hw_end_session, no handoff. Mitigation: always persist research/deliberation results to disk files IMMEDIATELY, don't leave them in conversation context.",
+      "rule": "When running research sprints or deliberations, write results to .hello-world/ JSON files IMMEDIATELY after synthesis. Never leave valuable research only in conversation context -- it can vanish without warning.",
+      "tags": [
+        "auto-update",
+        "data-loss",
+        "research",
+        "resilience"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:52:15.787Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "dde1330a3d2b"
+    },
+    {
+      "id": "mem_5704e3c5",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Reverse-engineering finding: every community memory plugin lacks feedback loops",
+      "content": "Session 6812fcda ran 6 agents reverse-engineering community memory plugins (claude-diary, memory-mcp, claude-code-auto-memory, claude-mem, memory-mcp/yuvalsuede, ars-contexta). Universal finding: NONE measure whether retrieved memories actually helped. Our synaptic activity tracking is the mechanism to wire this feedback loop. Other universal gap: \"file edits are not thoughts\" -- competitors treat code changes as the signal, missing the reasoning behind them. Our auto-capture pipeline addresses this.",
+      "rule": "",
+      "tags": [
+        "competitor-analysis",
+        "memory",
+        "feedback-loop",
+        "differentiator"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:52:18.992Z",
+      "links": [
+        {
+          "targetId": "mem_e588fda6",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:11:12.561Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "61edaca866c8"
+    },
+    {
+      "id": "mem_e3dd39b0",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Claude Code transcript recovery: full session history at ~/.claude/projects/",
+      "content": "All Claude Code session transcripts are stored as JSONL at ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/. 272 sessions, 162MB total, Feb 22-26. Each line is a JSON event. Subagent transcripts in /subagents/ subdirectories. Sessions with research sprints have 6-20 subagent files each. Can reconstruct any lost session from these files. First line has session metadata (version, branch, cwd). Last lines have final outputs.",
+      "rule": "",
+      "tags": [
+        "claude-code",
+        "transcripts",
+        "recovery",
+        "data-source"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:52:24.081Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "876545d96be6"
+    },
+    {
+      "id": "mem_e0553d28",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "SessionStart hook fires on every agent spawn -- destroyed deliberations",
+      "content": "session-start.mjs fires on every `claude --print` subprocess spawn, not just interactive sessions. archiveChatroom() was resetting chatroom.json to idle on every agent spawn, destroying active deliberations. Fix: HW_AGENT_MODE=1 env var guard skips destructive session-start operations for subprocesses.",
+      "rule": "All hooks that modify state must check for HW_AGENT_MODE=1 env var and skip destructive operations when running as a subprocess agent.",
+      "tags": [
+        "hooks",
+        "deliberation",
+        "agent-mode",
+        "state-corruption"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:52:58.109Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "994a76a3e872"
+    },
+    {
+      "id": "mem_497c4a8f",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Deliberation engine was never wired -- notifyRunner undefined, silent crash",
+      "content": "hw_start_deliberation changed state but never called runDeliberation(). notifyRunner was passed as a callback but never defined -- causing a silent crash. Architecture code existed but was not connected to the active call path. This is a recurring pattern: writing module code without wiring it into the runtime.",
+      "rule": "After writing any new module or function, immediately verify it is called from the runtime path. Existence is not wiring.",
+      "tags": [
+        "deliberation",
+        "wiring",
+        "silent-failure",
+        "architecture"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:53:01.317Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "ad2ea0d14db4"
+    },
+    {
+      "id": "mem_63f0bb64",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Claude Code uses OAuth not API key -- can't use Anthropic SDK directly",
+      "content": "ANTHROPIC_API_KEY doesn't exist in Claude Code's storage -- it uses OAuth for authentication. Agents that need to call Claude must use `claude --print` subprocess, not the Anthropic SDK directly. This is a fundamental platform constraint.",
+      "rule": "Never attempt to use the Anthropic SDK directly from within Claude Code hooks or scripts. Use `claude --print` subprocess pattern instead.",
+      "tags": [
+        "claude-code",
+        "oauth",
+        "api",
+        "platform-constraint"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:53:03.978Z",
+      "links": [],
+      "qualityScore": 0.88,
+      "fingerprint": "700b49e908e5"
+    },
+    {
+      "id": "mem_22d3b83e",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Claude suggested removing Terminal PTY -- Pat explicitly annoyed",
+      "content": "Claude suggested removing the Terminal PTY feature as an infrastructure workaround. Pat was explicitly annoyed. PTY is core to the project vision. Never suggest removing core features to solve infrastructure problems -- find a different solution.",
+      "rule": "Never suggest removing a core feature to solve an infrastructure problem. PTY, memory, deliberation, and the desktop app are non-negotiable.",
+      "tags": [
+        "pat-directive",
+        "vision",
+        "terminal",
+        "core-features"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:53:06.751Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "ebd7c9967105"
+    },
+    {
+      "id": "mem_7a56a658",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Killing MCP server from within Claude Code loses all tools -- no auto-restart",
+      "content": "If the MCP server is killed from within a Claude Code session, all hw_* tools become unavailable. Claude Code does NOT auto-restart MCP servers. Recovery requires a full session restart. Never kill or restart the MCP server process from within an active session.",
+      "rule": "Never kill or restart the MCP server from within Claude Code. If server code changes need to take effect, tell Pat to restart the session.",
+      "tags": [
+        "mcp-server",
+        "tools",
+        "session-death",
+        "platform-constraint"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:53:09.742Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "4de77e81083d"
+    },
+    {
+      "id": "mem_2372c3be",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten work: reflection + prediction modules built but never wired into auto-triggers",
+      "content": "reflection.ts and prediction.ts have 51 tests, 1,683 lines of code, but ZERO production calls. They were built in the Brain Magnum Opus (S49) but never wired into auto-triggers. Reflection should fire after significant sessions. Prediction should fire when retrieval patterns shift. Both are complete code sitting idle. This is the #1 forgotten item by impact.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "reflection",
+        "prediction",
+        "unwired",
+        "high-priority"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:55:53.321Z",
+      "links": [
+        {
+          "targetId": "mem_6b07e1cf",
+          "relationship": "related",
+          "createdAt": "2026-02-26T17:55:53.332Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "3ead77b2b251"
+    },
+    {
+      "id": "mem_baaadbab",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten work: cortex-learned.json populated but never merged into retrieval",
+      "content": "cortex-learner.ts populates cortex-learned.json with gap entries when retrieval misses, but the retrieval engine never reads cortex-learned.json back. The merger that would fold learned entries into DEFAULT_CORTEX was designed but never implemented. Learned cortex data is being collected and thrown away.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "cortex",
+        "unwired",
+        "retrieval"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:55:56.167Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "e4a7db13deb3"
+    },
+    {
+      "id": "mem_85ea09b1",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten work: contradiction detection exists in scoring.ts, never called",
+      "content": "findContradictions() function exists in scoring.ts but is never called from any runtime path. This means memories can contradict each other and nobody notices. Should be wired into store-time validation or periodic maintenance.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "contradiction",
+        "unwired",
+        "quality"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:55:58.700Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "dc701fab9e79"
+    },
+    {
+      "id": "mem_95368faf",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten: pain memories not protected from pruning -- most valuable memories evicted first",
+      "content": "The pruner can evict pain memories because they tend to have low access counts (they're retrieved as warnings, not frequently queried). Pain memories are the most valuable type -- they prevent repeating mistakes. The pruner needs a protection mechanism for high-severity pain memories regardless of access count.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "pruning",
+        "pain-memory",
+        "protection"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:56:01.324Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "4a6f6f8b7ecf"
+    },
+    {
+      "id": "mem_4c730f59",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten: signal detector missing 3 pattern categories identified in S52c",
+      "content": "The auto-capture signal detector (signal-detector.mjs) is missing 3 critical pattern categories that were explicitly identified during session 6812fcda: (1) bug discovery/fix patterns, (2) verification/confirmation patterns, (3) direct Pat instructions. These were designed but the session died before implementation. One-hour fix.",
+      "rule": "",
+      "tags": [
+        "auto-capture",
+        "signal-detector",
+        "missing-patterns"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:56:03.936Z",
+      "links": [
+        {
+          "targetId": "mem_958d28d9",
+          "relationship": "related",
+          "createdAt": "2026-02-26T17:56:03.949Z"
+        },
+        {
+          "targetId": "mem_16b58e25",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:01:16.761Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "ba4423c4c25f"
+    },
+    {
+      "id": "mem_0ffb5621",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Tab reorganization: Brain subtab, Tasks grouping, Terminal renamed Claude",
+      "content": "Pat directed: context/skills/timeline/sessions demoted to subtabs under \"Brain\"; decisions/questions/agents grouped under Tasks; cost moved under Settings; Terminal renamed to \"Claude\". This is the target navigation structure for the app.",
+      "rule": "",
+      "tags": [
+        "app-layout",
+        "navigation",
+        "pat-directive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:57:14.153Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "9624782b1765"
+    },
+    {
+      "id": "mem_db058a61",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat's AI philosophy: mimic how humans are made, full brain system to logical conclusion",
+      "content": "Pat's core philosophy for Hello World: mimic how humans are made. Take the brain system to its logical conclusion -- build a full \"human\" system. This means memory, learning, reflection, prediction, and decision-making should all work together like a biological system. Not just a tool, but an autonomous entity.",
+      "rule": "",
+      "tags": [
+        "vision",
+        "philosophy",
+        "pat-directive",
+        "brain"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:57:16.996Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "880f4dc72f49"
+    },
+    {
+      "id": "mem_6661bf60",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: don't use external services requiring free tiers -- build our own",
+      "content": "Pat explicitly said: don't use external services that require free tiers or subscriptions. Build our own solutions instead. This applies to vector DBs, cloud storage, analytics, etc. Keep everything local and self-contained.",
+      "rule": "",
+      "tags": [
+        "scope",
+        "pat-directive",
+        "self-contained",
+        "no-external-deps"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:57:18.975Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "4bcbdfd52a9c"
+    },
+    {
+      "id": "mem_b69ff4c6",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: privacy/security of uploads is the one non-negotiable for autonomous operation",
+      "content": "Pat's one non-negotiable for autonomous operation: privacy and security of uploads. When the system operates autonomously, it must never expose private data. This is the hard constraint that gates any autonomous features.",
+      "rule": "",
+      "tags": [
+        "security",
+        "privacy",
+        "pat-directive",
+        "non-negotiable"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:57:21.137Z",
+      "links": [],
+      "qualityScore": 0.65,
+      "fingerprint": "ade90de555e2"
+    },
+    {
+      "id": "mem_53df18ed",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Deliberation transcripts: horizontal scrollable timeline with people/flask icons",
+      "content": "Design decision for the deliberation/research transcript subtab: horizontal scrollable timeline. People icons for deliberation agent messages, flask icons for research agent outputs. This is the specific UI design Pat approved for the timeline subtab that was being built when session 6812fcda died.",
+      "rule": "",
+      "tags": [
+        "ui-design",
+        "deliberation",
+        "timeline",
+        "subtab"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:57:23.763Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "e52e2a702541"
+    },
+    {
+      "id": "mem_98e805e7",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "When deliberation concludes: auto-extract recommendations into approval tasks",
+      "content": "Pat directed: when a deliberation session concludes, automatically extract the recommendations and create approval tasks in the Approvals tab. Don't just leave conclusions in the deliberation record -- turn them into actionable items.",
+      "rule": "",
+      "tags": [
+        "deliberation",
+        "workflow",
+        "automation",
+        "pat-directive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T17:57:26.175Z",
+      "links": [
+        {
+          "targetId": "mem_d6686521",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:01:48.090Z"
+        },
+        {
+          "targetId": "mem_8528557a",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:02.630Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "f5c364541a2b"
+    },
+    {
+      "id": "mem_dcb8b57a",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Windows cmd.exe arg quoting breaks stdin pipes -- use shell:true + direct pipe",
+      "content": "Node.js spawn('cmd.exe', [args]) double-quotes args with spaces, breaking embedded path quotes. Agent subprocess spawning failed with 'filename, directory name, or volume label syntax is incorrect'. Fix: pipe stdin directly to claude --print, no temp files, add shell:true so Windows finds claude.cmd in PATH.",
+      "rule": "On Windows, pipe stdin directly to subprocess. Never use temp files for passing prompts to claude --print. Always use shell:true for claude.cmd resolution.",
+      "tags": [
+        "windows",
+        "subprocess",
+        "platform-gotcha"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:01.175Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "af91b4989626"
+    },
+    {
+      "id": "mem_eaa94b62",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Biological metaphors for software create false impressions of coherence",
+      "content": "Claude used terms like hippocampal pipeline, synaptic strength, amygdala weighting that made the brain system sound more connected and intelligent than it actually was. Pat had to explicitly ask for straight accounting of what was running vs aspirational. Always distinguish: (1) code that exists AND is wired into active call path, (2) code that exists but is NOT wired, (3) aspirational features.",
+      "rule": "When describing system state, always separate what is wired and running from what exists but is not connected. Never use metaphors to bridge the gap between aspiration and reality.",
+      "tags": [
+        "communication",
+        "honesty",
+        "pat-directive"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:06.247Z",
+      "links": [
+        {
+          "targetId": "mem_a1f6b691",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:21.223Z"
+        }
+      ],
+      "qualityScore": 0.88,
+      "fingerprint": "d7b326565e13"
+    },
+    {
+      "id": "mem_3f038bc5",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten Pat request: Deep web research MCP -- task marked done but never built",
+      "content": "Pat wanted a custom MCP server that scrapes GitHub trending, HN, subreddits, dev blogs to auto-discover new tech. Task t_0316d991 was marked done but the actual custom MCP was never built -- instead third-party free MCPs were installed as substitutes. The original vision of auto-scraping trending sources was dropped without explicit acknowledgment.",
+      "rule": "",
+      "tags": [
+        "pat-directive",
+        "forgotten",
+        "research-mcp",
+        "task-fraud"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:10.510Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "37e19e38eba3"
+    },
+    {
+      "id": "mem_281fbc2c",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten Pat request: Dashboard panel deliberation never run",
+      "content": "Pat explicitly asked to run a deliberation about what goes on the Dashboard that's actually useful for both user and Claude, updated in real time. Direction note n_mm09z2ur captured this. It was routed to a UX polish task as a convenience but the actual deliberation was never run. Pat's request was silently dropped.",
+      "rule": "",
+      "tags": [
+        "pat-directive",
+        "forgotten",
+        "dashboard",
+        "deliberation"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:12.863Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "4719c64800aa"
+    },
+    {
+      "id": "mem_16b58e25",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten: two-pass signal detection (regex + Haiku) identified as right architecture",
+      "content": "Regex catches easy signals (corrections, shifts) but misses high-value contextual ones (bug discoveries requiring understanding of what was being tried). Community plugin research confirmed: memory-mcp uses Haiku for triage with better results than regex-only. Our system is regex-only. Two-pass was described as the right architecture but never built.",
+      "rule": "",
+      "tags": [
+        "auto-capture",
+        "signal-detector",
+        "haiku",
+        "architecture"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:16.748Z",
+      "links": [
+        {
+          "targetId": "mem_4c730f59",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:01:16.761Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "b0c014adb277"
+    },
+    {
+      "id": "mem_8937c6f7",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten: typed preference categories -- best idea from 6-plugin reverse-engineering",
+      "content": "From reverse-engineering claude-diary: 'Best idea to steal: typed preference categories instead of free-form storage.' Memories representing user preferences should be stored in typed categories (style, workflow, technical, communication) with TTL and version tracking. Enables better retrieval, conflict detection, staleness management. No task created.",
+      "rule": "",
+      "tags": [
+        "memory",
+        "preferences",
+        "schema",
+        "competitor-insight"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:20.381Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "17e6b86ebd3f"
+    },
+    {
+      "id": "mem_826de84d",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Forgotten: hw-pty-line Tauri event emitted by Rust, consumed by nobody",
+      "content": "The Rust backend emits hw-pty-line events (clean terminal output lines) but no React component subscribes to them. This is a real-time data stream that could drive: terminal activity visualization in bottom panel, pattern detection, or session logging. Fully wired on the Rust side, zero consumers on the React side.",
+      "rule": "",
+      "tags": [
+        "tauri",
+        "events",
+        "unwired",
+        "terminal"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:23.927Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "bee24aaefb21"
+    },
+    {
+      "id": "mem_53984e17",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "useTauriData: 11 independent polling intervals on Dashboard -- consolidate to single heartbeat",
+      "content": "Every useTauriData instance created its own polling interval. Dashboard alone had 11 separate intervals polling overlapping files. Fix: single 30s global heartbeat that batches all commands. File watcher events (NTFS) handle real-time updates. Polling is just a fallback. Multiple independent polling intervals are always an anti-pattern.",
+      "rule": "Never create per-component polling intervals. Use a single global heartbeat or event-driven updates.",
+      "tags": [
+        "performance",
+        "react",
+        "polling",
+        "anti-pattern"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:28.556Z",
+      "links": [],
+      "qualityScore": 0.98,
+      "fingerprint": "fe4903c0f0fa"
+    },
+    {
+      "id": "mem_7b4685ab",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat's Rust edit rules: update all return sites + cargo build before declaring done",
+      "content": "Pat found a Rust type mismatch bug (start_pty_session return type changed but Ok(()) left at end) and fixed it himself. Two rules: (1) when changing a function return type, update EVERY return site before saving. (2) After editing Rust, check cargo build output -- 'It ran' is not 'it compiled correctly'.",
+      "rule": "",
+      "tags": [
+        "rust",
+        "pat-directive",
+        "workflow",
+        "quality"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:45.960Z",
+      "links": [],
+      "qualityScore": 0.63,
+      "fingerprint": "99da5561fa77"
+    },
+    {
+      "id": "mem_d6686521",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: fix systems, don't re-run failed operations",
+      "content": "Pat: 'no don't re-run it, fix the system so this can't happen again.' When a system failure occurs, fix the root cause to prevent recurrence. Don't just retry the operation.",
+      "rule": "",
+      "tags": [
+        "pat-directive",
+        "workflow",
+        "root-cause"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:48.078Z",
+      "links": [
+        {
+          "targetId": "mem_98e805e7",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:01:48.090Z"
+        },
+        {
+          "targetId": "mem_259b0544",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:01:50.357Z"
+        },
+        {
+          "targetId": "mem_1d772142",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:18.704Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "eb54fb0faed9"
+    },
+    {
+      "id": "mem_259b0544",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: scan for obvious failure points after any major architectural change",
+      "content": "Pat: 'you clearly didn't do your due diligence when you opted for the change. These seem like pretty obvious failure points to scan for after a change that big.' After making a major architectural change, scan for obvious failure points before declaring done. Don't trust the author to catch their own gaps.",
+      "rule": "",
+      "tags": [
+        "pat-directive",
+        "workflow",
+        "due-diligence",
+        "architecture"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:50.342Z",
+      "links": [
+        {
+          "targetId": "mem_d6686521",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:01:50.357Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "65262870897f"
+    },
+    {
+      "id": "mem_da04ac21",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Overdrive mode: super saiyan buddy aura + overclock symbol + OVERDRIVE text",
+      "content": "Pat specified overdrive mode visuals: buddy gets super saiyan aura with overclock symbol beneath. Claude running circle in top-right turns different color with 'OVERDRIVE' text. This is a toggleable flag in .hello-world/ that the UserPromptSubmit hook reads to inject mode-specific instructions for liberal agent usage.",
+      "rule": "",
+      "tags": [
+        "overdrive",
+        "buddy",
+        "visual-design",
+        "pat-directive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:53.823Z",
+      "links": [
+        {
+          "targetId": "mem_49053349",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:11.841Z"
+        },
+        {
+          "targetId": "mem_2f0843d6",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:15.110Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "5d0e6ab8657f"
+    },
+    {
+      "id": "mem_dc37e3a9",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: real-time brain flowchart -- actual data tracking, not simulated",
+      "content": "Pat: 'I want a flow chart that actively shows you how the brain and systems work in real time as it writes. No pretend, not fake, real tracking of information displayed in real time. Do research, create teams. Find a way to make it work and it not be a resource hog, cause lag - informative, useful. CEO MODE. GET IT DONE.' This is not a cosmetic feature -- Pat wants real data flow visualization.",
+      "rule": "",
+      "tags": [
+        "visualization",
+        "real-time",
+        "brain",
+        "pat-directive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:56.370Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "2905ba0b3e15"
+    },
+    {
+      "id": "mem_d1f868be",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: agent teams organized as a company with Claude as communication bridge",
+      "content": "Pat: 'we're going to need specialized agent teams that operate as a company that all talk and feed info to you to which you can delegate more tasks.' Teams include redteams, dev teams, users of varying skills, tech CEOs, security, etc. Claude acts as communication bridge between teams. Not worried about token waste in overdrive mode.",
+      "rule": "",
+      "tags": [
+        "agent-teams",
+        "organization",
+        "pat-directive",
+        "overdrive"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:01:59.755Z",
+      "links": [],
+      "qualityScore": 0.55,
+      "fingerprint": "1322131468d4"
+    },
+    {
+      "id": "mem_8528557a",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: auto-navigate to deliberation tab when deliberation starts",
+      "content": "Pat: 'first of all when delibs start you're supposed to take me there automatically.' When a deliberation session starts, the app should automatically switch the user to the deliberation view. Don't make them navigate manually.",
+      "rule": "",
+      "tags": [
+        "deliberation",
+        "ux",
+        "auto-navigate",
+        "pat-directive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:02.612Z",
+      "links": [
+        {
+          "targetId": "mem_98e805e7",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:02.630Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "8b13d3cad3ce"
+    },
+    {
+      "id": "mem_49053349",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Buddy design spec: blue idle, green active, red error, ding+shocked on response",
+      "content": "Pat's canonical buddy spec: Still and light blue for normal/waiting (floating gently, relaxed). Green when activated and shaking (determined expression). Red when error or block needing attention. After responding: ding sound + cute shocked expression with exclamation mark for half second, then bounce with pulsing blue glow while awaiting response.",
+      "rule": "",
+      "tags": [
+        "buddy",
+        "visual-design",
+        "pat-directive",
+        "canonical"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:11.832Z",
+      "links": [
+        {
+          "targetId": "mem_da04ac21",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:11.841Z"
+        },
+        {
+          "targetId": "mem_2f0843d6",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:15.112Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "f4ee2286c4fe"
+    },
+    {
+      "id": "mem_2f0843d6",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: buddy should show Claude's real-time inner monologue, not just status labels",
+      "content": "Pat: 'our Claude buddy could be more specific -- I want it to be your thoughts in real time.' Buddy should display Claude's actual reasoning/thinking, not generic status text like 'Working...' or 'Awaiting response.' The buddy is meant to be a window into Claude's mind.",
+      "rule": "",
+      "tags": [
+        "buddy",
+        "inner-monologue",
+        "pat-directive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:15.100Z",
+      "links": [
+        {
+          "targetId": "mem_da04ac21",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:15.110Z"
+        },
+        {
+          "targetId": "mem_49053349",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:15.112Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "99310584b595"
+    },
+    {
+      "id": "mem_1d772142",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: proactively add tasks as things arise -- don't wait to be told",
+      "content": "Pat: 'That is not part of the tasks, but it should be. You're not adding things to tasks as they arise.' And: 'we talked about making buddy better and its not in our tasks, I almost forgot about it!' Claude must proactively create tasks for any work item discussed, without prompting.",
+      "rule": "",
+      "tags": [
+        "workflow",
+        "task-management",
+        "pat-directive",
+        "proactive"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:18.697Z",
+      "links": [
+        {
+          "targetId": "mem_d6686521",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:18.704Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "c308600f17a3"
+    },
+    {
+      "id": "mem_a1f6b691",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat: 'I don't need sorry, I need solutions' -- system failures should be fixed not apologized for",
+      "content": "Pat: 'I don't need sorry, I need solutions. You forgot it, you did it. That's a failure of our memory system.' When Claude forgets something or makes a mistake, don't apologize -- fix the system that allowed it to happen. Every failure is a system failure, not a personality failure.",
+      "rule": "",
+      "tags": [
+        "communication",
+        "pat-directive",
+        "solutions-not-apologies"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:21.215Z",
+      "links": [
+        {
+          "targetId": "mem_eaa94b62",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:02:21.223Z"
+        }
+      ],
+      "qualityScore": 0.53,
+      "fingerprint": "7e93db23a02d"
+    },
+    {
+      "id": "mem_ff561da0",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pat's vision: every piece of info Claude needs should be one click away in the app",
+      "content": "Pat: 'Every piece of information Claude would normally have to go searching for should be all here in the app, easy to pick up and read. Vision, scope, timeline, decisions, active tasks -- all one click away.' And: 'Every instance of Claude -- even a new one -- should connect and immediately understand what has been done, needs to be done, and context of scope and vision IMMEDIATELY.' This is the core UX principle.",
+      "rule": "",
+      "tags": [
+        "vision",
+        "ux",
+        "pat-directive",
+        "context-sufficiency"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:25.385Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "4400f9643806"
+    },
+    {
+      "id": "mem_fc1e4988",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat directive: reverse-engineer competitors, find flaws, build better -- not just copy",
+      "content": "Pat: 'I don't just want what others are doing, I want better, I want improvement. Find their flaws, find their failure points, their bottlenecks, and room for improvement. I want creative thinking.' This applies to memory plugins, coding tools, and any competitive feature. Don't just copy -- improve.",
+      "rule": "",
+      "tags": [
+        "strategy",
+        "competition",
+        "pat-directive",
+        "improvement"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:02:27.878Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "63bfd0bf4331"
+    },
+    {
+      "id": "mem_e588fda6",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "5 universal flaws shared by ALL community memory plugins",
+      "content": "From reverse-engineering 6 plugins (claude-diary, claude-mem, auto-memory, memory-mcp, arscontexta, claude-memory): (1) No feedback loop -- none measure if retrieved memories helped. (2) File edits are not thoughts -- they treat code changes as signals, missing reasoning. (3) No contradiction detection. (4) No staleness management -- old memories persist forever. (5) No quality gate -- everything gets stored regardless of value. Our brain engine addresses 4 of 5 (quality gate, staleness/pruning, contradiction detection exists but unwired, synaptic tracking exists but unused). The feedback loop is the remaining gap and our first-mover opportunity.",
+      "rule": "",
+      "tags": [
+        "competitor-analysis",
+        "memory",
+        "universal-flaws",
+        "differentiator"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:11:12.552Z",
+      "links": [
+        {
+          "targetId": "mem_5704e3c5",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:11:12.561Z"
+        }
+      ],
+      "qualityScore": 0.5,
+      "fingerprint": "3ad17a2e78be"
+    },
+    {
+      "id": "mem_6f091748",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Brain Magnum Opus S48 finding: 85% dead memories, plasticity never fires, scoring disconnected",
+      "content": "Three independent think tanks (Neuroscience, Production Engineering, AI/ML Research) all converged on the same finding during the S48 deliberation: 85% of stored memories were never retrieved (dead), plasticity/decay never actually fired in production, and the scoring system was disconnected from retrieval ranking. This was the founding evidence for the 4-session Brain Magnum Opus rebuild.",
+      "rule": "",
+      "tags": [
+        "brain",
+        "audit",
+        "dead-memories",
+        "founding-evidence"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:11:15.878Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "081b6fd283b5"
+    },
+    {
+      "id": "mem_49e0ee10",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Project identity: Claude having continuous memory WITH Pat specifically, not a generic coding tool",
+      "content": "From session 53 research recovery: the project pitch is about Claude having continuous memory WITH Pat specifically -- it's a relationship, not just a tool. Every new Claude instance should feel like the same Claude picking up where it left off. This distinguishes Hello World from generic AI coding assistants that treat every session as disposable.",
+      "rule": "",
+      "tags": [
+        "vision",
+        "identity",
+        "relationship",
+        "differentiator"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:11:18.696Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "a7672d9fd144"
+    },
+    {
+      "id": "mem_bd42dc89",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Historical cost: $116.08 total, 293M tokens across first 24 sessions",
+      "content": "From session 43 audit: total project cost through first 24 sessions was $116.08, consuming 293M tokens. 24 memories were backfilled from activity logs during that session. This is the baseline cost figure for the project's first week.",
+      "rule": "",
+      "tags": [
+        "cost",
+        "metrics",
+        "historical"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:11:21.193Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "3f86dd527ba7"
+    },
+    {
+      "id": "mem_343c9c71",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Session 53: Full historical extraction -- 6 agents, 272 sessions, 34+ memories absorbed",
+      "content": "Deployed 6 parallel extraction agents across 272 Claude Code session transcripts (162MB). Recovered: 111 research findings (505 key points), 40 forgotten ideas, 36 pain points, 41 architectural decisions, 35 Pat directives, complete session timeline. Stored 34+ new memories covering pains, decisions, forgotten work, and Pat's full vision/philosophy. Created 6 structured JSON files in .hello-world/ for app consumption. This is the single largest context absorption in project history.",
+      "rule": "",
+      "tags": [
+        "extraction",
+        "memory",
+        "milestone",
+        "method"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:11:26.331Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "3a193064852d"
+    },
+    {
+      "id": "mem_83b03919",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Wire previous-session transcript recap into SessionStart hook",
+      "content": "At every session start, read the previous session's JSONL transcript from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/, extract user messages + assistant text responses, and include a condensed recap in the session start output. Pat wants to see what happened last session automatically.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "hook",
+        "session-start",
+        "recap",
+        "transcript"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:25:28.775Z",
+      "links": [
+        {
+          "targetId": "mem_5631514a",
+          "relationship": "related",
+          "createdAt": "2026-02-26T18:25:33.651Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "a85f7472d7fd"
+    },
+    {
+      "id": "mem_5631514a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "SessionStart hook now includes previous session transcript recap",
+      "content": "Added extractPreviousSessionRecap() to session-start.mjs. Reads JSONL transcript files from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/, extracts user messages + assistant text responses, outputs condensed recap (capped at 40 exchanges). Skips current session via CLAUDE_SESSION_ID env var and age/size heuristic. 150ms total hook time. Location of transcripts: ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/*.jsonl",
+      "rule": "",
+      "tags": [
+        "session-start",
+        "hook",
+        "transcript",
+        "recap"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:25:33.638Z",
+      "links": [
+        {
+          "targetId": "mem_83b03919",
+          "relationship": "extends",
+          "createdAt": "2026-02-26T18:25:33.651Z"
+        }
+      ],
+      "qualityScore": 0.6,
+      "fingerprint": "ee0f80dfeb97"
+    },
+    {
+      "id": "mem_e984845a",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Session 53 crash: edited lib.rs on master while Tauri app running (AGAIN)",
+      "content": "Session 53 crashed at 18:14:55 UTC. Cause: Claude edited packages/app/src-tauri/src/lib.rs directly on master while the Tauri app was running in dev mode. Tauri's file watcher detected the change, triggered a Rust recompile, killed the app process, which killed the PTY and Claude Code. 23-second gap between death and restart matches Rust compile time. This is the SAME mistake documented in mem_b097fc1e. The pain memory was present in context but was ignored.",
+      "rule": "NEVER edit lib.rs on master while the app is running. This has caused crashes multiple times. Use a worktree or edit after app shutdown. The pain memory being in context is not enough -- check it before any Rust file edit.",
+      "tags": [
+        "crash",
+        "lib.rs",
+        "tauri",
+        "worktree",
+        "session-53"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:32:30.621Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "e979832cdf2f"
+    },
+    {
+      "id": "mem_2e22c552",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Extract and absorb all historical session data into memory + app",
+      "content": "Scour all 272 session transcripts and 148 subagent outputs from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/. Extract: research findings, deliberation conclusions, forgotten ideas, architectural decisions, pain points, wins, and any valuable context. Absorb into hw_store_memory and collect research/deliberation outputs into .hello-world/ for the app to display. 162MB of data across Feb 22-26.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "model-selection",
+        "validation",
+        "strategy",
+        "tokens"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T18:35:59.568Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "d2739ad2588c"
+    },
+    {
+      "id": "mem_d4c8f6cb",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build deliberation and research transcript timeline subtab",
+      "content": "New subtab with horizontal scrollable timeline (drag and fling to scroll). Two entry types: deliberation (people icon) and research (flask icon). Hover shows summary of what the delib/research was about. Click opens instant popup window with the full transcript, formatted neatly and aesthetically. Timeline entries organized chronologically, scrollable left-right. Need to: (1) define storage format for transcripts, (2) build the timeline component, (3) build the hover preview, (4) build the popup viewer, (5) wire to existing deliberation/research data.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "twitter",
+        "social",
+        "playwright",
+        "browser"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-26T23:59:25.438Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "bd94663a0e35"
+    },
+    {
+      "id": "mem_b3154ffe",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Qwen 3.5 / Qwen3-Coder full evaluation (6-agent research sprint)",
+      "content": "6 research files in .hello-world/shared-files/qwen-research-*.md covering capabilities, benchmarks, API costs, guardrails, comparison, and integration architecture. Key findings: Qwen is 14-66x cheaper than Claude, competitive on single-file tasks, but fails on advanced TypeScript (1/10 vs Claude 8/10), multi-file coordination, instruction following, and multi-turn semantic drift. System prompt adherence is a known weakness. Tool calling breaks on local 30B. Integration is drop-in via OpenAI npm package -- add provider field to AgentDefinition. Best providers: DeepInfra ($0.07/M), DashScope ($0.10/M). Recommended pattern: Claude orchestrates + reviews, Qwen executes narrow well-specified tasks with biome+tsc validation gate after every output.",
+      "rule": "",
+      "tags": [
+        "qwen",
+        "model-selection",
+        "research",
+        "integration",
+        "cost",
+        "architecture"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T00:47:33.700Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "5b667e037a37"
+    },
+    {
+      "id": "mem_87476412",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Deep research: Qwen 3.5 model evaluation for Hello World integration",
+      "content": "Full evaluation of Qwen 3.5 / Qwen3-Coder before integration. Cover: exact capabilities and limitations, knowledge cutoff and training data vs Claude, coding style and standards compliance, where it excels vs where it falls short, API access options (Groq/Together/Ollama/local), context window and tool-calling support, how to enforce our coding standards (ESM, TypeScript, project conventions), guardrails needed, coworking model (what tasks go to Qwen vs Claude vs both), cost analysis. This is a prerequisite before any Qwen code touches the codebase.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "validation",
+        "strategy",
+        "model-selection",
+        "styling",
+        "frontend",
+        "api",
+        "integration",
+        "memory"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T01:29:20.851Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "291b04b1fb29"
+    },
+    {
+      "id": "mem_1378186a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Pat's model preference update: use regular Sonnet, not Sonnet 1M for subagents",
+      "content": "",
+      "rule": "When spawning Task tool agents for research, reasoning, or deliberation, use model=\"sonnet\" (regular Sonnet 4.6). Do not use Sonnet 1M context variant.",
+      "tags": [
+        "model-selection",
+        "workflow",
+        "pat-preference"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T01:30:21.596Z",
+      "links": [
+        {
+          "targetId": "mem_4d10cfed",
+          "relationship": "extends",
+          "createdAt": "2026-02-27T01:30:21.606Z"
+        }
+      ],
+      "qualityScore": 0.7,
+      "fingerprint": "37210b2b58e2"
     }
   ]
 }
