@@ -260,6 +260,21 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
     }
   };
 
+  const clearChatroom = async () => {
+    if (!projectPath) return;
+    try {
+      await invoke('clear_chatroom', { projectPath });
+    } catch {
+      /* no-op */
+    }
+  };
+
+  // Session age for staleness indicator
+  const sessionAgeHours = state?.session.startedAt
+    ? (Date.now() - new Date(state.session.startedAt).getTime()) / 3_600_000
+    : 0;
+  const isStale = state?.session.status === 'concluded' && sessionAgeHours > 24;
+
   const isActive =
     state?.session.status === 'active' ||
     state?.session.status === 'paused' ||
@@ -391,6 +406,26 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
               <span className="text-[9px] font-mono text-gray-700">
                 R{state?.session.roundNumber}
               </span>
+            </>
+          )}
+          {isStale && (
+            <>
+              <div className="h-3 w-px bg-gray-800" />
+              <span className="text-[9px] font-mono text-gray-600">
+                {Math.floor(sessionAgeHours)}h old
+              </span>
+            </>
+          )}
+          {/* Clear button: visible when concluded */}
+          {state?.session.status === 'concluded' && (
+            <>
+              <div className="flex-1" />
+              <button
+                onClick={clearChatroom}
+                className="text-[9px] font-mono text-gray-600 hover:text-red-400 uppercase tracking-widest transition-colors"
+              >
+                clear
+              </button>
             </>
           )}
         </div>

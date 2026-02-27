@@ -607,6 +607,31 @@ fn epoch_ms() -> u64 {
         .as_millis() as u64
 }
 
+#[tauri::command]
+fn clear_chatroom(project_path: &str) -> Result<(), String> {
+    let empty = serde_json::json!({
+        "session": {
+            "id": "",
+            "topic": "",
+            "status": "idle",
+            "startedAt": "",
+            "startedBy": "claude",
+            "waitingForInput": false,
+            "roundNumber": 0
+        },
+        "agents": [],
+        "messages": [],
+        "reactions": []
+    });
+    let contents = serde_json::to_string_pretty(&empty)
+        .map_err(|e| format!("Serialize error: {}", e))?;
+    let path = std::path::Path::new(project_path)
+        .join(".hello-world")
+        .join("chatroom.json");
+    std::fs::write(&path, contents)
+        .map_err(|e| format!("Write error: {}", e))
+}
+
 // ── Approval resolution ──────────────────────────────────────────
 
 #[tauri::command]
@@ -1291,6 +1316,7 @@ pub fn run() {
             get_timeline,
             get_chatroom,
             post_pat_chatroom_message,
+            clear_chatroom,
             get_chat_history,
             append_chat_message,
             send_claude_message,
