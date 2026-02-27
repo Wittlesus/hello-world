@@ -1,9 +1,10 @@
 import { invoke } from '@tauri-apps/api/core';
+import { emit } from '@tauri-apps/api/event';
 import { useEffect, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { THEMES, useThemeStore } from '../stores/theme.js';
-import { AvatarPicker, getSavedAvatarId, saveAvatarId } from './buddy-avatars.js';
+import { AvatarPicker, getSavedAvatarId, saveAvatarId, type AvatarId } from './buddy-avatars.js';
 import { ErrorState, LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
 
@@ -48,6 +49,7 @@ export function SettingsView() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const { themeId, setTheme } = useThemeStore();
+  const [currentAvatar, setCurrentAvatar] = useState<AvatarId>(getSavedAvatarId);
 
   useEffect(() => {
     if (data?.config) setForm({ ...data.config });
@@ -171,11 +173,15 @@ export function SettingsView() {
           <div className="mt-6">
             <div className={labelClass}>Buddy Avatar</div>
             <AvatarPicker
-              selected={getSavedAvatarId()}
-              onSelect={(id) => saveAvatarId(id)}
+              selected={currentAvatar}
+              onSelect={(id) => {
+                saveAvatarId(id);
+                setCurrentAvatar(id);
+                emit('hw-avatar-changed', id).catch(() => {});
+              }}
             />
             <p className="text-[10px] text-gray-600 mt-2">
-              Pick a buddy character. Takes effect on next app restart.
+              Pick a buddy character. Changes apply instantly.
             </p>
           </div>
         </section>

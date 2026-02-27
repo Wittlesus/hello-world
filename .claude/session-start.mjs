@@ -428,6 +428,53 @@ try {
     // Brain init is non-fatal
   }
 
+  // ── Generate claude-usage.json from stats-cache ────────────────
+  try {
+    const home = process.env.USERPROFILE || process.env.HOME || '';
+    const cachePath = join(home, '.claude', 'stats-cache.json');
+    if (existsSync(cachePath)) {
+      const raw = JSON.parse(readFileSync(cachePath, 'utf8'));
+      const PRICING = {
+        'claude-opus-4-6':            { input: 15e-6,  output: 75e-6,  cw: 18.75e-6, cr: 1.5e-6 },
+        'claude-sonnet-4-5-20250929': { input: 3e-6,   output: 15e-6,  cw: 3.75e-6,  cr: 0.3e-6 },
+        'claude-sonnet-4-6':          { input: 3e-6,   output: 15e-6,  cw: 3.75e-6,  cr: 0.3e-6 },
+        'claude-haiku-4-5-20251001':  { input: 0.8e-6, output: 4e-6,   cw: 1e-6,     cr: 0.08e-6 },
+      };
+      const modelBreakdown = {};
+      let totalCost = 0, totalIn = 0, totalOut = 0, totalCR = 0, totalCW = 0;
+      for (const [model, u] of Object.entries(raw.modelUsage ?? {})) {
+        const p = PRICING[model] ?? Object.values(PRICING)[0];
+        const cost = (u.inputTokens * p.input) + (u.outputTokens * p.output)
+                   + (u.cacheCreationInputTokens * p.cw) + (u.cacheReadInputTokens * p.cr);
+        totalCost += cost; totalIn += u.inputTokens; totalOut += u.outputTokens;
+        totalCR += u.cacheReadInputTokens; totalCW += u.cacheCreationInputTokens;
+        modelBreakdown[model] = { ...u, costUsd: Math.round(cost * 100) / 100 };
+      }
+      const dailyTokens = (raw.dailyModelTokens ?? []).map(d => ({
+        date: d.date,
+        totalTokens: Object.values(d.tokensByModel).reduce((s, v) => s + v, 0),
+        byModel: d.tokensByModel,
+      }));
+      const result = {
+        generatedAt: new Date().toISOString(),
+        lastComputedDate: raw.lastComputedDate,
+        totalSessions: raw.totalSessions ?? 0,
+        totalMessages: raw.totalMessages ?? 0,
+        totalCostUsd: Math.round(totalCost * 100) / 100,
+        totalInputTokens: totalIn, totalOutputTokens: totalOut,
+        totalCacheRead: totalCR, totalCacheWrite: totalCW,
+        modelBreakdown, dailyActivity: raw.dailyActivity ?? [], dailyTokens,
+        firstSessionDate: raw.firstSessionDate, hourCounts: raw.hourCounts ?? {},
+      };
+      const outPath = join(HW, 'claude-usage.json');
+      const tmp2 = outPath + '.tmp';
+      writeFileSync(tmp2, JSON.stringify(result, null, 2), 'utf8');
+      renameSync(tmp2, outPath);
+    }
+  } catch {
+    // Usage generation is non-fatal
+  }
+
   console.log(lines.join('\n'));
 
 } catch (layer1Error) {

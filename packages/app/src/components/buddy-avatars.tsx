@@ -15,7 +15,7 @@ export interface BuddyAvatarProps {
   activeColor?: string;
 }
 
-export type AvatarId = 'default' | 'pixel' | 'cat' | 'ghost' | 'cube' | 'flame';
+export type AvatarId = 'classic' | 'default' | 'pixel' | 'cat' | 'ghost' | 'cube' | 'flame' | 'lizard';
 
 export interface AvatarEntry {
   id: AvatarId;
@@ -903,7 +903,7 @@ const LizardAvatar: React.FC<BuddyAvatarProps> = ({ state, size = 48, color, act
   const s = size;
   const idle = color ?? '#60a5fa';
   const active = activeColor ?? '#4ade80';
-  const fill = colorForState(state, idle, active);
+  const fill = stateColor(state, idle, active);
   const anim = animForState(state);
   const cx = s / 2;
   const cy = s / 2;
@@ -1011,10 +1011,74 @@ const LizardAvatar: React.FC<BuddyAvatarProps> = ({ state, size = 48, color, act
 };
 
 // ---------------------------------------------------------------------------
+// 8. Classic -- the original block-art buddy
+// ---------------------------------------------------------------------------
+
+const CLASSIC_KEYFRAMES = `
+@keyframes classic-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-2px)} }
+@keyframes classic-twitch { 0%,100%{transform:rotate(0)} 25%{transform:rotate(-3deg)} 75%{transform:rotate(3deg)} }
+@keyframes classic-bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+@keyframes classic-pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+`;
+
+let _classicStyled = false;
+function useClassicStyles() {
+  useEffect(() => {
+    if (_classicStyled) return;
+    _classicStyled = true;
+    const el = document.createElement('style');
+    el.textContent = CLASSIC_KEYFRAMES;
+    document.head.appendChild(el);
+  }, []);
+}
+
+const ClassicAvatar: React.FC<BuddyAvatarProps> = ({
+  state,
+  size = 48,
+  color = '#60a5fa',
+  activeColor = '#4ade80',
+}) => {
+  useClassicStyles();
+  const fill = stateColor(state, color, activeColor);
+  const fontSize = Math.max(8, size * 0.3);
+  const anim =
+    state === 'working' ? 'classic-twitch 0.28s ease infinite'
+    : state === 'thinking' ? 'classic-bounce 0.45s ease infinite'
+    : state === 'error' ? 'classic-pulse 1.4s ease infinite'
+    : 'classic-bob 3.5s ease infinite';
+
+  return (
+    <div
+      style={{
+        width: size,
+        height: size,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        animation: anim,
+      }}
+    >
+      <div
+        style={{
+          fontFamily: '"Courier New", Courier, monospace',
+          fontSize: `${fontSize}px`,
+          lineHeight: '0.95',
+          color: fill,
+          whiteSpace: 'pre',
+          textAlign: 'left',
+          transition: 'color 0.25s ease',
+        }}
+      >{`\u2590\u259B\u2588\u2588\u2588\u259C\u258C\n\u259D\u259C\u2588\u2588\u2588\u2588\u2588\u259B\u2598\n  \u2598\u2598 \u259D\u259D  `}</div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
 // Avatar registry
 // ---------------------------------------------------------------------------
 
 export const BUDDY_AVATARS: AvatarEntry[] = [
+  { id: 'classic', name: 'Classic', component: ClassicAvatar },
   { id: 'default', name: 'Bot',    component: DefaultAvatar },
   { id: 'pixel',   name: 'Pixel',  component: PixelAvatar },
   { id: 'cat',     name: 'Cat',    component: CatAvatar },
@@ -1037,7 +1101,7 @@ export function getSavedAvatarId(): AvatarId {
   } catch {
     /* ignore */
   }
-  return 'default';
+  return 'classic';
 }
 
 export function saveAvatarId(id: AvatarId): void {

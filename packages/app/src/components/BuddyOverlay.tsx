@@ -3,7 +3,7 @@ import { emit, listen } from '@tauri-apps/api/event';
 import { currentMonitor, getCurrentWindow, LogicalPosition } from '@tauri-apps/api/window';
 import { useEffect, useRef, useState } from 'react';
 import { getTheme } from '../stores/theme.js';
-import { getAvatarById, getSavedAvatarId, type BuddyState } from './buddy-avatars.js';
+import { getAvatarById, getSavedAvatarId, type AvatarId, type BuddyState } from './buddy-avatars.js';
 
 type ActivityState = 'waiting' | 'responding' | 'shocked' | 'happy';
 type VisualState = ActivityState | 'error';
@@ -202,16 +202,25 @@ export function BuddyOverlay() {
   const safetyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const projectPathRef = useRef<string | null>(null);
 
+  const [avatarId, setAvatarId] = useState<AvatarId>(getSavedAvatarId);
+
   const setAct = (s: ActivityState) => {
     activityRef.current = s;
     setActivity(s);
   };
 
+  // Listen for avatar changes from Settings (cross-window event)
+  useEffect(() => {
+    const unlisten = listen<string>('hw-avatar-changed', (e) => {
+      setAvatarId(e.payload as AvatarId);
+    });
+    return () => { unlisten.then((f) => f()); };
+  }, []);
+
   const theme = getTheme(themeId);
   const visual: VisualState = hasError ? 'error' : activity;
 
   // Avatar system: map visual state to BuddyState
-  const avatarId = getSavedAvatarId();
   const avatarEntry = getAvatarById(avatarId);
   const AvatarComp = avatarEntry.component;
   const buddyState: BuddyState =
@@ -328,15 +337,10 @@ export function BuddyOverlay() {
       }
     });
 
-    const summaryU = listen<{ type: string }>('hw-tool-summary', (e) => {
+    const summaryU = listen<{ type?: string; summary?: string }>('hw-tool-summary', (e) => {
       const type = e.payload?.type;
-      if (type === 'typing') {
-        if (safetyTimer.current) clearTimeout(safetyTimer.current);
-        if (shockTimer.current) clearTimeout(shockTimer.current);
-        if (happyTimer.current) clearTimeout(happyTimer.current);
-        setAct('responding');
-        safetyTimer.current = setTimeout(() => setAct('waiting'), 3 * 60 * 1000);
-      } else if (type === 'awaiting') {
+      if (type === 'awaiting') {
+        // Claude finished responding -- play chime and transition
         if (safetyTimer.current) clearTimeout(safetyTimer.current);
         if (!mutedRef.current) playDoneSound();
         setAct('shocked');
@@ -344,6 +348,13 @@ export function BuddyOverlay() {
           setAct('happy');
           happyTimer.current = setTimeout(() => setAct('waiting'), 3000);
         }, 500);
+      } else {
+        // Any other event (typing, brain_retrieval, MCP tool calls) = responding
+        if (safetyTimer.current) clearTimeout(safetyTimer.current);
+        if (shockTimer.current) clearTimeout(shockTimer.current);
+        if (happyTimer.current) clearTimeout(happyTimer.current);
+        setAct('responding');
+        safetyTimer.current = setTimeout(() => setAct('waiting'), 3 * 60 * 1000);
       }
     });
 
@@ -517,7 +528,7 @@ export function BuddyOverlay() {
           </div>
         )}
 
-        {/* Avatar — uses selected avatar from buddy-avatars gallery */}
+        {/* Avatar -- uses selected avatar from buddy-avatars gallery */}
         <div style={{
           position: 'relative', zIndex: 1,
           animation: overdrive ? 'overdrive-glow 2s ease-in-out infinite' : 'none',

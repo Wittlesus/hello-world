@@ -200,7 +200,6 @@ const sync = (() => {
 if (sync?.port) {
   const signalData = { type: 'typing', summary: 'Responding...' };
   if (brainSignalFiles.length > 0) {
-    signalData.type = 'brain_retrieval';
     signalData.filesChanged = brainSignalFiles;
   }
   const body = JSON.stringify(signalData);

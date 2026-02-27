@@ -250,6 +250,7 @@ function toolFiles(tool: string): string[] {
     hw_kill_watcher:      ['watchers.json'],
     hw_list_watchers:     [],
     hw_check_autonomous_timer: [],
+    hw_get_claude_usage: ['claude-usage.json'],
     hw_start_task:            ['state.json', 'workflow.json'],
     hw_get_task:              [],
     hw_reset_strikes:         ['workflow.json'],
@@ -1405,6 +1406,94 @@ server.registerTool('hw_close_boardroom', {
   return text(`Boardroom ${args.boardroomId} closed`);
 });
 
+// ── Claude Usage ─────────────────────────────────────────────────
+
+// LiteLLM pricing (per-token, not per-million). Updated Feb 2026.
+const CLAUDE_PRICING: Record<string, { input: number; output: number; cacheWrite: number; cacheRead: number }> = {
+  'claude-opus-4-6':            { input: 15e-6,  output: 75e-6,  cacheWrite: 18.75e-6, cacheRead: 1.5e-6 },
+  'claude-sonnet-4-5-20250929': { input: 3e-6,   output: 15e-6,  cacheWrite: 3.75e-6,  cacheRead: 0.3e-6 },
+  'claude-sonnet-4-6':          { input: 3e-6,   output: 15e-6,  cacheWrite: 3.75e-6,  cacheRead: 0.3e-6 },
+  'claude-haiku-4-5-20251001':  { input: 0.8e-6, output: 4e-6,   cacheWrite: 1e-6,     cacheRead: 0.08e-6 },
+};
+
+function calcModelCost(model: string, usage: { inputTokens: number; outputTokens: number; cacheCreationInputTokens: number; cacheReadInputTokens: number }): number {
+  // Try exact match, then prefix match
+  const p = CLAUDE_PRICING[model] ?? Object.entries(CLAUDE_PRICING).find(([k]) => model.includes(k))?.[1];
+  if (!p) return 0;
+  return (usage.inputTokens * p.input)
+       + (usage.outputTokens * p.output)
+       + (usage.cacheCreationInputTokens * p.cacheWrite)
+       + (usage.cacheReadInputTokens * p.cacheRead);
+}
+
+server.registerTool('hw_get_claude_usage', {
+  title: 'Get Claude Usage',
+  description: 'Read Claude Code usage stats from ~/.claude/stats-cache.json and write enriched data to .hello-world/claude-usage.json.',
+  inputSchema: z.object({}),
+}, async () => {
+  const home = process.env.USERPROFILE || process.env.HOME || '';
+  const cachePath = join(home, '.claude', 'stats-cache.json');
+
+  if (!existsSync(cachePath)) {
+    return text('No stats-cache.json found at ' + cachePath);
+  }
+
+  const raw = JSON.parse(readFileSync(cachePath, 'utf-8'));
+
+  // Enrich model usage with calculated costs
+  const modelBreakdown: Record<string, unknown> = {};
+  let totalCostUsd = 0;
+  let totalInputTokens = 0;
+  let totalOutputTokens = 0;
+  let totalCacheRead = 0;
+  let totalCacheWrite = 0;
+
+  for (const [model, usage] of Object.entries(raw.modelUsage ?? {})) {
+    const u = usage as { inputTokens: number; outputTokens: number; cacheReadInputTokens: number; cacheCreationInputTokens: number };
+    const cost = calcModelCost(model, { inputTokens: u.inputTokens, outputTokens: u.outputTokens, cacheCreationInputTokens: u.cacheCreationInputTokens, cacheReadInputTokens: u.cacheReadInputTokens });
+    totalCostUsd += cost;
+    totalInputTokens += u.inputTokens;
+    totalOutputTokens += u.outputTokens;
+    totalCacheRead += u.cacheReadInputTokens;
+    totalCacheWrite += u.cacheCreationInputTokens;
+    modelBreakdown[model] = { ...u, costUsd: Math.round(cost * 100) / 100 };
+  }
+
+  // Build daily usage with costs
+  const dailyTokens = (raw.dailyModelTokens ?? []).map((day: { date: string; tokensByModel: Record<string, number> }) => ({
+    date: day.date,
+    totalTokens: Object.values(day.tokensByModel).reduce((s: number, v: number) => s + v, 0),
+    byModel: day.tokensByModel,
+  }));
+
+  const result = {
+    generatedAt: new Date().toISOString(),
+    lastComputedDate: raw.lastComputedDate,
+    totalSessions: raw.totalSessions ?? 0,
+    totalMessages: raw.totalMessages ?? 0,
+    totalCostUsd: Math.round(totalCostUsd * 100) / 100,
+    totalInputTokens,
+    totalOutputTokens,
+    totalCacheRead,
+    totalCacheWrite,
+    modelBreakdown,
+    dailyActivity: raw.dailyActivity ?? [],
+    dailyTokens,
+    firstSessionDate: raw.firstSessionDate,
+    hourCounts: raw.hourCounts ?? {},
+  };
+
+  // Write to .hello-world/ so the frontend can read it
+  const outPath = join(projectRoot, '.hello-world', 'claude-usage.json');
+  writeFileSync(outPath, JSON.stringify(result, null, 2));
+
+  return text(
+    `Claude usage: $${result.totalCostUsd.toFixed(2)} total across ${result.totalSessions} sessions, ${result.totalMessages.toLocaleString()} messages.\n` +
+    `Models: ${Object.keys(modelBreakdown).join(', ')}\n` +
+    `Input: ${totalInputTokens.toLocaleString()} | Output: ${totalOutputTokens.toLocaleString()} | Cache read: ${totalCacheRead.toLocaleString()} | Cache write: ${totalCacheWrite.toLocaleString()}`
+  );
+});
+
 // ── Start ───────────────────────────────────────────────────────
 
 // Write capabilities manifest so hooks + app can check MCP status
@@ -1435,6 +1524,7 @@ const TOOL_CATALOG = [
   { name: 'hw_spawn_watcher', category: 'watchers' },
   { name: 'hw_list_watchers', category: 'watchers' },
   { name: 'hw_kill_watcher', category: 'watchers' },
+  { name: 'hw_get_claude_usage', category: 'usage' },
   { name: 'hw_create_boardroom', category: 'boardroom' },
   { name: 'hw_run_boardroom', category: 'boardroom' },
   { name: 'hw_stop_boardroom', category: 'boardroom' },
