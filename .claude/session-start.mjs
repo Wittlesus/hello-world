@@ -455,6 +455,13 @@ try {
         totalTokens: Object.values(d.tokensByModel).reduce((s, v) => s + v, 0),
         byModel: d.tokensByModel,
       }));
+      // Carry forward webUsage from previous file (fetched via browser)
+      let prevWebUsage = null;
+      try {
+        const prev = JSON.parse(readFileSync(join(HW, 'claude-usage.json'), 'utf8'));
+        if (prev.webUsage) prevWebUsage = prev.webUsage;
+      } catch { /* no previous file */ }
+
       const result = {
         generatedAt: new Date().toISOString(),
         lastComputedDate: raw.lastComputedDate,
@@ -465,6 +472,7 @@ try {
         totalCacheRead: totalCR, totalCacheWrite: totalCW,
         modelBreakdown, dailyActivity: raw.dailyActivity ?? [], dailyTokens,
         firstSessionDate: raw.firstSessionDate, hourCounts: raw.hourCounts ?? {},
+        ...(prevWebUsage ? { webUsage: prevWebUsage } : {}),
       };
       const outPath = join(HW, 'claude-usage.json');
       const tmp2 = outPath + '.tmp';
@@ -473,6 +481,34 @@ try {
     }
   } catch {
     // Usage generation is non-fatal
+  }
+
+  // ── Start usage poller (background, detached) ──────────────────────
+  try {
+    // Skip in agent mode
+    if (!process.env.HW_AGENT_MODE) {
+      const pidFile = join(HW, '.usage-poller-pid');
+      let alreadyRunning = false;
+      try {
+        const pid = parseInt(readFileSync(pidFile, 'utf8').trim(), 10);
+        if (pid > 0) { process.kill(pid, 0); alreadyRunning = true; } // throws if dead
+      } catch { /* not running */ }
+
+      if (!alreadyRunning) {
+        const { spawn } = await import('child_process');
+        const pollerPath = join(PROJECT, '.claude', 'poll-claude-usage.mjs');
+        if (existsSync(pollerPath)) {
+          const child = spawn('node', [pollerPath], {
+            detached: true,
+            stdio: 'ignore',
+            windowsHide: true,
+          });
+          child.unref();
+        }
+      }
+    }
+  } catch {
+    // Poller start is non-fatal
   }
 
   console.log(lines.join('\n'));

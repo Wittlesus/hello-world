@@ -1,5 +1,5 @@
 import { useProjectPath } from '../hooks/useProjectPath.js';
-import { useClaudeUsage, type ClaudeUsageData, type ModelUsage } from '../hooks/useClaudeUsage.js';
+import { useClaudeUsage, type ClaudeUsageData, type ModelUsage, type WebUsage } from '../hooks/useClaudeUsage.js';
 import { LoadingState } from './LoadingState.js';
 import { ViewShell } from './ViewShell.js';
 
@@ -144,6 +144,87 @@ function TokenBreakdown({ data }: { data: ClaudeUsageData }) {
   );
 }
 
+function timeUntil(isoDate: string): string {
+  const diff = new Date(isoDate).getTime() - Date.now();
+  if (diff <= 0) return 'now';
+  const hrs = Math.floor(diff / 3600000);
+  const mins = Math.floor((diff % 3600000) / 60000);
+  if (hrs > 24) {
+    const days = Math.floor(hrs / 24);
+    return `${days}d ${hrs % 24}h`;
+  }
+  return hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+}
+
+function limitBarColor(pct: number): string {
+  if (pct >= 80) return 'bg-red-500/80';
+  if (pct >= 50) return 'bg-yellow-500/70';
+  return 'bg-sky-500/70';
+}
+
+function LimitBar({ label, pct, sub }: { label: string; pct: number; sub: string }) {
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-1">
+        <span className="text-xs text-gray-300">{label}</span>
+        <span className="text-xs font-mono text-gray-400">{pct}% used</span>
+      </div>
+      <div className="h-2 rounded-full bg-gray-800 overflow-hidden">
+        <div
+          className={`h-full ${limitBarColor(pct)} rounded-full transition-all`}
+          style={{ width: `${Math.min(100, pct)}%` }}
+        />
+      </div>
+      <span className="text-[10px] text-gray-500 mt-0.5 block">{sub}</span>
+    </div>
+  );
+}
+
+function WebUsageLimits({ web }: { web: WebUsage }) {
+  const extra = web.extraUsage;
+  const spent = extra ? (extra.usedCredits / 100).toFixed(2) : '0';
+  const limit = extra ? (extra.monthlyLimit / 100).toFixed(0) : '0';
+
+  return (
+    <div className="bg-[#1a1a24] border border-gray-800 rounded-lg p-4 mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-[10px] uppercase tracking-wider text-gray-500 font-semibold">
+          Claude.ai Limits
+        </h3>
+        <span className="text-[9px] font-mono text-gray-600">
+          fetched {new Date(web.fetchedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </span>
+      </div>
+      <div className="space-y-3">
+        <LimitBar
+          label="Current Session"
+          pct={web.fiveHour.utilization}
+          sub={`Resets in ${timeUntil(web.fiveHour.resetsAt)}`}
+        />
+        <LimitBar
+          label="Weekly (All Models)"
+          pct={web.sevenDay.utilization}
+          sub={`Resets ${timeUntil(web.sevenDay.resetsAt)}`}
+        />
+        {web.sevenDaySonnet && (
+          <LimitBar
+            label="Weekly (Sonnet)"
+            pct={web.sevenDaySonnet.utilization}
+            sub={`Resets ${timeUntil(web.sevenDaySonnet.resetsAt)}`}
+          />
+        )}
+        {extra && extra.isEnabled && (
+          <LimitBar
+            label={`Extra Usage: $${spent} / $${limit}`}
+            pct={extra.utilization}
+            sub="Monthly spend"
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function CostView() {
   const projectPath = useProjectPath();
   const { data, loading } = useClaudeUsage(projectPath);
@@ -170,6 +251,9 @@ export function CostView() {
 
   return (
     <ViewShell title="Cost" description="Claude Code usage and spending">
+      {/* Web usage limits */}
+      {data.webUsage && <WebUsageLimits web={data.webUsage} />}
+
       {/* Top stats */}
       <div className="grid grid-cols-4 gap-3 mb-6">
         <StatCard
