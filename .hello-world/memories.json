@@ -5683,6 +5683,11 @@
           "targetId": "mem_8253e189",
           "relationship": "contradicts",
           "createdAt": "2026-02-27T11:14:30.342Z"
+        },
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "related",
+          "createdAt": "2026-02-27T11:54:52.805Z"
         }
       ],
       "qualityScore": 0.6,
@@ -5903,7 +5908,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T02:53:39.257Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.770Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "0040824d18a9"
     },
@@ -6255,6 +6266,11 @@
           "targetId": "mem_8253e189",
           "relationship": "related",
           "createdAt": "2026-02-27T11:14:30.354Z"
+        },
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.781Z"
         }
       ],
       "qualityScore": 0.6,
@@ -6282,7 +6298,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T03:45:17.754Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.784Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "a08980d7bbd5"
     },
@@ -6364,7 +6386,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T03:51:48.969Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.790Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "39bae56fa324"
     },
@@ -6471,7 +6499,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T03:57:39.412Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.794Z"
+        }
+      ],
       "qualityScore": 0.7,
       "fingerprint": "224576a0b282"
     },
@@ -6537,7 +6571,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T04:05:57.058Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.798Z"
+        }
+      ],
       "qualityScore": 0.5,
       "fingerprint": "7e6e3d6a5099"
     },
@@ -6560,7 +6600,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T04:07:16.807Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.774Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "f19cccc42980"
     },
@@ -6758,7 +6804,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T06:40:44.323Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.777Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "2e52ec0eba6a"
     },
@@ -7523,7 +7575,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-27T10:49:34.911Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_d249d7d2",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.801Z"
+        }
+      ],
       "qualityScore": 0.6,
       "fingerprint": "fb1b263e5409"
     },
@@ -7752,6 +7810,81 @@
       "links": [],
       "qualityScore": 0.5,
       "fingerprint": "89f4ed07f47a"
+    },
+    {
+      "id": "mem_d249d7d2",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pruning redesign: capacity-based trigger + agent review, not time-based arbitrary pruning",
+      "content": "Pat's directive: (1) Remove session-end auto-pruning. (2) Pruning only triggers when memory count hits a capacity threshold -- like a storage gauge filling up. (3) Display memory usage as a visual bar in the app (same style as cost bars). (4) On /clean-quit, spawn an agent that reviews memories for: truly unnecessary entries, mistakes, duplicates. Agent uses judgment, not score cutoffs. (5) Memories get breathing room to prove their worth before any pruning happens. This replaces the current system where hw_end_session runs pruneMemories() automatically.",
+      "rule": "Never auto-prune on session end. Pruning is capacity-triggered and agent-reviewed, not time-based and score-based.",
+      "tags": [
+        "memory",
+        "performance",
+        "styling",
+        "frontend",
+        "tokens",
+        "strategy",
+        "validation"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T11:54:52.759Z",
+      "links": [
+        {
+          "targetId": "mem_d4e5f721",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.770Z"
+        },
+        {
+          "targetId": "mem_26d3e733",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.774Z"
+        },
+        {
+          "targetId": "mem_0161cdb4",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.777Z"
+        },
+        {
+          "targetId": "mem_4cf5e64e",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.781Z"
+        },
+        {
+          "targetId": "mem_b3aed7bb",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.784Z"
+        },
+        {
+          "targetId": "mem_0d07f069",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.790Z"
+        },
+        {
+          "targetId": "mem_eb004b92",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.794Z"
+        },
+        {
+          "targetId": "mem_61035c34",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.798Z"
+        },
+        {
+          "targetId": "mem_0e1f48ed",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T11:54:52.801Z"
+        },
+        {
+          "targetId": "mem_2e22c552",
+          "relationship": "related",
+          "createdAt": "2026-02-27T11:54:52.805Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "466964d733cb"
     }
   ]
 }

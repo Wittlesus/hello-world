@@ -1,27 +1,6 @@
 {
   "activities": [
     {
-      "id": "act_f98d59e0",
-      "type": "agent_posted_to_chatroom",
-      "description": "AI Research Technical: Line counts per session: S48 (~800 lines): data migration, c",
-      "details": "",
-      "timestamp": "2026-02-26T09:27:30.313Z"
-    },
-    {
-      "id": "act_0f7b78a0",
-      "type": "agent_posted_to_chatroom",
-      "description": "Neuro Technical: One last point on phasing: the data cleanup (archiving 85% d",
-      "details": "",
-      "timestamp": "2026-02-26T09:27:34.196Z"
-    },
-    {
-      "id": "act_fae0a0d3",
-      "type": "deliberation_coverage_complete",
-      "description": "All 7 sub-questions addressed",
-      "details": "Quality: 4 tension, 2 shifted, 1 consensus\n  1. [TENSION] What is the canonical Memory schema? Which new fields are essential (links, reflections, qualityScore, fingerprint, supersededBy) and which are overengineering? What's the minimal schema that supports linking, scoring, dedup, and conflict resolution? -> Schema adds: links[], supersededBy, qualityScore, fingerprint (all optional). New type enum: reflection. Optional reflection fields: relatedTaskId, surfacedMemoryIds, outcome.\n  2. [TENSION] What is the complete retrieval pipeline from 'user types message' to 'brain injects context'? How do scoring.ts, cortex learning, link traversal, and context phase integrate into one flow? Where does each team's contribution slot in? -> 11-stage pipeline: tokenize, attention, cortex load (merged), pattern recognition, associative chaining, link traversal (0.8/0.6/0.4 weights), amygdala * scoreMemory * synapticStrength, rank with context phase, forced pain-win pairing via resolves links, dopamine, hot tags. Telemetry on every retrieval.\n  3. [SHIFTED] How does the brain learn from outcomes? Design the complete feedback loop: memory surfaced -> task outcome -> strength adjustment -> rule derivation. How do Reflexion-style reflections, Hebbian plasticity, and engineering effectiveness tracking combine into one system? -> Complete feedback loop: surfaced -> activeTraces -> task completion -> reflection (template-based) -> outcome-based plasticity (+0.15 success, -0.05 failure) -> after 3+ reflections same tags -> derive learned rule -> confidence scoring -> CLAUDE.md promotion at 0.9+. Prediction-error principle for auto-capture.\n  4. [SHIFTED] What enters the brain automatically vs manually? Design quality gates, dedup rules, and the prediction-error principle. How do we prevent auto-capture noise (71 of 193 memories are low-quality auto-captured) while still capturing important events? -> Three-gate quality system: qualityScore at write (reject < 0.15), fingerprint dedup (block exact, warn near), conflict resolution (ADD/MERGE/INVALIDATE/SKIP). Auto-capture uses prediction-error: only store unexpected outcomes. Expected success = just boost, novel success = capture, failure despite warnings = capture reflection.\n  5. [CONSENSUS] How does the brain self-evolve? Design cortex learning (auto-expand keyword map), procedural memory (learned rules from patterns), and automated archival/pruning. What self-evolves vs what stays manual? Where is the automation boundary? -> Three self-evolution systems: (1) cortex learning from retrieval gaps + memory title mining at PreCompact, (2) automated pruning at session end (stale + zero-access + 60d = archive), (3) learned rules derived from reflection patterns with confidence scoring. Cortex-learned.json, learned-rules.json, memories-archive.json.\n  6. [TENSION] How do we enforce brain signals so Claude can't ignore them? Design the three-layer enforcement: signal (hook output format), gate (PreToolUse blocks), instruction (CLAUDE.md rules). What's mandatory vs advisory? -> Three-layer enforcement: signal (hook prefixes [ATTENTION GATE], [CRITICAL PAIN], [LEARNED RULE]), gate (PreToolUse blocks Edit/Write when smart checkpoint triggers -- significantEvents >= 3 AND interval exceeded), instruction (CLAUDE.md rules). Brain health observability via hw_brain_health tool + memory-metrics.json.\n  7. [TENSION] What is the phased execution plan? Map every feature to a specific phase, identify dependencies, and define what ships in session 48 vs 49 vs 50+. What's the minimum viable brain that delivers real learning, and what layers on top? -> 4-session phased execution. S48: migration script + unify systems + wire engine + scoring + plasticity (~800 lines). S49: quality gates + reflections + linking (~600 lines). S50: cortex learning + pruning + rules (~500 lines). S51: enforcement + observability + flowchart (~300 lines). Total ~2200 lines across 4 new files + modifications to ~10 existing files.",
-      "timestamp": "2026-02-26T09:27:58.651Z"
-    },
-    {
       "id": "act_aa8cdb04",
       "type": "deliberation_phase",
       "description": "Phase → synthesis",
@@ -3499,6 +3478,27 @@
       "description": "Session ended",
       "details": "Brain audit deliberation (5/6 findings approved, 49 LOC committed). Upgraded deliberation runner to Sonnet 4.6 + 90s timeout. Added switchable provider per agent (Claude/Qwen mix). 5-judge panel reviewed all 8 collaboration methods. Created /clean-quit skill. Critical finding: deliberation agents should be independent subprocesses, not one brain wearing hats.",
       "timestamp": "2026-02-27T11:52:27.481Z"
+    },
+    {
+      "id": "act_d1368f3c",
+      "type": "direction_updated",
+      "description": "Direction updated",
+      "details": "note added: Pruning redesign: (1) No time-based or session-end pruning. ",
+      "timestamp": "2026-02-27T11:54:44.886Z"
+    },
+    {
+      "id": "act_9d5ed3a5",
+      "type": "memory_stored",
+      "description": "[DECISION] Pruning redesign: capacity-based trigger + agent review, not time-based arbitrary pruning",
+      "details": "Pat's directive: (1) Remove session-end auto-pruning. (2) Pruning only triggers when memory count hits a capacity threshold -- like a storage gauge filling up. (3) Display memory usage as a visual bar in the app (same style as cost bars). (4) On /clean-quit, spawn an agent that reviews memories for: truly unnecessary entries, mistakes, duplicates. Agent uses judgment, not score cutoffs. (5) Memories get breathing room to prove their worth before any pruning happens. This replaces the current system where hw_end_session runs pruneMemories() automatically.",
+      "timestamp": "2026-02-27T11:54:52.809Z"
+    },
+    {
+      "id": "act_03f830c8",
+      "type": "task_added",
+      "description": "Task: Memory capacity gauge: visual bar + capacity-based pruning trigger",
+      "details": "Add a memory usage bar to the app (same style as cost/usage bars). Define a capacity threshold (e.g., 200 memories). When memory count approaches the threshold, show warning in the gauge. Pruning only triggers when capacity is reached, not on session end. The /clean-quit agent review handles quality cleanup; the capacity gauge handles quantity limits.",
+      "timestamp": "2026-02-27T11:56:05.445Z"
     }
   ]
 }

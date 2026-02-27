@@ -259,6 +259,13 @@
       "capturedAt": "2026-02-27T07:28:49.608Z",
       "actionTaken": "decision",
       "actionId": "d_36e31687"
+    },
+    {
+      "id": "n_mm4u4i6t",
+      "text": "Pruning redesign: (1) No time-based or session-end pruning. Pruning triggers when memory count hits a capacity threshold (like a storage gauge). (2) Show memory usage as a visual bar in the app, same style as cost/usage bars. (3) On /clean-quit, instead of dumb pruning, spawn an agent that combs through memories looking for: truly unnecessary entries, mistakes, duplicates. Agent follows guidelines, not arbitrary score cutoffs. (4) Memories get breathing room to prove their worth before any pruning happens.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-27T11:54:44.885Z"
     }
   ]
 }

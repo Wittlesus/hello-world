@@ -1,7 +1,7 @@
 {
   "state": {
     "sessionStart": "2026-02-27T10:33:49.154Z",
-    "messageCount": 0,
+    "messageCount": 1,
     "contextPhase": "early",
     "synapticActivity": {
       "electron": {
@@ -25,12 +25,12 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "crash": {
-        "count": 63,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 64,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "tauri": {
-        "count": 26,
-        "lastHit": "2026-02-27T10:12:36.113Z"
+        "count": 27,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "bug": {
         "count": 14,
@@ -49,8 +49,8 @@
         "lastHit": "2026-02-27T10:02:30.689Z"
       },
       "verification": {
-        "count": 50,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 51,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "test": {
         "count": 1,
@@ -77,12 +77,12 @@
         "lastHit": "2026-02-27T07:13:36.798Z"
       },
       "debugging": {
-        "count": 34,
-        "lastHit": "2026-02-27T10:53:54.954Z"
+        "count": 35,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "rust": {
-        "count": 40,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 41,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "performance": {
         "count": 29,
@@ -105,8 +105,8 @@
         "lastHit": "2026-02-27T07:45:41.453Z"
       },
       "cross-project": {
-        "count": 46,
-        "lastHit": "2026-02-27T10:53:54.954Z"
+        "count": 47,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "vercel": {
         "count": 14,
@@ -125,16 +125,16 @@
         "lastHit": "2026-02-27T04:50:32.186Z"
       },
       "tasks": {
-        "count": 26,
-        "lastHit": "2026-02-27T10:33:44.435Z"
+        "count": 27,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "brain": {
-        "count": 27,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 28,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "memory": {
-        "count": 787,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 788,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "nextjs": {
         "count": 17,
@@ -193,8 +193,8 @@
         "lastHit": "2026-02-24T12:00:00.000Z"
       },
       "browser": {
-        "count": 322,
-        "lastHit": "2026-02-27T10:03:24.589Z"
+        "count": 323,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "twitter": {
         "count": 392,
@@ -205,8 +205,8 @@
         "lastHit": "2026-02-26T12:00:00.000Z"
       },
       "playwright": {
-        "count": 332,
-        "lastHit": "2026-02-27T10:00:52.184Z"
+        "count": 333,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "ai-tells": {
         "count": 361,
@@ -225,8 +225,8 @@
         "lastHit": "2026-02-21T12:00:00.000Z"
       },
       "audit": {
-        "count": 18,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 19,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "agent": {
         "count": 5,
@@ -257,8 +257,8 @@
         "lastHit": "2026-02-27T10:13:07.523Z"
       },
       "git": {
-        "count": 25,
-        "lastHit": "2026-02-27T10:31:42.927Z"
+        "count": 26,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "cortex": {
         "count": 20,
@@ -293,20 +293,20 @@
         "lastHit": "2026-02-27T10:31:42.927Z"
       },
       "session": {
-        "count": 25,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 26,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "workflow": {
         "count": 65,
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "handoff": {
-        "count": 19,
-        "lastHit": "2026-02-27T10:33:44.435Z"
+        "count": 20,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "worktree": {
-        "count": 25,
-        "lastHit": "2026-02-27T10:33:44.435Z"
+        "count": 26,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "competitor": {
         "count": 18,
@@ -333,8 +333,8 @@
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "ux": {
-        "count": 16,
-        "lastHit": "2026-02-27T10:00:52.184Z"
+        "count": 17,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "react": {
         "count": 17,
@@ -345,16 +345,16 @@
         "lastHit": "2026-02-27T07:37:26.518Z"
       },
       "multi-agent": {
-        "count": 16,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 17,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "orchestration": {
-        "count": 6,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 7,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "claude-cli": {
-        "count": 5,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "precompact": {
         "count": 2,
@@ -369,20 +369,20 @@
         "lastHit": "2026-02-27T10:53:54.497Z"
       },
       "quality": {
-        "count": 60,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 61,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "done-means-done": {
-        "count": 8,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 9,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "communication": {
-        "count": 29,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 30,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "deliberation": {
-        "count": 39,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 40,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "guardrails": {
         "count": 9,
@@ -409,20 +409,20 @@
         "lastHit": "2026-02-27T07:45:41.453Z"
       },
       "dev-mode": {
-        "count": 8,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 9,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "chrome": {
-        "count": 6,
-        "lastHit": "2026-02-27T10:00:52.184Z"
+        "count": 7,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "config": {
-        "count": 7,
-        "lastHit": "2026-02-27T10:00:52.184Z"
+        "count": 8,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "passwords": {
-        "count": 5,
-        "lastHit": "2026-02-27T10:00:52.184Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "code-indexing": {
         "count": 7,
@@ -521,8 +521,8 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "lead-gen": {
-        "count": 4,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 5,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "states": {
         "count": 4,
@@ -537,16 +537,16 @@
         "lastHit": "2026-02-27T10:00:52.184Z"
       },
       "discipline": {
-        "count": 27,
-        "lastHit": "2026-02-27T10:33:44.435Z"
+        "count": 28,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "preference": {
         "count": 3,
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "method": {
-        "count": 46,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 47,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "groupthink": {
         "count": 15,
@@ -561,16 +561,16 @@
         "lastHit": "2026-02-27T07:47:20.786Z"
       },
       "auto-capture": {
-        "count": 41,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 42,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "signal-detector": {
-        "count": 37,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 38,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "behavior": {
-        "count": 28,
-        "lastHit": "2026-02-27T10:13:21.019Z"
+        "count": 29,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "decision-making": {
         "count": 34,
@@ -605,16 +605,16 @@
         "lastHit": "2026-02-27T07:41:47.778Z"
       },
       "prisma": {
-        "count": 5,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "orm": {
-        "count": 5,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "breaking-changes": {
-        "count": 5,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "typing": {
         "count": 4,
@@ -669,8 +669,8 @@
         "lastHit": "2026-02-27T10:53:54.497Z"
       },
       "missing-patterns": {
-        "count": 36,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 37,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "linter": {
         "count": 5,
@@ -725,8 +725,8 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "false-positives": {
-        "count": 2,
-        "lastHit": "2026-02-27T04:58:57.017Z"
+        "count": 3,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "auto-update": {
         "count": 9,
@@ -777,8 +777,8 @@
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "pat-directive": {
-        "count": 38,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 39,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "canonical": {
         "count": 6,
@@ -805,32 +805,32 @@
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "chrome-extension": {
-        "count": 4,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 5,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "distribution": {
-        "count": 5,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "trust": {
-        "count": 14,
-        "lastHit": "2026-02-27T10:33:44.435Z"
+        "count": 15,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "tax-credit-calculators": {
-        "count": 1,
-        "lastHit": "2026-02-26T23:41:08.473Z"
+        "count": 2,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "market-research": {
-        "count": 5,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 6,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "solar": {
-        "count": 1,
-        "lastHit": "2026-02-26T23:41:08.473Z"
+        "count": 2,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "pricing": {
-        "count": 7,
-        "lastHit": "2026-02-27T10:13:21.019Z"
+        "count": 8,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "claude-code": {
         "count": 7,
@@ -869,8 +869,8 @@
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "solutions-not-apologies": {
-        "count": 19,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 20,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "brain-wiring": {
         "count": 11,
@@ -921,8 +921,8 @@
         "lastHit": "2026-02-27T04:50:32.186Z"
       },
       "dashboard": {
-        "count": 2,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 3,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "agents": {
         "count": 7,
@@ -973,12 +973,12 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "honesty": {
-        "count": 3,
-        "lastHit": "2026-02-27T06:54:40.249Z"
+        "count": 4,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "architecture-gap": {
-        "count": 11,
-        "lastHit": "2026-02-27T10:33:44.435Z"
+        "count": 12,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "minimal": {
         "count": 1,
@@ -997,12 +997,12 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "dead-memories": {
-        "count": 1,
-        "lastHit": "2026-02-27T04:58:57.017Z"
+        "count": 2,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "founding-evidence": {
-        "count": 1,
-        "lastHit": "2026-02-27T04:58:57.017Z"
+        "count": 2,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "context-management": {
         "count": 4,
@@ -1193,8 +1193,8 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "forgotten": {
-        "count": 3,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 4,
+        "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "research-mcp": {
         "count": 1,
@@ -1234,8 +1234,8 @@
         "synapticStrength": 1.1
       },
       "mem_281fbc2c": {
-        "count": 2,
-        "lastAccessed": "2026-02-27T11:13:52.518Z",
+        "count": 3,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
         "synapticStrength": 1.1
       },
       "mem_3a15f5e9": {
@@ -1254,8 +1254,8 @@
         "synapticStrength": 1.1
       },
       "mem_2c411e02": {
-        "count": 4,
-        "lastAccessed": "2026-02-27T10:53:54.954Z",
+        "count": 5,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
         "synapticStrength": 1.1
       },
       "mem_7cd96e23": {
@@ -1264,8 +1264,8 @@
         "synapticStrength": 1.1
       },
       "mem_6f091748": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T10:34:56.494Z",
+        "count": 2,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
         "synapticStrength": 1.1
       },
       "mem_09c288bc": {
@@ -1319,8 +1319,8 @@
         "synapticStrength": 1.1
       },
       "mem_d58cdf2b": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T10:53:54.954Z",
+        "count": 2,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
         "synapticStrength": 1.1
       },
       "mem_706d3714": {
@@ -1332,52 +1332,72 @@
         "count": 1,
         "lastAccessed": "2026-02-27T10:53:54.954Z",
         "synapticStrength": 1.1
+      },
+      "mem_8d1255da": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
+        "synapticStrength": 1
+      },
+      "mem_ee3c8f17": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
+        "synapticStrength": 1
+      },
+      "mem_c7d61dda": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
+        "synapticStrength": 1
+      },
+      "mem_0161cdb4": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T11:55:58.203Z",
+        "synapticStrength": 1
       }
     },
     "firingFrequency": {
-      "deliberation": 5,
+      "deliberation": 6,
       "model-selection": 3,
       "claude": 2,
       "agents": 3,
-      "session": 3,
+      "session": 4,
       "regression": 3,
-      "method": 5,
+      "method": 6,
       "groupthink": 3,
-      "quality": 5,
+      "quality": 6,
       "hooks": 2,
       "wiring": 2,
       "silent-failure": 2,
       "architecture": 4,
-      "pat-directive": 2,
-      "forgotten": 2,
+      "pat-directive": 3,
+      "forgotten": 3,
       "decision-making": 5,
       "workflow": 5,
       "research": 5,
       "parallel-agents": 5,
       "qwen": 5,
       "boardroom": 5,
-      "multi-agent": 4,
+      "multi-agent": 5,
       "context-management": 2,
-      "verification": 5,
+      "verification": 6,
       "migration": 4,
       "mcp-server": 4,
       "jsonstore": 4,
-      "auto-capture": 4,
-      "signal-detector": 3,
-      "missing-patterns": 3,
-      "communication": 2,
-      "solutions-not-apologies": 2,
+      "auto-capture": 5,
+      "signal-detector": 4,
+      "missing-patterns": 4,
+      "communication": 3,
+      "solutions-not-apologies": 3,
       "overdrive": 2,
       "buddy": 2,
       "visual-design": 2,
       "inner-monologue": 2,
       "task-management": 2,
       "proactive": 2,
-      "rust": 2,
-      "brain": 2,
-      "memory": 1,
+      "rust": 3,
+      "brain": 3,
+      "memory": 2,
       "performance": 1,
-      "audit": 1,
+      "audit": 2,
       "consensus": 1,
       "memory-systems": 1,
       "validation": 1,
@@ -1400,9 +1420,44 @@
       "api": 1,
       "credentials": 1,
       "pat-preference": 1,
-      "debugging": 1,
-      "cross-project": 1,
-      "subagents": 1
+      "debugging": 2,
+      "cross-project": 2,
+      "subagents": 1,
+      "prisma": 1,
+      "orm": 1,
+      "breaking-changes": 1,
+      "tauri": 1,
+      "crash": 1,
+      "worktree": 1,
+      "dev-mode": 1,
+      "chrome-extension": 1,
+      "distribution": 1,
+      "ux": 1,
+      "trust": 1,
+      "playwright": 1,
+      "chrome": 1,
+      "browser": 1,
+      "config": 1,
+      "passwords": 1,
+      "orchestration": 1,
+      "claude-cli": 1,
+      "tasks": 1,
+      "done-means-done": 1,
+      "handoff": 1,
+      "git": 1,
+      "tax-credit-calculators": 1,
+      "market-research": 1,
+      "solar": 1,
+      "lead-gen": 1,
+      "pricing": 1,
+      "false-positives": 1,
+      "behavior": 1,
+      "discipline": 1,
+      "honesty": 1,
+      "dashboard": 1,
+      "dead-memories": 1,
+      "founding-evidence": 1,
+      "architecture-gap": 1
     },
     "activeTraces": [
       "mem_bff85b0b",
@@ -1427,8 +1482,12 @@
       "mem_2df73149",
       "mem_d58cdf2b",
       "mem_706d3714",
-      "mem_1a0150bc"
+      "mem_1a0150bc",
+      "mem_8d1255da",
+      "mem_ee3c8f17",
+      "mem_c7d61dda",
+      "mem_0161cdb4"
     ],
-    "significantEventsSinceCheckpoint": 172
+    "significantEventsSinceCheckpoint": 173
   }
 }
