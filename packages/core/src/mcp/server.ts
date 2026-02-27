@@ -442,13 +442,27 @@ server.registerTool('hw_store_memory', {
   const suffix = result.merged ? ' (merged with existing)' : result.superseded?.length ? ` (superseded ${result.superseded.join(', ')})` : '';
 
   // Zone B: Link discovery (degradable -- new memory gets linked to existing graph)
-  safeBrainOp('store:linker', () => {
+  const linkResult = safeBrainOp('store:linker', () => {
     const allMems = memoryStore.getAllMemories();
     const links = findLinks(mem, allMems.filter(m => m.id !== mem.id));
     for (const link of links) {
       memoryStore.addLink(mem.id, link.targetId, link.relationship);
     }
-  }, undefined);
+    return links;
+  }, []);
+
+  // Surface contradictions and supersessions in the response
+  let linkWarnings = '';
+  if (linkResult.result.length > 0) {
+    const contradictions = linkResult.result.filter(l => l.relationship === 'contradicts');
+    const supersessions = linkResult.result.filter(l => l.relationship === 'supersedes');
+    if (contradictions.length > 0) {
+      linkWarnings += '\nWARNING: Contradicts ' + contradictions.map(c => `#${c.targetId} (score: ${c.weight.toFixed(2)})`).join(', ') + ' -- consider updating or superseding the older memory.';
+    }
+    if (supersessions.length > 0) {
+      linkWarnings += '\nSupersedes: ' + supersessions.map(s => `#${s.targetId}`).join(', ');
+    }
+  }
 
   // Zone C: Activity logging (degradable)
   safeBrainOp('store:activity', () => {
@@ -528,7 +542,7 @@ server.registerTool('hw_store_memory', {
     }, undefined);
   }
 
-  return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}`);
+  return text(`Memory stored: ${mem.id} (${mem.type}, quality: ${result.gateResult.qualityScore.toFixed(2)}) "${mem.title}"${suffix}${linkWarnings}`);
 });
 
 // ── Tasks ───────────────────────────────────────────────────────
