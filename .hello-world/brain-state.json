@@ -1,7 +1,7 @@
 {
   "state": {
     "sessionStart": "2026-02-27T10:33:49.154Z",
-    "messageCount": 1,
+    "messageCount": 2,
     "contextPhase": "early",
     "synapticActivity": {
       "electron": {
@@ -49,8 +49,8 @@
         "lastHit": "2026-02-27T10:02:30.689Z"
       },
       "verification": {
-        "count": 51,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 52,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "test": {
         "count": 1,
@@ -105,8 +105,8 @@
         "lastHit": "2026-02-27T07:45:41.453Z"
       },
       "cross-project": {
-        "count": 47,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 48,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "vercel": {
         "count": 14,
@@ -117,16 +117,16 @@
         "lastHit": "2026-02-27T10:31:42.927Z"
       },
       "deployment": {
-        "count": 400,
-        "lastHit": "2026-02-27T10:31:42.927Z"
+        "count": 401,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "analytics": {
         "count": 2,
         "lastHit": "2026-02-27T04:50:32.186Z"
       },
       "tasks": {
-        "count": 27,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 28,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "brain": {
         "count": 28,
@@ -177,8 +177,8 @@
         "lastHit": "2026-02-27T10:34:56.494Z"
       },
       "hooks": {
-        "count": 610,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 611,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "tokens": {
         "count": 689,
@@ -257,12 +257,12 @@
         "lastHit": "2026-02-27T10:13:07.523Z"
       },
       "git": {
-        "count": 26,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 27,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "cortex": {
-        "count": 20,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "count": 21,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "gap": {
         "count": 4,
@@ -285,8 +285,8 @@
         "lastHit": "2026-02-27T10:31:42.927Z"
       },
       "gotcha": {
-        "count": 16,
-        "lastHit": "2026-02-27T10:31:42.927Z"
+        "count": 17,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "github-pages": {
         "count": 14,
@@ -369,28 +369,28 @@
         "lastHit": "2026-02-27T10:53:54.497Z"
       },
       "quality": {
-        "count": 61,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 62,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "done-means-done": {
-        "count": 9,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 10,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "communication": {
         "count": 30,
         "lastHit": "2026-02-27T11:55:58.202Z"
       },
       "deliberation": {
-        "count": 40,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 41,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "guardrails": {
         "count": 9,
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "regression": {
-        "count": 15,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 16,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "semantic-indexing": {
         "count": 11,
@@ -561,8 +561,8 @@
         "lastHit": "2026-02-27T07:47:20.786Z"
       },
       "auto-capture": {
-        "count": 42,
-        "lastHit": "2026-02-27T11:55:58.202Z"
+        "count": 43,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "signal-detector": {
         "count": 38,
@@ -657,8 +657,8 @@
         "lastHit": "2026-02-27T11:13:52.518Z"
       },
       "reflection": {
-        "count": 20,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 21,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "prediction": {
         "count": 27,
@@ -737,8 +737,8 @@
         "lastHit": "2026-02-27T10:00:52.184Z"
       },
       "wiring": {
-        "count": 5,
-        "lastHit": "2026-02-27T11:13:52.518Z"
+        "count": 6,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "silent-failure": {
         "count": 9,
@@ -877,8 +877,8 @@
         "lastHit": "2026-02-27T10:34:56.494Z"
       },
       "server.ts": {
-        "count": 6,
-        "lastHit": "2026-02-27T07:45:06.184Z"
+        "count": 7,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "qwen": {
         "count": 31,
@@ -961,8 +961,8 @@
         "lastHit": "2026-02-27T07:13:36.798Z"
       },
       "memory-system": {
-        "count": 3,
-        "lastHit": "2026-02-27T07:48:52.712Z"
+        "count": 4,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "task-hygiene": {
         "count": 3,
@@ -1205,16 +1205,44 @@
         "lastHit": "2026-02-27T07:48:52.712Z"
       },
       "broken": {
-        "count": 3,
-        "lastHit": "2026-02-27T10:12:05.426Z"
+        "count": 4,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       },
       "archive": {
         "count": 9,
         "lastHit": "2026-02-27T10:13:07.523Z"
       },
       "consensus": {
+        "count": 2,
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "pat-feedback": {
         "count": 1,
-        "lastHit": "2026-02-27T10:34:56.494Z"
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "mcp-tools": {
+        "count": 1,
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "session-48": {
+        "count": 1,
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "accidental-deletion": {
+        "count": 1,
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "brain-audit": {
+        "count": 1,
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "scoring": {
+        "count": 1,
+        "lastHit": "2026-02-27T12:01:09.013Z"
+      },
+      "pruner": {
+        "count": 1,
+        "lastHit": "2026-02-27T12:01:09.013Z"
       }
     },
     "memoryTraces": {
@@ -1239,8 +1267,8 @@
         "synapticStrength": 1.1
       },
       "mem_3a15f5e9": {
-        "count": 2,
-        "lastAccessed": "2026-02-27T11:13:52.518Z",
+        "count": 3,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
         "synapticStrength": 1.1
       },
       "mem_ab99537b": {
@@ -1334,8 +1362,8 @@
         "synapticStrength": 1.1
       },
       "mem_8d1255da": {
-        "count": 1,
-        "lastAccessed": "2026-02-27T11:55:58.203Z",
+        "count": 2,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
         "synapticStrength": 1
       },
       "mem_ee3c8f17": {
@@ -1352,20 +1380,50 @@
         "count": 1,
         "lastAccessed": "2026-02-27T11:55:58.203Z",
         "synapticStrength": 1
+      },
+      "mem_4b06ba9d": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
+        "synapticStrength": 1
+      },
+      "mem_a16663aa": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
+        "synapticStrength": 1
+      },
+      "mem_97c6bee0": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
+        "synapticStrength": 1
+      },
+      "mem_a3d0d41a": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
+        "synapticStrength": 1
+      },
+      "mem_c6dfd67b": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
+        "synapticStrength": 1
+      },
+      "mem_d4e5f721": {
+        "count": 1,
+        "lastAccessed": "2026-02-27T12:01:09.014Z",
+        "synapticStrength": 1
       }
     },
     "firingFrequency": {
-      "deliberation": 6,
+      "deliberation": 7,
       "model-selection": 3,
       "claude": 2,
       "agents": 3,
       "session": 4,
-      "regression": 3,
+      "regression": 4,
       "method": 6,
       "groupthink": 3,
-      "quality": 6,
-      "hooks": 2,
-      "wiring": 2,
+      "quality": 7,
+      "hooks": 3,
+      "wiring": 3,
       "silent-failure": 2,
       "architecture": 4,
       "pat-directive": 3,
@@ -1378,11 +1436,11 @@
       "boardroom": 5,
       "multi-agent": 5,
       "context-management": 2,
-      "verification": 6,
+      "verification": 7,
       "migration": 4,
       "mcp-server": 4,
       "jsonstore": 4,
-      "auto-capture": 5,
+      "auto-capture": 6,
       "signal-detector": 4,
       "missing-patterns": 4,
       "communication": 3,
@@ -1398,17 +1456,17 @@
       "memory": 2,
       "performance": 1,
       "audit": 2,
-      "consensus": 1,
+      "consensus": 2,
       "memory-systems": 1,
       "validation": 1,
       "prediction": 2,
       "unwired": 1,
-      "cortex": 1,
+      "cortex": 2,
       "magnum-opus": 2,
       "s49": 2,
       "quality-gate": 2,
       "linker": 2,
-      "reflection": 2,
+      "reflection": 3,
       "competitor-analysis": 1,
       "feedback-loop": 1,
       "differentiator": 1,
@@ -1421,7 +1479,7 @@
       "credentials": 1,
       "pat-preference": 1,
       "debugging": 2,
-      "cross-project": 2,
+      "cross-project": 3,
       "subagents": 1,
       "prisma": 1,
       "orm": 1,
@@ -1441,10 +1499,10 @@
       "passwords": 1,
       "orchestration": 1,
       "claude-cli": 1,
-      "tasks": 1,
-      "done-means-done": 1,
+      "tasks": 2,
+      "done-means-done": 2,
       "handoff": 1,
-      "git": 1,
+      "git": 2,
       "tax-credit-calculators": 1,
       "market-research": 1,
       "solar": 1,
@@ -1457,7 +1515,19 @@
       "dashboard": 1,
       "dead-memories": 1,
       "founding-evidence": 1,
-      "architecture-gap": 1
+      "architecture-gap": 1,
+      "deployment": 1,
+      "gotcha": 1,
+      "broken": 1,
+      "pat-feedback": 1,
+      "mcp-tools": 1,
+      "session-48": 1,
+      "accidental-deletion": 1,
+      "server.ts": 1,
+      "brain-audit": 1,
+      "memory-system": 1,
+      "scoring": 1,
+      "pruner": 1
     },
     "activeTraces": [
       "mem_bff85b0b",
@@ -1486,7 +1556,13 @@
       "mem_8d1255da",
       "mem_ee3c8f17",
       "mem_c7d61dda",
-      "mem_0161cdb4"
+      "mem_0161cdb4",
+      "mem_4b06ba9d",
+      "mem_a16663aa",
+      "mem_97c6bee0",
+      "mem_a3d0d41a",
+      "mem_c6dfd67b",
+      "mem_d4e5f721"
     ],
     "significantEventsSinceCheckpoint": 173
   }

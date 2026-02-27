@@ -143,23 +143,6 @@
       "lastAccessed": "2026-02-22T08:08:51.218Z"
     },
     {
-      "id": "mem_3082b13b",
-      "projectId": "Claude AI Interface",
-      "type": "win",
-      "title": "Completed: Feature verification run",
-      "content": "Testing all Hello World features one by one using the project itself as the template. Tasks â†’ Memory â†’ Decisions â†’ Questions â†’ Workflow â†’ Approval â†’ Two-Strike â†’ Cost â†’ Sessions.",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "test",
-        "verification"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-24T09:18:18.591Z"
-    },
-    {
       "id": "mem_3fe56ea3",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -2914,21 +2897,6 @@
       "createdAt": "2026-02-26T03:46:07.426Z"
     },
     {
-      "id": "mem_7a20b18c",
-      "projectId": "Claude AI Interface",
-      "type": "win",
-      "title": "Completed: Set up Biome linter/formatter (greenfield)",
-      "content": "No existing ESLint/Prettier config. Fresh Biome setup: add @biomejs/biome dev dep, create biome.json at root, wire to turbo.json lint task, add check/fix scripts. Should take ~10 minutes. Research confirmed full coverage for our stack (TS + React + JSON + Tailwind).",
-      "rule": "",
-      "tags": [
-        "auto-captured"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T03:49:23.095Z"
-    },
-    {
       "id": "mem_621434c3",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -3520,27 +3488,6 @@
       "links": []
     },
     {
-      "id": "mem_f077cbf1",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Test: quality gate accepts well-formed memories",
-      "content": "Testing quality gate",
-      "rule": "Always verify after restart",
-      "tags": [
-        "testing",
-        "strategy",
-        "autonomy"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
-      "createdAt": "2026-02-26T13:20:13.705Z",
-      "links": [],
-      "qualityScore": 0.75,
-      "fingerprint": "431ef06db2be",
-      "lastAccessed": "2026-02-27T08:45:24.681Z"
-    },
-    {
       "id": "mem_32565078",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -3721,24 +3668,6 @@
       ],
       "qualityScore": 0.6,
       "fingerprint": "a4f2ce55d744"
-    },
-    {
-      "id": "mem_005fe210",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Link test",
-      "content": "Testing that linker wires up on store",
-      "rule": "",
-      "tags": [
-        "testing"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T15:09:00.283Z",
-      "links": [],
-      "qualityScore": 0.3,
-      "fingerprint": "0cb813dfa2a9"
     },
     {
       "id": "mem_82ae4687",
@@ -5788,55 +5717,6 @@
       "fingerprint": "291b04b1fb29"
     },
     {
-      "id": "mem_1378186a",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Pat's model preference update: use regular Sonnet, not Sonnet 1M for subagents",
-      "content": "",
-      "rule": "When spawning Task tool agents for research, reasoning, or deliberation, use model=\"sonnet\" (regular Sonnet 4.6). Do not use Sonnet 1M context variant.",
-      "tags": [
-        "model-selection",
-        "workflow",
-        "pat-preference"
-      ],
-      "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T01:30:21.596Z",
-      "links": [
-        {
-          "targetId": "mem_4d10cfed",
-          "relationship": "extends",
-          "createdAt": "2026-02-27T01:30:21.606Z"
-        }
-      ],
-      "qualityScore": 0.7,
-      "fingerprint": "37210b2b58e2"
-    },
-    {
-      "id": "mem_30f032dc",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "Qwen API provider: Chutes.ai (Pat's existing paid account)",
-      "content": "Qwen access via Chutes.ai -- Pat already has a paid account. Endpoint: https://llm.chutes.ai/v1 (OpenAI-compatible). Model: Qwen/Qwen3-235B-A22B-Instruct-2507-TEE. Also has Qwen3.5-397B, Qwen3-Coder-Next, vision models. 99.9% uptime SLA, decentralized GPU compute. DeepInfra was rejected (68-70% uptime, predatory pricing). Alibaba Cloud China region requires Chinese ID verification.",
-      "rule": "Use Chutes.ai for all Qwen API calls. Env vars: QWEN_API_KEY, QWEN_BASE_URL=https://llm.chutes.ai/v1, QWEN_MODEL.",
-      "tags": [
-        "qwen",
-        "api",
-        "chutes",
-        "credentials",
-        "provider"
-      ],
-      "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
-      "createdAt": "2026-02-27T02:26:59.889Z",
-      "links": [],
-      "qualityScore": 0.95,
-      "fingerprint": "42bcb6ce55c7",
-      "lastAccessed": "2026-02-27T10:53:54.499Z"
-    },
-    {
       "id": "mem_18fc5b2a",
       "projectId": "Claude AI Interface",
       "type": "fact",
@@ -6012,32 +5892,6 @@
       "qualityScore": 0.7,
       "fingerprint": "b290af1aba83",
       "lastAccessed": "2026-02-27T07:30:35.352Z"
-    },
-    {
-      "id": "mem_ec4c5276",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "Test: prediction wiring fires on pain memory store",
-      "content": "This is a verification test from session 58. Storing a pain memory should trigger prediction event processing and create/update expectation-model.json.",
-      "rule": "Always verify brain wiring after restart",
-      "tags": [
-        "verification",
-        "brain-wiring",
-        "prediction"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T03:05:44.072Z",
-      "links": [
-        {
-          "targetId": "mem_034f6fc6",
-          "relationship": "related",
-          "createdAt": "2026-02-27T03:36:15.382Z"
-        }
-      ],
-      "qualityScore": 0.95,
-      "fingerprint": "48ef0de569a6"
     },
     {
       "id": "mem_7a3e2cbc",
@@ -7134,25 +6988,6 @@
       "fingerprint": "3e39040bc64c"
     },
     {
-      "id": "mem_68e0c104",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: d action list from the audit:**  **P0 -- Fix now (broken fun",
-      "content": "d action list from the audit:**  **P0 -- Fix now (broken functionality):** 1. Hook files read dead `state.json` -- update to `tasks.json`/`questions.json` 2",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T08:45:24.662Z",
-      "links": [],
-      "qualityScore": 0.6000000000000001,
-      "fingerprint": "57f27252d414"
-    },
-    {
       "id": "mem_0bde53a6",
       "projectId": "Claude AI Interface",
       "type": "decision",
@@ -7285,25 +7120,6 @@
       "links": [],
       "qualityScore": 0.98,
       "fingerprint": "a643008c4e49"
-    },
-    {
-      "id": "mem_2d4af7b3",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: s back to `entries`, then to the raw array. Won't crash anym",
-      "content": "s back to `entries`, then to the raw array. Won't crash anymore.  **Hello World** | Phase: BUILD | Active task: Qwen integration (OpenRouter migration)  Th",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T10:13:27.281Z",
-      "links": [],
-      "qualityScore": 0.55,
-      "fingerprint": "541b94bdde5b"
     },
     {
       "id": "mem_3a15f5e9",
@@ -7637,44 +7453,6 @@
       "fingerprint": "852aaebb737d"
     },
     {
-      "id": "mem_11b626c7",
-      "projectId": "Claude AI Interface",
-      "type": "fact",
-      "title": "research_conclusion: sign** | Fast, broad coverage. Weak on synthesis. The synthe",
-      "content": "sign** | Fast, broad coverage. Weak on synthesis. The synthesis step is the missing piece. | Comprehensive but no debate. Does not pretend to be more than it is, u",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "research_conclusion"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T11:13:52.491Z",
-      "links": [],
-      "qualityScore": 0.45,
-      "fingerprint": "441846f1070e"
-    },
-    {
-      "id": "mem_640ff3f2",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "correction_confirmed: You're right. I ran today's deliberation by voicing all 4 ag",
-      "content": "You're right. I ran today's deliberation by voicing all 4 agents myself via hw_post_agent_message -- one brain w",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "correction_confirmed"
-      ],
-      "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T11:13:52.505Z",
-      "links": [],
-      "qualityScore": 0.45,
-      "fingerprint": "0e93906ebecf"
-    },
-    {
       "id": "mem_8253e189",
       "projectId": "Claude AI Interface",
       "type": "pain",
@@ -7724,25 +7502,6 @@
       ],
       "qualityScore": 1,
       "fingerprint": "209333d58a91"
-    },
-    {
-      "id": "mem_72b3680c",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: th the SessionStart hook firing on each spawn. We fixed the ",
-      "content": "th the SessionStart hook firing on each spawn. We fixed the hook issue (HW_AGENT_MODE=1 guard) but never bumped the model to Sonnet or increased the timeout pa",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-27T11:15:17.308Z",
-      "links": [],
-      "qualityScore": 0.7000000000000001,
-      "fingerprint": "1e07744be51b"
     },
     {
       "id": "mem_243cc114",
