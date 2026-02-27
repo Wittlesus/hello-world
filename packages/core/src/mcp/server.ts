@@ -225,16 +225,16 @@ function generateSummary(tool: string, args: Record<string, unknown>): string {
 // File lists per tool — which .hello-world/*.json files does each tool write?
 function toolFiles(tool: string): string[] {
   const map: Record<string, string[]> = {
-    hw_add_task:          ['state.json'],
-    hw_update_task:       ['state.json'],
+    hw_add_task:          ['tasks.json'],
+    hw_update_task:       ['tasks.json'],
     hw_list_tasks:        [],
     hw_store_memory:      ['memories.json', 'brain-state.json', 'expectation-model.json'],
     hw_retrieve_memories: ['brain-state.json', 'memories.json'],
     hw_advance_phase:     ['workflow.json'],
     hw_get_workflow_state:[],
-    hw_record_decision:   ['state.json'],
-    hw_add_question:      ['state.json'],
-    hw_answer_question:   ['state.json'],
+    hw_record_decision:   ['decisions.json'],
+    hw_add_question:      ['questions.json'],
+    hw_answer_question:   ['questions.json'],
     hw_notify:            [],
     hw_check_approval:    [],
     hw_list_approvals:    [],
@@ -251,11 +251,11 @@ function toolFiles(tool: string): string[] {
     hw_list_watchers:     [],
     hw_check_autonomous_timer: [],
     hw_get_claude_usage: ['claude-usage.json'],
-    hw_start_task:            ['state.json', 'workflow.json'],
+    hw_start_task:            ['tasks.json', 'workflow.json'],
     hw_get_task:              [],
     hw_reset_strikes:         ['workflow.json'],
   };
-  return map[tool] ?? ['state.json'];
+  return map[tool] ?? ['tasks.json'];
 }
 
 let pendingNotify: { files: Set<string>; events: Array<{ tool: string; summary: string }> } | null = null;
