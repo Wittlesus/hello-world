@@ -54,7 +54,7 @@ export interface PruneOptions {
 // ── Capacity ──────────────────────────────────────────────────────
 
 /** Max memories before pruning is recommended. */
-export const MEMORY_CAPACITY = 300;
+export const MEMORY_CAPACITY = 1000;
 
 /** Warning threshold (percentage of capacity). */
 export const CAPACITY_WARNING_PCT = 0.80;

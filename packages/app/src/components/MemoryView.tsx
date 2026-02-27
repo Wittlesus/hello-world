@@ -454,22 +454,22 @@ export function MemoryView() {
         <div className="flex items-center justify-between mb-1.5">
           <span className="text-[11px] text-gray-400">Memory Capacity</span>
           <span className="text-[11px] font-mono text-gray-300">
-            {memories.length} / 300
+            {memories.length} / 1000
           </span>
         </div>
         <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all ${
-              memories.length >= 300
+              memories.length >= 1000
                 ? 'bg-red-500'
-                : memories.length >= 240
+                : memories.length >= 800
                   ? 'bg-amber-500'
                   : 'bg-emerald-500'
             }`}
-            style={{ width: `${Math.min(100, (memories.length / 300) * 100)}%` }}
+            style={{ width: `${Math.min(100, (memories.length / 1000) * 100)}%` }}
           />
         </div>
-        {memories.length >= 300 && (
+        {memories.length >= 1000 && (
           <div className="text-[10px] text-red-400 mt-1">
             At capacity. Run /clean-quit or prune memories.
           </div>
