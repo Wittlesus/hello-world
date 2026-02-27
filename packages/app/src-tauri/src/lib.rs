@@ -304,13 +304,9 @@ fn get_mode(project_path: &str) -> Result<Value, String> {
 
 #[tauri::command]
 fn set_mode(project_path: &str, overdrive: bool) -> Result<Value, String> {
-    let now = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .unwrap_or_default()
-        .as_millis();
     let data = serde_json::json!({
         "overdrive": overdrive,
-        "toggledAt": now,
+        "toggledAt": utc_now_iso(),
         "toggledBy": "pat",
     });
     write_json_file(project_path, "mode.json", &data)?;
@@ -576,7 +572,7 @@ fn resolve_approval(project_path: &str, request_id: String, decision: String) ->
     let mut resolved = pending.remove(idx);
 
     resolved["status"] = serde_json::json!(decision);
-    resolved["resolvedAt"] = serde_json::json!(epoch_ms());
+    resolved["resolvedAt"] = serde_json::json!(utc_now_iso());
 
     data["resolved"]
         .as_array_mut()
@@ -603,7 +599,7 @@ fn answer_question(project_path: &str, id: String, answer: String) -> Result<Val
 
     q["status"] = serde_json::json!("answered");
     q["answer"] = serde_json::json!(answer);
-    q["answeredAt"] = serde_json::json!(epoch_ms());
+    q["answeredAt"] = serde_json::json!(utc_now_iso());
 
     let result = q.clone();
     write_json_file(project_path, "questions.json", &data)?;
@@ -856,7 +852,8 @@ static PTY_STATE: Mutex<Option<PtyState>> = Mutex::new(None);
 
 fn build_project_context(project_path: &str) -> String {
     let config = read_json_file(project_path, "config.json").ok();
-    let state = read_json_file(project_path, "state.json").ok();
+    let tasks_data = read_json_file(project_path, "tasks.json").ok();
+    let questions_data = read_json_file(project_path, "questions.json").ok();
     let workflow = read_json_file(project_path, "workflow.json").ok();
 
     let name = config.as_ref()
@@ -867,7 +864,7 @@ fn build_project_context(project_path: &str) -> String {
         .and_then(|w| w["phase"].as_str())
         .unwrap_or("idle");
 
-    let active_tasks: Vec<String> = state.as_ref()
+    let active_tasks: Vec<String> = tasks_data.as_ref()
         .and_then(|s| s["tasks"].as_array())
         .map(|tasks| {
             tasks.iter()
@@ -882,7 +879,7 @@ fn build_project_context(project_path: &str) -> String {
         })
         .unwrap_or_default();
 
-    let open_questions: Vec<String> = state.as_ref()
+    let open_questions: Vec<String> = questions_data.as_ref()
         .and_then(|s| s["questions"].as_array())
         .map(|qs| {
             qs.iter()
