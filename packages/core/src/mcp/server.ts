@@ -771,9 +771,24 @@ async function sendDiscordDM(message: string): Promise<void> {
 
 server.registerTool('hw_notify', {
   title: 'Notify Pat',
-  description: 'Send Pat a Discord DM notification. Use for important events, blockers, or when you need attention.',
+  description: 'Send Pat a Discord DM notification. Use for important events, blockers, or when you need attention. The system checks if memories already cover your question -- if so, you get a nudge to use those first.',
   inputSchema: z.object({ message: z.string() }),
 }, async (args: { message: string }) => {
+  // Uncertainty gate: check if memories cover this topic before escalating
+  const allMems = memoryStore.getAllMemories();
+  const brainState = memoryStore.getBrainState();
+  if (brainState && allMems.length > 0) {
+    const retrieval = retrieveMemories(args.message, allMems, brainState);
+    const topPain = retrieval.painMemories[0];
+    const topWin = retrieval.winMemories[0];
+    const topScore = Math.max(topPain?.score ?? 0, topWin?.score ?? 0);
+    const topMemory = (topPain?.score ?? 0) >= (topWin?.score ?? 0) ? topPain?.memory : topWin?.memory;
+    if (topScore > 0.7 && topMemory) {
+      activity.append('notification', 'Notify gate: relevant memory found, still sending', `Score: ${topScore.toFixed(2)} | Memory: ${topMemory.title}`);
+      await sendDiscordDM(`**Hello World:** ${args.message}`);
+      return text(`Notification sent. NOTE: Memory "${topMemory.title}" (score: ${topScore.toFixed(2)}) may already cover this. Consider hw_retrieve_memories("${args.message.slice(0, 40)}") before escalating next time.`);
+    }
+  }
   await sendDiscordDM(`**Hello World:** ${args.message}`);
   activity.append('notification', 'Discord DM sent to Pat', args.message);
   return text('Notification sent to Pat via Discord DM.');
