@@ -155,7 +155,7 @@ export function App() {
     <ErrorBoundary label="app">
       <div className="h-screen flex flex-col bg-[#0a0a0f] text-gray-200">
         <div className="flex-1 flex min-h-0">
-          <Sidebar onShowHelp={() => setShowHelp(true)} />
+          <Sidebar onShowHelp={() => setShowHelp(true)} onShowCommands={() => setShowCommands(true)} />
           <main className="flex-1 flex flex-col min-w-0 min-h-0">
             <MainContent />
           </main>

@@ -1759,11 +1759,21 @@
       "id": "t_40a1fd66",
       "title": "Build command palette: clickable /commands menu that pastes to terminal",
       "description": "Pat's request: A menu (like the ? keybind help modal) showing all important /commands with descriptions. Clickable -- clicking a command auto-copies/pastes it into the terminal chat input. Commands to include: /fullsweep, /clean-quit, /commit, /review-pr, /content-pipeline:scan, /social-engine:engage, /pulse, /market-intel:research, /memory-gardener:garden, etc. Implementation: new CommandPalette component, triggered by a keybind (maybe /), lists commands with one-line descriptions, click handler writes to PTY stdin or copies to clipboard.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T14:07:01.292Z",
-      "updatedAt": "2026-02-27T14:07:05.577Z"
+      "updatedAt": "2026-02-27T14:08:55.107Z"
+    },
+    {
+      "id": "t_9cc3844e",
+      "title": "Add command palette button to sidebar above overdrive",
+      "description": "Pat wants a visible button in the sidebar for the command palette, above the overdrive toggle. Should stand out with indigo accent.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T14:10:51.344Z",
+      "updatedAt": "2026-02-27T14:10:57.862Z"
     }
   ],
   "milestones": []

@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { Brain, CheckSquare, HelpCircle, Settings } from 'lucide-react';
+import { Brain, CheckSquare, Command, HelpCircle, Settings } from 'lucide-react';
 import { useCallback } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
@@ -120,13 +120,14 @@ interface WorkflowData {
 
 interface SidebarProps {
   onShowHelp?: () => void;
+  onShowCommands?: () => void;
 }
 
 interface ModeData {
   overdrive?: boolean;
 }
 
-export function Sidebar({ onShowHelp }: SidebarProps) {
+export function Sidebar({ onShowHelp, onShowCommands }: SidebarProps) {
   const { activeView, setView, projectName, sidebarCollapsed, toggleSidebar } = useAppStore();
   const projectPath = useProjectPath();
   const { data: workflowData } = useTauriData<WorkflowData>('get_workflow', projectPath);
@@ -208,6 +209,27 @@ export function Sidebar({ onShowHelp }: SidebarProps) {
           );
         })}
       </nav>
+
+      {/* Command palette button */}
+      {onShowCommands && (
+        <button
+          onClick={onShowCommands}
+          title="Commands (/)"
+          className="border-t border-indigo-500/20 px-3 py-2.5 shrink-0 w-full text-left transition-colors bg-indigo-500/[0.06] hover:bg-indigo-500/[0.12] group"
+        >
+          {sidebarCollapsed ? (
+            <div className="flex justify-center">
+              <Command size={14} className="text-indigo-400 group-hover:text-indigo-300" />
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Command size={13} className="text-indigo-400 group-hover:text-indigo-300" />
+              <span className="text-[11px] text-indigo-400 group-hover:text-indigo-300 font-medium">Commands</span>
+              <kbd className="ml-auto text-[9px] text-indigo-500/60 bg-indigo-500/10 px-1 rounded font-mono">/</kbd>
+            </div>
+          )}
+        </button>
+      )}
 
       {/* Phase indicator + overdrive toggle */}
       <button
