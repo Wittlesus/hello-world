@@ -142,10 +142,15 @@ When writing `hw_write_handoff()`, always use this structure so the next Claude 
 - Brain memory — pain/win/fact searchable at session start
 - Watcher system — spawn background watchers that fire on app shutdown
 - Direction notes — captured in direction.json, surfaced in Dashboard + ProjectContextView
+- Loading splash screen — HTML+CSS spinner visible from first webview frame
+- Brain wiring — reflection, prediction, cortex merger, linker all connected to runtime
+- Auto-capture signal detector — detects significant moments, auto-stores high-confidence signals
+- Boardroom system — Qwen-powered multi-agent collaboration with anti-groupthink phases
 
 ## What's In Progress
-- SkillsView tab (Rust command exists, UI not yet wired)
 - Direction notes "mark read" button in Dashboard (Rust command in feat/direction-notes, not yet merged)
+- Boardroom quality improvements: anti-groupthink phases, agent-specific prompts, round awareness
+- Auto-capture: signals above 0.7 confidence auto-store as memories
 
 ## Direction Capture — Critical Rule
 When Pat discusses vision, scope, or strategy during a session, write it to `.hello-world/direction.json` immediately — before moving on. Do not wait for the end of the session. A crash wipes context; the file survives.
