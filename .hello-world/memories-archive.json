@@ -111,8 +111,2661 @@
       "reason": "Superseded by mem_525e32e3",
       "archivedAt": "2026-02-27T11:52:27.448Z",
       "scoreAtArchive": 0.816604218068706
+    },
+    {
+      "memory": {
+        "id": "mem_3fe56ea3",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Verify live reactivity works",
+        "content": "Check that Dashboard and other views update in real-time when MCP tools write to .hello-world/ JSON files.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:22:52.850Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7dfdf40e",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Wire question answers to downstream actions (tasks/decisions)",
+        "content": "When a question is answered, the answer should optionally route to a task (if it implies action) or a decision (if it reveals a tradeoff). Currently answers just sit in the Answered section with no follow-through. Could be a convention in the MCP tool, or a UI prompt after answering.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "ux",
+          "backlog"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:22:53.289Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_2e7aed6c",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Deliberation v2: intelligent agent selection, plan-before-run, recommendation extraction",
+        "content": "From Pat's direction: (1) Expand agent roster beyond 4 cognitive lenses -- Claude picks the right agents per topic. (2) Claude enters plan mode before deliberations to design framing + agent selection. (3) After conclusion, auto-extract recommendations into individual approval tasks in Approvals tab. (4) Summary writer -- polished timeline view. Items 1-3 are the core of the delib-v2 plan already in progress.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:23:25.199Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_8ba19195",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Deliberation UX polish: message separation, summary timeline, end-of-delib prompt",
+        "content": "From Pat's feedback: (1) Strip markdown from agent output (already done on master). (2) Visually separate/partition agent messages as they arrive. (3) Add button to generate polished deliberation summary timeline in a table view. (4) At deliberation end, remind user to return to terminal to discuss results. (5-6) Deferred per Pat's later note -- keep deliberations practical, not meta.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:26:09.766Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_21d33b6d",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Clean up stale watcher from watchers.json",
+        "content": "Remove dead [copy] zesty-ferret watcher (PID 27244, process already dead) from watchers.json active list. Delib-v2 work was already merged to master.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:31:11.792Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_53f40551",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Color-code activity feed brackets in terminal side panel",
+        "content": "Color [DONE] green, and other bracket labels with appropriate colors in the Dashboard terminal side panel activity feed. Bonus: match buddy theme colors.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:35:58.129Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_ac1e80ac",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix ChatroomPanel hooks ordering crash",
+        "content": "useState(false) for showSummary is at line 234, after the early return at line 212. React hooks must be called in the same order every render. Move it up to the hook block at line 126.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-24T23:47:25.669Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_001ce94f",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Run architecture deliberation for multi-project support",
+        "content": "Deliberation with backend-arch, ux-designer, pragmatist, constraint agents on: storage split (global vs project), project registry data model, MCP server switching strategy, auto-onboard agent pipeline, terminal context switching. Must run in-app with MCP server up.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "deliberation",
+          "multi-project"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T00:04:00.589Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_6aee0cd4",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Build deliberation mediator guardrails",
+        "content": "Three guardrails to prevent lazy consensus in deliberations: (1) Coverage gate -- track numbered sub-questions from the framing, verify each gets substantive treatment before synthesis. If a question was dismissed without engagement, force a steelman round. (2) Mediator intervention rule -- when an agent dismisses a topic without engaging its specific value prop, Claude pauses the round and redirects. (3) Randomize or rotate agent speaking order per round so no single agent always anchors the frame. Implementation: these are behavioral rules for Claude as mediator, but could also be encoded as a pre-synthesis checklist in the deliberation flow.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T00:25:03.559Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_2ed7e910",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Deliberate on deliberation guardrails design",
+        "content": "Run a deliberation to evaluate the current guardrails system (subQuestions, balanceNotes, coverage checks) and determine if the design is right, what's missing, and what should change.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T00:54:36.069Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4d69a983",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Delete balance notes as required field",
+        "content": "Remove balanceNotes from hw_plan_deliberation required schema. Make it optional. Update plan storage and display to handle missing balanceNotes.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:00:54.493Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_f4d3b2df",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Upgrade coverage from binary to quality tags",
+        "content": "Replace addressed/pending/lumped status in hw_check_deliberation_coverage with consensus/tension/shifted. Update coverage report output. All-consensus triggers a warning.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:00:55.109Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7db65b6b",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Auto-runner pauses at synthesis phase",
+        "content": "runDeliberation auto-runner should stop generating agent messages when phase transitions to synthesis. Prevents late-stage messages that invalidate coverage reports.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:00:55.635Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_9b223d80",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Conclusion must reference synthesis",
+        "content": "hw_conclude_deliberation should validate that a synthesis message exists in the chatroom before allowing conclusion. Warn if conclusion text doesn't align with synthesis.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:00:56.455Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_edbc311e",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Build separate lightweight-insights tool",
+        "content": "New hw_quick_insights tool: 3 agents, no coverage tracking, no sub-questions, bulk-dismissable output. Clearly non-binding. Visually distinct from deliberation in app.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:00:57.053Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_df5a8eb6",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Enforce one mandatory deliberation path",
+        "content": "Update CLAUDE.md and mediator instructions: all deliberations require hw_plan_deliberation with subQuestions. No skipping to hw_start_deliberation directly for decision-making. Document the distinction between deliberation (binding) and quick-insights (non-binding).",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:01:50.273Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_f88f6500",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Make session startup instant -- eliminate redundant hw_get_context() call",
+        "content": "Enhance session-start.mjs to be the single source of truth for session context. Include active-state.md contents, register session directly in sessions.json, and replace the checklist with \"start working immediately\" instruction. Update CLAUDE.md startup instructions accordingly.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T01:24:12.437Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7d9f3180",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Evaluate Tech Radar MCP as a product",
+        "content": "Nobody built proactive technique/repo discovery as MCP. Scrape GitHub trending + HN + subreddits, analyze patterns, surface by user stack. Subscription model viable. Closest competitor: Forage (2 stars). Run competitive research before building.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T02:57:08.301Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_a5fcec72",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Build custom ACE MCP server -- semantic code indexing",
+        "content": "Build our own Augment Context Engine equivalent as a standalone MCP server. Semantic code indexing tailored to our workflow: file summaries, function/class extraction, dependency graphs, concept tagging. Uses Claude API for understanding, local JSON/SQLite for index storage. MCP tools: semantic_search, get_file_context, find_related_files, explain_architecture. No vector DB -- Claude does the semantic matching on pre-generated summaries.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T07:39:41.924Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_d94b2911",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Update memory files and extend Cortex scope",
+        "content": "Update active-state.md, context node, and timeline for Cortex build session. Then extend Cortex to index external tech discoveries into persistent memory.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T08:19:17.072Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_ecc5f51b",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Add fallback to SessionStart hook for corrupted files",
+        "content": "Wrap each JSON file read in session-start.mjs with individual try/catch so one corrupted file doesn't crash the entire hook. Output partial context with warnings instead of failing silently. Add a health check that reports which files loaded vs failed.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T08:43:16.400Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_1d74d687",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Disable Tauri hot-reload for lib.rs specifically",
+        "content": "Configure Tauri dev mode to NOT hot-reload when lib.rs changes. This eliminates the root cause of PTY kills and removes the need for the worktree workflow on Rust changes. Check tauri.conf.json and Cargo.toml for watch/ignore config.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T08:44:38.641Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_340cde96",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Add approval timeout with auto-escalation",
+        "content": "When a block-tier approval has been pending for >30 minutes, send a reminder DM to Pat. After 60 minutes, downgrade to notify-tier (proceed with caution, log the override). Prevents system from freezing when Pat is away.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T08:46:00.560Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_642ae542",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Implement B+: split state.json + atomic writes + backup",
+        "content": "From deliberation: (1) Split state.json into tasks.json, decisions.json, questions.json, memories.json. (2) Update JsonStore with atomic write-to-temp-then-rename with Windows NTFS retry. (3) Backup copy before each write. (4) Session-start hook reads split files with .backup fallback. (5) Update Tauri file watcher to watch new files. (6) Migration: on first run, read old state.json and split into new files.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T09:38:23.368Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_a307a00c",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Feature verification run",
+        "content": "Testing all Hello World features one by one using the project itself as the template. Tasks → Memory → Decisions → Questions → Workflow → Approval → Two-Strike → Cost → Sessions.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "test",
+          "verification"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T09:53:07.850Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_c9dae5af",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Add auto-tagging to hw_add_task",
+        "content": "Parse task title/description for keywords and auto-assign tags when none are provided. Prevents untagged tasks from appearing on the board.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "bug-fix",
+          "mcp",
+          "dx"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T10:12:31.630Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_38ad45b4",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Update system-explorer.html to reflect split-state architecture",
+        "content": "The system explorer node graph still shows the old single state.json flow. Update to show tasks.json, decisions.json, questions.json as separate nodes with individual write paths from MCP and merged read path to Tauri get_state.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T10:20:01.919Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4ec22657",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix deliberation system: prevent bypassing guardrails with quick insights",
+        "content": "Problem: Claude used hw_quick_insights for a topic that needed full deliberation, bypassing all guardrails (sub-questions, coverage tracking, consensus flagging, phases). The system allowed it silently. Fix: (1) quick insights should warn/block when topic complexity exceeds threshold, (2) mediator protocol needs to be enforced in code not just instructions, (3) agent definitions need deeper expertise prompts, (4) session-start context must include deliberation system capabilities so Claude doesn't forget what tools exist.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T10:42:04.541Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4811c285",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix deliberation UI: summary format, dialogue sizing, thinking animation, table visibility",
+        "content": "4 issues: (1) End summary should be a timeline with short sentences per agent, not a blob. (2) Agent dialogue boxes need more space -- either larger or scrollable or both. (3) Need dot animation with exclamation when agents are thinking so user knows it's not stuck. (4) Table is barely visible.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "ux",
+          "deliberation",
+          "chatroom"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T10:46:48.942Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_57fa6aa8",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix state.json race conditions with file locking",
+        "content": "State.json has race conditions where concurrent writes from MCP server, file watcher, and discord listener can silently clobber data. This is the highest-risk bug. Needs deliberation on: (1) File locking as a quick fix vs SQLite migration as the proper fix, (2) If locking, what mechanism (proper-lockfile, .lock file, OS-level), (3) If SQLite, should this be combined with t_f2d9ad7d, (4) How to detect and recover from data loss that may have already happened, (5) Whether to split state.json into separate files per concern (tasks.json, decisions.json, etc.) as an intermediate step.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T10:46:49.673Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_6c02b0af",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Test auto-tagging verification",
+        "content": "Temporary task to verify auto-tagging infers tags from title/description. Should get tags like ['testing', 'verification'] or similar, not empty or ['untagged'].",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "testing"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T10:54:06.157Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_95467655",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Rebuild system-explorer.html with clean tiered layout and group boxes",
+        "content": "Complete rewrite of the system explorer flow chart. Add group background rectangles with labels, reorganize nodes into clear horizontal tiers (Human -> Communication -> Processing -> Data -> Workflows), update MCP server list (remove stale code-research, add Gmail + Chrome), reduce edge crossings. Keep same sidebar/controls/interaction code.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "feature",
+          "mcp",
+          "workflow",
+          "research"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T11:02:10.524Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_f6f237c4",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix sidebar subtabs showing for all sections",
+        "content": "Sidebar.tsx line 148: subtabs render for ALL sections when sidebar is expanded. Missing isActiveSection check. Fix: change `{!sidebarCollapsed && (` to `{!sidebarCollapsed && isActiveSection && (`",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T17:14:21.694Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_57afcfd2",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Apply system explorer layout changes (keep pipelines)",
+        "content": "Apply deliberation changes to system-explorer.html BUT keep the 5 pipeline nodes. Changes: (1) top-to-bottom data flow layout -- hooks/Pat at top, MCP hub center, storage bottom. (2) MCP servers as right-edge leaf nodes. (3) Dashed \"atomic-read zone\" line around split files (tasks/decisions/questions). (4) Write-frequency labels on hot files. (5) Reduce connection crossings via new spatial arrangement. Keep all 5 pipeline nodes -- they show flows as first-class objects.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T17:16:33.371Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4d2a5a04",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix all fallout from state.json split -- full system audit and optimization",
+        "content": "The state.json -> split files migration was incomplete. Fix everything:\n\n1. ENOENT fix: Find and update all references to the old state.json path (session-start hook, MCP server, Rust commands)\n2. Rust read cache: Add TTL-based file cache in lib.rs so multiple components reading the same file within 2-3s get cached results instead of hitting disk\n3. Shared polling: Replace per-hook 10s intervals in useTauriData.ts with a single global 30s heartbeat that deduplicates\n4. File watcher debounce: When MCP writes 3 files rapidly, batch the watcher events so components re-render once, not 3 times\n5. Verify all hooks work with split files: session-start, pre-tool-gate, user-prompt-submit, post-edit-context\n6. Test the full flow end-to-end\n\nThis is cleanup debt from the B+ state storage decision. Should have been caught during the original migration.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-25T17:54:25.369Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_49c7b3ae",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Remove all browser feature remnants from UI",
+        "content": "BrowserView.tsx still exists, and App.tsx/Sidebar.tsx/store still reference it. The watcher copied files back. Delete BrowserView.tsx and remove all browser references from App.tsx, Sidebar.tsx, and stores/app.ts.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:31:22.912Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_90cfe6f1",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy animations don't work on non-HW projects",
+        "content": "Buddy's state machine is driven by hw-tool-summary events emitted by the MCP server loopback notify. When HW points at a project where MCP isn't running, those events never fire and buddy stays in 'waiting' state permanently -- no twitch, no bounce, no sound. Fix options: (1) Have buddy watch PTY output directly for activity signals (regex on terminal output), (2) Have the Tauri Rust backend emit hw-tool-summary based on file watcher activity instead of relying on MCP push, (3) Both -- MCP push for HW-aware projects, file watcher fallback for others.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "bug",
+          "multi-project",
+          "buddy"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:40:18.090Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_3b6218c4",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix all hardcoded project paths in Claude hooks",
+        "content": "All 6 .claude/hooks/*.mjs files hardcode PROJECT = 'C:/Users/Patri/CascadeProjects/hello-world'. This breaks buddy animations and context tracking on non-HW projects. Fix: read from ~/.hello-world-app.json with fallback. Already fixed user-prompt.mjs and stop-thought.mjs. Remaining: pre-tool-gate.mjs, post-edit-context.mjs, pre-compact.mjs, post-tool-thought.mjs.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:41:15.850Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_eb60cc01",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Set up Biome linter/formatter (greenfield)",
+        "content": "No existing ESLint/Prettier config. Fresh Biome setup: add @biomejs/biome dev dep, create biome.json at root, wire to turbo.json lint task, add check/fix scripts. Should take ~10 minutes. Research confirmed full coverage for our stack (TS + React + JSON + Tailwind).",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:46:07.224Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_5b6508a9",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Enable Claude Code Agent Teams (experimental)",
+        "content": "Researched. Agent Teams is experimental, unsupported on Windows Terminal for split-pane, known stability issues. Deferred until stable release. Decision: d_8b644ccd.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:46:07.426Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_77f8045c",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Build deep web research MCP server",
+        "content": "No longer needed. We now have Context7, GitMCP, Package Version Check, and Cortex MCP servers covering research needs. No custom build required.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:49:26.000Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_1d7e279a",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Adopt React 19.2 Activity for view preservation",
+        "content": "Replace conditional rendering ({view === 'x' && Component}) with Activity wrappers in App.tsx MainContent. Already on React 19.2.4, Activity is stable and available. Preserves scroll position, form state, component state across all 15 views. Also removes the manual display:none hack on TerminalView. Must use worktree since it edits App.tsx.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:52:03.661Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_afbf36b7",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy startup recap: summarize last session context in chat bubble",
+        "content": "Merged into t_ecdd0782. Both describe buddy recap on startup -- t_ecdd0782 is the canonical task with the detached subprocess approach.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "buddy",
+          "ux",
+          "session",
+          "feature"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:52:36.003Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7657fa48",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix all hardcoded project paths in Claude hooks",
+        "content": "Fixed ALL 7 files with hardcoded project paths: user-prompt.mjs, stop-thought.mjs, pre-tool-gate.mjs, post-edit-context.mjs, pre-compact.mjs, post-tool-thought.mjs, AND session-start.mjs. All now read from ~/.hello-world-app.json with fallback. Also fixed hardcoded MEMORY_DIR and JSONL_DIR paths.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:54:09.362Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_9e2495a9",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy recap: rolling buffer writer in PreCompact hook",
+        "content": "Add to pre-compact.mjs: write last ~10 activity items and session stats to .hello-world/recap-buffer.json. This runs on every context compression, providing a crash-safe baseline recap. Format: { completedTasks: string[], decisions: string[], highlights: string[], sessionNumber: number, startedAt: string }. No API calls needed -- pure extraction from existing data already loaded by the hook.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:55:46.440Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_eedd2cc0",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Replace ESLint + Prettier with Biome",
+        "content": "Done. Implemented as t_75a2434c. Biome 2.4.4 installed, biome.json configured with VCS integration, turbo.json wired. 177 files auto-fixed. No existing ESLint/Prettier -- greenfield setup.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T03:56:20.500Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7da3f91d",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy recap: speech bubble UI in BuddyOverlay",
+        "content": "Extend BuddyOverlay.tsx with a speech bubble component. On startup, listen for hw-buddy-recap event. Display recap text in a pixel-art speech bubble above the buddy's head, with character-by-character typing animation and chat sound effects (reuse deliberation sounds). Auto-dismiss after 15s or click to dismiss. Show recap-buffer.json data if pending-recap.json doesn't exist (crash fallback).",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T04:00:51.927Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_f71c2107",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy recap: detached AI summary subprocess",
+        "content": "Create .claude/recap-generator.mjs -- a standalone Node script that reads recap-buffer.json + sessions.json, calls Claude Haiku to generate a polished 3-5 bullet summary, writes to .hello-world/pending-recap.json. Spawned detached on clean session exit (hw_end_session). Falls back gracefully if API unavailable. Uses existing watcher pattern (child.unref()).",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T04:01:24.549Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_18c4495a",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Verify project swapping works with zero bleedover",
+        "content": "Verified: All 7 hook files now read project path dynamically from ~/.hello-world-app.json. TCC project has its own .hello-world/ with isolated state. Data isolation is structural -- each project has its own directory. Architecture audit confirms 10 of 12 systems are already project-aware. Two blockers remain (MCP server + Discord listener) tracked in t_mp_epic. Zero bleedover at the data layer is confirmed.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T04:03:09.313Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_48680874",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Implement memory scoring module (82-line TypeScript)",
+        "content": "Write packages/core/src/brain/scoring.ts with: scoreMemory(), classifyHealth(), rankMemories(), getReviewQueue(), findContradictions(). Add lastAccessedAt, accessCount, failureCorrelations, supersededBy fields to Memory schema. Integrate into hw_retrieve_memories for filtered/ranked results. Formula: exponential decay (type-specific rates) + access boost + freq bonus - failure penalty - superseded penalty. Half-lives: fact 17d, pain 28d, win 46d, decision 87d, architecture 173d.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T04:04:36.923Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_83338377",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Overdrive + Bypass mode toggle",
+        "content": "Add a toggleable mode Pat can cycle Claude into that encourages liberal use of parallel agents, thoroughness over token conservation. When ON, Claude prioritizes parallel agent swarms, deep research, and comprehensive execution. When OFF, normal cost-conscious behavior. Implementation: flag in .hello-world/ that the UserPromptSubmit hook reads and injects mode-specific instructions.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T04:32:00.393Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_44372cae",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix clean shutdown: write endedAt to sessions.json on window close",
+        "content": "The sentinel always thinks window-close is a crash because no code writes endedAt to sessions.json before the process exits. Fix: intercept CloseRequested in Rust, read sessions.json, stamp endedAt on the latest session, write back. Then sentinel correctly distinguishes crash vs clean exit.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T05:43:12.326Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_676a65b3",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy overdrive: change from circle to glow effect",
+        "content": "Current overdrive visual is a circular aura (box-shadow rings). Change to a more subtle ambient glow effect instead. Should look like the buddy is radiating energy, not surrounded by rings.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T05:48:17.559Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_29e5436a",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Questions tab: make it constructive and allow answering questions",
+        "content": "Two issues: (1) Questions tab needs a more constructive purpose beyond just listing questions. (2) Can't actually answer questions from the app UI -- the answer flow needs to work end-to-end. Fix the answer panel, wire up the MCP call, make the tab useful.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T05:52:28.099Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_5cbe2275",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Terminal dash: replace sessions panel with brain model visualization",
+        "content": "Remove the sessions list from the terminal dashboard panel. Replace it with a working brain model visualization (similar to one built previously). Shows memory activity, connections, active state.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T05:52:28.388Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_aa89e84e",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Create custom deliberation agents for brain design think tanks",
+        "content": "Add 6 custom agents to agent-definitions.ts representing the 3 think tank teams (2 per team: fundamental + technical). Each agent's system prompt should contain their team's key findings and proposals so they can argue from an informed position during the deliberation.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T09:20:22.784Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_c13412bd",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain Magnum Opus Session 48: Wire foundation + plasticity + scoring",
+        "content": "Session 48 of the brain magnum opus build. Migration script, hook wiring (user-prompt.mjs imports engine), engine enhancements (scoring integration, link traversal, telemetry, cortex merge), schema updates (links, supersededBy, qualityScore, fingerprint, reflection type), store updates (auto-tagging, plasticity wiring), disable auto-pilot plugin. ~800 lines across parallel agent teams.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T09:46:29.556Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_e847972f",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Audit Brain Magnum Opus S48 build with 4 specialist teams",
+        "content": "Run parallel audit teams against all Session 48 brain changes: hooks, engine, types, store, server, migration script. Find bugs, logic errors, missed edge cases, type mismatches before we test live.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T09:53:20.510Z"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_2c399f91",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain Magnum Opus S50: Cortex learning, pruning, learned rules",
+        "content": "S50 of Brain Magnum Opus. ~500 lines across:\n- cortex-learner.ts: auto-learn cortex entries from gaps (words that hit fuzzy but not cortex)\n- rules.ts: extract learned rules from repeated reflection patterns, promote to CLAUDE.md candidates\n- Memory pruning: archive superseded/stale memories to memories-archive.json\n- New JSON files: cortex-learned.json, learned-rules.json, memories-archive.json\nReference: Think tank reports",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "brain",
+          "magnum-opus",
+          "s50"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T10:41:32.800Z",
+        "links": []
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_8bd37144",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain Magnum Opus S51: Enforcement, observability, hw_brain_health",
+        "content": "S51 of Brain Magnum Opus (final phase). ~300 lines:\n- hw_brain_health MCP tool: memory count by type/health, review queue, cortex stats, learned rules count\n- Smart checkpoints: adaptive interval based on significant events + context phase\n- Wire pruner into hw_end_session for automatic maintenance\n- Wire rules extraction into hw_end_session",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "brain",
+          "magnum-opus",
+          "s51"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T10:45:38.440Z",
+        "links": []
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_32565078",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Post-restart verification: Brain Magnum Opus end-to-end",
+        "content": "After MCP restart, verify all S49-S51 brain modules work live through the MCP tools, not just via direct node imports.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "mcp"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T13:23:13.382Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "1a76f459b20b"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_c417677b",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Update system-explorer.html with Brain Magnum Opus architecture",
+        "content": "Add the 8 brain engine modules (quality gate, linker, scorer, health, engine, cortex learner, rules, pruner) as a new BRAIN ENGINE group. Add new data stores (brain-state.json, cortex-learned.json, learned-rules.json, memories-archive.json). Add brain connections, Brain System preset view, and Brain Lifecycle workflow.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "architecture",
+          "strategy",
+          "autonomy"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T13:37:14.127Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "680ea40b476b"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_bffb93f1",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: System resilience task force: address 10 failure points from architecture audit",
+        "content": "6 Opus agents working in parallel on: (1) Quality gate O(n) perf, (2) Circuit breakers for brain modules, (3) Data store safety/backup, (4) Discord queue + SessionStart resilience, (5) Cortex learner latency + file watcher coalescing, (6) Cross-cutting architecture review. All research/design first, then consolidated implementation.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "architecture",
+          "model-selection",
+          "strategy",
+          "autonomy",
+          "validation",
+          "design"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T15:05:41.129Z",
+        "links": [
+          {
+            "targetId": "mem_8253e189",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:14:30.334Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "a4f2ce55d744"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_a4c66b94",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Backfill old memories: quality scores, fingerprints, and links",
+        "content": "198 of 212 memories pre-date the brain magnum opus and lack quality scores, fingerprints, and links. Write a migration script that runs computeFingerprint, computeQualityScore, and findLinks on all old memories. This should bring brain health from B to A.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "strategy",
+          "autonomy",
+          "model-selection",
+          "writing",
+          "validation"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T15:15:12.017Z",
+        "links": [
+          {
+            "targetId": "mem_8253e189",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:14:30.338Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "2ab5a3cfb9e8"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7344ad8b",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain MO integration test: prove every module fires under real usage",
+        "content": "Exercise the full brain pipeline through normal MCP tool calls. Store memories (quality gate + linker), retrieve memories (scoring + link traversal + synaptic activity + cortex gaps), then end session (plasticity + pruning + rules + cortex flush). Audit data files after each phase to prove the pipeline left evidence. This is the acceptance test for the Magnum Opus.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "testing",
+          "mcp",
+          "strategy",
+          "autonomy",
+          "memory",
+          "model-selection"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T15:26:54.029Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "fc3f83fdbe55"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7141a774",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Deep research: AI agent memory systems -- what actually works",
+        "content": "6-agent parallel research sprint to evaluate whether our brain MO is useful, overengineered, or missing key patterns. Research what competitors do, what the research says, and what simpler approaches might outperform our 14-module system.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "validation",
+          "strategy",
+          "memory",
+          "performance"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T16:01:54.581Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "97e3c17e12fd"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_19a0b854",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Build auto-capture signal detector and wire into hooks",
+        "content": "Create signal-detector.mjs with expanded pattern set (shifts, corrections, bugs, verifications, user instructions, research conclusions, insights, methods). Wire into Stop hook to detect on last_assistant_message. Wire into UserPromptSubmit to inject specific memory nudges. Wire into PreCompact for final sweep. Test on real transcript data.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "build",
+          "compilation",
+          "strategy",
+          "validation",
+          "hooks",
+          "memory",
+          "performance",
+          "testing"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T17:08:08.647Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "5c9b47e567e4"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_83b03919",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Wire previous-session transcript recap into SessionStart hook",
+        "content": "At every session start, read the previous session's JSONL transcript from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/, extract user messages + assistant text responses, and include a condensed recap in the session start output. Pat wants to see what happened last session automatically.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "hook",
+          "session-start",
+          "recap",
+          "transcript"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T18:25:28.775Z",
+        "links": [
+          {
+            "targetId": "mem_5631514a",
+            "relationship": "related",
+            "createdAt": "2026-02-26T18:25:33.651Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "a85f7472d7fd"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_2e22c552",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Extract and absorb all historical session data into memory + app",
+        "content": "Scour all 272 session transcripts and 148 subagent outputs from ~/.claude/projects/C--Users-Patri-CascadeProjects-hello-world/. Extract: research findings, deliberation conclusions, forgotten ideas, architectural decisions, pain points, wins, and any valuable context. Absorb into hw_store_memory and collect research/deliberation outputs into .hello-world/ for the app to display. 162MB of data across Feb 22-26.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "performance",
+          "model-selection",
+          "validation",
+          "strategy",
+          "tokens"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T18:35:59.568Z",
+        "links": [
+          {
+            "targetId": "mem_8253e189",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:14:30.342Z"
+          },
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "related",
+            "createdAt": "2026-02-27T11:54:52.805Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "d2739ad2588c"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_d4c8f6cb",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Build deliberation and research transcript timeline subtab",
+        "content": "New subtab with horizontal scrollable timeline (drag and fling to scroll). Two entry types: deliberation (people icon) and research (flask icon). Hover shows summary of what the delib/research was about. Click opens instant popup window with the full transcript, formatted neatly and aesthetically. Timeline entries organized chronologically, scrollable left-right. Need to: (1) define storage format for transcripts, (2) build the timeline component, (3) build the hover preview, (4) build the popup viewer, (5) wire to existing deliberation/research data.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "build",
+          "compilation",
+          "strategy",
+          "validation",
+          "twitter",
+          "social",
+          "playwright",
+          "browser"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-26T23:59:25.438Z",
+        "links": [
+          {
+            "targetId": "mem_b6d065ee",
+            "relationship": "related",
+            "createdAt": "2026-02-27T10:49:37.502Z"
+          }
+        ],
+        "qualityScore": 0.5,
+        "fingerprint": "bd94663a0e35"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_87476412",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Deep research: Qwen 3.5 model evaluation for Hello World integration",
+        "content": "Full evaluation of Qwen 3.5 / Qwen3-Coder before integration. Cover: exact capabilities and limitations, knowledge cutoff and training data vs Claude, coding style and standards compliance, where it excels vs where it falls short, API access options (Groq/Together/Ollama/local), context window and tool-calling support, how to enforce our coding standards (ESM, TypeScript, project conventions), guardrails needed, coworking model (what tasks go to Qwen vs Claude vs both), cost analysis. This is a prerequisite before any Qwen code touches the codebase.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "validation",
+          "strategy",
+          "model-selection",
+          "styling",
+          "frontend",
+          "api",
+          "integration",
+          "memory"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T01:29:20.851Z",
+        "links": [
+          {
+            "targetId": "mem_8253e189",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:14:30.346Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "291b04b1fb29"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_d4e5f721",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Auto-populate Timeline and Context tabs from brain data",
+        "content": "Timeline tab (History > Timeline) should auto-generate from sessions.json, activity.json, decisions, and task completions -- not be a static hand-written file. Context tab (P key) should pull from brain data (decisions, memories, strategic state) in addition to direction.json. Both tabs should stay current automatically as the brain system processes new data.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "twitter",
+          "social",
+          "memory",
+          "tokens",
+          "strategy",
+          "validation",
+          "github",
+          "git"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T02:53:39.257Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.770Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "0040824d18a9"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_f3a96a8f",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Wiring sprint: connect all built-but-unwired brain modules to runtime",
+        "content": "Wire reflection, prediction, cortex merger, contradiction detection into their runtime call paths. Protect pain memories from pruning. Fix get_research in lib.rs. Expand signal detector patterns. All code exists and is tested -- just needs to be connected.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "debugging"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T02:59:35.456Z",
+        "links": [],
+        "qualityScore": 0.55,
+        "fingerprint": "e8395e2035de"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_28825862",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Qwen integration Phase 1: callQwen + provider routing + boardroom foundation",
+        "content": "Add Qwen as a model provider in the agent system. Steps: 1) callQwen() function using OpenAI npm package pointed at DeepInfra/DashScope, 2) provider field on AgentDefinition, 3) route runSingleAgent by provider, 4) DASHSCOPE_API_KEY env var, 5) basic boardroom infrastructure (chat.json with 160-char limit, whiteboard.json, agent usernames + timestamps). No Rust changes needed -- pure TypeScript in packages/core.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "npm",
+          "dependencies",
+          "packages",
+          "configuration",
+          "environment"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T02:59:47.699Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "de426dda2003"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4cf5e64e",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Boardroom quick wins: max_tokens, round awareness, whiteboard regex, char limit",
+        "content": "Implement the 4 highest-impact boardroom fixes from the research sprint: 1. runner.ts:51 -- raise max_tokens from 100 to 400 for non-thinking agents 2. runner.ts buildBoardroomPrompt -- add round number and phase guidance (round/maxRounds params, intro vs converge instructions) 3. runner.ts:182 -- fix whiteboard regex from (.+) to ([\\s\\S]+) for multiline capture 4. types.ts:39 -- raise CHAT_CHAR_LIMIT from 160 to 300 Also: show agent's own last message separately in prompt to prevent repetition.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "validation",
+          "strategy",
+          "debugging"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:39:26.416Z",
+        "links": [
+          {
+            "targetId": "mem_8253e189",
+            "relationship": "related",
+            "createdAt": "2026-02-27T11:14:30.354Z"
+          },
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.781Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "0165f860d71e"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_b3aed7bb",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Auto-capture: add storage path so detected signals become memories automatically",
+        "content": "The signal detector pipeline detects and nudges but never auto-stores. Fix this gap. Options: 1. Server-side: add processSignalQueue() to MCP server that consumes high-confidence (0.7+) signals and auto-stores them via storeMemory(). Run during hw_store_memory or hw_retrieve_memories calls. 2. Qwen quality gate: for 0.5-0.7 signals, send excerpt to Qwen (\"is this worth storing? yes/no\") before storing. Cheap per-signal cost. 3. Keep nudge system for low-confidence signals but make the \"STOP and evaluate\" behavior automatic. Decision needed on which approach. The current system wastes detected signals -- detection without storage is waste.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "windows",
+          "ai-tells",
+          "writing",
+          "debugging",
+          "mcp",
+          "strategy",
+          "autonomy",
+          "validation"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:45:17.754Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.784Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "a08980d7bbd5"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_6f689ca8",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Boardroom agent prompts: create boardroom-specific versions for specialist agents",
+        "content": "Current specialist agents (neuro-vision, neuro-impl, eng-arch, eng-impl, research-vision, research-impl) have system prompts written for adversarial deliberation. These conflict with boardroom collaboration rules -- FORMAT instructions say \"2-4 sentences\" which clashes with 160/300 char limit, and role framing says \"argue against whatever seems obvious\" which contradicts \"collaborate, don't argue.\" Add a boardroomPrompt field to AgentDefinition type, create collaboration-focused versions of specialist prompts, fall back to systemPrompt if boardroomPrompt absent.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:47:06.756Z",
+        "links": [],
+        "qualityScore": 0.55,
+        "fingerprint": "600c4d65b614"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_825a136f",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Questions: in-app answer flow (no MCP needed)",
+        "content": "Pat can't answer questions from the app. Need: text input + Answer button in QuestionsView.tsx, Rust command answer_question(project_path, question_id, answer_text) that writes to questions.json, SessionStart hook detects newly answered questions and surfaces them for routing. Principle: Pat acts, Claude routes. No Claude in the loop for ANSWERING, only for ROUTING after. Bonus: Discord reply-to-DM also routes answers.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "mcp",
+          "hooks",
+          "model-selection"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:50:39.922Z",
+        "links": [],
+        "qualityScore": 0.7,
+        "fingerprint": "6f1a27245821"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_ed99c6bb",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Boardroom anti-groupthink: independent initialization + selective history",
+        "content": "Restructure runBoardroom into phases based on research findings: Phase 1 (rounds 1): Independent thinking -- each agent sees only topic + whiteboard, no chat history. Forms position independently. Phase 2 (rounds 2-3): Selective sharing -- agents see whiteboard + own prior messages + compressed summary of others' positions. NOT full transcript. Phase 3 (rounds 4+): Convergence -- synthesis round, flag disagreements as valuable. This prevents anchoring bias (r=0.902 sycophancy correlation), groupthink (80%+ collapse), and produces more diverse outputs (research: embedding similarity 0.791 -> 0.511 without shared context).",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "validation",
+          "strategy",
+          "memory",
+          "tokens"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:50:40.631Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "80257aff91a8"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_0d07f069",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: App loading screen or faster startup",
+        "content": "The app shows a blank white screen while loading, making it impossible to tell if it's broken or just slow. Either: (1) reduce load times so the white screen is negligible, or (2) add a loading/splash screen with the Hello World branding so the user knows the app is starting up and not stuck. Investigate what's causing the slow load -- could be heavy JS bundle, synchronous state reads, or Rust init. A Tauri splash screen (native window) or an inline HTML loading indicator in index.html (before React mounts) are both viable approaches.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "performance",
+          "react",
+          "frontend"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:51:48.969Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.790Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "39bae56fa324"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_ebeb1d2f",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Implement Overdrive + Bypass mode toggle",
+        "content": "Duplicate of t_0f1cf64b -- overdrive toggle already implemented in Sidebar.tsx and BuddyOverlay.tsx.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:52:33.355Z",
+        "links": [],
+        "qualityScore": 0.49999999999999994,
+        "fingerprint": "86a1febb1be7"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4da22186",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Design and implement subagent team strategy",
+        "content": "Design a comprehensive team strategy where specialized subagent teams work together on different aspects of the Hello World project. Teams: Red Team (security, exploit finding, adversarial testing), Dev Team (feature implementation, code quality), UX Team (user personas of varying skill levels), Strategy Team (tech CEO perspectives, product direction), Security Team (audit, hardening), QA Team (testing, edge cases). Each team needs: defined roles, coordination patterns, when to spawn, how results feed back. Pat wants liberal agent usage -- no token conservation.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "architecture",
+          "design",
+          "strategy",
+          "security",
+          "autonomy",
+          "tokens",
+          "authentication"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:55:17.585Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "e9e50bbae02e"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_eb004b92",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Wire contradiction detection into hw_store_memory response",
+        "content": "detectContradiction exists in linker.ts and runs during findLinks, but contradictions are only stored as link relationships -- the user never sees them. Add contradiction warnings to the hw_store_memory response text so Claude knows when a new memory contradicts an existing one. Example: \"Memory stored: mem_xxx (pain). WARNING: contradicts mem_yyy (score: 0.7) -- consider updating or superseding.\" This helps catch stale/wrong memories.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "memory",
+          "performance"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T03:57:39.412Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.794Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "224576a0b282"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_c9e011b2",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Buddy avatar gallery: 6 agents each design a unique buddy with animations",
+        "content": "Spawn 6 creative agents, each given BuddyOverlay.tsx as a template. Each designs a completely unique buddy avatar with its own personality, look, and animations. They can take screenshots and iterate in real time. Build a gallery/selector so Pat can switch between buddy designs.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "architecture",
+          "design",
+          "build",
+          "compilation",
+          "strategy",
+          "validation",
+          "playwright",
+          "browser"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T04:00:52.062Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "cacdc8c2e813"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_6ef13883",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Wire buddy avatars into BuddyOverlay + add picker to Settings",
+        "content": "buddy-avatars.tsx exists with 6 avatars + AvatarPicker + localStorage persistence. Wire it: 1. BuddyOverlay.tsx: import getAvatarById/getSavedAvatarId, replace block-art div with selected avatar component. 2. SettingsView.tsx: add AvatarPicker section so users can choose their buddy.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "react",
+          "frontend"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T04:04:28.814Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "d79fa8692abe"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_61035c34",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Dashboard improvements: show brain health grade + memory count in status bar",
+        "content": "The Dashboard view shows activity stream and active task. Add a compact status bar at the top showing: brain health grade (from hw_brain_health), total memory count, active task name, current workflow phase. Makes the dashboard actually useful as a glanceable status screen.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "performance"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T04:05:57.058Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.798Z"
+          }
+        ],
+        "qualityScore": 0.5,
+        "fingerprint": "7e6e3d6a5099"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_26d3e733",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Update MemoryView with brain magnum opus fields: qualityScore, links, fingerprint",
+        "content": "MemoryView.tsx interface is missing qualityScore, links[], fingerprint, and reflection type from the brain magnum opus. Add these fields to the interface and display them: quality score as a small badge, link count, and linked memory IDs on hover/expand.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "strategy",
+          "autonomy",
+          "memory",
+          "performance"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T04:07:16.807Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.774Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "f19cccc42980"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_c687aee5",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Rebuild UsageBars: Qwen requests/day + Claude session cost tracking",
+        "content": "Current UsageBars shows misleading token split. Redesign to show: 1. Qwen: requests used today / 300 daily limit (progress bar + percentage). Track request count in qwen-usage.json. 2. Claude: need to figure out what's trackable. Options: session message count, estimated tokens, or pull from Anthropic usage API if available. Keep it simple and accurate.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "memory",
+          "tokens",
+          "strategy",
+          "authentication",
+          "security",
+          "github",
+          "git"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T04:17:49.036Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "0fb4a07aaca9"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_e8e0910a",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Add lizard buddy avatar + ensure all avatars integrate with full buddy system",
+        "content": "1. Add a lizard/reptile avatar to the buddy-avatars gallery. 2. Verify all 7 avatars work with: theme colors (buddyIdle/buddyActive), overdrive glow, error state (red), shocked state (exclamation mark), responding state (typing dots), recap bubble, sentinel shield, mute dot, chime sound. The current BuddyOverlay wiring may have lost some of these when replacing block-art with avatar components.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "errors",
+          "debugging"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T04:20:34.883Z",
+        "links": [],
+        "qualityScore": 0.7,
+        "fingerprint": "7ef9029e47ba"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_7cce67ca",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Enforce win/loss memory recording via hook blocks",
+        "content": "Audit every nudge/reminder in the system and convert to hard blocks in pre-tool-gate.mjs. Block Edit/Write until obligations are met, while allowing memory/task tools through. Nudges that need converting: (1) UNCAPTURED SIGNALS, (2) hippocampal checkpoint, (3) pattern detection, (4) signal auto-storage, (5) task completion without memory. Pat's principle: if it's worth nudging about, it's worth blocking for.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "performance",
+          "hooks",
+          "writing",
+          "strategy",
+          "validation"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T06:35:13.545Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "cb6f3b9dab87"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_abaa10c3",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix active task panel not updating in Dashboard",
+        "content": "The active task display in the Dashboard status bar is not updating when tasks change. Diagnose whether it's a data freshness issue (useTauriData not picking up changes to tasks.json) or a rendering issue.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "debugging"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T06:40:43.553Z",
+        "links": [],
+        "qualityScore": 0.55,
+        "fingerprint": "637ccecdd8d4"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_0161cdb4",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Clean up MemoryView -- brain memory is hard to read",
+        "content": "The MemoryView (key 5) is messy and hard to navigate. Needs better grouping, filtering, and visual hierarchy. Consider: group by type (pain/win/fact), sort by quality score, hide low-quality entries, add search/filter, make links/tags clickable.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "performance",
+          "playwright",
+          "browser",
+          "strategy",
+          "autonomy"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T06:40:44.323Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.777Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "2e52ec0eba6a"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_4c6f4aaa",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix orphaned sessions in Timeline + backfill from JSONL transcripts",
+        "content": "Two problems: (1) Sessions show as orphaned because we never implemented clean exit (Xing out doesn't write endedAt). Need to handle window close in Rust/Tauri. (2) Historical sessions from Claude's JSONL transcript files (~/.claude/projects/) should be backfilled into sessions.json since they're not actually orphaned -- they have full data.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "debugging",
+          "twitter",
+          "social",
+          "writing",
+          "model-selection",
+          "strategy",
+          "validation"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T06:45:02.688Z",
+        "links": [
+          {
+            "targetId": "mem_8253e189",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:14:30.350Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "6d89e79829a2"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_ad2d2020",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Rust get_usage command: rebuild and verify UsageBars sidebar component",
+        "content": "Build claude.ai web usage bars in the app's Cost view (key 7) and sidebar. Shows session limit, weekly limit, sonnet limit, and extra usage spend -- matching the claude.ai/settings/usage page. Data fetched via browser API at session start, cached to .hello-world/claude-web-usage.json.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "react",
+          "frontend",
+          "build",
+          "compilation",
+          "strategy",
+          "validation",
+          "tokens",
+          "memory"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T06:45:03.296Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "0bd8b2093f2a"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_fd972bc0",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Add get_claude_usage Rust command to lib.rs",
+        "content": "The UsageBars sidebar and CostView (key 7) both call useClaudeUsage() which invokes Tauri command 'get_claude_usage'. But this command was NEVER added to lib.rs. Only get_usage exists (reads qwen-usage.json). Need to add get_claude_usage that reads claude-usage.json, register it in the invoke_handler, and rebuild. This is why the usage bars have been invisible since commit 088b014.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "github",
+          "git"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T07:38:40.138Z",
+        "links": [
+          {
+            "targetId": "mem_c9afde79",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T07:38:47.688Z"
+          }
+        ],
+        "qualityScore": 0.7,
+        "fingerprint": "325141f90a61"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_a304372a",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain audit Batch 1: F4 verbosity + F2 reflection filter + F3a cortex threshold",
+        "content": "Three quick wins in one commit (~9 LOC). F4: In reflection.ts computeQualityScore(), replace detailLength>200 bonus with rule.length>0 check for the 0.2 weight. F2: In generateMetaObservations(), filter out type=reflection memories from input. F3a: Change cortex-learner.ts minObservations default from 2 to 3.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "github",
+          "git"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T10:49:34.487Z",
+        "links": [],
+        "qualityScore": 0.7,
+        "fingerprint": "b626fc1d6297"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_0e1f48ed",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain audit Batch 2: F1 decay_exempt for pain+high-severity",
+        "content": "Add decayExempt?: boolean to Memory type in types.ts. In scoreMemory() (scoring.ts), skip decay when decayExempt=true (return 1.0 base). In pruner.ts, skip archive for exempt memories. Auto-set decayExempt=true when type=pain AND severity=high. ~15 LOC across 3 files.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "performance"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T10:49:34.911Z",
+        "links": [
+          {
+            "targetId": "mem_d249d7d2",
+            "relationship": "contradicts",
+            "createdAt": "2026-02-27T11:54:52.801Z"
+          }
+        ],
+        "qualityScore": 0.6,
+        "fingerprint": "fb1b263e5409"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_20b6283c",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Brain audit Batch 3: F5 tag-boosting + F3b session dedup",
+        "content": "F5: Add optional queryTags param to rankMemories() in scoring.ts. Count tag overlap, add overlap*0.1 capped at 0.3 total. Thread cortex-resolved tags through retrieval caller (~17 LOC). F3b: In cortex-learner.ts, deduplicate observations per session -- max 1 observation per word per session (~8 LOC). Needs test pass since it touches retrieval hot path.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "twitter",
+          "writing",
+          "testing",
+          "windows"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T10:49:35.460Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "5801d862f134"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_243cc114",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Upgrade deliberation agent-runner: Sonnet model + increased timeout",
+        "content": "Change CLAUDE_MODEL from haiku to sonnet in agent-runner.ts. Increase timeout from 45s to 90s. Test with a real deliberation where agents are genuinely independent subprocesses.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "prompting",
+          "testing"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T11:15:54.917Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "05955e5f7168"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_898c79b3",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Make deliberation agent provider switchable per-session",
+        "content": "Currently all 21 agents hardcode provider: 'claude'. Make provider switchable so any agent can run as Claude or Qwen. Default stays Claude but user/mediator can override per deliberation session.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "model-selection",
+          "memory"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T11:19:13.778Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "050591d97ec2"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_3013e9f5",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Create /clean-quit skill for reliable session-end automation",
+        "content": "Create a /clean-quit slash command that explicitly runs ALL end-of-session automation: handoff, end session, timeline update, cost tracking, plasticity, signal flush, git commit. Replaces unreliable hook-based automation with a manual trigger.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "twitter",
+          "social",
+          "tokens",
+          "strategy",
+          "git",
+          "version-control",
+          "github"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T11:45:59.504Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "89f4ed07f47a"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_2d81cc22",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix hooks reading dead state.json",
+        "content": "DONE. Shipped in Session 59 (confirmed in win memory act_9f9e0b06). Task status was abandoned mid-session restart and never closed.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "debugging",
+          "hooks",
+          "memory",
+          "performance"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T12:23:19.808Z",
+        "links": [],
+        "qualityScore": 0.7,
+        "fingerprint": "1090ff6dcf4c"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_a84f6b08",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Qwen integration: secondary AI mind for cost reduction and diverse perspective",
+        "content": "DONE. Strategic wrapper -- actual implementation completed under t_79a6a6d1 (Qwen integration) and subsequent boardroom tasks. Qwen calling, provider routing, and boardroom all shipped.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "tokens",
+          "strategy"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T12:23:21.868Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "c62ba7ea1055"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_78a3f8d9",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Adopt tauri-specta for type-safe IPC",
+        "content": "Explicitly deferred per decision d_53e538a6. tauri-specta blocked by RC + Value type requirements. Not needed until conditions change.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "rust",
+          "typescript",
+          "adopt",
+          "tech-radar"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T12:23:23.868Z",
+        "links": [],
+        "qualityScore": 0.5,
+        "fingerprint": "528c4f73020d"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_29f9816d",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Add system explorer to Hello World app",
+        "content": "Dismissed. Original system-explorer.html was deleted during cleanup. ProjectContextView already shows system state, making this redundant.",
+        "rule": "",
+        "tags": [
+          "auto-captured"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T12:23:25.431Z",
+        "links": [],
+        "qualityScore": 0.55,
+        "fingerprint": "53735bebd722"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_0a9cb6ac",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Create /fullsweep command -- comprehensive system audit",
+        "content": "DONE. /fullsweep skill created at ~/.claude/skills/fullsweep/SKILL.md. First run completed: 5 parallel agents audited tasks, memories, sessions, decisions, and flows. Report delivered, 7 new tasks created, stale tasks cleaned up.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "skill",
+          "audit",
+          "automation"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T12:23:27.936Z",
+        "links": [],
+        "qualityScore": 0.7,
+        "fingerprint": "b4942736a331"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_1581dd80",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Fix brain module crashes: reflection.toLowerCase + pruning.length errors at session end",
+        "content": "Activity log shows two brain_error entries every session end: (1) end_session:reflection failed -- Cannot read properties of undefined reading 'toLowerCase'. (2) end_session:pruning failed -- Cannot read properties of undefined reading 'length'. These are null-access bugs in the wiring from t_5d511b12. One-line fixes with high impact since they're the only automated brain ops that run without explicit invocation. Check packages/core/src/brain/reflection.ts and pruner.ts.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "debugging",
+          "memory",
+          "ai-tells",
+          "opsec"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T13:22:13.067Z",
+        "links": [],
+        "qualityScore": 0.7,
+        "fingerprint": "6415d99a0108"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
+    },
+    {
+      "memory": {
+        "id": "mem_79082a9a",
+        "projectId": "Claude AI Interface",
+        "type": "win",
+        "title": "Completed: Rewrite active-state.md, strategy.md, lessons-learned.md",
+        "content": "All three auto-memory files are 17+ sessions stale. active-state.md shows S48 as current (actually S63). strategy.md lists completed work as pending. lessons-learned.md only covers Session 45. Every session start injects active-state.md, poisoning context. Rewrite all three to reflect current state: brain MO complete, Qwen integrated, deliberation system live, boardroom built, Sessions 46-62 lessons captured.",
+        "rule": "",
+        "tags": [
+          "auto-captured",
+          "memory",
+          "tokens"
+        ],
+        "severity": "low",
+        "synapticStrength": 1,
+        "accessCount": 0,
+        "createdAt": "2026-02-27T13:23:06.788Z",
+        "links": [],
+        "qualityScore": 0.6,
+        "fingerprint": "7b478cf4aff0"
+      },
+      "reason": "Bulk archive: task-receipt win with zero access",
+      "archivedAt": "2026-02-27T13:24:23.226Z",
+      "scoreAtArchive": 0
     }
   ],
-  "totalArchived": 3,
-  "lastPruned": "2026-02-27T11:52:27.448Z"
+  "totalArchived": 111,
+  "lastPruned": "2026-02-27T13:24:23.226Z"
 }

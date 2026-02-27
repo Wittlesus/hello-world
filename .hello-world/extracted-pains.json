@@ -10,7 +10,7 @@
       "category": "bug",
       "description": "SessionStart hook (session-start.mjs) fires on every claude --print subprocess spawn, including when agent-runner.ts spawns deliberation agents. The hook's archiveChatroom() function reset chatroom.json to idle on every agent spawn, destroying the entire deliberation the moment the first agent tried to speak. Additionally, the hook's context injection replaced the agent's role prompt.",
       "lesson": "Set HW_AGENT_MODE=1 in env when spawning agent subprocesses. session-start.mjs must exit immediately when this env var is present. Any hook that runs on session start will also run for every claude --print subprocess unless explicitly guarded.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -20,7 +20,7 @@
       "category": "bug",
       "description": "Agent-runner.ts originally used temp files to pass stdin to claude --print subprocesses. Node.js spawn('cmd.exe', ['/d', '/s', '/c', shellCmd]) double-quotes the shellCmd argument because it contains spaces, which broke embedded quotes around temp file paths. Resulted in every agent subprocess failing with 'filename, directory name, or volume label syntax is incorrect' on Windows.",
       "lesson": "On Windows, pipe stdin directly to claude --print instead of using temp files. cmd.exe arg quoting is treacherous with embedded paths. Also requires shell:true so Windows can find claude.cmd in PATH.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -30,7 +30,7 @@
       "category": "bug",
       "description": "hw_start_deliberation started the deliberation state but never called runDeliberation(). The engine was fully built in agent-runner.ts but never wired to the MCP tool. Deliberations appeared to start (chatroom state changed) but no agents ever posted.",
       "lesson": "When shipping a new capability, verify the call chain end-to-end. Having the engine exist is not the same as having it connected. notifyRunner was also undefined in server.ts, passed as undefined to runDeliberation, causing silent crashes.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -40,7 +40,7 @@
       "category": "bug",
       "description": "notifyRunner was referenced in server.ts (passed to runDeliberation) but was never defined or imported. It was undefined at runtime, causing runDeliberation to crash silently on its first notification attempt. Deliberation appeared to start but agents never responded.",
       "lesson": "Undefined function references in TypeScript can slip through if they are passed as callbacks rather than called directly. TypeScript would catch this with strict null checks. Always wire up the full call chain and test it end-to-end, not just the happy path.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -50,7 +50,7 @@
       "category": "crash",
       "description": "Editing lib.rs directly on master while the app was running in dev mode (cargo tauri dev) triggered an automatic Tauri recompile. The app window closed and relaunched mid-session. Claude was running inside the app's Terminal PTY. When the app window closed, the PTY was killed, taking the entire Claude Code session with it. The rule existed (worktree required for Rust changes) but wasn't enforced.",
       "lesson": "NEVER edit lib.rs while the app is running in dev mode. Dev mode (cargo tauri dev) watches Rust source files and auto-recompiles on change. Use git worktrees for ALL Rust changes while the app is running. The pre-tool-gate hook must hard-block lib.rs edits without a prior hw_write_handoff. Claude once suggested removing the Terminal PTY feature as a workaround -- this was wrong and Pat caught it.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -60,7 +60,7 @@
       "category": "bug",
       "description": "Claude Code uses OAuth, not ANTHROPIC_API_KEY. The key is stored as an OAuth token internally. The Anthropic SDK in agent-runner.ts can't use it. This caused agent deliberations to fail with API key errors even though Claude Code itself was working fine. Pat specifically noted that Option A (subprocess the claude CLI, reuse existing auth) should have been noted somewhere to prevent re-discovering this.",
       "lesson": "Claude Code uses OAuth auth, not API keys. To call the Anthropic API from within a subprocess spawned by Claude Code, use subprocess approach (claude --print) which reuses the existing OAuth session. Do not try to extract or use ANTHROPIC_API_KEY from Claude Code's credential storage.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -70,7 +70,7 @@
       "category": "bug",
       "description": "state.json race conditions: multiple processes (MCP server, file watcher, Discord listener) could write simultaneously to a single state.json file. Concurrent writes could truncate or corrupt the file, silently deleting tasks, decisions, or questions. This was the project's highest-risk data loss scenario.",
       "lesson": "Solved with B+ pattern: split state.json into tasks.json, decisions.json, questions.json, memories.json. Add atomic writes (write to temp file, then rename). Windows NTFS requires a retry loop (50ms backoff x5) because rename can fail transiently. Keep .backup copy before every write; session-start hook falls back to .backup if main file is corrupt. Splitting files distributes but does not eliminate the race -- each file still needs atomic writes.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -80,7 +80,7 @@
       "category": "bug",
       "description": "After state.json was split into separate files, the Tauri Rust backend (lib.rs get_state command) still read from the now-deleted state.json. This caused a white screen on app launch -- the frontend received no state data.",
       "lesson": "When migrating storage layout, update ALL readers: TypeScript MCP server, Rust Tauri commands, and the session-start hook. The Rust get_state command must merge tasks.json + decisions.json + questions.json into the expected shape. This required a worktree Rust change.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -110,7 +110,7 @@
       "category": "crash",
       "description": "Claude killed the MCP server processes too aggressively (using kill commands) while trying to restart it. Claude Code did not auto-restart the MCP server. The entire MCP toolchain went down, requiring a full Claude Code session restart to recover.",
       "lesson": "Never kill MCP server processes from within Claude Code. To reload the MCP server after code changes: restart the Claude Code session (the MCP server is managed by Claude Code, not by Claude). Killing the process leaves Claude without tools.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -170,7 +170,7 @@
       "category": "workflow",
       "description": "Strategy and vision discussed during a session was not captured to direction.json before a crash. After the restart, Claude had no record of the scope/vision discussion. Pat had to re-share everything. This was the recurring pain that prompted building direction.json in the first place.",
       "lesson": "When Pat discusses vision, scope, or strategy during a session, write it to direction.json IMMEDIATELY -- before moving on. Do not wait for the end of the session. A crash wipes context; the file survives. This is now a CLAUDE.md rule but must be treated as a hard habit.",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {
@@ -250,7 +250,7 @@
       "category": "communication",
       "description": "After the PTY was killed by a Tauri recompile, Claude suggested removing the Terminal PTY feature (Claude-in-terminal) as a workaround. Pat was annoyed: Claude in the terminal was an essential part of the vision, and Claude should have had memory of all the work done to get it working. This was a wrong suggestion that showed Claude had deprioritized a core feature.",
       "lesson": "Never suggest removing a core product feature as a workaround for an infrastructure problem. Claude-in-terminal (PTY) is a core feature, not optional. The correct response to PTY crashes is to fix the infrastructure (worktree system, .taurignore, enforcement hooks).",
-      "alreadyCaptured": false,
+      "alreadyCaptured": true,
       "severity": "high"
     },
     {

@@ -273,8 +273,9 @@
       "id": "n_mm4v8l68",
       "text": "Fullsweep rundown should be a visual panel in the app -- \"nice to look at, very intuitive.\" Not just terminal output. Scoreboard with letter grades, change indicators, numbers, what broke/improved, top actions, items needing Pat's call. Design it to be scannable in 10 seconds.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-27T12:25:54.992Z"
+      "read": true,
+      "capturedAt": "2026-02-27T12:25:54.992Z",
+      "actionTaken": "dismiss"
     }
   ]
 }

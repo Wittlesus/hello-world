@@ -1675,41 +1675,41 @@
       "id": "t_7ea40a37",
       "title": "Fix brain module crashes: reflection.toLowerCase + pruning.length errors at session end",
       "description": "Activity log shows two brain_error entries every session end: (1) end_session:reflection failed -- Cannot read properties of undefined reading 'toLowerCase'. (2) end_session:pruning failed -- Cannot read properties of undefined reading 'length'. These are null-access bugs in the wiring from t_5d511b12. One-line fixes with high impact since they're the only automated brain ops that run without explicit invocation. Check packages/core/src/brain/reflection.ts and pruner.ts.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:22:58.547Z",
-      "updatedAt": "2026-02-27T12:22:58.547Z"
+      "updatedAt": "2026-02-27T13:22:13.043Z"
     },
     {
       "id": "t_2ec78d4e",
       "title": "Ingest 32 uncaptured pain extractions from extracted-pains.json",
       "description": "extracted-pains.json has 32 pains with alreadyCaptured: false. 12 are high severity (PTY kill patterns, Windows NTFS quirks, MCP restart requirements, etc.). Run them through hw_store_memory. At minimum do the 12 high-severity ones.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:23:00.469Z",
-      "updatedAt": "2026-02-27T12:23:00.469Z"
+      "updatedAt": "2026-02-27T13:25:40.270Z"
     },
     {
       "id": "t_7772f759",
       "title": "Bulk archive ~100 \"Completed: [task]\" auto-captured win memories",
       "description": "115 of 124 auto-captured memories are task-completion receipts with zero access count. They inflate memory count from ~140 real entries to 359. These have never been retrieved and add no value beyond what tasks.json already records. Write a script or agent to identify memories where: type=win, source contains auto-capture, title starts with \"Completed:\", accessCount=0. Archive them to memories-archive.json.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:23:03.620Z",
-      "updatedAt": "2026-02-27T12:23:03.620Z"
+      "updatedAt": "2026-02-27T13:25:40.238Z"
     },
     {
       "id": "t_39255496",
       "title": "Wire cortex merger into retrieval path",
-      "description": "cortex-learned.json is written by cortex-learner.ts when retrieval misses occur, but hw_retrieve_memories never reads it back. The merger that folds learned entries into DEFAULT_CORTEX at retrieval time was designed but never implemented. Either wire the merger or disable the learner to stop wasting compute. Check packages/core/src/brain/cortex-learner.ts and the retrieval path in server.ts.",
-      "status": "todo",
+      "description": "Already wired: server.ts lines 418-422 merge cortex-learned.json entries with DEFAULT_CORTEX at retrieval time. cortex-learned.json shows 6 gaps processed. No learned entries saved yet (threshold not met), but the code path works.",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:23:06.977Z",
-      "updatedAt": "2026-02-27T12:23:06.977Z"
+      "updatedAt": "2026-02-27T13:26:11.576Z"
     },
     {
       "id": "t_60bd39eb",
@@ -1725,11 +1725,11 @@
       "id": "t_4a1e9821",
       "title": "Rewrite active-state.md, strategy.md, lessons-learned.md",
       "description": "All three auto-memory files are 17+ sessions stale. active-state.md shows S48 as current (actually S63). strategy.md lists completed work as pending. lessons-learned.md only covers Session 45. Every session start injects active-state.md, poisoning context. Rewrite all three to reflect current state: brain MO complete, Qwen integrated, deliberation system live, boardroom built, Sessions 46-62 lessons captured.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:23:12.092Z",
-      "updatedAt": "2026-02-27T12:23:12.092Z"
+      "updatedAt": "2026-02-27T13:23:06.774Z"
     },
     {
       "id": "t_f53885c5",

@@ -1517,9 +1517,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.2000000000000002,
-      "accessCount": 7,
+      "accessCount": 8,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-27T10:53:54.957Z"
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_823838dc",
@@ -1558,9 +1558,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.2000000000000002,
-      "accessCount": 6,
+      "accessCount": 7,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-27T10:53:54.957Z"
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1579,9 +1579,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 6,
+      "accessCount": 7,
       "createdAt": "2026-02-25T08:14:24.115Z",
-      "lastAccessed": "2026-02-27T07:31:55.275Z"
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_254f24ba",
@@ -1638,9 +1638,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 3,
+      "accessCount": 4,
       "createdAt": "2026-02-25T08:14:43.154Z",
-      "lastAccessed": "2026-02-26T13:22:22.731Z"
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_286ad94e",
@@ -1678,7 +1678,14 @@
       "severity": "high",
       "synapticStrength": 1,
       "accessCount": 0,
-      "createdAt": "2026-02-25T08:14:49.909Z"
+      "createdAt": "2026-02-25T08:14:49.909Z",
+      "links": [
+        {
+          "targetId": "mem_b79bd8c7",
+          "relationship": "related",
+          "createdAt": "2026-02-27T13:25:07.140Z"
+        }
+      ]
     },
     {
       "id": "mem_6c2052f2",
@@ -1924,7 +1931,19 @@
       "severity": "low",
       "synapticStrength": 1,
       "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:30.707Z"
+      "createdAt": "2026-02-25T08:15:30.707Z",
+      "links": [
+        {
+          "targetId": "mem_12ad1325",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:24:59.170Z"
+        },
+        {
+          "targetId": "mem_35965a4d",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:25:01.693Z"
+        }
+      ]
     },
     {
       "id": "mem_76471b85",
@@ -2480,7 +2499,14 @@
       "synapticStrength": 1,
       "accessCount": 1,
       "createdAt": "2026-02-25T08:17:27.740Z",
-      "lastAccessed": "2026-02-26T15:46:11.663Z"
+      "lastAccessed": "2026-02-26T15:46:11.663Z",
+      "links": [
+        {
+          "targetId": "mem_1d36d530",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:25:19.152Z"
+        }
+      ]
     },
     {
       "id": "mem_d94b2911",
@@ -2752,7 +2778,14 @@
       "severity": "high",
       "synapticStrength": 1,
       "accessCount": 0,
-      "createdAt": "2026-02-25T17:47:27.049Z"
+      "createdAt": "2026-02-25T17:47:27.049Z",
+      "links": [
+        {
+          "targetId": "mem_acf32420",
+          "relationship": "related",
+          "createdAt": "2026-02-27T13:25:14.547Z"
+        }
+      ]
     },
     {
       "id": "mem_4d2a5a04",
@@ -3372,7 +3405,7 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 2,
+      "accessCount": 3,
       "createdAt": "2026-02-26T10:29:25.572Z",
       "links": [
         {
@@ -3381,7 +3414,7 @@
           "createdAt": "2026-02-26T17:55:53.332Z"
         }
       ],
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_2c399f91",
@@ -3436,9 +3469,10 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T10:45:39.020Z",
-      "links": []
+      "links": [],
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_a21ec7d8",
@@ -4281,11 +4315,12 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:08:09.191Z",
       "links": [],
       "qualityScore": 0.7,
-      "fingerprint": "87de23103913"
+      "fingerprint": "87de23103913",
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_a3d0d41a",
@@ -4466,7 +4501,13 @@
       "synapticStrength": 1.1,
       "accessCount": 3,
       "createdAt": "2026-02-26T17:52:58.109Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_12ad1325",
+          "relationship": "related",
+          "createdAt": "2026-02-27T13:24:59.174Z"
+        }
+      ],
       "qualityScore": 1,
       "fingerprint": "994a76a3e872",
       "lastAccessed": "2026-02-27T11:13:52.519Z"
@@ -4488,7 +4529,13 @@
       "synapticStrength": 1.1,
       "accessCount": 2,
       "createdAt": "2026-02-26T17:53:01.317Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_156237ad",
+          "relationship": "related",
+          "createdAt": "2026-02-27T13:25:04.425Z"
+        }
+      ],
       "qualityScore": 0.9,
       "fingerprint": "ad2ea0d14db4",
       "lastAccessed": "2026-02-27T11:13:52.519Z"
@@ -4572,7 +4619,7 @@
       ],
       "severity": "high",
       "synapticStrength": 1.1,
-      "accessCount": 1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T17:55:53.321Z",
       "links": [
         {
@@ -4583,7 +4630,7 @@
       ],
       "qualityScore": 0.7,
       "fingerprint": "3ead77b2b251",
-      "lastAccessed": "2026-02-27T10:34:56.496Z"
+      "lastAccessed": "2026-02-27T13:19:51.383Z"
     },
     {
       "id": "mem_baaadbab",
@@ -4842,7 +4889,13 @@
       "synapticStrength": 1,
       "accessCount": 0,
       "createdAt": "2026-02-26T18:01:01.175Z",
-      "links": [],
+      "links": [
+        {
+          "targetId": "mem_35965a4d",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:25:01.696Z"
+        }
+      ],
       "qualityScore": 1,
       "fingerprint": "af91b4989626"
     },
@@ -7726,6 +7779,383 @@
       "qualityScore": 0.95,
       "fingerprint": "e3e51940d81a",
       "decayExempt": false
+    },
+    {
+      "id": "mem_1581dd80",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Fix brain module crashes: reflection.toLowerCase + pruning.length errors at session end",
+      "content": "Activity log shows two brain_error entries every session end: (1) end_session:reflection failed -- Cannot read properties of undefined reading 'toLowerCase'. (2) end_session:pruning failed -- Cannot read properties of undefined reading 'length'. These are null-access bugs in the wiring from t_5d511b12. One-line fixes with high impact since they're the only automated brain ops that run without explicit invocation. Check packages/core/src/brain/reflection.ts and pruner.ts.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "debugging",
+        "memory",
+        "ai-tells",
+        "opsec"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:22:13.067Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "6415d99a0108"
+    },
+    {
+      "id": "mem_79082a9a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Rewrite active-state.md, strategy.md, lessons-learned.md",
+      "content": "All three auto-memory files are 17+ sessions stale. active-state.md shows S48 as current (actually S63). strategy.md lists completed work as pending. lessons-learned.md only covers Session 45. Every session start injects active-state.md, poisoning context. Rewrite all three to reflect current state: brain MO complete, Qwen integrated, deliberation system live, boardroom built, Sessions 46-62 lessons captured.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "tokens"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:23:06.788Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "7b478cf4aff0"
+    },
+    {
+      "id": "mem_12ad1325",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "SessionStart hook fires on agent subprocesses, destroying deliberations",
+      "content": "session-start.mjs fires on every claude --print subprocess spawn. The hook's archiveChatroom() reset chatroom.json on every agent spawn, destroying deliberations. Context injection also replaced agent role prompts.",
+      "rule": "Set HW_AGENT_MODE=1 in env when spawning agent subprocesses. session-start.mjs must exit immediately when this env var is present.",
+      "tags": [
+        "hooks",
+        "deliberation",
+        "agent-runner",
+        "subprocess"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:24:59.158Z",
+      "links": [
+        {
+          "targetId": "mem_d26abc7a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:24:59.170Z"
+        },
+        {
+          "targetId": "mem_e0553d28",
+          "relationship": "related",
+          "createdAt": "2026-02-27T13:24:59.174Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "90144604292b",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_35965a4d",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Windows cmd.exe arg quoting breaks temp file paths for agent subprocesses",
+      "content": "Node.js spawn('cmd.exe', ['/d', '/s', '/c', shellCmd]) double-quotes the shellCmd argument, breaking embedded quotes around temp file paths. Every agent subprocess failed with path syntax errors.",
+      "rule": "On Windows, pipe stdin directly to claude --print instead of using temp files. Use shell:true so Windows can find claude.cmd in PATH.",
+      "tags": [
+        "windows",
+        "subprocess",
+        "cmd-exe",
+        "agent-runner",
+        "quoting"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:01.682Z",
+      "links": [
+        {
+          "targetId": "mem_d26abc7a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:25:01.693Z"
+        },
+        {
+          "targetId": "mem_dcb8b57a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:25:01.696Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "29f01c365d13",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_156237ad",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "hw_start_deliberation never called runDeliberation -- engine existed but wasn't wired",
+      "content": "MCP tool started deliberation state but never called runDeliberation(). Engine was built in agent-runner.ts but not connected. notifyRunner was undefined in server.ts, causing silent crashes.",
+      "rule": "When shipping a new capability, verify the call chain end-to-end. Having the engine exist is not the same as having it connected. Test the full path, not just individual pieces.",
+      "tags": [
+        "deliberation",
+        "wiring",
+        "end-to-end",
+        "silent-failure"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:04.412Z",
+      "links": [
+        {
+          "targetId": "mem_497c4a8f",
+          "relationship": "extends",
+          "createdAt": "2026-02-27T13:25:04.425Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "87139cca3432",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_b79bd8c7",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Editing lib.rs in dev mode crashes entire session via PTY kill",
+      "content": "cargo tauri dev watches Rust source files. Editing lib.rs triggers recompile, closing app window, killing PTY, ending Claude session.",
+      "rule": "NEVER edit lib.rs while cargo is running. Check tasklist | grep cargo first. Use git worktrees for ALL Rust changes while app is in dev mode.",
+      "tags": [
+        "rust",
+        "lib-rs",
+        "cargo",
+        "dev-mode",
+        "crash",
+        "worktree"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:07.129Z",
+      "links": [
+        {
+          "targetId": "mem_b097fc1e",
+          "relationship": "extends",
+          "createdAt": "2026-02-27T13:25:07.140Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "8871e163dc5c",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_c48ae371",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Claude Code uses OAuth, not API keys -- agent subprocess auth fails",
+      "content": "Claude Code stores auth as OAuth token, not ANTHROPIC_API_KEY. Anthropic SDK in agent-runner.ts can't use it. Agent deliberations failed with API key errors.",
+      "rule": "To call Anthropic API from within Claude Code, use subprocess approach (claude --print) which reuses the existing OAuth session. Never try to extract API keys from Claude Code's credential storage.",
+      "tags": [
+        "auth",
+        "oauth",
+        "api-key",
+        "agent-runner",
+        "claude-cli"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:09.453Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "3829dae28505",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_a89f68e2",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "state.json race conditions: concurrent writes corrupt data",
+      "content": "Multiple processes (MCP server, file watcher, Discord listener) writing state.json simultaneously caused truncation and data loss.",
+      "rule": "Split monolithic JSON into separate files (tasks.json, decisions.json, etc). Use atomic writes (temp file + rename). Windows NTFS needs retry loop (50ms backoff x5). Keep .backup before every write.",
+      "tags": [
+        "state-json",
+        "race-condition",
+        "data-loss",
+        "atomic-writes",
+        "windows"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:12.201Z",
+      "links": [],
+      "qualityScore": 1,
+      "fingerprint": "d94d829b571f",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_acf32420",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Rust get_state still read deleted state.json after storage split -- white screen",
+      "content": "After splitting state.json into separate files, the Tauri Rust backend still read from the now-deleted state.json. App launched to white screen with no data.",
+      "rule": "When migrating storage layout, update ALL readers: TypeScript MCP server, Rust Tauri commands, and hooks. Rust get_state must merge split files into expected shape.",
+      "tags": [
+        "rust",
+        "migration",
+        "storage",
+        "white-screen",
+        "readers"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:14.538Z",
+      "links": [
+        {
+          "targetId": "mem_9a5f3276",
+          "relationship": "related",
+          "createdAt": "2026-02-27T13:25:14.547Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "241ce70c177b",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_2983c9e4",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Killing MCP server from within Claude Code leaves session without tools",
+      "content": "Claude killed MCP server processes with kill commands. Claude Code didn't auto-restart it. Entire MCP toolchain went down, requiring full session restart.",
+      "rule": "Never kill MCP server processes from within Claude Code. To reload after code changes: restart the Claude Code session. The MCP server is managed by Claude Code, not by Claude.",
+      "tags": [
+        "mcp-server",
+        "process-kill",
+        "toolchain",
+        "restart"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:16.641Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "e86e1ae404eb",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_1d36d530",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Strategy discussion lost to crash -- direction.json not written in time",
+      "content": "Vision and scope discussed during session wasn't captured to direction.json before a crash. After restart, Claude had no record. Pat had to re-share everything.",
+      "rule": "When Pat discusses vision, scope, or strategy, write to direction.json IMMEDIATELY -- before moving on. Do not wait for session end. A crash wipes context; the file survives.",
+      "tags": [
+        "direction",
+        "crash",
+        "context-loss",
+        "strategy",
+        "immediate-write"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:19.142Z",
+      "links": [
+        {
+          "targetId": "mem_9d95b799",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-27T13:25:19.152Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "f2f07e5cf9fe",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_0e7a5e8c",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "Claude suggested removing Terminal PTY feature as workaround -- Pat annoyed",
+      "content": "After PTY killed by Tauri recompile, Claude suggested removing the Terminal PTY feature. This was a core product feature. Pat caught the wrong suggestion.",
+      "rule": "Never suggest removing a core product feature as workaround for infrastructure problems. Fix the infrastructure instead. Claude-in-terminal (PTY) is core, not optional.",
+      "tags": [
+        "pty",
+        "terminal",
+        "core-feature",
+        "workaround",
+        "pat-feedback"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:21.572Z",
+      "links": [],
+      "qualityScore": 0.9,
+      "fingerprint": "4f6b97e8a6ef",
+      "decayExempt": true
+    },
+    {
+      "id": "mem_ce0aa2a0",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Bulk archive ~100 \"Completed: [task]\" auto-captured win memories",
+      "content": "115 of 124 auto-captured memories are task-completion receipts with zero access count. They inflate memory count from ~140 real entries to 359. These have never been retrieved and add no value beyond what tasks.json already records. Write a script or agent to identify memories where: type=win, source contains auto-capture, title starts with \"Completed:\", accessCount=0. Archive them to memories-archive.json.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "writing"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:40.254Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "62928868b07e"
+    },
+    {
+      "id": "mem_061e3c8a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Ingest 32 uncaptured pain extractions from extracted-pains.json",
+      "content": "extracted-pains.json has 32 pains with alreadyCaptured: false. 12 are high severity (PTY kill patterns, Windows NTFS quirks, MCP restart requirements, etc.). Run them through hw_store_memory. At minimum do the 12 high-severity ones.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "windows",
+        "mcp"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:25:40.288Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "e8a240652ea2"
+    },
+    {
+      "id": "mem_6122ae7b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Wire cortex merger into retrieval path",
+      "content": "Already wired: server.ts lines 418-422 merge cortex-learned.json entries with DEFAULT_CORTEX at retrieval time. cortex-learned.json shows 6 gaps processed. No learned entries saved yet (threshold not met), but the code path works.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "windows",
+        "git"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-27T13:26:11.591Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "7dc81eda6e44"
     }
   ]
 }

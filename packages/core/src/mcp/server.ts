@@ -529,8 +529,8 @@ server.registerTool('hw_store_memory', {
     const observations = generateMetaObservations(recent);
 
     for (const obs of observations) {
-      if (isDuplicateReflection(obs.summary, allMems)) continue;
-      const reflectionMem = createReflection(obs, obs.linkedMemoryIds);
+      if (isDuplicateReflection(obs, allMems)) continue;
+      const reflectionMem = createReflection(obs);
       memoryStore.storeMemory({
         type: 'reflection',
         title: reflectionMem.title,
@@ -974,8 +974,8 @@ server.registerTool('hw_end_session', {
     const observations = generateMetaObservations(recent);
     let storedCount = 0;
     for (const obs of observations) {
-      if (isDuplicateReflection(obs.summary, allMems)) continue;
-      const reflectionMem = createReflection(obs, obs.linkedMemoryIds);
+      if (isDuplicateReflection(obs, allMems)) continue;
+      const reflectionMem = createReflection(obs);
       memoryStore.storeMemory({
         type: 'reflection',
         title: reflectionMem.title,
@@ -991,8 +991,8 @@ server.registerTool('hw_end_session', {
     for (const cluster of clusters.slice(0, 3)) {
       const consolidated = generateConsolidation(cluster);
       if (!consolidated) continue;
-      if (isDuplicateReflection(consolidated.summary, allMems)) continue;
-      const cMem = createReflection(consolidated, consolidated.sourceMemoryIds);
+      if (isDuplicateReflection(consolidated, allMems)) continue;
+      const cMem = createReflection(consolidated);
       memoryStore.storeMemory({
         type: 'reflection',
         title: cMem.title,

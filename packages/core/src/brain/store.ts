@@ -245,9 +245,10 @@ export class MemoryStore {
 
     this.store.update(data => ({
       memories: data.memories.map(m => {
-        if (m.links.length === 0) return m;
-        const cleaned = m.links.filter(l => validIds.has(l.targetId));
-        const delta = m.links.length - cleaned.length;
+        const links = m.links ?? [];
+        if (links.length === 0) return m;
+        const cleaned = links.filter(l => validIds.has(l.targetId));
+        const delta = links.length - cleaned.length;
         if (delta === 0) return m;
         removed += delta;
         return { ...m, links: cleaned };
