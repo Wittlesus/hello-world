@@ -1,5 +1,5 @@
 import { invoke } from '@tauri-apps/api/core';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 import { ActivityStream } from './ActivityStream.js';
@@ -48,6 +48,78 @@ interface DirectionData {
   notes?: DirectionNote[];
 }
 
+interface Memory {
+  id: string;
+  type: string;
+  title: string;
+  synapticStrength: number;
+  accessCount: number;
+  createdAt: string;
+}
+
+interface MemoriesData {
+  memories: Memory[];
+}
+
+interface BrainStateData {
+  state: {
+    sessionStart: string;
+    messageCount: number;
+    contextPhase: string;
+    synapticActivity: Record<string, { count: number }>;
+    significantEventsSinceCheckpoint?: number;
+  } | null;
+}
+
+type HealthGrade = 'A' | 'B' | 'C' | 'D' | 'F';
+
+function computeSimplifiedGrade(
+  memories: Memory[] | undefined,
+  brainState: BrainStateData | null,
+): HealthGrade {
+  if (!memories || memories.length === 0) return 'F';
+  let score = 100;
+  const total = memories.length;
+
+  // No brain state
+  if (!brainState?.state) score -= 10;
+
+  // Memory count thresholds
+  if (total < 5) score -= 30;
+  else if (total < 20) score -= 15;
+  else if (total < 50) score -= 5;
+
+  // Check for stale memories (no access in 7+ days)
+  const now = Date.now();
+  const staleCount = memories.filter((m) => {
+    const age = now - new Date(m.createdAt).getTime();
+    return age > 7 * 24 * 60 * 60 * 1000 && m.accessCount <= 1;
+  }).length;
+  const staleRatio = total > 0 ? staleCount / total : 0;
+  if (staleRatio > 0.3) score -= 20;
+  else if (staleRatio > 0.15) score -= 10;
+
+  // Low synaptic activity
+  const tagCount = brainState?.state?.synapticActivity
+    ? Object.keys(brainState.state.synapticActivity).length
+    : 0;
+  if (tagCount < 5) score -= 10;
+
+  if (score >= 90) return 'A';
+  if (score >= 75) return 'B';
+  if (score >= 60) return 'C';
+  if (score >= 40) return 'D';
+  return 'F';
+}
+
+const GRADE_STYLE: Record<HealthGrade, string> = {
+  A: 'text-green-400 bg-green-500/15 border-green-500/30',
+  B: 'text-blue-400 bg-blue-500/15 border-blue-500/30',
+  C: 'text-yellow-400 bg-yellow-500/15 border-yellow-500/30',
+  D: 'text-red-400 bg-red-500/15 border-red-500/30',
+  F: 'text-red-400 bg-red-500/15 border-red-500/30',
+};
+
 const PHASE_ORDER = ['idle', 'scope', 'plan', 'build', 'verify', 'ship'];
 
 const PHASE_COLOR: Record<string, string> = {
@@ -93,6 +165,8 @@ export function Dashboard() {
     'get_direction',
     projectPath,
   );
+  const { data: memoriesData } = useTauriData<MemoriesData>('get_memories', projectPath);
+  const { data: brainStateData } = useTauriData<BrainStateData>('get_brain_state', projectPath);
 
   const [markingRead, setMarkingRead] = useState<Set<string>>(new Set());
   const [expandedSessions, setExpandedSessions] = useState<Set<string>>(new Set());
@@ -104,6 +178,13 @@ export function Dashboard() {
   const activeTask = tasks.find((t) => t.status === 'in_progress');
   const todoTasks = tasks.filter((t) => t.status === 'todo');
   const doneTasks = tasks.filter((t) => t.status === 'done');
+
+  const memoryCount = memoriesData?.memories?.length ?? 0;
+  const brainGrade = useMemo(
+    () => computeSimplifiedGrade(memoriesData?.memories, brainStateData),
+    [memoriesData, brainStateData],
+  );
+  const gradeStyle = GRADE_STYLE[brainGrade];
 
   const phaseIdx = PHASE_ORDER.indexOf(phase);
   const phaseColor = PHASE_COLOR[phase] ?? 'text-gray-400';
@@ -162,6 +243,47 @@ export function Dashboard() {
         <div className="ml-auto flex items-center gap-3">
           <span className="text-[11px] text-blue-400">{todoTasks.length} todo</span>
           <span className="text-[11px] text-gray-500">{doneTasks.length} done</span>
+        </div>
+      </div>
+
+      {/* Status bar — 4 compact stat blocks */}
+      <div className="shrink-0 grid grid-cols-4 gap-px bg-gray-800/30 border-b border-gray-800/70">
+        {/* Brain Health */}
+        <div className="bg-[#0d0d14] px-4 py-2 flex items-center gap-2.5">
+          <span className="text-[10px] uppercase tracking-widest text-gray-600">Brain</span>
+          <span
+            className={`text-[13px] font-bold font-mono px-1.5 py-0.5 rounded border ${gradeStyle}`}
+          >
+            {brainGrade}
+          </span>
+        </div>
+
+        {/* Memory Count */}
+        <div className="bg-[#0d0d14] px-4 py-2 flex items-center gap-2.5">
+          <span className="text-[10px] uppercase tracking-widest text-gray-600">Memories</span>
+          <span className="text-[13px] font-mono font-medium text-purple-400">
+            {memoryCount > 0 ? memoryCount : '--'}
+          </span>
+        </div>
+
+        {/* Active Task */}
+        <div className="bg-[#0d0d14] px-4 py-2 flex items-center gap-2.5 min-w-0">
+          <span className="text-[10px] uppercase tracking-widest text-gray-600 shrink-0">Task</span>
+          {activeTask ? (
+            <span className="text-[11px] text-white truncate">{activeTask.title}</span>
+          ) : (
+            <span className="text-[11px] text-gray-600 italic">No active task</span>
+          )}
+        </div>
+
+        {/* Workflow Phase */}
+        <div className="bg-[#0d0d14] px-4 py-2 flex items-center gap-2.5">
+          <span className="text-[10px] uppercase tracking-widest text-gray-600">Phase</span>
+          <span
+            className={`text-[11px] font-mono uppercase px-1.5 py-0.5 rounded ${phaseColor} ${phaseBg}`}
+          >
+            {phase}
+          </span>
         </div>
       </div>
 
