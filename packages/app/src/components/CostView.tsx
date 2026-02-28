@@ -311,3 +311,4 @@ export function CostView() {
     </ViewShell>
   );
 }
+CostView.displayName = 'CostView';

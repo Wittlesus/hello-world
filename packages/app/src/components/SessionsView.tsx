@@ -258,3 +258,4 @@ export function SessionsView() {
     </ViewShell>
   );
 }
+SessionsView.displayName = 'SessionsView';

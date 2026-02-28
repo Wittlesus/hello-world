@@ -242,3 +242,4 @@ export function TimelineView() {
     </div>
   );
 }
+TimelineView.displayName = 'TimelineView';

@@ -307,3 +307,4 @@ export function TranscriptsView() {
     </div>
   );
 }
+TranscriptsView.displayName = 'TranscriptsView';
