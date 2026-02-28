@@ -57,7 +57,16 @@ try {
     process.stderr.write(`Missing: ${missing.join(', ')}\n`);
     process.stderr.write(`This happened before in Session 48 and broke Pat's deliberation system.\n`);
     process.stderr.write(`RESTORE THEM IMMEDIATELY. Do not proceed without these tools.\n\n`);
-    process.exit(1);
+    // FIX: Feb 28, 2026 -- changed from exit(1) to exit(2).
+    // WHAT: exit(1) in PostToolUse is a warning, not a block. The edit already
+    //   happened by the time PostToolUse fires. exit(2) is a hard block.
+    // WHY: This hook exists because Session 48 accidentally deleted all
+    //   deliberation tools during a refactor (decision d_29fa761d). With
+    //   exit(1), it could warn but not prevent. exit(2) enforces the gate.
+    // NOTE: PostToolUse with exit(2) blocks AFTER the edit -- Claude Code
+    //   will see the block and should undo/restore. This is the best we
+    //   can do without a PreToolUse counterpart.
+    process.exit(2);
   }
 } catch (err) {
   // If we can't read the file, don't block

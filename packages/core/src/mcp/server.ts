@@ -435,13 +435,50 @@ server.registerTool('hw_retrieve_memories', {
     }
   }
 
-  // Zone D: Activity logging (degradable)
+  // Zone D: Learned rules matching (degradable)
+  // WIRED: Feb 28, 2026 -- rules now surface during retrieval.
+  // WHAT: Checks learned-rules.json for rules whose tags overlap with the
+  //   retrieval's matched tags. Matching rules are appended to the output
+  //   and their observationCount/strength are reinforced.
+  // WHY: Rules were extracted at session end (rules.ts) but never read back
+  //   during retrieval. 15 rules sat at strength 0.00 because the reinforcement
+  //   step was missing. This closes the feedback loop.
+  // WHY BUILT ORIGINALLY: Brain Magnum Opus S50 (decision d_0b40da28) -- learn
+  //   behavioral patterns from repeated pain/win memories. The write path worked,
+  //   the read path was never connected.
+  let rulesText = '';
+  safeBrainOp('retrieve:rules', () => {
+    const rulesData = rulesStore.read();
+    if (!rulesData.rules || rulesData.rules.length === 0) return;
+    const matchedTagSet = new Set(result.matchedTags);
+    const matchingRules = rulesData.rules.filter(r =>
+      r.tags.some(t => matchedTagSet.has(t)),
+    );
+    if (matchingRules.length === 0) return;
+    // Reinforce matched rules (increment observation count + recalculate strength)
+    let updated = false;
+    for (const rule of matchingRules) {
+      rule.observationCount = (rule.observationCount ?? 0) + 1;
+      rule.lastReinforced = new Date().toISOString();
+      // Strength grows with observations: starts 0, approaches 1 asymptotically
+      rule.confidence = Math.min(1, rule.observationCount / (rule.observationCount + 5));
+      updated = true;
+    }
+    if (updated) {
+      rulesStore.write({ rules: rulesData.rules, lastUpdated: new Date().toISOString() });
+    }
+    // Format rules for injection
+    rulesText = '\n\nLEARNED RULES (from repeated patterns):\n' +
+      matchingRules.map(r => `- ${r.rule} (confidence: ${r.confidence.toFixed(2)}, seen ${r.observationCount}x)`).join('\n');
+  }, undefined);
+
+  // Zone E: Activity logging (degradable)
   const count = result.painMemories.length + result.winMemories.length;
   safeBrainOp('retrieve:activity', () => {
     activity.append('memory_retrieved', `Retrieved ${count} memories for: "${args.prompt.slice(0, 60)}" (${tagRanked.length} tag-ranked)`, result.injectionText || 'No matches.');
   }, undefined);
 
-  return text(result.injectionText || 'No relevant memories found.');
+  return text((result.injectionText || 'No relevant memories found.') + rulesText);
 });
 
 server.registerTool('hw_store_memory', {
@@ -569,7 +606,23 @@ server.registerTool('hw_store_memory', {
 
       if (predResult.captureResult.capture && predResult.captureResult.memory) {
         const sm = predResult.captureResult.memory;
-        activity.append('brain_prediction', `Surprise detected (expectedness: ${predResult.captureResult.expectedness.toFixed(2)}): ${sm.title}`);
+        // WIRED: Feb 28, 2026 -- surprise memories now stored, not just logged.
+        // WHAT: When an event is surprising (below adaptive threshold 0.3-0.85),
+        //   the prediction system creates a memory. Previously this memory was
+        //   computed and then thrown away -- only the activity log entry was written.
+        // WHY: Decision d_0b40da28 (Brain Magnum Opus) specified prediction-error
+        //   auto-capture. The detection path worked, the storage path was missing.
+        // SAFE: Uses memoryStore.storeMemory() directly (not the MCP tool handler),
+        //   so Zone F won't re-trigger (no infinite loop). The prediction system has
+        //   built-in safeguards: adaptive threshold, memory density cap (max 8/4h).
+        memoryStore.storeMemory({
+          type: sm.type as MemoryType,
+          title: sm.title,
+          content: sm.content,
+          tags: [...(sm.tags ?? []), 'auto-captured', 'surprise'],
+          severity: sm.severity as MemorySeverity | undefined,
+        });
+        activity.append('brain_prediction', `Surprise captured (expectedness: ${predResult.captureResult.expectedness.toFixed(2)}): ${sm.title}`);
       }
     }, undefined);
   }
@@ -650,14 +703,16 @@ server.registerTool('hw_update_task', {
   const task = project.state.updateTask(args.id, updates);
   if (args.status === 'done') {
     sessions.recordTaskCompleted(args.id);
-    // Auto-capture win memory so brain learns from task completions without manual calls
-    memoryStore.storeMemory({
-      type: 'win',
-      title: `Completed: ${task.title}`,
-      content: task.description ?? 'Task completed successfully.',
-      tags: ['auto-captured', ...(task.tags ?? [])],
-      severity: 'low',
-    });
+    // DISABLED: Auto-win on task completion (Feb 28, 2026)
+    // WHAT: Stored a "Completed: <title>" win memory on every task done.
+    // WHY BUILT: Brain Magnum Opus S48 -- wanted every completion to leave a
+    //   trace so future sessions know what was built (decision d_0b40da28).
+    // WHY DISABLED: 192 of 424 memories (45%) were these auto-wins. They're
+    //   low-information noise -- title only, no HOW/WHERE/WHAT-WAS-LEARNED.
+    //   The task record in tasks.json already proves completion. Genuine wins
+    //   should be stored manually with actual content about what worked.
+    //   6-agent audit (3 Claude + 3 Qwen) unanimously flagged this as bloat.
+    // DATA PRESERVED: All 192 existing auto-wins remain in memories.json.
     // Track significant event for checkpoint logic
     const bs = memoryStore.getBrainState();
     if (bs) {
