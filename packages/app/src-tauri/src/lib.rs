@@ -332,6 +332,16 @@ fn get_claude_usage(project_path: &str) -> Result<Value, String> {
 }
 
 #[tauri::command]
+fn get_factory(project_path: &str) -> Result<Value, String> {
+    read_json_file(project_path, "factory.json")
+}
+
+#[tauri::command]
+fn save_factory(project_path: &str, data: Value) -> Result<(), String> {
+    write_json_file(project_path, "factory.json", &data)
+}
+
+#[tauri::command]
 fn mark_direction_note_read(project_path: &str, note_id: String) -> Result<(), String> {
     let mut data = read_json_file(project_path, "direction.json")?;
     let notes = data["notes"]
@@ -1312,6 +1322,8 @@ pub fn run() {
             get_direction,
             get_usage,
             get_claude_usage,
+            get_factory,
+            save_factory,
             mark_direction_note_read,
             get_mode,
             set_mode,

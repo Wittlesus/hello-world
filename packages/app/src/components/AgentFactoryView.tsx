@@ -1,3 +1,4 @@
+import { invoke } from '@tauri-apps/api/core';
 import {
   Bot,
   BookOpen,
@@ -10,7 +11,9 @@ import {
   Settings2,
   X,
 } from 'lucide-react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useProjectPath } from '../hooks/useProjectPath.js';
+import { useTauriData } from '../hooks/useTauriData.js';
 
 // ── Types ────────────────────────────────────────────────────────
 
@@ -41,8 +44,21 @@ interface FactoryRun {
   error?: string;
 }
 
-// TODO: Wire to Tauri backend when get_factory Rust command is added
-// CustomAgent persistence + FactoryState will live in .hello-world/factory.json
+interface CustomAgent {
+  id: string;
+  name: string;
+  purpose: string;
+  agency: string;
+  restrictions: string;
+  persona: string;
+  contextMode: ContextMode;
+  createdAt: string;
+}
+
+interface FactoryState {
+  runs: FactoryRun[];
+  customAgents: CustomAgent[];
+}
 
 // ── Preset Agents ────────────────────────────────────────────────
 
@@ -445,12 +461,37 @@ function generateId(): string {
 // ── Main view ────────────────────────────────────────────────────
 
 export function AgentFactoryView() {
+  const projectPath = useProjectPath();
+  const { data: factoryData } = useTauriData<FactoryState>('get_factory', projectPath);
   const [runs, setRuns] = useState<FactoryRun[]>([]);
   const [builderOpen, setBuilderOpen] = useState(false);
   const [builderInitial, setBuilderInitial] = useState<BuilderForm | undefined>(undefined);
+  const initializedRef = useRef(false);
+
+  // Load persisted runs from factory.json on first data load
+  useEffect(() => {
+    if (factoryData?.runs && !initializedRef.current) {
+      setRuns(factoryData.runs);
+      initializedRef.current = true;
+    }
+  }, [factoryData]);
+
+  // Persist runs to factory.json whenever they change (after initial load)
+  const persistRuns = useCallback(
+    (newRuns: FactoryRun[]) => {
+      if (!projectPath) return;
+      const state: FactoryState = {
+        runs: newRuns,
+        customAgents: factoryData?.customAgents ?? [],
+      };
+      invoke('save_factory', { projectPath, data: state }).catch(() => {
+        // Rust command may not exist yet -- silently ignore until app restart
+      });
+    },
+    [projectPath, factoryData?.customAgents],
+  );
 
   const handleDeployPreset = useCallback((agent: PresetAgent) => {
-    // Add a placeholder run -- the MCP tool will handle actual deployment
     const run: FactoryRun = {
       id: generateId(),
       agentId: agent.id,
@@ -458,8 +499,12 @@ export function AgentFactoryView() {
       status: 'queued',
       startedAt: new Date().toISOString(),
     };
-    setRuns((prev) => [run, ...prev]);
-  }, []);
+    setRuns((prev) => {
+      const updated = [run, ...prev];
+      persistRuns(updated);
+      return updated;
+    });
+  }, [persistRuns]);
 
   const handleEditPreset = useCallback((agent: PresetAgent) => {
     setBuilderInitial({
@@ -481,10 +526,14 @@ export function AgentFactoryView() {
       status: 'queued',
       startedAt: new Date().toISOString(),
     };
-    setRuns((prev) => [run, ...prev]);
+    setRuns((prev) => {
+      const updated = [run, ...prev];
+      persistRuns(updated);
+      return updated;
+    });
     setBuilderOpen(false);
     setBuilderInitial(undefined);
-  }, []);
+  }, [persistRuns]);
 
   const activeRuns = runs.filter((r) => r.status === 'running' || r.status === 'queued');
   const completedRuns = runs.filter(
