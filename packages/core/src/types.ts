@@ -97,7 +97,11 @@ export type Question = z.infer<typeof QuestionSchema>;
 
 // ── Brain: Memories ─────────────────────────────────────────────
 
-export const MemoryType = z.enum(['pain', 'win', 'fact', 'decision', 'architecture', 'reflection']);
+// 'skill' added Feb 28 2026 -- procedural memory (HOW to do something, not just WHAT happened).
+// Inspired by Hermes Agent's SKILL.md system. Decision d_c7206dab chose proper type over prefix hack.
+// Skills are just memories with type:'skill' -- no separate file system. They surface via normal
+// tag-based retrieval when similar problems appear.
+export const MemoryType = z.enum(['pain', 'win', 'fact', 'decision', 'architecture', 'reflection', 'skill']);
 export type MemoryType = z.infer<typeof MemoryType>;
 
 export const MemorySeverity = z.enum(['low', 'medium', 'high']);

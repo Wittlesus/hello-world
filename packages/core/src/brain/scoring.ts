@@ -6,7 +6,8 @@
 
 import type { Memory, MemoryType } from '../types.js';
 
-// Half-life in days: fact=17, pain=28, win=46, decision=87, architecture=173, reflection=35
+// Half-life in days: fact=17, pain=28, win=46, decision=87, architecture=173, reflection=35, skill=90
+// Skills decay very slowly -- procedural knowledge stays relevant for months
 const DECAY_RATE: Record<MemoryType, number> = {
   fact: 0.04,
   pain: 0.025,
@@ -14,6 +15,7 @@ const DECAY_RATE: Record<MemoryType, number> = {
   decision: 0.008,
   architecture: 0.004,
   reflection: 0.02,
+  skill: 0.0077,
 };
 
 const SEVERITY_MULT: Record<string, number> = {

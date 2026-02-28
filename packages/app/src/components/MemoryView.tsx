@@ -13,7 +13,7 @@ interface MemoryLink {
 interface Memory {
   id: string;
   projectId: string;
-  type: 'pain' | 'win' | 'fact' | 'decision' | 'architecture' | 'reflection';
+  type: 'pain' | 'win' | 'fact' | 'decision' | 'architecture' | 'reflection' | 'skill';
   title: string;
   content: string;
   rule: string;
@@ -45,7 +45,7 @@ interface MemoriesData {
   memories: Memory[];
 }
 
-const MEMORY_TYPES = ['pain', 'win', 'fact', 'decision', 'architecture', 'reflection'] as const;
+const MEMORY_TYPES = ['pain', 'win', 'fact', 'decision', 'architecture', 'reflection', 'skill'] as const;
 type MemoryType = (typeof MEMORY_TYPES)[number];
 
 const TYPE_CONFIG: Record<
@@ -93,6 +93,13 @@ const TYPE_CONFIG: Record<
     section: 'border-indigo-900/40 bg-indigo-950/10',
     dot: 'bg-indigo-500',
     indicator: 'border-l-indigo-700/60',
+  },
+  skill: {
+    label: 'Skill',
+    badge: 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/20',
+    section: 'border-cyan-900/40 bg-cyan-950/10',
+    dot: 'bg-cyan-500',
+    indicator: 'border-l-cyan-700/60',
   },
 };
 

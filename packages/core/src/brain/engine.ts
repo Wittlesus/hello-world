@@ -249,7 +249,8 @@ export function retrieveMemories(
   const viableMap = new Map(viable.map(m => [m.id, m]));
 
   // Split by type (from viable pool only)
-  const painMems = viable.filter(m => m.type === 'pain' || m.type === 'fact');
+  // Skills are procedural (HOW-TO) -- surface them alongside pain/fact as reference knowledge
+  const painMems = viable.filter(m => m.type === 'pain' || m.type === 'fact' || m.type === 'skill');
   const winMems = viable.filter(m => m.type === 'win');
 
   // Stage 3: Pattern recognition

@@ -483,9 +483,9 @@ server.registerTool('hw_retrieve_memories', {
 
 server.registerTool('hw_store_memory', {
   title: 'Store Memory',
-  description: 'Store a memory. Types: pain (mistakes), win (successes), fact (reference), decision, architecture.',
+  description: 'Store a memory. Types: pain (mistakes), win (successes), fact (reference), decision, architecture, skill (how-to procedures).',
   inputSchema: z.object({
-    type: z.enum(['pain', 'win', 'fact', 'decision', 'architecture', 'reflection']),
+    type: z.enum(['pain', 'win', 'fact', 'decision', 'architecture', 'reflection', 'skill']),
     title: z.string(),
     content: z.string().optional(),
     rule: z.string().optional(),
