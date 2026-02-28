@@ -210,3 +210,4 @@ export function WatchersView() {
     </ViewShell>
   );
 }
+WatchersView.displayName = 'WatchersView';

@@ -787,3 +787,4 @@ export function TerminalView() {
     </div>
   );
 }
+TerminalView.displayName = 'TerminalView';

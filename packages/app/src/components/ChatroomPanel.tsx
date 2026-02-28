@@ -974,3 +974,4 @@ export function ChatroomPanel({ fullHeight = false }: { fullHeight?: boolean }) 
     </>
   );
 }
+ChatroomPanel.displayName = 'ChatroomPanel';

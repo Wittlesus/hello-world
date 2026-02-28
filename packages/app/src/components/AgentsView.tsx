@@ -7,3 +7,4 @@ export function AgentsView() {
     </div>
   );
 }
+AgentsView.displayName = 'AgentsView';
