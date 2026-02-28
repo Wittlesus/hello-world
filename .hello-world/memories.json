@@ -3213,19 +3213,6 @@
       "createdAt": "2026-02-26T07:56:23.212Z"
     },
     {
-      "id": "mem_5327db25",
-      "projectId": "Claude AI Interface",
-      "type": "decision",
-      "title": "Wire brain engine end-to-end -- Pat's top priority",
-      "content": "Session 47 audit revealed the brain system is disconnected pieces: (1) hook does simple keyword matching, (2) 9-stage engine exists but isn't called, (3) scoring module exists but isn't integrated, (4) plasticity is tracked but doesn't affect ranking, (5) memory storage is manual. Pat wants one cohesive pipeline that automatically retrieves, stores, indexes, ranks, and evolves. Next session: wire it all together.",
-      "rule": "The brain engine in packages/core/src/brain/engine.ts must be the ACTUAL retrieval path, not decoration. If the flowchart shows 9 stages, 9 stages must actually run.",
-      "tags": [],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-26T08:02:38.890Z"
-    },
-    {
       "id": "mem_aa89e84e",
       "projectId": "Claude AI Interface",
       "type": "win",
@@ -9399,44 +9386,6 @@
       "fingerprint": "47b206ad8d4f"
     },
     {
-      "id": "mem_ed4569bf",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: k:** - Auto-capture signal detector -- always-on. Broken, no",
-      "content": "k:** - Auto-capture signal detector -- always-on. Broken, noisy, Pat has flagged it twice. - Brain modules (reflection, prediction, cortex merger) -- always",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T05:23:13.330Z",
-      "links": [],
-      "qualityScore": 0.6000000000000001,
-      "fingerprint": "cb103fe9de06"
-    },
-    {
-      "id": "mem_5d593c60",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: nd it's the real issue.  The brain modules aren't broken bec",
-      "content": "nd it's the real issue.  The brain modules aren't broken because they're \"always-on.\" They're broken because \"always-on\" means \"whenever Claude remembers to",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T05:23:13.342Z",
-      "links": [],
-      "qualityScore": 0.6000000000000001,
-      "fingerprint": "5bc548d6f05b"
-    },
-    {
       "id": "mem_7a634789",
       "projectId": "Claude AI Interface",
       "type": "decision",
@@ -9464,25 +9413,6 @@
       "qualityScore": 1,
       "fingerprint": "0b14163df3fe",
       "decayExempt": false
-    },
-    {
-      "id": "mem_372f2c74",
-      "projectId": "Claude AI Interface",
-      "type": "pain",
-      "title": "bug_fix: sting 192 auto-wins in place  **Phase 2: Wire the broken loo",
-      "content": "sting 192 auto-wins in place  **Phase 2: Wire the broken loops (the real fixes)** - prediction.ts: store the surprise memory instead of discarding it - prun",
-      "rule": "",
-      "tags": [
-        "auto-captured",
-        "bug_fix"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T05:59:42.162Z",
-      "links": [],
-      "qualityScore": 0.7000000000000001,
-      "fingerprint": "f07c97f90c34"
     },
     {
       "id": "mem_116dbdd6",
@@ -9658,114 +9588,6 @@
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "1d52f34ee903"
-    },
-    {
-      "id": "mem_d48bf099",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"mcp\" domain (8 pain memories)",
-      "content": "Tag \"mcp\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "mcp",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T07:57:09.313Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "6aabe8cbd1e7",
-      "supersededBy": "mem_e9ca2228"
-    },
-    {
-      "id": "mem_e9ca2228",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"tooling\" domain (9 pain memories)",
-      "content": "Tag \"tooling\" appears in 9 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "tooling",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T07:57:09.331Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "81bd9f1b9ad0",
-      "supersededBy": "mem_4d213e34"
-    },
-    {
-      "id": "mem_4d213e34",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"immediate-win\" domain (8 pain memories)",
-      "content": "Tag \"immediate-win\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "immediate-win",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T07:57:09.354Z",
-      "links": [],
-      "qualityScore": 0.6,
-      "fingerprint": "68f7d0e5b0ba",
-      "supersededBy": "mem_a08bb054"
-    },
-    {
-      "id": "mem_a08bb054",
-      "projectId": "Claude AI Interface",
-      "type": "reflection",
-      "title": "[meta-observation] Recurring failure pattern in \"research\" domain (9 pain memories)",
-      "content": "Tag \"research\" appears in 9 pain memories recently.\nExamples: Perplexity MCP -- deep web research on demand; Code Research MCP -- unified dev search; Research synthesis: AI memory systems -- our brain MO is research-aligned\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
-      "rule": "",
-      "tags": [
-        "reflection",
-        "meta-observation",
-        "recurring-failure",
-        "research",
-        "recurring",
-        "failure",
-        "pattern",
-        "domain",
-        "memories"
-      ],
-      "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-28T07:57:09.375Z",
-      "links": [],
-      "qualityScore": 0.5,
-      "fingerprint": "6db0d20030cd",
-      "supersededBy": "mem_230552e8"
     },
     {
       "id": "mem_230552e8",
