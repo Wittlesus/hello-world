@@ -242,3 +242,4 @@ export function FullsweepView() {
     </ViewShell>
   );
 }
+FullsweepView.displayName = 'FullsweepView';

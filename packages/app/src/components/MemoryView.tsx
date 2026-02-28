@@ -513,3 +513,4 @@ export function MemoryView() {
     </ViewShell>
   );
 }
+MemoryView.displayName = 'MemoryView';

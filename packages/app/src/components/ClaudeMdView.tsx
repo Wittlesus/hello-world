@@ -431,3 +431,4 @@ export function ClaudeMdView() {
     </ViewShell>
   );
 }
+ClaudeMdView.displayName = 'ClaudeMdView';

@@ -347,3 +347,4 @@ export function ProjectContextView() {
     </div>
   );
 }
+ProjectContextView.displayName = 'ProjectContextView';

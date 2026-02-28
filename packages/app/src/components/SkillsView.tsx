@@ -142,3 +142,4 @@ export function SkillsView() {
     </ViewShell>
   );
 }
+SkillsView.displayName = 'SkillsView';
