@@ -5,6 +5,7 @@ export function LoadingState({ label }: { label?: string }) {
     </div>
   );
 }
+LoadingState.displayName = 'LoadingState';
 
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
@@ -22,6 +23,7 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
     </div>
   );
 }
+ErrorState.displayName = 'ErrorState';
 
 export function EmptyState({ message }: { message: string }) {
   return (
@@ -30,3 +32,4 @@ export function EmptyState({ message }: { message: string }) {
     </div>
   );
 }
+EmptyState.displayName = 'EmptyState';

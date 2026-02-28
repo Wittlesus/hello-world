@@ -23,3 +23,4 @@ export function ViewShell({ title, description, children, actions }: ViewShellPr
     </div>
   );
 }
+ViewShell.displayName = 'ViewShell';

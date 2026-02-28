@@ -79,3 +79,4 @@ export function HelpModal({ open, onClose }: HelpModalProps) {
     </div>
   );
 }
+HelpModal.displayName = 'HelpModal';

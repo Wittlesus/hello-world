@@ -10,6 +10,7 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
+  static displayName = 'ErrorBoundary';
   state: State = { error: null };
 
   static getDerivedStateFromError(error: Error): State {

@@ -265,3 +265,4 @@ export function Sidebar({ onShowHelp }: SidebarProps) {
     </aside>
   );
 }
+Sidebar.displayName = 'Sidebar';
