@@ -1,4 +1,120 @@
 {
-  "scannedAt": null,
-  "candidates": []
+  "scannedAt": "2026-02-27T19:00:00.000Z",
+  "candidates": [
+    {
+      "id": "kq_evrmemos",
+      "title": "EverMemOS: memory-as-OS architecture, 83% LongMemEval SOTA",
+      "category": "ai-news",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_3b34a8ed"
+    },
+    {
+      "id": "kq_arcagi3",
+      "title": "ARC-AGI-3 requires persistent memory + long-horizon planning as benchmark criteria",
+      "category": "ai-news",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_1bf1b560"
+    },
+    {
+      "id": "kq_aurora",
+      "title": "Aurora: autonomous Claude agent at session 181 with outcome-tagged memory",
+      "category": "coding-trend",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_f200bf46"
+    },
+    {
+      "id": "kq_cursor_ctx",
+      "title": "Cursor dynamic context discovery: 46.9% token reduction via lazy tool loading",
+      "category": "coding-trend",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_762b0375"
+    },
+    {
+      "id": "kq_anthrop_harness",
+      "title": "Anthropic's long-running agent harness: Initializer + Coding Agent pattern",
+      "category": "coding-trend",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_08bb2c61"
+    },
+    {
+      "id": "kq_hermes_skill",
+      "title": "Hermes Agent: procedural memory via SKILL.md documents",
+      "category": "ai-news",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_0a2eda0a"
+    },
+    {
+      "id": "kq_umem",
+      "title": "U-Mem: active memory that detects uncertainty and seeks knowledge",
+      "category": "ai-news",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_b409cca0"
+    },
+    {
+      "id": "kq_gam",
+      "title": "GAM: dual-agent context rot architecture",
+      "category": "ai-news",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_c9afdb53"
+    },
+    {
+      "id": "kq_langchain_gen",
+      "title": "LangChain: generalization is the bottleneck, not infrastructure",
+      "category": "coding-trend",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_9314f2de"
+    },
+    {
+      "id": "kq_mcp_apps",
+      "title": "MCP Apps: protocol now supports returning interactive UI components",
+      "category": "ai-news",
+      "summary": "Announced Jan 2026, MCP Apps extend the protocol to return interactive UI components (dashboards, forms, visualizations) that render directly in conversations. Transforms MCP from data/tool protocol into a full application platform. Directly relevant to Hello World's MCP-first architecture.",
+      "source": "https://dev.to/aristoaistack/mcp-explained-how-ai-agents-actually-work-2026-5p8",
+      "relevance": "high",
+      "suggestedMemoryType": "fact",
+      "status": "stored",
+      "memoryId": "mem_b1f6e25a"
+    },
+    {
+      "id": "kq_mcp_linux",
+      "title": "MCP donated to Linux Foundation; OpenAI killed Assistants API, adopted MCP",
+      "category": "ai-news",
+      "relevance": "high",
+      "status": "stored",
+      "memoryId": "mem_66017d91"
+    },
+    {
+      "id": "kq_vercept",
+      "title": "Anthropic acquires Vercept; Sonnet 4.6 computer use at 72.5%",
+      "category": "ai-news",
+      "relevance": "medium",
+      "status": "stored",
+      "memoryId": "mem_5ac89037"
+    },
+    {
+      "id": "kq_agent_sdk_v2",
+      "title": "Claude Agent SDK v2: session API changed to stream(), AskUserQuestion support",
+      "category": "dependency",
+      "relevance": "medium",
+      "status": "stored",
+      "memoryId": "mem_5f26e700"
+    },
+    {
+      "id": "kq_tanstack_exp",
+      "title": "TanStack ecosystem expansion: DB, AI, Form, Store, Start",
+      "category": "coding-trend",
+      "relevance": "medium",
+      "status": "stored",
+      "memoryId": "mem_aa564599"
+    }
+  ]
 }

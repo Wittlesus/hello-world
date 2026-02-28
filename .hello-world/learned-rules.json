@@ -152,11 +152,11 @@
         "mem_ab99537b"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "win-pattern",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm4u1k5p_j99g",
@@ -171,11 +171,11 @@
         "mem_2df73149"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "pain-pattern",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm4u1k5p_ti63",
@@ -190,11 +190,11 @@
         "mem_e43c46da"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm4u1k5p_224z",
@@ -209,11 +209,11 @@
         "mem_2c411e02"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm4u1k5p_gugq",
@@ -227,11 +227,11 @@
         "mem_61e3dd4c"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm51wz8f_x8xp",
@@ -244,12 +244,12 @@
         "mem_958d28d9",
         "mem_a3d0d41a"
       ],
-      "confidence": 0.7000000000000001,
-      "observationCount": 2,
+      "confidence": 0.8,
+      "observationCount": 3,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T15:32:50.655Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm4u1k5p_swes",
@@ -263,11 +263,11 @@
         "mem_c6dfd67b"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     },
     {
       "id": "rule_mm4u1k5p_mif2",
@@ -281,12 +281,12 @@
         "mem_b6d065ee"
       ],
       "confidence": 0.95,
-      "observationCount": 5,
+      "observationCount": 6,
       "type": "contradiction-resolution",
       "promotedToClaudeMd": false,
       "createdAt": "2026-02-27T11:52:27.469Z",
-      "lastReinforced": "2026-02-27T17:33:45.569Z"
+      "lastReinforced": "2026-02-28T07:57:09.296Z"
     }
   ],
-  "lastUpdated": "2026-02-27T17:33:45.569Z"
+  "lastUpdated": "2026-02-28T07:57:09.297Z"
 }

@@ -759,6 +759,17 @@
       "tokensUsed": 0,
       "summary": "3 decision(s). 15 memories stored. 6 commit(s)",
       "endedAt": "2026-02-27T15:32:50.794Z"
+    },
+    {
+      "id": "s_13380cdb",
+      "startedAt": "2026-02-27T17:42:16.940Z",
+      "tasksCompleted": [],
+      "decisionsMade": [],
+      "costUsd": 27.1908,
+      "tokensUsed": 68873501,
+      "summary": "10 memories stored. 4 commit(s)",
+      "outcomeTags": [],
+      "endedAt": "2026-02-28T07:57:29.906Z"
     }
   ]
 }

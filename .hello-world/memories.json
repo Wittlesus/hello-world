@@ -461,9 +461,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 2,
+      "accessCount": 3,
       "createdAt": "2026-02-25T02:48:55.011Z",
-      "lastAccessed": "2026-02-25T08:14:40.477Z"
+      "lastAccessed": "2026-02-27T22:49:49.550Z"
     },
     {
       "id": "mem_45431539",
@@ -480,9 +480,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 2,
+      "accessCount": 3,
       "createdAt": "2026-02-25T02:50:54.635Z",
-      "lastAccessed": "2026-02-25T08:14:40.477Z"
+      "lastAccessed": "2026-02-27T22:49:49.550Z"
     },
     {
       "id": "mem_c9dcdd3d",
@@ -674,8 +674,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:10:34.984Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:10:34.984Z",
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_3b365d9c",
@@ -986,10 +987,10 @@
         "automation"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.2,
+      "accessCount": 2,
       "createdAt": "2026-02-25T08:11:51.826Z",
-      "lastAccessed": "2026-02-26T07:08:03.240Z"
+      "lastAccessed": "2026-02-28T06:00:30.646Z"
     },
     {
       "id": "mem_2a873e28",
@@ -1096,10 +1097,10 @@
         "memory"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.2,
+      "accessCount": 2,
       "createdAt": "2026-02-25T08:12:20.977Z",
-      "lastAccessed": "2026-02-26T07:08:03.240Z"
+      "lastAccessed": "2026-02-28T06:00:30.646Z"
     },
     {
       "id": "mem_0a1a97db",
@@ -1115,7 +1116,7 @@
         "claude"
       ],
       "severity": "low",
-      "synapticStrength": 1,
+      "synapticStrength": 1.2,
       "accessCount": 1,
       "createdAt": "2026-02-25T08:12:25.289Z",
       "lastAccessed": "2026-02-26T07:08:03.240Z"
@@ -1172,8 +1173,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:12:40.397Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:12:40.397Z",
+      "lastAccessed": "2026-02-27T22:49:49.550Z"
     },
     {
       "id": "mem_00bda3fd",
@@ -1389,8 +1391,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:13:41.164Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:13:41.164Z",
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_cc0fa025",
@@ -1425,8 +1428,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:13:50.175Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:13:50.175Z",
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_6db5b89b",
@@ -1461,8 +1465,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:13:59.593Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:13:59.593Z",
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_534568ca",
@@ -1498,9 +1503,9 @@
       ],
       "severity": "high",
       "synapticStrength": 1.3000000000000003,
-      "accessCount": 9,
+      "accessCount": 10,
       "createdAt": "2026-02-25T08:14:08.688Z",
-      "lastAccessed": "2026-02-27T14:26:41.526Z"
+      "lastAccessed": "2026-02-27T22:49:50.249Z"
     },
     {
       "id": "mem_823838dc",
@@ -1538,10 +1543,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.4000000000000004,
-      "accessCount": 9,
+      "synapticStrength": 1.32,
+      "accessCount": 10,
       "createdAt": "2026-02-25T08:14:19.435Z",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_6599d4b1",
@@ -1638,10 +1643,10 @@
         "cross-project"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-25T08:14:48.531Z",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_6c2052f2",
@@ -1657,9 +1662,10 @@
         "windows"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:14:54.557Z"
+      "synapticStrength": 1.2,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:14:54.557Z",
+      "lastAccessed": "2026-02-28T07:43:22.113Z"
     },
     {
       "id": "mem_961f717a",
@@ -1956,7 +1962,14 @@
       "severity": "high",
       "synapticStrength": 1,
       "accessCount": 0,
-      "createdAt": "2026-02-25T08:15:37.822Z"
+      "createdAt": "2026-02-25T08:15:37.822Z",
+      "links": [
+        {
+          "targetId": "mem_11c5782b",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:08:48.395Z"
+        }
+      ]
     },
     {
       "id": "mem_f24cdc4e",
@@ -2163,9 +2176,10 @@
         "vercel"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:16:11.905Z"
+      "synapticStrength": 1.2,
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:16:11.905Z",
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_5dd67021",
@@ -2332,7 +2346,7 @@
         "safety"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.26,
       "accessCount": 0,
       "createdAt": "2026-02-25T08:16:47.958Z"
     },
@@ -2351,8 +2365,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1.1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T08:17:01.310Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T08:17:01.310Z",
+      "lastAccessed": "2026-02-27T22:49:49.550Z"
     },
     {
       "id": "mem_50f31d51",
@@ -2633,8 +2648,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
-      "createdAt": "2026-02-25T11:02:10.524Z"
+      "accessCount": 1,
+      "createdAt": "2026-02-25T11:02:10.524Z",
+      "lastAccessed": "2026-02-27T22:49:49.550Z"
     },
     {
       "id": "mem_f6f237c4",
@@ -2726,9 +2742,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 2,
+      "accessCount": 3,
       "createdAt": "2026-02-26T03:30:24.851Z",
-      "lastAccessed": "2026-02-27T07:30:35.352Z"
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_49c7b3ae",
@@ -2952,9 +2968,9 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 1,
+      "accessCount": 2,
       "createdAt": "2026-02-26T03:56:18.123Z",
-      "lastAccessed": "2026-02-26T15:46:11.663Z"
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_eedd2cc0",
@@ -3271,10 +3287,10 @@
         "scoring"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 3,
+      "synapticStrength": 1.2,
+      "accessCount": 5,
       "createdAt": "2026-02-26T09:46:37.875Z",
-      "lastAccessed": "2026-02-27T11:13:52.519Z"
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_e847972f",
@@ -3453,7 +3469,7 @@
         "discipline"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.26,
       "accessCount": 0,
       "createdAt": "2026-02-26T15:00:24.978Z",
       "links": [],
@@ -3474,13 +3490,13 @@
         "shipping"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-26T15:05:10.841Z",
       "links": [],
       "qualityScore": 1,
       "fingerprint": "552fd64af76c",
-      "lastAccessed": "2026-02-27T07:31:55.275Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_99142307",
@@ -3566,8 +3582,8 @@
         "design"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.2,
+      "accessCount": 3,
       "createdAt": "2026-02-26T15:05:41.129Z",
       "links": [
         {
@@ -3578,7 +3594,7 @@
       ],
       "qualityScore": 0.6,
       "fingerprint": "a4f2ce55d744",
-      "lastAccessed": "2026-02-27T13:33:47.630Z"
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_82ae4687",
@@ -3678,8 +3694,8 @@
         "migration"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.2,
+      "accessCount": 2,
       "createdAt": "2026-02-26T15:23:19.521Z",
       "links": [
         {
@@ -3695,7 +3711,7 @@
       ],
       "qualityScore": 1,
       "fingerprint": "c1ab9b378e89",
-      "lastAccessed": "2026-02-26T15:23:48.368Z"
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_c6db0176",
@@ -3790,13 +3806,13 @@
         "performance"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:01:54.581Z",
       "links": [],
       "qualityScore": 0.5,
       "fingerprint": "97e3c17e12fd",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T07:43:22.113Z"
     },
     {
       "id": "mem_c0b7264d",
@@ -3835,13 +3851,13 @@
         "validation"
       ],
       "severity": "high",
-      "synapticStrength": 1.3000000000000003,
-      "accessCount": 4,
+      "synapticStrength": 1.32,
+      "accessCount": 7,
       "createdAt": "2026-02-26T16:04:44.510Z",
       "links": [],
       "qualityScore": 0.95,
       "fingerprint": "7b98f2294574",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_a7928c89",
@@ -3858,12 +3874,13 @@
         "market-research"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.2,
+      "accessCount": 1,
       "createdAt": "2026-02-26T16:04:54.317Z",
       "links": [],
       "qualityScore": 0.85,
-      "fingerprint": "41b287bb0d54"
+      "fingerprint": "41b287bb0d54",
+      "lastAccessed": "2026-02-28T07:43:22.113Z"
     },
     {
       "id": "mem_7563e49f",
@@ -3901,8 +3918,8 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:17:17.541Z",
       "links": [
         {
@@ -3913,7 +3930,7 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "91118135b41d",
-      "lastAccessed": "2026-02-27T13:33:47.630Z"
+      "lastAccessed": "2026-02-27T22:49:50.249Z"
     },
     {
       "id": "mem_61e3dd4c",
@@ -3930,8 +3947,8 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-26T16:30:05.798Z",
       "links": [
         {
@@ -3942,7 +3959,7 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "58afe1f0df57",
-      "lastAccessed": "2026-02-27T15:56:01.094Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_525e32e3",
@@ -4030,8 +4047,8 @@
         "workflow"
       ],
       "severity": "medium",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 7,
+      "synapticStrength": 1.26,
+      "accessCount": 8,
       "createdAt": "2026-02-26T16:30:23.130Z",
       "links": [
         {
@@ -4042,7 +4059,7 @@
       ],
       "qualityScore": 0.85,
       "fingerprint": "0e4dd2489f99",
-      "lastAccessed": "2026-02-27T15:56:01.094Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_ee3c8f17",
@@ -4223,13 +4240,13 @@
         "plugins"
       ],
       "severity": "low",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 2,
+      "synapticStrength": 1.26,
+      "accessCount": 5,
       "createdAt": "2026-02-26T17:08:09.191Z",
       "links": [],
       "qualityScore": 0.7,
       "fingerprint": "87de23103913",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_a3d0d41a",
@@ -4359,8 +4376,8 @@
         "differentiator"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.2,
+      "accessCount": 3,
       "createdAt": "2026-02-26T17:52:18.992Z",
       "links": [
         {
@@ -4370,7 +4387,8 @@
         }
       ],
       "qualityScore": 0.5,
-      "fingerprint": "61edaca866c8"
+      "fingerprint": "61edaca866c8",
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_e3dd39b0",
@@ -4407,12 +4425,13 @@
         "quality"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.2,
+      "accessCount": 1,
       "createdAt": "2026-02-26T17:55:58.700Z",
       "links": [],
       "qualityScore": 0.7,
-      "fingerprint": "dc701fab9e79"
+      "fingerprint": "dc701fab9e79",
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_95368faf",
@@ -4428,13 +4447,13 @@
         "protection"
       ],
       "severity": "medium",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-26T17:56:01.324Z",
       "links": [],
       "qualityScore": 0.5,
       "fingerprint": "4a6f6f8b7ecf",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_4c730f59",
@@ -4608,6 +4627,11 @@
           "targetId": "mem_18fc5b2a",
           "relationship": "contradicts",
           "createdAt": "2026-02-27T02:39:35.832Z"
+        },
+        {
+          "targetId": "mem_11c5782b",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:08:48.389Z"
         }
       ],
       "qualityScore": 0.5,
@@ -4674,13 +4698,13 @@
         "deliberation"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 3,
+      "synapticStrength": 1.26,
+      "accessCount": 4,
       "createdAt": "2026-02-26T18:01:12.863Z",
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "4719c64800aa",
-      "lastAccessed": "2026-02-27T15:56:01.094Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_16b58e25",
@@ -4765,13 +4789,13 @@
         "anti-pattern"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 1,
+      "synapticStrength": 1.2,
+      "accessCount": 3,
       "createdAt": "2026-02-26T18:01:28.556Z",
       "links": [],
       "qualityScore": 0.98,
       "fingerprint": "fe4903c0f0fa",
-      "lastAccessed": "2026-02-27T07:30:35.352Z"
+      "lastAccessed": "2026-02-28T07:43:22.113Z"
     },
     {
       "id": "mem_7b4685ab",
@@ -4836,6 +4860,11 @@
           "targetId": "mem_18fc5b2a",
           "relationship": "contradicts",
           "createdAt": "2026-02-27T02:39:35.837Z"
+        },
+        {
+          "targetId": "mem_11c5782b",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:08:48.400Z"
         }
       ],
       "qualityScore": 0.6,
@@ -5064,6 +5093,11 @@
           "targetId": "mem_18fc5b2a",
           "relationship": "related",
           "createdAt": "2026-02-27T02:39:35.845Z"
+        },
+        {
+          "targetId": "mem_cfdf25a3",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-28T07:17:13.328Z"
         }
       ],
       "qualityScore": 0.6,
@@ -5152,8 +5186,8 @@
         "differentiator"
       ],
       "severity": "low",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.2,
+      "accessCount": 2,
       "createdAt": "2026-02-26T18:11:12.552Z",
       "links": [
         {
@@ -5163,7 +5197,8 @@
         }
       ],
       "qualityScore": 0.5,
-      "fingerprint": "3ad17a2e78be"
+      "fingerprint": "3ad17a2e78be",
+      "lastAccessed": "2026-02-28T07:43:22.113Z"
     },
     {
       "id": "mem_6f091748",
@@ -5179,13 +5214,13 @@
         "founding-evidence"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.2,
+      "accessCount": 2,
       "createdAt": "2026-02-26T18:11:15.878Z",
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "081b6fd283b5",
-      "lastAccessed": "2026-02-27T10:34:56.496Z"
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_49e0ee10",
@@ -5323,8 +5358,8 @@
         "tokens"
       ],
       "severity": "low",
-      "synapticStrength": 1.1,
-      "accessCount": 0,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-26T18:35:59.568Z",
       "links": [
         {
@@ -5339,7 +5374,8 @@
         }
       ],
       "qualityScore": 0.6,
-      "fingerprint": "d2739ad2588c"
+      "fingerprint": "d2739ad2588c",
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_d4c8f6cb",
@@ -5389,8 +5425,8 @@
         "architecture"
       ],
       "severity": "high",
-      "synapticStrength": 1.3000000000000003,
-      "accessCount": 2,
+      "synapticStrength": 1.32,
+      "accessCount": 4,
       "createdAt": "2026-02-27T00:47:33.700Z",
       "links": [
         {
@@ -5401,7 +5437,7 @@
       ],
       "qualityScore": 0.7,
       "fingerprint": "5b667e037a37",
-      "lastAccessed": "2026-02-27T13:33:47.630Z"
+      "lastAccessed": "2026-02-27T22:49:50.249Z"
     },
     {
       "id": "mem_87476412",
@@ -5422,8 +5458,8 @@
         "memory"
       ],
       "severity": "low",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 3,
       "createdAt": "2026-02-27T01:29:20.851Z",
       "links": [
         {
@@ -5434,7 +5470,7 @@
       ],
       "qualityScore": 0.7,
       "fingerprint": "291b04b1fb29",
-      "lastAccessed": "2026-02-27T13:33:47.630Z"
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
     },
     {
       "id": "mem_18fc5b2a",
@@ -5448,7 +5484,7 @@
         "workflow"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
+      "synapticStrength": 1.26,
       "accessCount": 0,
       "createdAt": "2026-02-27T02:39:35.821Z",
       "links": [
@@ -5481,6 +5517,16 @@
           "targetId": "mem_c6fa3b73",
           "relationship": "contradicts",
           "createdAt": "2026-02-27T07:28:43.648Z"
+        },
+        {
+          "targetId": "mem_11c5782b",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-28T05:08:48.385Z"
+        },
+        {
+          "targetId": "mem_cfdf25a3",
+          "relationship": "related",
+          "createdAt": "2026-02-28T07:17:13.337Z"
         }
       ],
       "qualityScore": 0.65,
@@ -5715,8 +5761,8 @@
         "memory"
       ],
       "severity": "high",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.2,
+      "accessCount": 3,
       "createdAt": "2026-02-27T03:36:23.333Z",
       "links": [
         {
@@ -5731,7 +5777,8 @@
         }
       ],
       "qualityScore": 0.8,
-      "fingerprint": "2243f49745fd"
+      "fingerprint": "2243f49745fd",
+      "lastAccessed": "2026-02-28T07:43:26.521Z"
     },
     {
       "id": "mem_70238c60",
@@ -5958,7 +6005,7 @@
       ],
       "severity": "low",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-27T03:51:48.969Z",
       "links": [
         {
@@ -5968,7 +6015,8 @@
         }
       ],
       "qualityScore": 0.6,
-      "fingerprint": "39bae56fa324"
+      "fingerprint": "39bae56fa324",
+      "lastAccessed": "2026-02-27T22:49:50.618Z"
     },
     {
       "id": "mem_ebeb1d2f",
@@ -6426,7 +6474,7 @@
         "validation"
       ],
       "severity": "low",
-      "synapticStrength": 1.2000000000000002,
+      "synapticStrength": 1.26,
       "accessCount": 1,
       "createdAt": "2026-02-27T06:45:02.688Z",
       "links": [
@@ -6511,6 +6559,11 @@
           "targetId": "mem_18fc5b2a",
           "relationship": "contradicts",
           "createdAt": "2026-02-27T07:28:43.648Z"
+        },
+        {
+          "targetId": "mem_cfdf25a3",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-28T07:17:13.332Z"
         }
       ],
       "qualityScore": 0.9,
@@ -6837,8 +6890,8 @@
         "server.ts"
       ],
       "severity": "high",
-      "synapticStrength": 1.2000000000000002,
-      "accessCount": 3,
+      "synapticStrength": 1.26,
+      "accessCount": 4,
       "createdAt": "2026-02-27T10:21:20.497Z",
       "links": [
         {
@@ -6854,7 +6907,7 @@
       ],
       "qualityScore": 1,
       "fingerprint": "0db9a8d99aaf",
-      "lastAccessed": "2026-02-27T15:56:01.094Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_c6dfd67b",
@@ -6921,12 +6974,13 @@
         "opinion-tracking"
       ],
       "severity": "medium",
-      "synapticStrength": 1,
-      "accessCount": 0,
+      "synapticStrength": 1.2,
+      "accessCount": 1,
       "createdAt": "2026-02-27T10:30:36.848Z",
       "links": [],
       "qualityScore": 0.85,
-      "fingerprint": "e0be562c4a19"
+      "fingerprint": "e0be562c4a19",
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_91035383",
@@ -6987,13 +7041,13 @@
         "consensus"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 2,
+      "synapticStrength": 1.26,
+      "accessCount": 5,
       "createdAt": "2026-02-27T10:30:56.224Z",
       "links": [],
       "qualityScore": 0.6,
       "fingerprint": "f07ba927ace4",
-      "lastAccessed": "2026-02-27T16:55:01.259Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_9b46287e",
@@ -7167,7 +7221,7 @@
       ],
       "severity": "high",
       "synapticStrength": 1,
-      "accessCount": 0,
+      "accessCount": 1,
       "createdAt": "2026-02-27T11:14:30.321Z",
       "links": [
         {
@@ -7202,7 +7256,8 @@
         }
       ],
       "qualityScore": 1,
-      "fingerprint": "209333d58a91"
+      "fingerprint": "209333d58a91",
+      "lastAccessed": "2026-02-27T22:49:50.249Z"
     },
     {
       "id": "mem_243cc114",
@@ -7472,6 +7527,11 @@
           "targetId": "mem_7cd96e23",
           "relationship": "contradicts",
           "createdAt": "2026-02-27T12:23:37.292Z"
+        },
+        {
+          "targetId": "mem_7a634789",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:57:37.290Z"
         }
       ],
       "qualityScore": 0.95,
@@ -7534,8 +7594,8 @@
         "subprocess"
       ],
       "severity": "high",
-      "synapticStrength": 1.1,
-      "accessCount": 1,
+      "synapticStrength": 1.26,
+      "accessCount": 2,
       "createdAt": "2026-02-27T13:24:59.158Z",
       "links": [
         {
@@ -7552,7 +7612,7 @@
       "qualityScore": 1,
       "fingerprint": "90144604292b",
       "decayExempt": true,
-      "lastAccessed": "2026-02-27T15:56:01.094Z"
+      "lastAccessed": "2026-02-28T06:00:34.578Z"
     },
     {
       "id": "mem_35965a4d",
@@ -9120,6 +9180,669 @@
       "links": [],
       "qualityScore": 0.5,
       "fingerprint": "0bebe2bc01ec"
+    },
+    {
+      "id": "mem_b1f6e25a",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "MCP Apps: protocol now supports returning interactive UI components",
+      "content": "Announced Jan 2026, MCP Apps extend the protocol to return interactive UI components (dashboards, forms, visualizations) that render directly in conversations. Transforms MCP from data/tool protocol into a full application platform. Directly relevant to Hello World's MCP-first architecture.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "protocol",
+        "ui",
+        "apps"
+      ],
+      "severity": "low",
+      "synapticStrength": 1.2,
+      "accessCount": 1,
+      "createdAt": "2026-02-28T05:03:12.530Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "f2fd592c2992",
+      "decayExempt": false,
+      "lastAccessed": "2026-02-28T05:11:22.158Z"
+    },
+    {
+      "id": "mem_66017d91",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "MCP donated to Linux Foundation; OpenAI killed Assistants API, adopted MCP",
+      "content": "Dec 2025, Anthropic donated MCP to the Agentic AI Foundation under Linux Foundation. Co-founders: Anthropic, Block, OpenAI. OpenAI killed their Assistants API and adopted MCP. Google DeepMind, Microsoft, AWS, Cloudflare also on board. 97M+ monthly SDK downloads. MCP is now the industry standard for agent-tool communication.",
+      "rule": "",
+      "tags": [
+        "mcp",
+        "industry",
+        "standard",
+        "linux-foundation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:03:15.937Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "08be1c22bcdc",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_5ac89037",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Anthropic acquires Vercept; Sonnet 4.6 computer use at 72.5%",
+      "content": "Anthropic acquired Vercept to push Claude's computer use and multi-tool tasks forward. Sonnet 4.6 computer use went from under 15% in late 2024 to 72.5%, approaching human-level on complex spreadsheet navigation and multi-tab web forms.",
+      "rule": "",
+      "tags": [
+        "anthropic",
+        "computer-use",
+        "vercept",
+        "sonnet"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:03:18.759Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "819bc963be71",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_5f26e700",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Claude Agent SDK v2: session API changed to stream(), AskUserQuestion support",
+      "content": "Claude Agent SDK TypeScript v2 changed session API from receive() to stream() for consistency with Anthropic SDK patterns. Added support for AskUserQuestion tool. Relevant if Hello World ever integrates Agent SDK for spawning sub-agents.",
+      "rule": "",
+      "tags": [
+        "agent-sdk",
+        "anthropic",
+        "typescript",
+        "api-change"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:03:21.423Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "4e0a0b9b4f0c",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_aa564599",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "TanStack ecosystem expansion: DB, AI, Form, Store, Start",
+      "content": "TanStack expanded beyond Query/Router into TanStack DB (client-side reactive database), TanStack AI (AI integration utilities), TanStack Form, TanStack Store, and TanStack Start (meta-framework). Pushing from utility libraries into a unified ecosystem. Hello World already uses React -- TanStack DB and AI could be relevant.",
+      "rule": "",
+      "tags": [
+        "tanstack",
+        "react",
+        "database",
+        "frontend"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:03:24.549Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "6b9d3ee49157",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_a95f74b0",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Run knowledge intake scan (session 66)",
+      "content": "Execute /scan skill: 3 parallel web searches across dependency updates, AI news, and coding trends. Stage candidates in knowledge-queue.json, present for Pat review, store approved items.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "npm",
+        "dependencies"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:03:43.190Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "ed4c7fc64268"
+    },
+    {
+      "id": "mem_11c5782b",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat's autonomy directive: deliberate instead of asking",
+      "content": "When Claude would normally ask Pat for approval on a technical/architectural decision, instead run a deliberation with appropriate agents to reach a conclusion autonomously. Document everything so changes can be undone. Pat still steers strategy and scope, but implementation decisions should be self-resolved via deliberation.",
+      "rule": "When you feel the need to ask Pat for approval on a technical decision, run a deliberation instead. Only escalate to Pat for strategy/scope decisions or true blockers.",
+      "tags": [
+        "workflow",
+        "autonomy",
+        "deliberation",
+        "pat-directive"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:08:48.373Z",
+      "links": [
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-28T05:08:48.385Z"
+        },
+        {
+          "targetId": "mem_98e805e7",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:08:48.389Z"
+        },
+        {
+          "targetId": "mem_049b99e0",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:08:48.395Z"
+        },
+        {
+          "targetId": "mem_d6686521",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:08:48.400Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "5b835860090e",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_1352fa2c",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Rebuild /scan skill with intelligence briefing phase",
+      "content": "Current /scan is a clipping service -- stores raw facts with no analysis. Rebuild to include an analysis phase after candidate staging. Each candidate gets: (1) What it means for Hello World specifically, (2) Action call: adopt/investigate/monitor/ignore, (3) Integration sketch if actionable -- what's the task, (4) Cost of ignoring. Present as decision table, not just approve/reject. Store the brief alongside the memory, not just the raw fact.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "tokens",
+        "strategy",
+        "memory",
+        "performance"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:09:42.215Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "769608df3bce"
+    },
+    {
+      "id": "mem_5936b938",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Update /scan skill with for/against assessment step",
+      "content": "Add Step 5 to scan.md: after the intelligence brief, give honest for/against take on each item. FOR (why we should care, specific to our stack), AGAINST (why we shouldn't act, honest about timing/relevance), MY TAKE (one sentence verdict). This gut check can override the brief's actionCall. Not everything needs to become a task.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "strategy",
+        "validation"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:18:40.606Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "47b206ad8d4f"
+    },
+    {
+      "id": "mem_ed4569bf",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: k:** - Auto-capture signal detector -- always-on. Broken, no",
+      "content": "k:** - Auto-capture signal detector -- always-on. Broken, noisy, Pat has flagged it twice. - Brain modules (reflection, prediction, cortex merger) -- always",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:23:13.330Z",
+      "links": [],
+      "qualityScore": 0.6000000000000001,
+      "fingerprint": "cb103fe9de06"
+    },
+    {
+      "id": "mem_5d593c60",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: nd it's the real issue.  The brain modules aren't broken bec",
+      "content": "nd it's the real issue.  The brain modules aren't broken because they're \"always-on.\" They're broken because \"always-on\" means \"whenever Claude remembers to",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:23:13.342Z",
+      "links": [],
+      "qualityScore": 0.6000000000000001,
+      "fingerprint": "5bc548d6f05b"
+    },
+    {
+      "id": "mem_7a634789",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "System audit: Write-Only Brain confirmed by 6-agent audit (3 Claude + 3 Qwen)",
+      "content": "6-agent audit (3 Claude subagents + 3 Qwen panel) unanimously found the same core problem: \"Write-Only Brain.\" Brain modules compute predictions, rules, rankings, cortex gaps, then throw results away. 45% of memory store is auto-win noise. 7 MCP tools never called. Workflow phase stuck 5 days. Kill list: hw_notify, hw_record_failure, hw_reset_strikes, hw_advance_phase, hw_check_autonomous_timer, hw_quick_insights, hw_pause/resume_deliberation, auto-win generation. Fix list: prediction.ts storage, pruner.ts wiring, rankMemories consumption, exit code fix, brain-state counter reset, workflow.json reset. Architecture: demand-driven not push-driven. Pat's rule: preserve all data/code for future reimplementation, don't delete permanently.",
+      "rule": "When deprecating systems, archive code and data rather than deleting. Future systems may reuse the logic or data.",
+      "tags": [
+        "architecture",
+        "audit",
+        "brain",
+        "system-health",
+        "multi-agent"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:57:37.275Z",
+      "links": [
+        {
+          "targetId": "mem_ab79004e",
+          "relationship": "related",
+          "createdAt": "2026-02-28T05:57:37.290Z"
+        }
+      ],
+      "qualityScore": 1,
+      "fingerprint": "0b14163df3fe",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_372f2c74",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "bug_fix: sting 192 auto-wins in place  **Phase 2: Wire the broken loo",
+      "content": "sting 192 auto-wins in place  **Phase 2: Wire the broken loops (the real fixes)** - prediction.ts: store the surprise memory instead of discarding it - prun",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "bug_fix"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:59:42.162Z",
+      "links": [],
+      "qualityScore": 0.7000000000000001,
+      "fingerprint": "f07c97f90c34"
+    },
+    {
+      "id": "mem_116dbdd6",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Multi-agent system audit: what's working, what's broken, what's noise",
+      "content": "6-agent audit (3 Claude subagents + 3 Qwen panel agents). Audit every system in Hello World: hooks, brain modules, auto-capture, activity stream, deliberations, boardrooms, pipelines. For each: is it actually running? Is it producing value? Is it noise? Produce a definitive status report before making any architecture decisions.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "model-selection",
+        "hooks",
+        "architecture"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T05:59:42.180Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "d27f03fe9530"
+    },
+    {
+      "id": "mem_cfdf25a3",
+      "projectId": "Claude AI Interface",
+      "type": "decision",
+      "title": "Pat's annotation rule: dead code/data must have comments explaining what, why built, why removed",
+      "content": "When deprecating or disabling code/data: leave inline comments explaining (1) what it was, (2) why it was originally built, (3) why it was ultimately taken out or disabled. This creates an institutional record that future sessions can reference without re-investigating.",
+      "rule": "When disabling or archiving code, always leave a comment block: WHAT it was, WHY it was built, WHY it was disabled/removed. Never leave orphaned code without context.",
+      "tags": [
+        "workflow",
+        "documentation",
+        "pat-directive",
+        "code-hygiene"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:17:13.315Z",
+      "links": [
+        {
+          "targetId": "mem_1d772142",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-28T07:17:13.328Z"
+        },
+        {
+          "targetId": "mem_c6fa3b73",
+          "relationship": "contradicts",
+          "createdAt": "2026-02-28T07:17:13.332Z"
+        },
+        {
+          "targetId": "mem_18fc5b2a",
+          "relationship": "related",
+          "createdAt": "2026-02-28T07:17:13.337Z"
+        }
+      ],
+      "qualityScore": 0.9,
+      "fingerprint": "9cbd005902f6",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_f5ae3a09",
+      "projectId": "Claude AI Interface",
+      "type": "pain",
+      "title": "brain-state counter at 250 is JsonStore cache staleness, not missing reset",
+      "content": "The significantEventsSinceCheckpoint at 250 looks like a missing reset but it's actually JsonStore cache divergence. initBrainState resets the counter on disk, but the MCP server's in-memory cache doesn't pick up the change. The reset logic is correct -- the persistence layer is stale.",
+      "rule": "When brain-state.json values look wrong, check if it's a JsonStore cache staleness issue before adding reset logic. The MCP server caches JSON files in memory.",
+      "tags": [
+        "brain",
+        "jsonstore",
+        "caching",
+        "debugging"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:20:45.517Z",
+      "links": [],
+      "qualityScore": 0.98,
+      "fingerprint": "a02b9f309a90",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_3e30588b",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Phase 1: Archive dead tools, wire unused data into live paths",
+      "content": "From the 6-agent audit: (1) Deprecate 7 dead MCP tools (comment out, don't delete). (2) Stop auto-win noise generation. (3) Wire unused data into live paths: cortex gaps -> retrieval context (tells Claude where knowledge is thin), learned rules -> retrieval boosting (if a rule matches the query domain, surface it), rankMemories -> actual retrieval ordering, prediction surprise -> memory storage. (4) Fix brain-state counter, workflow.json stuck phase, deliberation verify exit code. Pat's rule: archive everything, delete nothing. Find ways to use saved data.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "mcp",
+        "social",
+        "memory",
+        "tokens",
+        "model-selection",
+        "database",
+        "performance",
+        "debugging"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:24:23.516Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "50327d9471f5"
+    },
+    {
+      "id": "mem_2444e5c0",
+      "projectId": "Claude AI Interface",
+      "type": "fact",
+      "title": "Claude Code upcoming: /simplify (parallel quality+efficiency+CLAUDE.md compliance) and /batch (parallel migrations)",
+      "content": "Boris Cherny (Claude Code creator) announced two new built-in skills for next version: /simplify runs parallel agents for code quality, efficiency tuning, and CLAUDE.md compliance checking. /batch handles parallelizable code migrations across many files. Both are skills he uses daily. Usage: \"make this code change then run /simplify.\" Our code-simplifier plugin only does quality -- the official /simplify adds efficiency + CLAUDE.md compliance. When released, /simplify is worth adopting especially for the CLAUDE.md compliance check against our large project bible.",
+      "rule": "",
+      "tags": [
+        "claude-code",
+        "tooling",
+        "upcoming",
+        "code-quality"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:31:05.603Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "2aaec7e874b3",
+      "decayExempt": false
+    },
+    {
+      "id": "mem_62cb0b5a",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Build CLAUDE.md visual viewer in the app",
+      "content": "New view in the Tauri app that renders CLAUDE.md graphically -- not raw text, but organized sections with visual hierarchy. Shows the real order and structure but makes it aesthetically pleasing and scannable. Sections like Vision, Stack, Commands, Architecture, Coding Rules, Pat's Preferences should each have their own visual treatment. Tables should render as actual tables. Code blocks styled. Collapsible sections for long content. Think: a polished reference card for the project bible.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "build",
+        "compilation",
+        "strategy",
+        "validation",
+        "architecture",
+        "writing",
+        "opsec"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:42:00.994Z",
+      "links": [],
+      "qualityScore": 0.7,
+      "fingerprint": "3924d4dd5656"
+    },
+    {
+      "id": "mem_948305cc",
+      "projectId": "Claude AI Interface",
+      "type": "win",
+      "title": "Completed: Add procedural memory layer (SKILL.md pattern)",
+      "content": "New memory type: when Claude solves a hard problem, auto-generate a reusable skill document. Stores HOW to do something, not just WHAT happened. Inspired by Hermes Agent's SKILL.md system and agentskills.io standard. Needs: new memory type in brain engine, extraction prompt for skill generation, retrieval integration so skills surface when similar problems appear.",
+      "rule": "",
+      "tags": [
+        "auto-captured",
+        "memory",
+        "performance",
+        "model-selection"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:46:58.306Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "1d52f34ee903"
+    },
+    {
+      "id": "mem_d48bf099",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"mcp\" domain (8 pain memories)",
+      "content": "Tag \"mcp\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "mcp",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.313Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "6aabe8cbd1e7",
+      "supersededBy": "mem_e9ca2228"
+    },
+    {
+      "id": "mem_e9ca2228",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"tooling\" domain (9 pain memories)",
+      "content": "Tag \"tooling\" appears in 9 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "tooling",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.331Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "81bd9f1b9ad0",
+      "supersededBy": "mem_4d213e34"
+    },
+    {
+      "id": "mem_4d213e34",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"immediate-win\" domain (8 pain memories)",
+      "content": "Tag \"immediate-win\" appears in 8 pain memories recently.\nExamples: Augment Context Engine MCP -- 70% agent perf boost; Perplexity MCP -- deep web research on demand; GitMCP -- instant docs from any GitHub repo\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "immediate-win",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.354Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "68f7d0e5b0ba",
+      "supersededBy": "mem_a08bb054"
+    },
+    {
+      "id": "mem_a08bb054",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"research\" domain (9 pain memories)",
+      "content": "Tag \"research\" appears in 9 pain memories recently.\nExamples: Perplexity MCP -- deep web research on demand; Code Research MCP -- unified dev search; Research synthesis: AI memory systems -- our brain MO is research-aligned\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "research",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.375Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "6db0d20030cd",
+      "supersededBy": "mem_230552e8"
+    },
+    {
+      "id": "mem_230552e8",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[meta-observation] Recurring failure pattern in \"rust\" domain (10 pain memories)",
+      "content": "Tag \"rust\" appears in 10 pain memories recently.\nExamples: Cargo.toml release profile optimizations; tauri-specta -- auto-generate TS bindings from Rust commands; Tauri Channels -- streaming IPC to replace file-watcher polling\nThis suggests a systemic issue rather than isolated incidents.\nConsider: is there a root cause that has not been addressed?",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "meta-observation",
+        "recurring-failure",
+        "rust",
+        "recurring",
+        "failure",
+        "pattern",
+        "domain",
+        "memories"
+      ],
+      "severity": "high",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.395Z",
+      "links": [],
+      "qualityScore": 0.6,
+      "fingerprint": "74c174c3194b"
+    },
+    {
+      "id": "mem_a9f48a17",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[consolidation] Consolidated insight: tauri, ipc domain (5 sources)",
+      "content": "Consolidated from 5 memories:\n  - tauri-specta -- auto-generate TS bindings from Rust commands\n  - Tauri Channels -- streaming IPC to replace file-watcher polling\n  - Comlink-style IPC -- ES6 Proxy wrapping Tauri invoke()\n  - Deep Linking -- helloworld:// protocol for Discord notifications\n  - Pattern: Proxy pattern makes remote calls feel local\nCommon tags: tauri, ipc\nAbstracted rule: Pattern across 5 memories in [tauri, ipc] domain",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "consolidation",
+        "tauri",
+        "ipc",
+        "consolidated",
+        "insight",
+        "domain",
+        "sources"
+      ],
+      "severity": "medium",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.427Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "d85eb799554c"
+    },
+    {
+      "id": "mem_45c9c1d1",
+      "projectId": "Claude AI Interface",
+      "type": "reflection",
+      "title": "[consolidation] Consolidated insight: competitor, cursor, agents domain (3 sources)",
+      "content": "Consolidated from 3 memories:\n  - Competitor: Cursor -- parallel subagents + plugin marketplace\n  - Vibe-Kanban -- 19.6k stars, kanban where cards are AI agents\n  - Competitor analysis: Cursor, Windsurf, Claude Code memory approaches (Feb 2026)\nCommon tags: competitor, cursor, agents\nAbstracted rule: Our differentiator: persistent memory across unlimited sessions with quality control. Competitors lose context between sessions or require cloud/privacy tradeoffs.",
+      "rule": "",
+      "tags": [
+        "reflection",
+        "consolidation",
+        "competitor",
+        "cursor",
+        "agents",
+        "consolidated",
+        "insight",
+        "domain",
+        "sources"
+      ],
+      "severity": "low",
+      "synapticStrength": 1,
+      "accessCount": 0,
+      "createdAt": "2026-02-28T07:57:09.447Z",
+      "links": [],
+      "qualityScore": 0.5,
+      "fingerprint": "9e7a20218d6c"
     }
   ]
 }

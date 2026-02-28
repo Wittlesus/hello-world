@@ -370,7 +370,7 @@
       "id": "t_mp_cwd_bug",
       "title": "Bug: App ignores launch directory, always uses stale projectPath from ~/.hello-world-app.json",
       "description": "Root cause found, full Rust patch prepared. Fix: add detect_and_set_project() function that captures CWD at startup, checks for .hello-world/ dir, auto-updates ~/.hello-world-app.json. Also adds --project CLI arg and get_launch_dir() command. Patch requires worktree (Rust change). No frontend changes needed -- existing get_app_project_path flow picks up the updated config transparently.",
-      "status": "todo",
+      "status": "done",
       "tags": [
         "bug",
         "p1",
@@ -379,7 +379,7 @@
       ],
       "dependsOn": [],
       "createdAt": "2026-02-24T17:30:00.000Z",
-      "updatedAt": "2026-02-26T03:52:08.100Z"
+      "updatedAt": "2026-02-27T14:30:27.685Z"
     },
     {
       "id": "t_de2ea65b",
@@ -747,11 +747,11 @@
       "id": "t_fee42a1a",
       "title": "[DELIBERATE] Knowledge intake scheduling and automation",
       "description": "Research pipeline is currently manual -- someone has to trigger it. Needs deliberation on: (1) What cadence makes sense (weekly? on-demand?), (2) What sources to auto-scan (GitHub trending, HN, specific subreddits), (3) How to avoid memory bloat from automated intake, (4) Whether this should be a cron job, a hook, or triggered by the app.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-25T08:29:15.718Z",
-      "updatedAt": "2026-02-25T10:08:33.804Z"
+      "updatedAt": "2026-02-27T15:04:01.295Z"
     },
     {
       "id": "t_f2d9ad7d",
@@ -1541,11 +1541,11 @@
       "id": "t_47cdef57",
       "title": "Proactive task creation -- Claude should auto-create tasks from work",
       "description": "Claude has stopped proactively creating tasks. The pre-tool-gate hook blocks edits without an active task, but Claude should also be creating tasks from Pat's direction notes, from bugs discovered during sessions, and from follow-up work identified during builds. Add a UserPromptSubmit hook check: if Pat's message contains actionable items (bugs, features, requests), create tasks before doing anything else.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T06:30:29.546Z",
-      "updatedAt": "2026-02-27T06:30:29.546Z"
+      "updatedAt": "2026-02-27T14:45:22.209Z"
     },
     {
       "id": "t_e0b77320",
@@ -1665,11 +1665,11 @@
       "id": "t_11939f7d",
       "title": "Pruning redesign: capacity-based triggers, visual bar, agent cleanup on /clean-quit",
       "description": "Pat's direction (Feb 27): (1) No time-based or session-end pruning. Pruning triggers when memory count hits a capacity threshold. (2) Show memory usage as a visual bar in the app, same style as cost/usage bars. (3) On /clean-quit, spawn an agent that combs through memories for: truly unnecessary entries, mistakes, duplicates -- not arbitrary score cutoffs. (4) Memories get breathing room to prove their worth. Items 2-3 partially exist (clean-quit already has agent review). Need: capacity threshold trigger, visual bar, remove any remaining time-based pruning.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:22:54.862Z",
-      "updatedAt": "2026-02-27T12:22:54.862Z"
+      "updatedAt": "2026-02-27T14:49:56.303Z"
     },
     {
       "id": "t_7ea40a37",
@@ -1715,11 +1715,11 @@
       "id": "t_60bd39eb",
       "title": "MCP server health check / watchdog",
       "description": "The sentinel monitors the app PID but not the MCP server PID. Silent MCP crashes leave Claude without any hw_* tools with no notification. Build a watchdog that monitors the MCP server PID and either restarts it or pings Pat via Discord. Critical resilience gap.",
-      "status": "todo",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T12:23:09.333Z",
-      "updatedAt": "2026-02-27T12:23:09.333Z"
+      "updatedAt": "2026-02-27T14:51:21.881Z"
     },
     {
       "id": "t_4a1e9821",
@@ -1769,11 +1769,154 @@
       "id": "t_9cc3844e",
       "title": "Add command palette button to sidebar above overdrive",
       "description": "Pat wants a visible button in the sidebar for the command palette, above the overdrive toggle. Should stand out with indigo accent.",
-      "status": "in_progress",
+      "status": "done",
       "tags": [],
       "dependsOn": [],
       "createdAt": "2026-02-27T14:10:51.344Z",
-      "updatedAt": "2026-02-27T14:10:57.862Z"
+      "updatedAt": "2026-02-27T14:12:02.079Z"
+    },
+    {
+      "id": "t_d7707612",
+      "title": "Auto-clear old deliberation sessions from AgentsView",
+      "description": "Deliberation room (AgentsView/chatroom) should auto-clear after a certain time. Old deliberation sessions shouldn't persist forever in the UI. Implement TTL or manual clear button.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T14:25:40.523Z",
+      "updatedAt": "2026-02-27T14:35:02.647Z"
+    },
+    {
+      "id": "t_6ddd95cc",
+      "title": "Fix duplicate key TS error in DecisionsView.tsx",
+      "description": "Pre-existing TypeScript error: duplicate 'label' key in object literal at line 37-38 of DecisionsView.tsx. Quick one-line fix.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T14:35:20.580Z",
+      "updatedAt": "2026-02-27T14:35:47.367Z"
+    },
+    {
+      "id": "t_0a9089bf",
+      "title": "Raise memory cap to 1000 and chatroom char limit to 2000",
+      "description": "Memory cap: 300 -> 1000 (Pat confirmed 5MB ceiling, current usage 370KB). Chatroom message limit: 670 -> 2000 chars (deliberation cross-exams were getting compressed to ~40% of their content). Update pruner.ts MEMORY_CAPACITY and server.ts message length checks + descriptions.",
+      "status": "done",
+      "tags": [
+        "config",
+        "quick-fix"
+      ],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T15:10:34.902Z",
+      "updatedAt": "2026-02-27T15:11:52.216Z"
+    },
+    {
+      "id": "t_04fe0485",
+      "title": "Build knowledge intake Phase 1: /scan command + knowledge-queue.json",
+      "description": "Build the manual /scan skill that fetches knowledge from broad sources (dependency docs, AI news, coding trends) and stages candidates in knowledge-queue.json. Zero-LLM scan phase, existing quality gates for storage, max 5 memories per cycle. Staging file for observability. Sources: Tauri/React/Anthropic docs + AI news + coding news/tools/frameworks.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T15:59:25.849Z",
+      "updatedAt": "2026-02-27T16:01:58.318Z"
+    },
+    {
+      "id": "t_0d5545f7",
+      "title": "Run first knowledge intake scan and stage candidates",
+      "description": "Execute the first /scan cycle: search 20 subreddits across 5 scanners, evaluate findings, stage top 5 candidates in knowledge-queue.json for Pat's review, store approved ones.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T16:13:19.059Z",
+      "updatedAt": "2026-02-27T16:45:45.974Z"
+    },
+    {
+      "id": "t_e8902a0f",
+      "title": "Add procedural memory layer (SKILL.md pattern)",
+      "description": "New memory type: when Claude solves a hard problem, auto-generate a reusable skill document. Stores HOW to do something, not just WHAT happened. Inspired by Hermes Agent's SKILL.md system and agentskills.io standard. Needs: new memory type in brain engine, extraction prompt for skill generation, retrieval integration so skills surface when similar problems appear.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T16:48:45.123Z",
+      "updatedAt": "2026-02-28T07:46:58.287Z"
+    },
+    {
+      "id": "t_f9713096",
+      "title": "Add active uncertainty detection (U-Mem pattern)",
+      "description": "Instead of always escalating to Pat when stuck, the system detects knowledge gaps and tries cheap sources first (self-reflection, memory search, web search) before escalating. Cost-aware cascade: self -> memory -> web -> Pat. Inspired by U-Mem's approach achieving 99.2% peak performance while consulting humans only 23% of the time.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T16:48:46.620Z",
+      "updatedAt": "2026-02-27T17:16:40.656Z"
+    },
+    {
+      "id": "t_588c3a95",
+      "title": "Add outcome tagging on sessions (Aurora pattern)",
+      "description": "Classify every session with mandatory outcome tags: exploration / building / shipping / debugging / planning / revenue. Enable pattern detection across sessions -- e.g. detect if 80% of sessions are exploration and only 5% shipping. Add to session end flow and make visible in Sessions view. Inspired by Aurora's PROGRESS.md outcome tags.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T16:48:49.063Z",
+      "updatedAt": "2026-02-27T17:15:24.759Z"
+    },
+    {
+      "id": "t_5da8cfbc",
+      "title": "Run knowledge intake scan (session 66)",
+      "description": "Execute /scan skill: 3 parallel web searches across dependency updates, AI news, and coding trends. Stage candidates in knowledge-queue.json, present for Pat review, store approved items.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-27T22:50:33.604Z",
+      "updatedAt": "2026-02-28T05:03:43.177Z"
+    },
+    {
+      "id": "t_4619e43b",
+      "title": "Rebuild /scan skill with intelligence briefing phase",
+      "description": "Current /scan is a clipping service -- stores raw facts with no analysis. Rebuild to include an analysis phase after candidate staging. Each candidate gets: (1) What it means for Hello World specifically, (2) Action call: adopt/investigate/monitor/ignore, (3) Integration sketch if actionable -- what's the task, (4) Cost of ignoring. Present as decision table, not just approve/reject. Store the brief alongside the memory, not just the raw fact.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T05:08:41.380Z",
+      "updatedAt": "2026-02-28T05:09:42.200Z"
+    },
+    {
+      "id": "t_eec31912",
+      "title": "Update /scan skill with for/against assessment step",
+      "description": "Add Step 5 to scan.md: after the intelligence brief, give honest for/against take on each item. FOR (why we should care, specific to our stack), AGAINST (why we shouldn't act, honest about timing/relevance), MY TAKE (one sentence verdict). This gut check can override the brief's actionCall. Not everything needs to become a task.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T05:18:14.655Z",
+      "updatedAt": "2026-02-28T05:18:40.592Z"
+    },
+    {
+      "id": "t_9d4e7259",
+      "title": "Multi-agent system audit: what's working, what's broken, what's noise",
+      "description": "6-agent audit (3 Claude subagents + 3 Qwen panel agents). Audit every system in Hello World: hooks, brain modules, auto-capture, activity stream, deliberations, boardrooms, pipelines. For each: is it actually running? Is it producing value? Is it noise? Produce a definitive status report before making any architecture decisions.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T05:23:13.349Z",
+      "updatedAt": "2026-02-28T05:59:42.168Z"
+    },
+    {
+      "id": "t_f776f595",
+      "title": "Phase 1: Archive dead tools, wire unused data into live paths",
+      "description": "From the 6-agent audit: (1) Deprecate 7 dead MCP tools (comment out, don't delete). (2) Stop auto-win noise generation. (3) Wire unused data into live paths: cortex gaps -> retrieval context (tells Claude where knowledge is thin), learned rules -> retrieval boosting (if a rule matches the query domain, surface it), rankMemories -> actual retrieval ordering, prediction surprise -> memory storage. (4) Fix brain-state counter, workflow.json stuck phase, deliberation verify exit code. Pat's rule: archive everything, delete nothing. Find ways to use saved data.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T05:59:46.494Z",
+      "updatedAt": "2026-02-28T07:24:23.498Z"
+    },
+    {
+      "id": "t_43b8cc2b",
+      "title": "Build CLAUDE.md visual viewer in the app",
+      "description": "New view in the Tauri app that renders CLAUDE.md graphically -- not raw text, but organized sections with visual hierarchy. Shows the real order and structure but makes it aesthetically pleasing and scannable. Sections like Vision, Stack, Commands, Architecture, Coding Rules, Pat's Preferences should each have their own visual treatment. Tables should render as actual tables. Code blocks styled. Collapsible sections for long content. Think: a polished reference card for the project bible.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T07:33:09.882Z",
+      "updatedAt": "2026-02-28T07:42:00.973Z"
     }
   ],
   "milestones": []

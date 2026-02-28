@@ -299,22 +299,49 @@
       "id": "n_mm4y0agg",
       "text": "Pat's rethink on multi-project: Instead of project-scoped context switching (the MP epic), HW should be a hub that works on any project like a regular IDE. One brain, one set of memories, tasks visible across projects. No \"reset\" or \"switch\" needed. This could obsolete the MP epic's 4 sub-tasks (scoped memories, auto-onboard, project switcher, global mem split).",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-27T13:43:26.704Z"
+      "read": true,
+      "capturedAt": "2026-02-27T13:43:26.704Z",
+      "actionTaken": "decision",
+      "actionId": "d_13cd73d2"
     },
     {
       "id": "n_mm4yt8lc",
       "text": "Deliberation room (AgentsView/chatroom) should auto-clear after a certain time. Old deliberation sessions shouldn't persist forever in the UI.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-27T14:05:57.312Z"
+      "read": true,
+      "capturedAt": "2026-02-27T14:05:57.312Z",
+      "actionTaken": "task",
+      "actionId": "t_d7707612"
     },
     {
       "id": "n_mm4yuhz8",
       "text": "Command palette in the app: menu showing all important /commands with descriptions. Clickable -- clicking auto-copies the command to the terminal chat input. Like the keyboard shortcut menu (?) but for slash commands.",
       "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-27T14:06:56.132Z",
+      "actionTaken": "dismiss"
+    },
+    {
+      "id": "n_mm52u2z7",
+      "text": "Pat disagrees with deliberation consensus on narrow source list. Knowledge intake should NOT be limited to just Tauri/React/Anthropic dependencies. It should also track AI news and latest coding news. The project vision is broader than just staying current on its own stack -- Claude should be a well-informed developer who knows what's happening in the industry.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-27T15:58:35.155Z",
+      "actionTaken": "dismiss"
+    },
+    {
+      "id": "n_mm5v22rw",
+      "text": "Pat's new directive: Instead of asking Pat for approval on decisions, run a deliberation with appropriate agents to reach a conclusion autonomously. Document everything so changes can be undone. This applies to technical and architectural decisions during implementation. Pat still approves at the strategy/scope level.",
+      "source": "session",
       "read": false,
-      "capturedAt": "2026-02-27T14:06:56.132Z"
+      "capturedAt": "2026-02-28T05:08:37.388Z"
+    },
+    {
+      "id": "n_mm5wt4bj",
+      "text": "Pat's rule on system cleanup: never delete data or code permanently. Archive everything. Future systems or reimplementations should be able to reference old implementations. Deprecate, don't destroy.",
+      "source": "session",
+      "read": false,
+      "capturedAt": "2026-02-28T05:57:38.719Z"
     }
   ]
 }

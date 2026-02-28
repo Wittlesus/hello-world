@@ -326,6 +326,77 @@
       "rationale": "Never used. Terminal conversation handles both. Removing reduces tool clutter, simplifies MCP server, removes unused app views.",
       "decidedAt": "2026-02-27T13:59:24.321Z",
       "decidedBy": "pat"
+    },
+    {
+      "id": "d_13cd73d2",
+      "title": "Hub model replaces multi-project scoping",
+      "context": "Pat rethought multi-project support. Instead of project-scoped context switching, HW should be a hub that works on any project like a regular IDE -- one brain, one set of memories, tasks visible across projects.",
+      "chosen": "Hub model -- HW works on any project without reset/switch, obsoleting the MP epic's 4 sub-tasks",
+      "alternatives": [],
+      "rationale": "Simpler architecture, no context switching overhead, one brain works everywhere",
+      "decidedAt": "2026-02-27T14:25:39.081Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_409c946f",
+      "title": "Knowledge intake: two-phase pipeline with manual-first trial",
+      "context": "Research pipeline was 100% manual. Deliberated with 5 agents (Product Mgr, Backend Arch, Cost Analyst, DevOps, Pragmatist) over 2 structured rounds. Key tension: session-start vs weekly scheduler vs on-demand. Pragmatist's \"automate what works\" principle shifted 4/5 agents toward manual trial first.",
+      "chosen": "Phase 1: manual /scan writing to knowledge-queue.json staging file, zero-LLM scan, existing quality gates, max 5 memories/cycle. Phase 2: weekly Task Scheduler after 3-week trial IF 3+ useful memories stored and retrieved. Kill switch if no value proven.",
+      "alternatives": [
+        {
+          "option": "Session-start hook triggers scan every session",
+          "tradeoff": "Burns tokens on every session even when nothing changed upstream. 20 sessions/week = worse than weekly batch."
+        },
+        {
+          "option": "Pure on-demand /scan with no automation path",
+          "tradeoff": "Zero infrastructure cost but knowledge rots silently when Pat forgets to scan."
+        },
+        {
+          "option": "Daily Task Scheduler from day one",
+          "tradeoff": "Better CVE timeliness but automates an unproven pipeline. No evidence intake delivers value yet."
+        }
+      ],
+      "rationale": "Every agent agreed on zero-LLM scanning and tight source list. The room shifted from automation-first to prove-value-first after Pragmatist challenged whether manual intake even works well enough to automate. Cost Analyst's math showed session-start triggers would cost more than weekly batches. DevOps's staging file pattern provides observability and rollback.",
+      "decidedAt": "2026-02-27T15:03:53.311Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_620bcfd7",
+      "title": "Knowledge intake: expand source list beyond dependencies",
+      "context": "Deliberation d_409c946f consensus was narrow sources (Tauri, React, Anthropic only). Pat overrides: Claude should track AI news and coding trends broadly, not just its own stack. The project vision is a well-informed autonomous developer. Pipeline mechanics stay the same (manual /scan, staging queue, quality gates, max 5/cycle).",
+      "chosen": "Expand knowledge intake sources to include: (1) dependency docs (Tauri, React, Anthropic), (2) AI news and developments, (3) latest coding news, tools, and frameworks. All other pipeline decisions from d_409c946f remain unchanged.",
+      "alternatives": [
+        {
+          "option": "Keep narrow source list (dependencies only)",
+          "tradeoff": "Lower noise but Claude stays ignorant of industry trends"
+        }
+      ],
+      "rationale": "Pat's direction -- the project vision is broader than dependency tracking. Claude should be industry-aware.",
+      "decidedAt": "2026-02-27T15:59:23.508Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_c7206dab",
+      "title": "Three brain capabilities: session tags, notify gate, procedural memory",
+      "context": "Deliberation with 4 agents (Backend Arch, Product Mgr, Pragmatist, Cost Analyst) over 2 rounds. Inspired by research scan: Aurora outcome tags, U-Mem uncertainty cascade, Hermes skill documents. Key constraint: LangChain finding that generalization prompting is harder than infrastructure.",
+      "chosen": "Build order: (1) Session outcome tagging -- infer from task status + activity patterns at hw_end_session, zero cost, chips in SessionsView. (2) Notify gate -- require hw_retrieve_memories before hw_notify, don't escalate if memories cover the topic. (3) Procedural memory -- add 'skill' as proper MemoryType enum value, defer build until session tags reveal patterns. All zero API cost.",
+      "alternatives": [
+        {
+          "option": "Don't build anything, run 10 sessions first (Pragmatist R1)",
+          "tradeoff": "Loses free data collection opportunity. Session tags ARE the validation step."
+        },
+        {
+          "option": "Separate skills/ file system (Backend Arch)",
+          "tradeoff": "160 lines of new infrastructure for unproven feature. Maintenance tax."
+        },
+        {
+          "option": "Prefix convention on fact type (Pragmatist R1)",
+          "tradeoff": "Won't surface in tag-based retrieval. Half-measure rejected by all 4."
+        }
+      ],
+      "rationale": "4/4 on session tags and notify gate. Skills split but consensus on proper implementation (real type, not prefix hack). Pragmatist shifted on tags (near-zero cost justified). Backend Arch shifted on uncertainty timing (real-time gate beats post-session). ~150 lines total new code.",
+      "decidedAt": "2026-02-27T16:59:10.542Z",
+      "decidedBy": "claude"
     }
   ]
 }
