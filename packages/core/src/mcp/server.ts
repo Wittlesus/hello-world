@@ -57,7 +57,7 @@ import {
 import { JsonStore } from '../storage.js';
 import { ChatroomStore } from '../chatroom/chatroom-state.js';
 import { AGENT_DEFINITIONS, DEFAULT_AGENTS, USER_SIM_AGENTS, AGENT_ROSTER } from '../chatroom/agent-definitions.js';
-import { runDeliberation, stopDeliberation } from '../chatroom/agent-runner.js';
+import { runDeliberation, stopDeliberation, isRunnerActive } from '../chatroom/agent-runner.js';
 
 const projectRoot = process.env.HW_PROJECT_ROOT ?? process.cwd();
 
@@ -1873,6 +1873,10 @@ server.registerTool('hw_post_agent_message', {
     message: z.string().describe('The message to post as this agent'),
   }),
 }, async (args: { agentId: string; message: string }) => {
+  // BLOCK: when auto-runner is active, agents speak independently. No manual voicing.
+  if (isRunnerActive()) {
+    return text('BLOCKED: Auto-runner is active. Agents speak independently via the runner. Use hw_post_to_chatroom for mediator messages only. Do NOT voice agents yourself.');
+  }
   const state = chatroom.read();
   if (state.session.status === 'idle') {
     return text('No active deliberation. Start one with hw_start_deliberation first.');

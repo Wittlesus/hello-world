@@ -519,11 +519,11 @@ FORMAT: Plain text only. No markdown, no bold, no headers, no bullet points. Jus
   },
 };
 
-// Default set — covers divergent, critical, structural, and creative modes
-export const DEFAULT_AGENTS = ['contrarian', 'premortem', 'firstprinciples', 'steelman'];
+// Default set -- contrarian thinking is Claude's mediator role, not a separate agent
+export const DEFAULT_AGENTS = ['premortem', 'firstprinciples', 'steelman', 'backendarch'];
 
-// User simulation set — adds end-user perspectives to deliberations about features or UX
-export const USER_SIM_AGENTS = ['contrarian', 'premortem', 'newuser', 'poweruser'];
+// User simulation set -- adds end-user perspectives to deliberations about features or UX
+export const USER_SIM_AGENTS = ['premortem', 'firstprinciples', 'newuser', 'poweruser'];
 
 // Full roster for agent selection — used by hw_list_agents
 export const AGENT_ROSTER = Object.values(AGENT_DEFINITIONS).map((a) => ({

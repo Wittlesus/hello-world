@@ -262,42 +262,198 @@ function buildConversation(history: ChatMessage[], topic: string): string {
   return `Topic: "${topic}"\n\nDiscussion so far:\n${conversation}\n\nRespond now. HARD RULE: 4 sentences maximum. Stay in your assigned role.`;
 }
 
+// Phase B: each agent addresses the other agents' opinions from this round
+function buildAddressPrompt(
+  topic: string,
+  roundMessages: ChatMessage[],
+  currentAgentId: string,
+): string {
+  const otherOpinions = roundMessages
+    .filter((m) => m.agentId !== currentAgentId && m.type === 'message')
+    .map((m) => {
+      const def = AGENT_DEFINITIONS[m.agentId];
+      return `${def?.name ?? m.agentId}: ${m.text}`;
+    })
+    .join('\n\n');
+
+  return `Topic: "${topic}"\n\nYou stated your opinion. Now address each other agent's opinion below. What do you agree with? What do you push back on? Be specific.\n\n${otherOpinions}\n\nHARD RULE: 4 sentences maximum. Stay in your assigned role. Address the substance, not the person.`;
+}
+
+// Phase C: agent reforms their opinion after hearing all responses
+function buildReformPrompt(
+  topic: string,
+  fullRoundHistory: ChatMessage[],
+  currentAgentId: string,
+): string {
+  const discussion = fullRoundHistory
+    .filter((m) => m.type === 'message')
+    .map((m) => {
+      const def = AGENT_DEFINITIONS[m.agentId];
+      return `${def?.name ?? m.agentId}: ${m.text}`;
+    })
+    .join('\n\n');
+
+  return `Topic: "${topic}"\n\nYou have heard all opinions and responses this round:\n\n${discussion}\n\nState your updated position. Has your opinion changed? If so, say what shifted and why. If not, say why you hold firm.\n\nHARD RULE: 3 sentences maximum. Stay in your assigned role.`;
+}
+
+// Vote prompt: agent decides whether to conclude or continue
+function buildVotePrompt(
+  topic: string,
+  fullHistory: ChatMessage[],
+): string {
+  const recent = fullHistory
+    .filter((m) => m.type === 'message')
+    .slice(-20)
+    .map((m) => {
+      const def = AGENT_DEFINITIONS[m.agentId];
+      return `${def?.name ?? m.agentId}: ${m.text}`;
+    })
+    .join('\n\n');
+
+  return `Topic: "${topic}"\n\nRecent discussion:\n${recent}\n\nHas enough ground been covered to conclude this deliberation? Answer with EXACTLY one word: CONCLUDE or CONTINUE.`;
+}
+
 async function runSingleAgent(
   store: ChatroomStore,
   agentId: string,
   notify: (files: string[]) => void,
   signal: AbortSignal,
-): Promise<void> {
-  if (signal.aborted) return;
+  customPrompt?: string,
+): Promise<string> {
+  if (signal.aborted) return '';
 
   const def = AGENT_DEFINITIONS[agentId];
-  if (!def) return;
+  if (!def) return '';
 
   store.updateAgentStatus(agentId, 'thinking', '...');
   notify(['chatroom.json']);
 
   const state = store.read();
-  if (state.session.status !== 'active') return;
+  if (state.session.status !== 'active') return '';
 
   try {
-    const conversation = buildConversation(state.messages, state.session.topic);
+    const prompt = customPrompt ?? buildConversation(state.messages, state.session.topic);
     const provider = state.session.providerOverrides?.[agentId] ?? def.provider;
     const raw = provider === 'qwen'
-      ? await callQwen(def.systemPrompt, conversation, signal, def.thinking ?? false)
-      : await callClaude(def.systemPrompt, conversation, signal);
-    if (signal.aborted) return;
-    store.appendMessage(agentId, stripMarkdown(raw), 'message');
+      ? await callQwen(def.systemPrompt, prompt, signal, def.thinking ?? false)
+      : await callClaude(def.systemPrompt, prompt, signal);
+    if (signal.aborted) return '';
+    const cleaned = stripMarkdown(raw);
+    store.appendMessage(agentId, cleaned, 'message');
     store.updateAgentStatus(agentId, 'idle', '');
     notify(['chatroom.json']);
+    return cleaned;
   } catch (err: unknown) {
-    if (signal.aborted) return;
+    if (signal.aborted) return '';
     const msg = err instanceof Error ? err.message : String(err);
-    // If Qwen fails, log it but don't crash the room
     const prefix = def.provider === 'qwen' ? '[Qwen error: ' : '[Error: ';
     store.appendMessage(agentId, `${prefix}${msg}]`, 'message');
     store.updateAgentStatus(agentId, 'idle', '');
     notify(['chatroom.json']);
+    return '';
   }
+}
+
+// Run one full round with Pat's required format:
+// Phase A: each agent states opinion
+// Phase B: each agent addresses the others
+// Phase C: each agent reforms their opinion
+async function runStructuredRound(
+  store: ChatroomStore,
+  notify: (files: string[]) => void,
+  signal: AbortSignal,
+): Promise<void> {
+  const state = store.read();
+  const agentIds = state.agents.map((a) => a.id);
+  const topic = state.session.topic;
+
+  // Phase A: State opinions
+  store.appendMessage('claude', 'Phase: State your positions.', 'system');
+  notify(['chatroom.json']);
+
+  const roundStartIdx = store.read().messages.length;
+
+  for (const agentId of agentIds) {
+    if (signal.aborted) return;
+    await runSingleAgent(store, agentId, notify, signal);
+    try { await sleep(BETWEEN_AGENT_MS, signal); } catch { return; }
+  }
+
+  // Phase B: Address each other's opinions
+  if (signal.aborted) return;
+  store.appendMessage('claude', 'Phase: Address each other\'s points.', 'system');
+  notify(['chatroom.json']);
+
+  const roundMessages = store.read().messages.slice(roundStartIdx).filter(m => m.type === 'message');
+
+  for (const agentId of agentIds) {
+    if (signal.aborted) return;
+    const addressPrompt = buildAddressPrompt(topic, roundMessages, agentId);
+    await runSingleAgent(store, agentId, notify, signal, addressPrompt);
+    try { await sleep(BETWEEN_AGENT_MS, signal); } catch { return; }
+  }
+
+  // Phase C: Reform opinions
+  if (signal.aborted) return;
+  store.appendMessage('claude', 'Phase: State your updated positions.', 'system');
+  notify(['chatroom.json']);
+
+  const fullRoundMessages = store.read().messages.slice(roundStartIdx).filter(m => m.type === 'message');
+
+  for (const agentId of agentIds) {
+    if (signal.aborted) return;
+    const reformPrompt = buildReformPrompt(topic, fullRoundMessages, agentId);
+    await runSingleAgent(store, agentId, notify, signal, reformPrompt);
+    try { await sleep(BETWEEN_AGENT_MS, signal); } catch { return; }
+  }
+}
+
+// Agent voting: each agent votes CONCLUDE or CONTINUE
+async function runVote(
+  store: ChatroomStore,
+  notify: (files: string[]) => void,
+  signal: AbortSignal,
+): Promise<boolean> {
+  const state = store.read();
+  const agentIds = state.agents.map((a) => a.id);
+  const topic = state.session.topic;
+  const votePrompt = buildVotePrompt(topic, state.messages);
+
+  store.appendMessage('claude', 'Agents are voting: conclude or continue?', 'system');
+  notify(['chatroom.json']);
+
+  let concludeVotes = 0;
+  const totalAgents = agentIds.length;
+
+  for (const agentId of agentIds) {
+    if (signal.aborted) return false;
+    const def = AGENT_DEFINITIONS[agentId];
+    if (!def) continue;
+
+    try {
+      const provider = state.session.providerOverrides?.[agentId] ?? def.provider;
+      const raw = provider === 'qwen'
+        ? await callQwen(def.systemPrompt, votePrompt, signal, false)
+        : await callClaude(def.systemPrompt, votePrompt, signal);
+      const vote = raw.trim().toUpperCase().startsWith('CONCLUDE') ? 'CONCLUDE' : 'CONTINUE';
+      if (vote === 'CONCLUDE') concludeVotes++;
+      store.appendMessage(agentId, `Vote: ${vote}`, 'message');
+      notify(['chatroom.json']);
+    } catch {
+      // On error, default to continue
+      store.appendMessage(agentId, 'Vote: CONTINUE', 'message');
+      notify(['chatroom.json']);
+    }
+  }
+
+  const majority = concludeVotes > totalAgents / 2;
+  store.appendMessage(
+    'claude',
+    `Vote result: ${concludeVotes}/${totalAgents} to conclude. ${majority ? 'Majority reached -- moving to synthesis.' : 'Continuing to next round.'}`,
+    'system',
+  );
+  notify(['chatroom.json']);
+  return majority;
 }
 
 async function runIntroSequence(
@@ -361,27 +517,7 @@ async function runIntroSequence(
   }
 }
 
-async function checkConsensus(messages: ChatMessage[], topic: string): Promise<boolean> {
-  const recent = messages
-    .filter((m) => m.type === 'message')
-    .slice(-10)
-    .map((m) => `${AGENT_DEFINITIONS[m.agentId]?.name ?? m.agentId}: ${m.text.slice(0, 120)}`)
-    .join('\n');
-
-  if (!recent) return false;
-
-  const ctrl = new AbortController();
-  try {
-    const answer = await callClaude(
-      'You are a neutral observer. Answer YES or NO only. No other text.',
-      `Topic: "${topic}"\n\nRecent discussion:\n${recent}\n\nHave a majority of participants converged on a shared answer or direction? Answer YES or NO only.`,
-      ctrl.signal,
-    );
-    return answer.toUpperCase().startsWith('YES');
-  } catch {
-    return false;
-  }
-}
+// checkConsensus removed -- replaced by agent voting in runVote()
 
 async function runSynthesis(
   store: ChatroomStore,
@@ -421,6 +557,11 @@ async function runSynthesis(
   }
 }
 
+// Track whether the auto-runner is active (used to block hw_post_agent_message)
+export function isRunnerActive(): boolean {
+  return activeRunner !== null;
+}
+
 export async function runDeliberation(
   store: ChatroomStore,
   notify: (files: string[]) => void,
@@ -437,8 +578,6 @@ export async function runDeliberation(
 
     if (ctrl.signal.aborted) return;
 
-    let consecutiveConsensus = 0;
-
     while (!ctrl.signal.aborted) {
       const state = store.read();
       if (state.session.status !== 'active') break;
@@ -450,30 +589,22 @@ export async function runDeliberation(
       store.incrementRound();
       notify(['chatroom.json']);
 
-      const agentIds = state.agents.map((a) => a.id);
-      for (const agentId of agentIds) {
-        if (ctrl.signal.aborted) break;
-        await runSingleAgent(store, agentId, notify, ctrl.signal);
-        try {
-          await sleep(BETWEEN_AGENT_MS, ctrl.signal);
-        } catch {
+      // Run structured round: state opinions -> address each other -> reform opinions
+      await runStructuredRound(store, notify, ctrl.signal);
+
+      if (ctrl.signal.aborted) break;
+
+      // After round 2+, agents vote to conclude or continue
+      const afterRound = store.read();
+      if (afterRound.session.roundNumber >= 2) {
+        const shouldConclude = await runVote(store, notify, ctrl.signal);
+        if (shouldConclude || afterRound.session.roundNumber >= MAX_ROUNDS) {
+          await runSynthesis(store, notify, ctrl.signal);
           break;
         }
       }
 
-      if (ctrl.signal.aborted) break;
-
-      const afterRound = store.read();
-      if (afterRound.session.roundNumber >= 2) {
-        const hasConsensus = await checkConsensus(afterRound.messages, afterRound.session.topic);
-        consecutiveConsensus = hasConsensus ? consecutiveConsensus + 1 : 0;
-      }
-
-      if (consecutiveConsensus >= 2 || store.read().session.roundNumber >= MAX_ROUNDS) {
-        await runSynthesis(store, notify, ctrl.signal);
-        break;
-      }
-
+      // Input window: check for Pat messages between rounds
       store.setWaitingForInput(true);
       notify(['chatroom.json']);
 
