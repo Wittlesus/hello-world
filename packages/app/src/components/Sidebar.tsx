@@ -70,6 +70,7 @@ const SECTIONS: SectionDef[] = [
     Icon: Brain,
     tabs: [
       { view: 'memory', label: 'Memory', key: '4' },
+      { view: 'bible', label: 'Bible', key: 'B' },
       { view: 'context', label: 'Context', key: 'P' },
       { view: 'history', label: 'History', key: '5' },
       { view: 'sweep', label: 'Sweep', key: 'S' },
@@ -92,7 +93,7 @@ const SECTIONS: SectionDef[] = [
 function getSection(view: View): Section {
   if (['terminal', 'agents', 'dashboard', 'files'].includes(view)) return 'claude';
   if (['tasks', 'decisions'].includes(view)) return 'tasks';
-  if (['memory', 'context', 'history', 'sweep'].includes(view)) return 'brain';
+  if (['memory', 'context', 'history', 'sweep', 'bible'].includes(view)) return 'brain';
   return 'settings';
 }
 

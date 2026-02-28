@@ -555,6 +555,13 @@ fn get_timeline(project_path: &str) -> Result<String, String> {
 }
 
 #[tauri::command]
+fn get_claude_md(project_path: &str) -> Result<String, String> {
+    let path = std::path::Path::new(project_path).join("CLAUDE.md");
+    std::fs::read_to_string(&path)
+        .map_err(|e| format!("Failed to read CLAUDE.md: {}", e))
+}
+
+#[tauri::command]
 fn get_chatroom(project_path: &str) -> Result<String, String> {
     let path = std::path::Path::new(project_path)
         .join(".hello-world")
@@ -1314,6 +1321,7 @@ pub fn run() {
             kill_watcher,
             save_shared_file,
             get_timeline,
+            get_claude_md,
             get_chatroom,
             post_pat_chatroom_message,
             clear_chatroom,

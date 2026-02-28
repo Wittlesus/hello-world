@@ -13,6 +13,7 @@ const SHORTCUTS = [
   { key: 'D', view: 'Deliberation Room' },
   { key: 'K', view: 'Skills' },
   { key: 'S', view: 'Sweep' },
+  { key: 'B', view: 'Bible (CLAUDE.md)' },
   { key: 'W', view: 'Watchers' },
   { key: 'P', view: 'Project Context' },
   { key: 'F', view: 'Files' },

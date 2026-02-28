@@ -21,6 +21,7 @@ import { SkillsView } from './components/SkillsView.js';
 import { TaskBoard } from './components/TaskBoard.js';
 import { TerminalView } from './components/TerminalView.js';
 import { WatchersView } from './components/WatchersView.js';
+import { ClaudeMdView } from './components/ClaudeMdView.js';
 import { useAppStore, type View } from './stores/app.js';
 
 const KEY_MAP: Record<string, View> = {
@@ -39,6 +40,7 @@ const KEY_MAP: Record<string, View> = {
   w: 'watchers',
   f: 'files',
   s: 'sweep',
+  b: 'bible',
 };
 
 function MainContent() {
@@ -61,6 +63,7 @@ function MainContent() {
       <Activity mode={view === 'context' ? 'visible' : 'hidden'}><ProjectContextView /></Activity>
       <Activity mode={view === 'files' ? 'visible' : 'hidden'}><FilesView /></Activity>
       <Activity mode={view === 'sweep' ? 'visible' : 'hidden'}><FullsweepView /></Activity>
+      <Activity mode={view === 'bible' ? 'visible' : 'hidden'}><ClaudeMdView /></Activity>
       <Activity mode={view === 'terminal' ? 'visible' : 'hidden'}>
         <TerminalView />
       </Activity>
