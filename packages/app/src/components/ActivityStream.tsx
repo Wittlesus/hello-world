@@ -191,3 +191,4 @@ export function ActivityStream() {
     </div>
   );
 }
+ActivityStream.displayName = 'ActivityStream';

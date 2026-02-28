@@ -107,3 +107,4 @@ export function AgentBuddy({
     </div>
   );
 }
+AgentBuddy.displayName = 'AgentBuddy';

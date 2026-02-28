@@ -16,3 +16,4 @@ export function ClaudeBuddy() {
 
   return null;
 }
+ClaudeBuddy.displayName = 'ClaudeBuddy';

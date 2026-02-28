@@ -579,3 +579,4 @@ export function BuddyOverlay() {
     </>
   );
 }
+BuddyOverlay.displayName = 'BuddyOverlay';
