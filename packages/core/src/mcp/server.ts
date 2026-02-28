@@ -1897,6 +1897,166 @@ server.registerTool('hw_post_agent_message', {
   return text(`Posted as ${validAgent.name}.\n\nRecent thread:\n${recent}`);
 });
 
+// ── Agent Factory ────────────────────────────────────────────────
+
+const factoryPath = join(projectRoot, '.hello-world', 'factory.json');
+
+interface FactoryRun {
+  id: string;
+  agentId: string;
+  agentName: string;
+  status: 'queued' | 'running' | 'completed' | 'failed' | 'cancelled';
+  purpose: string;
+  agency: string;
+  restrictions: string;
+  contextMode: 'full' | 'smart' | 'fresh';
+  persona?: string;
+  startedAt: string;
+  completedAt?: string;
+  summary?: string;
+  changelog?: string[];
+  error?: string;
+}
+
+interface CustomAgent {
+  id: string;
+  name: string;
+  purpose: string;
+  agency: string;
+  restrictions: string;
+  persona: string;
+  contextMode: 'full' | 'smart' | 'fresh';
+  createdAt: string;
+}
+
+interface FactoryState {
+  runs: FactoryRun[];
+  customAgents: CustomAgent[];
+}
+
+function readFactory(): FactoryState {
+  try {
+    return JSON.parse(readFileSync(factoryPath, 'utf-8')) as FactoryState;
+  } catch {
+    return { runs: [], customAgents: [] };
+  }
+}
+
+function writeFactory(state: FactoryState): void {
+  writeFileSync(factoryPath, JSON.stringify(state, null, 2), 'utf-8');
+}
+
+server.registerTool('hw_deploy_agent', {
+  title: 'Deploy Agent',
+  description: 'Deploy a single-agent mission from the Agent Factory. Creates a run entry and queues the agent for execution. Returns the run ID.',
+  inputSchema: z.object({
+    agentName: z.string().describe('Display name for this agent run'),
+    purpose: z.string().describe('What the agent should accomplish'),
+    agency: z.string().describe('What the agent can do'),
+    restrictions: z.string().describe('What the agent must NOT do'),
+    contextMode: z.enum(['full', 'smart', 'fresh']).default('full').describe('How much project context to inject'),
+    persona: z.string().optional().describe('Persona/character/bias for the agent'),
+    presetId: z.string().optional().describe('Preset agent ID if deploying a pre-built agent'),
+  }),
+}, async (args) => {
+  const factory = readFactory();
+  const runId = `run_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+  const run: FactoryRun = {
+    id: runId,
+    agentId: args.presetId ?? `custom_${Date.now().toString(36)}`,
+    agentName: args.agentName,
+    status: 'queued',
+    purpose: args.purpose,
+    agency: args.agency,
+    restrictions: args.restrictions,
+    contextMode: args.contextMode,
+    persona: args.persona,
+    startedAt: new Date().toISOString(),
+  };
+  factory.runs.unshift(run);
+  writeFactory(factory);
+  activity.append('factory_deploy', `Deployed: ${args.agentName}`, args.purpose);
+  return text(`Agent deployed. Run ID: ${runId}\nAgent: ${args.agentName}\nStatus: queued\n\nNote: Agent execution via subprocess is not yet wired. The run is recorded and visible in the Agent Factory view.`);
+});
+
+server.registerTool('hw_list_factory_runs', {
+  title: 'List Factory Runs',
+  description: 'List all Agent Factory runs, optionally filtered by status.',
+  inputSchema: z.object({
+    status: z.enum(['queued', 'running', 'completed', 'failed', 'cancelled']).optional(),
+    limit: z.number().optional().default(20),
+  }),
+}, async (args) => {
+  const factory = readFactory();
+  let runs = factory.runs;
+  if (args.status) runs = runs.filter(r => r.status === args.status);
+  runs = runs.slice(0, args.limit ?? 20);
+  if (runs.length === 0) return text('No factory runs found.');
+  const lines = runs.map(r => {
+    const elapsed = r.completedAt
+      ? `${Math.round((new Date(r.completedAt).getTime() - new Date(r.startedAt).getTime()) / 1000)}s`
+      : r.status === 'running' ? 'running...' : '';
+    return `[${r.status}] ${r.id}: ${r.agentName}${elapsed ? ` (${elapsed})` : ''}${r.summary ? ` -- ${r.summary.slice(0, 80)}` : ''}`;
+  });
+  return text(lines.join('\n'));
+});
+
+server.registerTool('hw_update_factory_run', {
+  title: 'Update Factory Run',
+  description: 'Update a factory run status, summary, changelog, or error. Used by the agent runner to report progress.',
+  inputSchema: z.object({
+    runId: z.string().describe('The run ID to update'),
+    status: z.enum(['queued', 'running', 'completed', 'failed', 'cancelled']).optional(),
+    summary: z.string().optional(),
+    changelog: z.array(z.string()).optional(),
+    error: z.string().optional(),
+  }),
+}, async (args) => {
+  const factory = readFactory();
+  const run = factory.runs.find(r => r.id === args.runId);
+  if (!run) return text(`Run not found: ${args.runId}`);
+  if (args.status) run.status = args.status;
+  if (args.summary) run.summary = args.summary;
+  if (args.changelog) run.changelog = [...(run.changelog ?? []), ...args.changelog];
+  if (args.error) run.error = args.error;
+  if (args.status === 'completed' || args.status === 'failed' || args.status === 'cancelled') {
+    run.completedAt = new Date().toISOString();
+  }
+  writeFactory(factory);
+  activity.append('factory_run_updated', `[${run.status}] ${run.agentName}`, args.summary ?? args.error ?? '');
+  return text(`Run ${args.runId} updated to [${run.status}]`);
+});
+
+server.registerTool('hw_create_custom_agent', {
+  title: 'Create Custom Agent',
+  description: 'Save a custom agent definition to the Agent Factory for reuse.',
+  inputSchema: z.object({
+    name: z.string().describe('Agent name'),
+    purpose: z.string().describe('What the agent does'),
+    agency: z.string().describe('What the agent can do'),
+    restrictions: z.string().describe('What the agent must NOT do'),
+    persona: z.string().optional().default('').describe('Persona/character/bias'),
+    contextMode: z.enum(['full', 'smart', 'fresh']).default('full'),
+  }),
+}, async (args) => {
+  const factory = readFactory();
+  const id = `agent_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+  const agent: CustomAgent = {
+    id,
+    name: args.name,
+    purpose: args.purpose,
+    agency: args.agency,
+    restrictions: args.restrictions,
+    persona: args.persona ?? '',
+    contextMode: args.contextMode,
+    createdAt: new Date().toISOString(),
+  };
+  factory.customAgents.push(agent);
+  writeFactory(factory);
+  activity.append('factory_agent_created', `Custom agent: ${args.name}`, args.purpose);
+  return text(`Custom agent saved: ${id} "${args.name}"`);
+});
+
 // ── Start ───────────────────────────────────────────────────────
 
 // Write capabilities manifest so hooks + app can check MCP status
@@ -1944,6 +2104,10 @@ const TOOL_CATALOG = [
   { name: 'hw_react', category: 'chatroom' },
   { name: 'hw_post_to_chatroom', category: 'chatroom' },
   { name: 'hw_post_agent_message', category: 'chatroom' },
+  { name: 'hw_deploy_agent', category: 'factory' },
+  { name: 'hw_list_factory_runs', category: 'factory' },
+  { name: 'hw_update_factory_run', category: 'factory' },
+  { name: 'hw_create_custom_agent', category: 'factory' },
 ];
 
 try {
