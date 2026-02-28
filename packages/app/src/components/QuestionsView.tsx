@@ -269,3 +269,4 @@ export function QuestionsView() {
     </ViewShell>
   );
 }
+QuestionsView.displayName = 'QuestionsView';

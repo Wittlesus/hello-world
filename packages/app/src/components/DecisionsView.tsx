@@ -123,3 +123,4 @@ export function DecisionsView() {
     </ViewShell>
   );
 }
+DecisionsView.displayName = 'DecisionsView';

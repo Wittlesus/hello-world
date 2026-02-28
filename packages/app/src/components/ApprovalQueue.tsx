@@ -267,3 +267,4 @@ export function ApprovalQueue({ standalone = false }: { standalone?: boolean }) 
     </div>
   );
 }
+ApprovalQueue.displayName = 'ApprovalQueue';

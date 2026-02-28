@@ -300,3 +300,4 @@ export function TaskBoard() {
     </div>
   );
 }
+TaskBoard.displayName = 'TaskBoard';

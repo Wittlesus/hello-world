@@ -155,6 +155,7 @@ export function FilesView() {
     </div>
   );
 }
+FilesView.displayName = 'FilesView';
 
 function FileCard({ file, onRemove }: { file: SharedFile; onRemove: () => void }) {
   const [copied, setCopied] = useState(false);
