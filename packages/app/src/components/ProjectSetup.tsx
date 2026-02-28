@@ -100,3 +100,4 @@ export function ProjectSetup({ onProjectSet }: Props) {
     </div>
   );
 }
+ProjectSetup.displayName = 'ProjectSetup';

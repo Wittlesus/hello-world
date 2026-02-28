@@ -263,3 +263,4 @@ export function SettingsView() {
     </ViewShell>
   );
 }
+SettingsView.displayName = 'SettingsView';
