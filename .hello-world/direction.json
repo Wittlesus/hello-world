@@ -333,15 +333,46 @@
       "id": "n_mm5v22rw",
       "text": "Pat's new directive: Instead of asking Pat for approval on decisions, run a deliberation with appropriate agents to reach a conclusion autonomously. Document everything so changes can be undone. This applies to technical and architectural decisions during implementation. Pat still approves at the strategy/scope level.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-28T05:08:37.388Z"
+      "read": true,
+      "capturedAt": "2026-02-28T05:08:37.388Z",
+      "actionTaken": "decision",
+      "actionId": "d_6f438f6c"
     },
     {
       "id": "n_mm5wt4bj",
       "text": "Pat's rule on system cleanup: never delete data or code permanently. Archive everything. Future systems or reimplementations should be able to reference old implementations. Deprecate, don't destroy.",
       "source": "session",
-      "read": false,
-      "capturedAt": "2026-02-28T05:57:38.719Z"
+      "read": true,
+      "capturedAt": "2026-02-28T05:57:38.719Z",
+      "actionTaken": "decision",
+      "actionId": "d_462aed31"
+    },
+    {
+      "id": "n_mm62hem2",
+      "text": "Agent Factory: new app view for deploying single-agent missions. Pre-built agents (CLAUDE.md janitor, codebase auditor, etc.) plus custom agent builder with AI-guided creation. Key design decisions: (1) Full project context injection -- not scoped, full dump. Cost is negligible vs risk of bad edits from missing context. (2) Every agent gets a Qwen watcher that independently documents all changes for the changelog. Two models = trustworthy accountability. (3) Custom agent builder ships alongside pre-builts, not deferred -- it's just a form over the same runner infrastructure. Factory is distinct from Agents/Deliberation view: deliberation = multi-agent discussion, factory = single-agent deployment with clear input/output.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-28T08:36:29.882Z",
+      "actionTaken": "task",
+      "actionId": "t_248d7b07"
+    },
+    {
+      "id": "n_mm639m2t",
+      "text": "Agent Factory -- expanded custom builder spec (Pat's design, Feb 28): Auto Build = AI fills in the form fields from user's natural language, user can edit before deploy. Context modes: full/smart/fresh/persistent(experimental). Structured fields: Purpose, Agency, Restrictions, Persona/Character/Bias (experimental -- study how persona affects decisions, don't discourage it. Scientists before capitalists). MCP/Features/Skills badges = drag-and-drop capability pills. Persistent agents get their own memory file at .hello-world/agents/agent-id.json. Templates from pre-builts as starting points. Dry Run preview mode.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-28T08:58:25.925Z",
+      "actionTaken": "decision",
+      "actionId": "d_efec13ec"
+    },
+    {
+      "id": "n_mm64jz5o",
+      "text": "DELIBERATION FORMAT (Pat's standing order, Feb 28): Round structure -- (1) Each agent independently forms opinions. (2) At table, each agent states their opinion. (3) In order, each agent addresses each other agent's opinion. (4) Agents hear everything and form new opinions. End of round 1. (5) Round 2: agents state new opinions, repeat process. (6) After round 2, agents vote to conclude or continue. (7) When vote passes, Claude does synthesis/conclusions. ENFORCEMENT: Must use agent-runner with independent Claude subprocesses. NEVER manually voice agents via hw_post_agent_message. Need hooks or blocks to prevent this.",
+      "source": "session",
+      "read": true,
+      "capturedAt": "2026-02-28T09:34:29.052Z",
+      "actionTaken": "decision",
+      "actionId": "d_49cd6e4b"
     }
   ]
 }

@@ -49,6 +49,7 @@ const SECTIONS: SectionDef[] = [
     tabs: [
       { view: 'terminal', label: 'Terminal', key: 'T' },
       { view: 'agents', label: 'Deliberation Room', key: 'D' },
+      { view: 'factory', label: 'Agent Factory', key: 'A' },
       { view: 'dashboard', label: 'Dashboard', key: '1' },
       { view: 'files', label: 'Files', key: 'F' },
     ],
@@ -91,7 +92,7 @@ const SECTIONS: SectionDef[] = [
 ];
 
 function getSection(view: View): Section {
-  if (['terminal', 'agents', 'dashboard', 'files'].includes(view)) return 'claude';
+  if (['terminal', 'agents', 'factory', 'dashboard', 'files'].includes(view)) return 'claude';
   if (['tasks', 'decisions'].includes(view)) return 'tasks';
   if (['memory', 'context', 'history', 'sweep', 'bible'].includes(view)) return 'brain';
   return 'settings';

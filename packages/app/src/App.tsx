@@ -21,6 +21,7 @@ import { SkillsView } from './components/SkillsView.js';
 import { TaskBoard } from './components/TaskBoard.js';
 import { TerminalView } from './components/TerminalView.js';
 import { WatchersView } from './components/WatchersView.js';
+import { AgentFactoryView } from './components/AgentFactoryView.js';
 import { ClaudeMdView } from './components/ClaudeMdView.js';
 import { useAppStore, type View } from './stores/app.js';
 
@@ -33,6 +34,7 @@ const KEY_MAP: Record<string, View> = {
   '6': 'cost',
   '7': 'settings',
   t: 'terminal',
+  a: 'factory',
   g: 'agents',
   h: 'history',
   k: 'skills',
@@ -55,6 +57,9 @@ function MainContent() {
       <Activity mode={view === 'history' ? 'visible' : 'hidden'}><HistoryView /></Activity>
       <Activity mode={view === 'agents' ? 'visible' : 'hidden'}>
         <ErrorBoundary label="agents"><AgentsView /></ErrorBoundary>
+      </Activity>
+      <Activity mode={view === 'factory' ? 'visible' : 'hidden'}>
+        <ErrorBoundary label="factory"><AgentFactoryView /></ErrorBoundary>
       </Activity>
       <Activity mode={view === 'cost' ? 'visible' : 'hidden'}><CostView /></Activity>
       <Activity mode={view === 'settings' ? 'visible' : 'hidden'}><SettingsView /></Activity>

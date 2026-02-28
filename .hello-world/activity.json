@@ -1,41 +1,6 @@
 {
   "activities": [
     {
-      "id": "act_a513e3e0",
-      "type": "memory_stored",
-      "description": "[PAIN] UsageBars shipped without Rust command -- silently broken since 088b014",
-      "details": "Commit 088b014 added UsageBars.tsx and useClaudeUsage.ts hook that calls invoke('get_claude_usage'), but never added the matching #[tauri::command] fn get_claude_usage() to lib.rs. The invoke silently errored, webUsage stayed null, and the {web && ...} guard meant bars never rendered. Fixed in a222d45.",
-      "timestamp": "2026-02-27T07:38:47.694Z"
-    },
-    {
-      "id": "act_ebef2e38",
-      "type": "brain_prediction",
-      "description": "Surprise detected (expectedness: 0.62): Unexpected failure: UsageBars shipped without Rust command -- silently broken since 088b014",
-      "details": "",
-      "timestamp": "2026-02-27T07:38:47.702Z"
-    },
-    {
-      "id": "act_e88de479",
-      "type": "memory_stored",
-      "description": "[WIN] xterm dual cursor fix: canvas renderer ignores CSS, use Terminal config options",
-      "details": "xterm v6 uses canvas renderer by default. CSS targeting .xterm-cursor-layer, .xterm-helper-textarea etc does nothing. The fix is Terminal config: cursor color matching background, cursorBlink: false, cursorInactiveStyle: 'none'. Also: xterm useEffect with [] deps needs remount (switch view and back) to pick up changes -- hot reload alone won't re-init.",
-      "timestamp": "2026-02-27T07:49:01.991Z"
-    },
-    {
-      "id": "act_8f86dd8e",
-      "type": "brain_error",
-      "description": "store:reflection failed (degraded)",
-      "details": "Cannot read properties of undefined (reading 'toLowerCase')",
-      "timestamp": "2026-02-27T07:49:02.000Z"
-    },
-    {
-      "id": "act_05e1b44e",
-      "type": "brain_prediction",
-      "description": "Surprise detected (expectedness: 0.47): Unexpected success: xterm dual cursor fix: canvas renderer ignores CSS, use Terminal config options",
-      "details": "",
-      "timestamp": "2026-02-27T07:49:02.005Z"
-    },
-    {
       "id": "act_496bb2a6",
       "type": "memory_stored",
       "description": "[WIN] Discipline: cleaned up dead code from failed approaches instead of leaving it",
@@ -3499,6 +3464,41 @@
       "description": "Session ended",
       "details": "Session 67: Updated CLAUDE.md (all sections current), fixed deliberation runner to use structured 3-phase rounds with agent voting, blocked manual agent voicing via hw_post_agent_message, removed contrarian from defaults. Planned Agent Factory view. Deliberation ran but was manually voiced (pain recorded). Runner now enforces independent agent subprocesses.",
       "timestamp": "2026-02-28T10:27:29.551Z"
+    },
+    {
+      "id": "act_d27d12c6",
+      "type": "context_loaded",
+      "description": "Session #67 started",
+      "details": "Project: Claude AI Interface\nActive tasks: 1\nOpen questions: 0",
+      "timestamp": "2026-02-28T10:34:51.267Z"
+    },
+    {
+      "id": "act_87e8a013",
+      "type": "handoff_loaded",
+      "description": "Restart handoff consumed",
+      "details": "## VERIFIED (done, tested, confirmed working)\n- TypeScript build: 0 errors across all changes\n- CLAUDE.md: fully updated",
+      "timestamp": "2026-02-28T10:34:51.270Z"
+    },
+    {
+      "id": "act_8efd5c2d",
+      "type": "note_processed",
+      "description": "Direction note n_mm639m2t processed via decision",
+      "details": "decision recorded: d_efec13ec \"Agent Factory custom builder spec -- Pat's expanded design\"",
+      "timestamp": "2026-02-28T10:36:15.789Z"
+    },
+    {
+      "id": "act_c422dfcc",
+      "type": "note_processed",
+      "description": "Direction note n_mm64jz5o processed via decision",
+      "details": "decision recorded: d_49cd6e4b \"Deliberation format -- structured round protocol\"",
+      "timestamp": "2026-02-28T10:36:20.362Z"
+    },
+    {
+      "id": "act_4a3d649d",
+      "type": "task_updated",
+      "description": "[IN_PROGRESS] Build Agent Factory view",
+      "details": "",
+      "timestamp": "2026-02-28T10:36:24.100Z"
     }
   ]
 }

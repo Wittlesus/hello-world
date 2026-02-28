@@ -397,6 +397,65 @@
       "rationale": "4/4 on session tags and notify gate. Skills split but consensus on proper implementation (real type, not prefix hack). Pragmatist shifted on tags (near-zero cost justified). Backend Arch shifted on uncertainty timing (real-time gate beats post-session). ~150 lines total new code.",
       "decidedAt": "2026-02-27T16:59:10.542Z",
       "decidedBy": "claude"
+    },
+    {
+      "id": "d_6f438f6c",
+      "title": "Autonomy directive: deliberations replace approval-seeking",
+      "context": "Pat directed Claude to stop asking for approval on technical/architectural decisions and instead run deliberations with appropriate agents. Strategy/scope decisions still require Pat.",
+      "chosen": "Run deliberations for implementation decisions, document everything for rollback. Pat approves strategy/scope only.",
+      "alternatives": [],
+      "rationale": "Removes bottleneck of waiting for Pat on every technical call. Deliberation trail provides accountability and rollback path.",
+      "decidedAt": "2026-02-28T08:09:17.694Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_462aed31",
+      "title": "Archive rule: deprecate, never delete",
+      "context": "Pat's standing rule on system cleanup: never delete data or code permanently. Archive everything so future systems or reimplementations can reference old work.",
+      "chosen": "All cleanup operations archive instead of delete. Deprecate, don't destroy.",
+      "alternatives": [],
+      "rationale": "Preserves institutional knowledge and allows future systems to learn from past implementations.",
+      "decidedAt": "2026-02-28T08:09:19.926Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_29ff24a1",
+      "title": "Agent Factory v1 scope and architecture",
+      "context": "5-agent deliberation on Agent Factory design. 6 sub-questions, 2 shifted positions, 1 tension resolved.",
+      "chosen": "v1: detached Node worker runner with flat FactoryRunConfig, 3 presets (Janitor/Gardener/Auditor), simple custom builder form with Edit button on presets, optional Qwen watcher (ON for custom, OFF for built-ins), target file allowlist + timeouts + snapshot revert, persistent memory as inject-last-N-runs. v1.1: Auto Build AI, badges, persona, dry run.",
+      "alternatives": [
+        {
+          "option": "Ship full builder with Auto Build, badges, persona in v1",
+          "tradeoff": "Higher scope, longer build time, but matches Pat's full vision immediately"
+        },
+        {
+          "option": "Defer custom builder entirely to v1.1",
+          "tradeoff": "Simpler v1 but contradicts Pat's directive that builder ships alongside presets"
+        }
+      ],
+      "rationale": "Runner is the value -- ship it with presets and a simple builder that satisfies Pat's requirement for custom agents alongside pre-builts. Builder enhancements (Auto Build, badges, persona) layer on top without changing the runner. Forward-compatible types prevent migration debt.",
+      "decidedAt": "2026-02-28T09:18:28.062Z",
+      "decidedBy": "claude"
+    },
+    {
+      "id": "d_efec13ec",
+      "title": "Agent Factory custom builder spec -- Pat's expanded design",
+      "context": "Pat provided detailed spec for the Agent Factory custom builder UI during session 67. Covers Auto Build AI, context modes, structured fields, capability badges, persistent agents, and dry run.",
+      "chosen": "Implement Pat's expanded spec: Auto Build = AI fills form from natural language (user edits before deploy). Context modes: full/smart/fresh/persistent(experimental). Fields: Purpose, Agency, Restrictions, Persona/Character/Bias (experimental -- study persona effects). MCP/Features/Skills as drag-and-drop badges. Persistent agents get .hello-world/agents/agent-id.json. Pre-built templates as starting points. Dry Run preview mode.",
+      "alternatives": [],
+      "rationale": "Pat's direct design spec. Persona as research variable, not guardrail. Scientists before capitalists. Auto Build fills form, doesn't bypass it.",
+      "decidedAt": "2026-02-28T10:36:15.787Z",
+      "decidedBy": "pat"
+    },
+    {
+      "id": "d_49cd6e4b",
+      "title": "Deliberation format -- structured round protocol",
+      "context": "Pat defined the exact deliberation round structure. Each round: agents form independent opinions, state them, address each other's opinions in order, then reform. After round 2, agents vote to conclude or continue. Claude synthesizes only after vote passes.",
+      "chosen": "Enforce structured round protocol: (1) independent opinion formation, (2) state opinions, (3) address each other's opinions in order, (4) reform opinions. Round 2 repeats. Vote to conclude or continue after round 2. Claude synthesizes after vote. Must use agent-runner with independent subprocesses -- NEVER manually voice via hw_post_agent_message.",
+      "alternatives": [],
+      "rationale": "Pat's standing order. Already partially implemented in f8255b4. This formalizes the exact round structure and enforcement requirements.",
+      "decidedAt": "2026-02-28T10:36:20.360Z",
+      "decidedBy": "pat"
     }
   ]
 }

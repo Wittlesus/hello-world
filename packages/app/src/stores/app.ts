@@ -7,6 +7,7 @@ export type View =
   | 'tasks'
   | 'decisions'
   | 'agents'
+  | 'factory'
   | 'memory'
   | 'context'
   | 'history'

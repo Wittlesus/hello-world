@@ -125,7 +125,8 @@ When writing `hw_write_handoff()`, always use this structure so the next Claude 
 | Timeline | l | Session timeline with episodic index |
 | Watchers | w | Background watcher processes |
 | Project Context | p | Direction notes, scope, vision |
-| Agents | a | Deliberation sessions and boardrooms |
+| Agents | g | Deliberation sessions and boardrooms |
+| Agent Factory | a | Deploy single-agent missions with full context |
 
 ## What's Built (as of Feb 2026)
 - Tauri v2 desktop app with all views listed above

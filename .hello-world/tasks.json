@@ -1917,6 +1917,36 @@
       "dependsOn": [],
       "createdAt": "2026-02-28T07:33:09.882Z",
       "updatedAt": "2026-02-28T07:42:00.973Z"
+    },
+    {
+      "id": "t_73d9f835",
+      "title": "Update CLAUDE.md: fix all outdated sections",
+      "description": "Full sweep of CLAUDE.md to match current reality. Core Loop, Key File Paths (split state), memory types (skill), App Views table, What's Built (approvals removed), What's In Progress (clear stale items), Deliberation Rules (autonomy directive), Coding Rules (autonomy directive).",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T08:13:42.845Z",
+      "updatedAt": "2026-02-28T08:15:19.898Z"
+    },
+    {
+      "id": "t_248d7b07",
+      "title": "Build Agent Factory view",
+      "description": "New app view for deploying single-agent missions. Pre-built agents (CLAUDE.md janitor, codebase auditor, memory gardener, test writer) plus custom agent builder with AI-guided creation. Design decisions: (1) Full project context injection per agent -- not scoped. (2) Every agent gets a Qwen watcher that independently documents changes for changelog. (3) Custom agent builder ships alongside pre-builts. Key: F shortcut. Distinct from Agents/Deliberation -- factory is single-agent deployment with clear input/output, not multi-agent discussion.",
+      "status": "in_progress",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T08:38:23.142Z",
+      "updatedAt": "2026-02-28T10:36:24.097Z"
+    },
+    {
+      "id": "t_9f0b7035",
+      "title": "Fix deliberation runner format + block manual voicing",
+      "description": "Update agent-runner.ts to match Pat's required deliberation format: multi-phase rounds (state opinions -> address each other -> reform opinions), agent voting to conclude after round 2, and block hw_post_agent_message when auto-runner is active. Remove contrarian from defaults.",
+      "status": "done",
+      "tags": [],
+      "dependsOn": [],
+      "createdAt": "2026-02-28T09:37:14.353Z",
+      "updatedAt": "2026-02-28T09:40:44.277Z"
     }
   ],
   "milestones": []
