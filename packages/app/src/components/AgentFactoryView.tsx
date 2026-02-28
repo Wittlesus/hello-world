@@ -11,7 +11,7 @@ import {
   Settings2,
   X,
 } from 'lucide-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useProjectPath } from '../hooks/useProjectPath.js';
 import { useTauriData } from '../hooks/useTauriData.js';
 
@@ -463,32 +463,26 @@ function generateId(): string {
 export function AgentFactoryView() {
   const projectPath = useProjectPath();
   const { data: factoryData } = useTauriData<FactoryState>('get_factory', projectPath);
-  const [runs, setRuns] = useState<FactoryRun[]>([]);
   const [builderOpen, setBuilderOpen] = useState(false);
   const [builderInitial, setBuilderInitial] = useState<BuilderForm | undefined>(undefined);
-  const initializedRef = useRef(false);
 
-  // Load persisted runs from factory.json on first data load
-  useEffect(() => {
-    if (factoryData?.runs && !initializedRef.current) {
-      setRuns(factoryData.runs);
-      initializedRef.current = true;
-    }
-  }, [factoryData]);
+  // Runs come from factory.json via useTauriData -- single source of truth.
+  // File watcher triggers refetch when MCP tools write to factory.json.
+  const runs = factoryData?.runs ?? [];
 
-  // Persist runs to factory.json whenever they change (after initial load)
-  const persistRuns = useCallback(
-    (newRuns: FactoryRun[]) => {
+  const persistRun = useCallback(
+    (run: FactoryRun) => {
       if (!projectPath) return;
+      const current = factoryData ?? { runs: [], customAgents: [] };
       const state: FactoryState = {
-        runs: newRuns,
-        customAgents: factoryData?.customAgents ?? [],
+        runs: [run, ...current.runs],
+        customAgents: current.customAgents,
       };
       invoke('save_factory', { projectPath, data: state }).catch(() => {
         // Rust command may not exist yet -- silently ignore until app restart
       });
     },
-    [projectPath, factoryData?.customAgents],
+    [projectPath, factoryData],
   );
 
   const handleDeployPreset = useCallback((agent: PresetAgent) => {
@@ -499,12 +493,8 @@ export function AgentFactoryView() {
       status: 'queued',
       startedAt: new Date().toISOString(),
     };
-    setRuns((prev) => {
-      const updated = [run, ...prev];
-      persistRuns(updated);
-      return updated;
-    });
-  }, [persistRuns]);
+    persistRun(run);
+  }, [persistRun]);
 
   const handleEditPreset = useCallback((agent: PresetAgent) => {
     setBuilderInitial({
@@ -526,14 +516,10 @@ export function AgentFactoryView() {
       status: 'queued',
       startedAt: new Date().toISOString(),
     };
-    setRuns((prev) => {
-      const updated = [run, ...prev];
-      persistRuns(updated);
-      return updated;
-    });
+    persistRun(run);
     setBuilderOpen(false);
     setBuilderInitial(undefined);
-  }, [persistRuns]);
+  }, [persistRun]);
 
   const activeRuns = runs.filter((r) => r.status === 'running' || r.status === 'queued');
   const completedRuns = runs.filter(
